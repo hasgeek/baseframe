@@ -1,0 +1,5 @@
+include baseframe/templates/*
+include baseframe/static/*                    
+include baseframe/static/css/*
+include baseframe/static/img/*
+include baseframe/static/js/*
