@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 
-__version__ = '0.1'
-
 import os
 from flask import Blueprint, send_from_directory
 from flaskext.assets import Bundle
 
-__all__ = ['__version__', 'baseframe', 'baseframe_js']
+__all__ = ['baseframe', 'baseframe_js']
 
 baseframe = Blueprint('baseframe', __name__,
                       static_folder='static',

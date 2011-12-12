@@ -1,6 +1,5 @@
 import os
 from setuptools import setup, find_packages
-import baseframe
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = unicode(open(os.path.join(here, 'README.rst')).read(), 'utf-8')
@@ -15,7 +14,7 @@ requires = [
     ]
 
 setup(name='baseframe',
-      version=baseframe.__version__,
+      version=0.1,
       description='BaseFrame for HasGeek projects',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
