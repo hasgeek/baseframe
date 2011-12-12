@@ -10,7 +10,8 @@ requires = [
     'Flask',
     'coaster',
     'jsmin',
-    'cssmin'
+    'cssmin',
+    'Flask-Assets',
     ]
 
 setup(name='baseframe',
