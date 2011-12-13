@@ -1,0 +1,24 @@
+<div id="hg-bar" class="container">
+  <div class="row">
+    <ul id="hg-barlinks" class="twelve columns">
+      <li {%- if config['SITE_ID'] == 'home' %} class="selected"{% endif %}><a href="http://hasgeek.com/"><strong><span class="hg-h">Has</span><span class="hg-g">Geek</span></strong></a></li>
+      <li {%- if config['SITE_ID'] == 'blog' %} class="selected"{% endif %}><a href="http://blog.hasgeek.in/">Blog</a></li>
+      <li {%- if config['SITE_ID'] == 'wiki' %} class="selected"{% endif %}><a href="http://wiki.hasgeek.in/">Wiki</a></li>
+      <li {%- if config['SITE_ID'] == 'jobs' %} class="selected"{% endif %}><a href="http://jobs.hasgeek.com/">Jobs</a></li>
+      <li {%- if config['SITE_ID'] == 'hgtv' %} class="selected"{% endif %}><a href="http://hasgeek.tv/">Videos</a></li>
+      <li {%- if config['SITE_ID'] == 'funnel' %} class="selected"{% endif %}><a href="http://funnel.hasgeek.com/">Funnel</a></li>
+      <li {%- if config['SITE_ID'] == 'geekup' %} class="selected"{% endif %}><a href="http://geekup.in/">GeekUp</a></li>
+      <li {%- if config['SITE_ID'] == 'events' %} class="selected"{% endif %}>
+        <a href="#" class="hg-submenu">Events</a>
+        <ul>
+          <li><a href="http://jsfoo.in/">JSFoo</a></li>
+          <li class="hg-menu-section">Past events</li>
+          <li><a href="http://droidcon.in/">Droidcon</a></li>
+          <li><a href="http://phpcloud.hasgeek.com/">Scaling PHP in the Cloud</a></li>
+          <li><a href="http://androidcamp.hasgeek.com/">AndroidCamp</a></li>
+          <li><a href="http://www.doctypehtml5.in/">DocType HTML5</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
