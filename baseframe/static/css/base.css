@@ -74,10 +74,10 @@ table {
 
 body {
   background: #fff;
-  font-family: "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: Lato, Arial, sans-serif;
   font-size: 13px;
   line-height: 18px;
-  color: #555;
+  color: #181818;
   position: relative;
   -webkit-font-smoothing: antialiased;
 }
@@ -331,7 +331,7 @@ blockquote cite {
   display: block;
   font-size: 12px;
   font-size: 1.2rem;
-  color: #555;
+  color: #181818;
 }
 
 blockquote cite:before {
@@ -339,7 +339,7 @@ blockquote cite:before {
 }
 
 blockquote cite a, blockquote cite a:visited {
-  color: #555;
+  color: #181818;
 }
 
 hr {
@@ -699,7 +699,7 @@ img {
   text-decoration: none;
   font-weight: bold;
   line-height: 1;
-  font-family: "Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif;
+  font-family: Lato, Arial, sans-serif;
   position: relative;
   cursor: pointer;
   border: none;
@@ -933,7 +933,7 @@ dl.tabs dd a {
   line-height: 30px;
   border: solid 1px #ddd;
   margin: 0 -1px 0 0;
-  color: #555;
+  color: #181818;
   background: #eee;
 }
 
@@ -953,7 +953,7 @@ dl.tabs dd a.active {
   padding: 7px 18px 9px;
   font-size: 15px;
   font-size: 1.5rem;
-  color: #555555;
+  color: #181818;
   background: none;
   border: none;
 }
@@ -992,7 +992,7 @@ dl.tabs.vertical dd a {
   border: solid 0 #ccc;
   border-width: 1px 1px 0;
   margin: 0;
-  color: #555;
+  color: #181818;
   background: #eee;
   font-size: 15px;
   font-size: 1.5rem;
@@ -1093,7 +1093,7 @@ ul.pagination li {
 ul.pagination li a {
   display: block;
   padding: 6px 7px 4px;
-  color: #555;
+  color: #181818;
 }
 
 ul.pagination li.current a, ul.pagination li:hover a, ul.pagination li a:focus {
@@ -1692,7 +1692,7 @@ span.pause.active {
    ================================================== */
 .orbit-caption {
   display: none;
-  font-family: "HelveticaNeue", "Helvetica-Neue", Helvetica, Arial, sans-serif;
+  font-family: Lato, Arial, sans-serif;
 }
 
 .orbit-wrapper .orbit-caption {
@@ -2280,7 +2280,7 @@ table.hide-on-tablets {
     border: solid 0 #ccc;
     border-width: 1px 0 0;
     margin: 0;
-    color: #555;
+    color: #181818;
     background: #eee;
     font-size: 15px;
     font-size: 1.5rem;
@@ -2386,4 +2386,155 @@ table.hide-on-tablets {
   .flyout p:last-child {
     margin-bottom: 18px;
   }
+}
+.hg-h {
+  color: #df5e0e;
+}
+
+.hg-g {
+  color: #816894;
+}
+
+.hg-s {
+  color: #f0a40c;
+}
+
+#hg-bar {
+  background: #e8e8e8;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f9f9f9), color-stop(100%, #e8e8e8));
+  background-image: -webkit-linear-gradient(#f9f9f9, #e8e8e8);
+  background-image: -moz-linear-gradient(#f9f9f9, #e8e8e8);
+  background-image: -o-linear-gradient(#f9f9f9, #e8e8e8);
+  background-image: -ms-linear-gradient(#f9f9f9, #e8e8e8);
+  background-image: linear-gradient(#f9f9f9, #e8e8e8);
+  color: #444444;
+  border-bottom: 1px solid #df5e0e;
+  margin-bottom: 1em;
+}
+#hg-bar ul#hg-barlinks {
+  *zoom: 1;
+  margin: 0 auto;
+  position: relative;
+  list-style: none;
+  font-size: 90%;
+}
+#hg-bar ul#hg-barlinks:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#hg-bar ul#hg-barlinks > li {
+  float: left;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+#hg-bar ul#hg-barlinks > li a {
+  display: block;
+  padding: 0.4em 0.5em;
+  text-decoration: none;
+  background-color: inherit;
+  color: #444444;
+  border-top: 2px solid transparent;
+}
+#hg-bar ul#hg-barlinks > li a:visited {
+  text-decoration: none;
+  background-color: inherit;
+  color: #444444;
+}
+#hg-bar ul#hg-barlinks > li a.hg-submenu:after {
+  content: " ▾";
+}
+#hg-bar ul#hg-barlinks > li ul {
+  position: absolute;
+  margin: 0;
+  background: #e8e8e8;
+  color: #444444;
+  list-style: none;
+  z-index: 9999;
+  left: -9999px;
+  -moz-border-radius-bottomleft: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  -o-border-bottom-left-radius: 6px;
+  -ms-border-bottom-left-radius: 6px;
+  -khtml-border-bottom-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  -moz-border-radius-bottomright: 6px;
+  -webkit-border-bottom-right-radius: 6px;
+  -o-border-bottom-right-radius: 6px;
+  -ms-border-bottom-right-radius: 6px;
+  -khtml-border-bottom-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border: 1px solid #df5e0e;
+  border-top: none;
+}
+#hg-bar ul#hg-barlinks > li ul li {
+  float: none;
+  position: relative;
+  white-space: nowrap;
+  padding: 0;
+  margin: 0;
+}
+#hg-bar ul#hg-barlinks > li ul li:last-child {
+  -moz-border-radius-bottomleft: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  -o-border-bottom-left-radius: 6px;
+  -ms-border-bottom-left-radius: 6px;
+  -khtml-border-bottom-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  -moz-border-radius-bottomright: 6px;
+  -webkit-border-bottom-right-radius: 6px;
+  -o-border-bottom-right-radius: 6px;
+  -ms-border-bottom-right-radius: 6px;
+  -khtml-border-bottom-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+#hg-bar ul#hg-barlinks > li ul li:hover > a {
+  text-decoration: none;
+  background: rgba(0, 0, 0, 0.1);
+  color: black;
+}
+#hg-bar ul#hg-barlinks > li ul li:last-child > a {
+  -moz-border-radius-bottomleft: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  -o-border-bottom-left-radius: 6px;
+  -ms-border-bottom-left-radius: 6px;
+  -khtml-border-bottom-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  -moz-border-radius-bottomright: 6px;
+  -webkit-border-bottom-right-radius: 6px;
+  -o-border-bottom-right-radius: 6px;
+  -ms-border-bottom-right-radius: 6px;
+  -khtml-border-bottom-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+#hg-bar ul#hg-barlinks > li ul li.hg-menu-section {
+  padding: 0.4em 0.5em 0.5em;
+  font-style: italic;
+}
+#hg-bar ul#hg-barlinks > li ul li.hg-menu-section:before, #hg-bar ul#hg-barlinks > li ul li.hg-menu-section:after {
+  content: " — ";
+}
+#hg-bar ul#hg-barlinks > li:hover > a, #hg-bar ul#hg-barlinks > li > a:active {
+  text-decoration: none;
+  background: #e8e8e8;
+  border-top: 2px solid #e8e8e8;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e8e8e8), color-stop(100%, #d1d1d1));
+  background-image: -webkit-linear-gradient(#e8e8e8, #d1d1d1);
+  background-image: -moz-linear-gradient(#e8e8e8, #d1d1d1);
+  background-image: -o-linear-gradient(#e8e8e8, #d1d1d1);
+  background-image: -ms-linear-gradient(#e8e8e8, #d1d1d1);
+  background-image: linear-gradient(#e8e8e8, #d1d1d1);
+  color: black;
+}
+#hg-bar ul#hg-barlinks > li:hover > ul {
+  left: -1px;
+}
+#hg-bar ul#hg-barlinks > li:first-child {
+  margin-left: -0.5em;
+}
+#hg-bar ul#hg-barlinks > li.selected a {
+  border-top: 2px solid #df5e0e;
+  color: black;
+  font-weight: bold;
 }

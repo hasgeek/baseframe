@@ -25,6 +25,7 @@
 	{% assets "css_all" -%}
     <link rel="stylesheet" href="{{ ASSET_URL }}"/>
   {% endassets -%}
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
 	<!--[if lt IE 9]>
 		<link rel="stylesheet" href="{{ url_for('baseframe.static', filename='css/ie.css') }}"/>
@@ -42,6 +43,8 @@
   {% block pageheaders %}{% endblock %}
 </head>
 <body>
+
+  {% include "networkbar.html" -%}
 
   <!-- headerbox -->
   {% block headerbox %}
