@@ -19,3 +19,6 @@ boilerplate to use it::
   assets.register('css_all', css)
 
   # Import models and views, and register routes here
+
+BaseFrame is BSD-licensed, but is built on top of Twitter Bootstrap 2.0,
+which uses the Apache license.
