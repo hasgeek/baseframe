@@ -23,6 +23,7 @@ $color-hg-bar-selected: #000;
     background: $color-hg-bar-background;
     //$experimental-support-for-svg: true;
     @include background-image(linear-gradient(#f9f9f9, #e8e8e8));
+    font-family: $networkbar-font-family;
     color: $color-hg-bar;
     border-bottom: 1px solid $color-hg-bar-border;
     margin-bottom: 1em;

@@ -25,6 +25,7 @@
 	{% assets "css_all" -%}
     <link rel="stylesheet" href="{{ ASSET_URL }}"/>
   {% endassets -%}
+  {# TODO: Make this font inclusion configurable #}
   <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
 	<!--[if lt IE 9]>
@@ -43,45 +44,49 @@
   {% block pageheaders %}{% endblock %}
 </head>
 <body>
+  <div id="root">
+    {% include "networkbar.html" -%}
 
-  {% include "networkbar.html" -%}
+    <!-- headerbox -->
+    {% block headerbox %}
+  	<header class="container">
+  	  <div class="row">
+    		<div class="twelve columns">
+    		  {% block header %}
+    			<h1>{{ self.title()|e }}</h1>
+    			{% endblock %}
+    		</div>
+    	</div>
+  	</header>
+  	{% endblock %}
+  	<!-- /headerbox -->
 
-  <!-- headerbox -->
-  {% block headerbox %}
-	<header class="container">
-	  <div class="row">
-  		<div class="twelve columns">
-  		  {% block header %}
-  			<h1>{{ self.title()|e }}</h1>
-  			{% endblock %}
-  		</div>
-  	</div>
-	</header>
-	{% endblock %}
-	<!-- /headerbox -->
-
-	<!-- mainbox -->
-	{% block mainbox %}
-	<div id="main" class="container">
-		<div class="row">
-			<div class="eight columns">
+  	<!-- mainbox -->
+  	{% block mainbox %}
+  	<div id="main" class="container">
+  		<div class="row">
         <!-- content -->
-			  {% block content %}
-  			{% endblock %}
-  		</div>
-			<!-- /content -->
+  			<div class="eight columns">
+  			  {% block content %}
+    			{% endblock %}
+    		</div>
+  			<!-- /content -->
 
-			<div class="four columns">
         <!-- sidebar -->
-        {% block sidebar %}
-				{% endblock %}
-				<!-- sidebar -->
-			</div>
-		</div>
+  			<div class="four columns">
+          {% block sidebar %}
+  				{% endblock %}
+  			</div>
+        <!-- /sidebar -->
+  		</div>
 
-	</div>
-	{% endblock %}
-	<!-- /mainbox -->
+  	</div>
+  	{% endblock %}
+  	<!-- /mainbox -->
+
+    <!-- For sticky footer -->
+    <div id="root_footer"></div>
+  </div>
 
   <!-- footerbox -->
   {% block footerbox %}

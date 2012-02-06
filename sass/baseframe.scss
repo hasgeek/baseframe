@@ -1,7 +1,8 @@
 /* HasGeek base CSS */
 
-// Variables
-@import "variables";
+// Local settings
+@import "settings";
 // Foundation components
 @import "foundation";
 @import "networkbar";
+@import "layout";
