@@ -11,3 +11,5 @@ test.db
 docs/_build
 build/
 dist/
+baseframe/static/js/baseframe.min.js
+baseframe/static/css/
