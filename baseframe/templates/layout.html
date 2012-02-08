@@ -52,10 +52,16 @@
   	<header class="container">
   	  <div class="row">
     		<div class="twelve columns">
-    		  {% block header %}
-    			<h1>{{ self.title()|e }}</h1>
-    			{% endblock %}
-    		</div>
+          <div id="logo"><a href="{{ url_for('index') }}">Home</a></div>
+          <ul class="usertools">
+            {% if g.user -%}
+              <li class="profile">{{ g.user.fullname }}</li>
+              <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {%- else %}
+              <li><a href="{{ url_for('login') }}">Login</a></li>
+            {%- endif %}      
+          </ul>
+        </div>
     	</div>
   	</header>
   	{% endblock %}
@@ -64,9 +70,29 @@
   	<!-- mainbox -->
   	{% block mainbox %}
   	<div id="main" class="container">
+      {# messages #}
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="row">
+            <div class="twelve columns">
+              {% for category, message in messages %}
+                <div class="alert-box {{category}}">
+                  {{ message }}
+                  <a href="" class="close">&times;</a>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      {% block contentarea %}
   		<div class="row">
         <!-- content -->
   			<div class="eight columns">
+          {% block headline %}
+          <h1>{{ self.title()|e }}</h1>
+          {% endblock %}
   			  {% block content %}
     			{% endblock %}
     		</div>
@@ -79,14 +105,18 @@
   			</div>
         <!-- /sidebar -->
   		</div>
+      {% endblock %}
 
   	</div>
   	{% endblock %}
   	<!-- /mainbox -->
 
     <!-- For sticky footer -->
+    {% block root_footer %}
     <div id="root_footer"></div>
+    {% endblock %}
   </div>
+  <!-- /root -->
 
   <!-- footerbox -->
   {% block footerbox %}
@@ -94,7 +124,7 @@
 	  <div class="row">
   		<div class="twelve columns">
   		  {% block footer %}
-  			Copyright &copy; 2010-11 HasGeek
+  			Copyright &copy; 2010-12 HasGeek
   			{% endblock %}
   		</div>
   	</div>

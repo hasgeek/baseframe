@@ -12,3 +12,4 @@ docs/_build
 build/
 dist/
 baseframe/static/css/packed.css
+baseframe/static/js/packed.js

@@ -1,4 +1,4 @@
-/* HasGeek base CSS */
+/* HasGeek baseframe CSS */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
   margin: 0;
   padding: 0;
@@ -53,7 +53,6 @@ body {
   font-family: Lato, "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 14px;
   font-size: 1.4rem;
-  -webkit-font-smoothing: antialiased;
   line-height: 18px;
   color: #181818;
   position: relative;
@@ -194,7 +193,6 @@ table tfoot tr td:last-child {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #181818;
   font-weight: bold;
   line-height: 1.25;
 }
@@ -208,30 +206,35 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 h1 {
   font-size: 46px;
   font-size: 4.6rem;
+  color: #df5e0e;
   margin-bottom: 12px;
 }
 
 h2 {
   font-size: 35px;
   font-size: 3.5rem;
+  color: #816894;
   margin-bottom: 9px;
 }
 
 h3 {
   font-size: 28px;
   font-size: 2.8rem;
+  color: #f0a40c;
   margin-bottom: 9px;
 }
 
 h4 {
   font-size: 21px;
   font-size: 2.1rem;
+  color: #181818;
   margin-bottom: 3px;
 }
 
 h5 {
   font-size: 18px;
   font-size: 1.8rem;
+  color: #181818;
   margin-bottom: 3px;
   font-weight: normal;
 }
@@ -239,6 +242,7 @@ h5 {
 h6 {
   font-size: 15px;
   font-size: 1.5rem;
+  color: #181818;
   font-weight: normal;
 }
 
@@ -2419,7 +2423,7 @@ table.hide-on-tablets {
   background-image: -moz-linear-gradient(#f9f9f9, #e8e8e8);
   background-image: -o-linear-gradient(#f9f9f9, #e8e8e8);
   background-image: linear-gradient(#f9f9f9, #e8e8e8);
-  font-family: Arial, sans-serif;
+  font: 13px/1.5 "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", "Lucida Sans", Arial, sans-serif;
   color: #444444;
   border-bottom: 1px solid #df5e0e;
   margin-bottom: 1em;
@@ -2548,21 +2552,116 @@ html, body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin-bottom: -50px;
+  margin-bottom: -55px;
 }
 #root #root_footer {
-  height: 50px;
+  height: 55px;
 }
 
 footer {
   clear: both;
   position: relative;
-  height: 50px;
+  height: 55px;
+}
+
+header.container .row {
+  border-bottom: 1px solid #b7b7b7;
+  margin-bottom: 1em;
+}
+
+footer {
+  background: whiteSmoke url('../img/shadow.png?1328717546') no-repeat top center;
 }
 
 footer.container .row {
   text-align: center;
-  border-top: 1px solid #b7b7b7;
   font-size: 90%;
-  padding-top: 1em;
+  padding-top: 1.5em;
+}
+
+#logo {
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  background-image: url('../img/logo.png?1328686920');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 75px;
+  height: 75px;
+}
+#logo a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.usertools {
+  list-style: none;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  font-size: 90%;
+}
+.usertools li {
+  float: left;
+  padding: 0.25em 0.5em;
+  margin: 0;
+  border-right: 1px solid #e8e8e8;
+}
+.usertools li a {
+  text-decoration: none;
+  border-bottom: 0;
+}
+.usertools li.profile {
+  font-weight: bold;
+}
+.usertools li:last-child {
+  border-right: 0;
+  padding-right: 0;
+}
+
+.ad-medrect {
+  width: 300px;
+  height: 250px;
+  display: inline-block;
+}
+
+.ad-rect {
+  width: 180px;
+  height: 150px;
+  display: inline-block;
+}
+
+.ad-leaderboard {
+  width: 728px;
+  height: 90px;
+  display: inline-block;
+}
+
+.ad-wideskyscraper {
+  width: 160px;
+  height: 600px;
+  display: inline-block;
+}
+
+.ad-halfpage {
+  width: 300px;
+  height: 600px;
+  display: inline-block;
+}
+
+.ad-button {
+  width: 120px;
+  height: 60px;
+  display: inline-block;
+}
+
+.ad-microbar {
+  width: 88px;
+  height: 31px;
+  display: inline-block;
 }

@@ -23,7 +23,9 @@ foundation_js = Bundle('baseframe/js/foundation/jquery.customforms.js',
 
 baseframe_js = Bundle('baseframe/js/foundation/modernizr.foundation.js',
                       jquery_js, foundation_js,
-                      filters='jsmin', output='js/packed.js')
+                      'baseframe/js/networkbar.js',
+                      'baseframe/js/baseframe.js',
+                      filters='jsmin', output='baseframe/js/packed.js')
 
 # Sass templates are compiled to CSS externally to avoid Sass as a dependency
 # in deployment.
