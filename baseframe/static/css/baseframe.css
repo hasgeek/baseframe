@@ -26,7 +26,7 @@
 }
 #hg-bar ul#hg-barlinks {
   *zoom: 1;
-  margin: 0 auto;
+  margin: 0 -0.5em;
   position: relative;
   list-style: none;
   font-size: 90%;
@@ -143,34 +143,10 @@
 #hg-bar ul#hg-barlinks > li:hover > ul {
   left: -1px;
 }
-#hg-bar ul#hg-barlinks > li:first-child {
-  margin-left: -0.5em;
-}
 #hg-bar ul#hg-barlinks > li.selected a {
   border-top: 2px solid #df5e0e;
   color: black;
   font-weight: bold;
-}
-
-html, body {
-  height: 100%;
-}
-
-#root {
-  clear: both;
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin-bottom: -55px;
-}
-#root #root_footer {
-  height: 55px;
-}
-
-footer {
-  clear: both;
-  position: relative;
-  height: 55px;
 }
 
 h1 {
@@ -191,7 +167,26 @@ header {
   position: relative;
 }
 
+html, body {
+  height: 100%;
+}
+
+#root {
+  clear: both;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin-bottom: -55px;
+}
+
+#root #root_footer {
+  height: 55px;
+}
+
 footer {
+  clear: both;
+  position: relative;
+  min-height: 55px;
   background: whiteSmoke url('../img/shadow.png?1328717766') no-repeat top center;
 }
 
@@ -199,6 +194,7 @@ footer .container {
   text-align: center;
   font-size: 90%;
   padding-top: 1.5em;
+  padding-bottom: 1em;
 }
 
 #logo {

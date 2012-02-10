@@ -44,7 +44,7 @@ baseframe_css = Bundle(#bootstrap_less,
                        'baseframe/css/bootstrap.css',  # Externally compiled with Less
                        'baseframe/css/responsive.css', # Externally compiled with Less
                        'baseframe/css/baseframe.css',  # Externally compiled with Compass
-                       filters='cssmin', output='baseframe/css/packed.css', debug=True)
+                       filters='cssmin', output='baseframe/css/packed.css')
 
 
 @baseframe.route('/favicon.ico')

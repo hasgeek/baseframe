@@ -29,7 +29,7 @@ $color-hg-bar-selected: #000;
     margin-bottom: 1em;
     ul#hg-barlinks {
         @include pie-clearfix;
-        margin: 0 auto;
+        margin: 0 -0.5em;
         position: relative;
         list-style: none;
         font-size: 90%;
@@ -108,9 +108,6 @@ $color-hg-bar-selected: #000;
         }
         & > li:hover > ul {
             left: -1px;
-        }
-        & > li:first-child {
-            margin-left: -0.5em;
         }
         & > li.selected a {
             border-top: 2px solid #df5e0e;

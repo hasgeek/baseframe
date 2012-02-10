@@ -1,8 +1,6 @@
 @import "compass/typography/text/replacement"
 @import "compass/layout/sticky-footer"
 
-@include sticky-footer($footer-height, "#root", "#root_footer", "footer")
-
 h1
   color: $color-h1
 
@@ -17,14 +15,33 @@ header
   margin-bottom: 1em
   position: relative
 
+// Start sticky footer
+html, body
+  height: 100%
+
+#root
+  clear: both
+  min-height: 100%
+  height: auto !important
+  height: 100%
+  margin-bottom: -$footer-height
+
+#root #root_footer
+  height: $footer-height
+
 footer
+  clear: both
+  position: relative
+  min-height: $footer-height
   background: whiteSmoke image-url('shadow.png') no-repeat top center
+// End sticky footer
 
 footer .container
   text-align: center
   //border-top: 1px solid $color-outline
   font-size: 90%
   padding-top: 1.5em
+  padding-bottom: 1em
 
 #logo
   @include replace-text-with-dimensions('logo.png')
