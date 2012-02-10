@@ -1,0 +1,58 @@
+@import "compass/typography/text/replacement"
+@import "compass/layout/sticky-footer"
+
+@include sticky-footer($footer-height, "#root", "#root_footer", "footer")
+
+h1
+  color: $color-h1
+
+h2
+  color: $color-h2
+
+h3
+  color: $color-h3
+
+header
+  border-bottom: 1px solid $color-outline
+  margin-bottom: 1em
+  position: relative
+
+footer
+  background: whiteSmoke image-url('shadow.png') no-repeat top center
+
+footer .container
+  text-align: center
+  //border-top: 1px solid $color-outline
+  font-size: 90%
+  padding-top: 1.5em
+
+#logo
+  @include replace-text-with-dimensions('logo.png')
+  a
+    display: block
+    width: 100%
+    height: 100%
+    margin: 0
+    padding: 0
+    border: 0
+
+.usertools
+  list-style: none
+  position: absolute
+  right: 0
+  bottom: 0
+  margin: 0
+  font-size: 90%
+  li
+    float: left
+    padding: 0.25em 0.5em
+    margin: 0
+    border-right: 1px solid $color-outline-thin
+    a
+      text-decoration: none
+      border-bottom: 0
+    &.profile
+      font-weight: bold
+    &:last-child
+      border-right: 0
+      padding-right: 0

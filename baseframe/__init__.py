@@ -14,23 +14,37 @@ baseframe = Blueprint('baseframe', __name__,
 jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
                    filters='jsmin', output='baseframe/js/jquery.min.js')
 
-foundation_js = Bundle('baseframe/js/foundation/jquery.customforms.js',
-                       'baseframe/js/foundation/jquery.orbit-1.4.0.js',
-                       'baseframe/js/foundation/jquery.placeholder.js',
-                       'baseframe/js/foundation/jquery.reveal.js',
-                       'baseframe/js/foundation/jquery.tooltips.js',
-                       filters='jsmin', output='baseframe/js/foundation.min.js')
+bootstrap_js = Bundle('baseframe/js/bootstrap/bootstrap-alert.js',
+                      'baseframe/js/bootstrap/bootstrap-button.js',
+                      'baseframe/js/bootstrap/bootstrap-carousel.js',
+                      'baseframe/js/bootstrap/bootstrap-collapse.js',
+                      'baseframe/js/bootstrap/bootstrap-dropdown.js',
+                      'baseframe/js/bootstrap/bootstrap-modal.js',
+                      'baseframe/js/bootstrap/bootstrap-tooltip.js',
+                      'baseframe/js/bootstrap/bootstrap-popover.js',
+                      'baseframe/js/bootstrap/bootstrap-scrollspy.js',
+                      'baseframe/js/bootstrap/bootstrap-tab.js',
+                      'baseframe/js/bootstrap/bootstrap-transition.js',
+                      'baseframe/js/bootstrap/bootstrap-typeahead.js',
+                      filters='jsmin', output='baseframe/js/bootstrap.min.js')
 
-baseframe_js = Bundle('baseframe/js/foundation/modernizr.foundation.js',
-                      jquery_js, foundation_js,
+baseframe_js = Bundle(jquery_js,
+                      bootstrap_js,
                       'baseframe/js/networkbar.js',
                       'baseframe/js/baseframe.js',
                       filters='jsmin', output='baseframe/js/packed.js')
 
-# Sass templates are compiled to CSS externally to avoid Sass as a dependency
-# in deployment.
-baseframe_css = Bundle('baseframe/css/baseframe.css',
-                       filters='cssmin', output='baseframe/css/packed.css')
+
+#bootstrap_less = Bundle('baseframe/less/bootstrap/bootstrap.less',
+#                        'baseframe/less/bootstrap/responsive.less',
+#                        filters='less', output='baseframe/css/bootstrap.css',
+#                        debug=False)
+
+baseframe_css = Bundle(#bootstrap_less,
+                       'baseframe/css/bootstrap.css',  # Externally compiled with Less
+                       'baseframe/css/responsive.css', # Externally compiled with Less
+                       'baseframe/css/baseframe.css',  # Externally compiled with Compass
+                       filters='cssmin', output='baseframe/css/packed.css', debug=True)
 
 
 @baseframe.route('/favicon.ico')
