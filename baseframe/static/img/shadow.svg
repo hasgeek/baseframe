@@ -10,8 +10,8 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="1000"
-   height="50"
+   width="1200"
+   height="30"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.0 r9654"
@@ -22,10 +22,9 @@
   <defs
      id="defs4">
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient3755">
       <stop
-         style="stop-color:#000000;stop-opacity:1;"
+         style="stop-color:#000000;stop-opacity:0.627451;"
          offset="0"
          id="stop3757" />
       <stop
@@ -47,10 +46,11 @@
     <filter
        inkscape:collect="always"
        id="filter3818"
-       x="-0.0050983479"
+       x="-0.005098348"
        width="1.0101967"
        y="-0.21710466"
-       height="1.4342093">
+       height="1.4342093"
+       color-interpolation-filters="sRGB">
       <feGaussianBlur
          inkscape:collect="always"
          stdDeviation="1.5507475"
@@ -65,8 +65,8 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="511.26938"
-     inkscape:cy="257.95506"
+     inkscape:cx="373.41224"
+     inkscape:cy="200.8122"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -91,7 +91,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1002.3622)">
+     transform="translate(0,-1022.3622)">
     <path
        sodipodi:type="arc"
        style="opacity:0.2;fill:url(#radialGradient3761);fill-opacity:1;fill-rule:evenodd;stroke:none;filter:url(#filter3818)"
@@ -101,6 +101,6 @@
        sodipodi:rx="365"
        sodipodi:ry="8.5714283"
        d="m 735.71429,487.36218 a 365,8.5714283 0 1 1 -729.9999956,0 365,8.5714283 0 1 1 729.9999956,0 z"
-       transform="matrix(1.3560359,0,0,2.0143741,-2.7019021,19.793293)" />
+       transform="matrix(1.6272431,0,0,2.0143741,-3.2422826,40.593293)" />
   </g>
 </svg>
