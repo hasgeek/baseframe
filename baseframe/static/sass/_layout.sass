@@ -3,12 +3,24 @@
 
 h1
   color: $color-h1
+  a, a:visited
+    color: $color-h1
+  a:hover, a:active
+    color: darken($color-h1, 15%)
 
 h2
   color: $color-h2
+  a, a:visited
+    color: $color-h2
+  a:hover, a:active
+    color: darken($color-h2, 15%)
 
 h3
   color: $color-h3
+  a, a:visited
+    color: $color-h3
+  a:hover, a:active
+    color: darken($color-h3, 15%)
 
 header
   border-bottom: 1px solid $color-outline
@@ -32,13 +44,15 @@ html, body
 footer
   clear: both
   position: relative
-  min-height: $footer-height
-  background: whiteSmoke image-url('shadow.png') no-repeat top center
+  min-height: $footer-height - 10px
 // End sticky footer
+
+footer .footer-inner
+  margin-top: 10px
+  background: whiteSmoke image-url('shadow.png') no-repeat top center
 
 footer .container
   text-align: center
-  //border-top: 1px solid $color-outline
   font-size: 90%
   padding-top: 1.5em
   padding-bottom: 1em
@@ -73,3 +87,29 @@ footer .container
     &:last-child
       border-right: 0
       padding-right: 0
+
+.video, .video169, .video43
+  position: relative
+  height: 0
+  overflow: hidden
+
+  iframe, object, embed
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+
+.video, .video169
+  padding-bottom: 56.25% // 16/9 ratio
+  padding-top: 30px // IE6 workaround
+
+.video43
+  padding-bottom: 75%
+  padding-top: 30px
+  
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2)
+  #logo
+    background-image: image-url('logo@2x.png')
+    -webkit-background-size: image-width('logo.png') image-height('logo.png')

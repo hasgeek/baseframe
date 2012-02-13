@@ -65,50 +65,37 @@
       {# messages #}
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-          <div class="span12">
-            {% for category, message in messages %}
-              <div class="alert-box {{category}}">
-                {{ message }}
-                <a href="" class="close">&times;</a>
-              </div>
-            {% endfor %}
-          </div>
+          {% for category, message in messages %}
+            <div class="alert alert-{{category}} fade in">
+              <a href="#" class="close" data-dismiss="alert">&times;</a>
+              {{ message }}
+            </div>
+          {% endfor %}
         {% endif %}
       {% endwith %}
 
-      {% block contentarea %}
-      <!-- mainbox -->
-      <div id="main" class="row">
-        <!-- content -->
-        <div class="span8">
-          {% block headline %}
-          <h1>{{ self.title()|e }}</h1>
-          {% endblock %}
-          {% block content %}
-          {% endblock %}
-        </div>
-        <!-- /content -->
-
-        <!-- sidebar -->
-        <div class="span4">
-          {% block sidebar %}
-          {% endblock %}
-        </div>
-        <!-- /sidebar -->
-      </div>
+      {% block headline %}
+      <h1>{{ self.title()|e }}</h1>
       {% endblock %}
+
+      {% block content %}
+      {% endblock %}
+
       <div id="root_footer"></div>
     </div>
+    <!-- /container -->
   </div>
-  <!-- /container -->
+  <!-- /root -->
   <!-- footerbox -->
   {% block footerbox %}
   <footer>
-    <div class="container">
-      {% block footer %}
-      Copyright &copy; 2010-12 HasGeek
-      {% endblock %}
+    <div class="footer-inner">
+      <div class="container">
+        {% block footer %}
+        Copyright &copy; 2010-12 HasGeek
+        {% endblock %}
       </div>
+    </div>
   </footer>
   {% endblock %}
   <!-- /footerbox -->

@@ -1,13 +1,15 @@
 @import "compass/css3/images";
 @import "compass/utilities/general/clearfix";
 @import "compass/css3/border-radius";
+@import "compass/css3/transition";
 
 .hg-h { color: #df5e0e; }
 .hg-g { color: #816894; }
 .hg-s { color: #f0a40c; }
 
 $color-hg-bar: #444;
-$color-hg-bar-border: #df5e0e;
+$color-hg-bar-nolink: #888;
+$color-hg-bar-border: #d5d5d5; //#df5e0e;
 //$color-hg-bar-background: rgba(223, 94, 14, 1);
 //$color-hg-bar-background: rgba(129, 104, 148, 0.5);
 //$color-hg-bar-background: rgba(0, 0, 0, 0.5);
@@ -17,15 +19,15 @@ $color-hg-bar-highlight: #000;
 $color-hg-bar-highlight-background: rgba(0, 0, 0, 0.1);
 $color-hg-bar-selected: #000;
 
-// -webkit-gradient(linear, 0% 0%, 0% 100%, from(#434343), to(#292929))
-
 #hg-bar {
     background: $color-hg-bar-background;
     //$experimental-support-for-svg: true;
     @include background-image(linear-gradient(#f9f9f9, #e8e8e8));
+    //@include background-image(linear-gradient(#f5f5f5, #eee));
     font: $networkbar-font;
     color: $color-hg-bar;
     border-bottom: 1px solid $color-hg-bar-border;
+    @include box-shadow(0 1px 5px rgba(0,0,0,.1));
     margin-bottom: 1em;
     ul#hg-barlinks {
         @include pie-clearfix;
@@ -61,11 +63,17 @@ $color-hg-bar-selected: #000;
                 color: $color-hg-bar;
                 list-style: none;
                 z-index: 9999;
-                left: -9999px;
+                //left: -9999px; // Now using height: 0;
+                left: -1px; // -1px to account for 1px border
+                overflow: hidden;
                 @include border-bottom-left-radius(6px);
                 @include border-bottom-right-radius(6px);
                 border: 1px solid $color-hg-bar-border;
                 border-top: none;
+                max-height: 0;
+                @include transition-property("max-height");
+                @include transition-duration(0.1s);
+                @include transition-timing-function(ease-out);
                 li {
                     float: none;
                     position: relative;
@@ -89,6 +97,23 @@ $color-hg-bar-selected: #000;
                 li.hg-menu-section {
                     padding: 0.4em 0.5em 0.5em;
                     font-style: italic;
+                    color: $color-hg-bar-nolink;
+                    /*
+                    background: $color-hg-bar-background;
+                    z-index: 10000;
+                    display: inline-block;
+
+                    &:before {
+                        display: block;
+                        content:"";
+                        position: absolute;
+                        height: 1px;
+                        border-top: 1px solid black;
+                        top: 1em;
+                        width: 100%;
+                        z-index: 9998;
+                    }
+                    */
                     &:before,
                     &:after {
                         content: " — ";
@@ -107,7 +132,12 @@ $color-hg-bar-selected: #000;
             color: $color-hg-bar-highlight;
         }
         & > li:hover > ul {
-            left: -1px;
+            left: -1px; // -1px to account for 1px border
+            max-height: 40em;
+            @include box-shadow(-3px 2px 5px -3px rgba(0,0,0,.1), 3px 2px 5px -3px rgba(0,0,0,.1));
+            @include transition-property("max-height");
+            @include transition-duration(0.1s);
+            @include transition-timing-function(ease-out)
         }
         & > li.selected a {
             border-top: 2px solid #df5e0e;
