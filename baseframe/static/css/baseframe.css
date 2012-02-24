@@ -71,7 +71,7 @@
   display: inline-block;
   width: 0;
   height: 0;
-  margin-top: 0.6em;
+  margin-top: 0.65em;
   margin-left: 0.4em;
   text-indent: -99999px;
   *text-indent: 0;
@@ -196,6 +196,10 @@
   background-image: -ms-linear-gradient(#e8e8e8, #d1d1d1);
   background-image: linear-gradient(#e8e8e8, #d1d1d1);
   color: black;
+}
+#hg-bar ul#hg-barlinks > li:hover > a:after, #hg-bar ul#hg-barlinks > li > a:active:after, #hg-bar ul#hg-usertools > li:hover > a:after, #hg-bar ul#hg-usertools > li > a:active:after {
+  opacity: 1;
+  filter: alpha(opacity=100);
 }
 #hg-bar ul#hg-barlinks > li:hover > ul, #hg-bar ul#hg-usertools > li:hover > ul {
   left: -1px;
