@@ -64,6 +64,7 @@
     {% endblock %}
     <!-- /headerbox -->
 
+    {% block main %}
     <div class="container">
 
       {# messages #}
@@ -85,9 +86,10 @@
       {% block content %}
       {% endblock %}
 
-      <div id="root_footer"></div>
     </div>
+    {% endblock %}
     <!-- /container -->
+    <div id="root_footer"></div>
   </div>
   <!-- /root -->
   <!-- footerbox -->
