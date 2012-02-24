@@ -21,7 +21,7 @@
   background-image: linear-gradient(#f9f9f9, #e8e8e8);
   font: 14px/1.5 Lato, "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", "Lucida Sans", Arial, sans-serif;
   color: #444444;
-  border-bottom: 1px solid #c5c5c5;
+  border-bottom: 1px solid #d5d5d5;
   -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   -o-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
@@ -91,7 +91,7 @@
   -ms-border-bottom-right-radius: 6px;
   -khtml-border-bottom-right-radius: 6px;
   border-bottom-right-radius: 6px;
-  border: 1px solid #c5c5c5;
+  border: 1px solid #d5d5d5;
   border-top: none;
   max-height: 0;
   -moz-transition-property: max-height;
