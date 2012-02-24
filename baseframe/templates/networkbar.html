@@ -29,5 +29,13 @@
         </ul>
       </li>
     </ul>
+    <ul id="hg-usertools">
+      {% if g.user -%}
+        <li class="profile"><a href="">{{ g.user.fullname }}</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+      {%- else %}
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+      {%- endif %}      
+    </ul>
   </div>
 </div>

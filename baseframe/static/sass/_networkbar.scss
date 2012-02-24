@@ -9,7 +9,7 @@
 
 $color-hg-bar: #444;
 $color-hg-bar-nolink: #888;
-$color-hg-bar-border: #d5d5d5; //#df5e0e;
+$color-hg-bar-border: #c5c5c5; //#d5d5d5; //#df5e0e;
 //$color-hg-bar-background: rgba(223, 94, 14, 1);
 //$color-hg-bar-background: rgba(129, 104, 148, 0.5);
 //$color-hg-bar-background: rgba(0, 0, 0, 0.5);
@@ -23,13 +23,22 @@ $color-hg-bar-selected: #000;
     background: $color-hg-bar-background;
     //$experimental-support-for-svg: true;
     @include background-image(linear-gradient(#f9f9f9, #e8e8e8));
-    //@include background-image(linear-gradient(#f5f5f5, #eee));
+    //@include background-image(linear-gradient(#f5f5f5, #e0e0e0));
     font: $networkbar-font;
     color: $color-hg-bar;
     border-bottom: 1px solid $color-hg-bar-border;
     @include box-shadow(0 1px 5px rgba(0,0,0,.1));
-    margin-bottom: 1em;
+    //margin-bottom: 1em;
+    ul#hg-usertools {
+        float: right;
+        .profile {
+            font-weight: bold;
+        }
+    }
     ul#hg-barlinks {
+        float: left;
+    }
+    ul#hg-barlinks, ul#hg-usertools {
         @include pie-clearfix;
         margin: 0 -0.5em;
         position: relative;

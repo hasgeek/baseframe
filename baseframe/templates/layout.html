@@ -43,13 +43,13 @@
 </head>
 <body>
   <div id="root">
+    <!-- headerbox -->
+    {% block headerbox %}
+    <header>
     {% include "networkbar.html" -%}
-    <div class="container">
-
-      <!-- headerbox -->
-      {% block headerbox %}
-      <header>
+      <div id="page-header" class="container">
         <div id="logo"><a href="{{ url_for('index') }}">Home</a></div>
+        {#
         <ul class="usertools">
           {% if g.user -%}
             <li class="profile">{{ g.user.fullname }}</li>
@@ -58,9 +58,13 @@
             <li><a href="{{ url_for('login') }}">Login</a></li>
           {%- endif %}      
         </ul>
-      </header>
-      {% endblock %}
-      <!-- /headerbox -->
+        #}
+      </div>
+    </header>
+    {% endblock %}
+    <!-- /headerbox -->
+
+    <div class="container">
 
       {# messages #}
       {% with messages = get_flashed_messages(with_categories=true) %}
