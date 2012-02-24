@@ -63,7 +63,20 @@ $color-hg-bar-selected: #000;
                 color: $color-hg-bar;
             }
             a.hg-submenu:after {
-                 content: " ▾";
+                display: inline-block;
+                width: 0;
+                height: 0;
+                margin-top: 0.6em;
+                margin-left: 0.4em;
+                text-indent: -99999px;
+                *text-indent: 0;
+                vertical-align: top;
+                border-left: 4px solid transparent;
+                border-right: 4px solid transparent;
+                border-top: 4px solid #000000;
+                opacity: 0.3;
+                filter: alpha(opacity=30);
+                content: "▾";
             }
             ul {
                 position: absolute;
@@ -78,7 +91,8 @@ $color-hg-bar-selected: #000;
                 @include border-bottom-left-radius(6px);
                 @include border-bottom-right-radius(6px);
                 border: 1px solid $color-hg-bar-border;
-                border-top: none;
+                border-top: 0;
+                border-bottom: 0;
                 max-height: 0;
                 @include transition-property("max-height");
                 @include transition-duration(0.1s);
@@ -142,6 +156,8 @@ $color-hg-bar-selected: #000;
         }
         & > li:hover > ul {
             left: -1px; // -1px to account for 1px border
+            border: 1px solid $color-hg-bar-border;
+            border-top: 0;
             max-height: 40em;
             @include box-shadow(-3px 2px 5px -3px rgba(0,0,0,.1), 3px 2px 5px -3px rgba(0,0,0,.1));
             @include transition-property("max-height");

@@ -68,7 +68,20 @@
   color: #444444;
 }
 #hg-bar ul#hg-barlinks > li a.hg-submenu:after, #hg-bar ul#hg-usertools > li a.hg-submenu:after {
-  content: " ▾";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-top: 0.6em;
+  margin-left: 0.4em;
+  text-indent: -99999px;
+  *text-indent: 0;
+  vertical-align: top;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #000000;
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+  content: "▾";
 }
 #hg-bar ul#hg-barlinks > li ul, #hg-bar ul#hg-usertools > li ul {
   position: absolute;
@@ -92,7 +105,8 @@
   -khtml-border-bottom-right-radius: 6px;
   border-bottom-right-radius: 6px;
   border: 1px solid #d5d5d5;
-  border-top: none;
+  border-top: 0;
+  border-bottom: 0;
   max-height: 0;
   -moz-transition-property: max-height;
   -webkit-transition-property: max-height;
@@ -185,6 +199,8 @@
 }
 #hg-bar ul#hg-barlinks > li:hover > ul, #hg-bar ul#hg-usertools > li:hover > ul {
   left: -1px;
+  border: 1px solid #d5d5d5;
+  border-top: 0;
   max-height: 40em;
   -moz-box-shadow: -3px 2px 5px -3px rgba(0, 0, 0, 0.1), 3px 2px 5px -3px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: -3px 2px 5px -3px rgba(0, 0, 0, 0.1), 3px 2px 5px -3px rgba(0, 0, 0, 0.1);
