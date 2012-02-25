@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from flask import Blueprint, send_from_directory
+from flask import Blueprint, send_from_directory, render_template
 from flask.ext.assets import Bundle
 
 __all__ = ['baseframe', 'baseframe_js', 'baseframe_css']
@@ -12,6 +12,7 @@ baseframe = Blueprint('baseframe', __name__,
                       template_folder='templates')
 
 jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
+                   'baseframe/js/jquery.form.js',
                    filters='jsmin', output='baseframe/js/jquery.min.js')
 
 bootstrap_js = Bundle('baseframe/js/bootstrap/bootstrap-alert.js',
@@ -63,3 +64,18 @@ def humans():
 def robots():
     return send_from_directory(os.path.join(baseframe.root_path, 'static'),
                                'robots.txt', mimetype='text/plain')
+
+
+@baseframe.app_errorhandler(404)
+def error404(e):
+    return render_template('404.html'), 404
+
+
+@baseframe.app_errorhandler(403)
+def error403(e):
+    return render_template('403.html'), 403
+
+
+@baseframe.app_errorhandler(500)
+def error500(e):
+    return render_template('500.html'), 500

@@ -1,0 +1,90 @@
+{% macro renderfield(field, css_class="", widget_css_class=None, tabIndex='', autofocus=False) -%}
+<div class="control-group{% if field.errors %} error{% endif %}{% if css_class %} {{ css_class}}{% endif %}" id="field-{{ field.id }}">
+  {% if field.widget.input_type == 'checkbox' %}
+    <div class="controls">{% if widget_css_class %}{{ field(class=widget_css_class, tabindex=tabIndex) }}{% else %}{{ field(tabindex=tabIndex) }}{% endif %} {{ field.label }}{% if field.description %}
+      {% if field.errors -%}
+        {% for error in field.errors -%}
+          <span class="help-inline">{{ error }}</span>
+        {% endfor %}
+      {% endif %}
+      <p class="help-block">{{ field.description }}</p>{% endif %}</div>
+  {% else %}
+    {{ field.label(class='control-label') }}
+    <div class="controls">
+      {% if autofocus %}
+        {% if widget_css_class %}
+          {{ field(autofocus="autofocus", class=widget_css_class, tabindex=tabIndex) }}
+        {% else %}
+          {{ field(autofocus="autofocus", tabindex=tabIndex) }}
+        {% endif %}
+      {% else %}
+        {% if widget_css_class %}
+          {{ field(class=widget_css_class, tabindex=tabIndex) }}
+        {% elif (field.widget.input_type or "") == "" %}
+          {{ field }}
+        {% else %}
+          {{ field(tabindex=tabIndex) }}
+        {% endif %}
+      {% endif %}
+      {% if field.errors -%}
+        {% for error in field.errors -%}
+          <span class="help-inline">{{ error }}</span>
+        {% endfor %}
+      {% endif %}
+      {% if field.description %}<p class="help-block">{{ field.description }}</p>{% endif %}
+    </div>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{% macro rendersubmit(buttons=[], css_class="", tabIndex='', cancel_url='') %}
+<div class="form-actions{% if css_class %} {{ css_class}}{% endif %}">
+  {% for name, value, widget_class in buttons %}
+    <button type="submit"
+      {%- if name %} name="{{ name|e }}"{% else %} {% endif -%}
+      {% if widget_class %} class="btn {{ widget_class|e }}" {% else %} class="btn"{% endif -%}
+      {%- if tabIndex %} tabindex="{{ tabIndex }}" {% endif -%}
+      >{{ value|e }}</button>
+  {% endfor %}
+  {% if cancel_url %}<a href="{{ cancel_url }}" class="btn">Cancel</a>{% endif %}
+  <span class="loading hidden">&nbsp;</span>
+</div>
+{% endmacro %}
+
+{% macro renderform(form, formid, submit, message='', cancel_url='') %}
+<form id="{{ formid }}" method="POST" accept-charset="UTF-8" class="form-horizontal">
+  {% if message %}<p>{{ message }}</p>{% endif %}
+  <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
+  {{ form.hidden_tag() }}
+  {% if form.csrf.errors %}
+    {% for error in form.csrf.errors %}<div class="alert alert-error">{{ error }}</div>{% endfor %}
+  {% endif %}
+  {% for field in form %}
+    {% if field.widget.input_type and field.widget.input_type == 'hidden' -%}
+    {# Don't show hidden #}
+    {%- else -%}
+    {{ renderfield(field) }}
+    {%- endif %}
+  {% endfor %}
+  {{ rendersubmit([(None, submit or "Submit", 'btn-primary')], cancel_url=cancel_url) }}
+</form>
+{% endmacro %}
+
+{% macro ajaxform(formid, request, force=False) -%}
+{% if force or request.is_xhr -%}
+<script type="text/javascript">
+  $(function() {
+    $("#{{ formid }}").ajaxForm({
+      target: '#{{ formid }}',
+      replaceTarget: true,
+    });
+    $('#{{ formid }} input[type="submit"]').click(function() {
+      $('#{{ formid }}').find(".loading").removeClass('hidden');
+    });
+    $('#{{ formid }} button[type="submit"]').click(function() {
+      $('#{{ formid }}').find(".loading").removeClass('hidden');
+    });
+  });
+</script>
+{%- endif %}
+{%- endmacro %}

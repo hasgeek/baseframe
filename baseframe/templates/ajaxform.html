@@ -1,0 +1,3 @@
+{% from "forms.html" import renderform, ajaxform %}
+{{ renderform(form, formid, submit, message, cancel_url) }}
+{{ ajaxform(formid, request, True) }}

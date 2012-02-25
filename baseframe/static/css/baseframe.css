@@ -266,6 +266,12 @@ header #page-header {
   border-bottom: 1px solid #b7b7b7;
 }
 
+.page-header {
+  margin: 0;
+  padding-bottom: 18px;
+  border-bottom: 0;
+}
+
 html, body {
   height: 100%;
 }
@@ -317,6 +323,16 @@ footer .container {
   margin: 0;
   padding: 0;
   border: 0;
+}
+
+span.loading {
+  display: inline-block;
+  background: url('../img/ajax-loader.gif?1305733694') center no-repeat;
+  width: 16px;
+  height: 16px;
+}
+span.loading.hidden {
+  display: none;
 }
 
 .usertools {

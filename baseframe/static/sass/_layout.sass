@@ -28,6 +28,12 @@ header
   #page-header
     border-bottom: 1px solid $color-outline
 
+// Override Bootstrap's page-header style
+.page-header
+  margin: 0
+  padding-bottom: 18px
+  border-bottom: 0
+
 // Start sticky footer
 html, body
   height: 100%
@@ -67,6 +73,14 @@ footer .container
     margin: 0
     padding: 0
     border: 0
+
+span.loading
+  display: inline-block
+  background: image-url('ajax-loader.gif') center no-repeat
+  width: 16px
+  height: 16px
+  &.hidden
+    display: none
 
 .usertools
   list-style: none
