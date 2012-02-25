@@ -34,6 +34,11 @@ header
   padding-bottom: 18px
   border-bottom: 0
 
+// Lesser padding around wells with navigation
+.well.nav.nav-list
+  padding-top: 8px
+  padding-bottom: 8px
+
 // Start sticky footer
 html, body
   height: 100%
@@ -56,6 +61,7 @@ footer
 
 footer .footer-inner
   margin-top: 10px
+  min-height: $footer-height - 10px
   background: whiteSmoke image-url('shadow.png') no-repeat top center
 
 footer .container

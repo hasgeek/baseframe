@@ -272,6 +272,11 @@ header #page-header {
   border-bottom: 0;
 }
 
+.well.nav.nav-list {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
 html, body {
   height: 100%;
 }
@@ -296,6 +301,7 @@ footer {
 
 footer .footer-inner {
   margin-top: 10px;
+  min-height: 55px;
   background: whiteSmoke url('../img/shadow.png?1328959567') no-repeat top center;
 }
 

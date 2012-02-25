@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% from "forms.html" import renderform, ajaxform %}
+{% from "baseframe/forms.html" import renderform, ajaxform %}
 
 {% block content %}
   {{ renderform(form, formid, submit, message, cancel_url) }}
