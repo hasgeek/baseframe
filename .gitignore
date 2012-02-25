@@ -13,3 +13,4 @@ build/
 dist/
 baseframe/static/css/packed.css
 baseframe/static/js/packed.js
+baseframe/static/js/tiny_mce

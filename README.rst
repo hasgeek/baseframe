@@ -1,8 +1,12 @@
 BaseFrame
 =========
 
-Reusable styles and templates for HasGeek projects. You'll need this
-boilerplate to use it::
+Reusable styles and templates for HasGeek projects. Setup instructions::
+
+  make tinymce
+  python setup.py install
+
+You'll need this boilerplate in your code to use it::
 
   from flask import Flask
   from flaskext.assets import Environment, Bundle
@@ -10,7 +14,6 @@ boilerplate to use it::
 
   app = Flask(__name__, instance_relative_config=True)
   app.register_blueprint(baseframe)
-  app.config.from_pyfile('settings.py') # For your app's settings
 
   assets = Environment(app)
   js = Bundle(baseframe_js)

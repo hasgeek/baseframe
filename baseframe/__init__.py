@@ -13,24 +13,26 @@ baseframe = Blueprint('baseframe', __name__,
 
 jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
                    'baseframe/js/jquery.form.js',
+                   'baseframe/js/tiny_mce/jquery.tinymce.js',
                    filters='jsmin', output='baseframe/js/jquery.min.js')
 
-bootstrap_js = Bundle('baseframe/js/bootstrap/bootstrap-alert.js',
-                      'baseframe/js/bootstrap/bootstrap-button.js',
-                      'baseframe/js/bootstrap/bootstrap-carousel.js',
-                      'baseframe/js/bootstrap/bootstrap-collapse.js',
-                      'baseframe/js/bootstrap/bootstrap-dropdown.js',
-                      'baseframe/js/bootstrap/bootstrap-modal.js',
-                      'baseframe/js/bootstrap/bootstrap-tooltip.js',
-                      'baseframe/js/bootstrap/bootstrap-popover.js',
-                      'baseframe/js/bootstrap/bootstrap-scrollspy.js',
-                      'baseframe/js/bootstrap/bootstrap-tab.js',
-                      'baseframe/js/bootstrap/bootstrap-transition.js',
-                      'baseframe/js/bootstrap/bootstrap-typeahead.js',
-                      filters='jsmin', output='baseframe/js/bootstrap.min.js')
+
+#bootstrap_js = Bundle('baseframe/js/bootstrap/bootstrap-alert.js',
+#                      'baseframe/js/bootstrap/bootstrap-button.js',
+#                      'baseframe/js/bootstrap/bootstrap-carousel.js',
+#                      'baseframe/js/bootstrap/bootstrap-collapse.js',
+#                      'baseframe/js/bootstrap/bootstrap-dropdown.js',
+#                      'baseframe/js/bootstrap/bootstrap-modal.js',
+#                      'baseframe/js/bootstrap/bootstrap-tooltip.js',
+#                      'baseframe/js/bootstrap/bootstrap-popover.js',
+#                      'baseframe/js/bootstrap/bootstrap-scrollspy.js',
+#                      'baseframe/js/bootstrap/bootstrap-tab.js',
+#                      'baseframe/js/bootstrap/bootstrap-transition.js',
+#                      'baseframe/js/bootstrap/bootstrap-typeahead.js',
+#                      filters='jsmin', output='baseframe/js/bootstrap.min.js')
 
 baseframe_js = Bundle(jquery_js,
-                      bootstrap_js,
+                      'baseframe/js/bootstrap/bootstrap.min.js',
                       'baseframe/js/networkbar.js',
                       'baseframe/js/baseframe.js',
                       filters='jsmin', output='baseframe/js/packed.js')
