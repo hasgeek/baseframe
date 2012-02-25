@@ -1,5 +1,5 @@
 /* =========================================================
- * bootstrap-modal.js v2.0.0
+ * bootstrap-modal.js v2.0.1
  * http://twitter.github.com/bootstrap/javascript.html#modals
  * =========================================================
  * Copyright 2012 Twitter, Inc.
@@ -26,7 +26,7 @@
   * ====================== */
 
   var Modal = function ( content, options ) {
-    this.options = $.extend({}, $.fn.modal.defaults, options)
+    this.options = options
     this.$element = $(content)
       .delegate('[data-dismiss="modal"]', 'click.dismiss.modal', $.proxy(this.hide, this))
   }
@@ -49,9 +49,9 @@
         this.isShown = true
         this.$element.trigger('show')
 
-        escape.call(this);
+        escape.call(this)
         backdrop.call(this, function () {
-          var transition = $.support.transition && that.$element.hasClass('fade');
+          var transition = $.support.transition && that.$element.hasClass('fade')
 
           !that.$element.parent().length && that.$element.appendTo(document.body) //don't move modals dom position
 
@@ -133,7 +133,7 @@
         this.$backdrop.click($.proxy(this.hide, this))
       }
 
-      if (doAnimate) this.$backdrop[0].offsetWidth; // force reflow
+      if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
 
       this.$backdrop.addClass('in')
 
@@ -177,16 +177,17 @@
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('modal')
-        , options = typeof option == 'object' && option
+        , options = $.extend({}, $.fn.modal.defaults, $this.data(), typeof option == 'object' && option)
       if (!data) $this.data('modal', (data = new Modal(this, options)))
       if (typeof option == 'string') data[option]()
-      else data.show()
+      else if (options.show) data.show()
     })
   }
 
   $.fn.modal.defaults = {
       backdrop: true
     , keyboard: true
+    , show: true
   }
 
   $.fn.modal.Constructor = Modal

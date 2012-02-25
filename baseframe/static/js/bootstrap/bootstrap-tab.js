@@ -1,5 +1,5 @@
 /* ========================================================
- * bootstrap-tab.js v2.0.0
+ * bootstrap-tab.js v2.0.1
  * http://twitter.github.com/bootstrap/javascript.html#tabs
  * ========================================================
  * Copyright 2012 Twitter, Inc.
@@ -80,7 +80,7 @@
         element.addClass('active')
 
         if (transition) {
-          element[0].offsetWidth; // reflow for transition
+          element[0].offsetWidth // reflow for transition
           element.addClass('in')
         } else {
           element.removeClass('fade')
