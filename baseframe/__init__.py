@@ -14,6 +14,7 @@ baseframe = Blueprint('baseframe', __name__,
 jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
                    'baseframe/js/jquery.form.js',
                    'baseframe/js/tiny_mce/jquery.tinymce.js',
+                   'baseframe/js/bootstrap-datepicker.js',
                    filters='jsmin', output='baseframe/js/jquery.min.js')
 
 

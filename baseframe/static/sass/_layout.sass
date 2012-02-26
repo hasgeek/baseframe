@@ -39,6 +39,50 @@ header
   padding-top: 8px
   padding-bottom: 8px
 
+.nav-list > li
+  padding-top: 3px
+  padding-bottom: 3px
+
+.nav-list > li > a, .nav-list .nav-header
+  margin-top: -3px
+  margin-bottom: -3px
+
+// Margin on icons to align with text
+[class^="icon-"], [class*=" icon-"]
+  margin-top: 1px
+
+// Single-button forms
+form.form-button
+  margin: 0
+  display: inline-block
+
+// Tables with linked rows
+.table tr.link
+  td, th
+    padding: 0
+    a
+      display: block
+      padding: 8px
+    a:hover
+      text-decoration: none
+.table tr.link
+  a:hover
+    // Color from bootstrap
+    color: #005580
+.table.table-condensed tr.link
+  td, th
+    a
+      padding: 4px
+
+.table .num
+  text-align: right
+
+.table a.link-util
+  opacity: 0.3
+
+.table tr:hover a.link-util
+  opacity: 1
+
 // Start sticky footer
 html, body
   height: 100%
@@ -87,6 +131,12 @@ span.loading
   height: 16px
   &.hidden
     display: none
+
+form span.loading
+  margin-top: 5px
+
+.section
+  margin-bottom: 18px
 
 .usertools
   list-style: none
