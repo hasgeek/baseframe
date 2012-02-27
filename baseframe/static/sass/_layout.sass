@@ -56,6 +56,13 @@ form.form-button
   margin: 0
   display: inline-block
 
+input[type="text"].input-primary
+  color: $color-h1
+  font-weight: bold
+  font-size: 30px
+  line-height: 35px
+  height: 35px
+
 // Tables with linked rows
 .table tr.link
   td, th
@@ -79,9 +86,14 @@ form.form-button
 
 .table a.link-util
   opacity: 0.3
+  filter: alpha(opacity=30)
 
 .table tr:hover a.link-util
   opacity: 1
+  filter: alpha(opacity=100)
+
+.table.table-disabled
+  color: #aaa
 
 // Start sticky footer
 html, body

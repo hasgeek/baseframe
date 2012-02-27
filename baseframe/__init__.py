@@ -44,17 +44,17 @@ baseframe_js = Bundle(jquery_js,
 #                        filters='less', output='baseframe/css/bootstrap.css',
 #                        debug=False)
 
-baseframe_css = Bundle(#bootstrap_less,
-                       'baseframe/css/bootstrap.css',  # Externally compiled with Less
-                       'baseframe/css/responsive.css', # Externally compiled with Less
-                       'baseframe/css/baseframe.css',  # Externally compiled with Compass
+baseframe_css = Bundle(  #bootstrap_less,
+                       'baseframe/css/bootstrap.css',   # Externally compiled with Less
+                       'baseframe/css/responsive.css',  # Externally compiled with Less
+                       'baseframe/css/baseframe.css',   # Externally compiled with Compass
                        filters='cssmin', output='baseframe/css/packed.css')
 
 
 @baseframe.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(baseframe.root_path, 'static', 'img'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+      'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @baseframe.route('/humans.txt')
