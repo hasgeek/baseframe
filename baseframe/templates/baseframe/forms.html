@@ -38,7 +38,7 @@
 {% endmacro %}
 
 {% macro rendersubmit(buttons=[], css_class="", tabIndex='', cancel_url='') %}
-<div class="form-actions{% if css_class %} {{ css_class}}{% endif %}">
+<div class="form-actions clearfix{% if css_class %} {{ css_class}}{% endif %}">
   {% for name, value, widget_class in buttons %}
     <button type="submit"
       {%- if name %} name="{{ name|e }}"{% else %} {% endif -%}

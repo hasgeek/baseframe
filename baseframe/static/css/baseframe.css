@@ -231,6 +231,10 @@
   font-weight: bold;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 h1 {
   color: #df5e0e;
 }
@@ -405,10 +409,6 @@ span.loading {
 }
 span.loading.hidden {
   display: none;
-}
-
-form span.loading {
-  margin-top: 5px;
 }
 
 .section {
