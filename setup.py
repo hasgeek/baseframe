@@ -36,4 +36,5 @@ setup(name='baseframe',
       zip_safe=True,
       test_suite='tests',
       install_requires=requires,
+      scripts=['setup_helper.py'],
       )
