@@ -1,4 +1,4 @@
-BaseFrame
+Baseframe
 =========
 
 Reusable styles and templates for HasGeek projects. Setup instructions::
@@ -23,5 +23,5 @@ You'll need this boilerplate in your code to use it::
 
   # Import models and views, and register routes here
 
-BaseFrame is BSD-licensed, but is built on top of Twitter Bootstrap 2.0,
+Baseframe is BSD-licensed, but is built on top of Twitter Bootstrap 2.0,
 which uses the Apache license.

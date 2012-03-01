@@ -28,7 +28,7 @@ class BaseframeBuildPy(build_py):
 
 setup(name='baseframe',
       version=0.1,
-      description='BaseFrame for HasGeek projects',
+      description='Baseframe for HasGeek projects',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
         "Programming Language :: Python",
