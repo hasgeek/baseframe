@@ -1,5 +1,6 @@
 import os
 from setuptools import setup, find_packages
+from setuptools.command.build_py import build_py
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = unicode(open(os.path.join(here, 'README.rst')).read(), 'utf-8')
@@ -12,6 +13,18 @@ requires = [
     'cssmin',
     'Flask-Assets',
     ]
+
+
+class BaseframeBuildPy(build_py):
+    def run(self):
+        result = build_py.run(self)
+        if not self._dry_run:
+            curdir = os.getcwd()
+            os.chdir(os.path.join(self.build_lib, 'baseframe'))
+            os.system("make tinymce")
+            os.chdir(curdir)
+        return result
+
 
 setup(name='baseframe',
       version=0.1,
@@ -36,5 +49,5 @@ setup(name='baseframe',
       zip_safe=False,
       test_suite='tests',
       install_requires=requires,
-      scripts=['setup_helper.py'],
+      cmdclass={'build_py': BaseframeBuildPy},
       )

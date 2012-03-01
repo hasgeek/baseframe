@@ -1,2 +1,3 @@
+include baseframe/Makefile
 recursive-include baseframe/templates *
 recursive-include baseframe/static *
