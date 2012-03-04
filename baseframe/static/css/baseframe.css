@@ -231,47 +231,6 @@
   font-weight: bold;
 }
 
-html {
-  overflow-y: scroll;
-}
-
-h1 {
-  color: #df5e0e;
-}
-h1 a, h1 a:visited {
-  color: #df5e0e;
-}
-h1 a:hover, h1 a:active {
-  color: #974009;
-}
-
-h2 {
-  color: #816894;
-}
-h2 a, h2 a:visited {
-  color: #816894;
-}
-h2 a:hover, h2 a:active {
-  color: #5a4867;
-}
-
-h3 {
-  color: #f0a40c;
-}
-h3 a, h3 a:visited {
-  color: #f0a40c;
-}
-h3 a:hover, h3 a:active {
-  color: #a77208;
-}
-
-header {
-  margin-bottom: 1em;
-}
-header #page-header {
-  border-bottom: 1px solid #b7b7b7;
-}
-
 .page-header {
   margin: 0;
   padding-bottom: 18px;
@@ -347,6 +306,59 @@ input[type="text"].input-primary {
   color: #aaaaaa;
 }
 
+blockquote {
+  padding: 0 0 0 11px;
+  margin: 0 0 0 9px;
+  border-left: 5px solid #cccccc;
+}
+blockquote p {
+  margin-bottom: 9px;
+  line-height: 18px;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+h1 {
+  color: #df5e0e;
+}
+h1 a, h1 a:visited {
+  color: #df5e0e;
+}
+h1 a:hover, h1 a:active {
+  color: #974009;
+}
+
+h2 {
+  color: #816894;
+}
+h2 a, h2 a:visited {
+  color: #816894;
+}
+h2 a:hover, h2 a:active {
+  color: #5a4867;
+}
+
+h3 {
+  color: #f0a40c;
+}
+h3 a, h3 a:visited {
+  color: #f0a40c;
+}
+h3 a:hover, h3 a:active {
+  color: #a77208;
+}
+
+header {
+  margin-bottom: 1em;
+}
+header #page-header {
+  border-bottom: 1px solid #b7b7b7;
+}
+
 html, body {
   height: 100%;
 }
@@ -372,7 +384,7 @@ footer {
 footer .footer-inner {
   margin-top: 10px;
   min-height: 55px;
-  background: whiteSmoke url('../img/shadow.png?1328959567') no-repeat top center;
+  background: whiteSmoke url('../../baseframe/img/shadow.png?1328959567') no-repeat top center;
 }
 
 footer .container {
@@ -386,7 +398,7 @@ footer .container {
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
-  background-image: url('../img/logo.png?1328964578');
+  background-image: url('../../baseframe/img/logo.png?1328964578');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   width: 75px;
@@ -403,7 +415,7 @@ footer .container {
 
 span.loading {
   display: inline-block;
-  background: url('../img/ajax-loader.gif?1305733694') center no-repeat;
+  background: url('../../baseframe/img/ajax-loader.gif?1305733694') center no-repeat;
   width: 16px;
   height: 16px;
 }
@@ -466,7 +478,7 @@ span.loading.hidden {
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   #logo {
-    background-image: url('../img/logo@2x.png?1328994509');
+    background-image: url('../../baseframe/img/logo@2x.png?1328994509');
     -webkit-background-size: 75px 75px;
   }
 }
@@ -684,26 +696,26 @@ span.loading.hidden {
   font-family: 'Lato';
   font-style: italic;
   font-weight: 400;
-  src: local("Lato Italic"), local("Lato-Italic"), url('fonts/lato-italic.woff') format("woff");
+  src: local("Lato Italic"), local("Lato-Italic"), url('../../baseframe/fonts/lato-italic.woff') format("woff");
 }
 
 @font-face {
   font-family: 'Lato';
   font-style: italic;
   font-weight: 700;
-  src: local("Lato Bold Italic"), local("Lato-BoldItalic"), url('fonts/lato-bold-italic.woff') format("woff");
+  src: local("Lato Bold Italic"), local("Lato-BoldItalic"), url('../../baseframe/fonts/lato-bold-italic.woff') format("woff");
 }
 
 @font-face {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 700;
-  src: local("Lato Bold"), local("Lato-Bold"), url('fonts/lato-bold.woff') format("woff");
+  src: local("Lato Bold"), local("Lato-Bold"), url('../../baseframe/fonts/lato-bold.woff') format("woff");
 }
 
 @font-face {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
-  src: local("Lato Regular"), local("Lato-Regular"), url('fonts/lato-regular.woff') format("woff");
+  src: local("Lato Regular"), local("Lato-Regular"), url('../../baseframe/fonts/lato-regular.woff') format("woff");
 }

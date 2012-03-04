@@ -15,7 +15,7 @@ jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
                    'baseframe/js/jquery.form.js',
                    'baseframe/js/tiny_mce/jquery.tinymce.js',
                    'baseframe/js/bootstrap-datepicker.js',
-                   filters='jsmin', output='baseframe/js/jquery.min.js')
+                   filters='jsmin', output='js/baseframe-jquery.min.js')
 
 
 #bootstrap_js = Bundle('baseframe/js/bootstrap/bootstrap-alert.js',
@@ -30,13 +30,13 @@ jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
 #                      'baseframe/js/bootstrap/bootstrap-tab.js',
 #                      'baseframe/js/bootstrap/bootstrap-transition.js',
 #                      'baseframe/js/bootstrap/bootstrap-typeahead.js',
-#                      filters='jsmin', output='baseframe/js/bootstrap.min.js')
+#                      filters='jsmin', output='js/baseframe-bootstrap.min.js')
 
 baseframe_js = Bundle(jquery_js,
                       'baseframe/js/bootstrap/bootstrap.min.js',
                       'baseframe/js/networkbar.js',
                       'baseframe/js/baseframe.js',
-                      filters='jsmin', output='baseframe/js/packed.js')
+                      filters='jsmin', output='js/baseframe-packed.js')
 
 
 #bootstrap_less = Bundle('baseframe/less/bootstrap/bootstrap.less',
@@ -44,11 +44,12 @@ baseframe_js = Bundle(jquery_js,
 #                        filters='less', output='baseframe/css/bootstrap.css',
 #                        debug=False)
 
-baseframe_css = Bundle(  #bootstrap_less,
+baseframe_css = Bundle(  # bootstrap_less,
                        'baseframe/css/bootstrap.css',   # Externally compiled with Less
                        'baseframe/css/responsive.css',  # Externally compiled with Less
                        'baseframe/css/baseframe.css',   # Externally compiled with Compass
-                       filters='cssmin', output='baseframe/css/packed.css')
+                       filters='cssmin',
+                       output='css/baseframe-packed.css')
 
 
 @baseframe.route('/favicon.ico')
