@@ -719,3 +719,9 @@ span.loading.hidden {
   font-weight: 400;
   src: local("Lato Regular"), local("Lato-Regular"), url('../../baseframe/fonts/lato-regular.woff') format("woff");
 }
+
+@media print {
+  .no-print {
+    display: none;
+  }
+}

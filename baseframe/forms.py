@@ -4,9 +4,10 @@
 Standard forms
 """
 
-from flask import render_template, request, Markup, abort, flash, redirect, json
+from flask import render_template, request, Markup, abort, flash, redirect, json, escape, url_for
 import flask.ext.wtf as wtf
-from coaster import sanitize_html, VALID_TAGS
+from coaster import sanitize_html
+
 
 class RichText(wtf.TextArea):
     """
@@ -29,7 +30,7 @@ class SubmitInput(wtf.SubmitInput):
     def __call__(self, field, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = u'%s %s' % (self.css_class, c)
-        return super(SubmitInput, self).__call__(field, **kwargs)        
+        return super(SubmitInput, self).__call__(field, **kwargs)
 
 
 class RichTextField(wtf.TextAreaField):
