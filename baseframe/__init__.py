@@ -15,6 +15,7 @@ jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
                    'baseframe/js/jquery.form.js',
                    'baseframe/js/tiny_mce/jquery.tinymce.js',
                    'baseframe/js/bootstrap-datepicker.js',
+                   'baseframe/js/chosen.jquery.js',
                    filters='jsmin', output='js/baseframe-jquery.min.js')
 
 
@@ -47,6 +48,7 @@ baseframe_js = Bundle(jquery_js,
 baseframe_css = Bundle(  # bootstrap_less,
                        'baseframe/css/bootstrap.css',   # Externally compiled with Less
                        'baseframe/css/responsive.css',  # Externally compiled with Less
+                       'baseframe/css/chosen.css',      # Companion to chosen.jquery.js
                        'baseframe/css/baseframe.css',   # Externally compiled with Compass
                        filters='cssmin',
                        output='css/baseframe-packed.css')
