@@ -57,7 +57,7 @@
         // one. If successful, return true. Note that input type="date"
         // requires that the string be RFC3339, so if the format/parse methods
         // have been overridden, this won't be used.
-        if(navigator.userAgent.match(/(iPad|iPhone); CPU(\ iPhone)? OS 5_\d/i)) {
+        if(navigator.userAgent.match(/(iPod|iPad|iPhone); CPU(\ iPhone)? OS 5_\d/i)) {
           // jQuery will only change the input type of a detached element.
           var $marker = $('<span>').insertBefore(this.$el);
           this.$el.detach().attr('type', 'date').insertAfter($marker);
