@@ -53,6 +53,7 @@
   //border: 1px solid #aaaaaa;
   //@include box-shadow(0 0 3px #ffffff inset, 0 1px 1px rgba(0,0,0,0.1));
   @include box-shadow(0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05));
+  @include transition(border linear .2s, box-shadow linear .2s);
   display: block;
   overflow: hidden;
   white-space: nowrap;
@@ -318,8 +319,11 @@
 
 /* @group Active  */
 .chzn-container-active .chzn-single {
-  @include box-shadow(0 0 5px rgba(0,0,0,.3));
-  border: 1px solid #5897fb;
+  //@include box-shadow(0 0 5px rgba(0,0,0,.3));
+  //border: 1px solid #5897fb;
+  border: 1px solid rgba(82,168,236,.8);
+  @include box-shadow(0 0 8px rgba(82,168,236,.6));
+  @include transition(border linear .2s, box-shadow linear .2s);
 }
 .chzn-container-active .chzn-single-with-drop {
   border: 1px solid #aaa;

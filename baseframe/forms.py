@@ -15,7 +15,10 @@ class RichText(wtf.TextArea):
     """
     def __call__(self, field, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = u'%s %s' % ('richtext', c)
+        if c:
+            kwargs['class'] = u'%s %s' % ('richtext', c)
+        else:
+            kwargs['class'] = 'richtext'
         return super(RichText, self).__call__(field, **kwargs)
 
 
