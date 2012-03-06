@@ -551,6 +551,10 @@ table.mceLayout.focus tr.mceLast td.mceLast {
   transition: border-bottom linear 0.2s;
 }
 
+.print-only {
+  display: none;
+}
+
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   #logo {
     background-image: url('../../baseframe/img/logo@2x.png?1328994509');
@@ -798,5 +802,35 @@ table.mceLayout.focus tr.mceLast td.mceLast {
 @media print {
   .no-print {
     display: none;
+  }
+
+  .print-only {
+    display: block;
+  }
+
+  img.print-only {
+    display: inline-block;
+  }
+
+  span.print-only {
+    display: inline;
+  }
+
+  table.print-only {
+    display: table;
+  }
+
+  #logo {
+    background: none;
+    text-indent: 0;
+    width: auto;
+    height: 1.5em;
+    line-height: 1.5em;
+    padding-top: 0.5em;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  #logo a {
+    color: black;
   }
 }

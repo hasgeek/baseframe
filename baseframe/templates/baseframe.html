@@ -49,7 +49,7 @@
     <header>
     {% include "baseframe/networkbar.html" -%}
       <div id="page-header" class="container">
-        <div id="logo"><a href="{{ url_for('index') }}">Home</a></div>
+        <div id="logo"><a href="{{ url_for('index') }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
       </div>
     </header>
     {% endblock %}
@@ -72,39 +72,37 @@
     <div id="root_footer"></div>
   </div>
   <!-- /root -->
-  <!-- footerbox -->
-  {% block footerbox %}
+  {% block basefooter %}
   <footer>
     <div class="footer-inner">
       <div class="container">
         {% block footer %}
-        Copyright &copy; 2010-12 HasGeek
+          <span class="no-print">Copyright &copy; 2010-12 HasGeek</span>
         {% endblock %}
       </div>
     </div>
   </footer>
   {% endblock %}
-  <!-- /footerbox -->
 
   <!-- Included JS Files -->
   {% assets "js_all" -%}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {% endassets -%}
 
-    {% if config['GA_CODE'] and not config['DEBUG'] %}
-      <script type="text/javascript">
-       var _gaq = [['_setAccount', '{{ config['GA_CODE'] }}'], ['_trackPageview']];
-       (function(d, t) {
-        var g = d.createElement(t),
-            s = d.getElementsByTagName(t)[0];
-        g.async = true;
-        g.src = ('https:' == location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        s.parentNode.insertBefore(g, s);
-       })(document, 'script');
-      </script>
-    {% endif -%}
+  {% if config['GA_CODE'] and not config['DEBUG'] %}
+    <script type="text/javascript">
+     var _gaq = [['_setAccount', '{{ config['GA_CODE'] }}'], ['_trackPageview']];
+     (function(d, t) {
+      var g = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      g.async = true;
+      g.src = ('https:' == location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g, s);
+     })(document, 'script');
+    </script>
+  {% endif -%}
 
-    {% block footerscripts %}{% endblock %}
+  {% block footerscripts %}{% endblock %}
 
-  </body>
+</body>
 </html>

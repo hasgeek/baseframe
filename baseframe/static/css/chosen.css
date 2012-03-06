@@ -2,6 +2,7 @@
 .chzn-container {
   position: relative;
   display: inline-block;
+  vertical-align: middle;
   zoom: 1;
   *display: inline;
 }
@@ -67,7 +68,6 @@
   padding: 0 0 0 8px;
   color: #333;
   text-decoration: none;
-  top: 2px;
 }
 
 .chzn-container-single .chzn-single span {

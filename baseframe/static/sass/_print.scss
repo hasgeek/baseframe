@@ -1,5 +1,33 @@
 @media print {
+    // No printing
     .no-print {
         display: none;
+    }
+    // Only show when printing
+    .print-only {
+        display: block;
+    }
+    img.print-only {
+        display: inline-block;
+    }
+    span.print-only {
+        display: inline;
+    }
+    table.print-only {
+        display: table;
+    }
+    // Make logo plain text when printing
+    #logo {
+        background: none;
+        text-indent: 0;
+        width: auto;
+        height: 1.5em;
+        line-height: 1.5em;
+        padding-top: 0.5em;
+        font-size: 30px;
+        font-weight: bold;
+        a {
+            color: black;
+        }
     }
 }

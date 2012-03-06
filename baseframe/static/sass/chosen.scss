@@ -6,6 +6,7 @@
   //font-size: 13px;
   position: relative;
   display: inline-block;
+  vertical-align: middle;
   zoom: 1;
   *display: inline;
 }
@@ -63,9 +64,6 @@
   padding: 0 0 0 8px;
   color: #333;
   text-decoration: none;
-
-  // Make element line-up with other input elements
-  top: 2px;
 }
 .chzn-container-single .chzn-single span {
   margin-right: 26px;
