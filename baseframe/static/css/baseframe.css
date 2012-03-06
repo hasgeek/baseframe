@@ -318,6 +318,10 @@ blockquote p {
   font-weight: normal;
 }
 
+.alert .btn {
+  vertical-align: baseline;
+}
+
 html {
   overflow-y: scroll;
 }
