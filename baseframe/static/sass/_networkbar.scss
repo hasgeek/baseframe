@@ -172,7 +172,7 @@ $color-hg-bar-selected: #000;
             @include transition-duration(0.1s);
             @include transition-timing-function(ease-out)
         }
-        & > li.selected a {
+        & > li.selected > a {
             border-top: 2px solid #df5e0e;
             color: $color-hg-bar-selected;
             font-weight: bold;

@@ -869,7 +869,7 @@ li[class*=" icon-"].icon-large:before {
   -o-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
-#hg-bar ul#hg-barlinks > li.selected a, #hg-bar ul#hg-usertools > li.selected a {
+#hg-bar ul#hg-barlinks > li.selected > a, #hg-bar ul#hg-usertools > li.selected > a {
   border-top: 2px solid #df5e0e;
   color: black;
   font-weight: bold;
