@@ -838,6 +838,10 @@ table.mceLayout.focus tr.mceLast td.mceLast {
     color: black;
   }
 
+  body, code, pre, legend, label, h1, h2, h3 {
+    color: black;
+  }
+
   .print-span1 {
     width: 42px;
   }
