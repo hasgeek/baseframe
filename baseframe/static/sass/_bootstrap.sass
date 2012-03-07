@@ -20,8 +20,15 @@
   margin-bottom: -3px
 
 // Margin on icons to align with text
-[class^="icon-"], [class*=" icon-"]
-  margin-top: 1px
+//[class^="icon-"], [class*=" icon-"]
+//  margin-top: 1px
+.nav-list > li > a [class^="icon-"]:before,
+.nav-list > li > a [class*=" icon-"]:before
+  color: #333
+
+.nav-list > li.active > a [class^="icon-"]:before,
+.nav-list > li.active > a [class*=" icon-"]:before
+  color: inherit
 
 // Single-button forms
 form.form-button
