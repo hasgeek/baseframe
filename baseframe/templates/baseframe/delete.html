@@ -4,10 +4,10 @@
 <p>{{ message }}</p>
 <form id="delete" method="POST">
   <input type="hidden" name="form.id" value="delete"/>
-  {{ form.csrf() }}
-  {% if form.csrf.errors %}
+  {{ form.hidden_tag() }}
+  {#{% if form.csrf.errors %}
     {% for error in form.csrf.errors %}<div class="error">{{ error }}</div>{% endfor %}
-  {% endif %}
+  {% endif %}#}
   <input class="btn btn-danger" type="submit" name="delete" value="Delete"/>
   <input class="btn" type="submit" name="cancel" value="Cancel"/>
 </form>
