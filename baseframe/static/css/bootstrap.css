@@ -2530,7 +2530,7 @@ button.btn.small, input[type="submit"].btn.small {
   -ms-transition: opacity .3s linear, top .3s ease-out;
   -o-transition: opacity .3s linear, top .3s ease-out;
   transition: opacity .3s linear, top .3s ease-out;
-  top: -25%;
+  top: -50%;
 }
 .modal.fade.in {
   top: 50%;
