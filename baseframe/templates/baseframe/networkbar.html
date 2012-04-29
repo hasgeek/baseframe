@@ -25,7 +25,7 @@
     {%- if config['LASTUSER_CLIENT_ID'] %}
       <ul id="hg-usertools">
         {% if g.user -%}
-          <li class="profile"><a href="">{{ g.user.fullname }}</a></li>
+          <li class="profile"><a href="{{ g.user.profile_url }}">{{ g.user.fullname }}</a></li>
           <li><a href="{{ url_for('logout') }}">Logout</a></li>
         {%- else %}
           <li><a href="{{ url_for('login') }}">Login</a></li>
