@@ -111,6 +111,9 @@
     width: auto;
     margin: 0;
   }
+  input[class*="span"], textarea[class*="span"], .uneditable-input[class*="span"] {
+    width: 98%;
+  }
 }
 @media screen and (min-width: 768px) and (max-width: 979px) {
   .row {
