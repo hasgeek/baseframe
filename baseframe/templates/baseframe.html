@@ -1,4 +1,4 @@
-{% from "baseframe/components.html" import flash_messages with context %}
+{% from "baseframe/components.html" import flash_messages, networkbar with context %}
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
@@ -47,7 +47,7 @@
     <!-- headerbox -->
     {% block headerbox %}
     <header>
-    {% include "baseframe/networkbar.html" -%}
+      {{ networkbar(siteid=config['SITE_ID'], login=config['LASTUSER_CLIENT_ID'] and true or false) }}
       <div id="page-header" class="container">
         <div id="logo"><a href="{{ url_for('index') }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
       </div>

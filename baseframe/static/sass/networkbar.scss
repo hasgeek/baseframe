@@ -2,6 +2,7 @@
 @import "compass/utilities/general/clearfix";
 @import "compass/css3/border-radius";
 @import "compass/css3/transition";
+@import "compass/css3/box-shadow";
 
 .hg-h { color: #df5e0e; }
 .hg-g { color: #816894; }
@@ -18,6 +19,7 @@ $color-hg-bar-background: #e8e8e8; //#eeeefa;
 $color-hg-bar-highlight: #000;
 $color-hg-bar-highlight-background: rgba(0, 0, 0, 0.1);
 $color-hg-bar-selected: #000;
+$networkbar-font: 14px/1.5 Lato, "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", "Lucida Sans", Arial, sans-serif !default;
 
 #hg-bar {
     background: $color-hg-bar-background;
@@ -28,6 +30,8 @@ $color-hg-bar-selected: #000;
     color: $color-hg-bar;
     border-bottom: 1px solid $color-hg-bar-border;
     @include box-shadow(0 1px 5px rgba(0,0,0,.1));
+    position: relative;
+    z-index: 9998;
     //margin-bottom: 1em;
     ul#hg-usertools {
         float: right;
@@ -177,5 +181,67 @@ $color-hg-bar-selected: #000;
             color: $color-hg-bar-selected;
             font-weight: bold;
         }
+    }
+}
+
+#hg-bar.hg-dark {
+    background: rgba(0, 0, 0, 0.2);
+    color: #888;
+    border-bottom: 1px solid #444;
+    @include single-transition("background");
+
+    &:hover {
+        background: #222;
+        @include single-transition("background");
+    }
+
+    ul#hg-barlinks > li a,
+    ul#hg-usertools > li a,
+    ul#hg-barlinks > li a:visited,
+    ul#hg-usertools > li a:visited {
+        color: #888;
+    }
+    ul#hg-barlinks > li a.hg-submenu:after,
+    ul#hg-usertools > li a.hg-submenu:after {
+        border-top: 4px solid #ffffff;
+    }
+    ul#hg-barlinks > li ul,
+    ul#hg-usertools > li ul {
+        background: #222;
+        color: #888;
+        border: 1px solid #444;
+        border-top: 0;
+        border-bottom: 0;
+    }
+    ul#hg-barlinks > li.selected > a,
+    ul#hg-usertools > li.selected > a {
+        color: #888;
+    }
+    ul#hg-barlinks > li:hover > a,
+    ul#hg-barlinks > li > a:focus,
+    ul#hg-usertools > li:hover > a,
+    ul#hg-usertools > li > a:focus {
+        background: #444;
+        border-top: 2px solid #444;
+        color: white;
+    }
+    ul#hg-barlinks > li.selected:hover > a,
+    ul#hg-barlinks > li.selected > a:focus,
+    ul#hg-usertools > li.selected:hover > a,
+    ul#hg-usertools > li.selected > a:focus {
+        border-top: 2px solid #df5e0e;
+    }
+    ul#hg-barlinks > li ul li:hover > a,
+    ul#hg-usertools > li ul li:hover > a {
+        text-decoration: none;
+        background: #444;
+        color: white;
+    }
+    ul#hg-barlinks > li:hover > ul,
+    ul#hg-barlinks > li a:focus > ul,
+    ul#hg-usertools > li:hover > ul,
+    ul#hg-usertools > li a:focus > ul {
+        border: 1px solid #444;
+        border-top: 0;
     }
 }
