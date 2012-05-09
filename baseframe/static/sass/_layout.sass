@@ -62,7 +62,7 @@ footer .container
   padding-top: 1.5em
   padding-bottom: 1em
 
-#logo
+#logo, #logo-presents
   @include replace-text-with-dimensions('logo.png')
   a
     display: block
@@ -71,6 +71,10 @@ footer .container
     margin: 0
     padding: 0
     border: 0
+    text-decoration: none
+
+#logo-presents
+  @include replace-text-with-dimensions('hasgeek-presents.png')
 
 span.loading
   display: inline-block

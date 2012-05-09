@@ -819,7 +819,7 @@ footer .container {
   padding-bottom: 1em;
 }
 
-#logo {
+#logo, #logo-presents {
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
@@ -829,13 +829,25 @@ footer .container {
   width: 75px;
   height: 75px;
 }
-#logo a {
+#logo a, #logo-presents a {
   display: block;
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
   border: 0;
+  text-decoration: none;
+}
+
+#logo-presents {
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  background-image: url('../../baseframe/img/hasgeek-presents.png?1324527959');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 100px;
+  height: 83px;
 }
 
 span.loading {
