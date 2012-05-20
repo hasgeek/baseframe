@@ -3,7 +3,6 @@ Baseframe
 
 Reusable styles and templates for HasGeek projects. Setup instructions::
 
-  make tinymce
   python setup.py install
 
 You'll need this boilerplate in your code to use it::
