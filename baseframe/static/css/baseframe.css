@@ -611,38 +611,6 @@ li[class*=" icon-"].icon-large:before {
   content: "\f094";
 }
 
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../../baseframe/fonts/lato-regular.eot');
-  src: local("Lato Regular"), local("Lato-Regular"), url('../../baseframe/fonts/lato-regular.eot?#iefix') format("embedded-opentype"), url('../../baseframe/fonts/lato-regular.woff') format("woff"), url('../../baseframe/fonts/lato-regular.ttf') format("truetype");
-}
-
-@font-face {
-  font-family: 'Lato';
-  font-style: italic;
-  font-weight: 400;
-  src: url('../../baseframe/fonts/lato-italic.eot');
-  src: local("Lato Italic"), local("Lato-Italic"), url('../../baseframe/fonts/lato-italic.eot?#iefix') format("embedded-opentype"), url('../../baseframe/fonts/lato-italic.woff') format("woff"), url('../../baseframe/fonts/lato-italic.ttf') format("truetype");
-}
-
-@font-face {
-  font-family: 'Lato';
-  font-style: italic;
-  font-weight: 700;
-  src: url('../../baseframe/fonts/lato-bold-italic.eot');
-  src: local("Lato Bold Italic"), local("Lato-BoldItalic"), url('../../baseframe/fonts/lato-bold-italic.eot?#iefix') format("embedded-opentype"), url('../../baseframe/fonts/lato-bold-italic.woff') format("woff"), url('../../baseframe/fonts/lato-bold-italic.ttf') format("truetype");
-}
-
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 700;
-  src: url('../../baseframe/fonts/lato-bold.eot');
-  src: local("Lato Bold"), local("Lato-Bold"), url('../../baseframe/fonts/lato-bold.eot?#iefix') format("embedded-opentype"), url('../../baseframe/fonts/lato-bold.woff') format("woff"), url('../../baseframe/fonts/lato-bold.ttf') format("truetype");
-}
-
 .page-header {
   margin: 0;
   padding-bottom: 18px;
@@ -818,6 +786,9 @@ footer .container {
   padding-top: 1.5em;
   padding-bottom: 1em;
 }
+footer .container p {
+  font-size: inherit;
+}
 
 #logo, #logo-presents {
   text-indent: -119988px;
@@ -911,6 +882,19 @@ span.loading.hidden {
 .video43 {
   padding-bottom: 75%;
   padding-top: 30px;
+}
+
+.link-list-line {
+  list-style: none;
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  overflow: hidden;
+  *zoom: 1;
+}
+.link-list-line li {
+  float: left;
+  padding: 0 0.5em;
+  white-space: nowrap;
 }
 
 table.mceLayout {

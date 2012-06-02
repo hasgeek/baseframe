@@ -110,8 +110,8 @@ $networkbar-font: 14px/1.5 Lato, "Lucida Grande", "DejaVu Sans", "Bitstream Vera
                     margin: 0;
                 }
                 li:last-child {
-                    @include border-bottom-left-radius(6px);
-                    @include border-bottom-right-radius(6px);
+                    @include border-bottom-left-radius(4px);
+                    @include border-bottom-right-radius(4px);
                 }
                 li:hover > a {
                     text-decoration: none;
@@ -119,8 +119,8 @@ $networkbar-font: 14px/1.5 Lato, "Lucida Grande", "DejaVu Sans", "Bitstream Vera
                     color: $color-hg-bar-highlight;
                 }
                 li:last-child > a {
-                    @include border-bottom-left-radius(6px);
-                    @include border-bottom-right-radius(6px);
+                    @include border-bottom-left-radius(4px);
+                    @include border-bottom-right-radius(4px);
                 }
                 li.hg-menu-section {
                     padding: 0.4em 0.5em 0.5em;

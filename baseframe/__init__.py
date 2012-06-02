@@ -16,27 +16,28 @@ jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
                    'baseframe/js/tiny_mce/jquery.tinymce.js',
                    'baseframe/js/bootstrap-datepicker.js',
                    'baseframe/js/chosen.jquery.js',
+#                   'baseframe/js/jquery.orbit-1.4.0.js',
                    filters='jsmin', output='js/baseframe-jquery.min.js')
 
 
-#bootstrap_js = Bundle('baseframe/js/bootstrap/bootstrap-alert.js',
-#                      'baseframe/js/bootstrap/bootstrap-button.js',
+bootstrap_js = Bundle('baseframe/js/bootstrap/bootstrap-alert.js',
+                      'baseframe/js/bootstrap/bootstrap-button.js',
 #                      'baseframe/js/bootstrap/bootstrap-carousel.js',
 #                      'baseframe/js/bootstrap/bootstrap-collapse.js',
-#                      'baseframe/js/bootstrap/bootstrap-dropdown.js',
-#                      'baseframe/js/bootstrap/bootstrap-modal.js',
-#                      'baseframe/js/bootstrap/bootstrap-tooltip.js',
+                      'baseframe/js/bootstrap/bootstrap-dropdown.js',
+                      'baseframe/js/bootstrap/bootstrap-modal.js',
+                      'baseframe/js/bootstrap/bootstrap-tooltip.js',
 #                      'baseframe/js/bootstrap/bootstrap-popover.js',
-#                      'baseframe/js/bootstrap/bootstrap-scrollspy.js',
-#                      'baseframe/js/bootstrap/bootstrap-tab.js',
-#                      'baseframe/js/bootstrap/bootstrap-transition.js',
-#                      'baseframe/js/bootstrap/bootstrap-typeahead.js',
-#                      filters='jsmin', output='js/baseframe-bootstrap.min.js')
+                      'baseframe/js/bootstrap/bootstrap-scrollspy.js',
+                      'baseframe/js/bootstrap/bootstrap-tab.js',
+                      'baseframe/js/bootstrap/bootstrap-transition.js',
+                      'baseframe/js/bootstrap/bootstrap-typeahead.js',
+                      )
 
 networkbar_js = Bundle('baseframe/js/networkbar.js')
 baseframe_js = Bundle(jquery_js,
-                      'baseframe/js/bootstrap/bootstrap.min.js',
-                      networkbar_js,
+                      bootstrap_js,
+                      #'baseframe/js/bootstrap/bootstrap.min.js',
                       'baseframe/js/baseframe.js',
                       filters='jsmin', output='js/baseframe-packed.js')
 
@@ -51,6 +52,7 @@ baseframe_css = Bundle(  # bootstrap_less,
                        'baseframe/css/bootstrap.css',   # Externally compiled with Less
                        'baseframe/css/responsive.css',  # Externally compiled with Less
                        'baseframe/css/chosen.css',      # Companion to chosen.jquery.js
+                       'baseframe/css/orbit.css',       # Companion to jquery.orbit-1.4.0.js
                        'baseframe/css/baseframe.css',   # Externally compiled with Compass
                        networkbar_css,                  # Externally compiled with Compass
                        filters='cssmin',

@@ -1,4 +1,4 @@
-{% from "baseframe/components.html" import flash_messages, networkbar with context %}
+{% from "baseframe/components.html" import flash_messages, networkbar with context -%}
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
@@ -29,6 +29,11 @@
   {% assets "css_all" -%}
     <link rel="stylesheet" href="{{ ASSET_URL }}"/>
   {% endassets -%}
+  {% if config['DEBUG'] -%}
+    <link rel="stylesheet" href="{{ url_for('baseframe.static', filename='css/fonts.css') }}"/>
+  {%- else -%}
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  {%- endif %}
 
   <!-- FIXME: This css/ie.css doesn't exist right now. -->
 
@@ -45,51 +50,45 @@
 <body>
   <div id="root">
     <!-- headerbox -->
-    {% block headerbox %}
+    {% block headerbox -%}
     <header>
       {{ networkbar(siteid=config['SITE_ID'], login=config['LASTUSER_CLIENT_ID'] and true or false) }}
       <div id="page-header" class="container">
         <div id="logo"><a href="{{ url_for('index') }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
       </div>
     </header>
-    {% endblock %}
+    {%- endblock %}
     <!-- /headerbox -->
 
-    {% block main %}
+    {% block main -%}
     <div class="container">
-
-      {% block messages %}{{ flash_messages() }}{% endblock %}
-
-      {% block baseheadline %}
-      {% endblock %}
-
-      {% block basecontent %}
-      {% endblock %}
-
+      {%- block messages %}{{ flash_messages() }}{% endblock %}
+      {%- block baseheadline %}{% endblock %}
+      {%- block basecontent %}{% endblock %}
     </div>
-    {% endblock %}
+    {%- endblock %}
     <!-- /container -->
     <div id="root_footer"></div>
   </div>
   <!-- /root -->
-  {% block basefooter %}
-  <footer>
-    <div class="footer-inner">
-      <div class="container">
-        {% block footer %}
-          <span class="no-print">Copyright &copy; 2010-12 HasGeek</span>
-        {% endblock %}
+  {% block basefooter -%}
+    <footer>
+      <div class="footer-inner">
+        <div class="container">
+          {% block footer -%}
+            <span class="no-print">Copyright &copy; 2010-12 HasGeek</span>
+          {%- endblock %}
+        </div>
       </div>
-    </div>
-  </footer>
-  {% endblock %}
+    </footer>
+  {%- endblock %}
 
   <!-- Included JS Files -->
   {% assets "js_all" -%}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-  {% endassets -%}
+  {%- endassets -%}
 
-  {% if config['GA_CODE'] and not config['DEBUG'] %}
+  {%- if config['GA_CODE'] and not config['DEBUG'] -%}
     <script type="text/javascript">
      var _gaq = [['_setAccount', '{{ config['GA_CODE'] }}'], ['_trackPageview']];
      (function(d, t) {
@@ -100,9 +99,9 @@
       s.parentNode.insertBefore(g, s);
      })(document, 'script');
     </script>
-  {% endif -%}
+  {%- endif -%}
 
-  {% block footerscripts %}{% endblock %}
+  {% block layoutscripts %}{% block footerscripts %}{% endblock %}{% endblock %}
 
 </body>
 </html>

@@ -1,9 +1,3 @@
-body {
-  font-family: Lato, "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-size: 14;
-  color: #333;
-}
-
 @font-face {
   font-family: 'Lato';
   src: url('../../baseframe/fonts/lato-regular.eot');

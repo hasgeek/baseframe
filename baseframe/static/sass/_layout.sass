@@ -61,6 +61,8 @@ footer .container
   font-size: 90%
   padding-top: 1.5em
   padding-bottom: 1em
+  p
+    font-size: inherit
 
 #logo, #logo-presents
   @include replace-text-with-dimensions('logo.png')
@@ -127,6 +129,17 @@ span.loading
 .video43
   padding-bottom: 75%
   padding-top: 30px
+
+.link-list-line
+  list-style: none
+  margin-left: -0.5em
+  margin-right: -0.5em
+  @include clearfix
+  li
+    float: left
+    padding: 0 0.5em
+    white-space: nowrap
+
 
 // Rich text editor
 table.mceLayout

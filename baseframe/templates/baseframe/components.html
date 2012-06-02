@@ -1,4 +1,4 @@
-{% macro flash_messages() %}
+{% macro flash_messages() -%}
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category, message in messages %}
@@ -9,9 +9,9 @@
       {% endfor %}
     {% endif %}
   {% endwith %}
-{% endmacro %}
+{%- endmacro %}
 
-{% macro networkbar(siteid=none, login=false, baseclass=none, containerclass="container") %}
+{% macro networkbar(siteid=none, login=false, baseclass=none, containerclass="container") -%}
   <div id="hg-bar" class="no-print {%- if baseclass %} {{ baseclass }}{% endif %}">
     <div class="{{ containerclass }}">
       <ul id="hg-barlinks">
@@ -49,4 +49,4 @@
       {%- endif %}
     </div>
   </div>
-{% endmacro %}
+{%- endmacro %}
