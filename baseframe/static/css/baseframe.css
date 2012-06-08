@@ -1029,6 +1029,10 @@ blockquote p {
   vertical-align: baseline;
 }
 
+.push-right {
+  float: right;
+}
+
 html {
   overflow-y: scroll;
 }
@@ -1268,6 +1272,19 @@ table.mceLayout.focus {
   -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
   -o-transition: border linear 0.2s, box-shadow linear 0.2s;
   transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+
+.listwidget ul, .listwidget ol {
+  padding-top: 5px;
+  list-style: none;
+  margin-left: 0;
+}
+.listwidget ul input, .listwidget ol input {
+  vertical-align: baseline;
+}
+.listwidget ul label, .listwidget ol label {
+  display: inline;
+  vertical-align: baseline;
 }
 
 .print-only {

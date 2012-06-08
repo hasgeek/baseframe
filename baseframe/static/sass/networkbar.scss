@@ -31,7 +31,7 @@ $networkbar-font: 14px/1.5 Lato, "Lucida Grande", "DejaVu Sans", "Bitstream Vera
     border-bottom: 1px solid $color-hg-bar-border;
     @include box-shadow(0 1px 5px rgba(0,0,0,.1));
     position: relative;
-    z-index: 9998;
+    z-index: 1029;
     //margin-bottom: 1em;
     ul#hg-usertools {
         float: right;
@@ -88,7 +88,7 @@ $networkbar-font: 14px/1.5 Lato, "Lucida Grande", "DejaVu Sans", "Bitstream Vera
                 background: $color-hg-bar-background;
                 color: $color-hg-bar;
                 list-style: none;
-                z-index: 9999;
+                z-index: 1030;
                 //left: -9999px; // Now using height: 0;
                 left: -1px; // -1px to account for 1px border
                 overflow: hidden;

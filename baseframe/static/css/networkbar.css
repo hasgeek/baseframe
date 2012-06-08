@@ -26,7 +26,7 @@
   -o-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   position: relative;
-  z-index: 9998;
+  z-index: 1029;
 }
 #hg-bar ul#hg-usertools {
   float: right;
@@ -90,7 +90,7 @@
   background: #e8e8e8;
   color: #444444;
   list-style: none;
-  z-index: 9999;
+  z-index: 1030;
   left: -1px;
   overflow: hidden;
   -moz-border-radius-bottomleft: 6px;
