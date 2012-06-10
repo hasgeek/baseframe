@@ -931,26 +931,70 @@ ul.icons li .icon-large:before {
 
 .page-header {
   margin: 0;
-  padding-bottom: 18px;
+  padding: 0;
   border-bottom: 0;
 }
 .page-header h3 {
+  margin-top: 0;
   font-weight: normal;
+}
+.page-header h1 {
+  line-height: 42px;
+  margin-top: 0;
+  margin-bottom: 21px;
+}
+
+h1 {
+  font-size: 30px;
+  line-height: 42px;
+  margin-top: 21px;
+  margin-bottom: 0;
+}
+
+h2 {
+  font-size: 25px;
+  line-height: 42px;
+  margin-top: 21px;
+  margin-bottom: 0;
+}
+
+h3 {
+  font-size: 19px;
+  line-height: 21px;
+  margin-top: 21px;
+  margin-bottom: 0;
+}
+
+h1 small, h2 small, h3 small {
+  line-height: 21px;
+}
+
+p {
+  margin: 0 0 21px;
+}
+
+ul, ol {
+  padding: 0;
+  margin: 0 0 21px 25px;
+}
+
+.lead {
+  margin-bottom: 21px;
+  font-size: 18px;
+  line-height: 21px;
 }
 
 .well.nav.nav-list {
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-
-.nav-list > li {
-  padding-top: 3px;
-  padding-bottom: 3px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .nav-list > li > a, .nav-list .nav-header {
-  margin-top: -3px;
-  margin-bottom: -3px;
+  padding: 0 15px;
+}
+
+.nav-list [class^="icon-"], .nav-list [class*=" icon-"] {
+  margin-bottom: -2px;
 }
 
 .nav-list > li > a [class^="icon-"]:before,
@@ -963,6 +1007,10 @@ ul.icons li .icon-large:before {
   color: inherit;
 }
 
+.nav li + .nav-header {
+  margin-top: 21px;
+}
+
 form.form-button {
   margin: 0;
   display: inline-block;
@@ -972,8 +1020,25 @@ input[type="text"].input-primary {
   color: #df5e0e;
   font-weight: bold;
   font-size: 30px;
-  line-height: 35px;
-  height: 35px;
+  line-height: 32px;
+  height: 32px;
+  margin-bottom: 0;
+}
+
+.control-group {
+  margin-bottom: 21px;
+}
+
+label {
+  margin-bottom: 0;
+}
+
+.chzn-container {
+  margin-bottom: 9px;
+}
+
+.table-condensed th, .table-condensed td {
+  padding: 3px 5px;
 }
 
 .table tr.link td, .table tr.link th {
@@ -1154,7 +1219,7 @@ span.loading.hidden {
 }
 
 .section {
-  margin-bottom: 18px;
+  margin-bottom: 21px;
 }
 
 .usertools {

@@ -3,28 +3,72 @@
 // Override Bootstrap's page-header style
 .page-header
   margin: 0
-  padding-bottom: 18px
+  padding: 0
   border-bottom: 0
 
   h3
+    margin-top: 0
     font-weight: normal
+  h1
+    line-height: $body-line-height * 2
+    margin-top: 0
+    margin-bottom: $body-line-height
+
+h1
+  font-size: 30px
+  line-height: $body-line-height * 2
+  margin-top: $body-line-height
+  margin-bottom: 0
+
+h2
+  font-size: 25px
+  line-height: $body-line-height * 2
+  margin-top: $body-line-height
+  margin-bottom: 0
+
+h3
+  font-size: 19px
+  line-height: $body-line-height
+  margin-top: $body-line-height
+  margin-bottom: 0
+
+h1 small, h2 small, h3 small
+  line-height: $body-line-height
+
+p
+  margin: 0 0 $body-line-height
+
+ul, ol
+  padding: 0
+  margin: 0 0 $body-line-height 25px
+
+.lead
+  margin-bottom: $body-line-height
+  font-size: 18px
+  line-height: $body-line-height
 
 // Lesser padding around wells with navigation
 .well.nav.nav-list
-  padding-top: 8px
-  padding-bottom: 8px
+  padding-top: $body-line-height - 1
+  padding-bottom: $body-line-height - 1
 
-.nav-list > li
-  padding-top: 3px
-  padding-bottom: 3px
+// .nav-list > li
+//   padding-top: 3px
+//   padding-bottom: 3px
 
 .nav-list > li > a, .nav-list .nav-header
-  margin-top: -3px
-  margin-bottom: -3px
+  padding: 0 15px
+//   margin-top: -3px
+//   margin-bottom: -3px
 
 // Margin on icons to align with text
 //[class^="icon-"], [class*=" icon-"]
 //  margin-top: 1px
+
+.nav-list [class^="icon-"], .nav-list [class*=" icon-"]
+  // Required to retain line height at 21px. Becomes 23px otherwise
+  margin-bottom: -2px
+
 .nav-list > li > a [class^="icon-"]:before,
 .nav-list > li > a [class*=" icon-"]:before
   color: #333
@@ -32,6 +76,9 @@
 .nav-list > li.active > a [class^="icon-"]:before,
 .nav-list > li.active > a [class*=" icon-"]:before
   color: inherit
+
+.nav li + .nav-header
+  margin-top: $body-line-height
 
 // Single-button forms
 form.form-button
@@ -42,8 +89,22 @@ input[type="text"].input-primary
   color: $color-h1
   font-weight: bold
   font-size: 30px
-  line-height: 35px
-  height: 35px
+  line-height: $body-line-height * 2 - 10
+  height: $body-line-height * 2 - 10
+  margin-bottom: 0
+
+.control-group
+  margin-bottom: $body-line-height
+
+label
+  margin-bottom: 0
+
+.chzn-container
+  margin-bottom: 9px
+
+.table-condensed th, .table-condensed td
+  // This doesn't align with the typographic grid, but makes tables compact
+  padding: 3px 5px
 
 // Tables with linked rows
 .table tr.link

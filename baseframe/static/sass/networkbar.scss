@@ -33,6 +33,9 @@ $networkbar-font: 14px/1.5 Lato, "Lucida Grande", "DejaVu Sans", "Bitstream Vera
     position: relative;
     z-index: 1029;
     //margin-bottom: 1em;
+    li {
+        line-height: 18px;
+    }
     ul#hg-usertools {
         float: right;
         .profile {

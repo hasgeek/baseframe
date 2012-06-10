@@ -28,6 +28,9 @@
   position: relative;
   z-index: 1029;
 }
+#hg-bar li {
+  line-height: 18px;
+}
 #hg-bar ul#hg-usertools {
   float: right;
 }
