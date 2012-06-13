@@ -5,6 +5,7 @@ test.db
 .project
 .pydevproject
 .settings
+*.swp
 *.egg-info
 .coverage
 .sass-cache
