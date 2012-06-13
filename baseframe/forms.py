@@ -50,6 +50,8 @@ class DateTimeInput(wtf.Input):
         value = kwargs.pop('value', None)
         if value is None:
             value = field._value()
+        if not value:
+            value = ' '
         date_value, time_value = value.split(' ')
         return Markup(u'<input type="date" data-datepicker="datepicker" %s /> <input type="time" %s />' % (
             html_params(name=field.name, id=field_id + '-date', value=date_value, **kwargs),
