@@ -1,7 +1,7 @@
 {% macro renderfield(field, css_class="", widget_css_class=None, tabIndex='', autofocus=False) -%}
 <div class="control-group{% if field.errors %} error{% endif %}{% if css_class %} {{ css_class}}{% endif %}" id="field-{{ field.id }}">
   {% if field.widget.input_type == 'checkbox' %}
-    <div class="controls">{% if widget_css_class %}{{ field(class=widget_css_class, tabindex=tabIndex) }}{% else %}{{ field(tabindex=tabIndex) }}{% endif %} {{ field.label }}{% if field.description %}
+    <div class="controls inline">{% if widget_css_class %}{{ field(class=widget_css_class, tabindex=tabIndex) }}{% else %}{{ field(tabindex=tabIndex) }}{% endif %} {{ field.label }}{% if field.description %}
       {% if field.errors -%}
         {% for error in field.errors -%}
           <span class="help-inline">{{ error }}</span>

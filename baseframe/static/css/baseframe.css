@@ -1352,6 +1352,14 @@ table.mceLayout.focus {
   vertical-align: baseline;
 }
 
+.controls.inline input[type="checkbox"] {
+  vertical-align: baseline;
+}
+.controls.inline label {
+  display: inline;
+  vertical-align: baseline;
+}
+
 .print-only {
   display: none;
 }
