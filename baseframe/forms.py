@@ -5,6 +5,7 @@ Standard forms
 """
 
 from flask import render_template, request, Markup, abort, flash, redirect, json, escape, url_for
+from wtforms.widgets import html_params
 import flask.ext.wtf as wtf
 from coaster import sanitize_html
 
@@ -34,6 +35,26 @@ class SubmitInput(wtf.SubmitInput):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = u'%s %s' % (self.css_class, c)
         return super(SubmitInput, self).__call__(field, **kwargs)
+
+
+class DateTimeInput(wtf.Input):
+    """
+    Render date and time inputs.
+    """
+    input_type = 'datetime'
+
+    def __call__(self, field, **kwargs):
+        kwargs.setdefault('id', field.id)
+        field_id = kwargs.pop('id')
+        kwargs.pop('type', None)
+        value = kwargs.pop('value', None)
+        if value is None:
+            value = field._value()
+        date_value, time_value = value.split(' ')
+        return Markup(u'<input type="date" data-datepicker="datepicker" %s /> <input type="time" %s />' % (
+            html_params(name=field.name, id=field_id + '-date', value=date_value, **kwargs),
+            html_params(name=field.name, id=field_id + '-time', value=time_value, **kwargs)
+            ))
 
 
 class RichTextField(wtf.TextAreaField):
