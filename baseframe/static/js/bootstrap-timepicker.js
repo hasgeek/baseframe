@@ -53,6 +53,7 @@
 
             this.$element
                 .on('click', $.proxy(this.show, this))
+                .on('focus', $.proxy(this.show, this))
                 .on('keyup', $.proxy(this.updateFromElementVal, this))
             ;
             

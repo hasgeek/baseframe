@@ -52,8 +52,8 @@ class DateTimeInput(wtf.Input):
             value = field._value()
         if not value:
             value = ' '
-        date_value, time_value, am_or_pm = value.split(' ')
-        return Markup(u'<input type="date" data-datepicker="datepicker" %s /> <input type="text" data-provide="timepicker" data-timepicker="timepicker"%s />' % (
+        date_value, time_value = value.split(' ', 1)
+        return Markup(u'<input type="date" data-datepicker="datepicker" %s /> <input type="time" data-provide="timepicker" %s />' % (
             html_params(name=field.name, id=field_id + '-date', value=date_value, **kwargs),
             html_params(name=field.name, id=field_id + '-time', value=time_value, **kwargs)
             ))
@@ -71,6 +71,17 @@ class RichTextField(wtf.TextAreaField):
         super(RichTextField, self).process_formdata(valuelist)
         # Sanitize data
         self.data = sanitize_html(self.data)
+
+
+class DateTimeField(wtf.DateTimeField):
+    """
+    A text field which stores a `datetime.datetime` matching a format.
+    """
+    widget = DateTimeInput()
+
+    def __init__(self, label=None, validators=None, format='%Y-%m-%d %I:%M %p', **kwargs):
+        super(DateTimeField, self).__init__(label, validators, **kwargs)
+        self.format = format
 
 
 class Form(wtf.Form):
