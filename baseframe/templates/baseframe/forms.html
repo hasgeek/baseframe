@@ -51,8 +51,8 @@
 </div>
 {% endmacro %}
 
-{% macro renderform(form, formid, submit, message='', cancel_url='') %}
-<form id="{{ formid }}" method="POST" accept-charset="UTF-8" class="form-horizontal">
+{% macro renderform(form, formid, submit, message='', cancel_url='', multipart=False) %}
+<form id="{{ formid }}" method="POST" {%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="form-horizontal">
   {% if form.errors %}
     <div class="alert alert-error">
       <a class="close" data-dismiss="alert">×</a>
