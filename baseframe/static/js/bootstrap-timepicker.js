@@ -55,6 +55,7 @@
                 .on('click', $.proxy(this.show, this))
                 .on('focus', $.proxy(this.show, this))
                 .on('keyup', $.proxy(this.updateFromElementVal, this))
+                .on('blur', $.proxy(this.hide, this))
             ;
             
             this.$widget = $(this.getTemplate()).appendTo('body');

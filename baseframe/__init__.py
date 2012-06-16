@@ -15,7 +15,7 @@ jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
                    'baseframe/js/jquery.form.js',
                    'baseframe/js/tiny_mce/jquery.tinymce.js',
                    'baseframe/js/bootstrap-datepicker.js',
-#                   'baseframe/js/bootstrap-timepicker.js',  # Disabled until it can be fixed to behave well
+                   'baseframe/js/bootstrap-timepicker.js',  
                    'baseframe/js/chosen.jquery.js',
 #                   'baseframe/js/jquery.orbit-1.4.0.js',
                    filters='jsmin', output='js/baseframe-jquery.min.js')
