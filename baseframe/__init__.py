@@ -15,7 +15,7 @@ jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
                    'baseframe/js/jquery.form.js',
                    'baseframe/js/tiny_mce/jquery.tinymce.js',
                    'baseframe/js/bootstrap-datepicker.js',
-                   'baseframe/js/bootstrap-timepicker.js',  
+                   'baseframe/js/jquery.timepicker.js',  
                    'baseframe/js/chosen.jquery.js',
 #                   'baseframe/js/jquery.orbit-1.4.0.js',
                    filters='jsmin', output='js/baseframe-jquery.min.js')
@@ -55,6 +55,7 @@ baseframe_css = Bundle(  # bootstrap_less,
                        'baseframe/css/chosen.css',      # Companion to chosen.jquery.js
                        'baseframe/css/orbit.css',       # Companion to jquery.orbit-1.4.0.js
                        'baseframe/css/baseframe.css',   # Externally compiled with Compass
+                       'baseframe/css/jquery.timepicker.css', #For timepicker
                        networkbar_css,                  # Externally compiled with Compass
                        filters='cssmin',
                        output='css/baseframe-packed.css')
