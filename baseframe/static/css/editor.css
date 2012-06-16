@@ -1,38 +1,38 @@
 body {
   font-family: Lato, "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-size: 14px;
-  line-height: 21px;
+  line-height: 22px;
   color: #333;
   margin: 11px 8px 8px;
 }
 
 p {
-  margin: 0 0 21px;
+  margin: 0 0 22px;
 }
 
 ul, ol {
   padding: 0;
-  margin: 0 0 21px 25px;
+  margin: 0 0 22px 25px;
 }
 
 h1 {
   font-size: 30px;
-  line-height: 42px;
+  line-height: 44px;
   margin-top: 0;
-  margin-bottom: 21px;
+  margin-bottom: 22px;
 }
 
 h2 {
   font-size: 25px;
-  line-height: 42px;
-  margin-top: 21px;
+  line-height: 44px;
+  margin-top: 22px;
   margin-bottom: 0;
 }
 
 h3 {
   font-size: 19px;
-  line-height: 21px;
-  margin-top: 21px;
+  line-height: 22px;
+  margin-top: 22px;
   margin-bottom: 0;
 }
 
