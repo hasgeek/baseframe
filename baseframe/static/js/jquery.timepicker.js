@@ -539,4 +539,4 @@ requires jQuery 1.6+
 		else { $.error("Method "+ method + " does not exist on jQuery.timepicker"); }
 	};
 })(jQuery);
- $('input[type="time"]').timepicker({ 'scrollDefaultNow': true })
+ $('input[type="time"]').timepicker({ 'scrollDefaultNow': true });
