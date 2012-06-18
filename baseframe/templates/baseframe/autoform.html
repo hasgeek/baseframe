@@ -2,7 +2,7 @@
 {% from "baseframe/forms.html" import renderform, ajaxform, richtext_editor %}
 
 {% block content %}
-  {{ renderform(form, formid, submit, message, cancel_url, multipart) }}
+  {{ renderform(form=form, formid=formid, submit=submit, message=message, cancel_url=cancel_url, multipart=multipart) }}
 {% endblock %}
 
 {% block footerscripts %}

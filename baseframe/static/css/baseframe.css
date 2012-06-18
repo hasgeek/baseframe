@@ -1012,8 +1012,13 @@ ul, ol {
 }
 
 .btn .caret {
-  margin-top: 9px;
+  margin-top: 10px;
   margin-left: 0;
+}
+
+.dropdown-right {
+  left: auto;
+  right: 0;
 }
 
 form.form-button {
@@ -1101,6 +1106,14 @@ blockquote p {
 
 .push-right {
   float: right;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #333333;
+}
+.modal-header .close {
+  margin-top: 0;
 }
 
 html {
@@ -1365,15 +1378,40 @@ table.mceLayout.focus {
   vertical-align: baseline;
 }
 
+.help-inline.help-error {
+  border: 1px solid #b94a48;
+  color: white !important;
+  background: #b94a48;
+  padding-right: 5px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -khtml-border-radius: 3px;
+  border-radius: 3px;
+  position: relative;
+}
+.help-inline.help-error:before {
+  display: block;
+  content: "";
+  position: absolute;
+  border: 6px solid transparent;
+  border-right: 6px solid #b94a48;
+  left: -13px;
+  top: 5px;
+}
+
+.help-required {
+  color: #b94a48;
+  font-weight: bold;
+}
+
 ul.grid {
   list-style: none;
   margin-left: 0;
 }
 ul.grid.container-fluid {
   padding: 0;
-}
-ul.grid > .row-fluid > [class*="span"]:first-child {
-  padding-left: 6px;
 }
 ul.grid > .row-fluid > [class*="span"] {
   white-space: nowrap;
@@ -1395,6 +1433,12 @@ ul.grid > li.header {
   border-top: 1px solid #b7b7b7;
   border-bottom: 1px solid #b7b7b7;
   font-weight: bold;
+}
+
+.unstyled {
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 .print-only {
