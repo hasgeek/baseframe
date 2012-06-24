@@ -1423,6 +1423,7 @@ ul.grid > li {
   padding-top: 11px;
   padding-bottom: 10px;
   position: relative;
+  margin: 0;
 }
 ul.grid > li:hover {
   border-bottom: 1px solid #b7b7b7;
