@@ -1413,10 +1413,17 @@ ul.grid {
 ul.grid.container-fluid {
   padding: 0;
 }
+ul.grid > .row-fluid > [class*="span"]:first-child {
+  padding-left: 13px;
+}
 ul.grid > .row-fluid > [class*="span"] {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
 }
 ul.grid > li {
   border-bottom: 1px solid #d9d9d9;
@@ -1431,9 +1438,16 @@ ul.grid > li:hover {
 }
 ul.grid > li.header {
   padding-top: 10px;
-  border-top: 1px solid #b7b7b7;
+  border-top: 0;
   border-bottom: 1px solid #b7b7b7;
   font-weight: bold;
+}
+ul.grid > li.header:hover {
+  background: inherit;
+}
+
+.nav.nav-grid {
+  margin-bottom: 0;
 }
 
 .unstyled {

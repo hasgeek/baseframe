@@ -208,13 +208,14 @@ ul.grid
     padding: 0
     // margin-left: -2px
 
-  // & > .row-fluid > [class*="span"]:first-child
-  //   padding-left: 6px
+  & > .row-fluid > [class*="span"]:first-child
+    padding-left: 13px
 
   & > .row-fluid > [class*="span"]
     white-space: nowrap
     overflow: hidden
     text-overflow: ellipsis
+    +box-sizing(border-box)
 
   & > li
     border-bottom: 1px solid #d9d9d9
@@ -229,9 +230,16 @@ ul.grid
 
   & > li.header
     padding-top: $body-line-height / 2 - 1px
-    border-top: 1px solid #b7b7b7
+    // border-top: 1px solid #b7b7b7
+    border-top: 0
     border-bottom: 1px solid #b7b7b7
     font-weight: bold
+
+    &:hover
+      background: inherit
+
+.nav.nav-grid
+  margin-bottom: 0
 
 .unstyled
   margin: 0
