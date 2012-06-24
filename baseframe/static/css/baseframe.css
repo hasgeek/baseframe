@@ -1466,6 +1466,11 @@ ul.grid > li.header:hover {
     -webkit-background-size: 75px 75px;
   }
 }
+@media only screen and (max-width: 767px) {
+  ul.grid > .row-fluid > [class*="span"]:first-child {
+    padding-left: 0;
+  }
+}
 .datepicker {
   background-color: #ffffff;
   border-color: #999;

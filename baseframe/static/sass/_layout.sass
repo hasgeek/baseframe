@@ -253,3 +253,7 @@ ul.grid
   #logo
     background-image: image-url('logo@2x.png')
     -webkit-background-size: image-width('logo.png') image-height('logo.png')
+
+@media only screen and (max-width: 767px)
+  ul.grid > .row-fluid > [class*="span"]:first-child
+    padding-left: 0
