@@ -1812,3 +1812,36 @@ ul.grid > li.header:hover {
     margin-left: 702px;
   }
 }
+/* ================= */
+/* = Media Queries = */
+/* ================= */
+@media screen and (max-width: 767px) {
+  .nav-tabs > li {
+    margin-bottom: 0;
+    float: none;
+    margin-bottom: 3px;
+    margin-left: -12px;
+    margin-right: -12px;
+  }
+  .nav-tabs > li > a {
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    border-radius: 4px;
+    border: 0;
+    line-height: 1;
+  }
+  .nav-tabs > li > a:hover {
+    text-decoration: none;
+    background-color: #EEE;
+    border: 0;
+  }
+
+  .nav-tabs > .active > a, .nav-tabs > .active > a:hover {
+    border: 0;
+    color: white;
+    background-color: #08C;
+  }
+}

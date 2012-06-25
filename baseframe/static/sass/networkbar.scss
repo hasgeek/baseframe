@@ -82,8 +82,9 @@ $networkbar-font: 14px/1.5 Lato, "Lucida Grande", "DejaVu Sans", "Bitstream Vera
                 border-right: 4px solid transparent;
                 border-top: 4px solid #000000;
                 opacity: 0.3;
+                content: "";
                 filter: alpha(opacity=30);
-                content: "▾";
+                // content: "▾";
             }
             ul {
                 position: absolute;

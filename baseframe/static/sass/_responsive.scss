@@ -1,0 +1,62 @@
+/* ================= */
+/* = Media Queries = */
+/* ================= */
+
+
+
+// UP TO LANDSCAPE PHONE
+// ---------------------
+
+@media screen and (max-width: 480px) {
+}
+
+// LANDSCAPE PHONE TO SMALL DESKTOP & PORTRAIT TABLET
+// --------------------------------------------------
+
+@media screen and (max-width: 767px) {
+  .nav-tabs > li {
+    margin-bottom: 0;
+    float: none;
+    margin-bottom: 3px;
+    margin-left: -12px;
+    margin-right: -12px;
+    & > a {
+      @include border-radius(4px);
+      border: 0;
+      line-height: 1;
+      &:hover {
+        text-decoration: none;
+        background-color: #EEE;
+        border: 0;
+      }
+    }
+  }
+  .nav-tabs > .active > a, .nav-tabs > .active > a:hover {
+    border: 0;
+    color: white;
+    background-color: #08C;
+  }
+}
+
+// PORTRAIT TABLET TO DEFAULT DESKTOP
+// ----------------------------------
+
+@media screen and (min-width: 768px) and (max-width: 979px) {
+}
+
+// TABLETS AND BELOW
+// -----------------
+@media screen and (max-width: 979px) {
+}
+
+// DEFAULT DESKTOP
+// ---------------
+
+@media screen and (min-width: 980px) {
+}
+
+// LARGE DESKTOP & UP
+// ------------------
+
+@media screen and (min-width: 1200px) {
+}

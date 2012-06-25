@@ -84,8 +84,8 @@
   border-right: 4px solid transparent;
   border-top: 4px solid #000000;
   opacity: 0.3;
+  content: "";
   filter: alpha(opacity=30);
-  content: "▾";
 }
 #hg-bar ul#hg-barlinks > li ul, #hg-bar ul#hg-usertools > li ul {
   position: absolute;
