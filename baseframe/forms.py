@@ -7,7 +7,7 @@ Standard forms
 from flask import render_template, request, Markup, abort, flash, redirect, json, escape, url_for
 from wtforms.widgets import html_params
 import flask.ext.wtf as wtf
-from coaster import sanitize_html
+from coaster import sanitize_html, make_name
 
 
 class RichText(wtf.TextArea):
@@ -53,7 +53,7 @@ class DateTimeInput(wtf.Input):
         if not value:
             value = ' '
         date_value, time_value = value.split(' ', 1)
-        return Markup(u'<input type="date" data-datepicker="datepicker" %s /> <input type="time" data-provide="timepicker" %s />' % (
+        return Markup(u'<input type="text" class="datetime-date" data-datepicker="datepicker" %s /> <input type="time" class="datetime-time" %s />' % (
             html_params(name=field.name, id=field_id + '-date', value=date_value, **kwargs),
             html_params(name=field.name, id=field_id + '-time', value=time_value, **kwargs)
             ))
@@ -92,6 +92,46 @@ class Form(wtf.Form):
         super(Form, self).__init__(*args, **kwargs)
         # Make editing objects easier
         self.edit_obj = kwargs.get('obj')
+        self.edit_model = kwargs.get('model')
+        self.edit_parent = kwargs.get('parent')
+        if self.edit_obj:
+            self.edit_id = self.edit_obj.id
+            if not self.edit_model:
+                self.edit_model = self.edit_obj.__class__
+            if not self.edit_parent and hasattr(self.edit_obj, 'parent'):
+                self.edit_parent = self.edit_obj.parent
+        else:
+            self.edit_id = None
+
+
+class ValidName(object):
+    def __init__(self, message=None):
+        if not message:
+            message = "Name contains unsupported characters"
+        self.message = message
+
+    def __call__(self, form, field):
+        if make_name(field.data) != field.data:
+            raise wtf.ValidationError(self.message)
+
+
+class AvailableName(object):
+    def __init__(self, message=None, scoped=False):
+        self.scoped = scoped
+        if not message:
+            message = "That URL name is already in use"
+        self.message = message
+
+    def __call__(self, form, field):
+        if form.edit_model:
+            query = form.edit_model.query.filter_by(name=field.data)
+            if form.edit_id:
+                query = query.filter(form.edit_model.id != form.edit_id)
+            if self.scoped:
+                query = query.filter_by(parent=form.edit_parent)
+            existing = query.first()
+            if existing:
+                raise wtf.ValidationError(self.message)
 
 
 class ConfirmDeleteForm(Form):
