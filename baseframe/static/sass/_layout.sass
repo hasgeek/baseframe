@@ -87,7 +87,7 @@ span.loading
     display: none
 
 .section
-  margin-bottom: 21px
+  margin-bottom: $body-line-height
 
 .usertools
   list-style: none
@@ -186,6 +186,7 @@ table.mceLayout
   padding-right: 5px
   +border-radius(3px)
   position: relative
+  margin-left: 6px
 
   &:before
     display: block
@@ -199,6 +200,9 @@ table.mceLayout
 .help-required
   color: #b94a48
   font-weight: bold
+
+input.datetime-date, input.datetime-time
+  width: 6em
 
 ul.grid
   list-style: none

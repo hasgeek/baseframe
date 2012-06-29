@@ -1237,7 +1237,7 @@ span.loading.hidden {
 }
 
 .section {
-  margin-bottom: 21px;
+  margin-bottom: 22px;
 }
 
 .usertools {
@@ -1390,6 +1390,7 @@ table.mceLayout.focus {
   -khtml-border-radius: 3px;
   border-radius: 3px;
   position: relative;
+  margin-left: 6px;
 }
 .help-inline.help-error:before {
   display: block;
@@ -1404,6 +1405,10 @@ table.mceLayout.focus {
 .help-required {
   color: #b94a48;
   font-weight: bold;
+}
+
+input.datetime-date, input.datetime-time {
+  width: 6em;
 }
 
 ul.grid {
