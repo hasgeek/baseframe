@@ -3,3 +3,4 @@ jsmin
 cssmin
 Flask-Assets
 https://github.com/hasgeek/coaster/zipball/master
+bleach

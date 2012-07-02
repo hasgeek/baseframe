@@ -7,13 +7,16 @@ Standard forms
 from flask import render_template, request, Markup, abort, flash, redirect, json, escape, url_for
 from wtforms.widgets import html_params
 import flask.ext.wtf as wtf
-from coaster import sanitize_html, make_name
+from coaster import make_name
+import bleach
 
 
 class RichText(wtf.TextArea):
     """
     Rich text widget.
     """
+    input_type = "tinymce"
+
     def __call__(self, field, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         if c:
@@ -66,11 +69,70 @@ class RichTextField(wtf.TextAreaField):
     widget = RichText()
 
     # TODO: Accept valid_tags as a init parameter
+    def __init__(self,
+            # WTForms fields
+            label=u'',
+            validators=None,
+            filters=(),
+            description=u'',
+            id=None,
+            default=None,
+            widget=None,
+            _form=None,
+            _name=None,
+            _prefix='',
+
+            # Additional fields
+            content_css=None,
+            buttons1=None, buttons2=None, buttons3=None,
+            blockformats=None,
+            width=None, height=None,
+            valid_elements=None, sanitize_tags=None, sanitize_attributes=None, **kwargs):
+
+        super(RichTextField, self).__init__(label=label, validators=validators, filters=filters,
+            description=description, id=id, default=default, widget=widget, _form=_form, _name=_name,
+            _prefix=_prefix, **kwargs)
+
+        if buttons1 is None:
+            buttons1 = "bold,italic,|,sup,sub,|,bullist,numlist,|,link,unlink,|,blockquote,|,removeformat,code"
+        if buttons2 is None:
+            buttons2 = ""
+        if buttons3 is None:
+            buttons3 = ""
+        if blockformats is None:
+            blockformats = "p,h3,h4,h5,h6,blockquote,dt,dd"
+        if width is None:
+            width = "100%"
+        if height is None:
+            height = "159"
+        # valid_elements and sanitize_tags/attributes are distinct because one is used by TinyMCE and
+        # the other by bleach. Their formats are incompatible and we're too lazy to write code to
+        # autogenerate one from the other.
+        if valid_elements is None:
+            valid_elements = "p,br,strong/b,em/i,sup,sub,h3,h4,h5,h6,ul,ol,li,a[!href|title|target],blockquote,code"
+        if sanitize_tags is None:
+            sanitize_tags = ['p', 'br', 'strong', 'em', 'sup', 'sub', 'h3', 'h4', 'h5', 'h6',
+                'ul', 'ol', 'li', 'a', 'blockquote', 'code']
+        if sanitize_attributes is None:
+            sanitize_attributes = {'a': ['href', 'title', 'target']}
+
+        self.content_css = content_css
+        self.buttons1 = buttons1
+        self.buttons2 = buttons2
+        self.buttons3 = buttons3
+        self.blockformats = blockformats
+        self.width = width
+        self.height = height
+        self.valid_elements = valid_elements
+        self.sanitize_tags = sanitize_tags
+        self.sanitize_attributes = sanitize_attributes
 
     def process_formdata(self, valuelist):
         super(RichTextField, self).process_formdata(valuelist)
         # Sanitize data
-        self.data = sanitize_html(self.data)
+        self.data = bleach.linkify(bleach.clean(self.data,
+            tags=self.sanitize_tags,
+            attributes=self.sanitize_attributes))
 
 
 class DateTimeField(wtf.DateTimeField):

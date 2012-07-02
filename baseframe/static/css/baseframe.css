@@ -984,6 +984,14 @@ ul, ol {
   line-height: 22px;
 }
 
+.well {
+  padding: 21px 14px;
+}
+.well .nav.nav-list {
+  margin-left: -14px;
+  margin-right: -14px;
+}
+
 .well.nav.nav-list {
   padding-top: 21px;
   padding-bottom: 21px;
@@ -1405,6 +1413,11 @@ table.mceLayout.focus {
 .help-required {
   color: #b94a48;
   font-weight: bold;
+  font-family: monospace;
+}
+
+.form-horizontal .help-required {
+  margin-right: -10px;
 }
 
 input.datetime-date, input.datetime-time {

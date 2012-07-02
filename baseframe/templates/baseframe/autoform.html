@@ -6,6 +6,10 @@
 {% endblock %}
 
 {% block footerscripts %}
-  {{ richtext_editor() }}
+  {% for field in form -%}
+    {% if field.widget.input_type == 'tinymce' -%}
+      {{ richtext_editor(field) }}
+    {%- endif %}
+  {%- endfor %}
   {{ ajaxform(formid, request, ajax) }}
 {% endblock %}
