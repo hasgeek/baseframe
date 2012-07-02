@@ -1,6 +1,7 @@
 @import "compass";
 @import "compass/layout";
 @import "compass/css3/box";
+@import "settings";
 /* @group Base */
 .chzn-container {
   //font-size: 13px;
@@ -59,8 +60,8 @@
   overflow: hidden;
   white-space: nowrap;
   position: relative;
-  height: 26px;
-  line-height: 26px;
+  height: 30px;
+  line-height: 30px;
   padding: 0 0 0 8px;
   color: #333;
   text-decoration: none;
