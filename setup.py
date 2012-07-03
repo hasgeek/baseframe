@@ -12,6 +12,7 @@ requires = [
     'jsmin',
     'cssmin',
     'Flask-Assets',
+    'bleach',
     ]
 
 
@@ -50,7 +51,7 @@ setup(name='baseframe',
       test_suite='tests',
       install_requires=requires,
       cmdclass={'build_py': BaseframeBuildPy},
-      dependency_links = [
-        "https://github.com/hasgeek/coaster/tarball/master#egg=coaster",
-      ]
+      dependency_links=[
+          "https://github.com/hasgeek/coaster/tarball/master#egg=coaster",
+          ]
       )
