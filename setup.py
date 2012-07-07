@@ -12,6 +12,8 @@ requires = [
     'jsmin',
     'cssmin',
     'Flask-Assets',
+    'Flask-WTF',
+    'wtforms',
     'bleach',
     ]
 
@@ -28,7 +30,7 @@ class BaseframeBuildPy(build_py):
 
 
 setup(name='baseframe',
-      version='0.2.4',
+      version='0.2.5',
       description='Baseframe for HasGeek projects',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
