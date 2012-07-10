@@ -1,6 +1,6 @@
 {% macro renderfield(field, css_class="", widget_css_class=None, tabIndex='', autofocus=False) -%}
 <div class="control-group{% if field.errors %} error{% endif %}{% if css_class %} {{ css_class}}{% endif %}" id="field-{{ field.id }}">
-  {% if field.widget.input_type == 'checkbox' %}
+  {%- if field.widget.input_type == 'checkbox' %}
     <div class="controls inline">{% if widget_css_class %}{{ field(class=widget_css_class, tabindex=tabIndex) }}{% else %}{{ field(tabindex=tabIndex) }}{% endif %} {{ field.label }}{% if field.description %}
       {% if field.errors -%}
         {% for error in field.errors -%}
@@ -8,40 +8,40 @@
         {% endfor %}
       {% endif %}
       <p class="help-block">{{ field.description }}</p>{% endif %}</div>
-  {% else %}
+  {%- else %}
     <label class="control-label" for="{{ field.id }}">{{ field.label.text }} {% if field.flags.required -%}
       <span class="help-required" title="Required">*</span>
     {%- endif %}</label>
     <div class="controls {%- if field.widget.html_tag in ['ul', 'ol'] %} listwidget {%- endif %}">
-      {% if autofocus %}
-        {% if widget_css_class %}
+      {%- if autofocus %}
+        {%- if widget_css_class %}
           {{ field(autofocus="autofocus", class=widget_css_class, tabindex=tabIndex) }}
-        {% else %}
+        {%- else %}
           {{ field(autofocus="autofocus", tabindex=tabIndex) }}
-        {% endif %}
-      {% else %}
-        {% if widget_css_class %}
+        {%- endif %}
+      {%- else %}
+        {%- if widget_css_class %}
           {{ field(class=widget_css_class, tabindex=tabIndex) }}
-        {% elif (field.widget.input_type or "") == "" %}
+        {%- elif (field.widget.input_type or "") == "" %}
           {{ field }}
-        {% else %}
+        {%- else %}
           {{ field(tabindex=tabIndex) }}
-        {% endif %}
-      {% endif %}
-      {% if field.errors -%}
+        {%- endif %}
+      {%- endif %}
+      {%- if field.errors -%}
         {% for error in field.errors -%}
           <span class="help-inline help-error">{{ error }}</span>
         {% endfor %}
-      {% endif %}
+      {%- endif %}
       {% if field.description %}<p class="help-block">{{ field.description }}</p>{% endif %}
     </div>
-  {% endif %}
+  {%- endif %}
 </div>
-{% endmacro %}
+{%- endmacro %}
 
-{% macro rendersubmit(buttons=[], css_class="", tabIndex='', cancel_url='') %}
+{% macro rendersubmit(buttons=[], css_class="", tabIndex='', cancel_url='') -%}
 <div class="form-actions clearfix{% if css_class %} {{ css_class}}{% endif %}">
-  {% for name, value, widget_class in buttons %}
+  {% for name, value, widget_class in buttons -%}
     <button type="submit"
       {%- if name %} name="{{ name|e }}"{% else %} {% endif -%}
       {% if widget_class %} class="btn {{ widget_class|e }}" {% else %} class="btn"{% endif -%}
@@ -51,29 +51,33 @@
   {% if cancel_url %}<a href="{{ cancel_url }}" class="btn">Cancel</a>{% endif %}
   <span class="loading hidden">&nbsp;</span>
 </div>
-{% endmacro %}
+{%- endmacro %}
 
-{% macro renderform_inner(form, formid) %}
-  {% if form.errors %}
+{% macro renderform_inner(form, formid) -%}
+  {%- if form.errors %}
     <div class="alert alert-error">
       <a class="close" data-dismiss="alert">×</a>
       Please correct the indicated errors.
     </div>
-  {% endif %}
+  {%- endif %}
   {% if message %}<p>{{ message }}</p>{% endif %}
   <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
   {{ form.hidden_tag() }}
-  {% if form.csrf_token.errors %}
+  {%- if form.csrf_token.errors %}
     {% for error in form.csrf_token.errors %}<div class="alert alert-error">{{ error }}</div>{% endfor %}
   {% endif %}
-  {% for field in form %}
-    {% if field.widget.input_type and field.widget.input_type == 'hidden' -%}
-    {# Don't show hidden #}
+  {% for field in form -%}
+    {%- if field.widget.input_type and field.widget.input_type == 'hidden' -%}
+      {# Don't show hidden #}
     {%- else -%}
-    {{ renderfield(field) }}
+      {%- if field.id == 'title' -%}
+        {{ renderfield(field, widget_css_class="input-primary span5") }}
+      {%- else -%}
+        {{ renderfield(field) }}
+      {%- endif -%}
     {%- endif %}
   {% endfor %}
-{% endmacro %}
+{%- endmacro %}
 
 {% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=False) %}
 <form id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="form-horizontal">
@@ -101,7 +105,7 @@
 {%- endif %}
 {%- endmacro %}
 
-{% macro richtext_editor(field) %}
+{% macro richtext_editor(field) -%}
   <script type="text/javascript">
     $(function() {
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
