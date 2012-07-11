@@ -117,6 +117,9 @@ class RichTextField(wtf.TextAreaField):
         if sanitize_attributes is None:
             sanitize_attributes = {'a': ['href', 'title', 'target']}
 
+        self.linkify = linkify
+        self.nofollow = nofollow
+
         self.content_css = content_css
         self.buttons1 = buttons1
         self.buttons2 = buttons2
@@ -139,6 +142,7 @@ class RichTextField(wtf.TextAreaField):
                 self.data = bleach.linkify(self.data)
             else:
                 self.data = bleach.linkify(self.data, callbacks=[])
+
 
 class DateTimeField(wtf.DateTimeField):
     """
