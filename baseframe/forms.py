@@ -87,6 +87,7 @@ class RichTextField(wtf.TextAreaField):
             buttons1=None, buttons2=None, buttons3=None,
             blockformats=None,
             width=None, height=None,
+            linkify=True, nofollow=True,
             valid_elements=None, sanitize_tags=None, sanitize_attributes=None, **kwargs):
 
         super(RichTextField, self).__init__(label=label, validators=validators, filters=filters,
@@ -130,10 +131,14 @@ class RichTextField(wtf.TextAreaField):
     def process_formdata(self, valuelist):
         super(RichTextField, self).process_formdata(valuelist)
         # Sanitize data
-        self.data = bleach.linkify(bleach.clean(self.data,
+        self.data = bleach.clean(self.data,
             tags=self.sanitize_tags,
-            attributes=self.sanitize_attributes))
-
+            attributes=self.sanitize_attributes)
+        if self.linkify:
+            if self.nofollow:
+                self.data = bleach.linkify(self.data)
+            else:
+                self.data = bleach.linkify(self.data, callbacks=[])
 
 class DateTimeField(wtf.DateTimeField):
     """
