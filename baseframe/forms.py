@@ -11,7 +11,7 @@ from coaster import make_name
 import bleach
 
 
-class RichText(wtf.TextArea):
+class RichText(wtf.widgets.TextArea):
     """
     Rich text widget.
     """
@@ -26,7 +26,7 @@ class RichText(wtf.TextArea):
         return super(RichText, self).__call__(field, **kwargs)
 
 
-class SubmitInput(wtf.SubmitInput):
+class SubmitInput(wtf.widgets.SubmitInput):
     """
     Submit input with pre-defined classes.
     """
@@ -62,7 +62,7 @@ class DateTimeInput(wtf.widgets.Input):
             ))
 
 
-class RichTextField(wtf.TextAreaField):
+class RichTextField(wtf.fields.TextAreaField):
     """
     Rich text field.
     """
@@ -144,7 +144,7 @@ class RichTextField(wtf.TextAreaField):
                 self.data = bleach.linkify(self.data, callbacks=[])
 
 
-class DateTimeField(wtf.DateTimeField):
+class DateTimeField(wtf.fields.DateTimeField):
     """
     A text field which stores a `datetime.datetime` matching a format.
     """
