@@ -87,7 +87,7 @@ class RichTextField(wtf.TextAreaField):
             buttons1=None, buttons2=None, buttons3=None,
             blockformats=None,
             width=None, height=None,
-            norel=False,
+            nofollow=False,
             valid_elements=None, sanitize_tags=None, sanitize_attributes=None, **kwargs):
 
         super(RichTextField, self).__init__(label=label, validators=validators, filters=filters,
@@ -134,7 +134,7 @@ class RichTextField(wtf.TextAreaField):
         self.data = bleach.clean(self.data,
             tags=self.sanitize_tags,
             attributes=self.sanitize_attributes)
-        if self.norel:
+        if self.nofollow:
             self.data = bleach.linkify(self.data)
         else:
             self.data = bleach.linkify(self.data, callbacks=[])
