@@ -40,7 +40,7 @@ class SubmitInput(wtf.SubmitInput):
         return super(SubmitInput, self).__call__(field, **kwargs)
 
 
-class DateTimeInput(wtf.Input):
+class DateTimeInput(wtf.widgets.Input):
     """
     Render date and time inputs.
     """
