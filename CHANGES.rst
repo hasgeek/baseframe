@@ -1,3 +1,10 @@
+0.2.7
+-----
+
+* Minor style tweaks
+* Modernizr build with more features
+* Limit automatic tab selection to .nav-tabs-auto
+
 0.2.6
 -----
 

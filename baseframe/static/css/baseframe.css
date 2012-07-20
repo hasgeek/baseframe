@@ -1019,6 +1019,10 @@ ul, ol {
   margin-top: 22px;
 }
 
+.nav-pills > li > a {
+  margin-top: 0;
+}
+
 .btn .caret {
   margin-top: 10px;
   margin-left: 0;
@@ -1155,10 +1159,13 @@ h3 a:hover, h3 a:active {
 }
 
 header {
-  margin-bottom: 1em;
+  margin-bottom: 22px;
 }
 header #page-header {
   border-bottom: 1px solid #b7b7b7;
+}
+header #page-header h1 {
+  margin-top: 11px;
 }
 
 html, body {
