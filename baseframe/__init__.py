@@ -12,11 +12,6 @@ baseframe = Blueprint('baseframe', __name__,
                       template_folder='templates')
 
 jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
-                   'baseframe/js/jquery.form.js',
-                   'baseframe/js/tiny_mce/jquery.tinymce.js',
-                   'baseframe/js/bootstrap-datepicker.js',
-                   'baseframe/js/jquery.timepicker.js',
-                   'baseframe/js/chosen.jquery.js',
 #                   'baseframe/js/jquery.orbit-1.4.0.js',
                    filters='jsmin', output='js/baseframe-jquery.min.js')
 
@@ -29,19 +24,32 @@ bootstrap_js = Bundle('baseframe/js/bootstrap/bootstrap-alert.js',
                       'baseframe/js/bootstrap/bootstrap-modal.js',
                       'baseframe/js/bootstrap/bootstrap-tooltip.js',
 #                      'baseframe/js/bootstrap/bootstrap-popover.js',
-                      'baseframe/js/bootstrap/bootstrap-scrollspy.js',
+#                      'baseframe/js/bootstrap/bootstrap-scrollspy.js',
                       'baseframe/js/bootstrap/bootstrap-tab.js',
                       'baseframe/js/bootstrap/bootstrap-transition.js',
-                      'baseframe/js/bootstrap/bootstrap-typeahead.js',
+#                      'baseframe/js/bootstrap/bootstrap-typeahead.js',
                       )
 
+
+extra_js = Bundle('baseframe/js/jquery.form.js',
+                  'baseframe/js/tiny_mce/jquery.tinymce.js',
+                  'baseframe/js/bootstrap-datepicker.js',
+                  'baseframe/js/jquery.timepicker.js',
+                  'baseframe/js/chosen.jquery.js',
+                  )
+
 networkbar_js = Bundle('baseframe/js/networkbar.js')
+
 baseframe_js = Bundle(jquery_js,
                       bootstrap_js,
-                      #'baseframe/js/bootstrap/bootstrap.min.js',
+                      extra_js,
+                      networkbar_js,
                       'baseframe/js/baseframe.js', debug=False,
                       filters='jsmin', output='js/baseframe-packed.js')
 
+# Optional extras
+mousetrap_js = Bundle('baseframe/js/mousetrap.js')
+toastr_js = Bundle('baseframe/js/toastr.js')
 
 #bootstrap_less = Bundle('baseframe/less/bootstrap/bootstrap.less',
 #                        'baseframe/less/bootstrap/responsive.less',
@@ -59,6 +67,9 @@ baseframe_css = Bundle(  # bootstrap_less,
                        networkbar_css,                  # Externally compiled with Compass
                        filters='cssmin',
                        output='css/baseframe-packed.css')
+
+# Optional extras
+toastr_css = Bundle('baseframe/css/toastr.css')
 
 
 @baseframe.route('/favicon.ico')
