@@ -1,3 +1,9 @@
+0.2.8
+-----
+
+* Added optional mousetrap js for keyboard control
+* Added optional toastr js for floating notifications
+
 0.2.7
 -----
 
