@@ -941,27 +941,26 @@ ul.icons li .icon-large:before {
 .page-header h1 {
   line-height: 44px;
   margin-top: 0;
-  margin-bottom: 22px;
 }
 
 h1 {
   font-size: 30px;
   line-height: 44px;
-  margin-top: 22px;
+  margin-top: 11px;
   margin-bottom: 0;
 }
 
 h2 {
   font-size: 25px;
   line-height: 44px;
-  margin-top: 22px;
+  margin-top: 11px;
   margin-bottom: 0;
 }
 
 h3 {
   font-size: 19px;
   line-height: 22px;
-  margin-top: 22px;
+  margin-top: 11px;
   margin-bottom: 0;
 }
 
@@ -969,23 +968,18 @@ h1 small, h2 small, h3 small {
   line-height: 22px;
 }
 
-p {
-  margin: 0 0 22px;
-}
-
 ul, ol {
   padding: 0;
-  margin: 0 0 22px 25px;
 }
 
 .lead {
-  margin-bottom: 22px;
+  margin-bottom: 11px;
   font-size: 18px;
   line-height: 22px;
 }
 
 .well {
-  padding: 21px 14px;
+  padding: 10px 14px;
 }
 .well .nav.nav-list {
   margin-left: -14px;
@@ -993,8 +987,8 @@ ul, ol {
 }
 
 .well.nav.nav-list {
-  padding-top: 21px;
-  padding-bottom: 21px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .nav-list > li > a, .nav-list .nav-header {
@@ -1016,11 +1010,25 @@ ul, ol {
 }
 
 .nav li + .nav-header {
-  margin-top: 22px;
+  margin-top: 11px;
 }
 
 .nav-pills > li > a {
   margin-top: 0;
+}
+
+span[class^="icon-"], span[class*=" icon-"] {
+  text-align: inherit;
+  margin-left: 1.5em;
+  position: relative;
+  width: auto;
+}
+span[class^="icon-"]:before, span[class*=" icon-"]:before {
+  position: absolute;
+  left: -1.5em;
+  top: 0.125em;
+  width: 1.25em;
+  text-align: center;
 }
 
 .btn .caret {

@@ -1,3 +1,9 @@
+0.2.9
+-----
+
+* Giving up on having a perfect typographic grid. It's not possible on the web
+* New <span class="icon-*"> for use in menus with long lines that may wrap
+
 0.2.8
 -----
 
@@ -14,8 +20,8 @@
 0.2.6
 -----
 
-* linkify and rel=nofollow on links are now optional in RichTextField.
-* Many changes since 0.1. See git commit history for details.
+* linkify and rel=nofollow on links are now optional in RichTextField
+* Many changes since 0.1. See git commit history for details
   
 0.1
 ---
