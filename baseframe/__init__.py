@@ -90,6 +90,11 @@ def robots():
                                'robots.txt', mimetype='text/plain')
 
 
+@baseframe.route('/_toastr_messages.js')
+def toastr_messages_js():
+    return render_template('toastr_messages.js')
+
+
 @baseframe.app_errorhandler(404)
 def error404(e):
     return render_template('404.html'), 404

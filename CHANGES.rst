@@ -1,3 +1,14 @@
+0.2.11
+------
+
+* Toastr messages can now be included via a JS include in the footer to
+   prevent them from showing again on back/front navigation
+
+0.2.10
+------
+
+* New logo and header blocks in the layout
+
 0.2.9
 -----
 
