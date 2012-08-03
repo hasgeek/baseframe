@@ -59,7 +59,10 @@
     <header>
       {{ networkbar(siteid=config['SITE_ID'], login=config['LASTUSER_CLIENT_ID'] and true or false) }}
       <div id="page-header" class="container">
-        <div id="logo"><a href="{{ url_for('index') }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
+        {% block logo -%}
+          <div id="logo"><a href="{{ url_for('index') }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
+        {%- endblock %}
+        {%- block header %}{% endblock %}
       </div>
     </header>
     {%- endblock %}
