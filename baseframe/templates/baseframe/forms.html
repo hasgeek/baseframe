@@ -1,36 +1,61 @@
-{% macro renderfield(field, css_class="", widget_css_class=None, tabIndex='', autofocus=False) -%}
-<div class="control-group{% if field.errors %} error{% endif %}{% if css_class %} {{ css_class}}{% endif %}" id="field-{{ field.id }}">
+{% macro renderfield(field, css_class="", widget_css_class=None, sidetext=None, tabindex='', autofocus=False) -%}
+<div class="control-group{% if field.errors %} error{% endif %}{% if css_class %} {{ css_class}}{% endif %} {%- if field.widget.html_tag in ['ul', 'ol'] %} listwidget {%- endif %}" id="field-{{ field.id }}">
   {%- if field.widget.input_type == 'checkbox' %}
-    <div class="controls inline">{% if widget_css_class %}{{ field(class=widget_css_class, tabindex=tabIndex) }}{% else %}{{ field(tabindex=tabIndex) }}{% endif %} {{ field.label }}{% if field.description %}
-      {% if field.errors -%}
-        {% for error in field.errors -%}
-          <span class="help-inline help-error">{{ error }}</span>
-        {% endfor %}
-      {% endif %}
-      <p class="help-block">{{ field.description }}</p>{% endif %}</div>
+    <div class="controls inline">{% if widget_css_class %}{{ field(class=widget_css_class, tabindex=tabindex) }}{% else %}{{ field(tabindex=tabindex) }}{% endif %} {{ field.label }}
+      {%- if sidetext %}
+        <span class="help-inline">{{ sidetext }}</span>
+      {%- endif %}
+      {%- if field.description %}
+        {%- if field.errors -%}
+          {%- for error in field.errors %}
+            <p class="help-error"><span>{{ error }}</span></p>
+          {%- endfor %}
+        {%- endif %}
+        <p class="help-block">{{ field.description }}</p>
+      {%- endif %}
+    </div>
   {%- else %}
     <label class="control-label" for="{{ field.id }}">{{ field.label.text }} {% if field.flags.required -%}
       <span class="help-required" title="Required">*</span>
     {%- endif %}</label>
-    <div class="controls {%- if field.widget.html_tag in ['ul', 'ol'] %} listwidget {%- endif %}">
+    <div class="controls">
       {%- if autofocus %}
         {%- if widget_css_class %}
-          {{ field(autofocus="autofocus", class=widget_css_class, tabindex=tabIndex) }}
+          {%- if tabindex %}
+            {{ field(autofocus="autofocus", class=widget_css_class, tabindex=tabindex) }}
+          {%- else %}
+            {{ field(autofocus="autofocus", class=widget_css_class) }}
+          {%- endif %}
         {%- else %}
-          {{ field(autofocus="autofocus", tabindex=tabIndex) }}
+          {%- if tabindex %}
+            {{ field(autofocus="autofocus", tabindex=tabindex) }}
+          {%- else %}
+            {{ field(autofocus="autofocus") }}
+          {%- endif %}
         {%- endif %}
       {%- else %}
         {%- if widget_css_class %}
-          {{ field(class=widget_css_class, tabindex=tabIndex) }}
+          {%- if tabindex %}
+            {{ field(class=widget_css_class, tabindex=tabindex) }}
+          {%- else %}
+            {{ field(class=widget_css_class) }}
+          {%- endif %}
         {%- elif (field.widget.input_type or "") == "" %}
-          {{ field }}
+          {{ field() }}
         {%- else %}
-          {{ field(tabindex=tabIndex) }}
+          {%- if tabindex %}
+            {{ field(tabindex=tabindex) }}
+          {%- else %}
+            {{ field() }}
+          {%- endif %}
         {%- endif %}
+      {%- endif %}
+      {%- if sidetext %}
+        <span class="help-inline">{{ sidetext }}</span>
       {%- endif %}
       {%- if field.errors -%}
         {% for error in field.errors -%}
-          <span class="help-inline help-error">{{ error }}</span>
+          <p class="help-error"><span>{{ error }}</span></p>
         {% endfor %}
       {%- endif %}
       {% if field.description %}<p class="help-block">{{ field.description }}</p>{% endif %}
@@ -39,13 +64,13 @@
 </div>
 {%- endmacro %}
 
-{% macro rendersubmit(buttons=[], css_class="", tabIndex='', cancel_url='') -%}
+{% macro rendersubmit(buttons=[], css_class="", tabindex='', cancel_url='') -%}
 <div class="form-actions clearfix{% if css_class %} {{ css_class}}{% endif %}">
   {% for name, value, widget_class in buttons -%}
     <button type="submit"
       {%- if name %} name="{{ name|e }}"{% else %} {% endif -%}
       {% if widget_class %} class="btn {{ widget_class|e }}" {% else %} class="btn"{% endif -%}
-      {%- if tabIndex %} tabindex="{{ tabIndex }}" {% endif -%}
+      {%- if tabindex %} tabindex="{{ tabindex }}" {% endif -%}
       >{{ value|e }}</button>
   {% endfor %}
   {% if cancel_url %}<a href="{{ cancel_url }}" class="btn">Cancel</a>{% endif %}
@@ -66,15 +91,13 @@
   {%- if form.csrf_token.errors %}
     {% for error in form.csrf_token.errors %}<div class="alert alert-error">{{ error }}</div>{% endfor %}
   {% endif %}
+  {%- set autofocus = true %}
   {% for field in form -%}
     {%- if field.widget.input_type and field.widget.input_type == 'hidden' -%}
       {# Don't show hidden #}
     {%- else -%}
-      {%- if field.id == 'title' -%}
-        {{ renderfield(field, widget_css_class="input-primary span5") }}
-      {%- else -%}
-        {{ renderfield(field) }}
-      {%- endif -%}
+      {{ renderfield(field, widget_css_class="field-" + field.id, autofocus=autofocus) }}
+      {%- if autofocus %}{% set autofocus = false %}{% endif %}
     {%- endif %}
   {% endfor %}
 {%- endmacro %}

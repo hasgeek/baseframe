@@ -50,11 +50,12 @@
 
   text-shadow: 0 1px 1px rgba(255,255,255,.75);
 
-  @include border-radius(4px);
+  @include border-radius(3px);
   @include background-clip(padding-box);
   //border: 1px solid #aaaaaa;
   //@include box-shadow(0 0 3px #ffffff inset, 0 1px 1px rgba(0,0,0,0.1));
-  @include box-shadow(0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05));
+  // @include box-shadow(0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05));
+  @include box-shadow(0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.5) inset);
   @include transition(border linear .2s, box-shadow linear .2s);
   display: block;
   overflow: hidden;
@@ -78,8 +79,8 @@
 .chzn-container-single .chzn-single abbr {
   display: block;
   position: absolute;
-  right: 26px;
-  top: 6px;
+  right: 15px;
+  top: 10px;
   width: 12px;
   height: 13px;
   font-size: 1px;
@@ -99,7 +100,7 @@
   width: 18px;
 }
 .chzn-container-single .chzn-single div b {
-  background: image-url('chosen-sprite.png') no-repeat 0 0;
+  background: image-url('chosen-sprite.png') no-repeat 0 3px;
   display: block;
   width: 100%;
   height: 100%;
@@ -145,13 +146,15 @@
 /* @group Multi Chosen */
 .chzn-container-multi .chzn-choices {
   background-color: #fff;
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
-  background-image: -webkit-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
-  background-image: -moz-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
-  background-image: -o-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
-  background-image: -ms-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
-  background-image: linear-gradient(top, #eeeeee 1%, #ffffff 15%);
-  border: 1px solid #aaa;
+  // background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
+  // background-image: -webkit-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
+  // background-image: -moz-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
+  // background-image: -o-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
+  // background-image: -ms-linear-gradient(top, #eeeeee 1%, #ffffff 15%);
+  // background-image: linear-gradient(top, #eeeeee 1%, #ffffff 15%);
+  // border: 1px solid #aaa;
+  border: 1px solid #ccc;
+  @include border-radius(3px);
   margin: 0;
   padding: 0;
   cursor: text;
@@ -159,6 +162,8 @@
   height: auto !important;
   height: 1%;
   position: relative;
+  @include box-shadow( 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.5) inset);
+  @include transition(border linear .2s, box-shadow linear .2s)
 }
 .chzn-container-multi .chzn-choices li {
   float: left;
@@ -347,14 +352,17 @@
   border-left: none;
 }
 .chzn-container-active .chzn-single-with-drop div b {
-  background-position: -18px 1px;
+  background-position: -18px 4px;
 }
 .chzn-container-active .chzn-choices {
-  -webkit-box-shadow: 0 0 5px rgba(0,0,0,.3);
-  -moz-box-shadow   : 0 0 5px rgba(0,0,0,.3);
-  -o-box-shadow     : 0 0 5px rgba(0,0,0,.3);
-  box-shadow        : 0 0 5px rgba(0,0,0,.3);
-  border: 1px solid #5897fb;
+  // -webkit-box-shadow: 0 0 5px rgba(0,0,0,.3);
+  // -moz-box-shadow   : 0 0 5px rgba(0,0,0,.3);
+  // -o-box-shadow     : 0 0 5px rgba(0,0,0,.3);
+  // box-shadow        : 0 0 5px rgba(0,0,0,.3);
+  // border: 1px solid #5897fb;
+  border: 1px solid rgba(82,168,236,.8) !important;
+  @include box-shadow(0 0 8px rgba(82,168,236,.6));
+  @include transition(border linear .2s, box-shadow linear .2s);
 }
 .chzn-container-active .chzn-choices .search-field input {
   color: #111 !important;

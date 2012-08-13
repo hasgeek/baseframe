@@ -28,10 +28,11 @@ h3
 header
   //background-color: whiteSmoke
   margin-bottom: $body-line-height
-  #page-header
-    border-bottom: 1px solid $color-outline
-    h1
-      margin-top: $body-line-height / 2
+
+#page-header
+  border-bottom: 1px solid $color-outline
+  h1
+    margin-top: $body-line-height / 2
 
 // Start sticky footer
 html, body
@@ -80,8 +81,8 @@ footer .container
 #logo-presents
   @include replace-text-with-dimensions('hasgeek-presents.png')
 
-span.loading
-  display: inline-block
+.loading
+  +inline-block
   background: image-url('ajax-loader.gif') center no-repeat
   width: 16px
   height: 16px
@@ -142,12 +143,12 @@ span.loading
     padding: 0 0.5em
     white-space: nowrap
 
-
 // Rich text editor
 table.mceLayout
   @include border-radius(4px)
   @include transition(border linear .2s, box-shadow linear .2s)
   border: 1px solid #ccc !important
+  +box-shadow(0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.5) inset)
   tr.mceFirst td.mceToolbar.mceFirst
     @include border-top-left-radius(4px)
     @include border-top-right-radius(4px)
@@ -161,11 +162,17 @@ table.mceLayout
     @include box-shadow(0 0 8px rgba(82,168,236,.6))
     @include transition(border linear .2s, box-shadow linear .2s)
 
+// Forms
+.form-horizontal
+  max-width: 800px
+  // margin-left: auto
+  // margin-right: auto
+
 .listwidget
   ul, ol
-    padding-top: 5px
     list-style: none
     margin-left: 0
+    margin-bottom: 0
 
     input
       vertical-align: baseline
@@ -174,6 +181,9 @@ table.mceLayout
       display: inline
       vertical-align: baseline
 
+.form-horizontal .listwidget .control-label
+  padding-top: 0
+
 .controls.inline
   input[type="checkbox"]
     vertical-align: baseline
@@ -181,23 +191,29 @@ table.mceLayout
     display: inline
     vertical-align: baseline
 
-.help-inline.help-error
-  border: 1px solid #b94a48
-  color: white !important
-  background: #b94a48
-  padding-right: 5px
-  +border-radius(3px)
-  position: relative
-  margin-left: 6px
+.controls.inline, .listwidget ul
+  label
+    margin-left: 0.25em
 
-  &:before
-    display: block
-    content: ""
-    position: absolute
-    border: 6px solid transparent
-    border-right: 6px solid #b94a48
-    left: -13px
-    top: 5px
+.help-error
+  margin-top: 11px
+  span
+    border: 1px solid #b94a48
+    color: white !important
+    background: #b94a48
+    padding: 4px
+    +border-radius(3px)
+    position: relative
+    margin-top: 3px
+
+    &:before
+      display: block
+      content: ""
+      position: absolute
+      border: 6px solid transparent
+      border-bottom: 6px solid #b94a48
+      top: -13px
+      left: 5px
 
 .help-required
   color: #b94a48
@@ -205,10 +221,37 @@ table.mceLayout
   font-family: monospace
 
 .form-horizontal .help-required
-  margin-right: -10px
+  margin-right: -11px
+
+.control-label
+  font-weight: bold
 
 input.datetime-date, input.datetime-time
   width: 6em
+
+textarea
+  width: 90%
+  height: 10em
+
+input[name="title"], .field-title
+  font-weight: bold
+  font-size: 18px
+
+input[type="url"]
+  font-family: Menlo, Monaco, "Courier New", monospace
+
+.field-title
+  margin-bottom: 0
+  width: 90%
+
+.help-block
+  font-size: 90%
+  color: #777
+
+// Single-button forms
+form.form-button
+  margin: 0
+  display: inline-block
 
 ul.grid
   list-style: none
@@ -259,11 +302,26 @@ ul.grid
 .print-only
   display: none
 
+/* Cookies */
+.cookies-required-alert, .no-cookies .cookies-required
+  display: none
+
+.cookies-required, .no-cookies .cookies-required-alert
+  display: block
+
+.no-cookies .cookies-required-alert
+  margin-top: 1em
+
+.rwd-line
+  +inline-block
+
 @media only screen and (-webkit-min-device-pixel-ratio: 2)
   #logo
     background-image: image-url('logo@2x.png')
     -webkit-background-size: image-width('logo.png') image-height('logo.png')
 
 @media only screen and (max-width: 767px)
+  .rwd-line
+    display: block
   ul.grid > .row-fluid > [class*="span"]:first-child
     padding-left: 0

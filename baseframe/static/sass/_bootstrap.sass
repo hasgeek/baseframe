@@ -2,7 +2,7 @@
 
 // Override Bootstrap's page-header style
 .page-header
-  margin: 0
+  margin: 0 0 ($body-line-height / 2)
   padding: 0
   border-bottom: 0
 
@@ -120,19 +120,6 @@ span[class^="icon-"], span[class*=" icon-"]
   left: auto
   right: 0
 
-// Single-button forms
-form.form-button
-  margin: 0
-  display: inline-block
-
-input[type="text"].input-primary
-  color: $color-h1
-  font-weight: bold
-  font-size: 30px
-  line-height: $body-line-height * 2 - 10
-  height: $body-line-height * 2 - 10
-  margin-bottom: 0
-
 .control-group
   margin-bottom: $body-line-height
 
@@ -201,3 +188,21 @@ blockquote
     color: #333
   .close
     margin-top: 0
+
+// Forms
+textarea, input, select
+  border: 1px solid #ccc //$color-outline
+  +box-shadow(0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.5) inset)
+  +transition(border linear .2s, box-shadow linear .2s)
+  &:focus
+    border: 1px solid rgba(82,168,236,.8) !important
+    +box-shadow(0 0 8px rgba(82,168,236,.6))
+    +transition(border linear .2s, box-shadow linear .2s)
+
+.form-inline
+  line-height: 36px
+  button, input, select, textarea, .btn, .chzn-container
+    vertical-align: top
+
+.btn
+  +box-shadow(0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.2) inset)

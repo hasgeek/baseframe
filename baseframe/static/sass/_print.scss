@@ -34,6 +34,15 @@
     body, code, pre, legend, label, h1, h2, h3 {
         color: black;
     }
+    .well {
+        border: 1px solid $color-outline;
+        @include box-shadow(none);
+    }
+    .table, .table-bordered {
+        &, th, td, th + th, td + td, th + td, td + th {
+            border-color: $color-outline;
+        }
+    }
     .print-span1 {
         width: 42px;
     }
