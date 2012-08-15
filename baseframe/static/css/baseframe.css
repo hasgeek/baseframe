@@ -1396,10 +1396,6 @@ table.mceLayout.focus {
   transition: border linear 0.2s, box-shadow linear 0.2s;
 }
 
-.form-horizontal {
-  max-width: 800px;
-}
-
 .listwidget ul, .listwidget ol {
   list-style: none;
   margin-left: 0;
@@ -1483,7 +1479,7 @@ input[name="title"], .field-title {
   font-size: 18px;
 }
 
-input[type="url"] {
+input[type="url"], input[name="name"] {
   font-family: Menlo, Monaco, "Courier New", monospace;
 }
 
