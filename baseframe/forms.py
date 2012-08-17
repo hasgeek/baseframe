@@ -229,11 +229,11 @@ def render_form(form, title, message='', formid='form', submit=u"Submit", cancel
             cancel_url=cancel_url, ajax=ajax, multipart=multipart)
 
 
-def render_message(title, message):
+def render_message(title, message, code=200):
     if request.is_xhr:
-        return Markup("<p>%s</p>" % escape(message))
+        return Markup("<p>%s</p>" % escape(message)), code
     else:
-        return render_template('baseframe/message.html', title=title, message=message)
+        return render_template('baseframe/message.html', title=title, message=message), code
 
 
 def render_redirect(url, code=302):
