@@ -169,8 +169,7 @@ $networkbar-font: 14px/1.5 Lato, "Lucida Grande", "DejaVu Sans", "Bitstream Vera
             }
         }
 
-        & > li:hover > ul,
-        & > li a:focus > ul {
+        & > li:hover > ul {
             left: -1px; // -1px to account for 1px border
             border: 1px solid $color-hg-bar-border;
             border-top: 0;
