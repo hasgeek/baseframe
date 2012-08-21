@@ -225,17 +225,33 @@
   background: rgba(0, 0, 0, 0.2);
   color: #888;
   border-bottom: 1px solid #444;
-  -webkit-transition: "background" 1s;
-  -moz-transition: "background" 1s;
-  -o-transition: "background" 1s;
-  transition: "background" 1s;
+  -webkit-transition-property: background;
+  -moz-transition-property: background;
+  -o-transition-property: background;
+  transition-property: background;
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  transition-duration: 1s;
+  -webkit-transition-timing-function: ease-out;
+  -moz-transition-timing-function: ease-out;
+  -o-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
 }
 #hg-bar.hg-dark:hover {
   background: #222;
-  -webkit-transition: "background" 1s;
-  -moz-transition: "background" 1s;
-  -o-transition: "background" 1s;
-  transition: "background" 1s;
+  -webkit-transition-property: background;
+  -moz-transition-property: background;
+  -o-transition-property: background;
+  transition-property: background;
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  transition-duration: 1s;
+  -webkit-transition-timing-function: ease-out;
+  -moz-transition-timing-function: ease-out;
+  -o-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
 }
 #hg-bar.hg-dark ul#hg-barlinks > li a,
 #hg-bar.hg-dark ul#hg-usertools > li a,

@@ -193,11 +193,15 @@ $networkbar-font: 14px/1.5 Lato, "Lucida Grande", "DejaVu Sans", "Bitstream Vera
     background: rgba(0, 0, 0, 0.2);
     color: #888;
     border-bottom: 1px solid #444;
-    @include single-transition("background");
+    @include transition-property("background");
+    @include transition-duration(1s);
+    @include transition-timing-function(ease-out);
 
     &:hover {
         background: #222;
-        @include single-transition("background");
+        @include transition-property("background");
+        @include transition-duration(1s);
+        @include transition-timing-function(ease-out);
     }
 
     ul#hg-barlinks > li a,
