@@ -1093,12 +1093,12 @@ label {
 
 blockquote {
   padding: 0 0 0 11px;
-  margin: 0 0 0 9px;
+  margin: 0 0 0 11px;
   border-left: 5px solid #cccccc;
 }
 blockquote p {
-  margin-bottom: 9px;
-  line-height: 18px;
+  margin-bottom: 11px;
+  line-height: 22px;
   font-size: 14px;
   font-weight: normal;
 }
