@@ -50,6 +50,7 @@ baseframe_js = Bundle(jquery_js,
 # Optional extras
 mousetrap_js = Bundle('baseframe/js/mousetrap.js')
 toastr_js = Bundle('baseframe/js/toastr.js')
+expander_js = Bundle('baseframe/js/jquery.expander.js')
 
 #bootstrap_less = Bundle('baseframe/less/bootstrap/bootstrap.less',
 #                        'baseframe/less/bootstrap/responsive.less',
