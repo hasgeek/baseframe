@@ -108,3 +108,16 @@ def error403(e):
 @baseframe.app_errorhandler(500)
 def error500(e):
     return render_template('500.html'), 500
+
+
+@baseframe.after_app_request
+def process_response(response):
+    # Prevent pages from being placed in an iframe. If the response already
+    # set has a value for this option, let it pass through
+    if 'X-Frame-Options' in response.headers:
+        frameoptions = response.headers.get('X-Frame-Options')
+        if not frameoptions or frameoptions == 'ALLOW':
+            response.headers.pop('X-Frame-Options')
+    else:
+        response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    return response
