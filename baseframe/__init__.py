@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from flask import Blueprint, send_from_directory, render_template
+from flask import Blueprint, send_from_directory, render_template, current_app
 from flask.ext.assets import Bundle
 
 __all__ = ['baseframe', 'baseframe_js', 'baseframe_css']
@@ -93,7 +93,7 @@ def robots():
 
 @baseframe.route('/_toastr_messages.js')
 def toastr_messages_js():
-    return render_template('toastr_messages.js')
+    return current_app.response_class(render_template('toastr_messages.js'), mimetype='application/javascript')
 
 
 @baseframe.app_errorhandler(404)
