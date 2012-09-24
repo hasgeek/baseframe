@@ -35,14 +35,15 @@
     {%- with ua = request.headers.get('User-Agent') %}
       {%- if ua.find('iPhone') != -1 or ua.find('iPod') != -1 or ua.find('iPad') != -1 -%}
         {#- Local fonts render badly on iOS. Get from Google. #}
-        <link href='//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{{ url_for('baseframe.static', filename='css/fonts.css') }}"/>
+        {#<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,400italic,600italic' rel='stylesheet' type='text/css'>#}
       {%- else -%}
         {#- Render local fonts when in debug/develop mode. Faster rendering and works offline. #}
         <link rel="stylesheet" href="{{ url_for('baseframe.static', filename='css/fonts.css') }}"/>
       {%- endif -%}
     {%- endwith -%}
   {%- else -%}
-    <link href='//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,400italic,600italic' rel='stylesheet' type='text/css'>
   {%- endif %}
   <script src="{{ url_for('baseframe.static', filename='js/modernizr.min.js') }}"></script>
 
