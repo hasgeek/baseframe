@@ -1,3 +1,9 @@
+0.2.12
+------
+
+* Optional baseframe.sqlalchemy provides a Flask-SQLALchemy SQLAlchemy() object
+  for use by blueprint-based apps
+
 0.2.11
 ------
 

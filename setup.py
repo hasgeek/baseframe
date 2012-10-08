@@ -30,7 +30,7 @@ class BaseframeBuildPy(build_py):
 
 
 setup(name='baseframe',
-      version='0.2.11',
+      version='0.2.12',
       description='Baseframe for HasGeek projects',
       long_description=README,
       classifiers=[
@@ -52,6 +52,7 @@ setup(name='baseframe',
       zip_safe=False,
       test_suite='tests',
       install_requires=requires,
+      tests_require=['Flask-SQLAlchemy'],
       cmdclass={'build_py': BaseframeBuildPy},
       dependency_links=[
           "https://github.com/hasgeek/coaster/tarball/master#egg=coaster",
