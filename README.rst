@@ -1,6 +1,9 @@
 Baseframe
 =========
 
+.. image:: https://secure.travis-ci.org/hasgeek/baseframe.png
+   :alt: Build status
+
 Reusable styles and templates for HasGeek projects. Setup instructions::
 
   python setup.py install
