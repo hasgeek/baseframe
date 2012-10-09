@@ -5,6 +5,7 @@ python:
 # command to install dependencies
 install:
   - python setup.py install
+  - pip install Flask-SQLAlchemy
 # command to run tests
 script: nosetests 
 notifications:
