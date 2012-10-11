@@ -50,6 +50,7 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} Lato, "Luc
     ul#hg-barlinks, ul#hg-usertools {
         @include pie-clearfix;
         margin: 0 -6px;
+        padding: 0;
         position: relative;
         list-style: none;
         //font-size: 90%;
@@ -91,6 +92,8 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} Lato, "Luc
             ul {
                 position: absolute;
                 margin: 0;
+                padding: 0;
+                font-size: 100%;
                 background: $color-hg-bar-background;
                 color: $color-hg-bar;
                 list-style: none;

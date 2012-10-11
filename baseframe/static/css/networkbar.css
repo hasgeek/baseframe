@@ -43,6 +43,7 @@
 #hg-bar ul#hg-barlinks, #hg-bar ul#hg-usertools {
   *zoom: 1;
   margin: 0 -6px;
+  padding: 0;
   position: relative;
   list-style: none;
 }
@@ -89,6 +90,8 @@
 #hg-bar ul#hg-barlinks > li ul, #hg-bar ul#hg-usertools > li ul {
   position: absolute;
   margin: 0;
+  padding: 0;
+  font-size: 100%;
   background: #e8e8e8;
   color: #444444;
   list-style: none;
