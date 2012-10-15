@@ -84,33 +84,43 @@ class RichTextField(wtf.fields.TextAreaField):
 
             # Additional fields
             content_css=None,
-            buttons1=None, buttons2=None, buttons3=None,
-            blockformats=None,
-            width=None, height=None,
             linkify=True, nofollow=True,
-            valid_elements=None, sanitize_tags=None, sanitize_attributes=None, **kwargs):
+            tinymce_options=None,
+            sanitize_tags=None, sanitize_attributes=None, **kwargs):
 
         super(RichTextField, self).__init__(label=label, validators=validators, filters=filters,
             description=description, id=id, default=default, widget=widget, _form=_form, _name=_name,
             _prefix=_prefix, **kwargs)
 
-        if buttons1 is None:
-            buttons1 = "bold,italic,|,sup,sub,|,bullist,numlist,|,link,unlink,|,blockquote,|,removeformat,code"
-        if buttons2 is None:
-            buttons2 = ""
-        if buttons3 is None:
-            buttons3 = ""
-        if blockformats is None:
-            blockformats = "p,h3,h4,h5,h6,blockquote,dt,dd"
-        if width is None:
-            width = "100%"
-        if height is None:
-            height = "159"
-        # valid_elements and sanitize_tags/attributes are distinct because one is used by TinyMCE and
-        # the other by bleach. Their formats are incompatible and we're too lazy to write code to
-        # autogenerate one from the other.
-        if valid_elements is None:
-            valid_elements = "p,br,strong/b,em/i,sup,sub,h3,h4,h5,h6,ul,ol,li,a[!href|title|target],blockquote,code"
+        if tinymce_options is None:
+            tinymce_options = {}
+        else:
+            # Clone the dict to preserve local edits
+            tinymce_options = dict(tinymce_options)
+
+        # Set defaults for TinyMCE
+        tinymce_options.setdefault('theme', "advanced")
+        tinymce_options.setdefault('plugins', "")
+        tinymce_options.setdefault('theme_advanced_buttons1',
+            "bold,italic,|,sup,sub,|,bullist,numlist,|,link,unlink,|,blockquote,|,removeformat,code")
+        tinymce_options.setdefault('theme_advanced_buttons2', "")
+        tinymce_options.setdefault('theme_advanced_buttons3', "")
+        tinymce_options.setdefault('blockformats', "p,h3,h4,h5,h6,blockquote,dt,dd")
+        tinymce_options.setdefault('width', "100%")
+        tinymce_options.setdefault('height', "159")
+        tinymce_options.setdefault('valid_elements',
+            "p,br,strong/b,em/i,sup,sub,h3,h4,h5,h6,ul,ol,li,a[!href|title|target],blockquote,code")
+        tinymce_options.setdefault('theme_advanced_toolbar_location', "top")
+        tinymce_options.setdefault('theme_advanced_toolbar_align', "left")
+        tinymce_options.setdefault('theme_advanced_statusbar_location', "bottom")
+        tinymce_options.setdefault('theme_advanced_resizing', True)
+        tinymce_options.setdefault('theme_advanced_path', False)
+
+        # Remove options that cannot be set by callers
+        tinymce_options.pop('content_css', None)
+        tinymce_options.pop('script_url', None)
+        tinymce_options.pop('setup', None)
+
         if sanitize_tags is None:
             sanitize_tags = ['p', 'br', 'strong', 'em', 'sup', 'sub', 'h3', 'h4', 'h5', 'h6',
                 'ul', 'ol', 'li', 'a', 'blockquote', 'code']
@@ -119,17 +129,14 @@ class RichTextField(wtf.fields.TextAreaField):
 
         self.linkify = linkify
         self.nofollow = nofollow
+        self.tinymce_options = tinymce_options
 
         self.content_css = content_css
-        self.buttons1 = buttons1
-        self.buttons2 = buttons2
-        self.buttons3 = buttons3
-        self.blockformats = blockformats
-        self.width = width
-        self.height = height
-        self.valid_elements = valid_elements
         self.sanitize_tags = sanitize_tags
         self.sanitize_attributes = sanitize_attributes
+
+    def tinymce_options_json(self):
+        return [(Markup(json.dumps(k)), Markup(json.dumps(v))) for k, v in self.tinymce_options.items()]
 
     def process_formdata(self, valuelist):
         super(RichTextField, self).process_formdata(valuelist)

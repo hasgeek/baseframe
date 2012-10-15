@@ -1,3 +1,8 @@
+0.2.13
+------
+
+* Incompatible API change for RichTextField to allow setting any TinyMCE option.
+
 0.2.12
 ------
 

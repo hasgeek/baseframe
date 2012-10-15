@@ -30,7 +30,7 @@ class BaseframeBuildPy(build_py):
 
 
 setup(name='baseframe',
-      version='0.2.12',
+      version='0.2.13',
       description='Baseframe for HasGeek projects',
       long_description=README,
       classifiers=[
