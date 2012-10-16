@@ -139,7 +139,7 @@
           {{ k }}: {{ v }},
         {%- endfor %}
         // Content CSS
-        content_css: "{{ field.content_css or url_for('baseframe.static', filename='css/editor.css') }}",
+        content_css: "{{ field.content_css or url_for('baseframe.editorcss') }}",
         // Focus/blur indicators
         setup: function(ed) {
           ed.onInit.add(function(ed) {

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import os
-from flask import Blueprint, send_from_directory, render_template, current_app
+from datetime import datetime, timedelta
+from flask import Blueprint, send_from_directory, render_template, current_app, Response
 from flask.ext.assets import Bundle
 
 __all__ = ['baseframe', 'baseframe_js', 'baseframe_css']
@@ -94,6 +95,14 @@ def robots():
 @baseframe.route('/_toastr_messages.js')
 def toastr_messages_js():
     return current_app.response_class(render_template('toastr_messages.js'), mimetype='application/javascript')
+
+
+@baseframe.route('/_editor.css')
+def editorcss():
+    response = Response(render_template('editor.css'),
+        mimetype='text/css',
+        headers={'Expires': (datetime.utcnow() + timedelta(minutes=60)).strftime('%a, %d %b %Y %H:%M:%S GMT')})
+    return response
 
 
 @baseframe.app_errorhandler(404)
