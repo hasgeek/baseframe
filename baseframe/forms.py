@@ -115,6 +115,7 @@ class RichTextField(wtf.fields.TextAreaField):
         tinymce_options.setdefault('theme_advanced_statusbar_location', "bottom")
         tinymce_options.setdefault('theme_advanced_resizing', True)
         tinymce_options.setdefault('theme_advanced_path', False)
+        tinymce_options.setdefault('relative_urls', False)
 
         # Remove options that cannot be set by callers
         tinymce_options.pop('content_css', None)
