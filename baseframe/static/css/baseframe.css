@@ -1537,7 +1537,7 @@ ul.grid > li {
   position: relative;
   margin: 0;
 }
-ul.grid > li:hover {
+ul.grid > li.item-hover:hover {
   border-bottom: 1px solid #b7b7b7;
   background: whitesmoke;
 }
@@ -1546,9 +1546,6 @@ ul.grid > li.header {
   border-top: 0;
   border-bottom: 1px solid #b7b7b7;
   font-weight: bold;
-}
-ul.grid > li.header:hover {
-  background: inherit;
 }
 
 .nav.nav-grid {
