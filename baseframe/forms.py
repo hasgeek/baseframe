@@ -56,7 +56,7 @@ class DateTimeInput(wtf.widgets.Input):
         if not value:
             value = ' '
         date_value, time_value = value.split(' ', 1)
-        return Markup(u'<input type="text" class="datetime-date" data-datepicker="datepicker" %s /> <input type="time" class="datetime-time" %s />' % (
+        return Markup(u'<input type="text" class="datetime-date" data-datepicker="datepicker" %s /> <input type="text" class="datetime-time" %s />' % (
             html_params(name=field.name, id=field_id + '-date', value=date_value, **kwargs),
             html_params(name=field.name, id=field_id + '-time', value=time_value, **kwargs)
             ))

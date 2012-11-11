@@ -8,4 +8,7 @@
 {{ ajaxform(formid, request, True) }}
 <script type="text/javascript">
   activate_chosen('select');
+  $(function() {
+    $('input.datetime-time').timepicker({ 'scrollDefaultNow': true });
+  });
 </script>

@@ -14,5 +14,10 @@
       {{ richtext_editor(field) }}
     {%- endif %}
   {%- endfor %}
+  <script type="text/javascript">
+    $(function() {
+      $('input.datetime-time').timepicker({ 'scrollDefaultNow': true });  
+    });
+  </script>
   {{ ajaxform(formid, request, ajax) }}
 {% endblock %}
