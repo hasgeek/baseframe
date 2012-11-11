@@ -13,7 +13,6 @@ baseframe = Blueprint('baseframe', __name__,
                       template_folder='templates')
 
 jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
-#                   'baseframe/js/jquery.orbit-1.4.0.js',
                    filters='jsmin', output='js/baseframe-jquery.min.js')
 
 
@@ -63,9 +62,8 @@ baseframe_css = Bundle(  # bootstrap_less,
                        'baseframe/css/bootstrap.css',   # Externally compiled with Less
                        'baseframe/css/responsive.css',  # Externally compiled with Less
                        'baseframe/css/chosen.css',      # Companion to chosen.jquery.js
-                       'baseframe/css/orbit.css',       # Companion to jquery.orbit-1.4.0.js
-                       'baseframe/css/baseframe.css',   # Externally compiled with Compass
                        'baseframe/css/jquery.timepicker.css',  # For timepicker
+                       'baseframe/css/baseframe.css',   # Externally compiled with Compass
                        networkbar_css,                  # Externally compiled with Compass
                        filters='cssmin',
                        output='css/baseframe-packed.css')
