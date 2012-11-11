@@ -9,7 +9,7 @@ __all__ = ['baseframe', 'baseframe_js', 'baseframe_css']
 
 baseframe = Blueprint('baseframe', __name__,
                       static_folder='static',
-                      static_url_path='/baseframe',
+                      static_url_path='/_baseframe',
                       template_folder='templates')
 
 jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
@@ -72,6 +72,7 @@ baseframe_css = Bundle(  # bootstrap_less,
 
 # Optional extras
 toastr_css = Bundle('baseframe/css/toastr.css')
+animate_css = Bundle('baseframe/css/animate.css')
 
 
 @baseframe.route('/favicon.ico')
