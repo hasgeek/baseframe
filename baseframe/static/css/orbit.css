@@ -67,7 +67,7 @@ div.orbit-wrapper span.rotator {
   position: absolute;
   top: 0;
   left: -20px;
-  background: url('../../baseframe/img/orbit/rotator-black.png?1338187005') no-repeat;
+  background: url('../../_baseframe/img/orbit/rotator-black.png?1338187005') no-repeat;
   z-index: 3;
 }
 
@@ -89,7 +89,7 @@ div.orbit-wrapper span.rotator.move {
 div.orbit-wrapper span.mask.move {
   width: 40px;
   left: 0;
-  background: url('../../baseframe/img/orbit/timer-black.png?1338187000') repeat 0 0;
+  background: url('../../_baseframe/img/orbit/timer-black.png?1338187000') repeat 0 0;
 }
 
 div.orbit-wrapper span.pause {
@@ -99,13 +99,13 @@ div.orbit-wrapper span.pause {
   position: absolute;
   top: 0;
   left: 0;
-  background: url('../../baseframe/img/orbit/pause-black.png?1338187012') no-repeat;
+  background: url('../../_baseframe/img/orbit/pause-black.png?1338187012') no-repeat;
   z-index: 4;
   opacity: 0;
 }
 
 div.orbit-wrapper span.pause.active {
-  background: url('../../baseframe/img/orbit/pause-black.png?1338187012') no-repeat 0 -40px;
+  background: url('../../_baseframe/img/orbit/pause-black.png?1338187012') no-repeat 0 -40px;
 }
 
 div.orbit-wrapper div.timer:hover span.pause,
@@ -152,12 +152,12 @@ div.orbit-wrapper div.slider-nav span {
 }
 
 div.orbit-wrapper div.slider-nav span.right {
-  background: url('../../baseframe/img/orbit/right-arrow.png?1338187009');
+  background: url('../../_baseframe/img/orbit/right-arrow.png?1338187009');
   right: 0;
 }
 
 div.orbit-wrapper div.slider-nav span.left {
-  background: url('../../baseframe/img/orbit/left-arrow.png?1338187022');
+  background: url('../../_baseframe/img/orbit/left-arrow.png?1338187022');
   left: 0;
 }
 
@@ -179,7 +179,7 @@ ul.orbit-bullets li {
   cursor: pointer;
   color: #999;
   text-indent: -9999px;
-  background: url('../../baseframe/img/orbit/bullets.jpg?1338186952') no-repeat 4px 0;
+  background: url('../../_baseframe/img/orbit/bullets.jpg?1338186952') no-repeat 4px 0;
   width: 13px;
   height: 12px;
   overflow: hidden;
@@ -230,7 +230,7 @@ ul.orbit-bullets li {
   cursor: pointer;
   color: #999;
   text-indent: -9999px;
-  background: url('../../baseframe/img/orbit/bullets.jpg?1338186952') no-repeat 4px 0;
+  background: url('../../_baseframe/img/orbit/bullets.jpg?1338186952') no-repeat 4px 0;
   width: 13px;
   height: 12px;
   overflow: hidden;
