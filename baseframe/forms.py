@@ -4,11 +4,12 @@
 Standard forms
 """
 
+from pytz import utc, timezone as pytz_timezone
+import bleach
 from flask import render_template, request, Markup, abort, flash, redirect, json, escape, url_for
 from wtforms.widgets import html_params
 import flask.ext.wtf as wtf
 from coaster import make_name
-import bleach
 
 
 class RichText(wtf.widgets.TextArea):
@@ -158,9 +159,35 @@ class DateTimeField(wtf.fields.DateTimeField):
     """
     widget = DateTimeInput()
 
-    def __init__(self, label=None, validators=None, format='%Y-%m-%d %I:%M %p', **kwargs):
+    def __init__(self, label=None, validators=None,
+            format='%Y-%m-%d %I:%M %p', timezone=None, **kwargs):
         super(DateTimeField, self).__init__(label, validators, **kwargs)
         self.format = format
+        self.timezone = timezone
+        if timezone:
+            self.tz = pytz_timezone(timezone)
+        else:
+            self.tz = utc
+
+    def _value(self):
+        if self.data:
+            if self.timezone:
+                if self.data.tzinfo is None:
+                    data = utc.localize(self.data).astimezone(self.tz)
+                else:
+                    data = self.data.astimezone(self.tz)
+            else:
+                data = self.data
+            value = data.strftime(self.format)
+        else:
+            value = ''
+        return value
+
+    def process_formdata(self, valuelist):
+        super(DateTimeField, self).process_formdata(valuelist)
+        if self.timezone:
+            # Convert from user timezone back to UTC, then discard tzinfo
+            self.data = self.tz.localize(self.data).astimezone(utc).replace(tzinfo=None)
 
 
 class Form(wtf.Form):

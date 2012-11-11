@@ -15,6 +15,7 @@ requires = [
     'Flask-WTF',
     'wtforms',
     'bleach',
+    'pytz',
     ]
 
 
