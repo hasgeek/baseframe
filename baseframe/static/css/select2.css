@@ -41,29 +41,33 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
   background-image: -ms-linear-gradient(top, #eeeeee 0%, white 50%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#eeeeee', endColorstr = '#ffffff', GradientType = 0);
   background-image: linear-gradient(top, #eeeeee 0%, #ffffff 50%);
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
   -moz-background-clip: padding;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
-  border: 1px solid #aaa;
+  border: 1px solid #ccc;
   display: block;
   overflow: hidden;
   white-space: nowrap;
   position: relative;
-  height: 26px;
-  line-height: 26px;
+  height: 30px;
+  line-height: 30px;
   padding: 0 0 0 8px;
-  color: #444;
+  color: #222;
   text-decoration: none;
 }
 
 .select2-container.select2-drop-above .select2-choice {
-  border-bottom-color: #aaa;
-  -webkit-border-radius: 0px 0px 4px 4px;
-  -moz-border-radius: 0px 0px 4px 4px;
-  border-radius: 0px 0px 4px 4px;
+  border-bottom-color: #ccc;
+  -webkit-border-radius: 0 0 3px 3px;
+  -moz-border-radius: 0 0 3px 3px;
+  -ms-border-radius: 0 0 3px 3px;
+  -o-border-radius: 0 0 3px 3px;
+  border-radius: 0 0 3px 3px;
   background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(0.9, white));
   background-image: -webkit-linear-gradient(center bottom, #eeeeee 0%, white 90%);
   background-image: -moz-linear-gradient(center bottom, #eeeeee 0%, white 90%);
@@ -87,11 +91,11 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
   display: block;
   position: absolute;
   right: 26px;
-  top: 8px;
+  top: 9px;
   width: 12px;
   height: 12px;
   font-size: 1px;
-  background: url('../../_baseframe/img/select2.png?1347253688') right top no-repeat;
+  background: url('../../_baseframe/img/select2.png?1352863174') right top no-repeat;
   cursor: pointer;
   text-decoration: none;
   border: 0;
@@ -106,39 +110,67 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
 .select2-drop {
   background: #fff;
   color: #000;
-  border: 1px solid #aaa;
+  border: 1px solid #ccc;
   border-top: 0;
   position: absolute;
   top: 100%;
   -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
-  -o-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
   z-index: 9999;
   width: 100%;
   margin-top: -1px;
-  -webkit-border-radius: 0 0 4px 4px;
-  -moz-border-radius: 0 0 4px 4px;
-  border-radius: 0 0 4px 4px;
+  -webkit-border-radius: 0 0 3px 3px;
+  -moz-border-radius: 0 0 3px 3px;
+  -ms-border-radius: 0 0 3px 3px;
+  -o-border-radius: 0 0 3px 3px;
+  border-radius: 0 0 3px 3px;
 }
 
 .select2-drop.select2-drop-above {
-  -webkit-border-radius: 4px 4px 0px 0px;
-  -moz-border-radius: 4px 4px 0px 0px;
-  border-radius: 4px 4px 0px 0px;
+  -webkit-border-radius: 3px 3px 0 0;
+  -moz-border-radius: 3px 3px 0 0;
+  -ms-border-radius: 3px 3px 0 0;
+  -o-border-radius: 3px 3px 0 0;
+  border-radius: 3px 3px 0 0;
   margin-top: 1px;
-  border-top: 1px solid #aaa;
+  border-top: 1px solid #ccc;
   border-bottom: 0;
   -webkit-box-shadow: 0 -4px 5px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0 -4px 5px rgba(0, 0, 0, 0.15);
-  -o-box-shadow: 0 -4px 5px rgba(0, 0, 0, 0.15);
   box-shadow: 0 -4px 5px rgba(0, 0, 0, 0.15);
 }
 
+.select2-drop.select2-drop-multi {
+  border-top: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.select2-drop.select2-drop-above.select2-drop-multi {
+  border-bottom: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.15);
+}
+
 .select2-container .select2-choice div {
-  -webkit-border-radius: 0 4px 4px 0;
-  -moz-border-radius: 0 4px 4px 0;
-  border-radius: 0 4px 4px 0;
+  -webkit-border-radius: 0 2px 2px 0;
+  -moz-border-radius: 0 2px 2px 0;
+  -ms-border-radius: 0 2px 2px 0;
+  -o-border-radius: 0 2px 2px 0;
+  border-radius: 0 2px 2px 0;
   -moz-background-clip: padding;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
@@ -150,7 +182,7 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
   background-image: -ms-linear-gradient(top, #cccccc 0%, #eeeeee 60%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#cccccc', endColorstr = '#eeeeee', GradientType = 0);
   background-image: linear-gradient(top, #cccccc 0%, #eeeeee 60%);
-  border-left: 1px solid #aaa;
+  border-left: 1px solid #ccc;
   position: absolute;
   right: 0;
   top: 0;
@@ -160,7 +192,7 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
 }
 
 .select2-container .select2-choice div b {
-  background: url('../../_baseframe/img/select2.png?1347253688') no-repeat 0 1px;
+  background: url('../../_baseframe/img/select2.png?1352863174') no-repeat 0 3px;
   display: block;
   width: 100%;
   height: 100%;
@@ -184,17 +216,16 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
 }
 
 .select2-search input {
-  background: white url('../../_baseframe/img/select2.png?1347253688') no-repeat 100% -22px;
-  background: url('../../_baseframe/img/select2.png?1347253688') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
-  background: url('../../_baseframe/img/select2.png?1347253688') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);
-  background: url('../../_baseframe/img/select2.png?1347253688') no-repeat 100% -22px, -moz-linear-gradient(center bottom, white 85%, #eeeeee 99%);
-  background: url('../../_baseframe/img/select2.png?1347253688') no-repeat 100% -22px, -o-linear-gradient(bottom, white 85%, #eeeeee 99%);
-  background: url('../../_baseframe/img/select2.png?1347253688') no-repeat 100% -22px, -ms-linear-gradient(top, white 85%, #eeeeee 99%);
-  background: url('../../_baseframe/img/select2.png?1347253688') no-repeat 100% -22px, linear-gradient(top, #ffffff 85%, #eeeeee 99%);
+  background: white url('../../_baseframe/img/select2.png?1352863174') no-repeat 100% -22px;
+  background: url('../../_baseframe/img/select2.png?1352863174') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
+  background: url('../../_baseframe/img/select2.png?1352863174') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);
+  background: url('../../_baseframe/img/select2.png?1352863174') no-repeat 100% -22px, -moz-linear-gradient(center bottom, white 85%, #eeeeee 99%);
+  background: url('../../_baseframe/img/select2.png?1352863174') no-repeat 100% -22px, -o-linear-gradient(bottom, white 85%, #eeeeee 99%);
+  background: url('../../_baseframe/img/select2.png?1352863174') no-repeat 100% -22px, -ms-linear-gradient(top, white 85%, #eeeeee 99%);
+  background: url('../../_baseframe/img/select2.png?1352863174') no-repeat 100% -22px, linear-gradient(top, #ffffff 85%, #eeeeee 99%);
   padding: 4px 20px 4px 5px;
   outline: 0;
-  border: 1px solid #aaa;
-  font-family: sans-serif;
+  border: 1px solid #ccc;
   font-size: 1em;
   width: 100%;
   margin: 0;
@@ -222,18 +253,33 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
   background: url('../../_baseframe/img/spinner.gif?1347253688') no-repeat 100%, linear-gradient(top, #ffffff 85%, #eeeeee 99%);
 }
 
+.select2-choice, .select2-choices {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: border linear, box-shadow linear;
+  -webkit-transition-delay: 0.2s, 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+
 .select2-container-active .select2-choice,
 .select2-container-active .select2-choices {
-  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  -o-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  border: 1px solid #5897fb;
+  border: 1px solid rgba(82, 168, 236, 0.8);
+  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
+  -moz-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
+  -webkit-transition: border linear, box-shadow linear;
+  -webkit-transition-delay: 0.2s, 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
   outline: none;
 }
 
 .select2-dropdown-open .select2-choice {
-  border: 1px solid #aaa;
+  border: 1px solid #ccc;
   border-bottom-color: transparent;
   -webkit-box-shadow: 0 1px 0 #fff inset;
   -moz-box-shadow: 0 1px 0 #fff inset;
@@ -261,7 +307,7 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
 }
 
 .select2-dropdown-open .select2-choice div b {
-  background-position: -18px 1px;
+  background-position: -18px 3px;
 }
 
 /* results */
@@ -386,13 +432,10 @@ disabled look for already selected choices in the results dropdown
 /* multiselect */
 .select2-container-multi .select2-choices {
   background-color: #fff;
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, #eeeeee), color-stop(15%, white));
-  background-image: -webkit-linear-gradient(top, #eeeeee 1%, white 15%);
-  background-image: -moz-linear-gradient(top, #eeeeee 1%, white 15%);
-  background-image: -o-linear-gradient(top, #eeeeee 1%, white 15%);
-  background-image: -ms-linear-gradient(top, #eeeeee 1%, white 15%);
-  background-image: linear-gradient(top, #eeeeee 1%, #ffffff 15%);
-  border: 1px solid #aaa;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  border: 1px solid #ccc;
   margin: 0;
   padding: 0;
   cursor: text;
@@ -400,18 +443,27 @@ disabled look for already selected choices in the results dropdown
   height: auto !important;
   height: 1%;
   position: relative;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
 }
 
 .select2-container-multi .select2-choices {
-  min-height: 26px;
+  min-height: 30px;
 }
 
 .select2-container-multi.select2-container-active .select2-choices {
-  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  -o-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  border: 1px solid #5897fb;
+  border: 1px solid rgba(82, 168, 236, 0.8);
+  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
+  -moz-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
+  -webkit-transition: border linear, box-shadow linear;
+  -webkit-transition-delay: 0.2s, 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
   outline: none;
 }
 
@@ -453,6 +505,8 @@ disabled look for already selected choices in the results dropdown
 .select2-container-multi .select2-choices .select2-search-choice {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
   border-radius: 3px;
   -moz-background-clip: padding;
   -webkit-background-clip: padding-box;
@@ -469,7 +523,7 @@ disabled look for already selected choices in the results dropdown
   -moz-box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
   box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
   color: #333;
-  border: 1px solid #aaaaaa;
+  border: 1px solid #ccc;
   line-height: 13px;
   padding: 3px 5px 3px 18px;
   margin: 3px 0 3px 5px;
@@ -493,7 +547,7 @@ disabled look for already selected choices in the results dropdown
   width: 12px;
   height: 13px;
   font-size: 1px;
-  background: url('../../_baseframe/img/select2.png?1347253688') right top no-repeat;
+  background: url('../../_baseframe/img/select2.png?1352863174') right top no-repeat;
   outline: none;
 }
 
@@ -546,7 +600,7 @@ disabled look for already selected choices in the results dropdown
 /* Retina-ize icons */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5) {
   .select2-search input, .select2-search-choice-close, .select2-container .select2-choice abbr, .select2-container .select2-choice div b {
-    background-image: url('../../_baseframe/img/select2x2.png?1347253688') !important;
+    background-image: url('../../_baseframe/img/select2x2.png?1352863269') !important;
     background-repeat: no-repeat !important;
     background-size: 60px 40px !important;
   }

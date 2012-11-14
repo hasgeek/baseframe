@@ -1119,40 +1119,11 @@ blockquote p {
   margin-top: 0;
 }
 
-textarea, input, select {
-  border: 1px solid #cccccc;
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.5) inset;
-  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.5) inset;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.5) inset;
-  -webkit-transition: border linear, box-shadow linear;
-  -webkit-transition-delay: 0.2s, 0.2s;
-  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
-  -o-transition: border linear 0.2s, box-shadow linear 0.2s;
-  transition: border linear 0.2s, box-shadow linear 0.2s;
-}
-textarea:focus, input:focus, select:focus {
-  border: 1px solid rgba(82, 168, 236, 0.8) !important;
-  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
-  -moz-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
-  box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
-  -webkit-transition: border linear, box-shadow linear;
-  -webkit-transition-delay: 0.2s, 0.2s;
-  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
-  -o-transition: border linear 0.2s, box-shadow linear 0.2s;
-  transition: border linear 0.2s, box-shadow linear 0.2s;
-}
-
 .form-inline {
   line-height: 36px;
 }
 .form-inline button, .form-inline input, .form-inline select, .form-inline textarea, .form-inline .btn, .form-inline .chzn-container {
   vertical-align: top;
-}
-
-.btn, .btn-group .dropdown-toggle {
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.2) inset;
-  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.2) inset;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.2) inset;
 }
 
 code {
