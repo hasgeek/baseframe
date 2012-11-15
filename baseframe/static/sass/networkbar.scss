@@ -32,7 +32,7 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} Lato, "Luc
     font: $networkbar-font;
     color: $color-hg-bar;
     border-bottom: 1px solid $color-hg-bar-border;
-    @include box-shadow(0 1px 5px rgba(0,0,0,.1));
+    @include box-shadow(0 2px 5px -2px rgba(0,0,0,.1));
     position: relative;
     z-index: 1029;
     li {
