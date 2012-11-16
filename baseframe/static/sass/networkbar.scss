@@ -22,7 +22,7 @@ $color-hg-bar-highlight-background: rgba(0, 0, 0, 0.1);
 $color-hg-bar-selected: #000;
 $networkbar-font-size: 13px;
 $networkbar-line-height: 18px;
-$networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} Lato, "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", "Lucida Sans", Arial, sans-serif !default;
+$networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif !default;
 
 #hg-bar {
     background: $color-hg-bar-background;

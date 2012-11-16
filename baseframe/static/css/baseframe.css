@@ -931,7 +931,7 @@ ul.icons li .icon-large:before {
 }
 
 .page-header {
-  margin: 0 0 11px;
+  margin: 0 0 10px;
   padding: 0;
   border-bottom: 0;
 }
@@ -940,33 +940,33 @@ ul.icons li .icon-large:before {
   font-weight: normal;
 }
 .page-header h1 {
-  line-height: 33px;
+  line-height: 30px;
   margin-top: 0;
 }
 
 h1 {
-  font-size: 28px;
-  line-height: 33px;
-  margin-top: 11px;
+  font-size: 25px;
+  line-height: 30px;
+  margin-top: 10px;
   margin-bottom: 0;
 }
 
 h2 {
-  font-size: 24px;
-  line-height: 33px;
-  margin-top: 11px;
+  font-size: 22px;
+  line-height: 30px;
+  margin-top: 10px;
   margin-bottom: 0;
 }
 
 h3 {
-  font-size: 19px;
-  line-height: 22px;
-  margin-top: 11px;
+  font-size: 18px;
+  line-height: 20px;
+  margin-top: 10px;
   margin-bottom: 0;
 }
 
 h1 small, h2 small, h3 small {
-  line-height: 22px;
+  line-height: 20px;
 }
 
 ul, ol {
@@ -974,13 +974,13 @@ ul, ol {
 }
 
 .lead {
-  margin-bottom: 11px;
+  margin-bottom: 10px;
   font-size: 18px;
-  line-height: 22px;
+  line-height: 20px;
 }
 
 .well {
-  padding: 10px 14px;
+  padding: 9px 14px;
 }
 .well .nav.nav-list {
   margin-left: -14px;
@@ -988,8 +988,8 @@ ul, ol {
 }
 
 .well.nav.nav-list {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 9px;
+  padding-bottom: 9px;
 }
 
 .nav-list > li > a, .nav-list .nav-header {
@@ -1011,7 +1011,7 @@ ul, ol {
 }
 
 .nav li + .nav-header {
-  margin-top: 11px;
+  margin-top: 10px;
 }
 
 .nav-pills > li > a {
@@ -1043,7 +1043,7 @@ span[class^="icon-"]:before, span[class*=" icon-"]:before {
 }
 
 .control-group {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 label {
@@ -1093,13 +1093,13 @@ label {
 
 blockquote {
   padding: 0 0 0 11px;
-  margin: 0 0 0 11px;
+  margin: 0 0 0 10px;
   border-left: 5px solid #cccccc;
 }
 blockquote p {
-  margin-bottom: 11px;
-  line-height: 22px;
-  font-size: 14px;
+  margin-bottom: 10px;
+  line-height: 20px;
+  font-size: 100%;
   font-weight: normal;
 }
 
@@ -1124,6 +1124,10 @@ blockquote p {
 }
 .form-inline button, .form-inline input, .form-inline select, .form-inline textarea, .form-inline .btn, .form-inline .chzn-container {
   vertical-align: top;
+}
+
+input[type="image"], input[type="checkbox"], input[type="radio"] {
+  vertical-align: baseline;
 }
 
 code {
@@ -1168,14 +1172,14 @@ h3 a:hover, h3 a:active {
 }
 
 header {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 #page-header {
   border-bottom: 1px solid #b7b7b7;
 }
 #page-header h1 {
-  margin-top: 11px;
+  margin-top: 10px;
 }
 
 html, body {
@@ -1263,7 +1267,7 @@ footer .container p {
 }
 
 .section {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .usertools {
@@ -1503,8 +1507,8 @@ ul.grid > .row-fluid > [class*="span"] {
 }
 ul.grid > li {
   border-bottom: 1px solid #d9d9d9;
-  padding-top: 11px;
-  padding-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 9px;
   position: relative;
   margin: 0;
 }
@@ -1513,7 +1517,7 @@ ul.grid > li.item-hover:hover {
   background: whitesmoke;
 }
 ul.grid > li.header {
-  padding-top: 10px;
+  padding-top: 9px;
   border-top: 0;
   border-bottom: 1px solid #b7b7b7;
   font-weight: bold;
@@ -1582,7 +1586,7 @@ ul.grid > li.header {
     -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     background: #f6f6f6;
-    padding: 11px;
+    padding: 10px;
   }
 }
 @media screen and (min-width: 768px) {
@@ -1628,16 +1632,16 @@ ul.grid > li.header {
     margin-bottom: 0;
   }
   dl.infobox dt:first-child {
-    padding-top: 11px;
+    padding-top: 10px;
   }
   dl.infobox dt:first-child + dd {
-    padding-top: 11px;
+    padding-top: 10px;
     -moz-border-radius-topright: 4px;
     -webkit-border-top-right-radius: 4px;
     border-top-right-radius: 4px;
   }
   dl.infobox dd:last-child {
-    padding-bottom: 11px;
+    padding-bottom: 10px;
     -moz-border-radius-bottomright: 4px;
     -webkit-border-bottom-right-radius: 4px;
     border-bottom-right-radius: 4px;

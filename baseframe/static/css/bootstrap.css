@@ -114,9 +114,9 @@ textarea {
 }
 body {
   margin: 0;
-  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 22px;
+  font-family: "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+  font-size: 13px;
+  line-height: 20px;
   color: #333333;
   background-color: #ffffff;
 }
@@ -297,20 +297,20 @@ a:hover {
   clear: both;
 }
 p {
-  margin: 0 0 11px;
-  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 22px;
+  margin: 0 0 10px;
+  font-family: "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+  font-size: 13px;
+  line-height: 20px;
 }
 p small {
-  font-size: 12px;
+  font-size: 11px;
   color: #999999;
 }
 .lead {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
   font-size: 20px;
   font-weight: 200;
-  line-height: 33px;
+  line-height: 30px;
 }
 h1,
 h2,
@@ -334,20 +334,20 @@ h6 small {
 }
 h1 {
   font-size: 30px;
-  line-height: 44px;
+  line-height: 40px;
 }
 h1 small {
   font-size: 18px;
 }
 h2 {
   font-size: 24px;
-  line-height: 44px;
+  line-height: 40px;
 }
 h2 small {
   font-size: 18px;
 }
 h3 {
-  line-height: 33px;
+  line-height: 30px;
   font-size: 18px;
 }
 h3 small {
@@ -356,7 +356,7 @@ h3 small {
 h4,
 h5,
 h6 {
-  line-height: 22px;
+  line-height: 20px;
 }
 h4 {
   font-size: 14px;
@@ -373,8 +373,8 @@ h6 {
   text-transform: uppercase;
 }
 .page-header {
-  padding-bottom: 21px;
-  margin: 22px 0;
+  padding-bottom: 19px;
+  margin: 20px 0;
   border-bottom: 1px solid #eeeeee;
 }
 .page-header h1 {
@@ -383,7 +383,7 @@ h6 {
 ul,
 ol {
   padding: 0;
-  margin: 0 0 11px 25px;
+  margin: 0 0 10px 25px;
 }
 ul ul,
 ul ol,
@@ -398,7 +398,7 @@ ol {
   list-style: decimal;
 }
 li {
-  line-height: 22px;
+  line-height: 20px;
 }
 ul.unstyled,
 ol.unstyled {
@@ -406,20 +406,20 @@ ol.unstyled {
   list-style: none;
 }
 dl {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 dt,
 dd {
-  line-height: 22px;
+  line-height: 20px;
 }
 dt {
   font-weight: bold;
 }
 dd {
-  margin-left: 11px;
+  margin-left: 10px;
 }
 hr {
-  margin: 22px 0;
+  margin: 20px 0;
   border: 0;
   border-top: 1px solid #eeeeee;
   border-bottom: 1px solid #ffffff;
@@ -441,18 +441,18 @@ abbr {
 }
 blockquote {
   padding: 0 0 0 15px;
-  margin: 0 0 22px;
+  margin: 0 0 20px;
   border-left: 5px solid #eeeeee;
 }
 blockquote p {
   margin-bottom: 0;
   font-size: 16px;
   font-weight: 300;
-  line-height: 27.5px;
+  line-height: 25px;
 }
 blockquote small {
   display: block;
-  line-height: 22px;
+  line-height: 20px;
   color: #999999;
 }
 blockquote small:before {
@@ -477,8 +477,8 @@ blockquote:after {
 }
 address {
   display: block;
-  margin-bottom: 22px;
-  line-height: 22px;
+  margin-bottom: 20px;
+  line-height: 20px;
   font-style: normal;
 }
 small {
@@ -491,7 +491,7 @@ code,
 pre {
   padding: 0 3px 2px;
   font-family: Menlo, Monaco, "Courier New", monospace;
-  font-size: 13px;
+  font-size: 12px;
   color: #333333;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -505,10 +505,10 @@ code {
 }
 pre {
   display: block;
-  padding: 10.5px;
-  margin: 0 0 11px;
+  padding: 9.5px;
+  margin: 0 0 10px;
   font-size: 12px;
-  line-height: 22px;
+  line-height: 20px;
   background-color: #f5f5f5;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -521,7 +521,7 @@ pre {
   word-wrap: break-word;
 }
 pre.prettyprint {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 pre code {
   padding: 0;
@@ -534,7 +534,7 @@ pre code {
   overflow-y: scroll;
 }
 form {
-  margin: 0 0 22px;
+  margin: 0 0 20px;
 }
 fieldset {
   padding: 0;
@@ -545,15 +545,15 @@ legend {
   display: block;
   width: 100%;
   padding: 0;
-  margin-bottom: 33px;
-  font-size: 21px;
-  line-height: 44px;
+  margin-bottom: 30px;
+  font-size: 19.5px;
+  line-height: 40px;
   color: #333333;
   border: 0;
   border-bottom: 1px solid #eee;
 }
 legend small {
-  font-size: 16.5px;
+  font-size: 15px;
   color: #999999;
 }
 label,
@@ -561,15 +561,15 @@ input,
 button,
 select,
 textarea {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: normal;
-  line-height: 22px;
+  line-height: 20px;
 }
 input,
 button,
 select,
 textarea {
-  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
 }
 label {
   display: block;
@@ -582,11 +582,11 @@ select,
 .uneditable-input {
   display: inline-block;
   width: 210px;
-  height: 22px;
+  height: 20px;
   padding: 4px;
   margin-bottom: 9px;
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 13px;
+  line-height: 20px;
   color: #555555;
   border: 1px solid #ccc;
   -webkit-border-radius: 3px;
@@ -915,9 +915,9 @@ select:focus:required:invalid:focus {
   box-shadow: 0 0 6px #f8b9b7;
 }
 .form-actions {
-  padding: 21px 20px 22px;
-  margin-top: 22px;
-  margin-bottom: 22px;
+  padding: 19px 20px 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   background-color: #f5f5f5;
   border-top: 1px solid #ddd;
 }
@@ -993,11 +993,11 @@ select:focus:required:invalid:focus {
   display: block;
   width: auto;
   min-width: 16px;
-  height: 22px;
+  height: 20px;
   margin-right: -1px;
   padding: 4px 5px;
   font-weight: normal;
-  line-height: 22px;
+  line-height: 20px;
   color: #999999;
   text-align: center;
   text-shadow: 0 1px 0 #ffffff;
@@ -1094,14 +1094,14 @@ select:focus:required:invalid:focus {
   vertical-align: middle;
 }
 .control-group {
-  margin-bottom: 11px;
+  margin-bottom: 10px;
 }
 legend + .control-group {
-  margin-top: 22px;
+  margin-top: 20px;
   -webkit-margin-top-collapse: separate;
 }
 .form-horizontal .control-group {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
   *zoom: 1;
 }
 .form-horizontal .control-group:before,
@@ -1131,12 +1131,12 @@ table {
 }
 .table {
   width: 100%;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 .table th,
 .table td {
   padding: 8px;
-  line-height: 22px;
+  line-height: 20px;
   text-align: left;
   vertical-align: top;
   border-top: 1px solid #ddd;
@@ -1350,7 +1350,7 @@ table .span12 {
   padding: 3px 15px;
   clear: both;
   font-weight: normal;
-  line-height: 22px;
+  line-height: 20px;
   color: #555555;
   white-space: nowrap;
 }
@@ -1424,7 +1424,7 @@ table .span12 {
   float: right;
   font-size: 20px;
   font-weight: bold;
-  line-height: 22px;
+  line-height: 20px;
   color: #000000;
   text-shadow: 0 1px 0 #ffffff;
   opacity: 0.2;
@@ -1441,8 +1441,8 @@ table .span12 {
   display: inline-block;
   padding: 4px 10px 4px;
   margin-bottom: 0;
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 13px;
+  line-height: 20px;
   color: #333333;
   text-align: center;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
@@ -1524,7 +1524,7 @@ table .span12 {
 }
 .btn-large {
   padding: 9px 14px;
-  font-size: 16px;
+  font-size: 15px;
   line-height: normal;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -1535,16 +1535,16 @@ table .span12 {
 }
 .btn-small {
   padding: 5px 9px;
-  font-size: 12px;
-  line-height: 20px;
+  font-size: 11px;
+  line-height: 18px;
 }
 .btn-small [class^="icon-"] {
   margin-top: -1px;
 }
 .btn-mini {
   padding: 2px 6px;
-  font-size: 12px;
-  line-height: 18px;
+  font-size: 11px;
+  line-height: 16px;
 }
 .btn-primary,
 .btn-primary:hover,
@@ -1759,8 +1759,8 @@ input[type="submit"].btn.small {
   margin-left: 5px;
 }
 .btn-toolbar {
-  margin-top: 11px;
-  margin-bottom: 11px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .btn-toolbar .btn-group {
   display: inline-block;
@@ -1871,7 +1871,7 @@ input[type="submit"].btn.small {
 }
 .alert {
   padding: 8px 35px 8px 14px;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
   background-color: #fcf8e3;
   border: 1px solid #fbeed5;
@@ -1929,7 +1929,7 @@ input[type="submit"].btn.small {
 }
 .nav {
   margin-left: 0;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
   list-style: none;
 }
 .nav > li > a {
@@ -1944,7 +1944,7 @@ input[type="submit"].btn.small {
   padding: 3px 15px;
   font-size: 11px;
   font-weight: bold;
-  line-height: 22px;
+  line-height: 20px;
   color: #999999;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
@@ -2216,7 +2216,7 @@ input[type="submit"].btn.small {
 }
 .navbar {
   overflow: visible;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 .navbar-inner {
   padding-left: 20px;
@@ -2361,7 +2361,7 @@ input[type="submit"].btn.small {
 }
 .navbar-search .search-query {
   padding: 4px 9px;
-  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
   font-size: 13px;
   font-weight: normal;
   line-height: 1;
@@ -2517,8 +2517,8 @@ input[type="submit"].btn.small {
   right: 13px;
 }
 .pagination {
-  height: 44px;
-  margin: 22px 0;
+  height: 40px;
+  margin: 20px 0;
 }
 .pagination ul {
   display: inline-block;
@@ -2541,7 +2541,7 @@ input[type="submit"].btn.small {
 .pagination a {
   float: left;
   padding: 0 14px;
-  line-height: 42px;
+  line-height: 38px;
   text-decoration: none;
   border: 1px solid #ddd;
   border-left-width: 0;
@@ -2579,7 +2579,7 @@ input[type="submit"].btn.small {
 }
 .pager {
   margin-left: 0;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
   list-style: none;
   text-align: center;
   *zoom: 1;
@@ -2807,7 +2807,7 @@ input[type="submit"].btn.small {
 }
 .thumbnails > li {
   float: left;
-  margin: 0 0 22px 20px;
+  margin: 0 0 20px 20px;
 }
 .thumbnail {
   display: block;
@@ -2838,7 +2838,7 @@ a.thumbnail:hover {
 }
 .label {
   padding: 2px 4px 3px;
-  font-size: 11.9px;
+  font-size: 11.049999999999999px;
   font-weight: bold;
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -3042,7 +3042,7 @@ a.thumbnail:hover {
 .hero-unit p {
   font-size: 18px;
   font-weight: 200;
-  line-height: 33px;
+  line-height: 30px;
 }
 .pull-right {
   float: right;
