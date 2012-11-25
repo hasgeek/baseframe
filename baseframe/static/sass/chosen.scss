@@ -55,14 +55,15 @@
   //border: 1px solid #aaaaaa;
   //@include box-shadow(0 0 3px #ffffff inset, 0 1px 1px rgba(0,0,0,0.1));
   // @include box-shadow(0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05));
-  @include box-shadow(0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.5) inset);
+  // @include box-shadow(0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.5) inset);
+  @include box-shadow(inset 0 1px 1px rgba(0,0,0,0.075));
   @include transition(border linear .2s, box-shadow linear .2s);
   display: block;
   overflow: hidden;
   white-space: nowrap;
   position: relative;
-  height: 30px;
-  line-height: 30px;
+  height: 28px;
+  line-height: 28px;
   padding: 0 0 0 8px;
   color: #333;
   text-decoration: none;
@@ -162,7 +163,8 @@
   height: auto !important;
   height: 1%;
   position: relative;
-  @include box-shadow( 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.5) inset);
+  // @include box-shadow( 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.5) inset);
+  @include box-shadow(inset 0 1px 1px rgba(0,0,0,0.075));
   @include transition(border linear .2s, box-shadow linear .2s)
 }
 .chzn-container-multi .chzn-choices li {
@@ -326,7 +328,8 @@
   //@include box-shadow(0 0 5px rgba(0,0,0,.3));
   //border: 1px solid #5897fb;
   border: 1px solid rgba(82,168,236,.8);
-  @include box-shadow(0 0 8px rgba(82,168,236,.6));
+  //@include box-shadow(0 0 8px rgba(82,168,236,.6));
+  @include box-shadow(inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6));
   @include transition(border linear .2s, box-shadow linear .2s);
 }
 .chzn-container-active .chzn-single-with-drop {
@@ -361,7 +364,8 @@
   // box-shadow        : 0 0 5px rgba(0,0,0,.3);
   // border: 1px solid #5897fb;
   border: 1px solid rgba(82,168,236,.8) !important;
-  @include box-shadow(0 0 8px rgba(82,168,236,.6));
+  // @include box-shadow(0 0 8px rgba(82,168,236,.6));
+  @include box-shadow(inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6));
   @include transition(border linear .2s, box-shadow linear .2s);
 }
 .chzn-container-active .chzn-choices .search-field input {
