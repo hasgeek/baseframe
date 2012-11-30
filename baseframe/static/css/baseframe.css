@@ -948,21 +948,21 @@ h1 {
   font-size: 25px;
   line-height: 30px;
   margin-top: 10px;
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 h2 {
   font-size: 22px;
   line-height: 30px;
   margin-top: 10px;
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 h3 {
   font-size: 18px;
   line-height: 20px;
   margin-top: 10px;
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 h1 small, h2 small, h3 small {
@@ -1306,6 +1306,9 @@ footer .container p {
 }
 .video.slideshare, .video169.slideshare, .video43.slideshare {
   padding-top: 36px;
+}
+.video.ustream, .video169.ustream, .video43.ustream {
+  padding-top: 32px;
 }
 .video iframe, .video object, .video embed, .video169 iframe, .video169 object, .video169 embed, .video43 iframe, .video43 object, .video43 embed {
   position: absolute;
