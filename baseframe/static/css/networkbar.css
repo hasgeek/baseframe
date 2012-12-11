@@ -29,6 +29,8 @@
   z-index: 1029;
 }
 #hg-bar li {
+  font: 13px/18px "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+  font-size: 13px;
   line-height: 18px;
 }
 #hg-bar ul#hg-usertools {

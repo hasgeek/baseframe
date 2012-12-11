@@ -36,6 +36,8 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans
     position: relative;
     z-index: 1029;
     li {
+        font: $networkbar-font;
+        font-size: $networkbar-font-size;
         line-height: 18px;
     }
     ul#hg-usertools {
