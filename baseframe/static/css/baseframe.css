@@ -1307,6 +1307,9 @@ footer .container p {
 .video.slideshare, .video169.slideshare, .video43.slideshare {
   padding-top: 36px;
 }
+.video.speakerdeck, .video169.speakerdeck, .video43.speakerdeck {
+  padding-top: 62px;
+}
 .video.ustream, .video169.ustream, .video43.ustream {
   padding-top: 32px;
 }
