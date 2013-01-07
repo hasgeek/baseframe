@@ -54,6 +54,7 @@ expander_js = Bundle('baseframe/js/jquery.expander.js')
 cookie_js = Bundle('baseframe/js/jquery.cookie.js')
 timezone_js = Bundle('baseframe/js/detect_timezone.js')
 socialite_js = Bundle('baseframe/js/socialite.js')
+swfobject_js = Bundle('baseframe/js/swfobject.js')
 
 #bootstrap_less = Bundle('baseframe/less/bootstrap/bootstrap.less',
 #                        'baseframe/less/bootstrap/responsive.less',
