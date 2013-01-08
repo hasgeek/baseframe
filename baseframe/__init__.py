@@ -79,20 +79,32 @@ animate_css = Bundle('baseframe/css/animate.css')
 
 @baseframe.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(baseframe.root_path, 'static', 'img'),
+    app_icon_path = current_app.static_folder
+    # Does the app have a favicon.ico in /static?
+    if not os.path.exists(os.path.join(app_icon_path, 'favicon.ico')):
+        # Nope? Is it in /static/img?
+        app_icon_path = os.path.join(current_app.static_folder, 'img')
+        if not os.path.exists(os.path.join(app_icon_path, 'favicon.ico')):
+            # Still nope? Serve default favicon from baseframe
+            app_icon_path = os.path.join(baseframe.static_folder, 'img')
+    return send_from_directory(app_icon_path,
       'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @baseframe.route('/humans.txt')
 def humans():
-    return send_from_directory(os.path.join(baseframe.root_path, 'static'),
-                               'humans.txt', mimetype='text/plain')
+    return send_from_directory(
+        current_app.static_folder if os.path.exists(
+            os.path.join(current_app.static_folder, 'humans.txt')) else baseframe.static_folder,
+       'humans.txt', mimetype='text/plain')
 
 
 @baseframe.route('/robots.txt')
 def robots():
-    return send_from_directory(os.path.join(baseframe.root_path, 'static'),
-                               'robots.txt', mimetype='text/plain')
+    return send_from_directory(
+        current_app.static_folder if os.path.exists(
+            os.path.join(current_app.static_folder, 'robots.txt')) else baseframe.static_folder,
+       'robots.txt', mimetype='text/plain')
 
 
 @baseframe.route('/_toastr_messages.js')
@@ -102,7 +114,7 @@ def toastr_messages_js():
 
 @baseframe.route('/_editor.css')
 def editorcss():
-    response = Response(render_template('editor.css'),
+    response = current_app.response_class(render_template('editor.css'),
         mimetype='text/css',
         headers={'Expires': (datetime.utcnow() + timedelta(minutes=60)).strftime('%a, %d %b %Y %H:%M:%S GMT')})
     return response
