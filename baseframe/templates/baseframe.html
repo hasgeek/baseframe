@@ -62,42 +62,44 @@
   {% block pageheaders %}{% endblock %}
 </head>
 <body>
-  <div id="root">
-    <!-- headerbox -->
-    {% block headerbox -%}
-    <header>
-      {% block networkbar %}{{ networkbar(siteid=config['SITE_ID'], login=config['LASTUSER_CLIENT_ID'] and true or false) }}{% endblock %}
-      <div id="page-header" class="container">
-        {% block logo -%}
-          <div id="logo"><a href="{{ url_for('index') }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
-        {%- endblock %}
-        {%- block header %}{% endblock %}
-      </div>
-    </header>
-    {%- endblock %}
-    <!-- /headerbox -->
-
-    {% block main -%}
-    <div class="container">
-      {%- block messages %}{{ flash_messages() }}{% endblock %}
-      {%- block baseheadline %}{% endblock %}
-      {%- block basecontent %}{% endblock %}
-    </div>
-    {%- endblock %}
-    <!-- /container -->
-    <div id="root_footer"></div>
-  </div>
-  <!-- /root -->
-  {% block basefooter -%}
-    <footer>
-      <div class="footer-inner">
-        <div class="container">
-          {% block footer -%}
-            <span class="no-print">Copyright &copy; 2010-12 HasGeek</span>
+  {% block root -%}
+    <div id="root">
+      <!-- headerbox -->
+      {% block headerbox -%}
+      <header>
+        {% block networkbar %}{{ networkbar(siteid=config['SITE_ID'], login=config['LASTUSER_CLIENT_ID'] and true or false) }}{% endblock %}
+        <div id="page-header" class="container">
+          {% block logo -%}
+            <div id="logo"><a href="{{ url_for('index') }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
           {%- endblock %}
+          {%- block header %}{% endblock %}
         </div>
+      </header>
+      {%- endblock %}
+      <!-- /headerbox -->
+
+      {% block main -%}
+      <div class="container">
+        {%- block messages %}{{ flash_messages() }}{% endblock %}
+        {%- block baseheadline %}{% endblock %}
+        {%- block basecontent %}{% endblock %}
       </div>
-    </footer>
+      {%- endblock %}
+      <!-- /container -->
+      <div id="root_footer"></div>
+    </div>
+    <!-- /root -->
+    {% block basefooter -%}
+      <footer>
+        <div class="footer-inner">
+          <div class="container">
+            {% block footer -%}
+              <span class="no-print">Copyright &copy; 2010-12 HasGeek</span>
+            {%- endblock %}
+          </div>
+        </div>
+      </footer>
+    {%- endblock %}
   {%- endblock %}
 
   <!-- Included JS Files -->
