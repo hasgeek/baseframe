@@ -2,7 +2,7 @@
 
 import os
 from datetime import datetime, timedelta
-from flask import Blueprint, send_from_directory, render_template, current_app, Response
+from flask import Blueprint, send_from_directory, render_template, current_app
 from flask.ext.assets import Bundle
 
 __all__ = ['baseframe', 'baseframe_js', 'baseframe_css']
@@ -35,7 +35,8 @@ extra_js = Bundle('baseframe/js/jquery.form.js',
                   'baseframe/js/tiny_mce/jquery.tinymce.js',
                   'baseframe/js/bootstrap-datepicker.js',
                   'baseframe/js/jquery.timepicker.js',
-                  'baseframe/js/chosen.jquery.js',
+                  # 'baseframe/js/chosen.jquery.js',
+                  'baseframe/js/select2.js',
                   )
 
 networkbar_js = Bundle('baseframe/js/networkbar.js')
@@ -64,8 +65,8 @@ networkbar_css = Bundle('baseframe/css/networkbar.css')
 baseframe_css = Bundle(  # bootstrap_less,
                        'baseframe/css/bootstrap.css',   # Externally compiled with Less
                        'baseframe/css/responsive.css',  # Externally compiled with Less
-                       'baseframe/css/chosen.css',      # Companion to chosen.jquery.js
-                       # 'baseframe/css/select2.css',     # Companion to select2.js
+                       # 'baseframe/css/chosen.css',      # Companion to chosen.jquery.js
+                       'baseframe/css/select2.css',     # Companion to select2.js
                        'baseframe/css/jquery.timepicker.css',  # For timepicker
                        'baseframe/css/baseframe.css',   # Externally compiled with Compass
                        networkbar_css,                  # Externally compiled with Compass
