@@ -3,7 +3,7 @@
 function activate_chosen(selector) {
   if (!navigator.userAgent.match(/(iPod|iPad|iPhone|Android)/)) {
     // $(selector).chosen({allow_single_deselect: true});
-    $(selector).select2({allowClear: true});
+    $(selector).select2({allowClear: true, width: '100%'});
   }
 }
 
