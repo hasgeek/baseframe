@@ -56,6 +56,7 @@ cookie_js = Bundle('baseframe/js/jquery.cookie.js')
 timezone_js = Bundle('baseframe/js/detect_timezone.js')
 socialite_js = Bundle('baseframe/js/socialite.js')
 swfobject_js = Bundle('baseframe/js/swfobject.js')
+fields_js = Bundle('baseframe/js/fields.js')
 
 #bootstrap_less = Bundle('baseframe/less/bootstrap/bootstrap.less',
 #                        'baseframe/less/bootstrap/responsive.less',
