@@ -6,7 +6,7 @@ Standard forms
 
 from pytz import utc, timezone as pytz_timezone
 import bleach
-from flask import render_template, request, Markup, abort, flash, redirect, json, escape, url_for
+from flask import render_template, request, Markup, abort, flash, redirect, json, escape, url_for, make_response
 from wtforms.widgets import html_params
 import flask.ext.wtf as wtf
 from coaster import make_name
@@ -255,25 +255,25 @@ def render_form(form, title, message='', formid='form', submit=u"Submit", cancel
         if isinstance(field.widget, wtf.FileInput):
             multipart = True
     if request.is_xhr and ajax:
-        return render_template('baseframe/ajaxform.html', form=form, title=title,
+        return make_response(render_template('baseframe/ajaxform.html', form=form, title=title,
             message=message, formid=formid, submit=submit,
-            cancel_url=cancel_url, multipart=multipart)
+            cancel_url=cancel_url, multipart=multipart))
     else:
-        return render_template('baseframe/autoform.html', form=form, title=title,
+        return make_response(render_template('baseframe/autoform.html', form=form, title=title,
             message=message, formid=formid, submit=submit,
-            cancel_url=cancel_url, ajax=ajax, multipart=multipart)
+            cancel_url=cancel_url, ajax=ajax, multipart=multipart))
 
 
 def render_message(title, message, code=200):
     if request.is_xhr:
-        return Markup("<p>%s</p>" % escape(message)), code
+        return make_response(Markup("<p>%s</p>" % escape(message)), code)
     else:
-        return render_template('baseframe/message.html', title=title, message=message), code
+        return make_response(render_template('baseframe/message.html', title=title, message=message), code)
 
 
 def render_redirect(url, code=302):
     if request.is_xhr:
-        return render_template('baseframe/redirect.html', quoted_url=Markup(json.dumps(url)))
+        return make_response(render_template('baseframe/redirect.html', quoted_url=Markup(json.dumps(url))))
     else:
         return redirect(url, code=code)
 
@@ -289,4 +289,4 @@ def render_delete_sqla(ob, db, title, message, success=u'', next=None):
             if success:
                 flash(success, "success")
         return render_redirect(next or url_for('index'))
-    return render_template('baseframe/delete.html', form=form, title=title, message=message)
+    return make_response(render_template('baseframe/delete.html', form=form, title=title, message=message))
