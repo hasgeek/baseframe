@@ -1519,6 +1519,17 @@ code {
   border: 0;
 }
 
+.hero-unit.clean {
+  padding: 0;
+  background-color: inherit;
+  margin-bottom: 20px;
+}
+.hero-unit.clean h1 {
+  font-size: 40px;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
 html {
   overflow-y: scroll;
 }
@@ -1919,6 +1930,94 @@ ul.grid > li.header {
 
 .print-only {
   display: none;
+}
+
+.cardset, .userset {
+  list-style: none;
+}
+.cardset li, .userset li {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: left;
+  position: relative;
+  margin-bottom: 20px;
+}
+.cardset li .card-badge, .userset li .card-badge {
+  position: absolute;
+  right: 6px;
+  top: 2px;
+  color: #595959;
+}
+.cardset li a, .userset li a {
+  overflow: hidden;
+  border: 1px solid #afafaf;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
+  width: 100%;
+  height: 100%;
+  padding: 0 14px 8px;
+  background: white;
+  color: inherit;
+  -webkit-transition-property: background;
+  -moz-transition-property: background;
+  -o-transition-property: background;
+  transition-property: background;
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+}
+.cardset li a:hover, .userset li a:hover {
+  color: inherit;
+  text-decoration: none;
+  background: #f6f6f6;
+  -webkit-transition-property: background;
+  -moz-transition-property: background;
+  -o-transition-property: background;
+  transition-property: background;
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+}
+.cardset li .card-title, .cardset li .card-body, .userset li .card-title, .userset li .card-body {
+  text-overflow: ellipsis;
+}
+.cardset li .card-title, .userset li .card-title {
+  padding: 8px 0 10px 0;
+  height: 5.5em;
+}
+.cardset li .card-body, .userset li .card-body {
+  margin: 10px -14px 0;
+  padding: 9px 14px 0;
+  border-top: 1px solid #e8e8e8;
+  height: 7em;
+}
+.cardset li.span3 .card-body, .userset li.span3 .card-body {
+  height: 5em;
+}
+.cardset li .card-body.large-plus, .userset li .card-body.large-plus {
+  text-align: center;
+  font-size: 100px;
+  line-height: 1;
+}
+.cardset li h2, .cardset li h3, .userset li h2, .userset li h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.cardset li h3, .userset li h3 {
+  font-size: 12px;
+  color: #666666;
+  font-weight: normal;
 }
 
 /* Cookies */
