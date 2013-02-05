@@ -1841,12 +1841,13 @@ table.mceLayout.focus {
   font-family: monospace;
 }
 
-.form-horizontal .help-required {
-  margin-right: -11px;
-}
-
 .control-label {
   font-weight: bold;
+  position: relative;
+}
+.control-label .help-required {
+  position: absolute;
+  right: -10px;
 }
 
 input.datetime-date, input.datetime-time {
@@ -1932,6 +1933,14 @@ ul.grid > li.header {
   display: none;
 }
 
+.htile {
+  background-color: #eeeeee;
+  padding: 8px 12px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
 .cardset, .userset {
   list-style: none;
 }
@@ -1964,7 +1973,7 @@ ul.grid > li.header {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1) inset;
   width: 100%;
   height: 100%;
-  padding: 0 14px 8px;
+  padding: 0 12px 8px;
   background: white;
   color: inherit;
   -webkit-transition-property: background;
@@ -2042,12 +2051,22 @@ ul.grid > li.header {
   *display: inline;
 }
 
-.js .jshidden {
+.js .jshidden, .js .no-js-only {
   display: none;
   visibility: hidden;
 }
 
-.no-js .no-jshidden {
+.no-js .no-jshidden, .no-js .js-only {
+  display: none;
+  visibility: hidden;
+}
+
+.userlogin .no-userlogin-only {
+  display: none;
+  visibility: hidden;
+}
+
+.no-userlogin .userlogin-only {
   display: none;
   visibility: hidden;
 }
