@@ -58,8 +58,9 @@
   {%- if config['TYPEKIT_CODE'] %}
     <script type="text/javascript" src="//use.typekit.com/{{ config['TYPEKIT_CODE'] }}.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-  {% endif -%}
-  {% block pageheaders %}{% endblock %}
+  {%- endif %}
+  {% block image_src %}<link rel="image_src" href="{{ url_for('baseframe.static', filename='img/logo@2x.png') }}">{% endblock %}
+  {% block layoutheaders %}{% block pageheaders %}{% endblock %}{% endblock %}
 </head>
 <body>
   {% block root -%}
