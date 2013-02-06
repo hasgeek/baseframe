@@ -37,7 +37,7 @@
   float: right;
 }
 #hg-bar ul#hg-usertools .profile {
-  font-weight: bold;
+  font-weight: 600;
 }
 #hg-bar ul#hg-barlinks {
   float: left;
@@ -226,7 +226,7 @@
 #hg-bar ul#hg-barlinks > li.selected > a, #hg-bar ul#hg-usertools > li.selected > a {
   border-top: 2px solid #df5e0e;
   color: black;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 #hg-bar.hg-dark {
