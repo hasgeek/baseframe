@@ -13,7 +13,7 @@ baseframe = Blueprint('baseframe', __name__,
                       template_folder='templates')
 
 jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
-                   filters='jsmin', output='js/baseframe-jquery.min.js')
+                   filters='closure_js', output='js/baseframe-jquery.min.js')
 
 
 bootstrap_js = Bundle('baseframe/js/bootstrap/bootstrap-alert.js',
@@ -46,7 +46,7 @@ baseframe_js = Bundle(jquery_js,
                       extra_js,
                       networkbar_js,
                       'baseframe/js/baseframe.js', debug=False,
-                      filters='jsmin', output='js/baseframe-packed.js')
+                      filters='closure_js', output='js/baseframe-packed.js')
 
 # Optional extras
 mousetrap_js = Bundle('baseframe/js/mousetrap.js')

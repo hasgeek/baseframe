@@ -9,13 +9,13 @@ CHANGES = unicode(open(os.path.join(here, 'CHANGES.rst')).read(), 'utf-8')
 requires = [
     'Flask',
     'coaster',
-    'jsmin',
     'cssmin',
     'Flask-Assets',
     'Flask-WTF',
     'wtforms',
     'bleach',
     'pytz',
+    'closure',
     ]
 
 
