@@ -2,9 +2,9 @@
   {%- if messages -%}
     {%- for category, message in messages %}
       {%- if category in ['error', 'info', 'success', 'warning'] %}
-        toastr.{{ category }}("{{ message }}");
+        toastr.{{ category }}("{{ message|e }}");
       {%- else %}
-        toastr.info("{{ message }}");
+        toastr.info("{{ message|e }}");
       {%- endif %}
     {%- endfor %}
   {%- endif %}
