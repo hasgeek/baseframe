@@ -1,5 +1,5 @@
 /*
-Version: @@ver@@ Timestamp: @@timestamp@@
+Version: 3.3.1 Timestamp: Wed Feb 20 09:57:22 PST 2013
 */
 .select2-container {
   position: relative;
@@ -44,6 +44,12 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   -webkit-background-clip: padding;
   -moz-background-clip: padding;
   background-clip: padding-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   background-color: #fff;
   background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(0.5, white));
   background-image: -webkit-linear-gradient(center bottom, #eeeeee 0%, white 50%);
@@ -98,6 +104,14 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 .select2-container .select2-choice abbr:hover {
   background-position: right -11px;
   cursor: pointer;
+}
+
+.select2-drop-mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9998;
+  opacity: 0;
 }
 
 .select2-drop {
@@ -274,6 +288,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .select2-results ul.select2-result-sub {
@@ -311,6 +326,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 .select2-results li {
   list-style: none;
   display: list-item;
+  background-image: none;
 }
 
 .select2-results li.select2-result-with-children > .select2-result-label {
@@ -321,6 +337,12 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   padding: 3px 7px 4px;
   margin: 0;
   cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .select2-results .select2-highlighted {
@@ -337,6 +359,11 @@ Version: @@ver@@ Timestamp: @@timestamp@@
   background: transparent;
 }
 
+.select2-results .select2-highlighted ul {
+  background: white;
+  color: #000;
+}
+
 .select2-results .select2-no-results,
 .select2-results .select2-searching,
 .select2-results .select2-selection-limit {
@@ -346,20 +373,22 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 /*
-disabled look for already selected choices in the results dropdown
+disabled look for disabled choices in the results dropdown
+*/
 .select2-results .select2-disabled.select2-highlighted {
-    color: #666;
-    background: #f4f4f4;
-    display: list-item;
-    cursor: default;
+  color: #666;
+  background: #f4f4f4;
+  display: list-item;
+  cursor: default;
 }
+
 .select2-results .select2-disabled {
   background: #f4f4f4;
   display: list-item;
   cursor: default;
 }
-*/
-.select2-results .select2-disabled {
+
+.select2-results .select2-selected {
   display: none;
 }
 
@@ -444,7 +473,6 @@ disabled look for already selected choices in the results dropdown
 }
 
 .select2-container-multi .select2-choices .select2-search-field input {
-  height: 15px;
   padding: 5px;
   margin: 1px 0;
   font-size: 100%;
@@ -484,6 +512,12 @@ disabled look for already selected choices in the results dropdown
   -webkit-background-clip: padding;
   -moz-background-clip: padding;
   background-clip: padding-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   background-color: #e4e4e4;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#f4f4f4', GradientType=0 );
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), color-stop(100%, #eeeeee));
@@ -547,12 +581,8 @@ disabled look for already selected choices in the results dropdown
 
 /* end multiselect */
 .select2-result-selectable .select2-match,
-.select2-result-unselectable .select2-result-selectable .select2-match {
-  text-decoration: underline;
-}
-
 .select2-result-unselectable .select2-match {
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .select2-offscreen {
