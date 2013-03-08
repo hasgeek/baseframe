@@ -1,13 +1,13 @@
 /*!
- * jQuery Expander Plugin v1.4.3
+ * jQuery Expander Plugin v1.4.5
  *
- * Date: Tue Jun 19 11:54:00 2012 EDT
+ * Date: Mon Jan 14 14:44:48 2013 EST
  * Requires: jQuery v1.3+
  *
- * Copyright 2011, Karl Swedberg
- * Dual licensed under the MIT and GPL licenses (just like jQuery):
+ * Copyright 2013, Karl Swedberg
+ * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
- * http://www.gnu.org/licenses/gpl.html
+ *
  *
  *
  *
@@ -16,7 +16,7 @@
 
 (function($) {
   $.expander = {
-    version: '1.4.3',
+    version: '1.4.5',
     defaults: {
       // the number of characters at which the contents will be sliced into two parts.
       slicePoint: 100,
@@ -67,7 +67,8 @@
       onSlice: null, // function() {}
       beforeExpand: null, // function() {},
       afterExpand: null, // function() {},
-      onCollapse: null // function(byUser) {}
+      onCollapse: null, // function(byUser) {}
+      afterCollapse: null // function() {}
     }
   };
 
@@ -86,14 +87,14 @@
         rOpenTag = /<(\w+)[^>]*>/g,
         rCloseTag = /<\/(\w+)>/g,
         rLastCloseTag = /(<\/[^>]+>)\s*$/,
-        rTagPlus = /^<[^>]+>.?/,
+        rTagPlus = /^(<[^>]+>)+.?/,
         delayedCollapse;
 
     var methods = {
       init: function() {
         this.each(function() {
           var i, l, tmp, newChar, summTagless, summOpens, summCloses,
-              lastCloseTag, detailText, detailTagless,
+              lastCloseTag, detailText, detailTagless, html, expand,
               $thisDetails, $readMore,
               openTagsForDetails = [],
               closeTagsForsummaryText = [],
@@ -109,21 +110,25 @@
               }).length,
               el = hasBlocks ? 'div' : 'span',
               detailSelector = el + '.' + o.detailClass,
-              moreSelector = 'span.' + o.moreClass,
+              moreClass = o.moreClass + '',
+              lessClass = o.lessClass + '',
               expandSpeed = o.expandSpeed || 0,
               allHtml = $.trim( $this.html() ),
               allText = $.trim( $this.text() ),
               summaryText = allHtml.slice(0, o.slicePoint);
 
+          // allow multiple classes for more/less links
+          o.moreSelector = 'span.' + moreClass.split(' ').join('.');
+          o.lessSelector = 'span.' + lessClass.split(' ').join('.');
           // bail out if we've already set up the expander on this element
           if ( $.data(this, 'expanderInit') ) {
             return;
           }
 
           $.data(this, 'expanderInit', true);
-
+          $.data(this, 'expander', o);
           // determine which callback functions are defined
-          $.each(['onSlice','beforeExpand', 'afterExpand', 'onCollapse'], function(index, val) {
+          $.each(['onSlice','beforeExpand', 'afterExpand', 'onCollapse', 'afterCollapse'], function(index, val) {
             defined[val] = $.isFunction(o[val]);
           });
 
@@ -213,7 +218,7 @@
 
             lastCloseTag = '';
           }
-          o.moreLabel = $this.find(moreSelector).length ? '' : buildMoreLabel(o);
+          o.moreLabel = $this.find(o.moreSelector).length ? '' : buildMoreLabel(o);
 
           if (hasBlocks) {
             detailText = allHtml;
@@ -236,38 +241,29 @@
           }
 
           // build the html with summary and detail and use it to replace old contents
-          var html = buildHTML(o, hasBlocks);
+          html = buildHTML(o, hasBlocks);
 
           $this.html( html );
 
           // set up details and summary for expanding/collapsing
           $thisDetails = $this.find(detailSelector);
-          $readMore = $this.find(moreSelector);
-          $thisDetails[o.collapseEffect](0);
-          $readMore.find('a').unbind('click.expander').bind('click.expander', expand);
+          $readMore = $this.find(o.moreSelector);
+
+          // Hide details span using collapseEffect unless
+          // expandEffect is NOT slideDown and collapseEffect IS slideUp.
+          // The slideUp effect sets span's "default" display to
+          // inline-block. This is necessary for slideDown, but
+          // problematic for other "showing" animations.
+          // Fixes #46
+          if (o.collapseEffect === 'slideUp' && o.expandEffect !== 'slideDown' || $this.is(':hidden')) {
+            $thisDetails.css({display: 'none'});
+          } else {
+            $thisDetails[o.collapseEffect](0);
+          }
 
           $summEl = $this.find('div.' + o.summaryClass);
 
-          if ( o.userCollapse && !$this.find('span.' + o.lessClass).length ) {
-            $this
-            .find(detailSelector)
-            .append('<span class="' + o.lessClass + '">' + o.userCollapsePrefix + '<a href="#">' + o.userCollapseText + '</a></span>');
-          }
-
-          $this
-          .find('span.' + o.lessClass + ' a')
-          .unbind('click.expander')
-          .bind('click.expander', function(event) {
-            event.preventDefault();
-            clearTimeout(delayedCollapse);
-            var $detailsCollapsed = $(this).closest(detailSelector);
-            reCollapse(o, $detailsCollapsed);
-            if (defined.onCollapse) {
-              o.onCollapse.call(thisEl, true);
-            }
-          });
-
-          function expand(event) {
+          expand = function(event) {
             event.preventDefault();
             $readMore.hide();
             $summEl.hide();
@@ -280,7 +276,28 @@
               if (defined.afterExpand) {o.afterExpand.call(thisEl);}
               delayCollapse(o, $thisDetails, thisEl);
             });
+          };
+
+          $readMore.find('a').unbind('click.expander').bind('click.expander', expand);
+
+          if ( o.userCollapse && !$this.find(o.lessSelector).length ) {
+            $this
+            .find(detailSelector)
+            .append('<span class="' + o.lessClass + '">' + o.userCollapsePrefix + '<a href="#">' + o.userCollapseText + '</a></span>');
           }
+
+          $this
+          .find(o.lessSelector + ' a')
+          .unbind('click.expander')
+          .bind('click.expander', function(event) {
+            event.preventDefault();
+            clearTimeout(delayedCollapse);
+            var $detailsCollapsed = $(this).closest(detailSelector);
+            reCollapse(o, $detailsCollapsed);
+            if (defined.onCollapse) {
+              o.onCollapse.call(thisEl, true);
+            }
+          });
 
         }); // this.each
       },
@@ -294,16 +311,16 @@
             return;
           }
 
-          o = $.extend({}, opts, $this.data('expander') || $.meta && $this.data() || {}),
+          o = $.extend({}, $this.data('expander') || {}, opts),
           details = $this.find('.' + o.detailClass).contents();
 
           $this.removeData('expanderInit');
           $this.removeData('expander');
 
-          $this.find('.' + o.moreClass).remove();
+          $this.find(o.moreSelector).remove();
           $this.find('.' + o.summaryClass).remove();
           $this.find('.' + o.detailClass).after(details).remove();
-          $this.find('.' + o.lessClass).remove();
+          $this.find(o.lessSelector).remove();
 
         });
       }
@@ -369,6 +386,7 @@
           el.parent().children('div.' + o.summaryClass).show()
             .find('span.' + o.moreClass).show();
         }
+        if (o.afterCollapse) {o.afterCollapse.call(el);}
       });
     }
 
