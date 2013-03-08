@@ -2,6 +2,8 @@ import os
 from setuptools import setup, find_packages
 from setuptools.command.build_py import build_py
 
+version = '0.2.14'
+
 here = os.path.abspath(os.path.dirname(__file__))
 README = unicode(open(os.path.join(here, 'README.rst')).read(), 'utf-8')
 CHANGES = unicode(open(os.path.join(here, 'CHANGES.rst')).read(), 'utf-8')
@@ -16,6 +18,7 @@ requires = [
     'bleach',
     'pytz',
     'closure',
+    'semantic_version',
     ]
 
 
@@ -31,7 +34,7 @@ class BaseframeBuildPy(build_py):
 
 
 setup(name='baseframe',
-      version='0.2.13',
+      version=version,
       description='Baseframe for HasGeek projects',
       long_description=README,
       classifiers=[

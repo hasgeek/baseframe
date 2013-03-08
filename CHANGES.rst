@@ -1,3 +1,20 @@
+0.2.14
+------
+
+* Added BSD license
+* Moved static path to /_baseframe to avoid namespace clashes with /<profile>
+* Many stylesheet changes; JS lib defaults
+* DateTimeField is now timezone aware
+* Switched from chosen.js to select2.js
+* Added documentation
+* Switched default font from Lato to Open Sans
+* Added JS for timezone detection
+* Added many optional JS assets
+* Added root block to baseframe.html that can be overriden by templates
+* Upgraded to FontAwesome 3.0 with many new icons
+* Switched to Google Closure JS minifier for better compression than JSMin
+* Semantically versioned assets, with unversioned assets moved into deprecated.py
+
 0.2.13
 ------
 

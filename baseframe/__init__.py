@@ -1,84 +1,39 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
 import os
 from datetime import datetime, timedelta
 from flask import Blueprint, send_from_directory, render_template, current_app
-from flask.ext.assets import Bundle
+from coaster.assets import split_namespec
+from flask.ext.assets import Environment
+from .assets import assets, Version
 
-__all__ = ['baseframe', 'baseframe_js', 'baseframe_css']
-
-baseframe = Blueprint('baseframe', __name__,
-                      static_folder='static',
-                      static_url_path='/_baseframe',
-                      template_folder='templates')
-
-jquery_js = Bundle('baseframe/js/jquery-1.7.1.js',
-                   filters='closure_js', output='js/baseframe-jquery.min.js')
+__all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets']
 
 
-bootstrap_js = Bundle('baseframe/js/bootstrap/bootstrap-alert.js',
-                      'baseframe/js/bootstrap/bootstrap-button.js',
-#                      'baseframe/js/bootstrap/bootstrap-carousel.js',
-#                      'baseframe/js/bootstrap/bootstrap-collapse.js',
-                      'baseframe/js/bootstrap/bootstrap-dropdown.js',
-                      'baseframe/js/bootstrap/bootstrap-modal.js',
-                      'baseframe/js/bootstrap/bootstrap-tooltip.js',
-#                      'baseframe/js/bootstrap/bootstrap-popover.js',
-#                      'baseframe/js/bootstrap/bootstrap-scrollspy.js',
-                      'baseframe/js/bootstrap/bootstrap-tab.js',
-                      'baseframe/js/bootstrap/bootstrap-transition.js',
-#                      'baseframe/js/bootstrap/bootstrap-typeahead.js',
-                      )
+class BaseframeBlueprint(Blueprint):
+    def init_app(self, app, requires=[]):
+        assets_js = []
+        assets_css = []
+        for item in requires:
+            name, spec = split_namespec(item)
+            for alist, ext in [(assets_js, '.js'), (assets_css, '.css')]:
+                if name + ext in assets:
+                    alist.append(name + ext + unicode(spec))
+        js_all = assets.require('!jquery.js', *assets_js)
+        css_all = assets.require(*assets_css)
+        app.assets = Environment(app)
+        app.assets.register('js_all', js_all,
+            filters='closure_js', output='js/baseframe-packed.js')
+        app.assets.register('css_all', css_all,
+            filters=['cssrewrite', 'cssmin'], output='js/baseframe-packed.css')
+        app.register_blueprint(self)
 
 
-extra_js = Bundle('baseframe/js/jquery.form.js',
-                  'baseframe/js/tiny_mce/jquery.tinymce.js',
-                  'baseframe/js/bootstrap-datepicker.js',
-                  'baseframe/js/jquery.timepicker.js',
-                  # 'baseframe/js/chosen.jquery.js',
-                  'baseframe/js/select2.js',
-                  )
-
-networkbar_js = Bundle('baseframe/js/networkbar.js')
-
-baseframe_js = Bundle(jquery_js,
-                      bootstrap_js,
-                      extra_js,
-                      networkbar_js,
-                      'baseframe/js/baseframe.js', debug=False,
-                      filters='closure_js', output='js/baseframe-packed.js')
-
-# Optional extras
-mousetrap_js = Bundle('baseframe/js/mousetrap.js')
-toastr_js = Bundle('baseframe/js/toastr.js')
-expander_js = Bundle('baseframe/js/jquery.expander.js')
-cookie_js = Bundle('baseframe/js/jquery.cookie.js')
-timezone_js = Bundle('baseframe/js/detect_timezone.js')
-socialite_js = Bundle('baseframe/js/socialite.js')
-swfobject_js = Bundle('baseframe/js/swfobject.js')
-parsley_js = Bundle('baseframe/js/parsley.js')
-parsley_extend_js = Bundle('baseframe/js/parsley.extend.js')
-
-#bootstrap_less = Bundle('baseframe/less/bootstrap/bootstrap.less',
-#                        'baseframe/less/bootstrap/responsive.less',
-#                        filters='less', output='baseframe/css/bootstrap.css',
-#                        debug=False)
-
-networkbar_css = Bundle('baseframe/css/networkbar.css')
-baseframe_css = Bundle(  # bootstrap_less,
-                       'baseframe/css/bootstrap.css',   # Externally compiled with Less
-                       'baseframe/css/responsive.css',  # Externally compiled with Less
-                       # 'baseframe/css/chosen.css',      # Companion to chosen.jquery.js
-                       'baseframe/css/select2.css',     # Companion to select2.js
-                       'baseframe/css/jquery.timepicker.css',  # For timepicker
-                       'baseframe/css/baseframe.css',   # Externally compiled with Compass
-                       networkbar_css,                  # Externally compiled with Compass
-                       filters='cssmin',
-                       output='css/baseframe-packed.css')
-
-# Optional extras
-toastr_css = Bundle('baseframe/css/toastr.css')
-animate_css = Bundle('baseframe/css/animate.css')
+baseframe = BaseframeBlueprint('baseframe', __name__,
+    static_folder='static',
+    static_url_path='/_baseframe',
+    template_folder='templates')
 
 
 @baseframe.route('/favicon.ico')
@@ -145,8 +100,13 @@ def process_response(response):
     # set has a value for this option, let it pass through
     if 'X-Frame-Options' in response.headers:
         frameoptions = response.headers.get('X-Frame-Options')
+        # FIXME: There has to be a better way to signal this.
         if not frameoptions or frameoptions == 'ALLOW':
             response.headers.pop('X-Frame-Options')
     else:
         response.headers['X-Frame-Options'] = 'SAMEORIGIN'
     return response
+
+
+# Deprecated imports
+from .deprecated import *
