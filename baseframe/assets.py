@@ -8,7 +8,6 @@ __version = '0.2.14'
 #: Semantic-versioned assets
 assets = VersionedAssets()
 
-
 assets['jquery.js'][Version('1.7.1')] = 'baseframe/js/jquery-1.7.1.js'
 assets['jquery.js'][Version('1.8.3')] = 'baseframe/js/jquery-1.8.3.js'
 
@@ -71,7 +70,7 @@ assets['bootstrap.js'][Version('2.0.1')] = {'requires': [
     'bootstrap-tab.js==2.0.1',
     'bootstrap-transition.js==2.0.1',
     #'bootstrap-typeahead.js==2.0.1',
-    ]}
+]}
 
 assets['extra.js'][Version('0.0.0')] = {'requires': [
     'jquery.form.js',
@@ -79,7 +78,7 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
     'bootstrap-datepicker.js',
     'jquery.timepicker.js',
     'select2.js',
-    ]}
+]}
 
 assets['baseframe.js'][Version(__version)] = {'requires': [
     'jquery.js',
@@ -87,7 +86,7 @@ assets['baseframe.js'][Version(__version)] = {'requires': [
     'extra.js',
     'baseframe-base.js==' + __version,
     'baseframe-networkbar.js' + __version,
-    ]}
+]}
 
 assets['baseframe.css'][Version(__version)] = {'requires': [
     'bootstrap.css==2.0.1',
@@ -96,4 +95,4 @@ assets['baseframe.css'][Version(__version)] = {'requires': [
     'jquery.timepicker.css',
     'baseframe-base.css==' + __version,
     'baseframe-networkbar.css==' + __version,
-    ]}
+]}
