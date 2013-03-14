@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from flask import Blueprint, send_from_directory, render_template, current_app
 from coaster.assets import split_namespec
 from flask.ext.assets import Environment
+from ._version import *
 from .assets import assets, Version
 
 __all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets']

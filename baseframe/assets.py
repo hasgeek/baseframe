@@ -2,8 +2,8 @@
 
 from __future__ import absolute_import
 from coaster.assets import VersionedAssets, Version
+from . import __version__
 
-__version = '0.2.14'
 
 #: Semantic-versioned assets
 assets = VersionedAssets()
@@ -11,10 +11,10 @@ assets = VersionedAssets()
 assets['jquery.js'][Version('1.7.1')] = 'baseframe/js/jquery-1.7.1.js'
 assets['jquery.js'][Version('1.8.3')] = 'baseframe/js/jquery-1.8.3.js'
 
-assets['baseframe-networkbar.js'][Version(__version)] = 'baseframe/js/networkbar.js'
-assets['baseframe-networkbar.css'][Version(__version)] = 'baseframe/css/networkbar.css'
-assets['baseframe-base.js'][Version(__version)] = 'baseframe/js/baseframe.js'
-assets['baseframe-base.css'][Version(__version)] = 'baseframe/css/baseframe.css'
+assets['baseframe-networkbar.js'][Version(__version__)] = 'baseframe/js/networkbar.js'
+assets['baseframe-networkbar.css'][Version(__version__)] = 'baseframe/css/networkbar.css'
+assets['baseframe-base.js'][Version(__version__)] = 'baseframe/js/baseframe.js'
+assets['baseframe-base.css'][Version(__version__)] = 'baseframe/css/baseframe.css'
 
 # Bootstrap 2.0.1
 assets['bootstrap.css'][Version('2.0.1')] = 'baseframe/css/bootstrap.css'
@@ -80,19 +80,19 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
     'select2.js',
 ]}
 
-assets['baseframe.js'][Version(__version)] = {'requires': [
+assets['baseframe.js'][Version(__version__)] = {'requires': [
     'jquery.js',
     'boostrap.js==2.0.1',
     'extra.js',
-    'baseframe-base.js==' + __version,
-    'baseframe-networkbar.js' + __version,
+    'baseframe-base.js==' + __version__,
+    'baseframe-networkbar.js' + __version__,
 ]}
 
-assets['baseframe.css'][Version(__version)] = {'requires': [
+assets['baseframe.css'][Version(__version__)] = {'requires': [
     'bootstrap.css==2.0.1',
     'bootstrap-responsive.css==2.0.1',
     'select2.css',
     'jquery.timepicker.css',
-    'baseframe-base.css==' + __version,
-    'baseframe-networkbar.css==' + __version,
+    'baseframe-base.css==' + __version__,
+    'baseframe-networkbar.css==' + __version__,
 ]}
