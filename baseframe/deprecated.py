@@ -56,6 +56,7 @@ socialite_js = Bundle('baseframe/js/socialite.js')
 swfobject_js = Bundle('baseframe/js/swfobject.js')
 parsley_js = Bundle('baseframe/js/parsley.js')
 parsley_extend_js = Bundle('baseframe/js/parsley.extend.js')
+presentz_js = Bundle('baseframe/js/presentz-1.2.0.min.js')
 
 #bootstrap_less = Bundle('baseframe/less/bootstrap/bootstrap.less',
 #                        'baseframe/less/bootstrap/responsive.less',
