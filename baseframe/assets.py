@@ -53,7 +53,7 @@ assets['socialite.js'][Version('2.0.0')] = 'baseframe/js/socialite.js'
 assets['swfobject.js'][Version('2.2.0')] = 'baseframe/js/swfobject.js'
 assets['parsley.js'][Version('1.1.13')] = ('jquery.js', 'baseframe/js/parsley.js')
 assets['parsley.extend.js'][Version('1.1.13')] = ('parsley.js', 'baseframe/js/parsley.extend.js')
-assets['presentz.js'][Version('1.2.0')] = ('presentz.js', 'baseframe/js/presentz-1.2.0.min.js')
+assets['presentz.js'][Version('1.2.0')] = ('presentz.js', 'baseframe/js/presentz-1.2.0.js')
 
 assets['animate.css'][Version('0.0.0')] = 'baseframe/css/animate.css'
 
