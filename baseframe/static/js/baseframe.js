@@ -12,11 +12,14 @@ $(function() {
   activate_chosen('select');
 
   var matchtab = function() {
-    var url = document.location.toString();
+    var url = document.location.toString(), tabmatch = null;
     if (url.match('#/')) {
-      $('.nav-tabs.nav-tabs-auto a[href="#'+url.split('#/')[1]+'"]').tab('show');
+      tabmatch = $('.nav-tabs.nav-tabs-auto a[href="#'+url.split('#/')[1]+'"]');
     } else if (url.match('#')) {
-      $('.nav-tabs.nav-tabs-auto a[href="#'+url.split('#')[1]+'"]').tab('show');
+      tabmatch = $('.nav-tabs.nav-tabs-auto a[href="#'+url.split('#')[1]+'"]');
+    }
+    if (tabmatch) {
+      tabmatch.tab('show');
     }
   };
 
@@ -31,6 +34,9 @@ $(function() {
   var url = document.location.toString();
   if (!url.match('#')) {
     // Activate the first tab if none are active
-    $('.nav-tabs.nav-tabs-auto a').filter(':first').tab('show');
+    var tabmatch = $('.nav-tabs.nav-tabs-auto a').filter(':first');
+    if (tabmatch) {
+      tabmatch.tab('show');
+    }
   }
 });
