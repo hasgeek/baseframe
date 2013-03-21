@@ -18,7 +18,7 @@ $(function() {
     } else if (url.match('#')) {
       tabmatch = $('.nav-tabs.nav-tabs-auto a[href="#'+url.split('#')[1]+'"]');
     }
-    if (tabmatch) {
+    if (tabmatch !== null && tabmatch.length !== 0) {
       tabmatch.tab('show');
     }
   };
@@ -35,7 +35,7 @@ $(function() {
   if (!url.match('#')) {
     // Activate the first tab if none are active
     var tabmatch = $('.nav-tabs.nav-tabs-auto a').filter(':first');
-    if (tabmatch) {
+    if (tabmatch.length !== 0) {
       tabmatch.tab('show');
     }
   }
