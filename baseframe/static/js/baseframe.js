@@ -19,7 +19,7 @@ $(function() {
       tabmatch = $('.nav-tabs.nav-tabs-auto a[href="#'+url.split('#')[1]+'"]');
     }
     if (tabmatch !== null && tabmatch.length !== 0) {
-      tabmatch.tab('show');
+      $(tabmatch[0]).tab('show');
     }
   };
 
@@ -36,7 +36,7 @@ $(function() {
     // Activate the first tab if none are active
     var tabmatch = $('.nav-tabs.nav-tabs-auto a').filter(':first');
     if (tabmatch.length !== 0) {
-      tabmatch.tab('show');
+        $(tabmatch[0]).tab('show');
     }
   }
 });
