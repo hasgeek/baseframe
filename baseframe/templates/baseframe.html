@@ -11,58 +11,37 @@
   <!-- Set the viewport width to device width for mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  {% block titletags -%}
-  <title>{% block title %}{{ title }}{% endblock %}{% if config['SITE_TITLE'] %} — {{ config['SITE_TITLE'] }}{% endif %}</title>
-  <meta name="DC.title" content="{{ self.title()|e }}"/>
+  {%- block titletags %}
+    <title>{% block title %}{{ title }}{% endblock %}{% if config['SITE_TITLE'] %} — {{ config['SITE_TITLE'] }}{% endif %}</title>
+    <meta name="DC.title" content="{{ self.title()|e }}" />
+    <meta property="og:title" content="{{ self.title()|e }}" />
   {%- endblock %}
   <meta name="description" content="{% block description %}{% endblock %}">
   <meta name="author" href="/humans.txt">
   {% if config['GOOGLE_SITE_VERIFICATION'] -%}
     <meta name="google-site-verification" content="{{ config['GOOGLE_SITE_VERIFICATION'] }}" />
   {%- endif %}
-  <link rel="icon" href="/favicon.ico"/>
-
-  {#- Obsoleted by Modernizr
-  <!-- HTML5 shim, for IE6-8 support of HTML elements -->
-  <!--[if lt IE 9]>
-    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-  #}
+  <link rel="icon" href="/favicon.ico" />
+  {%- block image_src %}
+    <link rel="image_src" href="{{ url_for('baseframe.static', filename='img/logo@2x.png') }}" />
+    <meta property="og:image" content="{{ url_for('baseframe.static', filename='img/logo@2x.png') }}" />
+  {%- endblock %}
 
   <!-- Included CSS Files -->
   {% assets "css_all" -%}
-    <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">
-  {% endassets -%}
-  {% if config['DEBUG'] -%}
-    {%- with ua = request.headers.get('User-Agent') %}
-      {%- if ua.find('iPhone') != -1 or ua.find('iPod') != -1 or ua.find('iPad') != -1 -%}
-        {#- Local fonts render badly on iOS. Get from Google. #}
-        {#<link href='//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>#}
-      {%- else -%}
-        {#- Render local fonts when in debug/develop mode. Faster rendering and works offline. #}
-        {#<link rel="stylesheet" href="{{ url_for('baseframe.static', filename='css/fonts.css') }}"/>#}
-      {%- endif -%}
-    {%- endwith -%}
-  {%- else -%}
-    {#<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic">#}
-  {%- endif %}
-  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600">
+    <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
+  {%- endassets %}
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" />
   <script src="{{ url_for('baseframe.static', filename='js/modernizr.min.js') }}"></script>
 
-  {#-
-  <!-- FIXME: This css/ie.css doesn't exist right now. -->
+  {%- block typekit %}
+    {%- if config['TYPEKIT_CODE'] %}
+      <script type="text/javascript" src="//use.typekit.com/{{ config['TYPEKIT_CODE'] }}.js"></script>
+      <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    {%- endif %}
+  {%- endblock %}
 
-  <!--[if lt IE 9]>
-    <link rel="stylesheet" href="{{ url_for('baseframe.static', filename='css/ie.css') }}"/>
-  <![endif]-->
-  #}
-
-  {%- if config['TYPEKIT_CODE'] %}
-    <script type="text/javascript" src="//use.typekit.com/{{ config['TYPEKIT_CODE'] }}.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-  {%- endif %}
-  {% block image_src %}<link rel="image_src" href="{{ url_for('baseframe.static', filename='img/logo@2x.png') }}">{% endblock %}
-  {% block layoutheaders %}{% block pageheaders %}{% endblock %}{% endblock %}
+  {%- block layoutheaders %}{% block pageheaders %}{% endblock %}{% endblock %}
 </head>
 <body>
   {% block root -%}
@@ -117,14 +96,14 @@
 
   {%- if config['GA_CODE'] and not config['DEBUG'] -%}
     <script type="text/javascript">
-     var _gaq = [['_setAccount', '{{ config['GA_CODE'] }}'], ['_trackPageview']];
-     (function(d, t) {
-      var g = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      g.async = true;
-      g.src = ('https:' == location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g, s);
-     })(document, 'script');
+      var _gaq = [['_setAccount', '{{ config['GA_CODE'] }}'], ['_trackPageview']];
+      (function(d, t) {
+        var g = d.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+        g.async = true;
+        g.src = ('https:' == location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g, s);
+      })(document, 'script');
     </script>
   {%- endif -%}
 

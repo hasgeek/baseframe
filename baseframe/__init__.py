@@ -5,15 +5,27 @@ import os
 from datetime import datetime, timedelta
 from flask import Blueprint, send_from_directory, render_template, current_app
 from coaster.assets import split_namespec
-from flask.ext.assets import Environment
+from flask.ext.assets import Environment, Bundle
 from ._version import *
 from .assets import assets, Version
 
-__all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets']
+__all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version']
 
 
 class BaseframeBlueprint(Blueprint):
-    def init_app(self, app, requires=[]):
+    def init_app(self, app, requires=[], bundle_js=None, bundle_css=None):
+        """
+        Initialize an app and load necessary assets.
+
+        :param requires: List of required assets. If an asset has both .js
+        and .css components, both will be added to the requirement list.
+        Loaded assets will be minified and concatenated into the app's
+        ``static/js`` and ``static/css`` folders. If an asset has problems
+        with either of these, it should be loaded pre-bundled via the
+        ``bundle_js`` and ``bundle_css`` parameters.
+        :param bundle_js: Bundle of additional JavaScript.
+        :param bundle_css: Bundle of additional CSS.
+        """
         assets_js = []
         assets_css = []
         for item in requires:
@@ -21,13 +33,19 @@ class BaseframeBlueprint(Blueprint):
             for alist, ext in [(assets_js, '.js'), (assets_css, '.css')]:
                 if name + ext in assets:
                     alist.append(name + ext + unicode(spec))
-        js_all = assets.require('!jquery.js', *assets_js)
-        css_all = assets.require(*assets_css)
-        app.assets = Environment(app)
-        app.assets.register('js_all', js_all,
+        js_all = Bundle(assets.require('!jquery.js', *assets_js),
             filters='closure_js', output='js/baseframe-packed.js')
-        app.assets.register('css_all', css_all,
-            filters=['cssrewrite', 'cssmin'], output='js/baseframe-packed.css')
+        css_all = Bundle(assets.require(*assets_css),
+            filters=['cssrewrite', 'cssmin'], output='css/baseframe-packed.css')
+        if bundle_js:
+            js_all = Bundle(js_all, bundle_js)
+        if bundle_css:
+            css_all = Bundle(css_all, bundle_css)
+
+        app.assets = Environment(app)
+        app.assets.register('jquery', assets.require('jquery.js'))
+        app.assets.register('js_all', js_all)
+        app.assets.register('css_all', css_all)
         app.register_blueprint(self)
 
 
