@@ -160,7 +160,7 @@ class DateTimeField(wtf.fields.DateTimeField):
     widget = DateTimeInput()
 
     def __init__(self, label=None, validators=None,
-            format='%Y-%m-%d %I:%M %p', timezone=None, **kwargs):
+            format='%Y-%m-%d %I:%M%p', timezone=None, **kwargs):
         super(DateTimeField, self).__init__(label, validators, **kwargs)
         self.format = format
         self.timezone = timezone

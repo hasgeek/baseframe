@@ -23,6 +23,7 @@ class BaseframeBlueprint(Blueprint):
                     alist.append(name + ext + unicode(spec))
         js_all = assets.require('!jquery.js', *assets_js)
         css_all = assets.require(*assets_css)
+	print js_all, css_all
         app.assets = Environment(app)
         app.assets.register('js_all', js_all,
             filters='closure_js', output='js/baseframe-packed.js')
