@@ -52,7 +52,19 @@
       {%- if login %}
         <ul id="hg-usertools">
           {% if g.user -%}
-            <li class="profile"><a href="{{ g.user.profile_url }}">{{ g.user.fullname }}</a></li>
+            <li class="profile">
+              {%- with orgs = g.user.organization_links() %}{% if orgs %}
+                <a href="#" class="hg-submenu">{{ g.user.fullname }}</a>
+                <ul>
+                  <li><a href="{{ g.user.profile_url }}">My profile</a></li>
+                  {%- for org in orgs %}
+                    <li><a href="{{ org.link }}">{{ org.title }}</a></li>
+                  {%- endfor %}
+                </ul>
+              {%- else %}
+                <a href="{{ g.user.profile_url }}">{{ g.user.fullname }}</a>
+              {% endif %}{%- endwith %}
+            </li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
           {%- else %}
             <li><a href="{{ url_for('login') }}">Login or sign up</a></li>
