@@ -93,7 +93,7 @@
   {% endif %}
   {%- set autofocus = true %}
   {% for field in form -%}
-    {%- if field.widget.input_type and field.widget.input_type == 'hidden' -%}
+    {%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
       {# Don't show hidden #}
     {%- else -%}
       {{ renderfield(field, widget_css_class="field-" + field.id, autofocus=autofocus) }}
