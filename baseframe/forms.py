@@ -203,7 +203,10 @@ class HiddenMultiField(wtf.fields.TextField):
         super(HiddenMultiField, self).__init__(*args, **kwargs)
 
     def _value(self):
-        return self.separator.join(self.data)
+        if self.data:
+            return self.separator.join(self.data)
+        else:
+            return ''
 
     def process_formdata(self, valuelist):
         super(HiddenMultiField, self).process_formdata(valuelist)
