@@ -39,8 +39,8 @@ assets['bootstrap-datepicker.js'][Version('1.3.0')] = ('jquery.js', 'baseframe/j
 assets['jquery.timepicker.js'][Version('1.0.7')] = ('jquery.js>=1.7.0', 'baseframe/js/jquery.timepicker.js')
 assets['jquery.timepicker.css'][Version('1.0.7')] = 'baseframe/css/jquery.timepicker.css'
 
-assets['select2.js'][Version('3.3.1')] = ('jquery.js>=1.4.6', 'baseframe/js/select2.js')
-assets['select2.css'][Version('3.3.1')] = 'baseframe/css/select2.css'
+assets['select2.js'][Version('3.3.2')] = ('jquery.js>=1.4.6', 'baseframe/js/select2.js')
+assets['select2.css'][Version('3.3.2')] = 'baseframe/css/select2.css'
 
 assets['mousetrap.js'][Version('1.1.2')] = 'baseframe/js/mousetrap.js'
 assets['toastr.js'][Version('1.2.2')] = 'baseframe/js/toastr.js'
