@@ -190,6 +190,29 @@ class DateTimeField(wtf.fields.DateTimeField):
             self.data = self.tz.localize(self.data).astimezone(utc).replace(tzinfo=None)
 
 
+class HiddenMultiField(wtf.fields.TextField):
+    """
+    A hidden field that stores multiple comma-separated values, meant to be
+    used as an Ajax widget target. The optional ``separator`` parameter
+    can be used to specify an alternate separator character (default ``','``).
+    """
+    widget = wtf.HiddenInput()
+
+    def __init__(self, *args, **kwargs):
+        self.separator = kwargs.pop('separator', ',')
+        super(HiddenMultiField, self).__init__(*args, **kwargs)
+
+    def _value(self):
+        return self.separator.join(self.data)
+
+    def process_formdata(self, valuelist):
+        super(HiddenMultiField, self).process_formdata(valuelist)
+        if not self.data:
+            self.data = []  # Calling ''.split(',') will give us [''] which is not "falsy"
+        else:
+            self.data = self.data.split(self.separator)
+
+
 class Form(wtf.Form):
     """
     Form with additional methods.
