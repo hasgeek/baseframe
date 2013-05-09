@@ -15,14 +15,14 @@
   <div id="hg-bar" class="no-print {%- if baseclass %} {{ baseclass }}{% endif %}">
     <div class="{{ containerclass }}">
       <ul id="hg-barlinks">
-        <li {%- if siteid == 'home' %} class="selected"{% endif %}><a href="http://hasgeek.com/"><strong>HasGeek</strong></a></li>
-        <li {%- if siteid == 'blog' %} class="selected"{% endif %}><a href="http://blog.hasgeek.com/">Blog</a></li>
-        <li {%- if siteid == 'jobs' %} class="selected"{% endif %}><a href="http://jobs.hasgeek.com/">Jobs</a></li>
-        <li {%- if siteid == 'hgtv' %} class="selected"{% endif %}><a href="http://hasgeek.tv/">TV</a></li>
-        <li {%- if siteid == 'funnel' %} class="selected"{% endif %}><a href="http://funnel.hasgeek.com/">Funnel</a></li>
-        <li {%- if siteid == 'geekup' %} class="selected"{% endif %}><a href="http://geekup.in/">Geekup</a></li>
-        <li {%- if siteid == 'hacknight' %} class="selected"{% endif %}><a href="http://hacknight.in/">Hacknight</a></li>
-        <li {%- if siteid == 'events' %} class="selected"{% endif %}>
+        <li data-siteid="home" {%- if siteid == 'home' %} class="selected"{% endif %}><a href="http://hasgeek.com/"><strong>HasGeek</strong></a></li>
+        <li data-siteid="blog" {%- if siteid == 'blog' %} class="selected"{% endif %}><a href="http://blog.hasgeek.com/">Blog</a></li>
+        <li data-siteid="jobs" {%- if siteid == 'jobs' %} class="selected"{% endif %}><a href="http://jobs.hasgeek.com/">Jobs</a></li>
+        <li data-siteid="hgtv" {%- if siteid == 'hgtv' %} class="selected"{% endif %}><a href="http://hasgeek.tv/">TV</a></li>
+        <li data-siteid="funnel" {%- if siteid == 'funnel' %} class="selected"{% endif %}><a href="http://funnel.hasgeek.com/">Funnel</a></li>
+        <li data-siteid="geekup" {%- if siteid == 'geekup' %} class="selected"{% endif %}><a href="http://geekup.in/">Geekup</a></li>
+        <li data-siteid="hacknight" {%- if siteid == 'hacknight' %} class="selected"{% endif %}><a href="http://hacknight.in/">Hacknight</a></li>
+        <li data-siteid="events" {%- if siteid == 'events' %} class="selected"{% endif %}>
           <a href="#" class="hg-submenu">Events</a>
           <ul>
             <li><a href="http://fifthelephant.in/">The Fifth Elephant</a></li>
@@ -37,7 +37,7 @@
             <li><a href="http://www.doctypehtml5.in/">DocType HTML5</a></li>
           </ul>
         </li>
-        <li {%- if siteid == 'workshops' %} class="selected"{% endif %}>
+        <li data-siteid="workshops" {%- if siteid == 'workshops' %} class="selected"{% endif %}>
           <a href="#" class="hg-submenu">Workshops</a>
           <ul>
             <li><a href="http://gitworkshop.hasgeek.com/">Git Workshop</a></li>
