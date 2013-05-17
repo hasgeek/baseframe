@@ -9,7 +9,7 @@ function activate_chosen(selector) {
 
 $(function() {
   // Activate chosen on all 'select' tags.
-  activate_chosen('select');
+  activate_chosen('select:not(.notselect)');
 
   var matchtab = function() {
     var url = document.location.toString(), tabmatch = null;
