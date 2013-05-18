@@ -25,6 +25,7 @@ $networkbar-line-height: 18px;
 $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif !default;
 
 #hg-bar {
+    @include pie-clearfix;
     display: block;
     background: $color-hg-bar-background;
     
