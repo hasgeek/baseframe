@@ -167,28 +167,11 @@
   border-bottom-right-radius: 4px;
 }
 #hg-bar ul#hg-barlinks > li ul li.hg-menu-section, #hg-bar ul#hg-usertools > li ul li.hg-menu-section {
-  padding: 6px 7px 7px;
-  font-style: italic;
+  padding: 9px 7px 2px;
+  border-top: 1px solid #d5d5d5;
+  text-transform: uppercase;
+  font-size: 85%;
   color: #888888;
-                    /*
-                    background: $color-hg-bar-background;
-                    z-index: 10000;
-                    display: inline-block;
-
-                    &:before {
-                        display: block;
-                        content:"";
-                        position: absolute;
-                        height: 1px;
-                        border-top: 1px solid black;
-                        top: 1em;
-                        width: 100%;
-                        z-index: 9998;
-                    }
-                    */
-}
-#hg-bar ul#hg-barlinks > li ul li.hg-menu-section:before, #hg-bar ul#hg-barlinks > li ul li.hg-menu-section:after, #hg-bar ul#hg-usertools > li ul li.hg-menu-section:before, #hg-bar ul#hg-usertools > li ul li.hg-menu-section:after {
-  content: " — ";
 }
 #hg-bar ul#hg-barlinks > li:hover > a, #hg-bar ul#hg-barlinks > li > a:focus, #hg-bar ul#hg-usertools > li:hover > a, #hg-bar ul#hg-usertools > li > a:focus {
   text-decoration: none;
@@ -288,6 +271,10 @@
   border: 1px solid #444;
   border-top: 0;
   border-bottom: 0;
+}
+#hg-bar.hg-dark ul#hg-barlinks > li ul li.hg-menu-section,
+#hg-bar.hg-dark ul#hg-usertools > li ul li.hg-menu-section {
+  border-top: 1px solid #444;
 }
 #hg-bar.hg-dark ul#hg-barlinks > li.selected > a,
 #hg-bar.hg-dark ul#hg-usertools > li.selected > a {

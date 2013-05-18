@@ -140,29 +140,11 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans
                     @include border-bottom-right-radius(4px);
                 }
                 li.hg-menu-section {
-                    padding: 6px 7px 7px;
-                    font-style: italic;
+                    padding: 9px 7px 2px;
+                    border-top: 1px solid $color-hg-bar-border;
+                    text-transform: uppercase;
+                    font-size: 85%;
                     color: $color-hg-bar-nolink;
-                    /*
-                    background: $color-hg-bar-background;
-                    z-index: 10000;
-                    display: inline-block;
-
-                    &:before {
-                        display: block;
-                        content:"";
-                        position: absolute;
-                        height: 1px;
-                        border-top: 1px solid black;
-                        top: 1em;
-                        width: 100%;
-                        z-index: 9998;
-                    }
-                    */
-                    &:before,
-                    &:after {
-                        content: " — ";
-                    }
                 }
             }
         }
@@ -233,6 +215,9 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans
         border: 1px solid #444;
         border-top: 0;
         border-bottom: 0;
+        li.hg-menu-section {
+            border-top: 1px solid #444;
+        }
     }
     ul#hg-barlinks > li.selected > a,
     ul#hg-usertools > li.selected > a {
