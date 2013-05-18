@@ -65,11 +65,11 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans
             padding: 0;
             a {
                 display: block;
-                padding: 7px 6px 3px;
+                padding: 5px 6px;
                 text-decoration: none;
                 background-color: inherit;
                 color: $color-hg-bar;
-                border-bottom: 2px solid transparent;
+                border-top: 2px solid transparent;
             }
             a:visited {
                 text-decoration: none;
@@ -168,8 +168,7 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans
             text-decoration: none;
             //background: $color-hg-bar-highlight-background;
             background: #e8e8e8;
-            // border-top: 2px solid #e8e8e8;
-            border-bottom: 2px solid #d1d1d1;
+            border-top: 2px solid #e8e8e8;
             //$experimental-support-for-svg: true;
             @include background-image(linear-gradient(#e8e8e8, #d1d1d1));
             color: $color-hg-bar-highlight;
@@ -192,7 +191,7 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans
             @include transition-delay(0.25s);
         }
         & > li.selected > a {
-            border-bottom: 2px solid #df5e0e;
+            border-top: 2px solid #df5e0e;
             color: $color-hg-bar-selected;
             font-weight: 600; // bold;
         }
@@ -241,14 +240,14 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans
     ul#hg-usertools > li:hover > a,
     ul#hg-usertools > li > a:focus {
         background: #444;
-        border-bottom: 2px solid #444;
+        border-top: 2px solid #444;
         color: white;
     }
     ul#hg-barlinks > li.selected:hover > a,
     ul#hg-barlinks > li.selected > a:focus,
     ul#hg-usertools > li.selected:hover > a,
     ul#hg-usertools > li.selected > a:focus {
-        border-bottom: 2px solid #df5e0e;
+        border-top: 2px solid #df5e0e;
     }
     ul#hg-barlinks > li ul li:hover > a,
     ul#hg-usertools > li ul li:hover > a {
@@ -262,5 +261,44 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans
     ul#hg-usertools > li a:focus > ul {
         border: 1px solid #444;
         border-top: 0;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #hg-bar {
+        ul#hg-barlinks, ul#hg-usertools {
+            & > li {
+                a {
+                    padding: 7px 6px 3px;
+                    border-top: 0;
+                    border-bottom: 2px solid transparent;
+                }
+            }
+            & > li:hover > a,
+            & > li > a:focus {
+                border-top: 0;
+                border-bottom: 2px solid #d1d1d1;
+            }
+            & > li.selected > a {
+                border-top: 0;
+                border-bottom: 2px solid #df5e0e;
+            }
+        }
+    }
+    #hg-bar.hg-dark {
+        ul#hg-barlinks > li:hover > a,
+        ul#hg-barlinks > li > a:focus,
+        ul#hg-usertools > li:hover > a,
+        ul#hg-usertools > li > a:focus {
+            border-top: 0;
+            border-bottom: 2px solid #444;
+        }
+        ul#hg-barlinks > li.selected:hover > a,
+        ul#hg-barlinks > li.selected > a:focus,
+        ul#hg-usertools > li.selected:hover > a,
+        ul#hg-usertools > li.selected > a:focus {
+            border-top: 0;
+            border-bottom: 2px solid #df5e0e;
+        }
     }
 }

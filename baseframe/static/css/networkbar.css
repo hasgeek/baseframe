@@ -69,11 +69,11 @@
 }
 #hg-bar ul#hg-barlinks > li a, #hg-bar ul#hg-usertools > li a {
   display: block;
-  padding: 7px 6px 3px;
+  padding: 5px 6px;
   text-decoration: none;
   background-color: inherit;
   color: #444444;
-  border-bottom: 2px solid transparent;
+  border-top: 2px solid transparent;
 }
 #hg-bar ul#hg-barlinks > li a:visited, #hg-bar ul#hg-usertools > li a:visited {
   text-decoration: none;
@@ -190,7 +190,7 @@
 #hg-bar ul#hg-barlinks > li:hover > a, #hg-bar ul#hg-barlinks > li > a:focus, #hg-bar ul#hg-usertools > li:hover > a, #hg-bar ul#hg-usertools > li > a:focus {
   text-decoration: none;
   background: #e8e8e8;
-  border-bottom: 2px solid #d1d1d1;
+  border-top: 2px solid #e8e8e8;
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U4ZThlOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2QxZDFkMSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e8e8e8), color-stop(100%, #d1d1d1));
@@ -231,7 +231,7 @@
   transition-delay: 0.25s;
 }
 #hg-bar ul#hg-barlinks > li.selected > a, #hg-bar ul#hg-usertools > li.selected > a {
-  border-bottom: 2px solid #df5e0e;
+  border-top: 2px solid #df5e0e;
   color: black;
   font-weight: 600;
 }
@@ -295,14 +295,14 @@
 #hg-bar.hg-dark ul#hg-usertools > li:hover > a,
 #hg-bar.hg-dark ul#hg-usertools > li > a:focus {
   background: #444;
-  border-bottom: 2px solid #444;
+  border-top: 2px solid #444;
   color: white;
 }
 #hg-bar.hg-dark ul#hg-barlinks > li.selected:hover > a,
 #hg-bar.hg-dark ul#hg-barlinks > li.selected > a:focus,
 #hg-bar.hg-dark ul#hg-usertools > li.selected:hover > a,
 #hg-bar.hg-dark ul#hg-usertools > li.selected > a:focus {
-  border-bottom: 2px solid #df5e0e;
+  border-top: 2px solid #df5e0e;
 }
 #hg-bar.hg-dark ul#hg-barlinks > li ul li:hover > a,
 #hg-bar.hg-dark ul#hg-usertools > li ul li:hover > a {
@@ -316,4 +316,35 @@
 #hg-bar.hg-dark ul#hg-usertools > li a:focus > ul {
   border: 1px solid #444;
   border-top: 0;
+}
+
+@media screen and (max-width: 767px) {
+  #hg-bar ul#hg-barlinks > li a, #hg-bar ul#hg-usertools > li a {
+    padding: 7px 6px 3px;
+    border-top: 0;
+    border-bottom: 2px solid transparent;
+  }
+  #hg-bar ul#hg-barlinks > li:hover > a, #hg-bar ul#hg-barlinks > li > a:focus, #hg-bar ul#hg-usertools > li:hover > a, #hg-bar ul#hg-usertools > li > a:focus {
+    border-top: 0;
+    border-bottom: 2px solid #d1d1d1;
+  }
+  #hg-bar ul#hg-barlinks > li.selected > a, #hg-bar ul#hg-usertools > li.selected > a {
+    border-top: 0;
+    border-bottom: 2px solid #df5e0e;
+  }
+
+  #hg-bar.hg-dark ul#hg-barlinks > li:hover > a,
+  #hg-bar.hg-dark ul#hg-barlinks > li > a:focus,
+  #hg-bar.hg-dark ul#hg-usertools > li:hover > a,
+  #hg-bar.hg-dark ul#hg-usertools > li > a:focus {
+    border-top: 0;
+    border-bottom: 2px solid #444;
+  }
+  #hg-bar.hg-dark ul#hg-barlinks > li.selected:hover > a,
+  #hg-bar.hg-dark ul#hg-barlinks > li.selected > a:focus,
+  #hg-bar.hg-dark ul#hg-usertools > li.selected:hover > a,
+  #hg-bar.hg-dark ul#hg-usertools > li.selected > a:focus {
+    border-top: 0;
+    border-bottom: 2px solid #df5e0e;
+  }
 }
