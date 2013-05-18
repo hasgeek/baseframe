@@ -37,6 +37,9 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans
     @include box-shadow(0 2px 5px -2px rgba(0,0,0,.1));
     position: relative;
     z-index: 1029;
+    .strong {
+        font-weight: 600;
+    }
     li {
         font: $networkbar-font;
         font-size: $networkbar-font-size;

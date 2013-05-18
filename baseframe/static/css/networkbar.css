@@ -35,6 +35,9 @@
   display: table;
   clear: both;
 }
+#hg-bar .strong {
+  font-weight: 600;
+}
 #hg-bar li {
   font: 13px/18px "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
   font-size: 13px;
