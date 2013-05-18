@@ -67,6 +67,9 @@
   margin: 0;
   padding: 0;
 }
+#hg-bar ul#hg-barlinks > li a, #hg-bar ul#hg-barlinks > li a:hover, #hg-bar ul#hg-barlinks > li a:active, #hg-bar ul#hg-barlinks > li a:visited, #hg-bar ul#hg-usertools > li a, #hg-bar ul#hg-usertools > li a:hover, #hg-bar ul#hg-usertools > li a:active, #hg-bar ul#hg-usertools > li a:visited {
+  border-bottom: 0;
+}
 #hg-bar ul#hg-barlinks > li a, #hg-bar ul#hg-usertools > li a {
   display: block;
   padding: 5px 6px;
