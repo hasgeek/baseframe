@@ -1,3 +1,9 @@
+0.2.15
+------
+
+* Template filters: age
+* forms.render_delete_sqla takes a cancel_url and handles HTTP DELETE requests
+
 0.2.14
 ------
 

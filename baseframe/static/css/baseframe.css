@@ -1851,7 +1851,8 @@ table.mceLayout.focus {
   font-weight: 600;
   position: relative;
 }
-.control-label .help-required {
+
+.form-horizontal .control-label .help-required {
   position: absolute;
   right: -10px;
 }

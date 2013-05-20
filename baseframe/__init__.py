@@ -74,7 +74,7 @@ def humans():
     return send_from_directory(
         current_app.static_folder if os.path.exists(
             os.path.join(current_app.static_folder, 'humans.txt')) else baseframe.static_folder,
-       'humans.txt', mimetype='text/plain')
+        'humans.txt', mimetype='text/plain')
 
 
 @baseframe.route('/robots.txt')
@@ -82,7 +82,7 @@ def robots():
     return send_from_directory(
         current_app.static_folder if os.path.exists(
             os.path.join(current_app.static_folder, 'robots.txt')) else baseframe.static_folder,
-       'robots.txt', mimetype='text/plain')
+        'robots.txt', mimetype='text/plain')
 
 
 @baseframe.route('/_toastr_messages.js')
@@ -111,6 +111,30 @@ def error403(e):
 @baseframe.app_errorhandler(500)
 def error500(e):
     return render_template('500.html'), 500
+
+
+@baseframe.app_template_filter('age')
+def age(dt):
+    suffix = u"ago"
+    delta = datetime.utcnow() - dt
+    if delta.days == 0:
+        # < 1 day
+        if delta.seconds < 10:
+            return "seconds %s" % suffix
+        elif delta.seconds < 60:
+            return "%d seconds %s" % (delta.seconds, suffix)
+        elif delta.seconds < 120:
+            return "a minute %s" % suffix
+        elif delta.seconds < 3600:  # < 1 hour
+            return "%d minutes %s" % (int(delta.seconds / 60), suffix)
+        elif delta.seconds < 7200:  # < 2 hours
+            return "an hour %s" % suffix
+        else:
+            return "%d hours %s" % (int(delta.seconds / 3600), suffix)
+    elif delta.days == 1:
+        return u"a day %s" % suffix
+    else:
+        return u"%d days %s" % (delta.days, suffix)
 
 
 @baseframe.after_app_request

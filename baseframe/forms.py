@@ -304,15 +304,17 @@ def render_redirect(url, code=302):
         return redirect(url, code=code)
 
 
-def render_delete_sqla(ob, db, title, message, success=u'', next=None):
-    if not ob:
+def render_delete_sqla(obj, db, title, message, success=u'', next=None, cancel_url=None):
+    if not obj:
         abort(404)
     form = ConfirmDeleteForm()
-    if form.validate_on_submit():
-        if 'delete' in request.form:
-            db.session.delete(ob)
+    if request.method in ('POST', 'DELETE') and form.validate():
+        if 'delete' in request.form or request.method == 'DELETE':
+            db.session.delete(obj)
             db.session.commit()
             if success:
                 flash(success, "success")
-        return render_redirect(next or url_for('index'))
+            return render_redirect(next or url_for('index'))
+        else:
+            return render_redirect(cancel_url or next or url_for('index'))
     return make_response(render_template('baseframe/delete.html', form=form, title=title, message=message))
