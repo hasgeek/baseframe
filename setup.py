@@ -25,6 +25,7 @@ requires = [
     'pytz',
     'closure',
     'semantic_version',
+    'requests',
     ]
 
 
