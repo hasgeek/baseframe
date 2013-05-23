@@ -11,44 +11,33 @@
   {% endwith %}
 {%- endmacro %}
 
+{% macro networkbar_links(siteid, links, toplevel=false) %}
+  {%- for link in links %}
+    <li data-siteid="{{ link.name }}" {%- if siteid == link.name %} class="{% if toplevel and loop.first %}strong {% endif %}selected"{% elif link.sep %} class="hg-menu-section"{% elif toplevel and loop.first %} class="strong"{% endif %}>
+      {%- if link.children %}
+        <a href="{{ link.url or '#' }}" class="hg-submenu">{{ link.title }}</a>
+        <ul>
+          {{ networkbar_links(siteid, link.children) }}
+        </ul>
+      {%- else -%}
+        {%- if link.sep %}
+          {{ link.title }}
+        {%- else %}
+          <a href="{{ link.url or '#' }}">{{ link.title }}</a>
+        {%- endif %}
+      {%- endif -%}
+    </li>
+  {%- endfor %}
+{% endmacro %}
+
 {% macro networkbar(siteid=none, login=false, baseclass=none, containerclass="container") -%}
   <div id="hg-bar" class="no-print {%- if baseclass %} {{ baseclass }}{% endif %}">
     <div class="{{ containerclass }}">
-      <ul id="hg-barlinks">
-        <li data-siteid="home" class="strong {%- if siteid == 'home' %} selected{% endif %}"><a href="http://hasgeek.com/">HasGeek</a></li>
-        <li data-siteid="blog" {%- if siteid == 'blog' %} class="selected"{% endif %}><a href="http://blog.hasgeek.com/">Blog</a></li>
-        <li data-siteid="jobs" {%- if siteid == 'jobs' %} class="selected"{% endif %}><a href="http://jobs.hasgeek.com/">Jobs</a></li>
-        <li data-siteid="hgtv" {%- if siteid == 'hgtv' %} class="selected"{% endif %}><a href="http://hasgeek.tv/">TV</a></li>
-        <li data-siteid="funnel" {%- if siteid == 'funnel' %} class="selected"{% endif %}><a href="http://funnel.hasgeek.com/">Funnel</a></li>
-        <li data-siteid="geekup" {%- if siteid == 'geekup' %} class="selected"{% endif %}><a href="http://geekup.in/">Geekup</a></li>
-        <li data-siteid="hacknight" {%- if siteid == 'hacknight' %} class="selected"{% endif %}><a href="http://hacknight.in/">Hacknight</a></li>
-        <li data-siteid="events" {%- if siteid == 'events' %} class="selected"{% endif %}>
-          <a href="#" class="hg-submenu">Events</a>
-          <ul>
-            <li><a href="http://fifthelephant.in/">The Fifth Elephant</a></li>
-            <li class="hg-menu-section">Past events</li>
-            <li><a href="http://metarefresh.in/">Meta Refresh</a></li>
-            <li><a href="http://jsfoo.in/">JSFoo</a></li>
-            <li><a href="http://droidcon.in/">Droidcon India</a></li>
-            <li><a href="http://cartonama.com/2012">Cartonama Conference</a></li>
-            <li><a href="http://rootconf.in/">Rootconf</a></li>
-            <li><a href="http://phpcloud.hasgeek.com/">Scaling PHP in the Cloud</a></li>
-            <li><a href="http://androidcamp.hasgeek.com/">AndroidCamp</a></li>
-            <li><a href="http://www.doctypehtml5.in/">DocType HTML5</a></li>
-          </ul>
-        </li>
-        <li data-siteid="workshops" {%- if siteid == 'workshops' %} class="selected"{% endif %}>
-          <a href="#" class="hg-submenu">Workshops</a>
-          <ul>
-            <li><a href="http://advancedpython.hasgeek.com/">Advanced Python</a></li>
-            <li class="hg-menu-section">Past workshops</li>
-            <li><a href="http://gitworkshop.hasgeek.com/">Git Workshop</a></li>
-            <li><a href="http://pigworkshop.fifthelephant.in/">Pig Workshop</a></li>
-            <li><a href="http://cssworkshop.metarefresh.in/">CSS for the Soul</a></li>
-            <li><a href="http://workshop.cartonama.com/">Cartonama Workshop</a></li>
-          </ul>
-        </li>
-      </ul>
+      {%- if config['NETWORKBAR_DATA'].links %}
+        <ul id="hg-barlinks">
+          {{ networkbar_links(siteid, config['NETWORKBAR_DATA'].links, toplevel=true) }}
+        </ul>
+      {%- endif %}
       {%- if login %}
         <ul id="hg-usertools">
           {% if g.user -%}

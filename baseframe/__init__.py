@@ -3,6 +3,7 @@
 from __future__ import absolute_import
 import os
 from datetime import datetime, timedelta
+import requests
 from flask import Blueprint, send_from_directory, render_template, current_app
 from coaster.assets import split_namespec
 from flask.ext.assets import Environment, Bundle
@@ -47,6 +48,19 @@ class BaseframeBlueprint(Blueprint):
         app.assets.register('js_all', js_all)
         app.assets.register('css_all', css_all)
         app.register_blueprint(self)
+
+        if 'NETWORKBAR_DATA' not in app.config:
+            app.config['NETWORKBAR_DATA'] = 'https://api.hasgeek.com/1/networkbar/networkbar.json'
+
+        self.load_networkbar_data(app)
+
+    def load_networkbar_data(self, app):
+        if isinstance(app.config['NETWORKBAR_DATA'], basestring):
+            r = requests.get(app.config['NETWORKBAR_DATA'])
+            try:
+                app.config['NETWORKBAR_DATA'] = r.json() if callable(r.json) else r.json
+            except:  # Catch all exceptions
+                app.config['NETWORKBAR_DATA'] = {'links': []}
 
 
 baseframe = BaseframeBlueprint('baseframe', __name__,
