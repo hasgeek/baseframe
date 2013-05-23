@@ -1857,6 +1857,10 @@ table.mceLayout.focus {
   right: -10px;
 }
 
+.control-group textarea {
+  margin-bottom: 0;
+}
+
 input.datetime-date, input.datetime-time {
   width: 6em;
 }

@@ -43,7 +43,7 @@ class BaseframeBlueprint(Blueprint):
             css_all = Bundle(css_all, bundle_css)
 
         app.assets = Environment(app)
-        app.assets.register('jquery', assets.require('jquery.js'))
+        app.assets.register('js_jquery', assets.require('jquery.js'))
         app.assets.register('js_all', js_all)
         app.assets.register('css_all', css_all)
         app.register_blueprint(self)
