@@ -55,12 +55,18 @@ class BaseframeBlueprint(Blueprint):
         self.load_networkbar_data(app)
 
     def load_networkbar_data(self, app):
-        if isinstance(app.config['NETWORKBAR_DATA'], basestring):
-            r = requests.get(app.config['NETWORKBAR_DATA'])
-            try:
-                app.config['NETWORKBAR_DATA'] = (r.json() if callable(r.json) else r.json)['links']
-            except:  # Catch all exceptions
-                app.config['NETWORKBAR_DATA'] = []
+        if not app.config.get('NETWORKBAR_LINKS'):
+            if isinstance(app.config['NETWORKBAR_DATA'], basestring):
+                try:
+                    r = requests.get(app.config['NETWORKBAR_DATA'])
+                    app.config['NETWORKBAR_LINKS'] = (
+                        r.json() if callable(r.json) else r.json).get('links', [])
+                except:  # Catch all exceptions
+                    app.config['NETWORKBAR_LINKS'] = []
+            elif isinstance(app.config['NETWORKBAR_DATA'], (list, tuple)):
+                app.config['NETWORKBAR_LINKS'] = app.config['NETWORKBAR_DATA']
+            else:
+                app.config['NETWORKBAR_LINKS'] = []
 
 
 baseframe = BaseframeBlueprint('baseframe', __name__,
