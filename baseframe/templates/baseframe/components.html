@@ -33,9 +33,9 @@
 {% macro networkbar(siteid=none, login=false, baseclass=none, containerclass="container") -%}
   <div id="hg-bar" class="no-print {%- if baseclass %} {{ baseclass }}{% endif %}">
     <div class="{{ containerclass }}">
-      {%- if config['NETWORKBAR_DATA'].links %}
+      {%- if config.get('NETWORKBAR_DATA') %}
         <ul id="hg-barlinks">
-          {{ networkbar_links(siteid, config['NETWORKBAR_DATA'].links, toplevel=true) }}
+          {{ networkbar_links(siteid, config['NETWORKBAR_DATA'], toplevel=true) }}
         </ul>
       {%- endif %}
       {%- if login %}

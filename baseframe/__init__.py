@@ -58,9 +58,9 @@ class BaseframeBlueprint(Blueprint):
         if isinstance(app.config['NETWORKBAR_DATA'], basestring):
             r = requests.get(app.config['NETWORKBAR_DATA'])
             try:
-                app.config['NETWORKBAR_DATA'] = r.json() if callable(r.json) else r.json
+                app.config['NETWORKBAR_DATA'] = (r.json() if callable(r.json) else r.json)['links']
             except:  # Catch all exceptions
-                app.config['NETWORKBAR_DATA'] = {'links': []}
+                app.config['NETWORKBAR_DATA'] = []
 
 
 baseframe = BaseframeBlueprint('baseframe', __name__,
