@@ -14,7 +14,7 @@ __all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version']
 
 
 class BaseframeBlueprint(Blueprint):
-    def init_app(self, app, requires=[], bundle_js=None, bundle_css=None):
+    def init_app(self, app, requires=[], bundle_js=None, bundle_css=None, assetenv=None):
         """
         Initialize an app and load necessary assets.
 
@@ -43,7 +43,10 @@ class BaseframeBlueprint(Blueprint):
         if bundle_css:
             css_all = Bundle(css_all, bundle_css)
 
-        app.assets = Environment(app)
+        if assetenv is None:
+            app.assets = Environment(app)
+        else:
+            app.assets = assetenv
         app.assets.register('js_jquery', assets.require('jquery.js'))
         app.assets.register('js_all', js_all)
         app.assets.register('css_all', css_all)
