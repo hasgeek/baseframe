@@ -2365,7 +2365,7 @@ ul.grid > li.header {
 
 @media print {
   .no-print {
-    display: none;
+    display: none !important;
   }
 
   .print-only {
@@ -2385,10 +2385,10 @@ ul.grid > li.header {
   }
 
   #logo {
-    background: none;
-    text-indent: 0;
-    width: auto;
-    height: 1.5em;
+    background: none !important;
+    text-indent: 0 !important;
+    width: auto !important;
+    height: 1.5em !important;
     line-height: 1.5em;
     padding-top: 0.5em;
     font-size: 30px;
@@ -2400,6 +2400,10 @@ ul.grid > li.header {
 
   body, code, pre, legend, label, h1, h2, h3 {
     color: black;
+  }
+
+  footer .footer-inner {
+    background: none !important;
   }
 
   .well {
