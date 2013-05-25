@@ -2096,6 +2096,10 @@ ul.grid > li.header {
   ul.grid > .row-fluid > [class*="span"]:first-child {
     padding-left: 0;
   }
+
+  .cardset li, .userset li {
+    margin-bottom: 20px !important;
+  }
 }
 @media screen and (max-width: 767px) {
   dl.infobox {
