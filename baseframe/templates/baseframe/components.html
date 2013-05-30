@@ -13,18 +13,18 @@
 
 {% macro networkbar_links(siteid, links, toplevel=false, appurl='#') %}
   {%- for link in links %}
-    <li data-siteid="{{ link.name }}" {%- if siteid == link.name %} class="{% if toplevel and loop.first %}strong {% endif %}selected"{% elif link.sep %} class="hg-menu-section"{% elif toplevel and loop.first %} class="strong"{% endif %}>
-      {%- if link.children %}
+    <li id="hg-networkbar-{{ link.name }}" {%- if siteid == link.name %} class="{% if toplevel and loop.first %}strong {% endif %}selected"{% elif link.sep %} class="hg-menu-section"{% elif toplevel and loop.first %} class="strong"{% endif %}>
+      {%- if link.children -%}
         <a href="{{ link.url or '#' }}" class="hg-submenu">{{ link.title }}</a>
         <ul>
           {{ networkbar_links(siteid, link.children) }}
         </ul>
       {%- else -%}
-        {%- if link.sep %}
+        {%- if link.sep -%}
           {{ link.title }}
-        {%- else %}
+        {%- else -%}
           <a href="{{ link.url or (toplevel and appurl or '#') }}">{{ link.title }}</a>
-        {%- endif %}
+        {%- endif -%}
       {%- endif -%}
     </li>
   {%- endfor %}
