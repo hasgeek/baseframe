@@ -11,13 +11,13 @@
   {% endwith %}
 {%- endmacro %}
 
-{% macro networkbar_links(siteid, links, toplevel=false, appurl='#') %}
+{% macro networkbar_inner(siteid, links, toplevel=false, appurl='#') %}
   {%- for link in links %}
     <li id="hg-networkbar-{{ link.name }}" {%- if siteid == link.name %} class="{% if toplevel and loop.first %}strong {% endif %}selected"{% elif link.sep %} class="hg-menu-section"{% elif toplevel and loop.first %} class="strong"{% endif %}>
       {%- if link.children -%}
         <a href="{{ link.url or '#' }}" class="hg-submenu">{{ link.title }}</a>
         <ul>
-          {{ networkbar_links(siteid, link.children) }}
+          {{ networkbar_inner(siteid, link.children) }}
         </ul>
       {%- else -%}
         {%- if link.sep -%}
@@ -33,11 +33,11 @@
 {% macro networkbar(siteid=none, login=false, baseclass=none, containerclass="container") -%}
   <div id="hg-bar" class="no-print {%- if baseclass %} {{ baseclass }}{% endif %}">
     <div class="{{ containerclass }}">
-      {%- if config.get('NETWORKBAR_LINKS') %}
+      {% with links = networkbar_links() %}{%- if links %}
         <ul id="hg-barlinks">
-          {{ networkbar_links(siteid, config['NETWORKBAR_LINKS'], toplevel=true, appurl=request.url_root) }}
+          {{ networkbar_inner(siteid, links, toplevel=true, appurl=request.url_root) }}
         </ul>
-      {%- endif %}
+      {%- endif %}{% endwith %}
       {%- if login %}
         <ul id="hg-usertools">
           {% if g.user -%}

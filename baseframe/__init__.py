@@ -7,10 +7,14 @@ import requests
 from flask import Blueprint, send_from_directory, render_template, current_app
 from coaster.assets import split_namespec
 from flask.ext.assets import Environment, Bundle
+from flask.ext.cache import Cache
 from ._version import *
 from .assets import assets, Version
 
 __all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version']
+
+networkbar_cache = Cache(with_jinja2_ext=False)
+cache = Cache()
 
 
 class BaseframeBlueprint(Blueprint):
@@ -52,30 +56,46 @@ class BaseframeBlueprint(Blueprint):
         app.assets.register('css_all', css_all)
         app.register_blueprint(self)
 
+        app.config.setdefault('CACHE_KEY_PREFIX', 'flask_cache_' + app.name)
+        nwcacheconfig = dict(app.config)
+        nwcacheconfig['CACHE_KEY_PREFIX'] = 'networkbar_'
+        if 'CACHE_TYPE' not in nwcacheconfig:
+            nwcacheconfig['CACHE_TYPE'] = 'simple'
+
+        networkbar_cache.init_app(app, config=nwcacheconfig)
+        cache.init_app(app)
+
         if 'NETWORKBAR_DATA' not in app.config:
             app.config['NETWORKBAR_DATA'] = 'https://api.hasgeek.com/1/networkbar/networkbar.json'
 
-        self.load_networkbar_data(app)
-
-    def load_networkbar_data(self, app):
-        if not app.config.get('NETWORKBAR_LINKS'):
-            if isinstance(app.config['NETWORKBAR_DATA'], basestring):
-                try:
-                    r = requests.get(app.config['NETWORKBAR_DATA'])
-                    app.config['NETWORKBAR_LINKS'] = (
-                        r.json() if callable(r.json) else r.json).get('links', [])
-                except:  # Catch all exceptions
-                    app.config['NETWORKBAR_LINKS'] = []
-            elif isinstance(app.config['NETWORKBAR_DATA'], (list, tuple)):
-                app.config['NETWORKBAR_LINKS'] = app.config['NETWORKBAR_DATA']
-            else:
-                app.config['NETWORKBAR_LINKS'] = []
+        if isinstance(app.config.get('NETWORKBAR_DATA'), (list, tuple)):
+            app.config['NETWORKBAR_LINKS'] = app.config['NETWORKBAR_DATA']
 
 
 baseframe = BaseframeBlueprint('baseframe', __name__,
     static_folder='static',
     static_url_path='/_baseframe',
     template_folder='templates')
+
+
+@networkbar_cache.cached(key_prefix='networkbar_links')
+def networkbar_links():
+    links = current_app.config.get('NETWORKBAR_LINKS')
+    if links:
+        return links
+
+    try:
+        r = requests.get(current_app.config['NETWORKBAR_DATA'])
+        return (r.json() if callable(r.json) else r.json).get('links', [])
+    except:  # Catch all exceptions
+        return []
+
+
+@baseframe.app_context_processor
+def baseframe_context():
+    return {
+        'networkbar_links': networkbar_links
+    }
 
 
 @baseframe.route('/favicon.ico')

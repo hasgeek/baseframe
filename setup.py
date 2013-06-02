@@ -26,6 +26,7 @@ requires = [
     'closure',
     'semantic_version',
     'requests',
+    'Flask-Cache',
     ]
 
 
