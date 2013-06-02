@@ -3,6 +3,14 @@
 
 * Template filters: age
 * forms.render_delete_sqla takes a cancel_url and handles HTTP DELETE requests
+* New NETWORKBAR_DATA config variable to load networkbar links
+* Organizations dropdown in networkbar
+* Meta Referrer header
+* Font-Awesome 3.1.1
+* assetenv, bundle_js and bundle_css parameters to baseframe.init_app
+* select2 activation can now be disabled with "notselect" class
+* New HiddenMultiSelect field in forms for customized form widgets with
+  comma-separated data
 
 0.2.14
 ------

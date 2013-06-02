@@ -11,19 +11,19 @@ Reusable styles and templates for HasGeek projects. Setup instructions::
 You'll need this boilerplate in your code to use it::
 
   from flask import Flask
-  from flaskext.assets import Environment, Bundle
-  from baseframe import baseframe, baseframe_js, baseframe_css
+  from baseframe import baseframe, assets, Version
 
+  version = Version('0.1.0')  # Insert your app's version number here
   app = Flask(__name__, instance_relative_config=True)
-  app.register_blueprint(baseframe)
 
-  assets = Environment(app)
-  js = Bundle(baseframe_js)
-  css = Bundle(baseframe_css)
-  assets.register('js_all', js)
-  assets.register('css_all', css)
+  # Declare your app's assets (with .js and .css suffixes)
+  # Filenames are relative to your app's static folder
+  assets['myapp.js'][version] = 'js/myapp.js'
+  assets['myapp.css'][version] = 'css/myapp.css'
 
-  # Import models and views, and register routes here
+  # Initialize baseframe with required JS/CSS assets
+  # The 'baseframe' requirement is optional: it gives you the default UI
+  baseframe.init_app(app, requires=['baseframe', 'myapp'])
 
 Baseframe is BSD-licensed, but is built on top of Twitter Bootstrap 2.0,
 which uses the Apache license.
