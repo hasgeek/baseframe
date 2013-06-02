@@ -26,6 +26,7 @@
     <link rel="image_src" href="{{ url_for('baseframe.static', filename='img/logo@2x.png') }}" />
     <meta property="og:image" content="{{ url_for('baseframe.static', filename='img/logo@2x.png') }}" />
   {%- endblock %}
+  <meta name="referrer" content="{% block metareferrer %}always{% endblock %}">
 
   <!-- Included CSS Files -->
   {% assets "css_all" -%}
