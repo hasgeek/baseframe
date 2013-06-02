@@ -34,7 +34,7 @@
   <div id="hg-bar" class="no-print {%- if baseclass %} {{ baseclass }}{% endif %}">
     <div class="{{ containerclass }}">
       {%- with links = networkbar_links() %}{% if links %}
-        {%- cache 60, 'networkbar-links-html', siteid %}
+        {%- cache 60, 'networkbar-links-html', siteid or '' %}
           <ul id="hg-barlinks">
             {{ networkbar_inner(siteid, links, toplevel=true, appurl=request.url_root) }}
           </ul>
