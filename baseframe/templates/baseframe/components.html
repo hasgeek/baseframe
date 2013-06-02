@@ -33,10 +33,12 @@
 {% macro networkbar(siteid=none, login=false, baseclass=none, containerclass="container") -%}
   <div id="hg-bar" class="no-print {%- if baseclass %} {{ baseclass }}{% endif %}">
     <div class="{{ containerclass }}">
-      {% with links = networkbar_links() %}{%- if links %}
-        <ul id="hg-barlinks">
-          {{ networkbar_inner(siteid, links, toplevel=true, appurl=request.url_root) }}
-        </ul>
+      {%- with links = networkbar_links() %}{% if links %}
+        {%- cache 60 %}
+          <ul id="hg-barlinks">
+            {{ networkbar_inner(siteid, links, toplevel=true, appurl=request.url_root) }}
+          </ul>
+        {%- endcache %}
       {%- endif %}{% endwith %}
       {%- if login %}
         <ul id="hg-usertools">
