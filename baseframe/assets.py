@@ -56,6 +56,9 @@ assets['parsley.extend.js'][Version('1.1.13')] = ('parsley.js', 'baseframe/js/pa
 
 assets['animate.css'][Version('0.0.0')] = 'baseframe/css/animate.css'
 
+assets['matchmedia.js'][Version('0.0.0')] = 'baseframe/js/matchmedia.js'
+assets['picturefill.js'][Version('0.1.0')] = ('matchmedia.js', 'baseframe/js/picturefill.js')
+
 # Asset packages
 assets['bootstrap.js'][Version('2.0.1')] = {'requires': [
     'bootstrap-alert.js==2.0.1',
