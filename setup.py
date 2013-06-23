@@ -1,6 +1,6 @@
 import os
 import re
-from setuptools import setup, find_packages
+from setuptools import setup
 from setuptools.command.build_py import build_py
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -15,18 +15,19 @@ else:
     raise RuntimeError("Unable to find version string in baseframe/_version.py.")
 
 requires = [
-    'Flask',
-    'coaster',
-    'cssmin',
-    'Flask-Assets',
-    'Flask-WTF',
-    'wtforms',
+    'semantic_version',
     'bleach',
     'pytz',
-    'closure',
-    'semantic_version',
     'requests',
+    'dnspython',
+    'wtforms',
+    'Flask',
+    'Flask-Assets',
+    'Flask-WTF',
     'Flask-Cache',
+    'closure',
+    'cssmin',
+    'coaster',
     ]
 
 
@@ -59,7 +60,7 @@ setup(name='baseframe',
     author_email='kiran@hasgeek.com',
     url='https://github.com/hasgeek/baseframe',
     keywords='baseframe',
-    packages=find_packages(),
+    packages=['baseframe'],
     include_package_data=True,
     zip_safe=False,
     test_suite='tests',

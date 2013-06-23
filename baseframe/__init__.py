@@ -180,6 +180,36 @@ def age(dt):
         return u"%d days %s" % (delta.days, suffix)
 
 
+@baseframe.app_template_filter('usessl')
+def usessl(url):
+    """
+    Convert a URL to https:// if SSL is enabled in site config
+    """
+    if not current_app.config.get('USE_SSL'):
+        return url
+    if url.startswith('//'):  # //www.example.com/path
+        return 'https:' + url
+    if url.startswith('/'):  # /path
+        url = os.path.join(request.url_root, url[1:])
+    if url.startswith('http:'):  # http://www.example.com
+        url = 'https:' + url[5:]
+    return url
+
+
+@baseframe.app_template_filter('nossl')
+def nossl(url):
+    """
+    Convert a URL to http:// if using SSL
+    """
+    if url.startswith('//'):
+        return 'http:' + url
+    if url.startswith('/') and request.url.startswith('https:'):  # /path and SSL is on
+        url = os.path.join(request.url_root, url[1:])
+    if url.startswith('https://'):
+        return 'http:' + url[6:]
+    return url
+
+
 @baseframe.after_app_request
 def process_response(response):
     # Prevent pages from being placed in an iframe. If the response already

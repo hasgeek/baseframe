@@ -6,10 +6,34 @@ Standard forms
 
 from pytz import utc, timezone as pytz_timezone
 import bleach
+import dns.resolver
 from flask import render_template, request, Markup, abort, flash, redirect, json, escape, url_for, make_response
 from wtforms.widgets import html_params
 import flask.ext.wtf as wtf
-from coaster import make_name
+from coaster import make_name, get_email_domain
+
+
+class ValidEmailDomain(object):
+    message_domain = u"This domain does not exist"
+    message_email = u"This email address does not exist"
+
+    def __init__(self, message=None, message_domain=None, message_email=None):
+        self.message = message
+        if message_domain:
+            self.message_domain = message_domain
+        if message_email:
+            self.message_email = message_email
+
+    def __call__(self, form, field):
+        email_domain = get_email_domain(field.data)
+        try:
+            dns.resolver.query(email_domain, 'MX')
+        except dns.resolver.NXDOMAIN:
+            raise wtf.ValidationError(self.message or self.message_domain)
+        except dns.resolver.NoAnswer:
+            raise wtf.ValidationError(self.message or self.message_email)
+        except (dns.resolver.Timeout, dns.resolver.NoNameservers):
+            pass
 
 
 class RichText(wtf.widgets.TextArea):
