@@ -91,7 +91,7 @@ assets['baseframe.js'][Version(__version__)] = {'requires': [
     'bootstrap.js==2.0.1',
     'extra.js',
     'baseframe-base.js==' + __version__,
-    'baseframe-networkbar.js' + __version__,
+    'baseframe-networkbar.js==' + __version__,
 ]}
 
 assets['baseframe.css'][Version(__version__)] = {'requires': [
