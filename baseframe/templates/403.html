@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
-{% block title %}Forbidden{% endblock %}
+{% block title %}{% trans %}Forbidden{% endtrans %}{% endblock %}
 
 {% block content %}
-<p>You do not have access to that page.</p>
+<p>{% trans %}You do not have access to that page.{% endtrans %}</p>
 {% endblock %}

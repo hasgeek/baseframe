@@ -4,10 +4,11 @@ from __future__ import absolute_import
 import os
 from datetime import datetime, timedelta
 import requests
-from flask import Blueprint, send_from_directory, render_template, current_app
+from flask import g, Blueprint, send_from_directory, render_template, current_app, request
 from coaster.assets import split_namespec
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
+from flask.ext.babelex import Babel
 from ._version import *
 from .assets import assets, Version
 
@@ -15,6 +16,7 @@ __all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version']
 
 networkbar_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
+babel = Babel()
 
 
 class BaseframeBlueprint(Blueprint):
@@ -64,6 +66,7 @@ class BaseframeBlueprint(Blueprint):
 
         networkbar_cache.init_app(app, config=nwcacheconfig)
         cache.init_app(app)
+        babel.init_app(app)
 
         if 'NETWORKBAR_DATA' not in app.config:
             app.config['NETWORKBAR_DATA'] = 'https://api.hasgeek.com/1/networkbar/networkbar.json'
@@ -96,6 +99,29 @@ def baseframe_context():
     return {
         'networkbar_links': networkbar_links
     }
+
+
+@babel.localeselector
+def get_locale():
+    # If a user is logged in and the user object specifies a locale, use it
+    user = getattr(g, 'user', None)
+    if user is not None and hasattr(user, 'locale'):
+        return user.locale
+    # Otherwise try to guess the language from the user accept
+    # header the browser transmits. We support a few in this
+    # example. The best match wins.
+
+    # FIXME: Do this properly. Don't use a random selection of languages
+    return request.accept_languages.best_match(['de', 'fr', 'es', 'hi', 'te', 'ta', 'kn', 'ml', 'en'])
+
+
+@babel.timezoneselector
+def get_timezone():
+    # If this app supports user logins (ie, g.user exists) and
+    # a user is logged in (ie, g.user is not None), return timezone
+    user = getattr(g, 'user', None)
+    if user is not None:
+        return user.timezone
 
 
 @baseframe.route('/favicon.ico')

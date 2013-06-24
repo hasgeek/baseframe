@@ -25,6 +25,7 @@ requires = [
     'Flask-Assets',
     'Flask-WTF',
     'Flask-Cache',
+    'Flask-BabelEx',
     'closure',
     'cssmin',
     'coaster',
