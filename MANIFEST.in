@@ -1,5 +1,9 @@
 include README.rst
 include CHANGES.rst
+include Makefile
+include babel.cfg
+include i18n.sh
 include baseframe/Makefile
 recursive-include baseframe/templates *
 recursive-include baseframe/static *
+recursive-include baseframe/translations *

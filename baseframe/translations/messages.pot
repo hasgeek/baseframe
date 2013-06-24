@@ -1,0 +1,131 @@
+# Translations template for PROJECT.
+# Copyright (C) 2013 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2013.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2013-06-25 03:34+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+
+#: baseframe/__init__.py:200
+msgid "seconds ago"
+msgstr ""
+
+#: baseframe/__init__.py:202
+#, python-format
+msgid "%(num)s seconds ago"
+msgstr ""
+
+#: baseframe/__init__.py:204
+msgid "a minute ago"
+msgstr ""
+
+#: baseframe/__init__.py:206
+#, python-format
+msgid "%(num)s minutes ago"
+msgstr ""
+
+#: baseframe/__init__.py:208
+msgid "an hour ago"
+msgstr ""
+
+#: baseframe/__init__.py:210
+#, python-format
+msgid "%(num)s hours ago"
+msgstr ""
+
+#: baseframe/__init__.py:212
+msgid "a day ago"
+msgstr ""
+
+#: baseframe/__init__.py:214
+#, python-format
+msgid "%(num)s days ago"
+msgstr ""
+
+#: baseframe/__init__.py:216
+msgid "a month ago"
+msgstr ""
+
+#: baseframe/__init__.py:218
+#, python-format
+msgid "%(num)s months ago"
+msgstr ""
+
+#: baseframe/__init__.py:220
+msgid "a year ago"
+msgstr ""
+
+#: baseframe/__init__.py:222
+#, python-format
+msgid "%(num)s years ago"
+msgstr ""
+
+#: baseframe/forms.py:18
+msgid "This domain does not exist"
+msgstr ""
+
+#: baseframe/forms.py:19
+msgid "This email address does not exist"
+msgstr ""
+
+#: baseframe/forms.py:267
+msgid "Name contains unsupported characters"
+msgstr ""
+
+#: baseframe/forms.py:279
+msgid "That URL name is already in use"
+msgstr ""
+
+#: baseframe/forms.py:299 baseframe/templates/baseframe/delete.html:11
+msgid "Delete"
+msgstr ""
+
+#: baseframe/forms.py:300 baseframe/templates/baseframe/delete.html:12
+msgid "Cancel"
+msgstr ""
+
+#: baseframe/forms.py:303 baseframe/templates/baseframe/forms.html:108
+msgid "Submit"
+msgstr ""
+
+#: baseframe/templates/403.html:2
+msgid "Forbidden"
+msgstr ""
+
+#: baseframe/templates/403.html:5
+msgid "You do not have access to that page."
+msgstr ""
+
+#: baseframe/templates/404.html:2
+msgid "Not Found"
+msgstr ""
+
+#: baseframe/templates/404.html:5
+msgid "The page you were looking for does not exist."
+msgstr ""
+
+#: baseframe/templates/500.html:2
+msgid "Internal Server Error"
+msgstr ""
+
+#: baseframe/templates/500.html:5
+msgid ""
+"Something broke inside. A report has been sent to the server’s "
+"administrator. Our apologies for the inconvenience."
+msgstr ""
+
+#: baseframe/templates/baseframe/redirect.html:1
+msgid "Loading..."
+msgstr ""
+

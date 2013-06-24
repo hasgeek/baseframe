@@ -4,19 +4,25 @@ from __future__ import absolute_import
 import os
 from datetime import datetime, timedelta
 import requests
+from pytz import timezone
 from flask import g, Blueprint, send_from_directory, render_template, current_app, request
 from coaster.assets import split_namespec
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
-from flask.ext.babelex import Babel, gettext as _, lazy_gettext as __
+from flask.ext.babelex import Babel, Domain
 from ._version import *
 from .assets import assets, Version
+from . import translations
 
 __all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version', '_', '__']
 
 networkbar_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
 babel = Babel()
+
+baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
+_ = baseframe_translations.gettext
+__ = baseframe_translations.lazy_gettext
 
 
 class BaseframeBlueprint(Blueprint):
@@ -121,7 +127,7 @@ def get_timezone():
     # a user is logged in (ie, g.user is not None), return timezone
     user = getattr(g, 'user', None)
     if user is not None:
-        return user.timezone
+        return timezone(user.timezone)
 
 
 @baseframe.route('/favicon.ico')
@@ -169,41 +175,51 @@ def editorcss():
 
 @baseframe.app_errorhandler(404)
 def error404(e):
+    baseframe_translations.as_default()
     return render_template('404.html'), 404
 
 
 @baseframe.app_errorhandler(403)
 def error403(e):
+    baseframe_translations.as_default()
     return render_template('403.html'), 403
 
 
 @baseframe.app_errorhandler(500)
 def error500(e):
+    baseframe_translations.as_default()
     return render_template('500.html'), 500
 
 
 @baseframe.app_template_filter('age')
 def age(dt):
-    suffix = u"ago"
     delta = datetime.utcnow() - dt
     if delta.days == 0:
         # < 1 day
         if delta.seconds < 10:
-            return "seconds %s" % suffix
+            return _(u"seconds ago")
         elif delta.seconds < 60:
-            return "%d seconds %s" % (delta.seconds, suffix)
+            return _(u"%(num)s seconds ago", num=delta.seconds)
         elif delta.seconds < 120:
-            return "a minute %s" % suffix
+            return _(u"a minute ago")
         elif delta.seconds < 3600:  # < 1 hour
-            return "%d minutes %s" % (int(delta.seconds / 60), suffix)
+            return _(u"%(num)s minutes ago", num=int(delta.seconds / 60))
         elif delta.seconds < 7200:  # < 2 hours
-            return "an hour %s" % suffix
+            return _(u"an hour ago")
         else:
-            return "%d hours %s" % (int(delta.seconds / 3600), suffix)
+            return _("%(num)s hours ago", num=int(delta.seconds / 3600))
     elif delta.days == 1:
-        return u"a day %s" % suffix
+        return _(u"a day ago")
+    elif delta.days < 30:
+        return _(u"%(num)s days ago", num=delta.days)
+    elif delta.days < 60:
+        return _(u"a month ago")
+    elif delta.days < 365:
+        return _(u"%(num)s months ago", num=int(delta.days / 30))
+    elif delta.days < 730:  # < 2 years
+        return _(u"a year ago")
     else:
-        return u"%d days %s" % (delta.days, suffix)
+        return _(u"%(num)s years ago", num=int(delta.days / 365))
 
 
 @baseframe.app_template_filter('usessl')
@@ -249,6 +265,11 @@ def process_response(response):
         response.headers['X-Frame-Options'] = 'SAMEORIGIN'
     return response
 
+
+# Replace gettext handlers for imports
+b_ = _
+b__ = __
+from flask.ext.babelex import gettext as _, lazy_gettext as __
 
 # Deprecated imports
 from .deprecated import *

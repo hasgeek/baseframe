@@ -11,7 +11,7 @@ from flask import render_template, request, Markup, abort, flash, redirect, json
 from wtforms.widgets import html_params
 import flask.ext.wtf as wtf
 from coaster import make_name, get_email_domain
-from . import __
+from . import b__ as __
 
 
 class ValidEmailDomain(object):
