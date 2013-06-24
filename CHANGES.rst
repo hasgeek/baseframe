@@ -2,6 +2,7 @@
 ------
 
 * Mandatory cache provisioning for all apps using Flask-Cache
+* i18n support via Flask-BabelEx for all apps
 * Cached networkbar rendering to ensure all apps update networkbar together
 * ValidEmailDomain validator for forms
 * Assets: Dropzone, picturefill
