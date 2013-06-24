@@ -1,3 +1,12 @@
+0.2.16
+------
+
+* Mandatory cache provisioning for all apps using Flask-Cache
+* Cached networkbar rendering to ensure all apps update networkbar together
+* ValidEmailDomain validator for forms
+* Assets: Dropzone, picturefill
+* Template filters: usessl, nossl
+
 0.2.15
 ------
 
