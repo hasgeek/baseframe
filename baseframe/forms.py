@@ -11,11 +11,12 @@ from flask import render_template, request, Markup, abort, flash, redirect, json
 from wtforms.widgets import html_params
 import flask.ext.wtf as wtf
 from coaster import make_name, get_email_domain
+from . import __
 
 
 class ValidEmailDomain(object):
-    message_domain = u"This domain does not exist"
-    message_email = u"This email address does not exist"
+    message_domain = __(u"This domain does not exist")
+    message_email = __(u"This email address does not exist")
 
     def __init__(self, message=None, message_domain=None, message_email=None):
         self.message = message
@@ -263,7 +264,7 @@ class Form(wtf.Form):
 class ValidName(object):
     def __init__(self, message=None):
         if not message:
-            message = "Name contains unsupported characters"
+            message = __("Name contains unsupported characters")
         self.message = message
 
     def __call__(self, form, field):
@@ -275,7 +276,7 @@ class AvailableName(object):
     def __init__(self, message=None, scoped=False):
         self.scoped = scoped
         if not message:
-            message = "That URL name is already in use"
+            message = __("That URL name is already in use")
         self.message = message
 
     def __call__(self, form, field):
@@ -295,11 +296,11 @@ class ConfirmDeleteForm(Form):
     Confirm a delete operation
     """
     # The labels on these widgets are not used. See delete.html.
-    delete = wtf.SubmitField(u"Delete")
-    cancel = wtf.SubmitField(u"Cancel")
+    delete = wtf.SubmitField(__(u"Delete"))
+    cancel = wtf.SubmitField(__(u"Cancel"))
 
 
-def render_form(form, title, message='', formid='form', submit=u"Submit", cancel_url=None, ajax=False):
+def render_form(form, title, message='', formid='form', submit=__(u"Submit"), cancel_url=None, ajax=False):
     multipart = False
     for field in form:
         if isinstance(field.widget, wtf.FileInput):
@@ -337,7 +338,7 @@ def render_delete_sqla(obj, db, title, message, success=u'', next=None, cancel_u
             db.session.delete(obj)
             db.session.commit()
             if success:
-                flash(success, "success")
+                flash(success, 'success')
             return render_redirect(next or url_for('index'))
         else:
             return render_redirect(cancel_url or next or url_for('index'))

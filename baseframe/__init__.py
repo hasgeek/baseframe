@@ -8,11 +8,11 @@ from flask import g, Blueprint, send_from_directory, render_template, current_ap
 from coaster.assets import split_namespec
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
-from flask.ext.babelex import Babel
+from flask.ext.babelex import Babel, gettext as _, lazy_gettext as __
 from ._version import *
 from .assets import assets, Version
 
-__all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version']
+__all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version', '_', '__']
 
 networkbar_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
