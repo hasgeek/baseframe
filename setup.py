@@ -70,6 +70,6 @@ setup(name='baseframe',
     cmdclass={'build_py': BaseframeBuildPy},
     dependency_links=[
         "https://github.com/hasgeek/coaster/archive/master.zip#egg=coaster-dev",
-        "https://github.com/mrjoes/flask-babelex/archive/master.zip#egg=Flask-BabelEx-dev",
+        "https://github.com/mrjoes/flask-babelex/archive/master.zip#egg=Flask-BabelEx-0.8.2",
         ]
     )
