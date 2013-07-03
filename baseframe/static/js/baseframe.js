@@ -7,9 +7,25 @@ function activate_chosen(selector) {
   }
 }
 
+function activate_codemirror(textarea, config){
+  if (typeof(config) == 'undefined'){
+    config =  { mode: 'markdown',
+                lineNumbers: true,
+                theme: "default",
+                extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList" }
+         };
+    }
+    var editor = CodeMirror.fromTextArea(textarea, config);
+}
+
 $(function() {
   // Activate chosen on all 'select' tags.
   activate_chosen('select:not(.notselect)');
+
+  // Activate codemirror on all textareas with class='codemirror'
+  $('textarea.codemirror').each(function() {
+    activate_codemirror(this);
+  });
 
   var matchtab = function() {
     var url = document.location.toString(), tabmatch = null;

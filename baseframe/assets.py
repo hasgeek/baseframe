@@ -42,6 +42,13 @@ assets['jquery.timepicker.css'][Version('1.0.7')] = 'baseframe/css/jquery.timepi
 assets['select2.js'][Version('3.3.2')] = ('jquery.js>=1.4.6', 'baseframe/js/select2.js')
 assets['select2.css'][Version('3.3.2')] = 'baseframe/css/select2.css'
 
+assets['codemirror_core.js'][Version(__version__)] = 'baseframe/js/codemirror/lib/codemirror.js'
+assets['codemirror_md.js'][Version(__version__)] = 'baseframe/js/codemirror/mode/markdown/markdown.js'
+assets['codemirror_htmlmixed.js'][Version(__version__)] = 'baseframe/js/codemirror/mode/htmlmixed/htmlmixed.js'
+assets['codemirror_continuelist.js'][Version(__version__)] = 'baseframe/js/codemirror/addon/edit/continuelist.js'
+
+assets['codemirror.css'][Version(__version__)] = 'baseframe/css/codemirror/codemirror.css'
+
 assets['mousetrap.js'][Version('1.1.2')] = 'baseframe/js/mousetrap.js'
 assets['toastr.js'][Version('1.2.2')] = 'baseframe/js/toastr.js'
 assets['toastr.css'][Version('1.2.2')] = 'baseframe/css/toastr.css'
@@ -78,6 +85,15 @@ assets['bootstrap.js'][Version('2.0.1')] = {'requires': [
     #'bootstrap-typeahead.js==2.0.1',
 ]}
 
+
+assets['codemirror.js'][Version(__version__)] = {'requires': ['codemirror_core.js',
+    'codemirror_md.js',
+    'codemirror_htmlmixed.js',
+    'codemirror_continuelist.js'
+]}
+
+assets['codemirror.css'][Version(__version__)] = ('baseframe/css/codemirror.css')
+
 assets['extra.js'][Version('0.0.0')] = {'requires': [
     'jquery.form.js',
     'jquery.tinymce.js',
@@ -102,3 +118,4 @@ assets['baseframe.css'][Version(__version__)] = {'requires': [
     'baseframe-base.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
 ]}
+
