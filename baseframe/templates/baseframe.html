@@ -44,7 +44,7 @@
 
   {%- block layoutheaders %}{% block pageheaders %}{% endblock %}{% endblock %}
 </head>
-<body class="{% block bodyclass %}{% endblock %}">
+{% block bodytag %}<body>{% endblock %}
   {% block root -%}
     <div id="root">
       <!-- headerbox -->
