@@ -114,6 +114,13 @@ span[class^="icon-"], span[class*=" icon-"]
     width: 1.25em !important
     text-align: center !important
 
+.nav-list > li
+  span[class^="icon-"], span[class*=" icon-"]
+    display: block
+    line-height: $body-line-height
+    &:before
+      top: 0.1em !important
+
 // Reposition the caret
 .btn .caret
   margin-top: 10px

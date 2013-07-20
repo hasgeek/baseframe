@@ -1728,6 +1728,14 @@ span[class^="icon-"]:before, span[class*=" icon-"]:before {
   text-align: center !important;
 }
 
+.nav-list > li span[class^="icon-"], .nav-list > li span[class*=" icon-"] {
+  display: block;
+  line-height: 20px;
+}
+.nav-list > li span[class^="icon-"]:before, .nav-list > li span[class*=" icon-"]:before {
+  top: 0.1em !important;
+}
+
 .btn .caret {
   margin-top: 10px;
   margin-left: 0;
