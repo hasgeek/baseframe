@@ -5,7 +5,8 @@ import os
 from datetime import datetime, timedelta
 import requests
 from pytz import timezone
-from flask import g, Blueprint, send_from_directory, render_template, current_app, request
+from flask import g, Blueprint, send_from_directory, render_template, current_app, request, redirect
+from werkzeug.routing import NotFound, MethodNotAllowed, RequestRedirect
 from coaster.assets import split_namespec
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
@@ -175,6 +176,14 @@ def editorcss():
 
 @baseframe.app_errorhandler(404)
 def error404(e):
+    if request.path.endswith('/') and request.method == 'GET':
+        newpath = request.path[:-1]
+        try:
+            adapter = current_app.url_map.bind_to_environ(request)
+            adapter.match(newpath)
+            return redirect(request.url[:-1])
+        except (NotFound, RequestRedirect, MethodNotAllowed):
+            pass
     baseframe_translations.as_default()
     return render_template('404.html'), 404
 
