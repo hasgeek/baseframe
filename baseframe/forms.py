@@ -14,6 +14,9 @@ from coaster import make_name, get_email_domain
 from . import b__ as __
 
 
+SANITIZE_TAGS = ['p', 'br', 'strong', 'em', 'sup', 'sub', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'blockquote', 'code']
+
+
 class ValidEmailDomain(object):
     message_domain = __(u"This domain does not exist")
     message_email = __(u"This email address does not exist")
@@ -149,8 +152,7 @@ class RichTextField(wtf.fields.TextAreaField):
         tinymce_options.pop('setup', None)
 
         if sanitize_tags is None:
-            sanitize_tags = ['p', 'br', 'strong', 'em', 'sup', 'sub', 'h3', 'h4', 'h5', 'h6',
-                'ul', 'ol', 'li', 'a', 'blockquote', 'code']
+            sanitize_tags = SANITIZE_TAGS
         if sanitize_attributes is None:
             sanitize_attributes = {'a': ['href', 'title', 'target']}
 
