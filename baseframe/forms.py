@@ -13,8 +13,9 @@ import flask.ext.wtf as wtf
 from coaster import make_name, get_email_domain
 from . import b__ as __
 
-
+# Default tags and attributes to allow in HTML sanitization
 SANITIZE_TAGS = ['p', 'br', 'strong', 'em', 'sup', 'sub', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'blockquote', 'code']
+SANITIZE_ATTRIBUTES = {'a': ['href', 'title', 'target']}
 
 
 class ValidEmailDomain(object):
@@ -154,7 +155,7 @@ class RichTextField(wtf.fields.TextAreaField):
         if sanitize_tags is None:
             sanitize_tags = SANITIZE_TAGS
         if sanitize_attributes is None:
-            sanitize_attributes = {'a': ['href', 'title', 'target']}
+            sanitize_attributes = SANITIZE_ATTRIBUTES
 
         self.linkify = linkify
         self.nofollow = nofollow
