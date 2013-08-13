@@ -11,6 +11,7 @@ from coaster.assets import split_namespec
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
 from flask.ext.babelex import Babel, Domain
+from flask.ext.mustache import FlaskMustache
 from ._version import *
 from .assets import assets, Version
 from . import translations
@@ -74,6 +75,7 @@ class BaseframeBlueprint(Blueprint):
         networkbar_cache.init_app(app, config=nwcacheconfig)
         cache.init_app(app)
         babel.init_app(app)
+        FlaskMustache(app)
 
         if 'NETWORKBAR_DATA' not in app.config:
             app.config['NETWORKBAR_DATA'] = 'https://api.hasgeek.com/1/networkbar/networkbar.json'

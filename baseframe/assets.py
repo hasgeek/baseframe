@@ -69,6 +69,9 @@ assets['picturefill.js'][Version('0.1.0')] = ('matchmedia.js', 'baseframe/js/pic
 assets['dropzone.js'][Version('3.2.0')] = 'baseframe/js/dropzone.js'
 assets['dropzone.css'][Version('3.2.0')] = 'baseframe/css/dropzone.css'
 
+assets['mustache-hogan.js'][Version('2.0.0')] = 'baseframe/js/mustache-hogan/hogan-2.0.0.min.mustache.js'
+assets['mustache-loader.js'][Version('0.5.1')] = 'baseframe/js/mustache-hogan/mustache-loader.js'
+
 # Asset packages
 assets['bootstrap.js'][Version('2.0.1')] = {'requires': [
     'bootstrap-alert.js==2.0.1',
@@ -92,6 +95,11 @@ assets['codemirror.js'][Version(__version__)] = {'requires': ['codemirror_core.j
     'codemirror_continuelist.js'
 ]}
 
+assets['mustache.js'][Version('2.0.0')] = {'requires': [
+    'mustache-loader.js==0.5.1',
+    'mustache-hogan.js==2.0.0',
+]}
+
 assets['codemirror.css'][Version(__version__)] = ('baseframe/css/codemirror.css')
 
 assets['extra.js'][Version('0.0.0')] = {'requires': [
@@ -100,6 +108,7 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
     'bootstrap-datepicker.js',
     'jquery.timepicker.js',
     'select2.js',
+    'mustache.js',
 ]}
 
 assets['baseframe.js'][Version(__version__)] = {'requires': [
