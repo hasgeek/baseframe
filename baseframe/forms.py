@@ -19,6 +19,10 @@ SANITIZE_ATTRIBUTES = {'a': ['href', 'title', 'target']}
 
 
 class ValidEmailDomain(object):
+    """
+    Validator to confirm an email address is likely to be valid because its
+    domain exists and has an MX record.
+    """
     message_domain = __(u"This domain does not exist")
     message_email = __(u"This email address does not exist")
 
@@ -39,6 +43,18 @@ class ValidEmailDomain(object):
             raise wtf.ValidationError(self.message or self.message_email)
         except (dns.resolver.Timeout, dns.resolver.NoNameservers):
             pass
+
+
+class StripWhitespace(object):
+    def __init__(self, left=True, right=True):
+        self.left = left
+        self.right = right
+
+    def __call__(self, form, field):
+        if self.left:
+            field.data = field.data.lstrip()
+        if self.right:
+            field.data = field.data.rstrip()
 
 
 class RichText(wtf.widgets.TextArea):

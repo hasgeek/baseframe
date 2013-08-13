@@ -10,6 +10,7 @@ assets = VersionedAssets()
 
 assets['jquery.js'][Version('1.7.1')] = 'baseframe/js/jquery-1.7.1.js'
 assets['jquery.js'][Version('1.8.3')] = 'baseframe/js/jquery-1.8.3.js'
+assets['jquery.js'][Version('1.9.1')] = 'baseframe/js/jquery-1.9.1.js'
 
 assets['baseframe-networkbar.js'][Version(__version__)] = 'baseframe/js/networkbar.js'
 assets['baseframe-networkbar.css'][Version(__version__)] = 'baseframe/css/networkbar.css'
@@ -31,6 +32,21 @@ assets['bootstrap-scrollspy.js'][Version('2.0.1')] = ('jquery.js', 'baseframe/js
 assets['bootstrap-tab.js'][Version('2.0.1')] = ('jquery.js', 'baseframe/js/bootstrap/bootstrap-tab.js')
 assets['bootstrap-transition.js'][Version('2.0.1')] = ('jquery.js', 'baseframe/js/bootstrap/bootstrap-transition.js')
 assets['bootstrap-typeahead.js'][Version('2.0.1')] = ('jquery.js', 'baseframe/js/bootstrap/bootstrap-typeahead.js')
+
+# Bootstrap 3.0.0-RC1
+assets['bootstrap.css'][Version('3.0.0-rc1')] = 'baseframe/css/bootstrap3/bootstrap.css'
+assets['bootstrap-affix.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/affix.js')
+assets['bootstrap-alert.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/alert.js')
+assets['bootstrap-button.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/button.js')
+assets['bootstrap-carousel.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/carousel.js')
+assets['bootstrap-collapse.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/collapse.js')
+assets['bootstrap-dropdown.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/dropdown.js')
+assets['bootstrap-modal.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/modal.js')
+assets['bootstrap-popover.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/popover.js')
+assets['bootstrap-scrollspy.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/scrollspy.js')
+assets['bootstrap-tab.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/tab.js')
+assets['bootstrap-tooltip.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/tooltip.js')
+assets['bootstrap-transition.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/transition.js')
 
 assets['jquery.form.js'][Version('2.96.0')] = ('jquery.js', 'baseframe/js/jquery.form.js')
 assets['jquery.tinymce.js'][Version('3.5.7')] = ('jquery.js', 'baseframe/js/tiny_mce/jquery.tinymce.js')
@@ -88,6 +104,20 @@ assets['bootstrap.js'][Version('2.0.1')] = {'requires': [
     #'bootstrap-typeahead.js==2.0.1',
 ]}
 
+assets['bootstrap.js'][Version('3.0.0-rc1')] = {'requires': [
+    'bootstrap-transition.js==3.0.0-rc1',
+    'bootstrap-alert.js==3.0.0-rc1',
+    'bootstrap-button.js==3.0.0-rc1',
+    'bootstrap-carousel.js==3.0.0-rc1',
+    'bootstrap-collapse.js==3.0.0-rc1',
+    'bootstrap-dropdown.js==3.0.0-rc1',
+    'bootstrap-modal.js==3.0.0-rc1',
+    'bootstrap-tooltip.js==3.0.0-rc1',
+    'bootstrap-popover.js==3.0.0-rc1',
+    'bootstrap-scrollspy.js==3.0.0-rc1',
+    'bootstrap-tab.js==3.0.0-rc1',
+    'bootstrap-affix.js==3.0.0-rc1',
+]}
 
 assets['codemirror.js'][Version(__version__)] = {'requires': ['codemirror_core.js',
     'codemirror_md.js',
@@ -112,7 +142,7 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
 ]}
 
 assets['baseframe.js'][Version(__version__)] = {'requires': [
-    'jquery.js',
+    'jquery.js<1.9.0',
     'bootstrap.js==2.0.1',
     'extra.js',
     'baseframe-base.js==' + __version__,
@@ -128,3 +158,17 @@ assets['baseframe.css'][Version(__version__)] = {'requires': [
     'baseframe-networkbar.css==' + __version__,
 ]}
 
+assets['baseframe-bs3.js'][Version(__version__)] = {'requires': [
+    'jquery.js>=1.9.0',
+    'bootstrap.js>=3.0.0',
+    'extra.js',
+    'baseframe-base.js==' + __version__,
+    'baseframe-networkbar.js==' + __version__,
+]}
+
+assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
+    'bootstrap.css>=3.0.0',
+    'select2.css',
+    'jquery.timepicker.css',
+    'baseframe-networkbar.css==' + __version__,
+]}

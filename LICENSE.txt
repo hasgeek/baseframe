@@ -1,11 +1,11 @@
-Baseframe is BSD-licensed, but is built on top of Twitter Bootstrap 2.0,
+Baseframe is BSD-licensed, but is built on top of Twitter Bootstrap,
 which uses the Apache license. Other libraries may be any of BSD, MIT, LGPL
 and Apache. See individual source files for licenses. The standard text of
 the BSD license is below.
 
 ----------------------------------------
 
-Copyright (c) 2010-12, HasGeek Media LLP
+Copyright (c) 2010-13, HasGeek Media LLP
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

@@ -9,13 +9,17 @@ Welcome to baseframe's documentation!
 Baseframe's documentation
 *************************
 Reusable styles and templates for HasGeek projects.
- :license: BSD, see LICENSE for more details.
+
+:license: BSD, see LICENSE.txt for more details.
 
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
 
-.. automodule:: forms
+.. automodule:: baseframe
+	:members:
+
+.. automodule:: baseframe.forms
    :members:
    
 
