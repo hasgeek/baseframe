@@ -170,5 +170,6 @@ assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
     'bootstrap.css>=3.0.0',
     'select2.css',
     'jquery.timepicker.css',
+    'baseframe-base.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
 ]}
