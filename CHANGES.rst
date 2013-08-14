@@ -1,3 +1,9 @@
+0.3.0
+-----
+
+* Added Bootstrap 3 (RC1)
+* Added Mustache templating support
+
 0.2.16
 ------
 
