@@ -33,20 +33,20 @@ assets['bootstrap-tab.js'][Version('2.0.1')] = ('jquery.js', 'baseframe/js/boots
 assets['bootstrap-transition.js'][Version('2.0.1')] = ('jquery.js', 'baseframe/js/bootstrap/bootstrap-transition.js')
 assets['bootstrap-typeahead.js'][Version('2.0.1')] = ('jquery.js', 'baseframe/js/bootstrap/bootstrap-typeahead.js')
 
-# Bootstrap 3.0.0-RC1
-assets['bootstrap.css'][Version('3.0.0-rc1')] = 'baseframe/css/bootstrap3/bootstrap.css'
-assets['bootstrap-affix.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/affix.js')
-assets['bootstrap-alert.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/alert.js')
-assets['bootstrap-button.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/button.js')
-assets['bootstrap-carousel.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/carousel.js')
-assets['bootstrap-collapse.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/collapse.js')
-assets['bootstrap-dropdown.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/dropdown.js')
-assets['bootstrap-modal.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/modal.js')
-assets['bootstrap-popover.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/popover.js')
-assets['bootstrap-scrollspy.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/scrollspy.js')
-assets['bootstrap-tab.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/tab.js')
-assets['bootstrap-tooltip.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/tooltip.js')
-assets['bootstrap-transition.js'][Version('3.0.0-rc1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/transition.js')
+# Bootstrap 3.0.0-WIP
+assets['bootstrap.css'][Version('3.0.0-wip')] = 'baseframe/css/bootstrap3/bootstrap.css'
+assets['bootstrap-affix.js'][Version('3.0.0-wip')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/affix.js')
+assets['bootstrap-alert.js'][Version('3.0.0-wip')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/alert.js')
+assets['bootstrap-button.js'][Version('3.0.0-wip')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/button.js')
+assets['bootstrap-carousel.js'][Version('3.0.0-wip')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/carousel.js')
+assets['bootstrap-collapse.js'][Version('3.0.0-wip')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/collapse.js')
+assets['bootstrap-dropdown.js'][Version('3.0.0-wip')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/dropdown.js')
+assets['bootstrap-modal.js'][Version('3.0.0-wip')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/modal.js')
+assets['bootstrap-popover.js'][Version('3.0.0-wip')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/popover.js')
+assets['bootstrap-scrollspy.js'][Version('3.0.0-wip')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/scrollspy.js')
+assets['bootstrap-tab.js'][Version('3.0.0-wip')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/tab.js')
+assets['bootstrap-tooltip.js'][Version('3.0.0-wip')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/tooltip.js')
+assets['bootstrap-transition.js'][Version('3.0.0-wip')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/transition.js')
 
 assets['jquery.form.js'][Version('2.96.0')] = ('jquery.js', 'baseframe/js/jquery.form.js')
 assets['jquery.tinymce.js'][Version('3.5.7')] = ('jquery.js', 'baseframe/js/tiny_mce/jquery.tinymce.js')
@@ -104,19 +104,19 @@ assets['bootstrap.js'][Version('2.0.1')] = {'requires': [
     #'bootstrap-typeahead.js==2.0.1',
 ]}
 
-assets['bootstrap.js'][Version('3.0.0-rc1')] = {'requires': [
-    'bootstrap-transition.js==3.0.0-rc1',
-    'bootstrap-alert.js==3.0.0-rc1',
-    'bootstrap-button.js==3.0.0-rc1',
-    'bootstrap-carousel.js==3.0.0-rc1',
-    'bootstrap-collapse.js==3.0.0-rc1',
-    'bootstrap-dropdown.js==3.0.0-rc1',
-    'bootstrap-modal.js==3.0.0-rc1',
-    'bootstrap-tooltip.js==3.0.0-rc1',
-    'bootstrap-popover.js==3.0.0-rc1',
-    'bootstrap-scrollspy.js==3.0.0-rc1',
-    'bootstrap-tab.js==3.0.0-rc1',
-    'bootstrap-affix.js==3.0.0-rc1',
+assets['bootstrap.js'][Version('3.0.0-wip')] = {'requires': [
+    'bootstrap-transition.js==3.0.0-wip',
+    'bootstrap-alert.js==3.0.0-wip',
+    'bootstrap-button.js==3.0.0-wip',
+    'bootstrap-carousel.js==3.0.0-wip',
+    'bootstrap-collapse.js==3.0.0-wip',
+    'bootstrap-dropdown.js==3.0.0-wip',
+    'bootstrap-modal.js==3.0.0-wip',
+    'bootstrap-tooltip.js==3.0.0-wip',
+    'bootstrap-popover.js==3.0.0-wip',
+    'bootstrap-scrollspy.js==3.0.0-wip',
+    'bootstrap-tab.js==3.0.0-wip',
+    'bootstrap-affix.js==3.0.0-wip',
 ]}
 
 assets['codemirror.js'][Version(__version__)] = {'requires': ['codemirror_core.js',
