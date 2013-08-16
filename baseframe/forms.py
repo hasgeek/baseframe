@@ -8,8 +8,8 @@ from pytz import utc, timezone as pytz_timezone
 import bleach
 import dns.resolver
 from flask import render_template, request, Markup, abort, flash, redirect, json, escape, url_for, make_response
-from wtforms.widgets import html_params
-import flask.ext.wtf as wtf
+import wtforms
+from flask.ext.wtf import Form as BaseForm
 from coaster import make_name, get_email_domain
 from . import b__ as __
 
@@ -38,9 +38,9 @@ class ValidEmailDomain(object):
         try:
             dns.resolver.query(email_domain, 'MX')
         except dns.resolver.NXDOMAIN:
-            raise wtf.ValidationError(self.message or self.message_domain)
+            raise wtforms.ValidationError(self.message or self.message_domain)
         except dns.resolver.NoAnswer:
-            raise wtf.ValidationError(self.message or self.message_email)
+            raise wtforms.ValidationError(self.message or self.message_email)
         except (dns.resolver.Timeout, dns.resolver.NoNameservers):
             pass
 
@@ -57,7 +57,7 @@ class StripWhitespace(object):
             field.data = field.data.rstrip()
 
 
-class RichText(wtf.widgets.TextArea):
+class RichText(wtforms.widgets.TextArea):
     """
     Rich text widget.
     """
@@ -72,7 +72,7 @@ class RichText(wtf.widgets.TextArea):
         return super(RichText, self).__call__(field, **kwargs)
 
 
-class SubmitInput(wtf.widgets.SubmitInput):
+class SubmitInput(wtforms.widgets.SubmitInput):
     """
     Submit input with pre-defined classes.
     """
@@ -86,7 +86,7 @@ class SubmitInput(wtf.widgets.SubmitInput):
         return super(SubmitInput, self).__call__(field, **kwargs)
 
 
-class DateTimeInput(wtf.widgets.Input):
+class DateTimeInput(wtforms.widgets.Input):
     """
     Render date and time inputs.
     """
@@ -103,12 +103,12 @@ class DateTimeInput(wtf.widgets.Input):
             value = ' '
         date_value, time_value = value.split(' ', 1)
         return Markup(u'<input type="text" class="datetime-date" data-datepicker="datepicker" %s /> <input type="text" class="datetime-time" %s />' % (
-            html_params(name=field.name, id=field_id + '-date', value=date_value, **kwargs),
-            html_params(name=field.name, id=field_id + '-time', value=time_value, **kwargs)
+            wtforms.widgets.html_params(name=field.name, id=field_id + '-date', value=date_value, **kwargs),
+            wtforms.widgets.html_params(name=field.name, id=field_id + '-time', value=time_value, **kwargs)
             ))
 
 
-class RichTextField(wtf.fields.TextAreaField):
+class RichTextField(wtforms.fields.TextAreaField):
     """
     Rich text field.
     """
@@ -197,7 +197,7 @@ class RichTextField(wtf.fields.TextAreaField):
                 self.data = bleach.linkify(self.data, callbacks=[])
 
 
-class DateTimeField(wtf.fields.DateTimeField):
+class DateTimeField(wtforms.fields.DateTimeField):
     """
     A text field which stores a `datetime.datetime` matching a format.
     """
@@ -234,13 +234,13 @@ class DateTimeField(wtf.fields.DateTimeField):
             self.data = self.tz.localize(self.data).astimezone(utc).replace(tzinfo=None)
 
 
-class HiddenMultiField(wtf.fields.TextField):
+class HiddenMultiField(wtforms.fields.TextField):
     """
     A hidden field that stores multiple comma-separated values, meant to be
     used as an Ajax widget target. The optional ``separator`` parameter
     can be used to specify an alternate separator character (default ``','``).
     """
-    widget = wtf.HiddenInput()
+    widget = wtforms.widgets.HiddenInput()
 
     def __init__(self, *args, **kwargs):
         self.separator = kwargs.pop('separator', ',')
@@ -260,7 +260,7 @@ class HiddenMultiField(wtf.fields.TextField):
             self.data = self.data.split(self.separator)
 
 
-class Form(wtf.Form):
+class Form(BaseForm):
     """
     Form with additional methods.
     """
@@ -288,7 +288,7 @@ class ValidName(object):
 
     def __call__(self, form, field):
         if make_name(field.data) != field.data:
-            raise wtf.ValidationError(self.message)
+            raise wtforms.ValidationError(self.message)
 
 
 class AvailableName(object):
@@ -307,7 +307,7 @@ class AvailableName(object):
                 query = query.filter_by(parent=form.edit_parent)
             existing = query.first()
             if existing:
-                raise wtf.ValidationError(self.message)
+                raise wtforms.ValidationError(self.message)
 
 
 class ConfirmDeleteForm(Form):
@@ -315,14 +315,14 @@ class ConfirmDeleteForm(Form):
     Confirm a delete operation
     """
     # The labels on these widgets are not used. See delete.html.
-    delete = wtf.SubmitField(__(u"Delete"))
-    cancel = wtf.SubmitField(__(u"Cancel"))
+    delete = wtforms.fields.SubmitField(__(u"Delete"))
+    cancel = wtforms.fields.SubmitField(__(u"Cancel"))
 
 
 def render_form(form, title, message='', formid='form', submit=__(u"Submit"), cancel_url=None, ajax=False):
     multipart = False
     for field in form:
-        if isinstance(field.widget, wtf.FileInput):
+        if isinstance(field.widget, wtforms.widgets.FileInput):
             multipart = True
     if request.is_xhr and ajax:
         return make_response(render_template('baseframe/ajaxform.html', form=form, title=title,
