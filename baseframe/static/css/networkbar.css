@@ -533,8 +533,7 @@
     display: none;
   }
   #hg-networkbar.navbar .navbar-header {
-    height: 0;
-    background-image: none;
+    display: none;
   }
   #hg-networkbar.navbar .navbar-collapse {
     border-top: none;
