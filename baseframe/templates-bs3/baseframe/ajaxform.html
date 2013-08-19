@@ -1,0 +1,14 @@
+{% from "baseframe/forms.html" import renderform, ajaxform, richtext_editor %}
+{{ renderform(form=form, formid=formid, submit=submit, message=message, cancel_url=cancel_url, multipart=multipart) }}
+{% for field in form -%}
+  {% if field.widget.input_type == 'tinymce' -%}
+    {{ richtext_editor(field) }}
+  {%- endif %}
+{%- endfor %}
+{{ ajaxform(formid, request, True) }}
+<script type="text/javascript">
+  activate_chosen('select');
+  $(function() {
+    $('input.datetime-time').timepicker({ 'scrollDefaultNow': true });
+  });
+</script>

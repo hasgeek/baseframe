@@ -1,3 +1,4 @@
+@import "compass";
 @import "compass/css3/images";
 @import "compass/utilities/general/clearfix";
 @import "compass/css3/border-radius";
@@ -293,3 +294,146 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans
         }
     }
 }
+
+$mob-icon-color: #999;
+
+#hg-networkbar.navbar{
+    min-height: 50px;
+    background-color: #F3F3F3;
+    .navbar-header{
+        background-image: linear-gradient(#FFFFFF,#F5F5F5);
+        height: 48px;
+    }    
+    .navbar-toggle{
+        margin-bottom: 0;
+        margin-top: 4px;
+        margin-left: 5px;
+        i{
+            color: #333333;
+        }
+    }
+    .navbar-brand{
+        padding: 0;
+        display: block;
+        @include replace-text-with-dimensions('logo@2x.png');
+        height: 48px;
+        background-position: left center;
+        background-size: auto 100%;
+        background-repeat: none;
+        text-indent: -1000px;
+    }
+    .navbar-collapse{
+        border-top: 2px solid #E6E6E6;
+        max-height: 390px;
+    }
+    .navbar-nav{
+        padding-top: 0;
+        padding-bottom: 0;
+        li{
+            border-bottom: 1px solid #EAEAEB;
+            &:last-child{
+                border-bottom: none;
+            }
+            &.selected{
+                border-left: 5px solid #EB5B1F;
+            }
+            ul li.hg-menu-section, ul li.hg-menu-section {
+                padding: 9px 7px 2px;
+                border-top: 1px solid rgb(213, 213, 213);
+                text-transform: uppercase;
+                font-size: 85%;
+                color: rgb(136, 136, 136);
+            }
+        }
+    }
+}
+#page-header{
+    height: 0;
+    visibility: hidden;
+}
+@media screen and (min-width: 768px){
+    #hg-networkbar.navbar{
+        border-top: none;
+        margin-left: -6px;
+        background: $color-hg-bar-background;
+        @include background-image(linear-gradient(#f9f9f9, #e8e8e8));
+        font: $networkbar-font;
+        font-size: $networkbar-font-size;
+        color: $color-hg-bar;
+        border-bottom: 1px solid $color-hg-bar-border;
+        @include box-shadow(0 2px 5px -2px rgba(0,0,0,.1));
+        min-height: 28px;
+        .navbar-nav{
+            & > li {
+                font: $networkbar-font;
+                line-height: 18px;
+                border-bottom: none;
+                & > a{
+                    padding: 5px 6px;
+                    color: #444444;
+                    border-top: 2px solid transparent;
+                    line-height: 18px;
+                }            
+                & > .dropdown-menu{
+                    background: $color-hg-bar-background;
+                    color: $color-hg-bar;
+                }
+                &.selected{
+                    border-left: none;
+                    & > a {
+                        border-top: 2px solid #df5e0e;
+                        color: $color-hg-bar-selected;
+                        font-weight: 600; // bold;
+                    }
+                }
+                &:hover > a, & > a:focus {                    
+                    background: #e8e8e8;
+                    border-top: 2px solid #e8e8e8;
+                    @include background-image(linear-gradient(#e8e8e8, #d1d1d1));
+                    color: $color-hg-bar-highlight;
+                }
+            }
+            li{
+                border-bottom: none;
+            }
+            .strong {
+                font-weight: 600;
+            }
+        }
+        .dropdown-menu{
+            font-size: inherit;
+            padding: 0;
+            @include box-shadow(-3px 2px 5px -3px rgba(0,0,0,.1), 3px 2px 5px -3px rgba(0,0,0,.1));
+            li{
+                margin: 0;
+                padding: 0;
+                a{
+                    padding: 5px 6px;
+                }
+                &:hover a{
+                    background-color: rgba(0,0,0,0.1);
+                    color: black;
+                }
+            }
+        }
+        .navbar-brand{
+            display: none;
+        }
+        .navbar-header{
+            height: 0;
+            background-image: none;
+        }
+        .navbar-collapse{
+            border-top: none;
+        }
+        .navbar-ex1-collapse{
+            display: inline-block;
+            float: left;
+        }
+        .navbar-ex2-collapse{
+            display: inline-block;
+            float: right;
+        }
+    }
+}
+
