@@ -315,7 +315,7 @@ $mob-icon-color: #999;
     .navbar-brand{
         padding: 0;
         display: block;
-        @include replace-text-with-dimensions('logo@2x.png');
+        @include replace-text-with-dimensions('logo.png');
         height: 48px;
         background-position: left center;
         background-size: auto 100%;
@@ -360,14 +360,32 @@ $mob-icon-color: #999;
         }
     }
 }
-#page-header{
-    height: 0;
-    visibility: hidden;
+#bs3-template{
+    #page-header{
+        height: 0;
+        visibility: hidden;
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2){
+    #hg-networkbar.navbar{
+        .navbar-brand{
+            padding: 0;
+            display: block;
+            @include replace-text-with-dimensions('logo@2x.png');
+            height: 48px;
+            background-position: left center;
+            background-size: auto 100%;
+            background-repeat: none;
+            text-indent: -1000px;
+        }
+    }
 }
 @media screen and (min-width: 768px){
     #hg-networkbar.navbar{
         border-top: none;
         margin-left: -6px;
+        margin-bottom: 0;
         background: $color-hg-bar-background;
         @include background-image(linear-gradient(#f9f9f9, #e8e8e8));
         font: $networkbar-font;
@@ -479,5 +497,12 @@ $mob-icon-color: #999;
             float: right;
         }
     }
+    #bs3-template{
+        #page-header{
+            height: auto;
+            visibility: visible;
+        }
+    }
+
 }
 
