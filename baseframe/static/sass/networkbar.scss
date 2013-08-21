@@ -300,6 +300,11 @@ $mob-icon-color: #999;
 #hg-networkbar.navbar{
     min-height: 50px;
     background-color: #F3F3F3;
+    z-index: 1029;
+    .dropdown-backdrop {
+        position: static;
+    }
+
     .navbar-header{
         background-image: linear-gradient(#FFFFFF,#F5F5F5);
         height: 48px;
@@ -324,7 +329,7 @@ $mob-icon-color: #999;
     }
     .navbar-collapse{
         border-top: 2px solid #E6E6E6;
-        max-height: 390px;
+        max-height: 100%;
     }
     .navbar-nav{
         padding-top: 0;
@@ -334,7 +339,7 @@ $mob-icon-color: #999;
             &:last-child{
                 border-bottom: none;
             }
-            &.selected{
+            &.selected > a{
                 border-left: 5px solid #EB5B1F;
             }
             ul{
@@ -342,7 +347,6 @@ $mob-icon-color: #999;
                 padding-bottom: 0;
                 li{
                     padding-left: 10px;
-                    border-right: 2px solid #F0A40B;
                 }
                 li.hg-menu-section, li.hg-menu-section {
                     padding: 6px 7px 6px 35px;
@@ -374,6 +378,7 @@ $mob-icon-color: #999;
             display: block;
             @include replace-text-with-dimensions('logo@2x.png');
             height: 48px;
+            max-width: 70%;
             background-position: left center;
             background-size: auto 100%;
             background-repeat: none;
@@ -384,6 +389,7 @@ $mob-icon-color: #999;
 @media screen and (min-width: 768px){
     #hg-networkbar.navbar{
         border-top: none;
+        border-radius: 0;
         margin-left: -6px;
         margin-bottom: 0;
         background: $color-hg-bar-background;
@@ -394,6 +400,9 @@ $mob-icon-color: #999;
         border-bottom: 1px solid $color-hg-bar-border;
         @include box-shadow(0 2px 5px -2px rgba(0,0,0,.1));
         min-height: 28px;
+        .dropdown-backdrop {
+            position: fixed;
+        }
         .dropdown-menu{
             font-size: inherit;
             padding: 0;
@@ -418,6 +427,14 @@ $mob-icon-color: #999;
             }
         }
         .navbar-nav{
+            & > .open > a, & > .open > a:hover, & > .open > a:focus {
+                border-top: none;
+                border-bottom: none;
+                padding-top: 7px;
+            }
+            & > .open > a{
+                background: transparent;
+            }
             & > li {
                 font: $networkbar-font;
                 line-height: 18px;
@@ -433,19 +450,22 @@ $mob-icon-color: #999;
                     color: $color-hg-bar;
                     border-top: 0;
                 }
-                &.selected{
-                    border-left: none;
-                    & > a {
-                        border-top: 2px solid #df5e0e;
-                        color: $color-hg-bar-selected;
-                        font-weight: 600; // bold;
-                    }
-                }
-                &:hover > a, & > a:focus {                    
+                &:hover > a {                    
                     background: #e8e8e8;
                     border-top: 2px solid #e8e8e8;
                     @include background-image(linear-gradient(#e8e8e8, #d1d1d1));
                     color: $color-hg-bar-highlight;
+                }
+                &.selected{
+                    & > a {
+                        border-left: none;
+                        border-top: 2px solid #df5e0e;
+                        color: $color-hg-bar-selected;
+                        font-weight: 600; // bold;
+                    }
+                    & > a:hover, & > a:focus {
+                        border-top: 2px solid #df5e0e;
+                    }
                 }
                 &:hover .dropdown-menu {
                     //left: -1px; // -1px to account for 1px border
@@ -504,5 +524,31 @@ $mob-icon-color: #999;
         }
     }
 
+}
+@media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait){
+    #hg-networkbar.navbar{
+        .navbar-nav{
+            & > li {
+                .dropdown-menu{
+                    max-height: 0;
+                    visibility: hidden;
+                    @include transition-property("max-height, visibility");
+                    @include transition-duration(0.1s);
+                    @include transition-timing-function(ease-out);
+                    @include transition-delay(0.25s);
+                    @include box-shadow(-3px 2px 5px -3px rgba(0,0,0,.1), 3px 2px 5px -3px rgba(0,0,0,.1));
+                }
+                &:hover .dropdown-menu {                    
+                    max-height: 40em;
+                    visibility: visible;
+                    @include box-shadow(-3px 2px 5px -3px rgba(0,0,0,.1), 3px 2px 5px -3px rgba(0,0,0,.1));
+                    @include transition-property("max-height, visibility");
+                    @include transition-duration(0.1s);
+                    @include transition-timing-function(ease-out);
+                    @include transition-delay(0.25s);
+                }
+            }
+        }
+    }
 }
 

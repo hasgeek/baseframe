@@ -12,10 +12,12 @@
 {%- endmacro %}
 
 {% macro networkbar_inner(siteid, links, toplevel=false, appurl='#') %}
+  {% set count = 0 %}
   {%- for link in links %}
     <li id="hg-networkbar-{{ link.name }}" {%- if siteid == link.name %} class="{% if toplevel and loop.first %}strong {% endif %}selected"{% elif link.sep %} class="hg-menu-section"{% elif toplevel and loop.first %} class="strong"{% endif %}>
       {%- if link.children -%}
-      <li class="dropdown">
+        {% set count = count + 1 %}
+      <li class="dropdown" id="child-dropdown-{{count}}">
         <a href="{{ link.url or '#' }}" class="dropdown-toggle" data-toggle="dropdown">{{ link.title }} <b class="caret"></b></a>
         <ul class="dropdown-menu">
           {{ networkbar_inner(siteid, link.children) }}
@@ -64,6 +66,7 @@
           {%- endif %}
         {% endwith %}
       </div>
+      {%- if login %}
       <div id="navbar-collapse-2" class="collapse navbar-collapse navbar-ex2-collapse">
         <ul class="nav navbar-nav navbar-right">
           {% if g.user -%}
@@ -86,6 +89,7 @@
           {%- endif %}
         </ul>
       </div><!-- /.navbar-collapse -->
+      {% endif %}
     </div>
   </nav>
 {%- endmacro %}
