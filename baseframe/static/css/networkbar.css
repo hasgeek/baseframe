@@ -356,7 +356,8 @@
 #hg-networkbar.navbar .navbar-toggle {
   margin-bottom: 0;
   margin-top: 4px;
-  margin-left: 5px;
+  margin-left: -10px;
+  margin-right: 15px;
 }
 #hg-networkbar.navbar .navbar-toggle i {
   color: #333333;
@@ -377,6 +378,7 @@
   background-size: auto 100%;
   background-repeat: none;
   text-indent: -1000px;
+  margin-left: 15px;
 }
 #hg-networkbar.navbar .navbar-collapse {
   border-top: 2px solid #E6E6E6;
@@ -385,6 +387,7 @@
 #hg-networkbar.navbar .navbar-nav {
   padding-top: 0;
   padding-bottom: 0;
+  margin: 0 -15px;
 }
 #hg-networkbar.navbar .navbar-nav li {
   border-bottom: 1px solid #EAEAEB;

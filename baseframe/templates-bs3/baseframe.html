@@ -51,11 +51,13 @@
       {% block headerbox -%}
       <header>
         {% block networkbar %}{{ networkbar(siteid=config['SITE_ID'], login=config['LASTUSER_CLIENT_ID'] and true or false) }}{% endblock %}
-        <div id="page-header" class="container">
-          {% block logo -%}
-            <div id="logo"><a href="{{ url_for('index') }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
-          {%- endblock %}
-          {%- block header %}{% endblock %}
+        <div class="container">
+          <div id="page-header">
+            {% block logo -%}
+              <div id="logo"><a href="{{ url_for('index') }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
+            {%- endblock %}
+            {%- block header %}{% endblock %}
+          </div>
         </div>
       </header>
       {%- endblock %}
