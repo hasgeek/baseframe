@@ -71,6 +71,7 @@ assets['toastr.css'][Version('1.2.2')] = 'baseframe/css/toastr.css'
 
 assets['jquery.expander.js'][Version('1.4.5')] = ('jquery.js', 'baseframe/js/jquery.expander.js')
 assets['jquery.cookie.js'][Version('1.3.0')] = ('jquery.js', 'baseframe/js/jquery.cookie.js')
+assets['jquery.sparkline.js'][Version('2.1.2')] = ('jquery.js', 'baseframe/js/jquery.sparkline.js')
 assets['timezone.js'][Version('0.0.0')] = 'baseframe/js/detect_timezone.js'
 assets['socialite.js'][Version('2.0.0')] = 'baseframe/js/socialite.js'
 assets['swfobject.js'][Version('2.2.0')] = 'baseframe/js/swfobject.js'
