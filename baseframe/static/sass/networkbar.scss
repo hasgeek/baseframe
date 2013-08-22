@@ -496,52 +496,52 @@ $mob-icon-color: #999;
             visibility: visible;
         }
     }
-}
-html.no-touch{
-    #hg-networkbar.navbar{
-        .dropdown-backdrop {
-            position: fixed;
-        }
-        .navbar-nav{
-            & > li{
-                & > .dropdown-menu{
-                    display: block;
-                    max-height: 0;
-                    visibility: hidden;
-                    @include transition-property("max-height, visibility");
-                    @include transition-duration(0.1s);
-                    @include transition-timing-function(ease-out);
-                    @include transition-delay(0.25s);
-                    @include box-shadow(-3px 2px 5px -3px rgba(0,0,0,.1), 3px 2px 5px -3px rgba(0,0,0,.1));
-                    li{
-                        &:hover a{
-                            background-color: rgba(0,0,0,0.1);
-                            color: black;
+    html.no-touch{
+        #hg-networkbar.navbar{
+            .dropdown-backdrop {
+                position: fixed;
+            }
+            .navbar-nav{
+                & > li{
+                    & > .dropdown-menu{
+                        display: block;
+                        max-height: 0;
+                        visibility: hidden;
+                        @include transition-property("max-height, visibility");
+                        @include transition-duration(0.1s);
+                        @include transition-timing-function(ease-out);
+                        @include transition-delay(0.25s);
+                        @include box-shadow(-3px 2px 5px -3px rgba(0,0,0,.1), 3px 2px 5px -3px rgba(0,0,0,.1));
+                        li{
+                            &:hover a{
+                                background-color: rgba(0,0,0,0.1);
+                                color: black;
+                            }
                         }
                     }
-                }
-                &:hover > a {                    
-                    background: #e8e8e8;
-                    border-top-color: #e8e8e8;
-                    @include background-image(linear-gradient(#e8e8e8, #d1d1d1));
-                    color: $color-hg-bar-highlight;
-                }
-                &:hover .dropdown-menu {
-                    border: 1px solid $color-hg-bar-border;
-                    border-top: 0;
-                    max-height: 40em;
-                    visibility: visible;
-                    @include box-shadow(-3px 2px 5px -3px rgba(0,0,0,.1), 3px 2px 5px -3px rgba(0,0,0,.1));
-                    @include transition-property("max-height, visibility");
-                    @include transition-duration(0.1s);
-                    @include transition-timing-function(ease-out);
-                    @include transition-delay(0.25s);
-                }
+                    &:hover > a {                    
+                        background: #e8e8e8;
+                        border-top-color: #e8e8e8;
+                        @include background-image(linear-gradient(#e8e8e8, #d1d1d1));
+                        color: $color-hg-bar-highlight;
+                    }
+                    &:hover .dropdown-menu {
+                        border: 1px solid $color-hg-bar-border;
+                        border-top: 0;
+                        max-height: 40em;
+                        visibility: visible;
+                        @include box-shadow(-3px 2px 5px -3px rgba(0,0,0,.1), 3px 2px 5px -3px rgba(0,0,0,.1));
+                        @include transition-property("max-height, visibility");
+                        @include transition-duration(0.1s);
+                        @include transition-timing-function(ease-out);
+                        @include transition-delay(0.25s);
+                    }
 
-                & > .open > a, .open > a:hover, & > .open > a:focus{
-                    background: red;
-                    background-image: none;
-                    color: red;
+                    & > .open > a, .open > a:hover, & > .open > a:focus{
+                        background: red;
+                        background-image: none;
+                        color: red;
+                    }
                 }
             }
         }
