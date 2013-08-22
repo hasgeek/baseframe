@@ -19,7 +19,7 @@
         {% set count = count + 1 %}
       <li class="dropdown" id="child-dropdown-{{count}}">
         <a href="{{ link.url or '#' }}" class="dropdown-toggle" data-toggle="dropdown">{{ link.title }} <b class="caret"></b></a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" id="child-dropdown-menu-{{count}}">
           {{ networkbar_inner(siteid, link.children) }}
         </ul>
       </li>

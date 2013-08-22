@@ -1,12 +1,3 @@
-// Disable hg-submenu link href
-$(function(){
-    $('a.hg-submenu').click(function(e) {
-        e.preventDefault();
-        return false;
-    });
-});
-
-
 //bs3
 $(function(){
 	$('#navbar-toggle-1').click(function(){
@@ -32,21 +23,3 @@ $(function(){
 		}
 	});
 });
-
-// var IS_IPAD = navigator.userAgent.match(/iPad/i) != null;
-// if (IS_IPAD){
-// 	$('.dropdown').click(function(){
-// 		if($(this).hasClass('open')){
-// 			$(this).css('background', 'red');
-// 			$('.dropdown-menu').css('visibility', 'hidden');
-// 			$('.dropdown-menu').css('max-height', '0');
-// 			$(this).removeClass('open');
-// 		}else if(!$(this).hasClass('open')){
-// 			$(this).addClass('open');
-// 			$('.dropdown-menu').css('visibility', 'visible');
-// 			$('.dropdown-menu').css('max-height', '40em');
-// 			$(this).css('background', 'green');
-// 		}
-// 	});
-// }
-
