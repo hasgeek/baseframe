@@ -103,19 +103,20 @@ def networkbar_links():
         return []
 
 
-def render(field, **kwargs):
+@baseframe.app_template_filter('render_field_options')
+def render_field_options(field, **kwargs):
     """ get rid of the empty valued html attributes in `renderfield`.
     """
-    d = dict((k, v) for k, v in kwargs.iteritems() if v )
+    d = dict((k, v if v else None) for k, v in kwargs.items() if v is not None)
     return field(**d)
 
 
 @baseframe.app_context_processor
 def baseframe_context():
     return {
-        'networkbar_links': networkbar_links,
-        'render': render,
+        'networkbar_links': networkbar_links
     }
+
 
 @babel.localeselector
 def get_locale():

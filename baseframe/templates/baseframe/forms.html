@@ -19,7 +19,7 @@
       <span class="help-required" title="Required">*</span>
     {%- endif %}</label>
     <div class="controls">
-        {{ render(field, css_class=css_class, class=widget_css_class,  tabindex=tabindex, autofocus=autofocus)}}
+        {{ field | render_field_options(css_class=css_class, class=widget_css_class,  tabindex=tabindex, autofocus=autofocus)}}
       {%- if sidetext %}
         <span class="help-inline">{{ sidetext }}</span>
       {%- endif %}
