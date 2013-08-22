@@ -403,20 +403,9 @@ $mob-icon-color: #999;
         border-bottom: 1px solid $color-hg-bar-border;
         @include box-shadow(0 2px 5px -2px rgba(0,0,0,.1));
         min-height: 28px;
-        .dropdown-backdrop {
-            position: fixed;
-        }
+
         .navbar-nav{
-            & > .open > a, & > .open > a:hover, & > .open > a:focus {
-                border-top: none;
-                border-bottom: none;
-                padding-top: 7px;
-            }
-            & > .open > a{
-                background: #e8e8e8;
-                @include background-image(linear-gradient(#e8e8e8, #d1d1d1));
-                color: $color-hg-bar-highlight;
-            }
+
             & > li {
                 font: $networkbar-font;
                 line-height: 18px;
@@ -463,6 +452,19 @@ $mob-icon-color: #999;
                     }
                 }
             }
+            & > .open > a, & > .open > a:hover, & > .open > a:focus {
+                border-top: none;
+                border-bottom: none;
+                padding-top: 7px;
+            }
+            & > .open > a{
+                background: #e8e8e8;
+                @include background-image(linear-gradient(#e8e8e8, #d1d1d1));
+                color: $color-hg-bar-highlight;
+            }
+            & > .open > a:hover, & > .open > a:focus,  & > .open > a:active{
+                background: transparent;
+            }
             li{
                 border-bottom: none;
             }
@@ -497,18 +499,11 @@ $mob-icon-color: #999;
 }
 html.no-touch{
     #hg-networkbar.navbar{
+        .dropdown-backdrop {
+            position: fixed;
+        }
         .navbar-nav{
             & > li{
-                & > .open > a{
-                    background: transparent;
-                    color: auto;
-                }
-                & > .open > a, & > .open > a:hover{
-                    padding-top: 0px;
-                    border: 0;
-                    padding: 0;
-                    margin: 0;
-                }
                 & > .dropdown-menu{
                     display: block;
                     max-height: 0;
@@ -541,6 +536,12 @@ html.no-touch{
                     @include transition-duration(0.1s);
                     @include transition-timing-function(ease-out);
                     @include transition-delay(0.25s);
+                }
+
+                & > .open > a, .open > a:hover, & > .open > a:focus{
+                    background: red;
+                    background-image: none;
+                    color: red;
                 }
             }
         }
