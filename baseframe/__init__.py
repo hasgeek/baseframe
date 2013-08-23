@@ -107,6 +107,14 @@ def networkbar_links():
         return []
 
 
+@baseframe.app_template_filter('render_field_options')
+def render_field_options(field, **kwargs):
+    """ get rid of the empty valued html attributes in `renderfield`.
+    """
+    d = dict((k, v if v else None) for k, v in kwargs.items() if v is not None)
+    return field(**d)
+
+
 @baseframe.app_context_processor
 @baseframe_bs3.app_context_processor
 def baseframe_context():
