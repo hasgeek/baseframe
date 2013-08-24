@@ -65,3 +65,87 @@
     </div>
   </div>
 {%- endmacro %}
+
+{% macro responsive_networkbar_inner(siteid, links, toplevel=false, appurl='#') %}
+  {% set count = 0 %}
+  {%- for link in links %}
+    <li id="hg-networkbar-{{ link.name }}" {%- if siteid == link.name %} class="{% if toplevel and loop.first %}strong {% endif %}selected"{% elif link.sep %} class="hg-menu-section"{% elif toplevel and loop.first %} class="strong"{% endif %}>
+      {%- if link.children -%}
+        {% set count = count + 1 %}
+      <li class="dropdown" id="child-dropdown-{{count}}">
+        <a href="{{ link.url or '#' }}" class="dropdown-toggle" data-toggle="dropdown">{{ link.title }} <b class="caret"></b></a>
+        <ul class="dropdown-menu" id="child-dropdown-menu-{{count}}">
+          {{ networkbar_inner(siteid, link.children) }}
+        </ul>
+      </li>
+      {%- else -%}
+        {%- if link.sep -%}
+          {{ link.title }}
+        {%- else -%}
+          <a href="{{ link.url or (toplevel and appurl or '#') }}">{{ link.title }}</a>
+        {%- endif -%}
+      {%- endif -%}
+    </li>
+  {%- endfor %}
+{% endmacro %}
+
+{% macro responsive_networkbar(siteid=none, login=false, baseclass=none, containerclass="container") -%}
+  <nav class="navbar navbar-default" id="hg-networkbar" role="navigation">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" id="navbar-toggle-1" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <i class="icon-reorder"></i>
+        </button>
+        {%- if login %}
+          <button type="button" id="navbar-toggle-2" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex2-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <i class="icon-user"></i>
+          </button>
+        {% endif -%}
+        {% block navbar_brand %}
+          <a class="navbar-brand" href="#">HasGeek</a>
+        {% endblock %}
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="navbar-collapse-1" class="collapse navbar-collapse navbar-ex1-collapse">
+        {%- with links = networkbar_links() %}
+          {% if links %}
+            {%- cache 60, 'networkbar-links-html', siteid or '' %}
+              <ul class="nav navbar-nav">
+                {{ responsive_networkbar_inner(siteid, links, toplevel=true, appurl=request.url_root) }}          
+              </ul>
+            {%- endcache %}
+          {%- endif %}
+        {% endwith %}
+      </div>
+      {%- if login %}
+      <div id="navbar-collapse-2" class="collapse navbar-collapse navbar-ex2-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          {% if g.user -%}
+          <li class="profile dropdown">
+            {%- with orgs = g.user.organization_links() %}{% if orgs %}
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ g.user.fullname }} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="/profile">My profile</a></li>
+              {%- for org in orgs %}
+                <li><a href="{{ org.link }}">{{ org.title }}</a></li>
+              {%- endfor %}             
+            </ul>
+            {%- else %}
+              <a href="{{ g.user.profile_url }}">{{ g.user.fullname }}</a>
+            {% endif %}{%- endwith %}
+          </li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          {%- else %}
+            <li><a href="{{ url_for('login') }}">Login or sign up</a></li>
+          {%- endif %}
+        </ul>
+      </div><!-- /.navbar-collapse -->
+      {% endif %}
+    </div>
+  </nav>
+{%- endmacro %}
+
