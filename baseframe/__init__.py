@@ -108,6 +108,7 @@ def networkbar_links():
 
 
 @baseframe.app_template_filter('render_field_options')
+@baseframe_bs3.app_template_filter('render_field_options')
 def render_field_options(field, **kwargs):
     """ get rid of the empty valued html attributes in `renderfield`.
     """

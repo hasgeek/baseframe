@@ -1,7 +1,7 @@
 {% macro renderfield(field, css_class="", widget_css_class=None, sidetext=None, tabindex='', autofocus=False) -%}
 <div class="control-group{% if field.errors %} error{% endif %}{% if css_class %} {{ css_class}}{% endif %} {%- if field.widget.html_tag in ['ul', 'ol'] %} listwidget {%- endif %}" id="field-{{ field.id }}">
   {%- if field.widget.input_type == 'checkbox' %}
-    <div class="controls inline">{% if widget_css_class %}{{ field(class=widget_css_class, tabindex=tabindex) }}{% else %}{{ field(tabindex=tabindex) }}{% endif %} {{ field.label }}
+    <div class="form-group inline">{% if widget_css_class %}{{ field(class=widget_css_class, tabindex=tabindex) }}{% else %}{{ field(tabindex=tabindex) }}{% endif %} {{ field.label }}
       {%- if sidetext %}
         <span class="help-inline">{{ sidetext }}</span>
       {%- endif %}
@@ -18,38 +18,12 @@
     <label class="control-label" for="{{ field.id }}">{{ field.label.text }} {% if field.flags.required -%}
       <span class="help-required" title="Required">*</span>
     {%- endif %}</label>
-    <div class="controls">
-      {%- if autofocus %}
-        {%- if widget_css_class %}
-          {%- if tabindex %}
-            {{ field(autofocus="autofocus", class=widget_css_class, tabindex=tabindex) }}
-          {%- else %}
-            {{ field(autofocus="autofocus", class=widget_css_class) }}
-          {%- endif %}
-        {%- else %}
-          {%- if tabindex %}
-            {{ field(autofocus="autofocus", tabindex=tabindex) }}
-          {%- else %}
-            {{ field(autofocus="autofocus") }}
-          {%- endif %}
-        {%- endif %}
-      {%- else %}
-        {%- if widget_css_class %}
-          {%- if tabindex %}
-            {{ field(class=widget_css_class, tabindex=tabindex) }}
-          {%- else %}
-            {{ field(class=widget_css_class) }}
-          {%- endif %}
-        {%- elif (field.widget.input_type or "") == "" %}
-          {{ field() }}
-        {%- else %}
-          {%- if tabindex %}
-            {{ field(tabindex=tabindex) }}
-          {%- else %}
-            {{ field() }}
-          {%- endif %}
-        {%- endif %}
-      {%- endif %}
+    <div class="form-group">
+      {%- if field.widget.input_type == 'text' %}
+        {% set widget_css_class=widget_css_class+" form-control" %}
+      {% endif -%}
+
+        {{ field | render_field_options(css_class=css_class, class=widget_css_class,  tabindex=tabindex, autofocus=autofocus)}}
       {%- if sidetext %}
         <span class="help-inline">{{ sidetext }}</span>
       {%- endif %}
@@ -103,7 +77,7 @@
 {%- endmacro %}
 
 {% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=False) %}
-<form id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="form-horizontal">
+<form role="form" id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="form-horizontal">
   {{ renderform_inner(form, formid) }}
   {{ rendersubmit([(None, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url) }}
 </form>
