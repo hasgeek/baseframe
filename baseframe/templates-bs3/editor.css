@@ -1,8 +1,0 @@
-@import url("//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,400italic,600italic");
-{%- assets "css_all" %}
-@import url("{{ ASSET_URL }}");
-{% endassets -%}
-
-body {
-  padding: 4px;
-}

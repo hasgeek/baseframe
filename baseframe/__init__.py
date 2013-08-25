@@ -16,7 +16,7 @@ from ._version import *
 from .assets import assets, Version
 from . import translations
 
-__all__ = ['baseframe', 'baseframe_bs3', 'baseframe_js', 'baseframe_css', 'assets', 'Version', '_', '__']
+__all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version', '_', '__']
 
 networkbar_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
@@ -89,11 +89,6 @@ baseframe = BaseframeBlueprint('baseframe', __name__,
     static_url_path='/_baseframe',
     template_folder='templates')
 
-baseframe_bs3 = BaseframeBlueprint('baseframe', __name__,
-    static_folder='static',
-    static_url_path='/_baseframe',
-    template_folder='templates-bs3')
-
 @networkbar_cache.cached(key_prefix='networkbar_links')
 def networkbar_links():
     links = current_app.config.get('NETWORKBAR_LINKS')
@@ -108,7 +103,6 @@ def networkbar_links():
 
 
 @baseframe.app_template_filter('render_field_options')
-@baseframe_bs3.app_template_filter('render_field_options')
 def render_field_options(field, **kwargs):
     """ get rid of the empty valued html attributes in `renderfield`.
     """
@@ -117,7 +111,6 @@ def render_field_options(field, **kwargs):
 
 
 @baseframe.app_context_processor
-@baseframe_bs3.app_context_processor
 def baseframe_context():
     return {
         'networkbar_links': networkbar_links
@@ -148,7 +141,6 @@ def get_timezone():
 
 
 @baseframe.route('/favicon.ico')
-@baseframe_bs3.route('/favicon.ico')
 def favicon():
     app_icon_path = current_app.static_folder
     # Does the app have a favicon.ico in /static?
@@ -163,7 +155,6 @@ def favicon():
 
 
 @baseframe.route('/humans.txt')
-@baseframe_bs3.route('/humans.txt')
 def humans():
     return send_from_directory(
         current_app.static_folder if os.path.exists(
@@ -172,7 +163,6 @@ def humans():
 
 
 @baseframe.route('/robots.txt')
-@baseframe_bs3.route('/robots.txt')
 def robots():
     return send_from_directory(
         current_app.static_folder if os.path.exists(
@@ -181,13 +171,11 @@ def robots():
 
 
 @baseframe.route('/_toastr_messages.js')
-@baseframe_bs3.route('/_toastr_messages.js')
 def toastr_messages_js():
     return current_app.response_class(render_template('toastr_messages.js'), mimetype='application/javascript')
 
 
 @baseframe.route('/_editor.css')
-@baseframe_bs3.route('/_editor.css')
 def editorcss():
     response = current_app.response_class(render_template('editor.css'),
         mimetype='text/css',
@@ -196,7 +184,6 @@ def editorcss():
 
 
 @baseframe.app_errorhandler(404)
-@baseframe_bs3.app_errorhandler(404)
 def error404(e):
     if request.path.endswith('/') and request.method == 'GET':
         newpath = request.path[:-1]
@@ -211,21 +198,18 @@ def error404(e):
 
 
 @baseframe.app_errorhandler(403)
-@baseframe_bs3.app_errorhandler(403)
 def error403(e):
     baseframe_translations.as_default()
     return render_template('403.html'), 403
 
 
 @baseframe.app_errorhandler(500)
-@baseframe_bs3.app_errorhandler(500)
 def error500(e):
     baseframe_translations.as_default()
     return render_template('500.html'), 500
 
 
 @baseframe.app_template_filter('age')
-@baseframe_bs3.app_template_filter('age')
 def age(dt):
     delta = datetime.utcnow() - dt
     if delta.days == 0:
@@ -257,7 +241,6 @@ def age(dt):
 
 
 @baseframe.app_template_filter('usessl')
-@baseframe_bs3.app_template_filter('usessl')
 def usessl(url):
     """
     Convert a URL to https:// if SSL is enabled in site config
@@ -274,7 +257,6 @@ def usessl(url):
 
 
 @baseframe.app_template_filter('nossl')
-@baseframe_bs3.app_template_filter('nossl')
 def nossl(url):
     """
     Convert a URL to http:// if using SSL
@@ -289,7 +271,6 @@ def nossl(url):
 
 
 @baseframe.after_app_request
-@baseframe_bs3.after_app_request
 def process_response(response):
     # Prevent pages from being placed in an iframe. If the response already
     # set has a value for this option, let it pass through
