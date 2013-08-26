@@ -89,6 +89,7 @@ baseframe = BaseframeBlueprint('baseframe', __name__,
     static_url_path='/_baseframe',
     template_folder='templates')
 
+
 @networkbar_cache.cached(key_prefix='networkbar_links')
 def networkbar_links():
     links = current_app.config.get('NETWORKBAR_LINKS')
