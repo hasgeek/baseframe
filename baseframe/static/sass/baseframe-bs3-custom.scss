@@ -24,6 +24,11 @@ ol, ul{
 	}
 
 }
+.cardset li .card-body, .userset li .card-body {
+	margin: 22px -14px 0;
+	font-size: 13px;
+	line-height: 20px;
+}
 #page-header{
 	display: none;
 }
