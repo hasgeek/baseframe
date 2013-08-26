@@ -16,6 +16,7 @@ assets['baseframe-networkbar.js'][Version(__version__)] = 'baseframe/js/networkb
 assets['baseframe-networkbar.css'][Version(__version__)] = 'baseframe/css/networkbar.css'
 assets['baseframe-base.js'][Version(__version__)] = 'baseframe/js/baseframe.js'
 assets['baseframe-base.css'][Version(__version__)] = 'baseframe/css/baseframe.css'
+assets['baseframe-bs3-custom.css'][Version(__version__)] = 'baseframe/css/baseframe-bs3-custom.css'
 
 # Bootstrap 2.0.1
 assets['bootstrap.css'][Version('2.0.1')] = 'baseframe/css/bootstrap.css'
@@ -173,4 +174,5 @@ assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
     'jquery.timepicker.css',
     'baseframe-base.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
+    'baseframe-bs3-custom.css',
 ]}
