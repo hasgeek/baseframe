@@ -36,7 +36,7 @@
   clear: both;
 }
 #hg-bar .strong {
-  font-weight: 600;
+  font-weight: bold;
 }
 #hg-bar li {
   font: 13px/18px "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
@@ -47,7 +47,7 @@
   float: right;
 }
 #hg-bar ul#hg-usertools .profile {
-  font-weight: 600;
+  font-weight: bold;
 }
 #hg-bar ul#hg-barlinks {
   float: left;
@@ -222,7 +222,7 @@
 #hg-bar ul#hg-barlinks > li.selected > a, #hg-bar ul#hg-usertools > li.selected > a {
   border-top: 2px solid #df5e0e;
   color: black;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 #hg-bar.hg-dark {
@@ -490,7 +490,7 @@
     border-left: none;
     border-top: 2px solid #df5e0e;
     color: black;
-    font-weight: 600;
+    font-weight: bold;
   }
   #hg-networkbar .navbar-nav > li.selected > a:hover, #hg-networkbar .navbar-nav > li.selected > a:focus {
     border-top: 2px solid #df5e0e;
@@ -525,8 +525,8 @@
   #hg-networkbar .navbar-nav li {
     border-bottom: none;
   }
-  #hg-networkbar .navbar-nav .strong {
-    font-weight: 600;
+  #hg-networkbar.navbar .navbar-nav .strong {
+    font-weight: bold;
   }
   #hg-networkbar .navbar-brand {
     display: none;

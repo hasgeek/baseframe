@@ -1,8 +1,9 @@
 0.3.0
 -----
 
-* Added Bootstrap 3 (RC1)
+* Added Bootstrap 3
 * Added Mustache templating support
+* Added a responsive networkbar for Bootstrap 3-based websites
 
 0.2.16
 ------
