@@ -39,7 +39,7 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans
     position: relative;
     z-index: 1029;
     .strong {
-        font-weight: 600;
+        font-weight: bold;
     }
     li {
         font: $networkbar-font;
@@ -49,7 +49,7 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans
     ul#hg-usertools {
         float: right;
         .profile {
-            font-weight: 600; // bold;
+            font-weight: bold;
         }
     }
     ul#hg-barlinks {
@@ -182,7 +182,7 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans
         & > li.selected > a {
             border-top: 2px solid #df5e0e;
             color: $color-hg-bar-selected;
-            font-weight: 600; // bold;
+            font-weight: bold;
         }
     }
 }
@@ -435,7 +435,7 @@ $mob-icon-color: #999;
                         border-left: none;
                         border-top: 2px solid #df5e0e;
                         color: $color-hg-bar-selected;
-                        font-weight: 600; // bold;
+                        font-weight: bold;
                     }
                     & > a:hover, & > a:focus {
                         border-top: 2px solid #df5e0e;
@@ -469,7 +469,7 @@ $mob-icon-color: #999;
                 border-bottom: none;
             }
             .strong {
-                font-weight: 600;
+                font-weight: bold;
             }
         }
         .navbar-brand{

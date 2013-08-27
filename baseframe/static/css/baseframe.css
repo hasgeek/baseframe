@@ -1623,7 +1623,7 @@ ul.icons-ul > li .icon-li {
 }
 
 strong {
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .page-header {
@@ -2004,7 +2004,7 @@ footer .container p {
   border-bottom: 0;
 }
 .usertools li.profile {
-  font-weight: 600;
+  font-weight: bold;
 }
 .usertools li:last-child {
   border-right: 0;
@@ -2163,12 +2163,12 @@ table.mceLayout.focus {
 
 .help-required {
   color: #b94a48;
-  font-weight: 600;
+  font-weight: bold;
   font-family: monospace;
 }
 
 .control-label {
-  font-weight: 600;
+  font-weight: bold;
   position: relative;
 }
 
@@ -2191,7 +2191,7 @@ textarea {
 }
 
 input[name="title"], .field-title {
-  font-weight: 600;
+  font-weight: bold;
   font-size: 18px;
 }
 
@@ -2247,7 +2247,7 @@ ul.grid > li.header {
   padding-top: 9px;
   border-top: 0;
   border-bottom: 1px solid #b7b7b7;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .nav.nav-grid {
@@ -2527,7 +2527,7 @@ ul.grid > li.header {
 }
 
 .datepicker .nav {
-  font-weight: 600;
+  font-weight: bold;
   width: 100%;
   padding: 4px 0;
   background-color: #f5f5f5;
@@ -2622,7 +2622,7 @@ ul.grid > li.header {
 }
 
 .datepicker .dow {
-  font-weight: 600;
+  font-weight: bold;
   color: #808080;
 }
 
@@ -2726,7 +2726,7 @@ ul.grid > li.header {
     line-height: 1.5em;
     padding-top: 0.5em;
     font-size: 30px;
-    font-weight: 600;
+    font-weight: bold;
   }
   #logo a {
     color: black;
