@@ -341,6 +341,10 @@
     border-bottom: 2px solid #df5e0e;
   }
 }
+#hg-networkbar {
+  font: 13px/18px "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+  font-size: 14px;
+}
 #hg-networkbar.navbar {
   min-height: 50px;
   background-color: #F3F3F3;
@@ -439,6 +443,9 @@
   }
 }
 @media screen and (min-width: 768px) {
+  #hg-networkbar {
+    font-size: 13px;
+  }
   #hg-networkbar.navbar {
     border-top: none;
     border-radius: 0;

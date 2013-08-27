@@ -22,6 +22,7 @@ $color-hg-bar-highlight: #000;
 $color-hg-bar-highlight-background: rgba(0, 0, 0, 0.1);
 $color-hg-bar-selected: #000;
 $networkbar-font-size: 13px;
+$networkbar-xs-font-size: 14px;
 $networkbar-line-height: 18px;
 $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif !default;
 
@@ -297,7 +298,10 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Open Sans
 
 $mob-icon-color: #999;
 
-#hg-networkbar{
+#hg-networkbar{  
+    font: $networkbar-font;
+    font-size: $networkbar-xs-font-size;
+
     &.navbar{
         min-height: 50px;
         background-color: #F3F3F3;
@@ -387,6 +391,7 @@ $mob-icon-color: #999;
 }
 @media screen and (min-width: 768px){
     #hg-networkbar{
+        font-size: $networkbar-font-size;
         &.navbar{
             border-top: none;
             border-radius: 0;
