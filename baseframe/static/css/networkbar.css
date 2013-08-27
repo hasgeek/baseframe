@@ -525,7 +525,7 @@
   #hg-networkbar .navbar-nav li {
     border-bottom: none;
   }
-  #hg-networkbar.navbar .navbar-nav .strong {
+  #hg-networkbar .navbar-nav .strong {
     font-weight: bold;
   }
   #hg-networkbar .navbar-brand {
@@ -557,10 +557,6 @@
     -moz-transition-property: max-height, visibility;
     -o-transition-property: max-height, visibility;
     transition-property: max-height, visibility;
-    -webkit-transition-duration: 0.1s;
-    -moz-transition-duration: 0.1s;
-    -o-transition-duration: 0.1s;
-    transition-duration: 0.1s;
     -webkit-transition-timing-function: ease-out;
     -moz-transition-timing-function: ease-out;
     -o-transition-timing-function: ease-out;
@@ -606,10 +602,6 @@
     -moz-transition-property: max-height, visibility;
     -o-transition-property: max-height, visibility;
     transition-property: max-height, visibility;
-    -webkit-transition-duration: 0.1s;
-    -moz-transition-duration: 0.1s;
-    -o-transition-duration: 0.1s;
-    transition-duration: 0.1s;
     -webkit-transition-timing-function: ease-out;
     -moz-transition-timing-function: ease-out;
     -o-transition-timing-function: ease-out;

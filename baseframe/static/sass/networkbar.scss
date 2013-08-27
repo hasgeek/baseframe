@@ -500,7 +500,6 @@ $mob-icon-color: #999;
                         max-height: 0;
                         visibility: hidden;
                         @include transition-property("max-height, visibility");
-                        @include transition-duration(0.1s);
                         @include transition-timing-function(ease-out);
                         @include transition-delay(0.25s);
                         @include box-shadow(-3px 2px 5px -3px rgba(0,0,0,.1), 3px 2px 5px -3px rgba(0,0,0,.1));
@@ -531,7 +530,6 @@ $mob-icon-color: #999;
                     visibility: visible;
                     @include box-shadow(-3px 2px 5px -3px rgba(0,0,0,.1), 3px 2px 5px -3px rgba(0,0,0,.1));
                     @include transition-property("max-height, visibility");
-                    @include transition-duration(0.1s);
                     @include transition-timing-function(ease-out);
                     @include transition-delay(0.25s);
                 }
