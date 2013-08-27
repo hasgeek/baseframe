@@ -105,9 +105,10 @@ def networkbar_links():
 
 @baseframe.app_template_filter('render_field_options')
 def render_field_options(field, **kwargs):
-    """ get rid of the empty valued html attributes in `renderfield`.
     """
-    d = dict((k, v if v else None) for k, v in kwargs.items() if v is not None)
+    Remove HTML attributes with a value of None or False before rendering a field.
+    """
+    d = dict((k, v) for k, v in kwargs.items() if v is not None and v is not False)
     return field(**d)
 
 
