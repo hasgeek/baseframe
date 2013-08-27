@@ -39,3 +39,57 @@ ul, ol {
     display: block;
   }
 }
+/* bs3 buttons */
+button.btn {
+  overflow: hidden;
+}
+
+.btn {
+  text-shadow: 1px 1px #e6e6e6, 2px 2px #e6e6e6, 3px 3px #e6e6e6, 4px 4px #e6e6e6, 5px 5px #e6e6e6, 6px 6px #e6e6e6, 7px 7px #e6e6e6, 8px 8px #e6e6e6, 9px 9px #e6e6e6, 10px 10px #e6e6e6, 11px 11px #e6e6e6, 12px 12px #e6e6e6, 13px 13px #e6e6e6, 14px 14px #e7e7e7, 15px 15px #e7e7e7, 16px 16px #e8e8e8, 17px 17px #e8e8e8, 18px 18px #e9e9e9, 19px 19px #e9e9e9, 20px 20px #eaeaea, 21px 21px #ebebeb, 22px 22px #ebebeb, 23px 23px #ececec, 24px 24px #ececec, 25px 25px #ededed, 26px 26px #ededed, 27px 27px #eeeeee, 28px 28px #eeeeee, 29px 29px #efefef, 30px 30px #f0f0f0;
+}
+
+.btn-link {
+  text-shadow: none;
+}
+
+.btn-default {
+  text-shadow: 1px 1px whitesmoke, 2px 2px whitesmoke, 3px 3px whitesmoke, 4px 4px whitesmoke, 5px 5px whitesmoke, 6px 6px whitesmoke, 7px 7px whitesmoke, 8px 8px whitesmoke, 9px 9px whitesmoke, 10px 10px whitesmoke, 11px 11px whitesmoke, 12px 12px whitesmoke, 13px 13px whitesmoke, 14px 14px #f6f6f6, 15px 15px #f6f6f6, 16px 16px #f7f7f7, 17px 17px #f7f7f7, 18px 18px #f8f8f8, 19px 19px #f8f8f8, 20px 20px #f9f9f9, 21px 21px #fafafa, 22px 22px #fafafa, 23px 23px #fbfbfb, 24px 24px #fbfbfb, 25px 25px #fcfcfc, 26px 26px #fcfcfc, 27px 27px #fdfdfd, 28px 28px #fdfdfd, 29px 29px #fefefe, 30px 30px white;
+}
+.btn-default:hover {
+  text-shadow: 1px 1px #d4d4d4, 2px 2px #d4d4d4, 3px 3px #d4d4d4, 4px 4px #d4d4d4, 5px 5px #d4d4d4, 6px 6px #d4d4d4, 7px 7px #d4d4d4, 8px 8px #d4d4d4, 9px 9px #d4d4d4, 10px 10px #d4d4d4, 11px 11px #d4d4d4, 12px 12px #d4d4d4, 13px 13px #d5d5d5, 14px 14px #d6d6d6, 15px 15px #d7d7d7, 16px 16px #d9d9d9, 17px 17px #dadada, 18px 18px #dbdbdb, 19px 19px gainsboro, 20px 20px #dedede, 21px 21px #dfdfdf, 22px 22px #e0e0e0, 23px 23px #e2e2e2, 24px 24px #e3e3e3, 25px 25px #e4e4e4, 26px 26px #e5e5e5, 27px 27px #e7e7e7, 28px 28px #e8e8e8, 29px 29px #e9e9e9, 30px 30px #ebebeb;
+}
+
+.btn-danger {
+  text-shadow: 1px 1px #c34b47, 2px 2px #c34b47, 3px 3px #c34b47, 4px 4px #c34b47, 5px 5px #c34b47, 6px 6px #c34b47, 7px 7px #c34b47, 8px 8px #c34b47, 9px 9px #c34b47, 10px 10px #c34b47, 11px 11px #c34b47, 12px 12px #c34b47, 13px 13px #c44b47, 14px 14px #c54b47, 15px 15px #c64c48, 16px 16px #c74c48, 17px 17px #c94d49, 18px 18px #ca4d49, 19px 19px #cb4e4a, 20px 20px #cc4e4a, 21px 21px #ce4f4b, 22px 22px #cf4f4b, 23px 23px #d04f4b, 24px 24px #d1504c, 25px 25px #d2504c, 26px 26px #d4514d, 27px 27px #d5514d, 28px 28px #d6524e, 29px 29px #d7524e, 30px 30px #d9534f;
+}
+.btn-danger:hover {
+  text-shadow: 1px 1px #bd2d29, 2px 2px #bd2d29, 3px 3px #bd2d29, 4px 4px #bd2d29, 5px 5px #bd2d29, 6px 6px #bd2d29, 7px 7px #bd2d29, 8px 8px #bd2d29, 9px 9px #bd2d29, 10px 10px #bd2d29, 11px 11px #bd2d29, 12px 12px #bd2d29, 13px 13px #be2d29, 14px 14px #bf2d29, 15px 15px #c02d29, 16px 16px #c12e29, 17px 17px #c22e2a, 18px 18px #c42e2a, 19px 19px #c52e2a, 20px 20px #c62f2a, 21px 21px #c72f2b, 22px 22px #c82f2b, 23px 23px #c9302b, 24px 24px #cb302b, 25px 25px #cc302b, 26px 26px #cd302c, 27px 27px #ce312c, 28px 28px #cf312c, 29px 29px #d0312c, 30px 30px #d2322d;
+}
+
+.btn-primary {
+  text-shadow: 1px 1px #3b7db6, 2px 2px #3b7db6, 3px 3px #3b7db6, 4px 4px #3b7db6, 5px 5px #3b7db6, 6px 6px #3b7db6, 7px 7px #3b7db6, 8px 8px #3b7db6, 9px 9px #3b7db6, 10px 10px #3b7db6, 11px 11px #3b7db6, 12px 12px #3b7db6, 13px 13px #3b7db7, 14px 14px #3b7eb8, 15px 15px #3c7fb9, 16px 16px #3c80ba, 17px 17px #3c80bb, 18px 18px #3d81bc, 19px 19px #3d82bd, 20px 20px #3e83be, 21px 21px #3e84c0, 22px 22px #3e84c1, 23px 23px #3f85c2, 24px 24px #3f86c3, 25px 25px #4087c4, 26px 26px #4087c5, 27px 27px #4088c6, 28px 28px #4189c7, 29px 29px #418ac8, 30px 30px #428bca;
+}
+.btn-primary:hover {
+  text-shadow: 1px 1px #2d6a9f, 2px 2px #2d6a9f, 3px 3px #2d6a9f, 4px 4px #2d6a9f, 5px 5px #2d6a9f, 6px 6px #2d6a9f, 7px 7px #2d6a9f, 8px 8px #2d6a9f, 9px 9px #2d6a9f, 10px 10px #2d6a9f, 11px 11px #2d6a9f, 12px 12px #2d6a9f, 13px 13px #2d6aa0, 14px 14px #2d6ba1, 15px 15px #2d6ca2, 16px 16px #2e6ca3, 17px 17px #2e6da4, 18px 18px #2e6ea5, 19px 19px #2e6ea6, 20px 20px #2f6fa7, 21px 21px #2f70a8, 22px 22px #2f70a9, 23px 23px #3071aa, 24px 24px #3072ab, 25px 25px #3072ac, 26px 26px #3073ad, 27px 27px #3174ae, 28px 28px #3174af, 29px 29px #3175b0, 30px 30px #3276b1;
+}
+
+.btn-success {
+  text-shadow: 1px 1px #53a653, 2px 2px #53a653, 3px 3px #53a653, 4px 4px #53a653, 5px 5px #53a653, 6px 6px #53a653, 7px 7px #53a653, 8px 8px #53a653, 9px 9px #53a653, 10px 10px #53a653, 11px 11px #53a653, 12px 12px #53a653, 13px 13px #53a753, 14px 14px #54a854, 15px 15px #54a954, 16px 16px #55aa55, 17px 17px #55ab55, 18px 18px #56ac56, 19px 19px #56ad56, 20px 20px #57ae57, 21px 21px #57af57, 22px 22px #58b058, 23px 23px #58b158, 24px 24px #59b259, 25px 25px #59b359, 26px 26px #5ab45a, 27px 27px #5ab55a, 28px 28px #5bb65b, 29px 29px #5bb75b, 30px 30px #5cb85c;
+}
+.btn-success:hover {
+  text-shadow: 1px 1px #409440, 2px 2px #409440, 3px 3px #409440, 4px 4px #409440, 5px 5px #409440, 6px 6px #409440, 7px 7px #409440, 8px 8px #409440, 9px 9px #409440, 10px 10px #409440, 11px 11px #409440, 12px 12px #409440, 13px 13px #409440, 14px 14px #409540, 15px 15px #419641, 16px 16px #419741, 17px 17px #419841, 18px 18px #429942, 19px 19px #429a42, 20px 20px #439b43, 21px 21px #439c43, 22px 22px #439c43, 23px 23px #449d44, 24px 24px #449e44, 25px 25px #459f45, 26px 26px #45a045, 27px 27px #45a145, 28px 28px #46a246, 29px 29px #46a346, 30px 30px #47a447;
+}
+
+.btn-info {
+  text-shadow: 1px 1px #52adc8, 2px 2px #52adc8, 3px 3px #52adc8, 4px 4px #52adc8, 5px 5px #52adc8, 6px 6px #52adc8, 7px 7px #52adc8, 8px 8px #52adc8, 9px 9px #52adc8, 10px 10px #52adc8, 11px 11px #52adc8, 12px 12px #52adc8, 13px 13px #52aec9, 14px 14px #53afca, 15px 15px #53b0cb, 16px 16px #54b1cc, 17px 17px #54b2ce, 18px 18px #55b3cf, 19px 19px #55b4d0, 20px 20px #56b5d1, 21px 21px #56b6d3, 22px 22px #57b7d4, 23px 23px #57b8d5, 24px 24px #58b9d6, 25px 25px #58bad7, 26px 26px #59bbd9, 27px 27px #59bcda, 28px 28px #5abddb, 29px 29px #5abedc, 30px 30px #5bc0de;
+}
+.btn-info:hover {
+  text-shadow: 1px 1px #33a1c2, 2px 2px #33a1c2, 3px 3px #33a1c2, 4px 4px #33a1c2, 5px 5px #33a1c2, 6px 6px #33a1c2, 7px 7px #33a1c2, 8px 8px #33a1c2, 9px 9px #33a1c2, 10px 10px #33a1c2, 11px 11px #33a1c2, 12px 12px #33a1c2, 13px 13px #33a2c3, 14px 14px #33a3c4, 15px 15px #34a4c5, 16px 16px #34a5c6, 17px 17px #34a6c7, 18px 18px #35a7c9, 19px 19px #35a8ca, 20px 20px #35a9cb, 21px 21px #36aacc, 22px 22px #36abcd, 23px 23px #36acce, 24px 24px #37add0, 25px 25px #37aed1, 26px 26px #37afd2, 27px 27px #38b0d3, 28px 28px #38b1d4, 29px 29px #38b2d5, 30px 30px #39b3d7;
+}
+
+.btn-warning {
+  text-shadow: 1px 1px #d89c46, 2px 2px #d89c46, 3px 3px #d89c46, 4px 4px #d89c46, 5px 5px #d89c46, 6px 6px #d89c46, 7px 7px #d89c46, 8px 8px #d89c46, 9px 9px #d89c46, 10px 10px #d89c46, 11px 11px #d89c46, 12px 12px #d89c46, 13px 13px #d99c46, 14px 14px #da9d46, 15px 15px #dc9e47, 16px 16px #dd9f47, 17px 17px #dea048, 18px 18px #e0a148, 19px 19px #e1a249, 20px 20px #e2a349, 21px 21px #e4a44a, 22px 22px #e5a54a, 23px 23px #e6a64a, 24px 24px #e8a74b, 25px 25px #e9a84b, 26px 26px #eaa94c, 27px 27px #ecaa4c, 28px 28px #edab4d, 29px 29px #eeac4d, 30px 30px #f0ad4e;
+}
+.btn-warning:hover {
+  text-shadow: 1px 1px #d58c24, 2px 2px #d58c24, 3px 3px #d58c24, 4px 4px #d58c24, 5px 5px #d58c24, 6px 6px #d58c24, 7px 7px #d58c24, 8px 8px #d58c24, 9px 9px #d58c24, 10px 10px #d58c24, 11px 11px #d58c24, 12px 12px #d58c24, 13px 13px #d68c24, 14px 14px #d78d24, 15px 15px #d98e24, 16px 16px #da8f24, 17px 17px #db9025, 18px 18px #dd9125, 19px 19px #de9225, 20px 20px #df9325, 21px 21px #e19426, 22px 22px #e29426, 23px 23px #e39526, 24px 24px #e59626, 25px 25px #e69726, 26px 26px #e79827, 27px 27px #e99927, 28px 28px #ea9a27, 29px 29px #eb9b27, 30px 30px #ed9c28;
+}
