@@ -517,6 +517,10 @@ $mob-icon-color: #999;
                         color: $color-hg-bar-highlight;
                     }
 
+                    &.selected:hover > a, &.selected:focus > a {
+                        border-top: 2px solid #df5e0e;
+                    }
+
                     & > .open > a, .open > a:hover, & > .open > a:focus{
                         background: red;
                         background-image: none;

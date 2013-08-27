@@ -585,6 +585,9 @@
     background-image: linear-gradient(#e8e8e8, #d1d1d1);
     color: black;
   }
+  .no-touch #hg-networkbar .navbar-nav > li.selected:hover > a, .no-touch #hg-networkbar .navbar-nav > li.selected:focus > a {
+    border-top: 2px solid #df5e0e;
+  }
   .no-touch #hg-networkbar .navbar-nav > li > .open > a, .no-touch #hg-networkbar .navbar-nav > li .open > a:hover, .no-touch #hg-networkbar .navbar-nav > li > .open > a:focus {
     background: red;
     background-image: none;
