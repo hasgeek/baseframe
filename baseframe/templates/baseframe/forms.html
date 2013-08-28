@@ -1,3 +1,4 @@
+<!-- change rendererrors.mustache also while changing here -->
 {% macro rendererrors(field) -%}
     {%- if field.errors -%}
       {%- for error in field.errors %}
@@ -6,6 +7,7 @@
     {%- endif %}
 {%- endmacro %}
 
+<!-- change renderfield.mustache also while changing here -->
 {% macro renderfield(field, css_class="", widget_css_class=None, sidetext=None, tabindex='', autofocus=False) -%}
 <div class="form-group control-group{% if field.errors %} error{% endif %} {{css_class}} {%- if field.widget.html_tag in ['ul', 'ol'] %} listwidget {%- endif %}" id="field-{{ field.id }}">
 {%- if field.widget.input_type == 'checkbox' %}

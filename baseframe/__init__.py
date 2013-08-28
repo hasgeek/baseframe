@@ -5,7 +5,8 @@ import os
 from datetime import datetime, timedelta
 import requests
 from pytz import timezone
-from flask import g, Blueprint, send_from_directory, render_template, current_app, request, redirect
+from flask import (g, Blueprint, send_from_directory, render_template,
+                    current_app, request, redirect, Markup)
 from werkzeug.routing import NotFound, MethodNotAllowed, RequestRedirect
 from coaster.assets import split_namespec
 from flask.ext.assets import Environment, Bundle
@@ -111,6 +112,18 @@ def render_field_options(field, **kwargs):
     d = dict((k, v) for k, v in kwargs.items() if v is not None and v is not False)
     return field(**d)
 
+@baseframe.app_template_filter('to_json')
+def form_field_to_json(field, **kwargs):
+    d = {}
+    d['id'] = field.id
+    d['label'] = field.label.text
+    d['has_errors'] = bool(field.errors)
+    d['errors'] = list(dict(error=e) for e in field.errors)
+    d['is_listwidget'] = bool(hasattr(field.widget, 'html_tag') and field.widget.html_tag in ['ul', 'ol'])
+    d['is_checkbox'] = (field.widget.input_type == 'checkbox')
+    d['is_required'] = bool(field.flags.required)
+    d['render_html'] = Markup(render_field_options(field, **kwargs))
+    return d
 
 @baseframe.app_context_processor
 def baseframe_context():

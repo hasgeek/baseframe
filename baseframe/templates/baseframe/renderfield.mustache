@@ -1,0 +1,26 @@
+{{! mustache equivalent of renderfield macro from forms.html }}
+{{! example usage: mustache('baseframe/renderfield.mustache', partials={'rendererrors':'baseframe/rendererrors.mustache'}, field=formfield|to_json) }}
+
+{{#field}}
+<div class="form-group control-group {{#errors}}error{{/errors}} {{css_class}}" {{#is_listwidget}} listwidget {{/is_listwidget}} id="field-{{id}}">
+
+    {{#is_checkbox}}
+    <div class="controls inline"> {{render_html}}{{label}}
+    {{/is_checkbox}}
+
+    {{^is_checkbox}}
+    <label class="control-label" for="{{id}}">{{label}}{{#is_required}} <span class="help-required" title="Required">*</span>{{/is_required}}</label>
+    <div class="controls">
+        {{ render_html }}
+    {{/is_checkbox}}
+
+        {{# sidetext }}
+            <span class="help-inline">{{ sidetext }}</span>
+        {{/ sidetext}}
+        {{ > rendererrors }}
+        {{# description}}
+            <p class="help-block">{{ description }}</p>
+        {{/ description}}
+    </div>
+</div>
+{{/field}}
