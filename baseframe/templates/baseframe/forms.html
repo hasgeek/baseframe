@@ -50,7 +50,7 @@
 
 {% macro renderform_inner(form, formid) -%}
   {%- if form.errors %}
-    <div class="alert alert-error">
+    <div class="alert alert-error alert-danger">
       <a class="close" data-dismiss="alert">×</a>
       Please correct the indicated errors.
     </div>
@@ -59,7 +59,7 @@
   <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
   {{ form.hidden_tag() }}
   {%- if form.csrf_token.errors %}
-    {% for error in form.csrf_token.errors %}<div class="alert alert-error">{{ error }}</div>{% endfor %}
+    {% for error in form.csrf_token.errors %}<div class="alert alert-error alert-danger">{{ error }}</div>{% endfor %}
   {% endif %}
   {%- set autofocus = true %}
   {% for field in form -%}

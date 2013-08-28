@@ -42,10 +42,19 @@ ul, ol{
 	margin-left: 0;
 	margin-right: 0;
 }
+div.error:after{
+	border: none !important;
+}
+div.error{
+	background: transparent !important;
+	padding: 0 !important;
+	width: 100% !important;
+	color: #333 !important;
+}
 
 /* bs3 buttons */
 
-button.btn{
+button.btn, a.btn{
 	overflow: hidden;
 }
 .btn{
