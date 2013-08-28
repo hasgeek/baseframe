@@ -1,5 +1,5 @@
 {% macro renderfield(field, css_class="", widget_css_class=None, sidetext=None, tabindex='', autofocus=False) -%}
-<div class="control-group{% if field.errors %} error{% endif %}{% if css_class %} {{ css_class}}{% endif %} {%- if field.widget.html_tag in ['ul', 'ol'] %} listwidget {%- endif %}" id="field-{{ field.id }}">
+<div class="form-group control-group{% if field.errors %} error{% endif %}{% if css_class %} {{ css_class}}{% endif %} {%- if field.widget.html_tag in ['ul', 'ol'] %} listwidget {%- endif %}" id="field-{{ field.id }}">
   {%- if field.widget.input_type == 'checkbox' %}
     <div class="controls inline">{% if widget_css_class %}{{ field(class=widget_css_class, tabindex=tabindex) }}{% else %}{{ field(tabindex=tabindex) }}{% endif %} {{ field.label }}
       {%- if sidetext %}
@@ -66,7 +66,11 @@
     {%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
       {# Don't show hidden #}
     {%- else -%}
-      {{ renderfield(field, widget_css_class="field-" + field.id, autofocus=autofocus) }}
+      {% if field.type in ['TextField', 'DateField', 'EmailField', 'URLField', 'TextAreaField'] %}
+        {{ renderfield(field, widget_css_class="form-control field-" + field.id, autofocus=autofocus) }}
+      {% else %}
+        {{ renderfield(field, widget_css_class="field-" + field.id, autofocus=autofocus) }}
+      {% endif %}
       {%- if autofocus %}{% set autofocus = false %}{% endif %}
     {%- endif %}
   {% endfor %}
@@ -78,78 +82,6 @@
   {{ rendersubmit([(None, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url) }}
 </form>
 {% endmacro %}
-
-<!--bs3-->
-{% macro renderfield_bs3(field, css_class="", widget_css_class=None, sidetext=None, tabindex='', autofocus=False) -%}
-<div class="form-group{% if field.errors %} error{% endif %}{% if css_class %} {{ css_class}}{% endif %} {%- if field.widget.html_tag in ['ul', 'ol'] %} listwidget {%- endif %}" id="field-{{ field.id }}">
-  {%- if field.widget.input_type == 'checkbox' %}
-    <div class=" inline">{% if widget_css_class %}{{ field(class=widget_css_class, tabindex=tabindex) }}{% else %}{{ field(tabindex=tabindex) }}{% endif %} {{ field.label }}
-      {%- if sidetext %}
-        <span class="help-inline">{{ sidetext }}</span>
-      {%- endif %}
-      {%- if field.description %}
-        {%- if field.errors -%}
-          {%- for error in field.errors %}
-            <p class="help-error"><span>{{ error }}</span></p>
-          {%- endfor %}
-        {%- endif %}
-        <p class="help-block">{{ field.description }}</p>
-      {%- endif %}
-    </div>
-  {%- else %}
-    <label class="" for="{{ field.id }}">{{ field.label.text }} {% if field.flags.required -%}
-      <span class="help-required" title="Required">*</span>
-    {%- endif %}</label>
-    
-        {{ field | render_field_options(css_class=css_class, class=widget_css_class,  tabindex=tabindex, autofocus=autofocus)}}
-      {%- if sidetext %}
-        <span class="help-inline">{{ sidetext }}</span>
-      {%- endif %}
-      {%- if field.errors -%}
-        {% for error in field.errors -%}
-          <p class="help-error"><span>{{ error }}</span></p>
-        {% endfor %}
-      {%- endif %}
-      {% if field.description %}<p class="help-block">{{ field.description }}</p>{% endif %}
-    {%- endif %}
-</div>
-{%- endmacro %}
-
-{% macro renderform_inner_bs3(form, formid) -%}
-  {%- if form.errors %}
-    <div class="alert alert-error">
-      <a class="close" data-dismiss="alert">×</a>
-      Please correct the indicated errors.
-    </div>
-  {%- endif %}
-  {% if message %}<p>{{ message }}</p>{% endif %}
-  <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
-  {{ form.hidden_tag() }}
-  {%- if form.csrf_token.errors %}
-    {% for error in form.csrf_token.errors %}<div class="alert alert-error">{{ error }}</div>{% endfor %}
-  {% endif %}
-  {%- set autofocus = true %}
-  {% for field in form -%}
-    {%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
-      {# Don't show hidden #}
-    {%- else -%}
-      {% if field.type in ['TextField', 'DateField', 'EmailField', 'URLField', 'TextAreaField'] %}
-        {{ renderfield_bs3(field, widget_css_class="form-control field-" + field.id, autofocus=autofocus) }}
-      {% else %}
-        {{ renderfield_bs3(field, widget_css_class="field-" + field.id, autofocus=autofocus) }}
-      {% endif %}
-      {%- if autofocus %}{% set autofocus = false %}{% endif %}
-    {%- endif %}
-  {% endfor %}
-{%- endmacro %}
-
-{% macro renderform_bs3(form, formid, submit, message='', action='', cancel_url='', multipart=False) %}
-<form role="form" id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8">
-  {{ renderform_inner_bs3(form, formid) }}
-  {{ rendersubmit([(None, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url) }}
-</form>
-{% endmacro %}
-<!--/bs3-->
 
 {% macro ajaxform(formid, request, force=False) -%}
 {% if force or request.is_xhr -%}
