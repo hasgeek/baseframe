@@ -337,14 +337,25 @@ $mob-icon-color: #999;
     }
     .navbar-collapse{
         border-top: 2px solid #E6E6E6;
+        // position: relative;
+        // left: 0;
+        // top: 0;
+        // right: 0;
+        //width: 100%;
         max-height: 100%;
+        z-index: 1032;
     }
+    .navbar-collapse.in{
+        overflow-y: scroll !important;
+    }
+
     .navbar-nav{
         padding-top: 0;
         padding-bottom: 0;
         margin: 0 -15px;
         li{
             border-bottom: 1px solid #EAEAEB;
+            //width: 100%;
             &:last-child{
                 border-bottom: none;
             }
@@ -406,7 +417,9 @@ $mob-icon-color: #999;
             @include box-shadow(0 2px 5px -2px rgba(0,0,0,.1));
             min-height: 28px;
         }
-
+        &.navbar-fixed-top{
+            position: relative;
+        }
         .navbar-nav{
 
             & > li {
@@ -482,7 +495,7 @@ $mob-icon-color: #999;
             display: none;
         }
         .navbar-collapse{
-            border-top: none;
+            border: none;
         }
         .navbar-ex1-collapse{
             display: inline-block;
@@ -507,6 +520,8 @@ $mob-icon-color: #999;
                         @include transition-property("max-height, visibility");
                         @include transition-timing-function(ease-out);
                         @include transition-delay(0.25s);
+                        @include transition-duration(0.1s);
+                        overflow: hidden;
                         @include box-shadow(-3px 2px 5px -3px rgba(0,0,0,.1), 3px 2px 5px -3px rgba(0,0,0,.1));
                         li{
                             &:hover a{

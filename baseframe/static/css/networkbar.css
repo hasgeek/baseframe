@@ -387,6 +387,10 @@
 #hg-networkbar .navbar-collapse {
   border-top: 2px solid #E6E6E6;
   max-height: 100%;
+  z-index: 1032;
+}
+#hg-networkbar .navbar-collapse.in {
+  overflow-y: scroll !important;
 }
 #hg-networkbar .navbar-nav {
   padding-top: 0;
@@ -468,6 +472,9 @@
     box-shadow: 0 2px 5px -2px rgba(0, 0, 0, 0.1);
     min-height: 28px;
   }
+  #hg-networkbar.navbar-fixed-top {
+    position: relative;
+  }
   #hg-networkbar .navbar-nav > li {
     font: 13px/18px "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
     line-height: 18px;
@@ -542,7 +549,7 @@
     display: none;
   }
   #hg-networkbar .navbar-collapse {
-    border-top: none;
+    border: none;
   }
   #hg-networkbar .navbar-ex1-collapse {
     display: inline-block;
@@ -572,6 +579,11 @@
     -moz-transition-delay: 0.25s;
     -o-transition-delay: 0.25s;
     transition-delay: 0.25s;
+    -webkit-transition-duration: 0.1s;
+    -moz-transition-duration: 0.1s;
+    -o-transition-duration: 0.1s;
+    transition-duration: 0.1s;
+    overflow: hidden;
     -webkit-box-shadow: -3px 2px 5px -3px rgba(0, 0, 0, 0.1), 3px 2px 5px -3px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: -3px 2px 5px -3px rgba(0, 0, 0, 0.1), 3px 2px 5px -3px rgba(0, 0, 0, 0.1);
     box-shadow: -3px 2px 5px -3px rgba(0, 0, 0, 0.1), 3px 2px 5px -3px rgba(0, 0, 0, 0.1);
