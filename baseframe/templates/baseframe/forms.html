@@ -13,8 +13,8 @@
 {%- if field.widget.input_type == 'checkbox' %}
     <div class="controls inline">{{ field | render_field_options(class=widget_css_class, tabindex=tabindex) }} {{ field.label.text }}
 {%- else %}
-        <label class="control-label col-md-2" for="{{ field.id }}">{% if field.flags.required -%}<span class="help-required" title="Required">*</span>{%- endif %}{{ field.label.text }}</label>
-        <div class="controls col-md-8">
+        <label class="control-label col-sm-3 col-md-2" for="{{ field.id }}">{% if field.flags.required -%}<span class="help-required" title="Required">*</span>{%- endif %}{{ field.label.text }}</label>
+        <div class="controls col-xs-12 col-sm-9 col-md-8">
             {{ field | render_field_options(class=widget_css_class,  tabindex=tabindex, autofocus=autofocus)}}
 {%- endif %}
             {% if sidetext %}
