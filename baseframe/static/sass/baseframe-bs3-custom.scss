@@ -44,9 +44,18 @@ ul, ol{
 	}
 }
 
+form {
+    margin-bottom: 1em;
+}
 .form-horizontal .form-group{
 	margin-left: 0;
 	margin-right: 0;
+}
+textarea.form-control{
+	min-height: 150px;
+}
+.form-horizontal .control-label .help-required {
+    right: 5px;
 }
 div.error:after{
 	border: none !important;
