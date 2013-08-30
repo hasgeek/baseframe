@@ -23,34 +23,3 @@ $(function(){
 		}
 	});
 });
-
-// $(function(){
-// 	var windowHeight = $(window).height();
-// 		$('.navbar-collapse').css('max-height',( windowHeight - 50));
-// });
-
-$(function(){
-	$('.navbar-collapse').css('max-height',(window.innerHeight));
-// Listen for orientation changes
-window.addEventListener("orientationchange", function() {
-	if( window.orientation == 0){
-		$('.navbar-collapse').css('max-height',(window.innerHeight));
-		// alert("width="+$('.navbar-collapse').css('width')+
-		// 	" , height="+$('.navbar-collapse').css('max-height')+
-		// 	" , win-width="+(window.innerWidth)+
-		// 	" , win-height="+(window.innerHeight));
-
-	} else if( window.orientation == 90){
-		$('.navbar-collapse').css('max-height',(window.innerHeight));			
-		//$('.navbar-collapse').css('max-height',(window.innerHeight));
-		// alert("width="+$('.navbar-collapse').css('width')+
-		// 	" , height="+$('.navbar-collapse').css('max-height')+
-		// 	" , win-width="+(window.innerWidth)+
-		// 	" , win-height="+(window.innerHeight));
-	}
-	// Announce the new orientation number
-	//alert(window.orientation+" ,"+window.innerWidth+", "+$('#page-header').height());
-	//$('.navbar-collapse').css({'max-height':(window.innerWidth - 150), 'width': '100%'});
-	//alert(getElementById('navbar-collapse').style.maxHeight);
-}, false);
-});

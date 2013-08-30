@@ -337,13 +337,13 @@ $mob-icon-color: #999;
     }
     .navbar-collapse{
         border-top: 2px solid #E6E6E6;
-        // position: relative;
-        // left: 0;
-        // top: 0;
-        // right: 0;
-        //width: 100%;
+        position: fixed;
+        top: 3.6em;
+        bottom: 0;
+        background: #F3F3F3;
+        width: 100%;
         max-height: 100%;
-        z-index: 1032;
+        z-index: 1029;
     }
     .navbar-collapse.in{
         overflow-y: scroll !important;
@@ -496,6 +496,14 @@ $mob-icon-color: #999;
         }
         .navbar-collapse{
             border: none;
+            position: relative;
+            top: auto;
+            bottom: auto;
+            background: $color-hg-bar-background;
+            @include background-image(linear-gradient(#f9f9f9, #e8e8e8));
+            width: auto;
+            max-height: auto;
+            z-index: auto;
         }
         .navbar-ex1-collapse{
             display: inline-block;
