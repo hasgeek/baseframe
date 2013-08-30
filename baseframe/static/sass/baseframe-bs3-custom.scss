@@ -44,11 +44,26 @@ ul, ol{
 	}
 }
 
+form {
+    margin-bottom: 1em;
+}
 .form-horizontal .form-group{
 	margin-left: 0;
 	margin-right: 0;
+	clear: both;
 }
-
+.listwidget ul > li > label{
+	font-weight: normal;
+}
+textarea.form-control{
+	min-height: 150px;
+}
+textarea#description{
+	min-height: 300px;
+}
+.form-horizontal .control-label .help-required {
+    right: 5px;
+}
 div.error:after{
 	border: none !important;
 }
