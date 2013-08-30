@@ -46,6 +46,22 @@ ul, ol{
 
 form {
     margin-bottom: 1em;
+    margin-left: -15px;
+    margin-right: -15px;
+    input.btn{ 	
+	    margin-left: 15px;
+	    margin-right: auto;
+    }
+}
+@media screen and (min-width: 768px){
+	form {
+	    margin-left: 0px;
+	    margin-right: 0px;
+	    input.btn{ 	
+		    margin-left: 0;
+		    margin-right: auto;
+	    }
+	}
 }
 .form-horizontal .form-group{
 	margin-left: 0;
@@ -55,6 +71,18 @@ form {
 .listwidget ul > li > label{
 	font-weight: normal;
 }
+.form-control{
+	padding: 6px;
+}
+.form-group{
+	margin-bottom: 10px !important;
+}
+@media screen and (min-width: 768px){
+	.form-group{
+		margin-bottom: auto;
+	}
+}
+
 textarea.form-control{
 	min-height: 150px;
 }
