@@ -388,14 +388,18 @@
   border-top: 2px solid #E6E6E6;
   position: fixed;
   top: 3.6em;
-  bottom: 0;
+  bottom: auto;
   background: #F3F3F3;
   width: 100%;
   max-height: 100%;
   z-index: 1029;
 }
+#hg-networkbar .navbar-collapse.collapsed {
+  bottom: auto;
+}
 #hg-networkbar .navbar-collapse.in {
   overflow-y: scroll !important;
+  bottom: 0;
 }
 #hg-networkbar .navbar-nav {
   padding-top: 0;
