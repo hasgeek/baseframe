@@ -317,7 +317,7 @@ $mob-icon-color: #999;
     }    
     .navbar-toggle{
         margin-bottom: 0;
-        margin-top: 4px;
+        margin-top: 5px;
         margin-left: -10px;
         margin-right: 15px;
         i{
@@ -336,15 +336,39 @@ $mob-icon-color: #999;
         margin-left: 15px;
     }
     .navbar-collapse{
-        border-top: 2px solid #E6E6E6;
-        max-height: 100%;
+        border-top: 2px solid #E6E6E6; 
+        &.collapsing{
+            height: 100%;
+            position: fixed;
+            top: 3.6em;
+            bottom: 0;
+            background: #F3F3F3;
+            width: 100%;
+        }
+        &.in{
+            border-top: 2px solid #E6E6E6;
+            overflow-y: auto !important; 
+            position: fixed;
+            top: 3.6em;
+            bottom: 0;
+            background: #F3F3F3;
+            max-height: 100%;
+            width: 100%;
+            @include transition-property("bottom");
+            @include transition-timing-function(ease-in);
+            @include transition-delay(0s);
+            @include transition-duration(3s);
+        }
     }
+
+
     .navbar-nav{
         padding-top: 0;
         padding-bottom: 0;
         margin: 0 -15px;
         li{
             border-bottom: 1px solid #EAEAEB;
+            //width: 100%;
             &:last-child{
                 border-bottom: none;
             }
@@ -406,7 +430,9 @@ $mob-icon-color: #999;
             @include box-shadow(0 2px 5px -2px rgba(0,0,0,.1));
             min-height: 28px;
         }
-
+        &.navbar-fixed-top{
+            position: relative;
+        }
         .navbar-nav{
 
             & > li {
@@ -482,7 +508,15 @@ $mob-icon-color: #999;
             display: none;
         }
         .navbar-collapse{
-            border-top: none;
+            border: none;
+            position: relative;
+            top: auto;
+            bottom: auto;
+            background: $color-hg-bar-background;
+            @include background-image(linear-gradient(#f9f9f9, #e8e8e8));
+            width: auto;
+            max-height: auto;
+            z-index: auto;
         }
         .navbar-ex1-collapse{
             display: inline-block;
@@ -507,6 +541,8 @@ $mob-icon-color: #999;
                         @include transition-property("max-height, visibility");
                         @include transition-timing-function(ease-out);
                         @include transition-delay(0.25s);
+                        @include transition-duration(0.1s);
+                        overflow: hidden;
                         @include box-shadow(-3px 2px 5px -3px rgba(0,0,0,.1), 3px 2px 5px -3px rgba(0,0,0,.1));
                         li{
                             &:hover a{
