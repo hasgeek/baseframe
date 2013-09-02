@@ -359,7 +359,7 @@
 }
 #hg-networkbar .navbar-toggle {
   margin-bottom: 0;
-  margin-top: 4px;
+  margin-top: 5px;
   margin-left: -10px;
   margin-right: 15px;
 }
@@ -386,20 +386,40 @@
 }
 #hg-networkbar .navbar-collapse {
   border-top: 2px solid #E6E6E6;
+}
+#hg-networkbar .navbar-collapse.collapsing {
+  height: 100%;
   position: fixed;
   top: 3.6em;
-  bottom: auto;
+  bottom: 0;
   background: #F3F3F3;
   width: 100%;
-  max-height: 100%;
-  z-index: 1029;
-}
-#hg-networkbar .navbar-collapse.collapsed {
-  bottom: auto;
 }
 #hg-networkbar .navbar-collapse.in {
-  overflow-y: scroll !important;
+  border-top: 2px solid #E6E6E6;
+  overflow-y: auto !important;
+  position: fixed;
+  top: 3.6em;
   bottom: 0;
+  background: #F3F3F3;
+  max-height: 100%;
+  width: 100%;
+  -webkit-transition-property: bottom;
+  -moz-transition-property: bottom;
+  -o-transition-property: bottom;
+  transition-property: bottom;
+  -webkit-transition-timing-function: ease-in;
+  -moz-transition-timing-function: ease-in;
+  -o-transition-timing-function: ease-in;
+  transition-timing-function: ease-in;
+  -webkit-transition-delay: 0s;
+  -moz-transition-delay: 0s;
+  -o-transition-delay: 0s;
+  transition-delay: 0s;
+  -webkit-transition-duration: 3s;
+  -moz-transition-duration: 3s;
+  -o-transition-duration: 3s;
+  transition-duration: 3s;
 }
 #hg-networkbar .navbar-nav {
   padding-top: 0;

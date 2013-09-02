@@ -317,7 +317,7 @@ $mob-icon-color: #999;
     }    
     .navbar-toggle{
         margin-bottom: 0;
-        margin-top: 4px;
+        margin-top: 5px;
         margin-left: -10px;
         margin-right: 15px;
         i{
@@ -336,22 +336,31 @@ $mob-icon-color: #999;
         margin-left: 15px;
     }
     .navbar-collapse{
-        border-top: 2px solid #E6E6E6;
-        position: fixed;
-        top: 3.6em;
-        bottom: auto;
-        background: #F3F3F3;
-        width: 100%;
-        max-height: 100%;
-        z-index: 1029;
+        border-top: 2px solid #E6E6E6; 
+        &.collapsing{
+            height: 100%;
+            position: fixed;
+            top: 3.6em;
+            bottom: 0;
+            background: #F3F3F3;
+            width: 100%;
+        }
+        &.in{
+            border-top: 2px solid #E6E6E6;
+            overflow-y: auto !important; 
+            position: fixed;
+            top: 3.6em;
+            bottom: 0;
+            background: #F3F3F3;
+            max-height: 100%;
+            width: 100%;
+            @include transition-property("bottom");
+            @include transition-timing-function(ease-in);
+            @include transition-delay(0s);
+            @include transition-duration(3s);
+        }
     }
-    .navbar-collapse.collapsed{
-        bottom: auto;    
-    }
-    .navbar-collapse.in{
-        overflow-y: scroll !important;
-        bottom: 0;
-    }
+
 
     .navbar-nav{
         padding-top: 0;
