@@ -87,7 +87,7 @@ form input.btn {
 
 @media screen and (min-width: 768px) {
   .form-group {
-    margin-bottom: auto;
+    margin-bottom: 20px !important;
   }
 }
 textarea.form-control {
@@ -96,10 +96,6 @@ textarea.form-control {
 
 textarea#description {
   min-height: 300px;
-}
-
-.form-horizontal .control-label .help-required {
-  right: 5px;
 }
 
 div.error:after {

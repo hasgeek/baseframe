@@ -9,23 +9,28 @@
 
 <!-- change renderfield.mustache also while changing here -->
 {% macro renderfield(field, css_class="", widget_css_class=None, sidetext=None, tabindex='', autofocus=False) -%}
-<div class="form-group control-group{% if field.errors %} error{% endif %} {{css_class}} {%- if field.widget.html_tag in ['ul', 'ol'] %} listwidget {%- endif %}" id="field-{{ field.id }}">
-{%- if field.widget.input_type == 'checkbox' %}
-    <div class="controls inline col-xs-12 col-sm-9 col-md-8 col-sm-offset-3 col-md-offset-2">{{ field | render_field_options(class=widget_css_class, tabindex=tabindex) }} {{ field.label.text }}
-{%- else %}
-        <label class="control-label col-sm-3 col-md-2" for="{{ field.id }}">{% if field.flags.required -%}<span class="help-required" title="Required">*</span>{%- endif %}{{ field.label.text }}</label>
-        <div class="controls col-xs-12 col-sm-9 col-md-8">
-            {{ field | render_field_options(class=widget_css_class,  tabindex=tabindex, autofocus=autofocus)}}
-{%- endif %}
-            {% if sidetext %}
+  <div class="form-group control-group{% if field.errors %} error{% endif %} {{css_class}} {%- if field.widget.html_tag in ['ul', 'ol'] %} listwidget {%- endif %}" id="field-{{ field.id }}">
+    {%- if field.widget.input_type == 'checkbox' %}
+      <div class="col-xs-12 col-sm-9 col-md-8 col-sm-offset-3 col-md-offset-2">
+        <div class="controls inline ">{{ field | render_field_options(class=widget_css_class, tabindex=tabindex) }} {{ field.label.text }}
+    {%- else %}
+      <div class="col-sm-3 col-md-2">
+        <label class="control-label " for="{{ field.id }}">{% if field.flags.required -%}<span class="help-required" title="Required">*</span>{%- endif %}{{ field.label.text }}</label>
+      </div>
+      <div class="col-xs-12 col-sm-9 col-md-8">
+        <div class="controls">
+          {{ field | render_field_options(class=widget_css_class,  tabindex=tabindex, autofocus=autofocus)}}
+    {%- endif %}
+          {% if sidetext %}
             <span class="help-inline">{{sidetext}}</span>
-            {% endif %}
-            {{ rendererrors(field) }}
-            {% if field.description %}
+          {% endif %}
+          {{ rendererrors(field) }}
+          {% if field.description %}
             <p class="help-block">{{field.description}}</p>
-            {% endif %}
+          {% endif %}
         </div>
-    </div>
+      </div>     
+  </div>
 {%- endmacro %}
 
 {% macro rendersubmit(buttons=[], css_class="", tabindex='', cancel_url='') -%}
@@ -37,7 +42,7 @@
       {%- if tabindex %} tabindex="{{ tabindex }}" {% endif -%}
       >{{ value|e }}</button>
   {% endfor %}
-  {% if cancel_url %}<a href="{{ cancel_url }}" class="btn">Cancel</a>{% endif %}
+  {% if cancel_url %}<a href="{{ cancel_url }}" class="btn btn-default">Cancel</a>{% endif %}
   <span class="loading hidden">&nbsp;</span>
 </span></div>
 {%- endmacro %}
