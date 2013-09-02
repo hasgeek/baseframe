@@ -118,6 +118,58 @@ button.btn, a.btn {
   overflow: hidden;
 }
 
+.btn:active, .btn.active {
+  box-shadow: none;
+}
+
 .btn-link {
   text-shadow: none;
+}
+
+.btn-default {
+  border-bottom: 2px solid #ADADAD;
+}
+.btn-default:focus, .btn-default:active, .btn-default.active {
+  border-bottom: 1px solid #ADADAD;
+  border-top: 2px solid #ADADAD;
+}
+
+.btn-danger {
+  border-bottom: 2px solid #AC2925;
+}
+.btn-danger:focus, .btn-danger:active, .btn-danger.active {
+  border-bottom: 1px solid #AC2925;
+  border-top: 2px solid #AC2925;
+}
+
+.btn-primary {
+  border-bottom: 2px solid #285E8E;
+}
+.btn-primary:focus, .btn-primary:active, .btn-primary.active {
+  border-bottom: 1px solid #285E8E;
+  border-top: 2px solid #285E8E;
+}
+
+.btn-success {
+  border-bottom: 2px solid #398439;
+}
+.btn-success:focus, .btn-success:active, .btn-success.active {
+  border-bottom: 1px solid #398439;
+  border-top: 2px solid #398439;
+}
+
+.btn-info {
+  border-bottom: 2px solid #269ABC;
+}
+.btn-info:focus, .btn-info:active, .btn-info.active {
+  border-bottom: 1px solid #269ABC;
+  border-top: 2px solid #269ABC;
+}
+
+.btn-warning {
+  border-bottom: 2px solid #D58512;
+}
+.btn-warning:focus, .btn-warning:active, .btn-warning.active {
+  border-bottom: 1px solid #D58512;
+  border-top: 2px solid #D58512;
 }

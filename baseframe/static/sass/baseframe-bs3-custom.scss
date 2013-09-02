@@ -108,44 +108,52 @@ button.btn, a.btn{
 	overflow: hidden;
 }
 .btn{
-	// text-shadow: 1px 1px rgb(230, 230, 230), 2px 2px rgb(230, 230, 230), 3px 3px rgb(230, 230, 230), 4px 4px rgb(230, 230, 230), 5px 5px rgb(230, 230, 230), 6px 6px rgb(230, 230, 230), 7px 7px rgb(230, 230, 230), 8px 8px rgb(230, 230, 230), 9px 9px rgb(230, 230, 230), 10px 10px rgb(230, 230, 230), 11px 11px rgb(230, 230, 230), 12px 12px rgb(230, 230, 230), 13px 13px rgb(230, 230, 230), 14px 14px rgb(231, 231, 231), 15px 15px rgb(231, 231, 231), 16px 16px rgb(232, 232, 232), 17px 17px rgb(232, 232, 232), 18px 18px rgb(233, 233, 233), 19px 19px rgb(233, 233, 233), 20px 20px rgb(234, 234, 234), 21px 21px rgb(235, 235, 235), 22px 22px rgb(235, 235, 235), 23px 23px rgb(236, 236, 236), 24px 24px rgb(236, 236, 236), 25px 25px rgb(237, 237, 237), 26px 26px rgb(237, 237, 237), 27px 27px rgb(238, 238, 238), 28px 28px rgb(238, 238, 238), 29px 29px rgb(239, 239, 239), 30px 30px rgb(240, 240, 240);
+	&:active, &.active{
+		box-shadow: none;
+	}
 }
 .btn-link{
   	text-shadow: none;
 }
 .btn-default{
-	// text-shadow: 1px 1px rgb(245, 245, 245), 2px 2px rgb(245, 245, 245), 3px 3px rgb(245, 245, 245), 4px 4px rgb(245, 245, 245), 5px 5px rgb(245, 245, 245), 6px 6px rgb(245, 245, 245), 7px 7px rgb(245, 245, 245), 8px 8px rgb(245, 245, 245), 9px 9px rgb(245, 245, 245), 10px 10px rgb(245, 245, 245), 11px 11px rgb(245, 245, 245), 12px 12px rgb(245, 245, 245), 13px 13px rgb(245, 245, 245), 14px 14px rgb(246, 246, 246), 15px 15px rgb(246, 246, 246), 16px 16px rgb(247, 247, 247), 17px 17px rgb(247, 247, 247), 18px 18px rgb(248, 248, 248), 19px 19px rgb(248, 248, 248), 20px 20px rgb(249, 249, 249), 21px 21px rgb(250, 250, 250), 22px 22px rgb(250, 250, 250), 23px 23px rgb(251, 251, 251), 24px 24px rgb(251, 251, 251), 25px 25px rgb(252, 252, 252), 26px 26px rgb(252, 252, 252), 27px 27px rgb(253, 253, 253), 28px 28px rgb(253, 253, 253), 29px 29px rgb(254, 254, 254), 30px 30px rgb(255, 255, 255);
-	&:hover{
-  		// text-shadow: 1px 1px rgb(212, 212, 212), 2px 2px rgb(212, 212, 212), 3px 3px rgb(212, 212, 212), 4px 4px rgb(212, 212, 212), 5px 5px rgb(212, 212, 212), 6px 6px rgb(212, 212, 212), 7px 7px rgb(212, 212, 212), 8px 8px rgb(212, 212, 212), 9px 9px rgb(212, 212, 212), 10px 10px rgb(212, 212, 212), 11px 11px rgb(212, 212, 212), 12px 12px rgb(212, 212, 212), 13px 13px rgb(213, 213, 213), 14px 14px rgb(214, 214, 214), 15px 15px rgb(215, 215, 215), 16px 16px rgb(217, 217, 217), 17px 17px rgb(218, 218, 218), 18px 18px rgb(219, 219, 219), 19px 19px rgb(220, 220, 220), 20px 20px rgb(222, 222, 222), 21px 21px rgb(223, 223, 223), 22px 22px rgb(224, 224, 224), 23px 23px rgb(226, 226, 226), 24px 24px rgb(227, 227, 227), 25px 25px rgb(228, 228, 228), 26px 26px rgb(229, 229, 229), 27px 27px rgb(231, 231, 231), 28px 28px rgb(232, 232, 232), 29px 29px rgb(233, 233, 233), 30px 30px rgb(235, 235, 235);  
+	border-bottom: 2px solid #ADADAD;
+	&:focus, &:active, &.active{
+		border-bottom: 1px solid #ADADAD;
+		border-top: 2px solid #ADADAD;		
   	}
 }
 .btn-danger{
-	// text-shadow: 1px 1px rgb(195, 75, 71), 2px 2px rgb(195, 75, 71), 3px 3px rgb(195, 75, 71), 4px 4px rgb(195, 75, 71), 5px 5px rgb(195, 75, 71), 6px 6px rgb(195, 75, 71), 7px 7px rgb(195, 75, 71), 8px 8px rgb(195, 75, 71), 9px 9px rgb(195, 75, 71), 10px 10px rgb(195, 75, 71), 11px 11px rgb(195, 75, 71), 12px 12px rgb(195, 75, 71), 13px 13px rgb(196, 75, 71), 14px 14px rgb(197, 75, 71), 15px 15px rgb(198, 76, 72), 16px 16px rgb(199, 76, 72), 17px 17px rgb(201, 77, 73), 18px 18px rgb(202, 77, 73), 19px 19px rgb(203, 78, 74), 20px 20px rgb(204, 78, 74), 21px 21px rgb(206, 79, 75), 22px 22px rgb(207, 79, 75), 23px 23px rgb(208, 79, 75), 24px 24px rgb(209, 80, 76), 25px 25px rgb(210, 80, 76), 26px 26px rgb(212, 81, 77), 27px 27px rgb(213, 81, 77), 28px 28px rgb(214, 82, 78), 29px 29px rgb(215, 82, 78), 30px 30px rgb(217, 83, 79);
-  	&:hover{
-		// text-shadow: 1px 1px rgb(189, 45, 41), 2px 2px rgb(189, 45, 41), 3px 3px rgb(189, 45, 41), 4px 4px rgb(189, 45, 41), 5px 5px rgb(189, 45, 41), 6px 6px rgb(189, 45, 41), 7px 7px rgb(189, 45, 41), 8px 8px rgb(189, 45, 41), 9px 9px rgb(189, 45, 41), 10px 10px rgb(189, 45, 41), 11px 11px rgb(189, 45, 41), 12px 12px rgb(189, 45, 41), 13px 13px rgb(190, 45, 41), 14px 14px rgb(191, 45, 41), 15px 15px rgb(192, 45, 41), 16px 16px rgb(193, 46, 41), 17px 17px rgb(194, 46, 42), 18px 18px rgb(196, 46, 42), 19px 19px rgb(197, 46, 42), 20px 20px rgb(198, 47, 42), 21px 21px rgb(199, 47, 43), 22px 22px rgb(200, 47, 43), 23px 23px rgb(201, 48, 43), 24px 24px rgb(203, 48, 43), 25px 25px rgb(204, 48, 43), 26px 26px rgb(205, 48, 44), 27px 27px rgb(206, 49, 44), 28px 28px rgb(207, 49, 44), 29px 29px rgb(208, 49, 44), 30px 30px rgb(210, 50, 45);
+	border-bottom: 2px solid #AC2925;
+  	&:focus, &:active, &.active{
+  		border-bottom: 1px solid #AC2925;
+  		border-top: 2px solid #AC2925;
 	}
 }
 .btn-primary{
-	// text-shadow: 1px 1px rgb(59, 125, 182), 2px 2px rgb(59, 125, 182), 3px 3px rgb(59, 125, 182), 4px 4px rgb(59, 125, 182), 5px 5px rgb(59, 125, 182), 6px 6px rgb(59, 125, 182), 7px 7px rgb(59, 125, 182), 8px 8px rgb(59, 125, 182), 9px 9px rgb(59, 125, 182), 10px 10px rgb(59, 125, 182), 11px 11px rgb(59, 125, 182), 12px 12px rgb(59, 125, 182), 13px 13px rgb(59, 125, 183), 14px 14px rgb(59, 126, 184), 15px 15px rgb(60, 127, 185), 16px 16px rgb(60, 128, 186), 17px 17px rgb(60, 128, 187), 18px 18px rgb(61, 129, 188), 19px 19px rgb(61, 130, 189), 20px 20px rgb(62, 131, 190), 21px 21px rgb(62, 132, 192), 22px 22px rgb(62, 132, 193), 23px 23px rgb(63, 133, 194), 24px 24px rgb(63, 134, 195), 25px 25px rgb(64, 135, 196), 26px 26px rgb(64, 135, 197), 27px 27px rgb(64, 136, 198), 28px 28px rgb(65, 137, 199), 29px 29px rgb(65, 138, 200), 30px 30px rgb(66, 139, 202);
-  	&:hover{
-		// text-shadow: 1px 1px rgb(45, 106, 159), 2px 2px rgb(45, 106, 159), 3px 3px rgb(45, 106, 159), 4px 4px rgb(45, 106, 159), 5px 5px rgb(45, 106, 159), 6px 6px rgb(45, 106, 159), 7px 7px rgb(45, 106, 159), 8px 8px rgb(45, 106, 159), 9px 9px rgb(45, 106, 159), 10px 10px rgb(45, 106, 159), 11px 11px rgb(45, 106, 159), 12px 12px rgb(45, 106, 159), 13px 13px rgb(45, 106, 160), 14px 14px rgb(45, 107, 161), 15px 15px rgb(45, 108, 162), 16px 16px rgb(46, 108, 163), 17px 17px rgb(46, 109, 164), 18px 18px rgb(46, 110, 165), 19px 19px rgb(46, 110, 166), 20px 20px rgb(47, 111, 167), 21px 21px rgb(47, 112, 168), 22px 22px rgb(47, 112, 169), 23px 23px rgb(48, 113, 170), 24px 24px rgb(48, 114, 171), 25px 25px rgb(48, 114, 172), 26px 26px rgb(48, 115, 173), 27px 27px rgb(49, 116, 174), 28px 28px rgb(49, 116, 175), 29px 29px rgb(49, 117, 176), 30px 30px rgb(50, 118, 177);
-  	}
+	border-bottom: 2px solid #285E8E;
+	&:focus, &:active, &.active{
+		border-bottom: 1px solid #285E8E;
+		border-top: 2px solid #285E8E;
+	}
 }
 .btn-success{
-	// text-shadow: 1px 1px rgb(83, 166, 83), 2px 2px rgb(83, 166, 83), 3px 3px rgb(83, 166, 83), 4px 4px rgb(83, 166, 83), 5px 5px rgb(83, 166, 83), 6px 6px rgb(83, 166, 83), 7px 7px rgb(83, 166, 83), 8px 8px rgb(83, 166, 83), 9px 9px rgb(83, 166, 83), 10px 10px rgb(83, 166, 83), 11px 11px rgb(83, 166, 83), 12px 12px rgb(83, 166, 83), 13px 13px rgb(83, 167, 83), 14px 14px rgb(84, 168, 84), 15px 15px rgb(84, 169, 84), 16px 16px rgb(85, 170, 85), 17px 17px rgb(85, 171, 85), 18px 18px rgb(86, 172, 86), 19px 19px rgb(86, 173, 86), 20px 20px rgb(87, 174, 87), 21px 21px rgb(87, 175, 87), 22px 22px rgb(88, 176, 88), 23px 23px rgb(88, 177, 88), 24px 24px rgb(89, 178, 89), 25px 25px rgb(89, 179, 89), 26px 26px rgb(90, 180, 90), 27px 27px rgb(90, 181, 90), 28px 28px rgb(91, 182, 91), 29px 29px rgb(91, 183, 91), 30px 30px rgb(92, 184, 92);
-  	&:hover{
-  		// text-shadow: 1px 1px rgb(64, 148, 64), 2px 2px rgb(64, 148, 64), 3px 3px rgb(64, 148, 64), 4px 4px rgb(64, 148, 64), 5px 5px rgb(64, 148, 64), 6px 6px rgb(64, 148, 64), 7px 7px rgb(64, 148, 64), 8px 8px rgb(64, 148, 64), 9px 9px rgb(64, 148, 64), 10px 10px rgb(64, 148, 64), 11px 11px rgb(64, 148, 64), 12px 12px rgb(64, 148, 64), 13px 13px rgb(64, 148, 64), 14px 14px rgb(64, 149, 64), 15px 15px rgb(65, 150, 65), 16px 16px rgb(65, 151, 65), 17px 17px rgb(65, 152, 65), 18px 18px rgb(66, 153, 66), 19px 19px rgb(66, 154, 66), 20px 20px rgb(67, 155, 67), 21px 21px rgb(67, 156, 67), 22px 22px rgb(67, 156, 67), 23px 23px rgb(68, 157, 68), 24px 24px rgb(68, 158, 68), 25px 25px rgb(69, 159, 69), 26px 26px rgb(69, 160, 69), 27px 27px rgb(69, 161, 69), 28px 28px rgb(70, 162, 70), 29px 29px rgb(70, 163, 70), 30px 30px rgb(71, 164, 71);  
+	border-bottom: 2px solid #398439;
+	&:focus, &:active, &.active{
+		border-bottom: 1px solid #398439;
+		border-top: 2px solid #398439;
   	}
 }
 .btn-info{
-	// text-shadow: 1px 1px rgb(82, 173, 200), 2px 2px rgb(82, 173, 200), 3px 3px rgb(82, 173, 200), 4px 4px rgb(82, 173, 200), 5px 5px rgb(82, 173, 200), 6px 6px rgb(82, 173, 200), 7px 7px rgb(82, 173, 200), 8px 8px rgb(82, 173, 200), 9px 9px rgb(82, 173, 200), 10px 10px rgb(82, 173, 200), 11px 11px rgb(82, 173, 200), 12px 12px rgb(82, 173, 200), 13px 13px rgb(82, 174, 201), 14px 14px rgb(83, 175, 202), 15px 15px rgb(83, 176, 203), 16px 16px rgb(84, 177, 204), 17px 17px rgb(84, 178, 206), 18px 18px rgb(85, 179, 207), 19px 19px rgb(85, 180, 208), 20px 20px rgb(86, 181, 209), 21px 21px rgb(86, 182, 211), 22px 22px rgb(87, 183, 212), 23px 23px rgb(87, 184, 213), 24px 24px rgb(88, 185, 214), 25px 25px rgb(88, 186, 215), 26px 26px rgb(89, 187, 217), 27px 27px rgb(89, 188, 218), 28px 28px rgb(90, 189, 219), 29px 29px rgb(90, 190, 220), 30px 30px rgb(91, 192, 222);
-  	&:hover{
-  		// text-shadow: 1px 1px rgb(51, 161, 194), 2px 2px rgb(51, 161, 194), 3px 3px rgb(51, 161, 194), 4px 4px rgb(51, 161, 194), 5px 5px rgb(51, 161, 194), 6px 6px rgb(51, 161, 194), 7px 7px rgb(51, 161, 194), 8px 8px rgb(51, 161, 194), 9px 9px rgb(51, 161, 194), 10px 10px rgb(51, 161, 194), 11px 11px rgb(51, 161, 194), 12px 12px rgb(51, 161, 194), 13px 13px rgb(51, 162, 195), 14px 14px rgb(51, 163, 196), 15px 15px rgb(52, 164, 197), 16px 16px rgb(52, 165, 198), 17px 17px rgb(52, 166, 199), 18px 18px rgb(53, 167, 201), 19px 19px rgb(53, 168, 202), 20px 20px rgb(53, 169, 203), 21px 21px rgb(54, 170, 204), 22px 22px rgb(54, 171, 205), 23px 23px rgb(54, 172, 206), 24px 24px rgb(55, 173, 208), 25px 25px rgb(55, 174, 209), 26px 26px rgb(55, 175, 210), 27px 27px rgb(56, 176, 211), 28px 28px rgb(56, 177, 212), 29px 29px rgb(56, 178, 213), 30px 30px rgb(57, 179, 215); 
+	border-bottom: 2px solid #269ABC;
+	&:focus, &:active, &.active{
+		border-bottom: 1px solid #269ABC;
+		border-top: 2px solid #269ABC;
   	}
 }
 .btn-warning{
-	// text-shadow: 1px 1px rgb(216, 156, 70), 2px 2px rgb(216, 156, 70), 3px 3px rgb(216, 156, 70), 4px 4px rgb(216, 156, 70), 5px 5px rgb(216, 156, 70), 6px 6px rgb(216, 156, 70), 7px 7px rgb(216, 156, 70), 8px 8px rgb(216, 156, 70), 9px 9px rgb(216, 156, 70), 10px 10px rgb(216, 156, 70), 11px 11px rgb(216, 156, 70), 12px 12px rgb(216, 156, 70), 13px 13px rgb(217, 156, 70), 14px 14px rgb(218, 157, 70), 15px 15px rgb(220, 158, 71), 16px 16px rgb(221, 159, 71), 17px 17px rgb(222, 160, 72), 18px 18px rgb(224, 161, 72), 19px 19px rgb(225, 162, 73), 20px 20px rgb(226, 163, 73), 21px 21px rgb(228, 164, 74), 22px 22px rgb(229, 165, 74), 23px 23px rgb(230, 166, 74), 24px 24px rgb(232, 167, 75), 25px 25px rgb(233, 168, 75), 26px 26px rgb(234, 169, 76), 27px 27px rgb(236, 170, 76), 28px 28px rgb(237, 171, 77), 29px 29px rgb(238, 172, 77), 30px 30px rgb(240, 173, 78);
-  	&:hover{
-  		// text-shadow: 1px 1px rgb(213, 140, 36), 2px 2px rgb(213, 140, 36), 3px 3px rgb(213, 140, 36), 4px 4px rgb(213, 140, 36), 5px 5px rgb(213, 140, 36), 6px 6px rgb(213, 140, 36), 7px 7px rgb(213, 140, 36), 8px 8px rgb(213, 140, 36), 9px 9px rgb(213, 140, 36), 10px 10px rgb(213, 140, 36), 11px 11px rgb(213, 140, 36), 12px 12px rgb(213, 140, 36), 13px 13px rgb(214, 140, 36), 14px 14px rgb(215, 141, 36), 15px 15px rgb(217, 142, 36), 16px 16px rgb(218, 143, 36), 17px 17px rgb(219, 144, 37), 18px 18px rgb(221, 145, 37), 19px 19px rgb(222, 146, 37), 20px 20px rgb(223, 147, 37), 21px 21px rgb(225, 148, 38), 22px 22px rgb(226, 148, 38), 23px 23px rgb(227, 149, 38), 24px 24px rgb(229, 150, 38), 25px 25px rgb(230, 151, 38), 26px 26px rgb(231, 152, 39), 27px 27px rgb(233, 153, 39), 28px 28px rgb(234, 154, 39), 29px 29px rgb(235, 155, 39), 30px 30px rgb(237, 156, 40);
+	border-bottom: 2px solid #D58512;
+	&:focus, &:active, &.active{
+		border-bottom: 1px solid #D58512;
+		border-top: 2px solid #D58512;
   	}
 }
