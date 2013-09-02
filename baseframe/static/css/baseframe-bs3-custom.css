@@ -128,6 +128,7 @@ button.btn, a.btn {
 
 .btn-default {
   border-bottom: 2px solid #ADADAD;
+  background: #F5F5F5;
 }
 .btn-default:focus, .btn-default:active, .btn-default.active {
   border-bottom: 1px solid #ADADAD;
