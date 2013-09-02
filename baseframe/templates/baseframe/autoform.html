@@ -16,6 +16,15 @@
   {%- endfor %}
   <script type="text/javascript">
     $(function() {
+      {%- for field in form -%}
+        {%- if field.type == 'RadioField' or field.type == 'QuerySelectField' %}
+          radioHighlight('{{ field.name }}', 'selected');
+        {%- endif -%}
+      {%- endfor %}
+    });
+  </script>
+  <script type="text/javascript">
+    $(function() {
       $('input.datetime-time').timepicker({ 'scrollDefaultNow': true });  
     });
   </script>
