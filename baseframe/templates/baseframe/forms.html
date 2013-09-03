@@ -9,27 +9,38 @@
 
 <!-- change renderfield.mustache also while changing here -->
 {% macro renderfield(field, css_class="", widget_css_class=None, sidetext=None, tabindex='', autofocus=False) -%}
-  <div class="form-group control-group{% if field.errors %} error{% endif %} {{css_class}} {%- if field.widget.html_tag in ['ul', 'ol'] %} listwidget {%- endif %}" id="field-{{ field.id }}">
+  <div class="form-group control-group
+      {%- if field.errors %} error {%- endif -%}
+      {%- if css_class %} {{ css_class }} {%- endif -%}
+      {%- if field.widget.html_tag in ['ul', 'ol'] %} listwidget {%- endif -%}
+      " id="field-{{ field.id }}">
     {%- if field.widget.input_type == 'checkbox' %}
       <div class="col-xs-12 col-sm-9 col-md-8 col-sm-offset-3 col-md-offset-2">
         <div class="controls inline ">{{ field | render_field_options(class=widget_css_class, tabindex=tabindex) }} {{ field.label.text }}
+          {#- Two closing /div tags are below #}
     {%- else %}
       <div class="col-sm-3 col-md-2">
-        <label class="control-label " for="{{ field.id }}">{% if field.flags.required -%}<span class="help-required" title="Required">*</span>{%- endif %}{{ field.label.text }}</label>
+        <label class="control-label" for="{{ field.id }}">{{ field.label.text }}
+          {%- if field.flags.required -%}
+            <span class="help-required" title="Required">*</span>
+          {%- endif -%}
+        </label>
       </div>
       <div class="col-xs-12 col-sm-9 col-md-8">
         <div class="controls">
           {{ field | render_field_options(class=widget_css_class,  tabindex=tabindex, autofocus=autofocus)}}
+          {#- Two closing /div tags are below #}
     {%- endif %}
-          {% if sidetext %}
-            <span class="help-inline">{{sidetext}}</span>
-          {% endif %}
-          {{ rendererrors(field) }}
-          {% if field.description %}
-            <p class="help-block">{{field.description}}</p>
-          {% endif %}
-        </div>
-      </div>     
+        {%- if sidetext %}
+          <span class="help-inline">{{sidetext}}</span>
+        {%- endif %}
+        {{ rendererrors(field) }}
+        {%- if field.description %}
+          <p class="help-block">{{field.description}}</p>
+        {%- endif %}
+        {#- Two closing /div tags follow #}
+      </div>
+    </div>
   </div>
 {%- endmacro %}
 
