@@ -83,7 +83,7 @@ a [class*=" icon-"]:before {
 
 ul.icons-ul {
   list-style-type: none;
-  text-indent: -0.7142857142857143em;
+  text-indent: -0.71429em;
   margin-left: 2.142857142857143em;
 }
 
@@ -1623,7 +1623,7 @@ ul.icons-ul > li .icon-li {
 }
 
 strong {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .page-header {
@@ -1867,23 +1867,23 @@ h1 a:hover, h1 a:active {
 }
 
 h2 {
-  color: #816894;
+  color: #df5e0e;
 }
 h2 a, h2 a:visited {
-  color: #816894;
+  color: #df5e0e;
 }
 h2 a:hover, h2 a:active {
-  color: #5a4867;
+  color: #974009;
 }
 
 h3 {
-  color: #f0a40c;
+  color: #df5e0e;
 }
 h3 a, h3 a:visited {
-  color: #f0a40c;
+  color: #df5e0e;
 }
 h3 a:hover, h3 a:active {
-  color: #a77208;
+  color: #974009;
 }
 
 header {
@@ -1922,7 +1922,7 @@ footer {
 footer .footer-inner {
   margin-top: 10px;
   min-height: 55px;
-  background: whitesmoke url('../../_baseframe/img/shadow.png?1377281570') no-repeat top center;
+  background: whitesmoke url('../../_baseframe/img/shadow.png?1328959567') no-repeat top center;
 }
 
 footer .container {
@@ -1939,7 +1939,7 @@ footer .container p {
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
-  background-image: url('../../_baseframe/img/logo.png?1377281570');
+  background-image: url('../../_baseframe/img/logo.png?1328964578');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   width: 75px;
@@ -1959,7 +1959,7 @@ footer .container p {
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
-  background-image: url('../../_baseframe/img/hasgeek-presents.png?1377281570');
+  background-image: url('../../_baseframe/img/hasgeek-presents.png?1324527959');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   width: 100px;
@@ -1973,7 +1973,7 @@ footer .container p {
   *vertical-align: auto;
   zoom: 1;
   *display: inline;
-  background: url('../../_baseframe/img/ajax-loader.gif?1377281570') center no-repeat;
+  background: url('../../_baseframe/img/ajax-loader.gif?1305733694') center no-repeat;
   width: 16px;
   height: 16px;
 }
@@ -2004,7 +2004,7 @@ footer .container p {
   border-bottom: 0;
 }
 .usertools li.profile {
-  font-weight: bold;
+  font-weight: 600;
 }
 .usertools li:last-child {
   border-right: 0;
@@ -2163,12 +2163,12 @@ table.mceLayout.focus {
 
 .help-required {
   color: #b94a48;
-  font-weight: bold;
+  font-weight: 600;
   font-family: monospace;
 }
 
 .control-label {
-  font-weight: bold;
+  font-weight: 600;
   position: relative;
 }
 
@@ -2191,7 +2191,7 @@ textarea {
 }
 
 input[name="title"], .field-title {
-  font-weight: bold;
+  font-weight: 600;
   font-size: 18px;
 }
 
@@ -2247,7 +2247,7 @@ ul.grid > li.header {
   padding-top: 9px;
   border-top: 0;
   border-bottom: 1px solid #b7b7b7;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .nav.nav-grid {
@@ -2408,7 +2408,7 @@ ul.grid > li.header {
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   #logo {
-    background-image: url('../../_baseframe/img/logo@2x.png?1377281570');
+    background-image: url('../../_baseframe/img/logo@2x.png?1328994509');
     -webkit-background-size: 75px 75px;
   }
 }
@@ -2527,7 +2527,7 @@ ul.grid > li.header {
 }
 
 .datepicker .nav {
-  font-weight: bold;
+  font-weight: 600;
   width: 100%;
   padding: 4px 0;
   background-color: #f5f5f5;
@@ -2622,7 +2622,7 @@ ul.grid > li.header {
 }
 
 .datepicker .dow {
-  font-weight: bold;
+  font-weight: 600;
   color: #808080;
 }
 
@@ -2726,7 +2726,7 @@ ul.grid > li.header {
     line-height: 1.5em;
     padding-top: 0.5em;
     font-size: 30px;
-    font-weight: bold;
+    font-weight: 600;
   }
   #logo a {
     color: black;

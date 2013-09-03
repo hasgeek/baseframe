@@ -36,7 +36,7 @@
   clear: both;
 }
 #hg-bar .strong {
-  font-weight: bold;
+  font-weight: 600;
 }
 #hg-bar li {
   font: 13px/18px "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
@@ -47,7 +47,7 @@
   float: right;
 }
 #hg-bar ul#hg-usertools .profile {
-  font-weight: bold;
+  font-weight: 600;
 }
 #hg-bar ul#hg-barlinks {
   float: left;
@@ -222,7 +222,7 @@
 #hg-bar ul#hg-barlinks > li.selected > a, #hg-bar ul#hg-usertools > li.selected > a {
   border-top: 2px solid #df5e0e;
   color: black;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 #hg-bar.hg-dark {
@@ -372,7 +372,7 @@
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
-  background-image: url('../../_baseframe/img/logo.png?1377281570');
+  background-image: url('../../_baseframe/img/logo.png?1328964578');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   width: 75px;
@@ -462,7 +462,7 @@
     text-indent: -119988px;
     overflow: hidden;
     text-align: left;
-    background-image: url('../../_baseframe/img/logo@2x.png?1377281570');
+    background-image: url('../../_baseframe/img/logo@2x.png?1328994509');
     background-repeat: no-repeat;
     background-position: 50% 50%;
     width: 150px;
@@ -533,7 +533,7 @@
     border-left: none;
     border-top: 2px solid #df5e0e;
     color: black;
-    font-weight: bold;
+    font-weight: 600;
   }
   #hg-networkbar .navbar-nav > li.selected > a:hover, #hg-networkbar .navbar-nav > li.selected > a:focus {
     border-top: 2px solid #df5e0e;
@@ -569,7 +569,7 @@
     border-bottom: none;
   }
   #hg-networkbar .navbar-nav .strong {
-    font-weight: bold;
+    font-weight: 600;
   }
   #hg-networkbar .navbar-brand {
     display: none;
