@@ -77,6 +77,11 @@ form {
 .form-group{
 	margin-bottom: 10px !important;
 }
+.selected{
+	label{
+		font-weight: bold;
+	}
+}
 @media screen and (min-width: 768px){
 	.form-group{
 		margin-bottom: 20px !important;
