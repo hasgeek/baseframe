@@ -23,8 +23,8 @@ class ValidEmailDomain(object):
     Validator to confirm an email address is likely to be valid because its
     domain exists and has an MX record.
     """
-    message_domain = __(u"This domain does not exist")
-    message_email = __(u"This email address does not exist")
+    message_domain = __(u"That domain does not exist")
+    message_email = __(u"That email address does not exist")
 
     def __init__(self, message=None, message_domain=None, message_email=None):
         self.message = message
