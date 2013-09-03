@@ -374,6 +374,7 @@ $mob-icon-color: #999;
             }
             &.selected > a{
                 border-left: 5px solid #EB5B1F;
+                padding-left: 10px;
             }
             ul{
                 padding-top: 0;
@@ -465,6 +466,7 @@ $mob-icon-color: #999;
                         border-top: 2px solid #df5e0e;
                         color: $color-hg-bar-selected;
                         font-weight: 600;
+                        padding-left: auto;
                     }
                     & > a:hover, & > a:focus {
                         border-top: 2px solid #df5e0e;

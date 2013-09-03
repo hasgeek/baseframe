@@ -89,7 +89,7 @@
 
 .cm-negative {color: #d44;}
 .cm-positive {color: #292;}
-.cm-header, .cm-strong {font-weight: bold;}
+.cm-header, .cm-strong {font-weight: 600;}
 .cm-em {font-style: italic;}
 .cm-link {text-decoration: underline;}
 

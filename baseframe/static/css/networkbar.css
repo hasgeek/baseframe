@@ -434,6 +434,7 @@
 }
 #hg-networkbar .navbar-nav li.selected > a {
   border-left: 5px solid #EB5B1F;
+  padding-left: 10px;
 }
 #hg-networkbar .navbar-nav li ul {
   padding-top: 0;
@@ -534,6 +535,7 @@
     border-top: 2px solid #df5e0e;
     color: black;
     font-weight: 600;
+    padding-left: auto;
   }
   #hg-networkbar .navbar-nav > li.selected > a:hover, #hg-networkbar .navbar-nav > li.selected > a:focus {
     border-top: 2px solid #df5e0e;
