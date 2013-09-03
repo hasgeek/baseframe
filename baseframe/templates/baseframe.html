@@ -52,23 +52,24 @@
       <header>
         {% block networkbar %}{{ networkbar(siteid=config['SITE_ID'], login=config['LASTUSER_CLIENT_ID'] and true or false) }}{% endblock %}
         <div class="container">
-        <div id="page-header">
-          {% block logo -%}
-            <div id="logo"><a href="{{ url_for('index') }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
-          {%- endblock %}
-          {%- block header %}{% endblock %}
+          <div id="page-header">
+            {% block logo -%}
+              <div id="logo"><a href="{{ url_for('index') }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
+            {%- endblock %}
+            {%- block header %}{% endblock %}
+          </div>
         </div>
-      </div>
       </header>
       {%- endblock %}
       <!-- /headerbox -->
 
       {% block main -%}
-      <div class="container" id="main-content">
-        {%- block messages %}{{ flash_messages() }}{% endblock %}
-        {%- block baseheadline %}{% endblock %}
-        {%- block basecontent %}{% endblock %}
-      </div>
+        {% block contenthead %}{% endblock %}
+        <div class="container" id="main-content">
+          {%- block messages %}{{ flash_messages() }}{% endblock %}
+          {%- block baseheadline %}{% endblock %}
+          {%- block basecontent %}{% endblock %}
+        </div>
       {%- endblock %}
       <!-- /container -->
       <div id="root_footer"></div>
