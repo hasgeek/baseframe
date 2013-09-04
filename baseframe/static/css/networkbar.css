@@ -344,6 +344,7 @@
 #hg-networkbar {
   font: 13px/18px "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
   font-size: 14px;
+  background: #F3F3F3;
 }
 #hg-networkbar.navbar {
   min-height: 50px;
@@ -398,6 +399,7 @@
 #hg-networkbar .navbar-collapse.in {
   border-top: 2px solid #E6E6E6;
   overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
   position: fixed;
   top: 3.6em;
   bottom: 0;

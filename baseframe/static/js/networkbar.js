@@ -23,3 +23,15 @@ $(function(){
 		}
 	});
 });
+
+$(function(){
+	if (Modernizr.touch){
+		$('.navbar-toggle').click(function(){
+			if(!$('.navbar-collapse').hasClass('in')){
+				$('body').addClass('nav-open');
+			}else{
+				$('body').removeClass('nav-open');
+			}	
+		});	
+	}
+});
