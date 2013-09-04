@@ -9,8 +9,8 @@ function activate_chosen(selector) {
 
 function activate_codemirror(textarea, config){
   if (typeof(config) == 'undefined'){
-    config =  { mode: 'markdown',
-                lineNumbers: true,
+    config = { mode: 'markdown',
+                lineNumbers: false,
                 theme: "default",
                 extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList" }
          };
@@ -19,11 +19,11 @@ function activate_codemirror(textarea, config){
 }
 
 $(function() {
-  // Activate chosen on all 'select' tags.
+  // Activate chosen on all 'select' tags other than the ones having class 'notselect'.
   activate_chosen('select:not(.notselect)');
 
-  // Activate codemirror on all textareas with class='codemirror'
-  $('textarea.codemirror').each(function() {
+  // Activate codemirror on all textareas with class='markdown'
+  $('textarea.markdown').each(function() {
     activate_codemirror(this);
   });
 

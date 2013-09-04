@@ -57,6 +57,15 @@ class StripWhitespace(object):
             field.data = field.data.rstrip()
 
 
+class MarkdownField(wtforms.TextAreaField):
+    """ TextArea field, which has class='markdown'
+    """
+    def __call__(self, **kwargs):
+        c = kwargs.pop('class', '') or kwargs.pop('class_', '')
+        kwargs['class'] = "%s %s" % (c, 'markdown')
+        return super(MarkdownField, self).__call__(**kwargs)
+
+
 class RichText(wtforms.widgets.TextArea):
     """
     Rich text widget.

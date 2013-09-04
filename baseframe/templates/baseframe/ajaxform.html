@@ -7,7 +7,11 @@
 {%- endfor %}
 {{ ajaxform(formid, request, True) }}
 <script type="text/javascript">
-  activate_chosen('select');
+activate_chosen('select:not(.notselect)');
+$('textarea.markdown').each(function() {
+  activate_codemirror(this);
+});
+
   $(function() {
     $('input.datetime-time').timepicker({ 'scrollDefaultNow': true });
   });
