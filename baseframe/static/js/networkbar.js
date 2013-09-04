@@ -1,4 +1,8 @@
 //bs3
+$(document).ready(function(){
+	$('.navbar-toggle').addClass('collapsed');
+});
+
 $(function(){
 	$('#navbar-toggle-1').click(function(){
 		if(!$('#navbar-toggle-2').hasClass('collapse')){

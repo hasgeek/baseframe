@@ -321,6 +321,10 @@ $mob-icon-color: #999;
         margin-top: 5px;
         margin-left: -10px;
         margin-right: 15px;
+        background-color: #DDDDDD;
+        &.collapsed{
+            background-color: transparent;
+        }
         i{
             color: #333333;
         }
