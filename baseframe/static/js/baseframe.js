@@ -1,31 +1,26 @@
-// Activate chosen.js only if not on a mobile browser
 // This is a global function. Isn't there a better way to do this?
-function activate_chosen(selector) {
-  if (!navigator.userAgent.match(/(iPod|iPad|iPhone|Android)/)) {
-    // $(selector).chosen({allow_single_deselect: true});
-    $(selector).select2({allowClear: true});
-  }
-}
 
-function activate_codemirror(textarea, config){
-  if (typeof(config) == 'undefined'){
-    config = { mode: 'markdown',
-                lineNumbers: false,
-                theme: "default",
-                extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList" }
-         };
+function activate_widgets(){
+    // Activate select2.js for non-mobile browsers
+    if (!navigator.userAgent.match(/(iPod|iPad|iPhone|Android)/)) {
+        $('select:not(.notselect)').select2({allowClear: true});
     }
-    var editor = CodeMirror.fromTextArea(textarea, config);
+
+    var cm_config = { mode: 'markdown',
+        lineNumbers: false,
+        theme: "default",
+        extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList" }
+    };
+
+    // Activate codemirror on all textareas with class='markdown'
+    $('textarea.markdown').each(function(){
+        var editor = CodeMirror.fromTextArea(this, cm_config);
+    });
 }
 
 $(function() {
-  // Activate chosen on all 'select' tags other than the ones having class 'notselect'.
-  activate_chosen('select:not(.notselect)');
-
-  // Activate codemirror on all textareas with class='markdown'
-  $('textarea.markdown').each(function() {
-    activate_codemirror(this);
-  });
+    // activate all widgets
+    activate_widgets();
 
   var matchtab = function() {
     var url = document.location.toString(), tabmatch = null;
