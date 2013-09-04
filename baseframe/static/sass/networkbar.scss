@@ -301,6 +301,7 @@ $mob-icon-color: #999;
 #hg-networkbar{  
     font: $networkbar-font;
     font-size: $networkbar-xs-font-size;
+    background: #F3F3F3;
 
     &.navbar{
         min-height: 50px;
@@ -320,6 +321,10 @@ $mob-icon-color: #999;
         margin-top: 5px;
         margin-left: -10px;
         margin-right: 15px;
+        background-color: #DDDDDD;
+        &.collapsed{
+            background-color: transparent;
+        }
         i{
             color: #333333;
         }
@@ -348,6 +353,7 @@ $mob-icon-color: #999;
         &.in{
             border-top: 2px solid #E6E6E6;
             overflow-y: auto !important; 
+            -webkit-overflow-scrolling: touch;
             position: fixed;
             top: 3.6em;
             bottom: 0;

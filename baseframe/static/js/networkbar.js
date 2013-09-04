@@ -1,4 +1,8 @@
 //bs3
+$(document).ready(function(){
+	$('.navbar-toggle').addClass('collapsed');
+});
+
 $(function(){
 	$('#navbar-toggle-1').click(function(){
 		if(!$('#navbar-toggle-2').hasClass('collapse')){
@@ -22,4 +26,16 @@ $(function(){
 			$('.navbar-ex1-collapse').animate({height:"2px"});
 		}
 	});
+});
+
+$(function(){
+	if (Modernizr.touch){
+		$('.navbar-toggle').click(function(){
+			if(!$('.navbar-collapse').hasClass('in')){
+				$('body').addClass('nav-open');
+			}else{
+				$('body').removeClass('nav-open');
+			}	
+		});	
+	}
 });
