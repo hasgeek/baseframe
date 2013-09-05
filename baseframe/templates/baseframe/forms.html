@@ -16,46 +16,55 @@
       " id="field-{{ field.id }}">
     {%- if field.widget.input_type == 'checkbox' %}
       <div class="col-xs-12 col-sm-9 col-md-8 col-sm-offset-3 col-md-offset-2">
-        <div class="controls inline ">{{ field | render_field_options(class=widget_css_class, tabindex=tabindex) }} {{ field.label.text }}
+        <div class="row">
+          <div class="controls inline">{{ field | render_field_options(class=widget_css_class, tabindex=tabindex) }} {{ field.label.text }}
           {#- Two closing /div tags are below #}
     {%- else %}
       <div class="col-sm-3 col-md-2">
-        <label class="control-label" for="{{ field.id }}">{{ field.label.text }}
-          {%- if field.flags.required -%}
-            <span class="help-required" title="Required">*</span>
-          {%- endif -%}
-        </label>
+        <div class="row">
+          <label class="control-label" for="{{ field.id }}">{{ field.label.text }}
+            {%- if field.flags.required -%}
+              <span class="help-required" title="Required">*</span>
+            {%- endif -%}
+          </label>
+        </div>
       </div>
       <div class="col-xs-12 col-sm-9 col-md-8">
+      <div class="row">
         <div class="controls">
           {{ field | render_field_options(class=widget_css_class,  tabindex=tabindex, autofocus=autofocus)}}
           {#- Two closing /div tags are below #}
     {%- endif %}
-        {%- if sidetext %}
-          <span class="help-inline">{{sidetext}}</span>
-        {%- endif %}
-        {{ rendererrors(field) }}
-        {%- if field.description %}
-          <p class="help-block">{{field.description}}</p>
-        {%- endif %}
-        {#- Two closing /div tags follow #}
+          {%- if sidetext %}
+            <span class="help-inline">{{sidetext}}</span>
+          {%- endif %}
+          {{ rendererrors(field) }}
+          {%- if field.description %}
+            <p class="help-block">{{field.description}}</p>
+          {%- endif %}
+          {#- Two closing /div tags follow #}
+        </div>
       </div>
     </div>
   </div>
 {%- endmacro %}
 
 {% macro rendersubmit(buttons=[], css_class="", tabindex='', cancel_url='') -%}
-<div class="form-actions clearfix{% if css_class %} {{ css_class}}{% endif %}"><span class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-8">
-  {% for name, value, widget_class in buttons -%}
-    <button type="submit"
-      {%- if name %} name="{{ name|e }}"{% else %} {% endif -%}
-      {% if widget_class %} class="btn {{ widget_class|e }}" {% else %} class="btn"{% endif -%}
-      {%- if tabindex %} tabindex="{{ tabindex }}" {% endif -%}
-      >{{ value|e }}</button>
-  {% endfor %}
-  {% if cancel_url %}<a href="{{ cancel_url }}" class="btn btn-default">Cancel</a>{% endif %}
-  <span class="loading hidden">&nbsp;</span>
-</span></div>
+<div class="form-actions clearfix{% if css_class %} {{ css_class}}{% endif %}">
+  <div class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-8">
+    <div class="row">
+      {% for name, value, widget_class in buttons -%}
+        <button type="submit"
+          {%- if name %} name="{{ name|e }}"{% else %} {% endif -%}
+          {% if widget_class %} class="btn {{ widget_class|e }}" {% else %} class="btn"{% endif -%}
+          {%- if tabindex %} tabindex="{{ tabindex }}" {% endif -%}
+          >{{ value|e }}</button>
+      {% endfor %}
+      {% if cancel_url %}<a href="{{ cancel_url }}" class="btn btn-default">Cancel</a>{% endif %}
+      <span class="loading hidden">&nbsp;</span>
+    </div>
+  </div>
+</div>
 {%- endmacro %}
 
 {% macro renderform_inner(form, formid) -%}
