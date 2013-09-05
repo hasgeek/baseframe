@@ -49,23 +49,8 @@ ul, ol{
 
 form {
     margin-bottom: 1em;
-    margin-left: -15px;
-    margin-right: -15px;
-    input.btn{ 	
-	    margin-left: 15px;
-	    margin-right: auto;
-    }
 }
-@media screen and (min-width: 768px){
-	form {
-	    margin-left: 0px;
-	    margin-right: 0px;
-	    input.btn{ 	
-		    margin-left: 0;
-		    margin-right: auto;
-	    }
-	}
-}
+
 .form-horizontal .form-group{
 	margin-left: 0;
 	margin-right: 0;
@@ -76,6 +61,9 @@ form {
 }
 .form-control{
 	padding: 6px;
+	&.field-title {	    
+		width: 100%;
+	}
 }
 .form-group{
 	margin-bottom: 10px !important;
