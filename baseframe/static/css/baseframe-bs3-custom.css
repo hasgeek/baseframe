@@ -76,7 +76,7 @@ form {
   margin-bottom: 10px !important;
 }
 
-.selected label {
+.selected label, .listwidget ul > li.selected label {
   font-weight: 600;
 }
 

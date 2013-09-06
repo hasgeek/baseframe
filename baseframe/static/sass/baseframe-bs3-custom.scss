@@ -68,7 +68,7 @@ form {
 .form-group{
 	margin-bottom: 10px !important;
 }
-.selected{
+.selected, .listwidget ul > li.selected {
 	label{
 		font-weight: 600;
 	}

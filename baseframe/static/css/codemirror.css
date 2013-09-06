@@ -367,10 +367,6 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
   font-size: 150%;
 }
 
-.cm-strong {
-  font-size: 140%;
-}
-
 /* IE7 hack to prevent it from returning funny offsetTops on the spans */
 .CodeMirror span {
   *vertical-align: text-bottom;
