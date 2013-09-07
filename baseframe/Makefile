@@ -1,7 +1,7 @@
 # Makefile for tinymce
 all: tinymce
 
-tinymce_zip = tinymce_3.5.7_jquery.zip
+tinymce_zip = tinymce_3.5.8_jquery.zip
 
 tinymce:
 	curl -L -O http://github.com/downloads/tinymce/tinymce/$(tinymce_zip)

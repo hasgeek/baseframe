@@ -50,7 +50,8 @@ assets['bootstrap-tooltip.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'basefra
 assets['bootstrap-transition.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/transition.js')
 
 assets['jquery.form.js'][Version('2.96.0')] = ('jquery.js', 'baseframe/js/jquery.form.js')
-assets['jquery.tinymce.js'][Version('3.5.7')] = ('jquery.js', 'baseframe/js/tiny_mce/jquery.tinymce.js')
+assets['jquery.tinymce.js'][Version('3.5.8')] = ('jquery.js', 'baseframe/js/tiny_mce/jquery.tinymce.js')
+assets['tiny_mce.js'][Version('3.5.8')] = 'baseframe/js/tiny_mce/tiny_mce.js'
 assets['bootstrap-datepicker.js'][Version('1.3.0')] = ('jquery.js', 'baseframe/js/bootstrap-datepicker.js')
 
 assets['jquery.ui.js'][Version('1.10.3')] = ('jquery.js', 'baseframe/js/jquery-ui.js')
