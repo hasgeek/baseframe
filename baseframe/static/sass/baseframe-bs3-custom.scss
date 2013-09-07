@@ -1,50 +1,47 @@
 .nav-open{
-	overflow: hidden;
+    overflow: hidden;
 }
 h1, h2, h3, h4, h5{
-	font-weight: 600;
-}
-ul, ol{
-	margin-left: 30px;
+    font-weight: 600;
 }
 .well{
-	margin-left: 0;
-	&.nav{
-		&.nav-list{
-			padding-left: 0;
-			padding-right: 0;
-		}
-		.nav-header{
-			color: #999999;
-			display: block;
-			font-size: 11px;
-			font-weight: 600;
-			line-height: 20px;
-			padding: 3px 15px;
-			text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-			text-transform: uppercase;
-		}
-	}
+    margin-left: 0;
+    &.nav{
+        &.nav-list{
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .nav-header{
+            color: #999999;
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 20px;
+            padding: 3px 15px;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+        }
+    }
 
 }
 .cardset li .card-body, .userset li .card-body {
-	margin: 22px -14px 0;
-	font-size: 13px;
-	line-height: 20px;
+    margin: 22px -14px 0;
+    font-size: 13px;
+    line-height: 20px;
 }
 #page-header{
-	display: none;
+    display: none;
 }
 #main-content{
-	margin-top: 5em;
+    margin-top: 5em;
 }
 @media screen and (min-width: 768px){
-	#page-header{
-		display: block;
-	}
-	#main-content{
-		margin-top: auto;
-	}
+    #page-header{
+        display: block;
+    }
+    #main-content{
+        margin-top: auto;
+    }
 }
 
 form {
@@ -52,101 +49,101 @@ form {
 }
 
 .form-horizontal .form-group{
-	margin-left: 0;
-	margin-right: 0;
-	clear: both;
+    margin-left: 0;
+    margin-right: 0;
+    clear: both;
 }
 .listwidget ul > li > label{
-	font-weight: normal;
+    font-weight: normal;
 }
 .form-control{
-	padding: 6px;
-	&.field-title {	    
-		width: 100%;
-	}
+    padding: 6px;
+    &.field-title {     
+        width: 100%;
+    }
 }
 .form-group{
-	margin-bottom: 10px !important;
+    margin-bottom: 10px !important;
 }
 .selected, .listwidget ul > li.selected {
-	label{
-		font-weight: 600;
-	}
+    label{
+        font-weight: 600;
+    }
 }
 @media screen and (min-width: 768px){
-	.form-group{
-		margin-bottom: 20px !important;
-	}
+    .form-group{
+        margin-bottom: 20px !important;
+    }
 }
 textarea.form-control{
-	min-height: 150px;
+    min-height: 150px;
 }
 textarea#description{
-	min-height: 300px;
+    min-height: 300px;
 }
 div.error:after{
-	border: none !important;
+    border: none !important;
 }
 div.error{
-	background: transparent !important;
-	padding: 0 !important;
-	width: 100% !important;
-	color: #333 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    width: 100% !important;
+    color: #333 !important;
 }
 
 /* bs3 buttons */
 
 button.btn, a.btn{
-	overflow: hidden;
+    overflow: hidden;
 }
 .btn{
-	&:active, &.active{
-		box-shadow: none;
-	}
+    &:active, &.active{
+        box-shadow: none;
+    }
 }
 .btn-link{
-  	text-shadow: none;
+    text-shadow: none;
 }
 .btn-default{
-	border-bottom: 2px solid #ADADAD;
-	background: #F5F5F5;
-	&:focus, &:active, &.active{
-		border-bottom: 1px solid #ADADAD;
-		border-top: 2px solid #ADADAD;		
-  	}
+    border-bottom: 2px solid #ADADAD;
+    background: #F5F5F5;
+    &:focus, &:active, &.active{
+        border-bottom: 1px solid #ADADAD;
+        border-top: 2px solid #ADADAD;      
+    }
 }
 .btn-danger{
-	border-bottom: 2px solid #AC2925;
-  	&:focus, &:active, &.active{
-  		border-bottom: 1px solid #AC2925;
-  		border-top: 2px solid #AC2925;
-	}
+    border-bottom: 2px solid #AC2925;
+    &:focus, &:active, &.active{
+        border-bottom: 1px solid #AC2925;
+        border-top: 2px solid #AC2925;
+    }
 }
 .btn-primary{
-	border-bottom: 2px solid #285E8E;
-	&:focus, &:active, &.active{
-		border-bottom: 1px solid #285E8E;
-		border-top: 2px solid #285E8E;
-	}
+    border-bottom: 2px solid #285E8E;
+    &:focus, &:active, &.active{
+        border-bottom: 1px solid #285E8E;
+        border-top: 2px solid #285E8E;
+    }
 }
 .btn-success{
-	border-bottom: 2px solid #398439;
-	&:focus, &:active, &.active{
-		border-bottom: 1px solid #398439;
-		border-top: 2px solid #398439;
-  	}
+    border-bottom: 2px solid #398439;
+    &:focus, &:active, &.active{
+        border-bottom: 1px solid #398439;
+        border-top: 2px solid #398439;
+    }
 }
 .btn-info{
-	border-bottom: 2px solid #269ABC;
-	&:focus, &:active, &.active{
-		border-bottom: 1px solid #269ABC;
-		border-top: 2px solid #269ABC;
-  	}
+    border-bottom: 2px solid #269ABC;
+    &:focus, &:active, &.active{
+        border-bottom: 1px solid #269ABC;
+        border-top: 2px solid #269ABC;
+    }
 }
 .btn-warning{
-	border-bottom: 2px solid #D58512;
-	&:focus, &:active, &.active{
-		border-bottom: 1px solid #D58512;
-		border-top: 2px solid #D58512;
-  	}
+    border-bottom: 2px solid #D58512;
+    &:focus, &:active, &.active{
+        border-bottom: 1px solid #D58512;
+        border-top: 2px solid #D58512;
+    }
 }

@@ -6,10 +6,6 @@ h1, h2, h3, h4, h5 {
   font-weight: 600;
 }
 
-ul, ol {
-  margin-left: 30px;
-}
-
 .well {
   margin-left: 0;
 }
