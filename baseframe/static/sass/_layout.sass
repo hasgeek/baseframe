@@ -179,6 +179,7 @@ table.mceLayout
 .listwidget
   ul, ol
     list-style: none
+    padding-left: 0
     margin-left: 0
     margin-bottom: 0
 
@@ -232,10 +233,6 @@ table.mceLayout
   font-weight: 600
   position: relative
 
-.form-horizontal .control-label .help-required
-  position: absolute
-  right: -10px
-
 .control-group textarea
   margin-bottom: 0
 
@@ -252,10 +249,6 @@ input[name="title"], .field-title
 
 input[type="url"], input[name="name"]
   font-family: Menlo, Monaco, "Courier New", monospace
-
-.field-title
-  margin-bottom: 0
-  width: 90%
 
 .help-block
   font-size: 90%
@@ -418,6 +411,11 @@ ul.grid
   display: none
   visibility: hidden
 
+
+@media screen and (min-width: 768px)
+  .form-horizontal .help-required
+    position: absolute
+    right: -10px
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2)
   #logo

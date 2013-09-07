@@ -2104,6 +2104,7 @@ table.mceLayout.focus {
 
 .listwidget ul, .listwidget ol {
   list-style: none;
+  padding-left: 0;
   margin-left: 0;
   margin-bottom: 0;
 }
@@ -2168,11 +2169,6 @@ table.mceLayout.focus {
   position: relative;
 }
 
-.form-horizontal .control-label .help-required {
-  position: absolute;
-  right: -10px;
-}
-
 .control-group textarea {
   margin-bottom: 0;
 }
@@ -2193,11 +2189,6 @@ input[name="title"], .field-title {
 
 input[type="url"], input[name="name"] {
   font-family: Menlo, Monaco, "Courier New", monospace;
-}
-
-.field-title {
-  margin-bottom: 0;
-  width: 90%;
 }
 
 .help-block {
@@ -2403,6 +2394,12 @@ ul.grid > li.header {
   visibility: hidden;
 }
 
+@media screen and (min-width: 768px) {
+  .form-horizontal .help-required {
+    position: absolute;
+    right: -10px;
+  }
+}
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   #logo {
     background-image: url('../../_baseframe/img/logo@2x.png?1328994509');

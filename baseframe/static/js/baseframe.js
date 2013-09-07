@@ -9,6 +9,7 @@ function activate_widgets(){
     var cm_config = { mode: 'markdown',
         lineNumbers: false,
         theme: "default",
+        lineWrapping: true,
         extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList" }
     };
 

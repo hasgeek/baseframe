@@ -46,58 +46,26 @@ h1, h2, h3, h4, h5 {
   #main-content {
     margin-top: auto;
   }
-}
-form {
-  margin-bottom: 1em;
-}
 
-.form-horizontal .form-group {
-  margin-left: 0;
-  margin-right: 0;
-  clear: both;
+  .form-horizontal .help-required {
+    position: absolute;
+    right: 5px;
+  }
 }
-
 .listwidget ul > li > label {
   font-weight: normal;
-}
-
-.form-control {
-  padding: 6px;
-}
-.form-control.field-title {
-  width: 100%;
-}
-
-.form-group {
-  margin-bottom: 10px !important;
 }
 
 .selected label, .listwidget ul > li.selected label {
   font-weight: 600;
 }
 
-@media screen and (min-width: 768px) {
-  .form-group {
-    margin-bottom: 20px !important;
-  }
-}
 textarea.form-control {
   min-height: 150px;
 }
 
 textarea#description {
   min-height: 300px;
-}
-
-div.error:after {
-  border: none !important;
-}
-
-div.error {
-  background: transparent !important;
-  padding: 0 !important;
-  width: 100% !important;
-  color: #333 !important;
 }
 
 /* bs3 buttons */
@@ -160,4 +128,8 @@ button.btn, a.btn {
 .btn-warning:focus, .btn-warning:active, .btn-warning.active {
   border-bottom: 1px solid #D58512;
   border-top: 2px solid #D58512;
+}
+
+.CodeMirror {
+  line-height: 20px !important;
 }

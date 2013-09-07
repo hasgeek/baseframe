@@ -1,4 +1,4 @@
-<!-- change rendererrors.mustache also while changing here -->
+{# change rendererrors.mustache also while changing here #}
 {% macro rendererrors(field) -%}
     {%- if field.errors -%}
       {%- for error in field.errors %}
@@ -7,62 +7,65 @@
     {%- endif %}
 {%- endmacro %}
 
-<!-- change renderfield.mustache also while changing here -->
-{% macro renderfield(field, css_class="", widget_css_class=None, sidetext=None, tabindex='', autofocus=False) -%}
-  <div class="form-group control-group
-      {%- if field.errors %} error {%- endif -%}
+{# change renderfield.mustache also while changing here #}
+{% macro renderfield(field, css_class="", widget_css_class=None, sidetext=None, tabindex=None, autofocus=False) -%}
+
+  {%- if field.widget.html_tag in ['ul', 'ol'] %}
+    {%- set listwidget = true %}
+  {%- elif field.widget.input_type == 'checkbox' %}
+    {%- set listwidget = false %}
+  {%- else %}
+    {%- set listwidget = false %}
+    {%- set widget_css_class = "form-control " + (widget_css_class or "") %}
+  {%- endif -%}
+
+  <div class="form-group control-group {#- BS3: form-group, BS2: control-group -#}
+      {%- if field.errors %} error has-error {%- endif -%}
       {%- if css_class %} {{ css_class }} {%- endif -%}
-      {%- if field.widget.html_tag in ['ul', 'ol'] %} listwidget {%- endif -%}
+      {%- if listwidget %} listwidget {%- endif -%}
       " id="field-{{ field.id }}">
     {%- if field.widget.input_type == 'checkbox' %}
-      <div class="col-xs-12 col-sm-9 col-md-8 col-sm-offset-3 col-md-offset-2">
-        <div class="row">
-          <div class="controls inline">{{ field | render_field_options(class=widget_css_class, tabindex=tabindex) }} {{ field.label.text }}
-          {#- Two closing /div tags are below #}
+      <div class="col-xs-12 col-sm-9 col-md-8 col-sm-offset-3 col-md-offset-2 controls">
+        <div class="checkbox">
+          <label>{{ field | render_field_options(class=widget_css_class, tabindex=tabindex) }} {{ field.label.text }}</label>
+        </div>
+        {{ rendererrors(field) }}
+        {%- if field.description %}
+          <p class="help-block">{{ field.description }}</p>
+        {%- endif %}
+      </div>
     {%- else %}
-      <div class="col-sm-3 col-md-2">
-        <div class="row">
-          <label class="control-label" for="{{ field.id }}">{{ field.label.text }}
-            {%- if field.flags.required -%}
-              <span class="help-required" title="Required">*</span>
-            {%- endif -%}
-          </label>
-        </div>
+      <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label" for="{{ field.id }}">{{ field.label.text }}
+        {%- if field.flags.required -%}
+          <span class="help-required" title="Required">*</span>
+        {%- endif -%}
+      </label>
+      <div class="col-xs-12 col-sm-9 col-md-8 col-lg-8 controls">
+        {{ field | render_field_options(class=widget_css_class, tabindex=tabindex, autofocus=autofocus)}}
+        {%- if sidetext %}
+          <span class="help-inline">{{sidetext}}</span>
+        {%- endif %}
+        {{ rendererrors(field) }}
+        {%- if field.description %}
+          <p class="help-block">{{ field.description }}</p>
+        {%- endif %}
       </div>
-      <div class="col-xs-12 col-sm-9 col-md-8">
-      <div class="row">
-        <div class="controls">
-          {{ field | render_field_options(class=widget_css_class,  tabindex=tabindex, autofocus=autofocus)}}
-          {#- Two closing /div tags are below #}
     {%- endif %}
-          {%- if sidetext %}
-            <span class="help-inline">{{sidetext}}</span>
-          {%- endif %}
-          {{ rendererrors(field) }}
-          {%- if field.description %}
-            <p class="help-block">{{field.description}}</p>
-          {%- endif %}
-          {#- Two closing /div tags follow #}
-        </div>
-      </div>
-    </div>
   </div>
 {%- endmacro %}
 
 {% macro rendersubmit(buttons=[], css_class="", tabindex='', cancel_url='') -%}
-<div class="form-actions clearfix{% if css_class %} {{ css_class}}{% endif %}">
-  <div class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-8">
-    <div class="row">
-      {% for name, value, widget_class in buttons -%}
-        <button type="submit"
-          {%- if name %} name="{{ name|e }}"{% else %} {% endif -%}
-          {% if widget_class %} class="btn {{ widget_class|e }}" {% else %} class="btn"{% endif -%}
-          {%- if tabindex %} tabindex="{{ tabindex }}" {% endif -%}
-          >{{ value|e }}</button>
-      {% endfor %}
-      {% if cancel_url %}<a href="{{ cancel_url }}" class="btn btn-default">Cancel</a>{% endif %}
-      <span class="loading hidden">&nbsp;</span>
-    </div>
+<div class="form-group form-actions clearfix{% if css_class %} {{ css_class}}{% endif %}">
+  <div class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+    {% for name, value, widget_class in buttons -%}
+      <button type="submit"
+        {%- if name %} name="{{ name|e }}"{% else %} {% endif -%}
+        {% if widget_class %} class="btn {{ widget_class|e }}" {% else %} class="btn"{% endif -%}
+        {%- if tabindex %} tabindex="{{ tabindex }}" {% endif -%}
+        >{{ value|e }}</button>
+    {% endfor %}
+    {% if cancel_url %}<a href="{{ cancel_url }}" class="btn btn-default">Cancel</a>{% endif %}
+    <span class="loading hidden">&nbsp;</span>
   </div>
 </div>
 {%- endmacro %}
@@ -78,7 +81,10 @@
   <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
   {{ form.hidden_tag() }}
   {%- if form.csrf_token.errors %}
-    {% for error in form.csrf_token.errors %}<div class="alert alert-error alert-danger">{{ error }}</div>{% endfor %}
+    <div class="alert alert-error alert-danger">{% trans %}
+      This form timed out because it’s been a while since the page loaded.
+      Please submit again to confirm.
+    {% endtrans %}</div>
   {% endif %}
   {%- set autofocus = true %}
   {% for field in form -%}
@@ -97,7 +103,7 @@
 
 {% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=False) %}
 <form id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="form-horizontal">
-  {{ renderform_inner(form, formid) }}
+  {{ renderform_inner(form, formid or None) }}
   {{ rendersubmit([(None, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url) }}
 </form>
 {% endmacro %}
