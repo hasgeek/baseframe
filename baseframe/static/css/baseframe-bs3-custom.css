@@ -129,7 +129,3 @@ button.btn, a.btn {
   border-bottom: 1px solid #D58512;
   border-top: 2px solid #D58512;
 }
-
-.CodeMirror {
-  line-height: 20px !important;
-}
