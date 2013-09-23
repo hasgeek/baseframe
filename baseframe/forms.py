@@ -11,6 +11,7 @@ from flask import render_template, request, Markup, abort, flash, redirect, json
 import wtforms
 from flask.ext.wtf import Form as BaseForm
 from coaster import make_name, get_email_domain
+from coaster.sqlalchemy import MarkdownComposite
 from . import b__ as __
 
 # Default tags and attributes to allow in HTML sanitization
@@ -58,12 +59,17 @@ class StripWhitespace(object):
 
 
 class MarkdownField(wtforms.TextAreaField):
-    """ TextArea field, which has class='markdown'
+    """ TextArea field, which has class='markdown' and
+    whose contents are transformed into a MarkdownComposite obj.
     """
     def __call__(self, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = "%s %s" % (c, 'markdown')
         return super(MarkdownField, self).__call__(**kwargs)
+
+    def populate_obj(self, obj, name):
+        md = MarkdownComposite(self.data)
+        setattr(obj, name, md)
 
 
 class RichText(wtforms.widgets.TextArea):
