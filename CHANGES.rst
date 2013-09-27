@@ -4,6 +4,7 @@
 * Added Bootstrap 3
 * Added Mustache templating support
 * Added a responsive networkbar for Bootstrap 3-based websites
+* Reorganized forms into sub-modules
 
 0.2.16
 ------
