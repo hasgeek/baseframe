@@ -701,7 +701,7 @@ address {
 
 code,
 pre {
-  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  font-family: Consolas, Inconsolata, Menlo, "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
 }
 
 code {

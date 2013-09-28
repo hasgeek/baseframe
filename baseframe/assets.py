@@ -87,6 +87,9 @@ assets['codemirror-markdown.js'][Version('3.16.0')] = {'requires': [
     'codemirror.addon.edit.continuelist.js==3.16.0',
 ]}
 assets['codemirror-markdown.css'][Version('3.16.0')] = ('codemirror.css==3.16.0', 'baseframe/css/codemirror.css')
+assets['pygments-default.css'][Version('1.5.0')] = 'baseframe/css/pygments-default.css'
+assets['pygments-zenburn.css'][Version('1.5.0')] = 'baseframe/css/pygments-zenburn.css'
+assets['pygments.css'][Version('1.5.0')] = {'requires': 'pygments-default.css'}
 
 assets['mousetrap.js'][Version('1.1.2')] = 'baseframe/js/mousetrap.js'
 assets['toastr.js'][Version('1.2.2')] = 'baseframe/js/toastr.js'

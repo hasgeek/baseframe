@@ -5,6 +5,7 @@
 * Added Mustache templating support
 * Added a responsive networkbar for Bootstrap 3-based websites
 * Reorganized forms into sub-modules
+* Added Pygments syntax highlighting
 
 0.2.16
 ------
