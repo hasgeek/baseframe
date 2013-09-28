@@ -6,6 +6,7 @@
 * Added a responsive networkbar for Bootstrap 3-based websites
 * Reorganized forms into sub-modules
 * Added Pygments syntax highlighting
+* Removed baseframe.sqlalchemy. Use coaster.db now
 
 0.2.16
 ------
