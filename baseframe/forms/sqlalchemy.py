@@ -5,13 +5,16 @@ SQLAlchemy-based form fields and widgets
 """
 
 import wtforms
-from coaster.sqlalchemy import MarkdownComposite
 from .. import b__ as __
 
-__all__ = ['AvailableName', 'MarkdownField']
+__all__ = ['AvailableName']
 
 
 class AvailableName(object):
+    """
+    Validator to check whether the specified name is available
+    for the model being edited.
+    """
     def __init__(self, message=None, scoped=False):
         self.scoped = scoped
         if not message:
@@ -28,18 +31,3 @@ class AvailableName(object):
             existing = query.first()
             if existing:
                 raise wtforms.ValidationError(self.message)
-
-
-class MarkdownField(wtforms.TextAreaField):
-    """
-    TextArea field, which has class='markdown' and
-    whose contents are transformed into a MarkdownComposite obj.
-    """
-    def __call__(self, **kwargs):
-        c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = "%s %s" % (c, 'markdown')
-        return super(MarkdownField, self).__call__(**kwargs)
-
-    def populate_obj(self, obj, name):
-        md = MarkdownComposite(self.data)
-        setattr(obj, name, md)

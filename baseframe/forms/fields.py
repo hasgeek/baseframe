@@ -7,7 +7,7 @@ from flask import Markup, json
 
 from .widgets import RichText, DateTimeInput
 
-__all__ = ['TinyMceField', 'RichTextField', 'DateTimeField', 'HiddenMultiField']
+__all__ = ['TinyMceField', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'MarkdownField']
 
 
 # Default tags and attributes to allow in HTML sanitization
@@ -168,3 +168,13 @@ class HiddenMultiField(wtforms.fields.TextField):
             self.data = []  # Calling ''.split(',') will give us [''] which is not "falsy"
         else:
             self.data = self.data.split(self.separator)
+
+
+class MarkdownField(wtforms.TextAreaField):
+    """
+    TextArea field which has class='markdown'.
+    """
+    def __call__(self, **kwargs):
+        c = kwargs.pop('class', '') or kwargs.pop('class_', '')
+        kwargs['class'] = "%s %s" % (c, 'markdown') if c else 'markdown'
+        return super(MarkdownField, self).__call__(**kwargs)
