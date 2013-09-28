@@ -70,12 +70,23 @@ assets['jquery.timepicker.css'][Version('1.0.7')] = 'baseframe/css/jquery.timepi
 assets['select2.js'][Version('3.3.2')] = ('jquery.js>=1.4.6', 'baseframe/js/select2.js')
 assets['select2.css'][Version('3.3.2')] = 'baseframe/css/select2.css'
 
-assets['codemirror_core.js'][Version(__version__)] = 'baseframe/js/codemirror/lib/codemirror.js'
-assets['codemirror_md.js'][Version(__version__)] = 'baseframe/js/codemirror/mode/markdown/markdown.js'
-assets['codemirror_htmlmixed.js'][Version(__version__)] = 'baseframe/js/codemirror/mode/htmlmixed/htmlmixed.js'
-assets['codemirror_continuelist.js'][Version(__version__)] = 'baseframe/js/codemirror/addon/edit/continuelist.js'
+assets['codemirror.js'][Version('3.16.0')] = 'baseframe/js/codemirror/lib/codemirror.js'
+assets['codemirror.mode.markdown.js'][Version('3.16.0')] = 'baseframe/js/codemirror/mode/markdown/markdown.js'
+assets['codemirror.mode.gfm.js'][Version('3.16.0')] = 'baseframe/js/codemirror/mode/gfm/gfm.js'
+assets['codemirror.mode.htmlmixed.js'][Version('3.16.0')] = 'baseframe/js/codemirror/mode/htmlmixed/htmlmixed.js'
+assets['codemirror.addon.mode.overlay.js'][Version('3.16.0')] = 'baseframe/js/codemirror/addon/mode/overlay.js'
+assets['codemirror.addon.edit.continuelist.js'][Version('3.16.0')] = 'baseframe/js/codemirror/addon/edit/continuelist.js'
+assets['codemirror.css'][Version('3.16.0')] = 'baseframe/js/codemirror/lib/codemirror.css'
 
-assets['codemirror.css'][Version(__version__)] = 'baseframe/css/codemirror/codemirror.css'
+assets['codemirror-markdown.js'][Version('3.16.0')] = {'requires': [
+    'codemirror.js==3.16.0',
+    'codemirror.mode.markdown.js==3.16.0',
+    'codemirror.mode.gfm.js==3.16.0',
+    'codemirror.mode.htmlmixed.js==3.16.0',
+    'codemirror.addon.mode.overlay.js==3.16.0',
+    'codemirror.addon.edit.continuelist.js==3.16.0',
+]}
+assets['codemirror-markdown.css'][Version('3.16.0')] = ('codemirror.css==3.16.0', 'baseframe/css/codemirror.css')
 
 assets['mousetrap.js'][Version('1.1.2')] = 'baseframe/js/mousetrap.js'
 assets['toastr.js'][Version('1.2.2')] = 'baseframe/js/toastr.js'
@@ -132,18 +143,10 @@ assets['bootstrap.js'][Version('3.0.0')] = {'requires': [
     'bootstrap-affix.js==3.0.0',
 ]}
 
-assets['codemirror.js'][Version(__version__)] = {'requires': ['codemirror_core.js',
-    'codemirror_md.js',
-    'codemirror_htmlmixed.js',
-    'codemirror_continuelist.js'
-]}
-
 assets['mustache.js'][Version('2.0.0')] = {'requires': [
     'mustache-loader.js==0.5.1',
     'mustache-hogan.js==2.0.0',
 ]}
-
-assets['codemirror.css'][Version(__version__)] = ('baseframe/css/codemirror.css')
 
 assets['extra.js'][Version('0.0.0')] = {'requires': [
     'jquery.form.js',
