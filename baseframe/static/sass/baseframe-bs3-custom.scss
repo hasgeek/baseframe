@@ -1,3 +1,5 @@
+@import "compass";
+
 .nav-open{
     overflow: hidden;
 }
@@ -124,4 +126,17 @@ button.btn, a.btn{
         border-bottom: 1px solid #D58512;
         border-top: 2px solid #D58512;
     }
+}
+
+// Select2 styling
+.select2-container.form-control {
+    border: 0;
+    padding: 0;
+    height: auto;
+    @include box-shadow(none);
+}
+
+.select2-container .select2-choice {
+    height: 34px;
+    line-height: 32px;
 }

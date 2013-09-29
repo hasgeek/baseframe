@@ -56,6 +56,7 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
     background-image: -ms-linear-gradient(top, #ffffff 0%, #eeeeee 50%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#eeeeee', GradientType = 0);
     background-image: linear-gradient(top, #ffffff 0%, #eeeeee 50%);
+    @include transition(border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s);
 }
 
 .select2-container.select2-drop-above .select2-choice {
@@ -224,7 +225,7 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
     outline: none;
 
     @include box-shadow(0 0 8px rgba(82,168,236,.6));
-    @include transition(border linear .2s, box-shadow linear .2s);
+    @include transition(border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s);
 }
 
 .select2-dropdown-open .select2-choice {
@@ -408,7 +409,7 @@ disabled look for disabled choices in the results dropdown
     outline: none;
 
     @include box-shadow(0 0 8px rgba(82,168,236,.6));
-    @include transition(border linear .2s, box-shadow linear .2s);
+    @include transition(border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s);
 }
 .select2-container-multi .select2-choices li {
     float: left;

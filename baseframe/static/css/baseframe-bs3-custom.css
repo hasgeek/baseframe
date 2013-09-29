@@ -129,3 +129,17 @@ button.btn, a.btn {
   border-bottom: 1px solid #D58512;
   border-top: 2px solid #D58512;
 }
+
+.select2-container.form-control {
+  border: 0;
+  padding: 0;
+  height: auto;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.select2-container .select2-choice {
+  height: 34px;
+  line-height: 32px;
+}

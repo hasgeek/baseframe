@@ -6,16 +6,16 @@ function activate_widgets(){
         $('select:not(.notselect)').select2({allowClear: true});
     }
 
-    var cm_config = { mode: 'gfm',
+    var cm_markdown_config = { mode: 'gfm',
         lineNumbers: false,
         theme: "default",
         lineWrapping: true,
-        extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList" }
+        extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList", "Tab": false, "Shift-Tab": false }
     };
 
     // Activate codemirror on all textareas with class='markdown'
     $('textarea.markdown').each(function(){
-        var editor = CodeMirror.fromTextArea(this, cm_config);
+        var editor = CodeMirror.fromTextArea(this, cm_markdown_config);
     });
 }
 
