@@ -5,7 +5,7 @@ import wtforms
 import bleach
 from flask import Markup, json
 
-from .widgets import RichText, DateTimeInput
+from .widgets import RichText, DateTimeInput, HiddenMultiInput
 
 __all__ = ['TinyMceField', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'MarkdownField']
 
@@ -150,7 +150,7 @@ class HiddenMultiField(wtforms.fields.TextField):
     used as an Ajax widget target. The optional ``separator`` parameter
     can be used to specify an alternate separator character (default ``','``).
     """
-    widget = wtforms.widgets.HiddenInput()
+    widget = HiddenMultiInput()
 
     def __init__(self, *args, **kwargs):
         self.separator = kwargs.pop('separator', ',')

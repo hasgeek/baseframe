@@ -3,7 +3,7 @@
 import wtforms
 from flask import Markup
 
-__all__ = ['RichText', 'SubmitInput', 'DateTimeInput']
+__all__ = ['RichText', 'SubmitInput', 'DateTimeInput', 'HiddenMultiInput']
 
 
 class RichText(wtforms.widgets.TextArea):
@@ -55,3 +55,10 @@ class DateTimeInput(wtforms.widgets.Input):
             wtforms.widgets.html_params(name=field.name, id=field_id + '-date', value=date_value, **kwargs),
             wtforms.widgets.html_params(name=field.name, id=field_id + '-time', value=time_value, **kwargs)
             ))
+
+
+class HiddenMultiInput(wtforms.widgets.core.Input):
+    """
+    Render a hidden input.
+    """
+    input_type = 'hidden'
