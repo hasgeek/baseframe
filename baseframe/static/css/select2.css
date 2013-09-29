@@ -242,11 +242,11 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
 
 .select2-container-active .select2-choice,
 .select2-container-active .select2-choices {
-  border: 1px solid rgba(82, 168, 236, 0.8);
+  border: 1px solid #66afe9;
   outline: none;
-  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
-  -moz-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
-  box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
+  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6), inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6), inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: 0 0 8px rgba(82, 168, 236, 0.6), inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border-color ease-in-out, box-shadow ease-in-out;
   -webkit-transition-delay: 0.15s, 0.15s;
   -moz-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
@@ -453,14 +453,19 @@ disabled look for disabled choices in the results dropdown
 
 .select2-container-multi .select2-choices {
   min-height: 30px;
+  -webkit-transition: border-color ease-in-out, box-shadow ease-in-out;
+  -webkit-transition-delay: 0.15s, 0.15s;
+  -moz-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
 .select2-container-multi.select2-container-active .select2-choices {
-  border: 1px solid rgba(82, 168, 236, 0.8);
+  border: 1px solid #66afe9;
   outline: none;
-  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
-  -moz-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
-  box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
+  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6), inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6), inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: 0 0 8px rgba(82, 168, 236, 0.6), inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border-color ease-in-out, box-shadow ease-in-out;
   -webkit-transition-delay: 0.15s, 0.15s;
   -moz-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;

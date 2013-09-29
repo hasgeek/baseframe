@@ -221,10 +221,10 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
 
 .select2-container-active .select2-choice,
 .select2-container-active .select2-choices {
-    border: 1px solid rgba(82,168,236,.8);
+    border: 1px solid #66afe9;
     outline: none;
 
-    @include box-shadow(0 0 8px rgba(82,168,236,.6));
+    @include box-shadow(0 0 8px rgba(82,168,236,.6), inset 0 1px 1px rgba(0,0,0,0.075));
     @include transition(border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s);
 }
 
@@ -402,13 +402,14 @@ disabled look for disabled choices in the results dropdown
 
 .select2-container-multi .select2-choices {
     min-height: 30px;
+    @include transition(border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s);
 }
 
 .select2-container-multi.select2-container-active .select2-choices {
-    border: 1px solid rgba(82,168,236,.8);
+    border: 1px solid #66afe9;
     outline: none;
 
-    @include box-shadow(0 0 8px rgba(82,168,236,.6));
+    @include box-shadow(0 0 8px rgba(82,168,236,.6), inset 0 1px 1px rgba(0,0,0,0.075));
     @include transition(border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s);
 }
 .select2-container-multi .select2-choices li {
