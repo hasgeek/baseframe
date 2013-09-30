@@ -516,6 +516,9 @@
     line-height: 18px;
     border-bottom: none;
   }
+  #hg-networkbar .navbar-nav > li.profile > a {
+    font-weight: 600;
+  }
   #hg-networkbar .navbar-nav > li > a {
     padding: 5px 6px;
     color: #444444;

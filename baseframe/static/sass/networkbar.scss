@@ -446,6 +446,9 @@ $mob-icon-color: #999;
                 font: $networkbar-font;
                 line-height: 18px;
                 border-bottom: none;
+                &.profile > a {
+                    font-weight: 600;
+                }
                 & > a{
                     padding: 5px 6px;
                     color: #444444;
