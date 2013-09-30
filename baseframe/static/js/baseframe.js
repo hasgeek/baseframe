@@ -10,7 +10,15 @@ function activate_widgets(){
         lineNumbers: false,
         theme: "default",
         lineWrapping: true,
-        extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList", "Tab": false, "Shift-Tab": false }
+        extraKeys: {
+          "Enter": "newlineAndIndentContinueMarkdownList",
+          "Tab": false,
+          "Shift-Tab": false,
+          "Home": "goLineLeft",
+          "End": "goLineRight",
+          "Cmd-Left": "goLineLeft",
+          "Cmd-Right": "goLineRight"
+        }
     };
 
     // Activate codemirror on all textareas with class='markdown'
