@@ -1,19 +1,21 @@
 @import "compass";
 
-.nav-open{
+.nav-open {
     overflow: hidden;
 }
+
 h1, h2, h3, h4, h5{
     font-weight: 600;
 }
-.well{
+
+.well {
     margin-left: 0;
-    &.nav{
-        &.nav-list{
+    &.nav {
+        &.nav-list {
             padding-left: 0;
             padding-right: 0;
         }
-        .nav-header{
+        .nav-header {
             color: #999999;
             display: block;
             font-size: 11px;
@@ -32,15 +34,15 @@ h1, h2, h3, h4, h5{
     line-height: 20px;
 }
 
-#page-header{
+#page-header {
     display: none;
 }
 
-#main-content{
+#main-content {
     margin-top: 5em;
 }
 
-@media screen and (min-width: 768px){
+@media screen and (min-width: 768px) {
     #page-header{
         display: block;
     }
@@ -58,16 +60,16 @@ h1, h2, h3, h4, h5{
 }
 
 .selected, .listwidget ul > li.selected {
-    label{
+    label {
         font-weight: 600;
     }
 }
 
-textarea.form-control{
+textarea.form-control {
     min-height: 150px;
 }
 
-textarea#description{
+textarea#description {
     min-height: 300px;
 }
 
@@ -76,53 +78,61 @@ textarea#description{
 button.btn, a.btn{
     overflow: hidden;
 }
-.btn{
-    &:active, &.active{
+
+.btn {
+    &:active, &.active {
         box-shadow: none;
     }
 }
-.btn-link{
+
+.btn-link {
     text-shadow: none;
 }
-.btn-default{
+
+.btn-default {
     border-bottom: 2px solid #ADADAD;
     background: #F5F5F5;
-    &:focus, &:active, &.active{
+    &:focus, &:active, &.active {
         border-bottom: 1px solid #ADADAD;
         border-top: 2px solid #ADADAD;      
     }
 }
-.btn-danger{
+
+.btn-danger {
     border-bottom: 2px solid #AC2925;
-    &:focus, &:active, &.active{
+    &:focus, &:active, &.active {
         border-bottom: 1px solid #AC2925;
         border-top: 2px solid #AC2925;
     }
 }
-.btn-primary{
+
+.btn-primary {
     border-bottom: 2px solid #285E8E;
-    &:focus, &:active, &.active{
+    &:focus, &:active, &.active {
         border-bottom: 1px solid #285E8E;
         border-top: 2px solid #285E8E;
     }
 }
-.btn-success{
+
+.btn-success {
     border-bottom: 2px solid #398439;
-    &:focus, &:active, &.active{
+    &:focus, &:active, &.active {
         border-bottom: 1px solid #398439;
         border-top: 2px solid #398439;
     }
 }
-.btn-info{
+
+.btn-info {
     border-bottom: 2px solid #269ABC;
-    &:focus, &:active, &.active{
+    &:focus, &:active, &.active {
         border-bottom: 1px solid #269ABC;
         border-top: 2px solid #269ABC;
     }
 }
-.btn-warning{
+
+.btn-warning {
     border-bottom: 2px solid #D58512;
-    &:focus, &:active, &.active{
+    &:focus, &:active, &.active {
         border-bottom: 1px solid #D58512;
         border-top: 2px solid #D58512;
     }
