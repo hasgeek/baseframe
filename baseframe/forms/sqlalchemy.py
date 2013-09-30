@@ -28,6 +28,6 @@ class AvailableName(object):
                 query = query.filter(form.edit_model.id != form.edit_id)
             if self.scoped:
                 query = query.filter_by(parent=form.edit_parent)
-            existing = query.first()
+            existing = query.count()
             if existing:
                 raise wtforms.ValidationError(self.message)
