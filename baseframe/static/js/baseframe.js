@@ -1,35 +1,35 @@
 // This is a global function. Isn't there a better way to do this?
 
 function activate_widgets(){
-    // Activate select2.js for non-mobile browsers
+    // Activate select2.js and CodeMirror for non-mobile browsers
     if (!navigator.userAgent.match(/(iPod|iPad|iPhone|Android)/)) {
-        $('select:not(.notselect)').select2({allowClear: true});
+      $('select:not(.notselect)').select2({allowClear: true});
+
+      var cm_markdown_config = { mode: 'gfm',
+          lineNumbers: false,
+          theme: "default",
+          lineWrapping: true,
+          extraKeys: {
+            "Enter": "newlineAndIndentContinueMarkdownList",
+            "Tab": false,
+            "Shift-Tab": false,
+            "Home": "goLineLeft",
+            "End": "goLineRight",
+            "Cmd-Left": "goLineLeft",
+            "Cmd-Right": "goLineRight"
+          }
+      };
+
+      // Activate codemirror on all textareas with class='markdown'
+      $('textarea.markdown').each(function(){
+          var editor = CodeMirror.fromTextArea(this, cm_markdown_config);
+      });
     }
-
-    var cm_markdown_config = { mode: 'gfm',
-        lineNumbers: false,
-        theme: "default",
-        lineWrapping: true,
-        extraKeys: {
-          "Enter": "newlineAndIndentContinueMarkdownList",
-          "Tab": false,
-          "Shift-Tab": false,
-          "Home": "goLineLeft",
-          "End": "goLineRight",
-          "Cmd-Left": "goLineLeft",
-          "Cmd-Right": "goLineRight"
-        }
-    };
-
-    // Activate codemirror on all textareas with class='markdown'
-    $('textarea.markdown').each(function(){
-        var editor = CodeMirror.fromTextArea(this, cm_markdown_config);
-    });
 }
 
 $(function() {
-    // activate all widgets
-    activate_widgets();
+  // activate all widgets
+  activate_widgets();
 
   var matchtab = function() {
     var url = document.location.toString(), tabmatch = null;
