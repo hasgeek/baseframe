@@ -7,7 +7,8 @@ from flask import Markup, json
 
 from .widgets import RichText, DateTimeInput, HiddenMultiInput
 
-__all__ = ['TinyMceField', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'MarkdownField']
+__all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
+    'TinyMceField', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'MarkdownField']
 
 
 # Default tags and attributes to allow in HTML sanitization
