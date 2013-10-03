@@ -7,6 +7,8 @@
 * Reorganized forms into sub-modules
 * Added Pygments syntax highlighting
 * Removed baseframe.sqlalchemy. Use coaster.db now
+* Switched default font from Open Sans to Source Sans Pro for the lower
+  x-height, thereby improving the visible line height
 
 0.2.16
 ------

@@ -114,8 +114,8 @@ textarea {
 }
 body {
   margin: 0;
-  font-family: "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
-  font-size: 13px;
+  font-family: "Source Sans Pro", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+  font-size: 14px;
   line-height: 20px;
   color: #333333;
   background-color: #ffffff;
@@ -298,8 +298,8 @@ a:hover {
 }
 p {
   margin: 0 0 10px;
-  font-family: "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
-  font-size: 13px;
+  font-family: "Source Sans Pro", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+  font-size: 14px;
   line-height: 20px;
 }
 p small {
@@ -490,7 +490,7 @@ cite {
 code,
 pre {
   padding: 0 3px 2px;
-  font-family: Menlo, Monaco, "Courier New", monospace;
+  font-family: Consolas, Inconsolata, Menlo, "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
   font-size: 12px;
   color: #333333;
   -webkit-border-radius: 3px;
@@ -561,7 +561,7 @@ input,
 button,
 select,
 textarea {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: normal;
   line-height: 20px;
 }
@@ -569,7 +569,7 @@ input,
 button,
 select,
 textarea {
-  font-family: "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+  font-family: "Source Sans Pro", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
 }
 label {
   display: block;
@@ -585,7 +585,7 @@ select,
   height: 20px;
   padding: 4px;
   margin-bottom: 9px;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 20px;
   color: #555555;
   border: 1px solid #ccc;
@@ -1441,7 +1441,7 @@ table .span12 {
   display: inline-block;
   padding: 4px 10px 4px;
   margin-bottom: 0;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 20px;
   color: #333333;
   text-align: center;
@@ -2361,8 +2361,8 @@ input[type="submit"].btn.small {
 }
 .navbar-search .search-query {
   padding: 4px 9px;
-  font-family: "Open Sans", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
-  font-size: 13px;
+  font-family: "Source Sans Pro", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+  font-size: 14px;
   font-weight: normal;
   line-height: 1;
   color: #ffffff;
