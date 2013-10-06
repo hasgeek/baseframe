@@ -4,7 +4,7 @@
 Baseframe forms
 """
 
-from flask import render_template, request, Markup, abort, flash, redirect, json, escape, url_for, make_response
+from flask import render_template, request, Markup, abort, flash, redirect, escape, url_for, make_response
 import wtforms
 from flask.ext.wtf import Form as BaseForm
 from .. import b__ as __
@@ -71,7 +71,7 @@ def render_message(title, message, code=200):
 
 def render_redirect(url, code=302):
     if request.is_xhr:
-        return make_response(render_template('baseframe/redirect.html', quoted_url=Markup(json.dumps(url))))
+        return make_response(render_template('baseframe/redirect.html', url=url))
     else:
         return redirect(url, code=code)
 
@@ -86,7 +86,7 @@ def render_delete_sqla(obj, db, title, message, success=u'', next=None, cancel_u
             db.session.commit()
             if success:
                 flash(success, 'success')
-            return render_redirect(next or url_for('index'))
+            return render_redirect(next or url_for('index'), code=303)
         else:
-            return render_redirect(cancel_url or next or url_for('index'))
+            return render_redirect(cancel_url or next or url_for('index'), code=303)
     return make_response(render_template('baseframe/delete.html', form=form, title=title, message=message))
