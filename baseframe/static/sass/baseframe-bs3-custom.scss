@@ -73,6 +73,13 @@ textarea#description {
     min-height: 300px;
 }
 
+.control-group {
+    margin-bottom: 15px;
+    .help-block {
+        margin-bottom: 0;
+    }
+}
+
 /* bs3 buttons */
 
 button.btn, a.btn{
