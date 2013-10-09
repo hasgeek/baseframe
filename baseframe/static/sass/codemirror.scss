@@ -1,13 +1,14 @@
 /* CodeMirror customizations */
 @import "compass";
+@import "settings-bs3";
 
 .CodeMirror {
-    font-family: Consolas, Inconsolata, Menlo, "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
+    font-family: $monospace-font-family;
     border: 1px solid #CCC;
     border-radius: 4px;
     @include box-shadow(0 1px 1px rgba(0, 0, 0, 0.075) inset);
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 14px; // $body-font-size;
+    line-height: 22px; // $body-line-height;
     padding: 3px 8px;
     color: #333;
     @include transition(border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s);

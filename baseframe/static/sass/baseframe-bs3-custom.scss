@@ -1,4 +1,5 @@
 @import "compass";
+@import "settings-bs3";
 
 .nav-open {
     overflow: hidden;
@@ -6,6 +7,15 @@
 
 h1, h2, h3, h4, h5{
     font-weight: 600;
+}
+
+h1 {
+    font-size: 30px;
+    line-height: 40px;
+}
+
+h2 {
+    font-size: 25px;
 }
 
 .well {
@@ -28,10 +38,21 @@ h1, h2, h3, h4, h5{
     }
 
 }
+
 .cardset li .card-body, .userset li .card-body {
-    margin: 22px -14px 0;
-    font-size: 13px;
-    line-height: 20px;
+    margin: 12px -14px 0;
+    font-size: $body-font-size;
+    line-height: $body-line-height;
+}
+
+.cardset li h2, .cardset li h3, .userset li h2, .userset li h3 {
+    max-height: 2.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cardset li h3, .userset li h3 {
+    font-size: 14px;
 }
 
 #page-header {
@@ -168,6 +189,13 @@ button.btn, a.btn{
 }
 
 .select2-container .select2-choice {
-    height: 34px;
-    line-height: 32px;
+    height: 38px;
+    line-height: 36px;
+    div b {
+        background-position: 0 5px;
+    }
+}
+
+.select2-dropdown-open .select2-choice div b {
+    background-position: -17px 5px;
 }
