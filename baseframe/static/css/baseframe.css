@@ -1719,7 +1719,7 @@ span[class^="icon-"], span[class*=" icon-"] {
 span[class^="icon-"]:before, span[class*=" icon-"]:before {
   position: absolute !important;
   left: -1.5em !important;
-  top: 0.25em !important;
+  top: 0;
   width: 1.25em !important;
   text-align: center !important;
 }
