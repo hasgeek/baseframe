@@ -30,4 +30,4 @@ class AvailableName(object):
                 query = query.filter_by(parent=form.edit_parent)
             existing = query.count()
             if existing:
-                raise wtforms.ValidationError(self.message)
+                raise wtforms.validators.StopValidation(self.message)
