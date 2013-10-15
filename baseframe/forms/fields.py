@@ -187,7 +187,7 @@ class ImgeeField(wtforms.TextField):
     with the url of the image chosen.
 
     Example usage:
-    image = ImgeeField(label='Logo', descrption='Your company logo here',
+    image = ImgeeField(label='Logo', description='Your company logo here',
             validators=[validators.Required()],
             profile='foo', img_label='logos', img_size='100x75')
         )
@@ -202,10 +202,10 @@ class ImgeeField(wtforms.TextField):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = "%s %s" % (c, 'imgee-url-holder') if c else 'imgee-url-holder'
         if self.profile:
-            kwargs['profile'] = self.profile
+            kwargs['data-profile'] = self.profile
         if self.img_label:
-            kwargs['img_label'] = self.img_label
+            kwargs['data-img-label'] = self.img_label
         if self.img_size:
-            kwargs['img_size'] = self.img_size
+            kwargs['data-img-size'] = self.img_size
         return super(ImgeeField, self).__call__(**kwargs)
 
