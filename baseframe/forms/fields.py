@@ -8,7 +8,7 @@ from flask import Markup, json
 from .widgets import RichText, DateTimeInput, HiddenMultiInput
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
-    'TinyMceField', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'MarkdownField']
+    'TinyMceField', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'MarkdownField', 'ImgeeField']
 
 
 # Default tags and attributes to allow in HTML sanitization
@@ -179,3 +179,33 @@ class MarkdownField(wtforms.TextAreaField):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = "%s %s" % (c, 'markdown') if c else 'markdown'
         return super(MarkdownField, self).__call__(**kwargs)
+
+
+class ImgeeField(wtforms.TextField):
+    """
+    A TextField, which lets the user choose image from Imgee. The field is filled
+    with the url of the image chosen.
+
+    Example usage:
+    image = ImgeeField(label='Logo', description='Your company logo here',
+            validators=[validators.Required()],
+            profile='foo', img_label='logos', img_size='100x75')
+        )
+    """
+    def __init__(self, label='', validators=None, profile=None, img_label=None, img_size=None, **kwargs):
+        super(ImgeeField, self).__init__(label, validators, **kwargs)
+        self.profile = profile
+        self.img_label = img_label
+        self.img_size = img_size
+
+    def __call__(self, **kwargs):
+        c = kwargs.pop('class', '') or kwargs.pop('class_', '')
+        kwargs['class'] = "%s %s" % (c, 'imgee-url-holder') if c else 'imgee-url-holder'
+        if self.profile:
+            kwargs['data-profile'] = self.profile
+        if self.img_label:
+            kwargs['data-img-label'] = self.img_label
+        if self.img_size:
+            kwargs['data-img-size'] = self.img_size
+        return super(ImgeeField, self).__call__(**kwargs)
+
