@@ -4,6 +4,10 @@ Baseframe
 .. image:: https://secure.travis-ci.org/hasgeek/baseframe.png
    :alt: Build status
 
+.. image:: https://coveralls.io/repos/hasgeek/baseframe/badge.png
+   :target: https://coveralls.io/r/hasgeek/baseframe
+   :alt: Coverage status
+
 Reusable styles and templates for HasGeek projects. Setup instructions::
 
   python setup.py install
@@ -25,5 +29,5 @@ You'll need this boilerplate in your code to use it::
   # The 'baseframe' requirement is optional: it gives you the default UI
   baseframe.init_app(app, requires=['baseframe', 'myapp'])
 
-Baseframe is BSD-licensed, but is built on top of Twitter Bootstrap 2.0,
-which uses the Apache license.
+Baseframe is BSD-licensed, but is built on top of Twitter Bootstrap 3.0
+and bundles various JavaScript libraries which use BSD, MIT and Apache.
