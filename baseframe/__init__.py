@@ -204,8 +204,10 @@ def error404(e):
         newpath = request.path[:-1]
         try:
             adapter = current_app.url_map.bind_to_environ(request)
-            adapter.match(newpath)
-            return redirect(request.url[:-1])
+            matchinfo = adapter.match(newpath)
+            if matchinfo[0] != request.endpoint:
+                # Redirect only if it's not back to the same endpoint
+                return redirect(request.url[:-1])
         except (NotFound, RequestRedirect, MethodNotAllowed):
             pass
     baseframe_translations.as_default()
