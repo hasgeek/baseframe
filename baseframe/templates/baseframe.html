@@ -54,7 +54,7 @@
         <div class="container">
           <div id="page-header">
             {% block logo -%}
-              <div id="logo"><a href="{{ url_for('index') }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
+              <div id="logo"><a href="{{ request.script_root or '/' }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
             {%- endblock %}
             {%- block header %}{% endblock %}
           </div>

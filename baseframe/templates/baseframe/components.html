@@ -103,7 +103,7 @@
           </button>
         {% endif -%}
         {% block navbar_brand %}
-          <a class="navbar-brand" href="{{ url_for('index') }}" title="Home">HasGeek</a>
+          <a class="navbar-brand" href="{{ request.script_root or '/' }}" title="Home">HasGeek</a>
         {% endblock %}
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
