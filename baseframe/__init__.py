@@ -8,6 +8,7 @@ from pytz import timezone
 from flask import (g, Blueprint, send_from_directory, render_template,
                     current_app, request, redirect, Markup)
 from werkzeug.routing import NotFound, MethodNotAllowed, RequestRedirect
+from coaster.views import render_with
 from coaster.assets import split_namespec
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
@@ -199,6 +200,7 @@ def editorcss():
 
 
 @baseframe.app_errorhandler(404)
+@render_with('404.html')
 def error404(e):
     if request.path.endswith('/') and request.method == 'GET':
         newpath = request.path[:-1]
@@ -211,19 +213,21 @@ def error404(e):
         except (NotFound, RequestRedirect, MethodNotAllowed):
             pass
     baseframe_translations.as_default()
-    return render_template('404.html'), 404
+    return {'error': "404 Not Found"}, 404
 
 
 @baseframe.app_errorhandler(403)
+@render_with('403.html')
 def error403(e):
     baseframe_translations.as_default()
-    return render_template('403.html'), 403
+    return {'error': "403 Forbidden"}, 403
 
 
 @baseframe.app_errorhandler(500)
+@render_with('500.html')
 def error500(e):
     baseframe_translations.as_default()
-    return render_template('500.html'), 500
+    return {'error': "500 Internal Server Error"}, 500
 
 
 @baseframe.app_template_filter('age')
