@@ -1,0 +1,59 @@
+/*!
+ * HasGeek baseframe CSS, based on Twitter Bootstrap.
+ */
+
+// Compass
+@import "compass";
+@import "compass/layout";
+@import "compass/css3/box";
+
+// Local settings
+@import "settings-bs3";
+@import "font-awesome";
+//@import "fonts";
+@import "layout";
+@import "bootstrap3-custom";
+@import "infobox";
+@import "datepicker";
+@import "adunits";
+@import "print";
+@import "responsive";
+
+// Only import this when in debug mode
+// @import "gridlines";
+
+/*
+	baseframe customizations 
+*/
+#page-header {
+    display: none;
+}
+#main-content {
+    margin-top: 5em;
+}
+@media screen and (min-width: 768px) {
+    #page-header{
+        display: block;
+    }
+    #main-content{
+        margin-top: auto;
+    }
+}
+
+// Select2 styling
+.select2-container.form-control {
+    border: 0;
+    padding: 0;
+    height: auto;
+    @include box-shadow(none);
+}
+.select2-container .select2-choice {
+    height: 38px;
+    line-height: 36px;
+    div b {
+        background-position: 0 5px;
+    }
+}
+.select2-dropdown-open .select2-choice div b {
+    background-position: -17px 5px;
+}

@@ -426,7 +426,7 @@ $mob-icon-color: #999;
         &.navbar{
             border-top: none;
             border-radius: 0;
-            margin-left: -6px;
+            margin-left: -12px;
             margin-bottom: 0;
             background: $color-hg-bar-background;
             @include background-image(linear-gradient(#f9f9f9, #e8e8e8));
