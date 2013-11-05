@@ -2195,37 +2195,6 @@ ul.grid > li.header {
     margin-bottom: 24px !important;
   }
 }
-.nav-open {
-  overflow: hidden;
-}
-
-h1 {
-  font-size: 30px;
-  line-height: 40px;
-}
-
-h2 {
-  font-size: 25px;
-}
-
-.well {
-  margin-left: 0;
-}
-.well.nav.nav-list {
-  padding-left: 0;
-  padding-right: 0;
-}
-.well.nav .nav-header {
-  color: #999999;
-  display: block;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 20px;
-  padding: 3px 15px;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-  text-transform: uppercase;
-}
-
 .listwidget ul > li > label {
   font-weight: normal;
 }
@@ -2239,22 +2208,10 @@ textarea.form-control {
 }
 
 .control-group {
-  margin-bottom: 15px;
+  margin-bottom: 15.04px;
 }
 .control-group .help-block {
   margin-bottom: 0;
-}
-
-.alert-error {
-  color: #b94a48;
-  background-color: #f2dede;
-  border-color: #eed3d7;
-}
-.alert-error hr {
-  border-top-color: #e6c1c7;
-}
-.alert-error .alert-link {
-  color: #953b39;
 }
 
 @media screen and (min-width: 768px) {
@@ -2281,28 +2238,28 @@ button.btn, a.btn {
 }
 
 .btn-default {
-  border-bottom: 2px solid #ADADAD;
-  background: #F5F5F5;
+  border-bottom: 2px solid #adadad;
+  background: whitesmoke;
 }
 .btn-default:focus, .btn-default:active, .btn-default.active {
-  border-bottom: 1px solid #ADADAD;
-  border-top: 2px solid #ADADAD;
+  border-bottom: 1px solid #adadad;
+  border-top: 2px solid #adadad;
 }
 
 .btn-danger {
-  border-bottom: 2px solid #AC2925;
+  border-bottom: 2px solid #ac2925;
 }
 .btn-danger:focus, .btn-danger:active, .btn-danger.active {
-  border-bottom: 1px solid #AC2925;
-  border-top: 2px solid #AC2925;
+  border-bottom: 1px solid #ac2925;
+  border-top: 2px solid #ac2925;
 }
 
 .btn-primary {
-  border-bottom: 2px solid #285E8E;
+  border-bottom: 2px solid #285e8e;
 }
 .btn-primary:focus, .btn-primary:active, .btn-primary.active {
-  border-bottom: 1px solid #285E8E;
-  border-top: 2px solid #285E8E;
+  border-bottom: 1px solid #285e8e;
+  border-top: 2px solid #285e8e;
 }
 
 .btn-success {
@@ -2314,19 +2271,19 @@ button.btn, a.btn {
 }
 
 .btn-info {
-  border-bottom: 2px solid #269ABC;
+  border-bottom: 2px solid #269abc;
 }
 .btn-info:focus, .btn-info:active, .btn-info.active {
-  border-bottom: 1px solid #269ABC;
-  border-top: 2px solid #269ABC;
+  border-bottom: 1px solid #269abc;
+  border-top: 2px solid #269abc;
 }
 
 .btn-warning {
-  border-bottom: 2px solid #D58512;
+  border-bottom: 2px solid #d58512;
 }
 .btn-warning:focus, .btn-warning:active, .btn-warning.active {
-  border-bottom: 1px solid #D58512;
-  border-top: 2px solid #D58512;
+  border-bottom: 1px solid #d58512;
+  border-top: 2px solid #d58512;
 }
 
 strong {
@@ -2380,15 +2337,28 @@ h1 small, h2 small, h3 small {
 
 .well {
   padding: 11px 14px;
+  margin-left: 0;
 }
 .well .nav.nav-list {
   margin-left: -14px;
   margin-right: -14px;
 }
+.well.nav .nav-header {
+  display: block;
+  color: #999999;
+  font-size: 12.8px;
+  font-weight: 600;
+  line-height: 19.2px;
+  padding: 0px 15px 5px 15px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
 
 .well.nav.nav-list {
   padding-top: 11px;
   padding-bottom: 11px;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .nav-list > li > a, .nav-list .nav-header {
@@ -2415,6 +2385,10 @@ h1 small, h2 small, h3 small {
 
 .nav-pills > li > a {
   margin-top: 0;
+}
+
+.nav-open {
+  overflow: hidden;
 }
 
 span[class^="icon-"], span[class*=" icon-"] {

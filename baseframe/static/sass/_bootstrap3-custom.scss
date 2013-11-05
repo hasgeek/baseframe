@@ -1,38 +1,5 @@
 // Corrections and additions to Bootstrap-3's styles
 
-.nav-open {
-    overflow: hidden;
-}
-
-h1 {
-    font-size: 30px;
-    line-height: 40px;
-}
-h2 {
-    font-size: 25px;
-}
-
-.well {
-    margin-left: 0;
-    &.nav {
-        &.nav-list {
-            padding-left: 0;
-            padding-right: 0;
-        }
-        .nav-header {
-            color: #999999;
-            display: block;
-            font-size: 11px;
-            font-weight: 600;
-            line-height: 20px;
-            padding: 3px 15px;
-            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-            text-transform: uppercase;
-        }
-    }
-}
-
-
 // Form styling
 .listwidget ul > li > label {
     font-weight: normal;
@@ -46,22 +13,12 @@ textarea.form-control {
     min-height: 150px;
 }
 .control-group {
-    margin-bottom: 15px;
+    margin-bottom: $body-font-size * 0.94;
     .help-block {
         margin-bottom: 0;
     }
 }
-.alert-error {
-    color: #b94a48;
-    background-color: #f2dede;
-    border-color: #eed3d7;
-    hr {
-        border-top-color: #e6c1c7;
-    }
-    .alert-link {
-        color: #953b39;
-    }
-}
+
 @media screen and (min-width: 768px){
     .form-horizontal .help-required {
         position: absolute;
@@ -89,51 +46,51 @@ button.btn, a.btn{
 }
 
 .btn-default {
-    border-bottom: 2px solid #ADADAD;
-    background: #F5F5F5;
+    border-bottom: 2px solid $color-default-btn;
+    background: $color-gray-btn;
     &:focus, &:active, &.active {
-        border-bottom: 1px solid #ADADAD;
-        border-top: 2px solid #ADADAD;      
+        border-bottom: 1px solid $color-default-btn;
+        border-top: 2px solid $color-default-btn;      
     }
 }
 
 .btn-danger {
-    border-bottom: 2px solid #AC2925;
+    border-bottom: 2px solid $color-danger-btn;
     &:focus, &:active, &.active {
-        border-bottom: 1px solid #AC2925;
-        border-top: 2px solid #AC2925;
+        border-bottom: 1px solid $color-danger-btn;
+        border-top: 2px solid $color-danger-btn;
     }
 }
 
 .btn-primary {
-    border-bottom: 2px solid #285E8E;
+    border-bottom: 2px solid $color-primary-btn;
     &:focus, &:active, &.active {
-        border-bottom: 1px solid #285E8E;
-        border-top: 2px solid #285E8E;
+        border-bottom: 1px solid $color-primary-btn;
+        border-top: 2px solid $color-primary-btn;
     }
 }
 
 .btn-success {
-    border-bottom: 2px solid #398439;
+    border-bottom: 2px solid $color-success-btn;
     &:focus, &:active, &.active {
-        border-bottom: 1px solid #398439;
-        border-top: 2px solid #398439;
+        border-bottom: 1px solid $color-success-btn;
+        border-top: 2px solid $color-success-btn;
     }
 }
 
 .btn-info {
-    border-bottom: 2px solid #269ABC;
+    border-bottom: 2px solid $color-info-btn;
     &:focus, &:active, &.active {
-        border-bottom: 1px solid #269ABC;
-        border-top: 2px solid #269ABC;
+        border-bottom: 1px solid $color-info-btn;
+        border-top: 2px solid $color-info-btn;
     }
 }
 
 .btn-warning {
-    border-bottom: 2px solid #D58512;
+    border-bottom: 2px solid $color-warning-btn;
     &:focus, &:active, &.active {
-        border-bottom: 1px solid #D58512;
-        border-top: 2px solid #D58512;
+        border-bottom: 1px solid $color-warning-btn;
+        border-top: 2px solid $color-warning-btn;
     }
 }
 
@@ -198,9 +155,22 @@ h1 small, h2 small, h3 small{
 .well{
     // padding: ($body-line-height - 1px) 14px;
     padding: (($body-line-height / 2) - 1px) 14px;
+    margin-left: 0;
     .nav.nav-list{
         margin-left: -14px;
         margin-right: -14px;
+    }
+    &.nav {
+        .nav-header {
+            display: block;
+            color: $color-gray-header;
+            font-size: $body-font-size * 0.8;
+            font-weight: 600;
+            line-height: $body-line-height * 0.8;
+            padding: 0px 15px 5px 15px;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+        }
     }
 }
 
@@ -208,6 +178,8 @@ h1 small, h2 small, h3 small{
 .well.nav.nav-list{
     padding-top: ($body-line-height / 2) - 1px;
     padding-bottom: ($body-line-height / 2) - 1px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .nav-list > li > a, .nav-list .nav-header{
@@ -234,6 +206,9 @@ h1 small, h2 small, h3 small{
 }
 .nav-pills > li > a{
     margin-top: 0;
+}
+.nav-open {
+    overflow: hidden;
 }
 
 // Icons without the ugly <i> tags
