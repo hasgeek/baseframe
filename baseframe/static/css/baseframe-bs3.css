@@ -2180,6 +2180,7 @@ ul.grid > li.header {
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   #logo {
     background-image: url('../../_baseframe/img/logo@2x.png?1378898409');
+    -webkit-background-size: auto 75px;
   }
 }
 @media only screen and (max-width: 767px) {
