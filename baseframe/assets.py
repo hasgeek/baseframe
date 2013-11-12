@@ -57,8 +57,8 @@ assets['bootstrap-datepicker.js'][Version('1.3.0')] = ('jquery.js', 'baseframe/j
 assets['jquery.ui.js'][Version('1.10.3')] = ('jquery.js', 'baseframe/js/jquery-ui.js')
 assets['jquery.ui.css'][Version('1.10.3')] = 'baseframe/css/jquery-ui.css'
 
-assets['jquery.range-slider.js'][Version('5.3.0')] = ('jquery.js', 'baseframe/js/jQRangeSlider-min.js')
-assets['jquery.range-slider.css'][Version('5.3.0')] = 'baseframe/css/jQRangeSlider.css'
+assets['jquery.range-slider.js'][Version('5.3.0')] = ('jquery.js', 'jquery.ui.js', 'baseframe/js/jQRangeSlider-min.js')
+assets['jquery.range-slider.css'][Version('5.3.0')] = ('jquery.ui.css', 'baseframe/css/jQRangeSlider.css')
 
 assets['jquery.textarea-expander.js'][Version('1.0.0')] = ('jquery.js', 'baseframe/js/jquery.textarea-expander.js')
 
@@ -66,6 +66,10 @@ assets['jquery.oembed.js'][Version('1.0.0')] = ('jquery.js', 'baseframe/js/jquer
 
 assets['jquery.timepicker.js'][Version('1.0.7')] = ('jquery.js>=1.7.0', 'baseframe/js/jquery.timepicker.js')
 assets['jquery.timepicker.css'][Version('1.0.7')] = 'baseframe/css/jquery.timepicker.css'
+
+assets['jquery.fullcalendar.js'][Version('1.6.4')] = ('jquery.js', 'jquery.ui.js', 'baseframe/js/fullcalendar/fullcalendar.js')
+assets['jquery.fullcalendar.css'][Version('1.6.4')] = ('jquery.ui.css', 'baseframe/js/fullcalendar/fullcalendar.css')
+assets['jquery.fullcalendar.gcal.js'][Version('1.6.4')] = ('jquery.fullcalendar.js', 'baseframe/js/fullcalendar/gcal.js')
 
 assets['select2.js'][Version('3.3.2')] = ('jquery.js>=1.4.6', 'baseframe/js/select2.js')
 assets['select2.css'][Version('3.3.2')] = 'baseframe/css/select2.css'
