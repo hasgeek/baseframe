@@ -27,7 +27,7 @@ requires = [
     'Flask-Cache',
     'Flask-BabelEx',
     'Flask-MustacheJS',
-    'closure',
+    'closure>=20121212',
     'cssmin',
     'coaster',
     ]
