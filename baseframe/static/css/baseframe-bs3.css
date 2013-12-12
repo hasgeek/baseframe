@@ -1,7 +1,7 @@
-/*!
+/*
  * HasGeek baseframe CSS, based on Twitter Bootstrap.
  */
-/*!
+/*
  *  Font Awesome 3.1.0
  *  the iconic font designed for Bootstrap
  *  -------------------------------------------------------
@@ -83,7 +83,7 @@ a [class*=" icon-"]:before {
 
 ul.icons-ul {
   list-style-type: none;
-  text-indent: -0.7142857142857143em;
+  text-indent: -0.71429em;
   margin-left: 2.142857142857143em;
 }
 
@@ -1657,7 +1657,7 @@ h3 a:hover, h3 a:active {
 }
 
 header {
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
 #page-header {
@@ -1692,7 +1692,7 @@ footer {
 footer .footer-inner {
   margin-top: 10px;
   min-height: 55px;
-  background: whitesmoke url('../../_baseframe/img/shadow.png?1378898409') no-repeat top center;
+  background: whitesmoke url('../../_baseframe/img/shadow.png?1328959567') no-repeat top center;
 }
 
 footer .container {
@@ -1709,7 +1709,7 @@ footer .container p {
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
-  background-image: url('../../_baseframe/img/logo.png?1378898409');
+  background-image: url('../../_baseframe/img/logo.png?1328964578');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   width: 75px;
@@ -1729,7 +1729,7 @@ footer .container p {
   text-indent: -119988px;
   overflow: hidden;
   text-align: left;
-  background-image: url('../../_baseframe/img/hasgeek-presents.png?1378898409');
+  background-image: url('../../_baseframe/img/hasgeek-presents.png?1324527959');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   width: 100px;
@@ -1743,7 +1743,7 @@ footer .container p {
   *vertical-align: auto;
   zoom: 1;
   *display: inline;
-  background: url('../../_baseframe/img/ajax-loader.gif?1378898409') center no-repeat;
+  background: url('../../_baseframe/img/ajax-loader.gif?1305733694') center no-repeat;
   width: 16px;
   height: 16px;
 }
@@ -2179,7 +2179,7 @@ ul.grid > li.header {
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   #logo {
-    background-image: url('../../_baseframe/img/logo@2x.png?1378898409');
+    background-image: url('../../_baseframe/img/logo@2x.png?1328994509');
     -webkit-background-size: auto 75px;
   }
 }

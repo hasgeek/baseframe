@@ -303,6 +303,31 @@ $mob-icon-color: #999;
     font-size: $networkbar-xs-font-size;
     background: #F3F3F3;
 
+    .dropdown-menu {
+        font-size: $networkbar-xs-font-size;
+    }
+
+    li > a.dropdown-toggle:after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-top: 11px;
+        margin-left: 5px;
+        text-indent: -99999px;
+        *text-indent: 0;
+        vertical-align: top;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid #000000;
+        opacity: 0.3;
+        content: "";
+        filter: alpha(opacity=30);
+        // content: "▾";
+    }
+    li:hover > a.dropdown-toggle:after {
+        opacity: 1.0;
+    }
+
     &.navbar{
         min-height: 50px;
         background-color: #F3F3F3;
@@ -371,7 +396,7 @@ $mob-icon-color: #999;
     .navbar-nav{
         padding-top: 0;
         padding-bottom: 0;
-        margin: 0 -15px;
+        margin: 0 -6px;
         li{
             border-bottom: 1px solid #EAEAEB;
             //width: 100%;
@@ -423,10 +448,12 @@ $mob-icon-color: #999;
 @media screen and (min-width: 768px){
     #hg-networkbar{
         font-size: $networkbar-font-size;
+        li > a.dropdown-toggle:after {
+            margin-top: 8px;
+        }
         &.navbar{
             border-top: none;
             border-radius: 0;
-            margin-left: -12px;
             margin-bottom: 0;
             background: $color-hg-bar-background;
             @include background-image(linear-gradient(#f9f9f9, #e8e8e8));
@@ -454,13 +481,14 @@ $mob-icon-color: #999;
                     color: #444444;
                     border-top: 2px solid transparent;
                     line-height: 18px;
-                }            
+                }
                 & > .dropdown-menu{
                     background: $color-hg-bar-background;
                     color: $color-hg-bar;
                     border-top: 0;
-                    font-size: inherit;
+                    font-size: $networkbar-xs-font-size;
                     padding: 0;
+                    left: -1px; // For the 1px border around menu
                     li{
                         margin: 0;
                         padding: 0;
@@ -528,6 +556,7 @@ $mob-icon-color: #999;
             width: auto;
             max-height: auto;
             z-index: auto;
+            padding: 0;
         }
         .navbar-ex1-collapse{
             display: inline-block;

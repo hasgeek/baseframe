@@ -68,14 +68,12 @@
 
 {% macro responsive_networkbar_inner(siteid, links, toplevel=false, appurl='#') %}
   {%- for link in links %}
-    <li id="hg-networkbar-{{ link.name }}" {%- if siteid == link.name %} class="{% if toplevel and loop.first %}strong {% endif %}selected"{% elif link.sep %} class="hg-menu-section"{% elif toplevel and loop.first %} class="strong"{% endif %}>
+    <li id="hg-networkbar-{{ link.name }}" {%- if siteid == link.name %} class="{% if toplevel and loop.first %}strong {% endif %}{% if link.children %}dropdown {% endif %}selected"{% elif link.sep %} class="hg-menu-section"{% elif toplevel and loop.first %} class="strong {%- if link.children %} dropdown{% endif %}"{% elif link.children %} class="dropdown"{% endif %}>
       {%- if link.children -%}
-      <li class="dropdown">
-        <a href="{{ link.url or '#' }}" class="dropdown-toggle" data-toggle="dropdown">{{ link.title }} <b class="caret"></b></a>
+        <a href="{{ link.url or '#' }}" class="dropdown-toggle" data-toggle="dropdown">{{ link.title }}</a>
         <ul class="dropdown-menu">
           {{ networkbar_inner(siteid, link.children) }}
         </ul>
-      </li>
       {%- else -%}
         {%- if link.sep -%}
           {{ link.title }}
@@ -125,7 +123,7 @@
           <li class="profile dropdown">
             {%- with orgs = g.user.organization_links() %}
               {% if orgs %}
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ g.user.fullname }} <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ g.user.fullname }}</a>
                 <ul class="dropdown-menu">
                   <li><a href="/profile">My profile</a></li>
                   {%- for org in orgs %}
