@@ -2987,8 +2987,8 @@ code {
   display: none;
 }
 
-#main-content {
-  margin-top: 5em;
+header {
+  min-height: 50px;
 }
 
 @media screen and (min-width: 768px) {
@@ -2996,8 +2996,8 @@ code {
     display: block;
   }
 
-  #main-content {
-    margin-top: auto;
+  header {
+    min-height: none;
   }
 }
 .select2-container.form-control {

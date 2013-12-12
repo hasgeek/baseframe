@@ -28,15 +28,15 @@
 #page-header {
     display: none;
 }
-#main-content {
-    margin-top: 5em;
+header {
+    min-height: 50px;
 }
 @media screen and (min-width: 768px) {
     #page-header{
         display: block;
     }
-    #main-content{
-        margin-top: auto;
+    header {
+        min-height: none;
     }
 }
 
