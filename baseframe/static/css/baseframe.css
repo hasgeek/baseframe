@@ -1902,28 +1902,28 @@ html, body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin-bottom: -67px;
+  margin-bottom: -65px;
 }
 
 #root #root_footer {
-  height: 67px;
+  height: 65px;
 }
 
 footer {
   clear: both;
   position: relative;
-  min-height: 57px;
+  min-height: 55px;
 }
 
 footer .footer-inner {
   margin-top: 10px;
-  min-height: 57px;
+  min-height: 55px;
   background: whitesmoke url('../../_baseframe/img/shadow.png?1328959567') no-repeat top center;
 }
 
 footer .container {
   text-align: center;
-  font-size: 14px;
+  font-size: 90%;
   padding-top: 1.5em;
   padding-bottom: 1em;
 }
