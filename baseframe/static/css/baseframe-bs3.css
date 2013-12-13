@@ -2204,6 +2204,10 @@ ul.grid > li.header {
   font-weight: 600;
 }
 
+.form-control {
+  padding: 6px 6px;
+}
+
 textarea.form-control {
   min-height: 150px;
 }
@@ -2299,6 +2303,9 @@ strong {
 .page-header h3 {
   margin-top: 0;
   font-weight: normal;
+}
+.page-header h2 {
+  margin-top: 0;
 }
 .page-header h1 {
   line-height: 36px;
@@ -2425,7 +2432,7 @@ span[class^="icon-"]:before, span[class*=" icon-"]:before {
 }
 
 .control-group {
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
 label {
@@ -2997,7 +3004,7 @@ header {
   }
 
   header {
-    min-height: none;
+    min-height: 0;
   }
 }
 .select2-container.form-control {

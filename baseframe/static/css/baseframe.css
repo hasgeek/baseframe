@@ -1635,6 +1635,9 @@ strong {
   margin-top: 0;
   font-weight: normal;
 }
+.page-header h2 {
+  margin-top: 0;
+}
 .page-header h1 {
   line-height: 30px;
   margin-top: 0;

@@ -9,9 +9,15 @@
         font-weight: 600;
     }
 }
+
+.form-control {
+    padding: 6px 6px
+}
+
 textarea.form-control {
     min-height: 150px;
 }
+
 .control-group {
     margin-bottom: $body-font-size * 0.94;
     .help-block {
@@ -106,11 +112,14 @@ strong{
     padding: 0;
     border-bottom: 0;
 
-    h3{
+    h3 {
         margin-top: 0;
         font-weight: normal;
     }
-    h1{
+    h2 {
+        margin-top: 0;
+    }
+    h1 {
         line-height: $body-line-height * 1.5;
         margin-top: 0;
         // margin-bottom: $body-line-height;
@@ -248,7 +257,7 @@ span[class^="icon-"], span[class*=" icon-"]{
 }
 
 .control-group{
-    margin-bottom: $body-line-height;
+    margin-bottom: $body-line-height / 2;
 }
 
 label{

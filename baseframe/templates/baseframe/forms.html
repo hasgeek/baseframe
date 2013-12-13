@@ -8,7 +8,7 @@
 {%- endmacro %}
 
 {# change renderfield.mustache also while changing here #}
-{% macro renderfield(field, css_class="", widget_css_class=None, sidetext=None, tabindex=None, autofocus=False) -%}
+{% macro renderfield(field, css_class="", widget_css_class=None, sidetext=None, tabindex=None, autofocus=False, style='horiz') -%}
 
   {%- if field.widget.html_tag in ['ul', 'ol'] %}
     {%- set listwidget = true %}
@@ -16,7 +16,7 @@
     {%- set listwidget = false %}
   {%- else %}
     {%- set listwidget = false %}
-    {%- set widget_css_class = "form-control " + (widget_css_class or "") %}
+    {#{%- set widget_css_class = "form-control " + (widget_css_class or "") %}#}
   {%- endif -%}
 
   <div class="form-group control-group {#- BS3: form-group, BS2: control-group -#}
@@ -25,7 +25,7 @@
       {%- if listwidget %} listwidget {%- endif -%}
       " id="field-{{ field.id }}">
     {%- if field.widget.input_type == 'checkbox' %}
-      <div class="col-xs-12 col-sm-9 col-md-8 col-sm-offset-3 col-md-offset-2 controls">
+      <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-9 col-md-8 col-sm-offset-3 col-md-offset-2 {%- endif %} controls">
         <div class="checkbox">
           <label>{{ field | render_field_options(class=widget_css_class, tabindex=tabindex) }} {{ field.label.text }}</label>
         </div>
@@ -35,12 +35,12 @@
         {%- endif %}
       </div>
     {%- else %}
-      <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label" for="{{ field.id }}">{{ field.label.text }}
+      <label class="{% if style == 'horiz' -%} col-xs-12 col-sm-3 col-md-2 col-lg-2 {%- endif %} control-label" for="{{ field.id }}">{{ field.label.text }}
         {%- if field.flags.required -%}
           <span class="help-required" title="Required">*</span>
         {%- endif -%}
       </label>
-      <div class="col-xs-12 col-sm-9 col-md-8 col-lg-8 controls">
+      <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-9 col-md-8 col-lg-8 {%- endif %} controls">
         {{ field | render_field_options(class=widget_css_class, tabindex=tabindex, autofocus=autofocus)}}
         {%- if sidetext %}
           <span class="help-inline">{{sidetext}}</span>
@@ -54,9 +54,9 @@
   </div>
 {%- endmacro %}
 
-{% macro rendersubmit(buttons=[], css_class="", tabindex='', cancel_url='') -%}
+{% macro rendersubmit(buttons=[], css_class="", tabindex='', cancel_url='', style='horiz') -%}
 <div class="form-group form-actions clearfix{% if css_class %} {{ css_class}}{% endif %}">
-  <div class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
+  <div {%- if style == 'horiz' %} class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8"{% endif %}>
     {% for name, value, widget_class in buttons -%}
       <button type="submit"
         {%- if name %} name="{{ name|e }}"{% else %} {% endif -%}
@@ -64,13 +64,13 @@
         {%- if tabindex %} tabindex="{{ tabindex }}" {% endif -%}
         >{{ value|e }}</button>
     {% endfor %}
-    {% if cancel_url %}<a href="{{ cancel_url }}" class="btn btn-default">Cancel</a>{% endif %}
+    {% if cancel_url %}<a href="{{ cancel_url }}" class="btn btn-default">{% trans %}Cancel{% endtrans %}</a>{% endif %}
     <span class="loading hidden">&nbsp;</span>
   </div>
 </div>
 {%- endmacro %}
 
-{% macro renderform_inner(form, formid) -%}
+{% macro renderform_inner(form, formid, style='horiz') -%}
   {%- if form.errors %}
     <div class="alert alert-error alert-danger">
       <a class="close" data-dismiss="alert">×</a>
@@ -92,19 +92,19 @@
       {# Don't show hidden #}
     {%- else -%}
       {% if field.type in ['TextField', 'DateField', 'EmailField', 'URLField', 'TextAreaField'] %}
-        {{ renderfield(field, widget_css_class="form-control field-" + field.id, autofocus=autofocus) }}
+        {{ renderfield(field, widget_css_class="form-control field-" + field.id, autofocus=autofocus, style=style) }}
       {% else %}
-        {{ renderfield(field, widget_css_class="field-" + field.id, autofocus=autofocus) }}
+        {{ renderfield(field, widget_css_class="field-" + field.id, autofocus=autofocus, style=style) }}
       {% endif %}
       {%- if autofocus %}{% set autofocus = false %}{% endif %}
     {%- endif %}
   {% endfor %}
 {%- endmacro %}
 
-{% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=False) %}
-<form id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="form-horizontal">
-  {{ renderform_inner(form, formid or None) }}
-  {{ rendersubmit([(None, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url) }}
+{% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=False, style='horiz') %}
+<form id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" {%- if style == 'horiz' %} class="form-horizontal"{% endif %}>
+  {{ renderform_inner(form, formid or None, style=style) }}
+  {{ rendersubmit([(None, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url, style=style) }}
 </form>
 {% endmacro %}
 
