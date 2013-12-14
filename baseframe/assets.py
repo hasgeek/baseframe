@@ -34,7 +34,7 @@ assets['bootstrap-tab.js'][Version('2.0.1')] = ('jquery.js', 'baseframe/js/boots
 assets['bootstrap-transition.js'][Version('2.0.1')] = ('jquery.js', 'baseframe/js/bootstrap/bootstrap-transition.js')
 assets['bootstrap-typeahead.js'][Version('2.0.1')] = ('jquery.js', 'baseframe/js/bootstrap/bootstrap-typeahead.js')
 
-# Bootstrap 3.0.0-WIP
+# Bootstrap 3.0.0
 assets['bootstrap.css'][Version('3.0.0')] = 'baseframe/css/bootstrap3/bootstrap.css'
 assets['bootstrap-affix.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/affix.js')
 assets['bootstrap-alert.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/alert.js')
@@ -150,6 +150,11 @@ assets['bootstrap.js'][Version('3.0.0')] = {'requires': [
     'bootstrap-affix.js==3.0.0',
 ]}
 
+assets['bootstrap3-editable.js'][Version('1.5.1')] = ('bootstrap.js>=3.0.0',
+    'baseframe/js/bootstrap3-editable/js/bootstrap-editable.js')
+assets['bootstrap3-editable.css'][Version('1.5.1')] = ('bootstrap.css>=3.0.0',
+    'baseframe/js/bootstrap3-editable/css/bootstrap-editable.css')
+
 assets['mustache.js'][Version('2.0.0')] = {'requires': [
     'mustache-loader.js==0.5.1',
     'mustache-hogan.js==2.0.0',
@@ -161,7 +166,7 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
     'bootstrap-datepicker.js',
     'jquery.timepicker.js',
     'select2.js',
-    'mustache.js',
+    #'mustache.js',
 ]}
 
 assets['baseframe.js'][Version(__version__)] = {'requires': [
