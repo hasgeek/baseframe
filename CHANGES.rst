@@ -9,6 +9,7 @@
 * Removed baseframe.sqlalchemy. Use coaster.db now
 * Switched default font from Open Sans to Source Sans Pro for the lower
   x-height, thereby improving the visible line height
+* Fixed timezone handling in DateTimeField
 
 0.2.16
 ------

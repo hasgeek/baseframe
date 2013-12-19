@@ -119,8 +119,17 @@ class DateTimeField(wtforms.fields.DateTimeField):
         super(DateTimeField, self).__init__(label, validators, **kwargs)
         self.format = format
         self.timezone = timezone
-        if timezone:
-            self.tz = pytz_timezone(timezone)
+        self._timezone_converted = None
+
+    @property
+    def timezone(self):
+        return self._timezone
+
+    @timezone.setter
+    def timezone(self, value):
+        self._timezone = value
+        if value:
+            self.tz = pytz_timezone(value)
         else:
             self.tz = utc
 
@@ -128,9 +137,9 @@ class DateTimeField(wtforms.fields.DateTimeField):
         if self.data:
             if self.timezone:
                 if self.data.tzinfo is None:
-                    data = utc.localize(self.data).astimezone(self.tz)
+                    data = self.tz.normalize(utc.localize(self.data).astimezone(self.tz))
                 else:
-                    data = self.data.astimezone(self.tz)
+                    data = self.tz.normalize(self.data.astimezone(self.tz))
             else:
                 data = self.data
             value = data.strftime(self.format)
@@ -140,9 +149,13 @@ class DateTimeField(wtforms.fields.DateTimeField):
 
     def process_formdata(self, valuelist):
         super(DateTimeField, self).process_formdata(valuelist)
-        if self.timezone:
+        self._timezone_converted = False
+
+    def pre_validate(self, form):
+        if self._timezone_converted is False:
             # Convert from user timezone back to UTC, then discard tzinfo
             self.data = self.tz.localize(self.data).astimezone(utc).replace(tzinfo=None)
+            self._timezone_converted = True
 
 
 class HiddenMultiField(wtforms.fields.TextField):
