@@ -119,6 +119,8 @@ assets['dropzone.css'][Version('3.2.0')] = 'baseframe/css/dropzone.css'
 assets['mustache-hogan.js'][Version('2.0.0')] = 'baseframe/js/mustache-hogan/hogan-2.0.0.min.mustache.js'
 assets['mustache-loader.js'][Version('0.5.1')] = 'baseframe/js/mustache-hogan/mustache-loader.js'
 
+assets['marked.js'][Version('0.3.0')] = 'baseframe/js/marked.js'
+
 # Asset packages
 assets['bootstrap.js'][Version('2.0.1')] = {'requires': [
     'bootstrap-alert.js==2.0.1',
