@@ -93,16 +93,19 @@ baseframe = BaseframeBlueprint('baseframe', __name__,
 
 
 @networkbar_cache.cached(key_prefix='networkbar_links')
-def networkbar_links():
-    links = current_app.config.get('NETWORKBAR_LINKS')
-    if links:
-        return links
-
+def networkbar_links_fetcher():
     try:
         r = requests.get(current_app.config['NETWORKBAR_DATA'])
         return (r.json() if callable(r.json) else r.json).get('links', [])
     except:  # Catch all exceptions
         return []
+
+def networkbar_links():
+    links = current_app.config.get('NETWORKBAR_LINKS')
+    if links:
+        return links
+
+    return networkbar_links_fetcher()
 
 
 @baseframe.app_template_filter('render_field_options')
