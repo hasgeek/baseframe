@@ -116,6 +116,7 @@ def render_field_options(field, **kwargs):
     d = dict((k, v) for k, v in kwargs.items() if v is not None and v is not False)
     return field(**d)
 
+
 @baseframe.app_template_filter('to_json')
 def form_field_to_json(field, **kwargs):
     d = {}
@@ -129,10 +130,12 @@ def form_field_to_json(field, **kwargs):
     d['render_html'] = Markup(render_field_options(field, **kwargs))
     return d
 
+
 @baseframe.app_context_processor
 def baseframe_context():
     return {
-        'networkbar_links': networkbar_links
+        'networkbar_links': networkbar_links,
+        'csrf_form': EmptyForm(),
     }
 
 
@@ -312,6 +315,17 @@ def process_response(response):
 b_ = _
 b__ = __
 from flask.ext.babelex import gettext as _, lazy_gettext as __
+
+# CSRF form. Placed at bottom of file to bypass circular import errors.
+from .forms import Form
+
+class EmptyForm(Form):
+    """
+    Empty form for :attr:`csrf_token`. Add ``{{ csrf_form.hidden_tag() }}``
+    in your template to insert the current CSRF token.
+    """
+    pass
+
 
 # Deprecated imports
 from .deprecated import *
