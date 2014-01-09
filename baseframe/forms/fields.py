@@ -88,9 +88,6 @@ class TinyMceField(wtforms.fields.TextAreaField):
         self.sanitize_tags = sanitize_tags
         self.sanitize_attributes = sanitize_attributes
 
-    def tinymce_options_json(self):
-        return [(Markup(json.dumps(k)), Markup(json.dumps(v))) for k, v in self.tinymce_options.items()]
-
     def process_formdata(self, valuelist):
         super(TinyMceField, self).process_formdata(valuelist)
         # Sanitize data

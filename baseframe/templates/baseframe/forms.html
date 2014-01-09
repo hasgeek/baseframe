@@ -132,13 +132,13 @@
     $(function() {
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
         // Location of TinyMCE script
-        script_url: '{{ url_for("baseframe.static", filename="js/tiny_mce/tiny_mce.js") }}',
+        script_url: {{ url_for("baseframe.static", filename="js/tiny_mce/tiny_mce.js")|tojson }},
 
-        {%- for k, v in field.tinymce_options_json() %}
-          {{ k }}: {{ v }},
+        {%- for k, v in field.tinymce_options.items() %}
+          {{ k|tojson }}: {{ v|tojson }},
         {%- endfor %}
         // Content CSS
-        content_css: "{{ field.content_css or url_for('baseframe.editorcss') }}",
+        content_css: {{ field.content_css or url_for('baseframe.editorcss')|tojson }},
         // Focus/blur indicators
         setup: function(ed) {
           ed.onInit.add(function(ed) {
