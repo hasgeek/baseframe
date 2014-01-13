@@ -109,10 +109,10 @@
 {% endmacro %}
 
 {% macro ajaxlink(form, text, title, action, formid, target='', replace_target=False, class='', success_msg='Action successfully taken') %}
-<form id="{{ formid }}" method="POST" action="{{ action }}" accept-charset="UTF-8" class="ajax_link" data-target="{% if target %}{{target}}{% else %}#{{ formid }}{% endif %}" data-replace-target="{% if replace_target %}1{% else %}0{% endif %}" data-success-msg="{{ success_msg|forceescape }}">
+<form id="{{ formid }}" method="POST" action="{{ action }}" accept-charset="UTF-8" class="ajax_link" data-target="{% if target %}{{target}}{% else %}#{{ formid }}{% endif %}" data-replace-target="{% if replace_target %}1{% else %}0{% endif %}" data-success-msg="{{ _(success_msg)|forceescape }}">
   <input type="hidden" name="form.id" value="{{ formid }}" />
   {{ form.hidden_tag() }}
-  <a href="javascript:void(0)" class="{{ class }}" title="{{ title|forceescape }}">{{ text|safe }}</a>
+  <a href="javascript:void(0)" class="{{ class }}" title="{{ _(title)|forceescape }}">{{ _(text)|safe }}</a>
 </form>
 {% if request.is_xhr -%}<script>activate_ajax_link($('#{{ formid }}'));</script>{% endif %}
 {% endmacro %}
