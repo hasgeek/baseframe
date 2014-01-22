@@ -8,7 +8,7 @@
 {%- endmacro %}
 
 {# change renderfield.mustache also while changing here #}
-{% macro renderfield(field, css_class="", widget_css_class=None, sidetext=None, tabindex=None, autofocus=False, style='horiz') -%}
+{% macro renderfield(field, css_class="", widget_css_class="", sidetext=None, tabindex=None, autofocus=False, style='horiz') -%}
 
   {%- if field.widget.html_tag in ['ul', 'ol'] %}
     {%- set listwidget = true %}
@@ -16,7 +16,6 @@
     {%- set listwidget = false %}
   {%- else %}
     {%- set listwidget = false %}
-    {#{%- set widget_css_class = "form-control " + (widget_css_class or "") %}#}
   {%- endif -%}
 
   <div class="form-group control-group {#- BS3: form-group, BS2: control-group -#}
@@ -27,7 +26,7 @@
     {%- if field.widget.input_type == 'checkbox' %}
       <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-9 col-md-8 col-sm-offset-3 col-md-offset-2 {%- endif %} controls">
         <div class="checkbox">
-          <label>{{ field | render_field_options(class=widget_css_class, tabindex=tabindex) }} {{ field.label.text }}</label>
+          <label>{{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex) }} {{ field.label.text }}</label>
         </div>
         {{ rendererrors(field) }}
         {%- if field.description %}
@@ -41,7 +40,11 @@
         {%- endif -%}
       </label>
       <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-9 col-md-8 col-lg-8 {%- endif %} controls">
-        {{ field | render_field_options(class=widget_css_class, tabindex=tabindex, autofocus=autofocus)}}
+        {%- if field.type in ['TextField', 'DateField', 'EmailField', 'URLField', 'TextAreaField', 'PasswordField'] %}
+          {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus)}}
+        {%- else %}
+          {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus)}}
+        {%- endif %}
         {%- if sidetext %}
           <span class="help-inline">{{sidetext}}</span>
         {%- endif %}
@@ -91,11 +94,7 @@
     {%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
       {# Don't show hidden #}
     {%- else -%}
-      {% if field.type in ['TextField', 'DateField', 'EmailField', 'URLField', 'TextAreaField'] %}
-        {{ renderfield(field, widget_css_class="form-control field-" + field.id, autofocus=autofocus, style=style) }}
-      {% else %}
-        {{ renderfield(field, widget_css_class="field-" + field.id, autofocus=autofocus, style=style) }}
-      {% endif %}
+      {{ renderfield(field, autofocus=autofocus, style=style) }}
       {%- if autofocus %}{% set autofocus = false %}{% endif %}
     {%- endif %}
   {% endfor %}
