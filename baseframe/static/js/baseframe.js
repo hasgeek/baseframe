@@ -1,6 +1,6 @@
 // This is a global function. Isn't there a better way to do this?
 
-function activate_widgets(){
+function activate_widgets(realtime){
     // Activate select2.js and CodeMirror for non-mobile browsers
     if (!navigator.userAgent.match(/(iPod|iPad|iPhone|Android)/)) {
       $('select:not(.notselect)').select2({allowClear: true});
@@ -23,6 +23,11 @@ function activate_widgets(){
       // Activate codemirror on all textareas with class='markdown'
       $('textarea.markdown').each(function(){
           var editor = CodeMirror.fromTextArea(this, cm_markdown_config);
+          if(typeof realtime != 'undefined' && realtime) {
+            editor.on('change', function(instance){
+              instance.save();
+            });
+          }
       });
     }
 }
