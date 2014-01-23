@@ -74,23 +74,23 @@ assets['jquery.fullcalendar.gcal.js'][Version('1.6.4')] = ('jquery.fullcalendar.
 assets['select2.js'][Version('3.3.2')] = ('jquery.js>=1.4.6', 'baseframe/js/select2.js')
 assets['select2.css'][Version('3.3.2')] = 'baseframe/css/select2.css'
 
-assets['codemirror.js'][Version('3.16.0')] = 'baseframe/js/codemirror/lib/codemirror.js'
-assets['codemirror.mode.markdown.js'][Version('3.16.0')] = 'baseframe/js/codemirror/mode/markdown/markdown.js'
-assets['codemirror.mode.gfm.js'][Version('3.16.0')] = 'baseframe/js/codemirror/mode/gfm/gfm.js'
-assets['codemirror.mode.htmlmixed.js'][Version('3.16.0')] = 'baseframe/js/codemirror/mode/htmlmixed/htmlmixed.js'
-assets['codemirror.addon.mode.overlay.js'][Version('3.16.0')] = 'baseframe/js/codemirror/addon/mode/overlay.js'
-assets['codemirror.addon.edit.continuelist.js'][Version('3.16.0')] = 'baseframe/js/codemirror/addon/edit/continuelist.js'
-assets['codemirror.css'][Version('3.16.0')] = 'baseframe/js/codemirror/lib/codemirror.css'
+assets['codemirror.js'][Version('3.21.0')] = 'baseframe/js/codemirror/lib/codemirror.js'
+assets['codemirror.mode.markdown.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/markdown/markdown.js'
+assets['codemirror.mode.gfm.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/gfm/gfm.js'
+assets['codemirror.mode.htmlmixed.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/htmlmixed/htmlmixed.js'
+assets['codemirror.addon.mode.overlay.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/mode/overlay.js'
+assets['codemirror.addon.edit.continuelist.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/edit/continuelist.js'
+assets['codemirror.css'][Version('3.21.0')] = 'baseframe/js/codemirror/lib/codemirror.css'
 
-assets['codemirror-markdown.js'][Version('3.16.0')] = {'requires': [
-    'codemirror.js==3.16.0',
-    'codemirror.mode.markdown.js==3.16.0',
-    'codemirror.mode.gfm.js==3.16.0',
-    'codemirror.mode.htmlmixed.js==3.16.0',
-    'codemirror.addon.mode.overlay.js==3.16.0',
-    'codemirror.addon.edit.continuelist.js==3.16.0',
+assets['codemirror-markdown.js'][Version('3.21.0')] = {'requires': [
+    'codemirror.js==3.21.0',
+    'codemirror.mode.markdown.js==3.21.0',
+    'codemirror.mode.gfm.js==3.21.0',
+    'codemirror.mode.htmlmixed.js==3.21.0',
+    'codemirror.addon.mode.overlay.js==3.21.0',
+    'codemirror.addon.edit.continuelist.js==3.21.0',
 ]}
-assets['codemirror-markdown.css'][Version('3.16.0')] = ('codemirror.css==3.16.0', 'baseframe/css/codemirror.css')
+assets['codemirror-markdown.css'][Version('3.21.0')] = ('codemirror.css==3.21.0', 'baseframe/css/codemirror.css')
 assets['pygments-default.css'][Version('1.5.0')] = 'baseframe/css/pygments-default.css'
 assets['pygments-zenburn.css'][Version('1.5.0')] = 'baseframe/css/pygments-zenburn.css'
 assets['pygments.css'][Version('1.5.0')] = {'requires': 'pygments-default.css'}
