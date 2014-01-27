@@ -2,10 +2,13 @@
 
 import dns.resolver
 import wtforms
+import requests
+from lxml import html
 from coaster import make_name, get_email_domain
 from .. import b__ as __
+from .. import b_ as _
 
-__all__ = ['ValidEmailDomain', 'StripWhitespace', 'ValidName']
+__all__ = ['ValidEmailDomain', 'AllUrlsValid', 'StripWhitespace', 'ValidName']
 
 
 class ValidEmailDomain(object):
@@ -43,6 +46,22 @@ class ValidEmailDomain(object):
             raise wtforms.validators.StopValidation(self.message or self.message_email)
         except (dns.resolver.Timeout, dns.resolver.NoNameservers):
             pass
+
+
+class AllUrlsValid(object):
+    """
+    Validator to confirm an url address is likely to be valid because
+    if the status code is 200
+    """
+    def __init__(self):
+        pass
+    
+    def __call__(self, form, field):
+        html_tree = html.fromstring(field.data)
+        for text, href in [(atag.text_content(), atag.attrib['href']) for atag in html_tree.xpath("//a")]:
+            if requests.head(href).status_code not in [200, 201, 202, 203, 204, 205, 206, 207, 208, 226]:
+            	field.errors.append(_(u'The URL "{url}" linked from "{text}" is not valid'.format(url=href, text=text)))
+        return
 
 
 class StripWhitespace(object):
