@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import dns.resolver
+from urlparse import urljoin
+from flask import request
 import wtforms
 import requests
 from lxml import html
@@ -57,11 +59,28 @@ class AllUrlsValid(object):
         pass
     
     def __call__(self, form, field):
-        html_tree = html.fromstring(field.data)
-        for text, href in [(atag.text_content(), atag.attrib['href']) for atag in html_tree.xpath("//a")]:
-            if requests.head(href).status_code not in [200, 201, 202, 203, 204, 205, 206, 207, 208, 226]:
-            	field.errors.append(_(u'The URL "{url}" linked from "{text}" is not valid'.format(url=href, text=text)))
-        return
+        if field.data:
+            try:
+                current_url = request.url
+            except RuntimeError:
+                current_url = None
+
+            html_tree = html.fromstring(field.data)
+            for text, href in [(atag.text_content(), atag.attrib['href']) for atag in html_tree.xpath("//a")]:
+                url = urljoin(current_url, href)  # Clean up relative URLs
+
+                try:
+                    code = requests.head(url, timeout=30).status_code
+                except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
+                        requests.exceptions.ConnectionError,  # Name resolution or connection failed
+                        requests.exceptions.Timeout):         # Didn't respond in time
+                    code = None
+
+                if code not in [200, 201, 202, 203, 204, 205, 206, 207, 208, 226]:
+                    if url == text:
+                        field.errors.append(_(u'The URL “{url}” is not valid'.format(url=href, text=text)))
+                    else:
+                        field.errors.append(_(u'The URL “{url}” linked from “{text}” is not valid'.format(url=href, text=text)))
 
 
 class StripWhitespace(object):
