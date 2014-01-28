@@ -78,9 +78,9 @@ class AllUrlsValid(object):
 
                 if code not in [200, 201, 202, 203, 204, 205, 206, 207, 208, 226]:
                     if url == text:
-                        field.errors.append(_(u'The URL “{url}” is not valid'.format(url=href, text=text)))
+                        field.errors.append(_(u'The URL “{url}” is not valid').format(url=href, text=text))
                     else:
-                        field.errors.append(_(u'The URL “{url}” linked from “{text}” is not valid'.format(url=href, text=text)))
+                        field.errors.append(_(u'The URL “{url}” linked from “{text}” is not valid').format(url=href, text=text))
 
 
 class StripWhitespace(object):
