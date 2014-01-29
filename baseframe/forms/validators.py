@@ -66,7 +66,7 @@ class AllUrlsValid(object):
                 current_url = None
 
             html_tree = html.fromstring(field.data)
-            for text, href in [(atag.text_content(), atag.attrib['href']) for atag in html_tree.xpath("//a")]:
+            for text, href in [(atag.text_content(), atag.attrib.get('href')) for atag in html_tree.xpath("//a")]:
                 url = urljoin(current_url, href)  # Clean up relative URLs
 
                 try:
