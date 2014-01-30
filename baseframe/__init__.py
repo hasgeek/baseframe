@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import
-import os
 from pytz import timezone
-from flask import g, Blueprint, current_app, request
+from flask import g, Blueprint, request
 from coaster.assets import split_namespec
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache

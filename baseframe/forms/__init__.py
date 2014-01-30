@@ -8,6 +8,7 @@ from flask import render_template, request, Markup, abort, flash, redirect, esca
 import wtforms
 from flask.ext.wtf import Form as BaseForm
 from .. import b__ as __
+from ..signals import form_validation_error, form_validation_success
 
 from .fields import *
 from .widgets import *
@@ -36,6 +37,14 @@ class Form(BaseForm):
                 self.edit_parent = self.edit_obj.parent
         else:
             self.edit_id = None
+
+    def validate(self):
+        result = super(Form, self).validate()
+        if self.errors:
+            form_validation_error.send(self)
+        else:
+            form_validation_success.send(self)
+        return result
 
 
 class ConfirmDeleteForm(Form):
