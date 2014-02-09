@@ -5,6 +5,7 @@ python:
   - "pypy"
 # command to install dependencies
 install:
+  - 'if [[ "$TRAVIS_PYTHON_VERSION" != "pypy" ]]; then pip install http://lxml.de/files/lxml-3.3.1pre.tar.gz; fi'
   - python setup.py install
   - pip install nose coverage coveralls
 # command to run tests
