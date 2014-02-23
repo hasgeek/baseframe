@@ -4,7 +4,7 @@ import dns.resolver
 from urlparse import urljoin
 from flask import request
 import wtforms
-import requests
+import erequests
 from lxml import html
 from coaster import make_name, get_email_domain
 from .. import b__ as __
@@ -55,7 +55,7 @@ class ValidEmailDomain(object):
 class AllUrlsValid(object):
     """
     Validator to confirm an url address is likely to be valid because
-    if the status code is 200
+    if the status code is in (200, 201, 202, 203, 204, 205, 206, 207, 208, 226)
     """
     def __init__(self):
         pass
@@ -68,11 +68,19 @@ class AllUrlsValid(object):
                 current_url = None
 
             html_tree = html.fromstring(field.data)
-            for text, href in [(atag.text_content(), atag.attrib.get('href')) for atag in html_tree.xpath("//a")]:
-                url = urljoin(current_url, href)  # Clean up relative URLs
+            urls = []
+            texts = []
 
+            for text, href in [(atag.text_content(), atag.attrib.get('href')) for atag in html_tree.xpath("//a")]:
+                urls.append(urljoin(current_url, href))       # Cleanup relative urls
+                texts.append(text)
+
+            rs = (erequests.async.head(url, timeout=30) for url in urls)
+            responses = list(erequests.map(rs))
+
+            for text, url, response in zip(texts, urls, responses):
                 try:
-                    code = requests.head(url, timeout=30).status_code
+                    code = response.status_code
                 except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
                         requests.exceptions.ConnectionError,  # Name resolution or connection failed
                         requests.exceptions.Timeout):         # Didn't respond in time
@@ -83,9 +91,9 @@ class AllUrlsValid(object):
 
                 if code not in (200, 201, 202, 203, 204, 205, 206, 207, 208, 226):
                     if url == text:
-                        field.errors.append(_(u'The URL “{url}” is not valid').format(url=href))
+                        field.errors.append(_(u'The URL “{url}” is not valid').format(url=url))
                     else:
-                        field.errors.append(_(u'The URL “{url}” linked from “{text}” is not valid').format(url=href, text=text))
+                        field.errors.append(_(u'The URL “{url}” linked from “{text}” is not valid').format(url=url, text=text))
 
 
 class StripWhitespace(object):
