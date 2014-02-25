@@ -62,7 +62,8 @@ assets['jquery.range-slider.css'][Version('5.3.0')] = ('jquery.ui.css', 'basefra
 
 assets['jquery.textarea-expander.js'][Version('1.0.0')] = ('jquery.js', 'baseframe/js/jquery.textarea-expander.js')
 
-assets['jquery.oembed.js'][Version('1.0.0')] = ('jquery.js', 'baseframe/js/jquery.oembed.js')
+assets['jquery.oembed.js'][Version('1.0.1')] = ('jquery.js', 'baseframe/js/jquery.oembed.js')
+assets['jquery.oembed.css'][Version('1.0.1')] = ('baseframe/css/jquery.oembed.css')
 
 assets['jquery.timepicker.js'][Version('1.0.7')] = ('jquery.js>=1.7.0', 'baseframe/js/jquery.timepicker.js')
 assets['jquery.timepicker.css'][Version('1.0.7')] = 'baseframe/css/jquery.timepicker.css'
