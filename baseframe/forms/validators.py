@@ -9,6 +9,8 @@ from lxml import html
 from coaster import make_name, get_email_domain
 from .. import b__ as __
 from .. import b_ as _
+from ..signals import exception_catchall
+
 
 __all__ = ['ValidEmailDomain', 'AllUrlsValid', 'StripWhitespace', 'ValidName']
 
@@ -74,6 +76,9 @@ class AllUrlsValid(object):
                 except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
                         requests.exceptions.ConnectionError,  # Name resolution or connection failed
                         requests.exceptions.Timeout):         # Didn't respond in time
+                    code = None
+                except Exception as e:
+                    exception_catchall.send(e)
                     code = None
 
                 if code not in (200, 201, 202, 203, 204, 205, 206, 207, 208, 226):

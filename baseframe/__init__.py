@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import
-import os
 from pytz import timezone
-from flask import g, Blueprint, current_app, request
+from flask import g, Blueprint, request
 from coaster.assets import split_namespec
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
@@ -25,7 +24,8 @@ __ = baseframe_translations.lazy_gettext
 
 
 class BaseframeBlueprint(Blueprint):
-    def init_app(self, app, requires=[], bundle_js=None, bundle_css=None, assetenv=None):
+    def init_app(self, app, requires=[], bundle_js=None, bundle_css=None, assetenv=None,
+            static_subdomain=None):
         """
         Initialize an app and load necessary assets.
 
@@ -37,6 +37,7 @@ class BaseframeBlueprint(Blueprint):
         ``bundle_js`` and ``bundle_css`` parameters.
         :param bundle_js: Bundle of additional JavaScript.
         :param bundle_css: Bundle of additional CSS.
+        :param static_subdomain: Serve static files from this subdomain
         """
         assets_js = []
         assets_css = []
@@ -61,7 +62,7 @@ class BaseframeBlueprint(Blueprint):
         app.assets.register('js_jquery', assets.require('jquery.js'))
         app.assets.register('js_all', js_all)
         app.assets.register('css_all', css_all)
-        app.register_blueprint(self)
+        app.register_blueprint(self, static_subdomain=static_subdomain)
 
         app.config.setdefault('CACHE_KEY_PREFIX', 'flask_cache_' + app.name)
         nwcacheconfig = dict(app.config)
@@ -79,6 +80,24 @@ class BaseframeBlueprint(Blueprint):
 
         if isinstance(app.config.get('NETWORKBAR_DATA'), (list, tuple)):
             app.config['NETWORKBAR_LINKS'] = app.config['NETWORKBAR_DATA']
+
+    def register(self, app, options, first_registration=False):
+        """
+        Called by :meth:`Flask.register_blueprint` to register a blueprint
+        on the application.  This can be overridden to customize the register
+        behavior.  Keyword arguments from
+        :func:`~flask.Flask.register_blueprint` are directly forwarded to this
+        method in the `options` dictionary.
+        """
+        self._got_registered_once = True
+        state = self.make_setup_state(app, options, first_registration)
+        if self.has_static_folder:
+            state.add_url_rule(self.static_url_path + '/<path:filename>',
+                               view_func=self.send_static_file,
+                               endpoint='static', subdomain=options.get('static_subdomain'))
+
+        for deferred in self.deferred_functions:
+            deferred(state)
 
 
 baseframe = BaseframeBlueprint('baseframe', __name__,

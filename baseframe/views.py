@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from . import b_ as _, b__ as __
-from . import current_app, Cache, baseframe, networkbar_cache
+from . import baseframe, networkbar_cache
 from .forms import Form
 import os
 import requests
 from datetime import datetime, timedelta
-from flask import send_from_directory, render_template
+from flask import current_app, send_from_directory, render_template
+
 
 @networkbar_cache.cached(key_prefix='networkbar_links')
 def networkbar_links_fetcher():
@@ -62,12 +62,12 @@ def robots():
         'robots.txt', mimetype='text/plain')
 
 
-@baseframe.route('/_toastr_messages.js')
+@baseframe.route('/api/baseframe/1/toastr_messages.js')
 def toastr_messages_js():
     return current_app.response_class(render_template('toastr_messages.js'), mimetype='application/javascript')
 
 
-@baseframe.route('/_editor.css')
+@baseframe.route('/api/baseframe/1/editor.css')
 def editorcss():
     response = current_app.response_class(render_template('editor.css'),
         mimetype='text/css',
