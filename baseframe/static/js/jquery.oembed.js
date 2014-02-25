@@ -178,7 +178,7 @@
             + " and " + (/html/.test(from) ? 'xpath' : 'itemPath') + "='" + (embedProvider.yql.xpath || '/')+"'" ;
         if(from=='html') query += " and compat='html5'";
         var ajaxopts = $.extend({
-          url: "http://query.yahooapis.com/v1/public/yql",
+          url: "//query.yahooapis.com/v1/public/yql",
           dataType: 'jsonp',
           data: {
             q: query,
