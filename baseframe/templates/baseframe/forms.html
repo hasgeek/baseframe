@@ -42,6 +42,10 @@
       <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-9 col-md-8 col-lg-8 {%- endif %} controls">
         {%- if field.type in ['TextField', 'DateField', 'EmailField', 'URLField', 'TextAreaField', 'PasswordField'] %}
           {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus)}}
+        {%- elif field.type == 'FormField' %}
+          {%- for subfield in field.form %}
+            {{ renderfield(subfield, css_class, widget_css_class, sidetext, tabindex, autofocus, style) }}
+          {%- endfor %}
         {%- else %}
           {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus)}}
         {%- endif %}
