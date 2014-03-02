@@ -5,6 +5,7 @@ from . import baseframe, current_app
 from flask import Markup, request
 from datetime import datetime
 import os
+from coaster.gfm import markdown
 
 @baseframe.app_template_filter('age')
 def age(dt):
@@ -91,3 +92,8 @@ def form_field_to_json(field, **kwargs):
     d['is_required'] = bool(field.flags.required)
     d['render_html'] = Markup(render_field_options(field, **kwargs))
     return d
+
+@baseframe.app_template_filter('markdown')
+def field_markdown(field, **kwargs):
+    html = markdown(field)
+    return Markup(html)
