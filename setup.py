@@ -74,6 +74,6 @@ setup(name='baseframe',
     dependency_links=[
         "https://github.com/hasgeek/coaster/archive/master.zip#egg=coaster-dev",
         "https://github.com/mrjoes/flask-babelex/archive/master.zip#egg=Flask-BabelEx-0.8.2",
-        "https://github.com/iamsudip/erequests/archive/master.zip"
+        "https://github.com/iamsudip/erequests/archive/master.zip#egg=erequests-dev"
         ]
     )
