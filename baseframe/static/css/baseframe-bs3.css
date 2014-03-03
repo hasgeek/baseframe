@@ -2244,7 +2244,7 @@ button.btn, a.btn {
 
 .btn-default {
   border-bottom: 2px solid #adadad;
-  background: whitesmoke;
+  background-color: whitesmoke;
 }
 .btn-default:focus, .btn-default:active, .btn-default.active {
   border-bottom: 1px solid #adadad;

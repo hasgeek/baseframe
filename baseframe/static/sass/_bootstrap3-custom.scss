@@ -53,7 +53,7 @@ button.btn, a.btn{
 
 .btn-default {
     border-bottom: 2px solid $color-default-btn;
-    background: $color-gray-btn;
+    background-color: $color-gray-btn;
     &:focus, &:active, &.active {
         border-bottom: 1px solid $color-default-btn;
         border-top: 2px solid $color-default-btn;      
