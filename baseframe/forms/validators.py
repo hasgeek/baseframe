@@ -4,6 +4,7 @@ import dns.resolver
 from urlparse import urljoin
 from flask import request
 import wtforms
+import requests
 import erequests
 from lxml import html
 from coaster import make_name, get_email_domain
