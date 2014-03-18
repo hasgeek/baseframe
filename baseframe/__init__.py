@@ -139,7 +139,9 @@ def process_response(response):
         if not frameoptions or frameoptions == 'ALLOW':
             response.headers.pop('X-Frame-Options')
     else:
-        response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+        if hasattr(g, 'login_required') and g.login_required:
+            # Protect logged-in-only pages from appearing in frames
+            response.headers['X-Frame-Options'] = 'SAMEORIGIN'
     return response
 
 
