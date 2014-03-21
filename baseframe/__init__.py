@@ -75,6 +75,8 @@ class BaseframeBlueprint(Blueprint):
         babel.init_app(app)
         FlaskMustache(app)
 
+        app.config['tz'] = timezone(app.config.get('TIMEZONE', 'UTC'))
+
         if 'NETWORKBAR_DATA' not in app.config:
             app.config['NETWORKBAR_DATA'] = 'https://api.hasgeek.com/1/networkbar/networkbar.json'
 
@@ -123,10 +125,16 @@ def get_locale():
 @babel.timezoneselector
 def get_timezone():
     # If this app supports user logins (ie, g.user exists) and
-    # a user is logged in (ie, g.user is not None), return timezone
+    # a user is logged in (ie, g.user is not None), return user's timezone
+    # else return app default timezone
     user = getattr(g, 'user', None)
     if user is not None:
-        return timezone(user.timezone)
+        if hasattr(user, 'tz'):
+            return user.tz
+        else:
+            return timezone(user.timezone)
+    else:
+        return app.config.get('tz') or timezone('UTC')
 
 
 @baseframe.after_app_request
@@ -140,7 +148,7 @@ def process_response(response):
             response.headers.pop('X-Frame-Options')
     else:
         if hasattr(g, 'login_required') and g.login_required:
-            # Protect logged-in-only pages from appearing in frames
+            # Protect only login_required pages from appearing in frames
             response.headers['X-Frame-Options'] = 'SAMEORIGIN'
     return response
 
