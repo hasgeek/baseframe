@@ -59,6 +59,8 @@ assets['jquery.ui.css'][Version('1.10.3')] = 'baseframe/css/jquery-ui.css'
 
 assets['jquery.range-slider.js'][Version('5.3.0')] = ('jquery.js', 'jquery.ui.js', 'baseframe/js/jQRangeSlider-min.js')
 assets['jquery.range-slider.css'][Version('5.3.0')] = ('jquery.ui.css', 'baseframe/css/jQRangeSlider.css')
+assets['jquery.nouislider.js'][Version('6.0.0')] = ('jquery.js', 'baseframe/js/jquery.nouislider.min.js')
+assets['jquery.nouislider.css'][Version('6.0.0')] = ('baseframe/css/jquery.nouislider.min.css')
 
 assets['jquery.textarea-expander.js'][Version('1.0.0')] = ('jquery.js', 'baseframe/js/jquery.textarea-expander.js')
 
