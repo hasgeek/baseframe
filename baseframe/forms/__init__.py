@@ -38,7 +38,8 @@ class Form(BaseForm):
         else:
             self.edit_id = None
 
-    def validate(self):
+    def validate(self, extra_validators=None):
+        # Don't pass up extra_validators because flask_wtf.Form doesn't support it as of 0.9.5
         result = super(Form, self).validate()
         if self.errors:
             form_validation_error.send(self)
