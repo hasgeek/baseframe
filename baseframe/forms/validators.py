@@ -72,7 +72,9 @@ class AllUrlsValid(object):
                 url = urljoin(current_url, href)  # Clean up relative URLs
 
                 try:
-                    code = requests.get(url, timeout=30).status_code
+                    code = requests.head(url, timeout=30).status_code
+                    if code == 405:  # Some servers don't like HTTP HEAD requests, strange but true
+                        code = requests.get(url, timeout=30).status_code
                 except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
                         requests.exceptions.ConnectionError,  # Name resolution or connection failed
                         requests.exceptions.Timeout):         # Didn't respond in time
