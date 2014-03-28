@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'Fira Sans';
+  src: url('../../_baseframe/fonts/fira/eot/FiraSans-MediumItalic.eot');
+  src: local("Fira Sans Medium Italic"), url('../../_baseframe/fonts/fira/eot/FiraSans-MediumItalic.eot') format("embedded-opentype"), url('../../_baseframe/fonts/fira/woff/FiraSans-MediumItalic.woff') format("woff"), url('../../_baseframe/fonts/fira/ttf/FiraSans-MediumItalic.ttf') format("truetype");
+  font-weight: 500;
+  font-style: italic;
+}

@@ -124,6 +124,30 @@ assets['mustache-loader.js'][Version('0.5.1')] = 'baseframe/js/mustache-hogan/mu
 
 assets['marked.js'][Version('0.3.0')] = 'baseframe/js/marked.js'
 
+# Fira Sans and Fira Mono
+assets['firasans-regular.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-regular.css'
+assets['firasans-regularitalic.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-regularitalic.css'
+assets['firasans-light.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-light.css'
+assets['firasans-lightitalic.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-lightitalic.css'
+assets['firasans-medium.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-medium.css'
+assets['firasans-mediumitalic.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-mediumitalic.css'
+assets['firasans-bold.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-bold.css'
+assets['firasans-bolditalic.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-bolditalic.css'
+assets['firamono-regular.css'][Version('1.0.0')] = 'baseframe/css/fira/firamono-regular.css'
+assets['firamono-bold.css'][Version('1.0.0')] = 'baseframe/css/fira/firamono-bold.css'
+
+assets['firasans.css'][Version('1.0.0')] = {'requires': [
+    'firasans-regular.css==1.0.0',
+    'firasans-regularitalic.css==1.0.0',
+    'firasans-bold.css==1.0.0',
+    'firasans-bolditalic.css==1.0.0'
+    ]}
+
+assets['firamono.css'][Version('1.0.0')] = {'requires': [
+    'firamono-regular.css==1.0.0',
+    'firamono-bold.css==1.0.0'
+    ]}
+
 # Asset packages
 assets['bootstrap.js'][Version('2.0.1')] = {'requires': [
     'bootstrap-alert.js==2.0.1',
