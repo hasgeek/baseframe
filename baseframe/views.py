@@ -28,7 +28,7 @@ def networkbar_links():
 def baseframe_context():
     return {
         'networkbar_links': networkbar_links,
-        'csrf_form': Form(),
+        'csrf_form': Form,
     }
 
 
