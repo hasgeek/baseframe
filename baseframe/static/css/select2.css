@@ -102,7 +102,7 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
   font-size: 1px;
   text-decoration: none;
   border: 0;
-  background: url('../../_baseframe/img/select2.png?1352863174') right top no-repeat;
+  background: url('/_baseframe/img/select2.png?1352863174') right top no-repeat;
   cursor: pointer;
   outline: 0;
 }
@@ -184,7 +184,7 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
   display: block;
   width: 100%;
   height: 100%;
-  background: url('../../_baseframe/img/select2.png?1352863174') no-repeat 0 2px;
+  background: url('/_baseframe/img/select2.png?1352863174') no-repeat 0 2px;
 }
 
 .select2-search {
@@ -222,7 +222,7 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
-  background: white url('../../_baseframe/img/select2.png?1352863174') no-repeat 100% -22px;
+  background: white url('/_baseframe/img/select2.png?1352863174') no-repeat 100% -22px;
 }
 
 .select2-search input:focus {
@@ -237,7 +237,7 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
 }
 
 .select2-search input.select2-active {
-  background: white url('../../_baseframe/img/spinner.gif?1347253688') no-repeat 100%;
+  background: white url('/_baseframe/img/spinner.gif?1347253688') no-repeat 100%;
 }
 
 .select2-container-active .select2-choice,
@@ -400,7 +400,7 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-more-results.select2-active {
-  background: #f4f4f4 url('../../_baseframe/img/spinner.gif?1347253688') no-repeat 100%;
+  background: #f4f4f4 url('/_baseframe/img/spinner.gif?1347253688') no-repeat 100%;
 }
 
 .select2-more-results {
@@ -498,7 +498,7 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-container-multi .select2-choices .select2-search-field input.select2-active {
-  background: white url('../../_baseframe/img/spinner.gif?1347253688') no-repeat 100% !important;
+  background: white url('/_baseframe/img/spinner.gif?1347253688') no-repeat 100% !important;
 }
 
 .select2-default {
@@ -557,7 +557,7 @@ disabled look for disabled choices in the results dropdown
   top: 4px;
   font-size: 1px;
   outline: none;
-  background: url('../../_baseframe/img/select2.png?1352863174') right top no-repeat;
+  background: url('/_baseframe/img/select2.png?1352863174') right top no-repeat;
 }
 
 .select2-container-multi .select2-search-choice-close {
@@ -611,7 +611,7 @@ disabled look for disabled choices in the results dropdown
 /* Retina-ize icons */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi) {
   .select2-search input, .select2-search-choice-close, .select2-container .select2-choice abbr, .select2-container .select2-choice div b {
-    background-image: url('../../_baseframe/img/select2x2.png?1352863269') !important;
+    background-image: url('/_baseframe/img/select2x2.png?1352863269') !important;
     background-repeat: no-repeat !important;
     background-size: 60px 40px !important;
   }

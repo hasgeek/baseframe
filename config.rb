@@ -8,9 +8,9 @@ fonts_dir = "baseframe/static/css/fonts"
 
 http_path = "/"
 http_stylesheets_path='/_baseframe/css'
-http_images_path='../../_baseframe/img'
+http_images_path='/_baseframe/img'
 http_javascripts_path='/_baseframe/js'
-http_fonts_path='../../_baseframe/fonts'
+http_fonts_path='/_baseframe/fonts'
 
 line_comments = false
 # To enable relative paths to assets via compass helper functions. Uncomment:
