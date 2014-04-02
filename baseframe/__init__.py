@@ -15,6 +15,7 @@ from . import translations
 __all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version', '_', '__']
 
 networkbar_cache = Cache(with_jinja2_ext=False)
+asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
 babel = Babel()
 
@@ -24,21 +25,53 @@ __ = baseframe_translations.lazy_gettext
 
 
 class BaseframeBlueprint(Blueprint):
-    def init_app(self, app, requires=[], bundle_js=None, bundle_css=None, assetenv=None,
+    def init_app(self, app, requires=[], ext_requires=[], bundle_js=None, bundle_css=None, assetenv=None,
             static_subdomain=None):
         """
         Initialize an app and load necessary assets.
 
         :param requires: List of required assets. If an asset has both .js
-        and .css components, both will be added to the requirement list.
-        Loaded assets will be minified and concatenated into the app's
-        ``static/js`` and ``static/css`` folders. If an asset has problems
-        with either of these, it should be loaded pre-bundled via the
-        ``bundle_js`` and ``bundle_css`` parameters.
-        :param bundle_js: Bundle of additional JavaScript.
-        :param bundle_css: Bundle of additional CSS.
+            and .css components, both will be added to the requirement list.
+            Loaded assets will be minified and concatenated into the app's
+            ``static/js`` and ``static/css`` folders. If an asset has problems
+            with either of these, it should be loaded pre-bundled via the
+            ``bundle_js`` and ``bundle_css`` parameters.
+        :param ext_requires: Same as requires, but will be loaded from
+            an external cookiefree server if ``ASSET_SERVER`` is in config,
+            before the reqular requires list. Assets are loaded as part of
+            ``requires`` if there is no asset server
+        :param bundle_js: Bundle of additional JavaScript
+        :param bundle_css: Bundle of additional CSS
         :param static_subdomain: Serve static files from this subdomain
         """
+        if app.config.get('ASSET_SERVER'):
+            ext_js = []
+            ext_css = []
+            ignore_js = []
+            ignore_css = []
+            for itemgroup in ext_requires:
+                sub_js = []
+                sub_css = []
+                if not isinstance(itemgroup, (list, tuple)):
+                    itemgroup = [itemgroup]
+                for item in itemgroup:
+                    name, spec = split_namespec(item)
+                    for alist, ilist, ext in [(sub_js, ignore_js, '.js'), (sub_css, ignore_css, '.css')]:
+                        if name + ext in assets:
+                            alist.append(name + ext + unicode(spec))
+                            ilist.append('!' + name + ext)
+                ext_js.append(sub_js)
+                ext_css.append(sub_css)
+            app.config['ext_js'] = ext_js
+            app.config['ext_css'] = ext_css
+        else:
+            ignore_js = []
+            ignore_css = []
+            requires = [item for itemgroup in ext_requires
+                for item in (itemgroup if isinstance(itemgroup, (list, tuple)) else [itemgroup])] + requires
+            app.config['ext_js'] = []
+            app.config['ext_css'] = []
+
         assets_js = []
         assets_css = []
         for item in requires:
@@ -46,9 +79,9 @@ class BaseframeBlueprint(Blueprint):
             for alist, ext in [(assets_js, '.js'), (assets_css, '.css')]:
                 if name + ext in assets:
                     alist.append(name + ext + unicode(spec))
-        js_all = Bundle(assets.require('!jquery.js', *assets_js),
+        js_all = Bundle(assets.require('!jquery.js', *(ignore_js + assets_js)),
             filters='closure_js', output='js/baseframe-packed.js')
-        css_all = Bundle(assets.require(*assets_css),
+        css_all = Bundle(assets.require(*(ignore_css + assets_css)),
             filters=['cssrewrite', 'cssmin'], output='css/baseframe-packed.css')
         if bundle_js:
             js_all = Bundle(js_all, bundle_js)
@@ -70,7 +103,13 @@ class BaseframeBlueprint(Blueprint):
         if 'CACHE_TYPE' not in nwcacheconfig:
             nwcacheconfig['CACHE_TYPE'] = 'simple'
 
+        acacheconfig = dict(app.config)
+        acacheconfig['CACHE_KEY_PREFIX'] = 'asset_'
+        if 'CACHE_TYPE' not in acacheconfig:
+            acacheconfig['CACHE_TYPE'] = 'simple'
+
         networkbar_cache.init_app(app, config=nwcacheconfig)
+        asset_cache.init_app(app, config=acacheconfig)
         cache.init_app(app)
         babel.init_app(app)
         FlaskMustache(app)

@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from . import baseframe, networkbar_cache
-from .forms import Form
 import os
 import requests
 from datetime import datetime, timedelta
-from flask import current_app, send_from_directory, render_template
+from urlparse import urljoin
+from flask import current_app, send_from_directory, render_template, abort
+from flask.ext.assets import Bundle
+from coaster.utils import make_name
+from coaster.assets import split_namespec
+from . import baseframe, networkbar_cache, asset_cache, assets as assets_repo
+from .forms import Form
 
 
 @networkbar_cache.cached(key_prefix='networkbar_links')
@@ -24,11 +28,63 @@ def networkbar_links():
     return networkbar_links_fetcher()
 
 
+def asset_key(assets):
+    return make_name('-'.join(assets).replace(
+            '==', '-eq-').replace('>=', '-gte-').replace('<=', '-lte-').replace('>', '-gt-').replace('<', '-lt-'),
+        maxlength=250)
+
+
+def gen_assets_url(assets):
+    try:
+        names = [split_namespec(a)[0] for a in assets]
+    except ValueError:
+        abort(400)
+
+    is_js = reduce(lambda status, name: status and name.endswith('.js'), names, True)
+    is_css = reduce(lambda status, name: status and name.endswith('.css'), names, True)
+    output_name = asset_key(assets)
+    gendir = os.path.join(current_app.static_folder, 'gen')
+    if not os.path.exists(gendir):
+        os.mkdir(gendir)
+    # The file extensions here are for upstream servers to serve the correct content type:
+    if is_js:
+        bundle = Bundle(assets_repo.require(*assets), output='gen/' + output_name + '.js', filters='closure_js')
+    elif is_css:
+        bundle = Bundle(assets_repo.require(*assets), output='gen/' + output_name + '.css', filters=['cssrewrite', 'cssmin'])
+    else:
+        abort(400)
+
+    return bundle.urls(env=current_app.assets)[0]
+
+
+def ext_assets(assets):
+    key = asset_key(assets)
+    url = asset_cache.get('assets/' + key)
+    if url:
+        return url
+    if current_app.config.get('ASSET_SERVER'):
+        try:
+            r = requests.get(urljoin(current_app.config['ASSET_SERVER'], 'asset'),
+                params={'asset': assets},
+                allow_redirects=False)
+            if r.status_code in (301, 302, 303, 307):
+                url = r.headers['location']
+            else:  # XXX: What broke and failed to do a 3xx?
+                url = r.url
+            asset_cache.set('assets/' + key, url, timeout=60)
+            return url
+        except requests.exceptions.ConnectionError:
+            return gen_assets_url(assets)
+    else:
+        return gen_assets_url(assets)
+
+
 @baseframe.app_context_processor
 def baseframe_context():
     return {
         'networkbar_links': networkbar_links,
         'csrf_form': Form,
+        'ext_assets': ext_assets,
     }
 
 
