@@ -60,8 +60,10 @@ class BaseframeBlueprint(Blueprint):
                         if name + ext in assets:
                             alist.append(name + ext + unicode(spec))
                             ilist.append('!' + name + ext)
-                ext_js.append(sub_js)
-                ext_css.append(sub_css)
+                if sub_js:
+                    ext_js.append(sub_js)
+                if sub_css:
+                    ext_css.append(sub_css)
         else:
             requires = [item for itemgroup in ext_requires
                 for item in (itemgroup if isinstance(itemgroup, (list, tuple)) else [itemgroup])] + requires
