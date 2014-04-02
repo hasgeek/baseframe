@@ -48,9 +48,11 @@ def gen_assets_url(assets):
         os.mkdir(gendir)
     # The file extensions here are for upstream servers to serve the correct content type:
     if is_js:
-        bundle = Bundle(assets_repo.require(*assets), output='gen/' + output_name + '.js', filters='closure_js')
+        bundle = Bundle(assets_repo.require(*(current_app.config.get('ignore_js', []) + assets)),
+            output='gen/' + output_name + '.js', filters='closure_js')
     elif is_css:
-        bundle = Bundle(assets_repo.require(*assets), output='gen/' + output_name + '.css', filters=['cssrewrite', 'cssmin'])
+        bundle = Bundle(assets_repo.require(*(current_app.config.get('ignore_css', []) + assets)),
+            output='gen/' + output_name + '.css', filters=['cssrewrite', 'cssmin'])
     else:
         abort(400)
 

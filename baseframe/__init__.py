@@ -44,11 +44,11 @@ class BaseframeBlueprint(Blueprint):
         :param bundle_css: Bundle of additional CSS
         :param static_subdomain: Serve static files from this subdomain
         """
+        ignore_js = ['!jquery.js']
+        ignore_css = []
+        ext_js = []
+        ext_css = []
         if app.config.get('ASSET_SERVER'):
-            ext_js = []
-            ext_css = []
-            ignore_js = []
-            ignore_css = []
             for itemgroup in ext_requires:
                 sub_js = []
                 sub_css = []
@@ -62,15 +62,14 @@ class BaseframeBlueprint(Blueprint):
                             ilist.append('!' + name + ext)
                 ext_js.append(sub_js)
                 ext_css.append(sub_css)
-            app.config['ext_js'] = ext_js
-            app.config['ext_css'] = ext_css
         else:
-            ignore_js = []
-            ignore_css = []
             requires = [item for itemgroup in ext_requires
                 for item in (itemgroup if isinstance(itemgroup, (list, tuple)) else [itemgroup])] + requires
-            app.config['ext_js'] = []
-            app.config['ext_css'] = []
+
+        app.config['ignore_js'] = ignore_js
+        app.config['ignore_css'] = ignore_css
+        app.config['ext_js'] = ext_js
+        app.config['ext_css'] = ext_css
 
         assets_js = []
         assets_css = []
@@ -79,7 +78,7 @@ class BaseframeBlueprint(Blueprint):
             for alist, ext in [(assets_js, '.js'), (assets_css, '.css')]:
                 if name + ext in assets:
                     alist.append(name + ext + unicode(spec))
-        js_all = Bundle(assets.require('!jquery.js', *(ignore_js + assets_js)),
+        js_all = Bundle(assets.require(*(ignore_js + assets_js)),
             filters='closure_js', output='js/baseframe-packed.js')
         css_all = Bundle(assets.require(*(ignore_css + assets_css)),
             filters=['cssrewrite', 'cssmin'], output='css/baseframe-packed.css')
