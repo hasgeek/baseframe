@@ -10,6 +10,7 @@
 * Switched default font from Open Sans to Source Sans Pro for the lower
   x-height, thereby improving the visible line height
 * Fixed timezone handling in DateTimeField
+* Support for external assets via the cookiefree server
 
 0.2.16
 ------

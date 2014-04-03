@@ -68,8 +68,6 @@ class BaseframeBlueprint(Blueprint):
             requires = [item for itemgroup in ext_requires
                 for item in (itemgroup if isinstance(itemgroup, (list, tuple)) else [itemgroup])] + requires
 
-        app.config['ignore_js'] = ignore_js
-        app.config['ignore_css'] = ignore_css
         app.config['ext_js'] = ext_js
         app.config['ext_css'] = ext_css
 
