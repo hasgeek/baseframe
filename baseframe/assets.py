@@ -78,12 +78,15 @@ assets['select2.js'][Version('3.3.2')] = ('jquery.js>=1.4.6', 'baseframe/js/sele
 assets['select2.css'][Version('3.3.2')] = 'baseframe/css/select2.css'
 
 assets['codemirror.js'][Version('3.21.0')] = 'baseframe/js/codemirror/lib/codemirror.js'
+assets['codemirror.css'][Version('3.21.0')] = 'baseframe/js/codemirror/lib/codemirror.css'
+
 assets['codemirror.mode.markdown.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/markdown/markdown.js'
 assets['codemirror.mode.gfm.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/gfm/gfm.js'
 assets['codemirror.mode.htmlmixed.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/htmlmixed/htmlmixed.js'
 assets['codemirror.addon.mode.overlay.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/mode/overlay.js'
 assets['codemirror.addon.edit.continuelist.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/edit/continuelist.js'
-assets['codemirror.css'][Version('3.21.0')] = 'baseframe/js/codemirror/lib/codemirror.css'
+assets['codemirror.addon.edit.closebrackets.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/edit/closebrackets.js'
+assets['codemirror.addon.edit.matchbrackets.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/edit/matchbrackets.js'
 
 assets['codemirror-markdown.js'][Version('3.21.0')] = {'requires': [
     'codemirror.js==3.21.0',
@@ -92,6 +95,7 @@ assets['codemirror-markdown.js'][Version('3.21.0')] = {'requires': [
     'codemirror.mode.htmlmixed.js==3.21.0',
     'codemirror.addon.mode.overlay.js==3.21.0',
     'codemirror.addon.edit.continuelist.js==3.21.0',
+    'codemirror.addon.edit.closebrackets.js==3.21.0',
 ]}
 assets['codemirror-markdown.css'][Version('3.21.0')] = ('codemirror.css==3.21.0', 'baseframe/css/codemirror.css')
 assets['pygments-default.css'][Version('1.5.0')] = 'baseframe/css/pygments-default.css'
@@ -195,7 +199,6 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
     'bootstrap-datepicker.js',
     'jquery.timepicker.js',
     'select2.js',
-    #'mustache.js',
 ]}
 
 assets['baseframe.js'][Version(__version__)] = {'requires': [
