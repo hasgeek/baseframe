@@ -49,7 +49,7 @@ def gen_assets_url(assets):
     # The file extensions here are for upstream servers to serve the correct content type:
     if is_js:
         # TODO: Move this !jquery.js to somewhere more relevant
-        bundle = Bundle(assets_repo.require(*('!jquery.js' + assets)),
+        bundle = Bundle(assets_repo.require(*(['!jquery.js'] + assets)),
             output='gen/' + output_name + '.js', filters='closure_js')
     elif is_css:
         bundle = Bundle(assets_repo.require(*assets),
