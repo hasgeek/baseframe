@@ -96,7 +96,7 @@ class BaseframeBlueprint(Blueprint):
         app.assets.register('css_all', css_all)
         app.register_blueprint(self, static_subdomain=static_subdomain)
 
-        app.config.setdefault('CACHE_KEY_PREFIX', 'flask_cache_' + app.name)
+        app.config.setdefault('CACHE_KEY_PREFIX', 'flask_cache_' + app.name + '/')
         nwcacheconfig = dict(app.config)
         nwcacheconfig['CACHE_KEY_PREFIX'] = 'networkbar_'
         if 'CACHE_TYPE' not in nwcacheconfig:
@@ -112,6 +112,11 @@ class BaseframeBlueprint(Blueprint):
         cache.init_app(app)
         babel.init_app(app)
         FlaskMustache(app)
+
+        # If this app has a Lastuser extension registered, give it a cache
+        lastuser = getattr(app, 'extensions', {}).get('lastuser')
+        if lastuser and hasattr(lastuser, 'init_cache'):
+            lastuser.init_cache(cache)
 
         app.config['tz'] = timezone(app.config.get('TIMEZONE', 'UTC'))
 
