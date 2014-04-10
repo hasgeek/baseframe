@@ -12,6 +12,8 @@ def age(dt):
     delta = datetime.utcnow() - dt
     if delta.days == 0:
         # < 1 day
+        if delta.seconds < 1:
+            return _(u"now")
         if delta.seconds < 10:
             return _(u"seconds ago")
         elif delta.seconds < 60:
