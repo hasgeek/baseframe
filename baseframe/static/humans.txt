@@ -1,25 +1,155 @@
 /* the humans responsible & colophon */
 /* humanstxt.org */
 
+
 /* TEAM */
 
-  Code Monkey: Kiran Jonnalagadda
-  Site: http://jace.zaiki.in/
-  Twitter: @jackerhack
-  Location: Bangalore, india
+  Kiran Jonnalagadda
+  https://hasgeek.com/
+  @jackerhack
+  Bangalore, india
 
-  Fanboy #1: Nigel Babu
-  Site: http://nigelb.me/
-  Location: Bangalore, India
+  Mitesh B Ashar
+  http://www.miteshashar.com/
+  @iMBA
+  Kolkata and Bangalore, India
+
+  Praseetha KR
+  http://imagineer.in/
+  @void_imagineer
+  Bangalore, India
+
+  Sumandro "Riju" Chattopadhyay
+  http://ajantriks.net
+  @ajantriks
+  New Delhi, India
+
+
+/* ALUMNI */
+
+  Pratul Kalia
+  http://uncommon.is/
+  @prat_l
+  Bangalore, India
+
+  Nimisha Saikia
+  @nimisja
+  Bangalore, India
+
+  Kracekumar Ramaraju
+  http://kracekumar.com/
+  @kracetheking
+  Bangalore, india
+
+  Haris Ibrahim
+  http://sosaysharis.wordpress.com/
+  @harisibrahimkv
+  Bangalore, India
+
+  ASL Devi
+  @asldevi
+  Vishakapatnam, India
+
+  Sajjad Anwar
+  http://geohacker.in
+  @geohacker
+  Bangalore, India
+
+  Sidharth Kuruvila
+  @sidharth
+  Bangalore, India
+
+  Anu Sharma
+  http://duffsdev.com/
+  @anusharma
+  Seattle, WA, USA
+
+  Nigel Babu
+  http://nigelb.me/
+  @nigelbabu
+  Bangalore, India
+
+  Aditya Yadav
+  @NetRoY
+  Berlin, Germany
+
 
 /* THANKS */
 
-  Chief Husband Management Officer: Zainab Bawa
-  Twitter: @zainabbawa
+  Zainab Bawa
+  @zainabbawa
+  Bangalore, India
+
+  Jamna Vyas
+  @jamna
+  Bangalore, India
+
+  Souvik Dasgupta
+  http://miranj.in/
+  @souvikdg
+  New Delhi, India
+
+  Prateek Rungta
+  http://miranj.in/
+  @rungta
+  New Delhi, India
+
+  Anand Chitipothu
+  http://anandology.com
+  @anandology
+  Vishakapatnam, India
+
+  Rajasekharan Vengalil
+  @avranju
+  Bangalore, India
+
+  Deepak Jois
+  http://deepak.jois.name/
+  @vyom
+  Berlin, Germany
+
+  Rakesh Pai
+  http://errorception.com/
+  @rakeshpai
+  Mumbai, India
+
+  Sunil Pai
+  @threepointone
+  Bangalore, India
+
+  Vishal Parpia
+  http://vizkid.com/
+  @viz
+  Pune, India
+
+  Rahul Gonsalves
+  http://uncommon.is/
+  @gonsalves_r
+  Bangalore, India
+
+  Akash Manohar
+  http://akash.im/
+  @hashnuke
+  Bangalore, India
+
+  Akash Mahajan
+  http://akashm.com/
+  @makash
+  Bangalore, India
+
+  Dhaval Trivedi
+  @dhavaltrivedi
+  Bangalore, India
+
+  Megha Vishwanath
+  http://neowarli.com/
+  @megha_tweeter
+  Bangalore, India
+
 
 /* SITE */
 
   Standards: HTML5, CSS3
-  Components: Flask, Twitter Bootstrap
-  Software: Python, TextMate, Mac OS X, Ubuntu, Vim, Gimp, Inkscape
+  Components: Coaster+Baseframe+Lastuser, SQLAlchemy, Flask, Twitter Bootstrap, Compass
+  Software: Python, Sublime Text, Mac OS X, Ubuntu, Vim, Gimp, Inkscape
   Source: https://github.com/hasgeek
