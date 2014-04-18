@@ -91,8 +91,9 @@ def baseframe_context():
     }
 
 
-@baseframe.route('/favicon.ico')
-def favicon():
+@baseframe.route('/favicon.ico', subdomain='<subdomain>')
+@baseframe.route('/favicon.ico', defaults={'subdomain': None})
+def favicon(subdomain=None):
     app_icon_path = current_app.static_folder
     # Does the app have a favicon.ico in /static?
     if not os.path.exists(os.path.join(app_icon_path, 'favicon.ico')):
@@ -105,24 +106,27 @@ def favicon():
       'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
-@baseframe.route('/humans.txt')
-def humans():
+@baseframe.route('/humans.txt', subdomain='<subdomain>')
+@baseframe.route('/humans.txt', defaults={'subdomain': None})
+def humans(subdomain=None):
     return send_from_directory(
         current_app.static_folder if os.path.exists(
             os.path.join(current_app.static_folder, 'humans.txt')) else baseframe.static_folder,
         'humans.txt', mimetype='text/plain')
 
 
-@baseframe.route('/robots.txt')
-def robots():
+@baseframe.route('/robots.txt', subdomain='<subdomain>')
+@baseframe.route('/robots.txt', defaults={'subdomain': None})
+def robots(subdomain=None):
     return send_from_directory(
         current_app.static_folder if os.path.exists(
             os.path.join(current_app.static_folder, 'robots.txt')) else baseframe.static_folder,
         'robots.txt', mimetype='text/plain')
 
 
-@baseframe.route('/api/baseframe/1/toastr_messages.js')
-def toastr_messages_js():
+@baseframe.route('/api/baseframe/1/toastr_messages.js', subdomain='<subdomain>')
+@baseframe.route('/api/baseframe/1/toastr_messages.js', defaults={'subdomain': None})
+def toastr_messages_js(subdomain=None):
     return current_app.response_class(render_template('toastr_messages.js'), mimetype='application/javascript')
 
 
