@@ -30,7 +30,8 @@ requires = [
     'closure>=20121212',
     'cssmin',
     'coaster',
-    'lxml'
+    'lxml',
+    'fluent-logger',
     ]
 
 
