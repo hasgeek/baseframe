@@ -77,7 +77,7 @@
 </div>
 {%- endmacro %}
 
-{% macro renderform_inner(form, formid, style='horiz') -%}
+{% macro renderform_inner(form, formid, style='horiz', autofocus=True) -%}
   {%- if form.errors %}
     <div class="alert alert-error alert-danger">
       <a class="close" data-dismiss="alert">×</a>
@@ -93,7 +93,6 @@
       Please submit again to confirm.
     {% endtrans %}</div>
   {% endif %}
-  {%- set autofocus = true %}
   {% for field in form -%}
     {%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
       {# Don't show hidden #}
@@ -104,11 +103,20 @@
   {% endfor %}
 {%- endmacro %}
 
-{% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=False, style='horiz') %}
+{% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=False, style='horiz', autofocus=True) %}
 <form id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" {%- if style == 'horiz' %} class="form-horizontal"{% endif %}>
-  {{ renderform_inner(form, formid or None, style=style) }}
+  {{ renderform_inner(form, formid or None, style=style, autofocus=autofocus) }}
   {{ rendersubmit([(None, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url, style=style) }}
 </form>
+{% endmacro %}
+
+{% macro ajaxlink(form, text, title, action, formid, target='', replace_target=False, class='', success_msg='Action successfully taken') %}
+<form id="{{ formid }}" method="POST" action="{{ action }}" accept-charset="UTF-8" class="ajax_link" data-target="{% if target %}{{target}}{% else %}#{{ formid }}{% endif %}" data-replace-target="{% if replace_target %}1{% else %}0{% endif %}" data-success-msg="{{ _(success_msg)|forceescape }}">
+  <input type="hidden" name="form.id" value="{{ formid }}" />
+  {{ form.hidden_tag() }}
+  <a href="javascript:void(0)" class="{{ class }}" title="{{ _(title)|forceescape }}">{{ _(text)|safe }}</a>
+</form>
+{% if request.is_xhr -%}<script>activate_ajax_link($('#{{ formid }}'));</script>{% endif %}
 {% endmacro %}
 
 {% macro ajaxform(formid, request, force=False) -%}

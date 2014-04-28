@@ -1,5 +1,5 @@
 {% from "baseframe/forms.html" import renderform, ajaxform, richtext_editor %}
-{{ renderform(form=form, formid=formid, submit=submit, message=message, cancel_url=cancel_url, multipart=multipart) }}
+{{ renderform(form=form, formid=formid, submit=submit, message=message, cancel_url=cancel_url, multipart=multipart, autofocus=autofocus) }}
 {% for field in form -%}
   {% if field.widget.input_type == 'tinymce' -%}
     {{ richtext_editor(field) }}

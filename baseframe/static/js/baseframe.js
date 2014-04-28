@@ -35,6 +35,24 @@ function activate_widgets(){
     }
 }
 
+function activate_ajax_link(form) {
+  form.ajaxForm({
+    target: form.attr('data-target'),
+    replaceTarget: Boolean(Number(form.attr('data-replace-target'))),
+    success: function(response, status, xhr, form) {
+      if(xhr.status == 200) toastr.success('', $(form[0]).attr('data-success-msg'))
+    },
+    error: function(xhr) {
+      if(xhr.status == 401) toastr.error('', xhr.responseText);
+      else if(xhr.status == 500) toastr.error('', "There was an unexpected error.")
+      else toastr.error('', "Server not reachable");
+    }
+  });
+  form.find('a').click(function() {
+    $(this).parent().submit();
+  });
+}
+
 $(function() {
   // activate all widgets
   activate_widgets();
@@ -67,6 +85,10 @@ $(function() {
         $(tabmatch[0]).tab('show');
     }
   }
+
+  $('form.ajax_link').each(function() {
+    activate_ajax_link($(this));
+  });
 });
 
 
