@@ -79,7 +79,7 @@ class BaseframeBlueprint(Blueprint):
                 if name + ext in assets:
                     alist.append(name + ext + unicode(spec))
         js_all = Bundle(assets.require(*(ignore_js + assets_js)),
-            filters='closure_js', output='js/baseframe-packed.js')
+            filters='uglipyjs', output='js/baseframe-packed.js')
         css_all = Bundle(assets.require(*(ignore_css + assets_css)),
             filters=['cssrewrite', 'cssmin'], output='css/baseframe-packed.css')
         if bundle_js:
