@@ -70,11 +70,13 @@ class AllUrlsValid(object):
             html_tree = html.fromstring(field.data)
             for text, href in [(atag.text_content(), atag.attrib.get('href')) for atag in html_tree.xpath("//a")]:
                 url = urljoin(current_url, href)  # Clean up relative URLs
+                ua = 'HasGeek/linkchecker'
 
                 try:
-                    code = requests.head(url, timeout=30).status_code
+
+                    code = requests.head(url, timeout=30, headers={'User-Agent': ua}).status_code
                     if code == 405:  # Some servers don't like HTTP HEAD requests, strange but true
-                        code = requests.get(url, timeout=30).status_code
+                        code = requests.get(url, timeout=30, headers={'User-Agent': ua}).status_code
                 except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
                         requests.exceptions.ConnectionError,  # Name resolution or connection failed
                         requests.exceptions.Timeout):         # Didn't respond in time
