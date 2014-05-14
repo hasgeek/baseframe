@@ -375,3 +375,8 @@ code{
         margin-bottom: $body-line-height;
     }
 }
+
+// Fix jQuery Sparkline box
+.jqstooltip {
+    box-sizing: content-box;
+}

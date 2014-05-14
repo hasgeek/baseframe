@@ -381,7 +381,7 @@ table.mceLayout.focus {
   border: 1px solid #b94a48;
   color: white !important;
   background: #b94a48;
-  padding: 4px;
+  padding: 4px 12px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
@@ -998,6 +998,10 @@ code {
   font-size: 40px;
   margin-top: 0;
   margin-bottom: 24px;
+}
+
+.jqstooltip {
+  box-sizing: content-box;
 }
 
 @media screen and (max-width: 767px) {
