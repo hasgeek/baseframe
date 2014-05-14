@@ -132,7 +132,7 @@
 {%- endif %}
 {%- endmacro %}
 
-{% macro richtext_editor(field) -%}
+{% macro tinymce3_editor(field) -%}
   <script type="text/javascript">
     $(function() {
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
@@ -156,6 +156,29 @@
             });
           });
         } // No comma or semicolon here
+      });
+    });
+  </script>
+{% endmacro %}
+
+{% macro tinymce4_editor(field) -%}
+  <script type="text/javascript">
+    $(function() {
+      $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
+        {%- for k, v in field.tinymce_options.items() %}
+        {{ k|tojson }}: {{ v|tojson }},
+        {%- endfor %}
+        // Content CSS
+        content_css: {{ (field.content_css or url_for('baseframe.editorcss'))|tojson }},
+        // Focus/blur indicators
+        setup: function(ed) {
+          ed.on('focus', function(e) {
+            $(ed.editorContainer).addClass('active');
+          });
+          ed.on('blur', function(e) {
+            $(ed.editorContainer).removeClass('active');
+          });
+        } // End of setup keyval
       });
     });
   </script>

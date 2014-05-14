@@ -3,14 +3,14 @@
 import wtforms
 from flask import Markup
 
-__all__ = ['RichText', 'SubmitInput', 'DateTimeInput', 'HiddenMultiInput']
+__all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'HiddenMultiInput']
 
 
-class RichText(wtforms.widgets.TextArea):
+class TinyMce3(wtforms.widgets.TextArea):
     """
-    Rich text widget.
+    Rich text widget with Tiny MCE 3.
     """
-    input_type = "tinymce"
+    input_type = "tinymce3"
 
     def __call__(self, field, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
@@ -18,7 +18,22 @@ class RichText(wtforms.widgets.TextArea):
             kwargs['class'] = u'%s %s' % ('richtext', c)
         else:
             kwargs['class'] = 'richtext'
-        return super(RichText, self).__call__(field, **kwargs)
+        return super(TinyMce3, self).__call__(field, **kwargs)
+
+
+class TinyMce4(wtforms.widgets.TextArea):
+    """
+    Rich text widget with Tiny MCE 4.
+    """
+    input_type = "tinymce4"
+
+    def __call__(self, field, **kwargs):
+        c = kwargs.pop('class', '') or kwargs.pop('class_', '')
+        if c:
+            kwargs['class'] = u'%s %s' % ('richtext', c)
+        else:
+            kwargs['class'] = 'richtext'
+        return super(TinyMce4, self).__call__(field, **kwargs)
 
 
 class SubmitInput(wtforms.widgets.SubmitInput):
