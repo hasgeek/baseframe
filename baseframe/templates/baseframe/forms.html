@@ -2,13 +2,13 @@
 {% macro rendererrors(field) -%}
     {%- if field.errors -%}
       {%- for error in field.errors %}
-        <p class="help-error"><span>{{ error }}</span></p>
+        <p class="help-error">{{ error }}</p>
       {%- endfor %}
     {%- endif %}
 {%- endmacro %}
 
 {# change renderfield.mustache also while changing here #}
-{% macro renderfield(field, css_class="", widget_css_class="", sidetext=None, tabindex=None, autofocus=False, style='horiz') -%}
+{% macro renderfield(field, css_class="", widget_css_class="", sidetext=None, tabindex=None, autofocus=False, nolabel=False, style='horiz', rows=none) -%}
 
   {%- if field.widget.html_tag in ['ul', 'ol'] %}
     {%- set listwidget = true %}
@@ -21,12 +21,12 @@
   <div class="form-group control-group {#- BS3: form-group, BS2: control-group -#}
       {%- if field.errors %} error has-error {%- endif -%}
       {%- if css_class %} {{ css_class }} {%- endif -%}
-      {%- if listwidget %} listwidget {%- endif -%}
+      {%- if listwidget %} listwidget {%- if style == 'horizlist' %} horizlist {%- endif %}{%- endif -%}
       " id="field-{{ field.id }}">
     {%- if field.widget.input_type == 'checkbox' %}
-      <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-9 col-md-8 col-sm-offset-3 col-md-offset-2 {%- endif %} controls">
+      <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">
         <div class="checkbox">
-          <label>{{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex) }} {{ field.label.text }}</label>
+          <label>{{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, rows=rows) }} {{ field.label.text }}</label>
         </div>
         {{ rendererrors(field) }}
         {%- if field.description %}
@@ -34,20 +34,22 @@
         {%- endif %}
       </div>
     {%- else %}
-      <label class="{% if style == 'horiz' -%} col-xs-12 col-sm-3 col-md-2 col-lg-2 {%- endif %} control-label" for="{{ field.id }}">{{ field.label.text }}
+      {%- if not nolabel %}
+      <label class="{% if style == 'horiz' -%} col-xs-12 col-sm-3 col-md-2 {%- else %} col-xs-12 {%- endif %} control-label" for="{{ field.id }}">{{ field.label.text }}
         {%- if field.flags.required -%}
           <span class="help-required" title="Required">*</span>
         {%- endif -%}
       </label>
-      <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-9 col-md-8 col-lg-8 {%- endif %} controls">
+      {%- endif %}
+      <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-9 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">
         {%- if field.type in ['TextField', 'DateField', 'EmailField', 'URLField', 'TextAreaField', 'PasswordField'] %}
-          {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus)}}
+          {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
         {%- elif field.type == 'FormField' %}
           {%- for subfield in field.form %}
             {{ renderfield(subfield, css_class, widget_css_class, sidetext, tabindex, autofocus, style) }}
           {%- endfor %}
         {%- else %}
-          {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus)}}
+          {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
         {%- endif %}
         {%- if sidetext %}
           <span class="help-inline">{{sidetext}}</span>
@@ -63,7 +65,7 @@
 
 {% macro rendersubmit(buttons=[], css_class="", tabindex='', cancel_url='', style='horiz') -%}
 <div class="form-group form-actions clearfix{% if css_class %} {{ css_class}}{% endif %}">
-  <div {%- if style == 'horiz' %} class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8"{% endif %}>
+  <div {%- if style == 'horiz' %} class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10"{% else %} class="col-xs-12"{% endif %}>
     {% for name, value, widget_class in buttons -%}
       <button type="submit"
         {%- if name %} name="{{ name|e }}"{% else %} {% endif -%}
@@ -111,7 +113,7 @@
 </form>
 {% endmacro %}
 
-{% macro ajaxform(formid, request, force=False) -%}
+{% macro ajaxform(formid, request, force=false) -%}
 {% if force or request.is_xhr -%}
 <script type="text/javascript">
   $(function() {
@@ -135,7 +137,7 @@
     $(function() {
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
         // Location of TinyMCE script
-        script_url: {{ url_for("baseframe.static", filename="js/tiny_mce/tiny_mce.js")|tojson }},
+        script_url: {{ url_for("baseframe.static", filename="js/tinymce3/tiny_mce.js")|tojson }},
 
         {%- for k, v in field.tinymce_options.items() %}
         {{ k|tojson }}: {{ v|tojson }},

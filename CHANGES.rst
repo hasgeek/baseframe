@@ -11,6 +11,8 @@
   x-height, thereby improving the visible line height
 * Fixed timezone handling in DateTimeField
 * Support for external assets via the cookiefree server
+* Removed local copies of Lato and Source Sans Pro fonts
+* Upgraded to TinyMCE 4 and Font Awesome 4.2, with older versions stil in assets
 
 0.2.16
 ------

@@ -14,11 +14,7 @@
     padding: 6px 6px
 }
 
-textarea.form-control {
-    min-height: 150px;
-}
-
-.control-group {
+.control-group, .form-group {
     margin-bottom: $body-font-size * 0.94;
     .help-block {
         margin-bottom: 0;
@@ -54,7 +50,7 @@ button.btn, a.btn{
 .btn-default {
     border-bottom: 2px solid $color-default-btn;
     background-color: $color-gray-btn;
-    &:focus, &:active, &.active {
+    &:active, &.active {
         border-bottom: 1px solid $color-default-btn;
         border-top: 2px solid $color-default-btn;      
     }
@@ -62,7 +58,7 @@ button.btn, a.btn{
 
 .btn-danger {
     border-bottom: 2px solid $color-danger-btn;
-    &:focus, &:active, &.active {
+    &:active, &.active {
         border-bottom: 1px solid $color-danger-btn;
         border-top: 2px solid $color-danger-btn;
     }
@@ -70,7 +66,7 @@ button.btn, a.btn{
 
 .btn-primary {
     border-bottom: 2px solid $color-primary-btn;
-    &:focus, &:active, &.active {
+    &:active, &.active {
         border-bottom: 1px solid $color-primary-btn;
         border-top: 2px solid $color-primary-btn;
     }
@@ -78,7 +74,7 @@ button.btn, a.btn{
 
 .btn-success {
     border-bottom: 2px solid $color-success-btn;
-    &:focus, &:active, &.active {
+    &:active, &.active {
         border-bottom: 1px solid $color-success-btn;
         border-top: 2px solid $color-success-btn;
     }
@@ -86,7 +82,7 @@ button.btn, a.btn{
 
 .btn-info {
     border-bottom: 2px solid $color-info-btn;
-    &:focus, &:active, &.active {
+    &:active, &.active {
         border-bottom: 1px solid $color-info-btn;
         border-top: 2px solid $color-info-btn;
     }
@@ -94,7 +90,7 @@ button.btn, a.btn{
 
 .btn-warning {
     border-bottom: 2px solid $color-warning-btn;
-    &:focus, &:active, &.active {
+    &:active, &.active {
         border-bottom: 1px solid $color-warning-btn;
         border-top: 2px solid $color-warning-btn;
     }

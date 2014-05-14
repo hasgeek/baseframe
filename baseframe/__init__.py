@@ -25,8 +25,7 @@ __ = baseframe_translations.lazy_gettext
 
 
 class BaseframeBlueprint(Blueprint):
-    def init_app(self, app, requires=[], ext_requires=[], bundle_js=None, bundle_css=None, assetenv=None,
-            static_subdomain=None):
+    def init_app(self, app, requires=[], ext_requires=[], bundle_js=None, bundle_css=None, assetenv=None):
         """
         Initialize an app and load necessary assets.
 
@@ -42,8 +41,15 @@ class BaseframeBlueprint(Blueprint):
             ``requires`` if there is no asset server
         :param bundle_js: Bundle of additional JavaScript
         :param bundle_css: Bundle of additional CSS
-        :param static_subdomain: Serve static files from this subdomain
         """
+        if app.config.get('SERVER_NAME'):
+            subdomain = app.config.get('STATIC_SUBDOMAIN', 'static')
+        else:
+            subdomain = None
+        app.add_url_rule('/static/<path:filename>', endpoint='static',
+            view_func=app.send_static_file, subdomain=subdomain)
+
+
         ignore_js = ['!jquery.js']
         ignore_css = []
         ext_js = []
@@ -94,7 +100,7 @@ class BaseframeBlueprint(Blueprint):
         app.assets.register('js_jquery', assets.require('jquery.js'))
         app.assets.register('js_all', js_all)
         app.assets.register('css_all', css_all)
-        app.register_blueprint(self, static_subdomain=static_subdomain)
+        app.register_blueprint(self, static_subdomain=subdomain)
 
         app.config.setdefault('CACHE_KEY_PREFIX', 'flask_cache_' + app.name + '/')
         nwcacheconfig = dict(app.config)

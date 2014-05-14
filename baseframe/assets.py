@@ -50,8 +50,11 @@ assets['bootstrap-tooltip.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'basefra
 assets['bootstrap-transition.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/transition.js')
 
 assets['jquery.form.js'][Version('2.96.0')] = ('jquery.js', 'baseframe/js/jquery.form.js')
-assets['jquery.tinymce.js'][Version('3.5.8')] = ('jquery.js', 'baseframe/js/tiny_mce/jquery.tinymce.js')
-assets['tiny_mce.js'][Version('3.5.8')] = 'baseframe/js/tiny_mce/tiny_mce.js'
+assets['jquery.tinymce.js'][Version('3.5.10')] = ('jquery.js', 'baseframe/js/tinymce3/jquery.tinymce.js')
+assets['tinymce.js'][Version('3.5.10')] = 'baseframe/js/tinymce3/tiny_mce.js'
+assets['tiny_mce.js'][Version('3.5.10')] = {'requires': ['tinymce.js==3.5.10']}
+assets['jquery.tinymce.js'][Version('4.0.25')] = ('jquery.js', 'baseframe/js/tinymce4/jquery.tinymce.min.js')
+assets['tinymce.js'][Version('4.0.25')] = 'baseframe/js/tinymce4/tinymce.min.js'
 assets['bootstrap-datepicker.js'][Version('1.3.0')] = ('jquery.js', 'baseframe/js/bootstrap-datepicker.js')
 
 assets['jquery.ui.js'][Version('1.10.3')] = ('jquery.js', 'baseframe/js/jquery-ui.js')
@@ -128,6 +131,10 @@ assets['mustache-loader.js'][Version('0.5.1')] = 'baseframe/js/mustache-hogan/mu
 
 assets['marked.js'][Version('0.3.0')] = 'baseframe/js/marked.js'
 
+# Font Awesome
+assets['fontawesome.css'][Version('3.1.0')] = 'baseframe/css/fontawesome-3.1.css'
+assets['fontawesome.css'][Version('4.0.3')] = 'baseframe/css/fontawesome-4.0.css'
+
 # Fira Sans and Fira Mono
 assets['firasans-regular.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-regular.css'
 assets['firasans-regularitalic.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-regularitalic.css'
@@ -151,6 +158,8 @@ assets['firamono.css'][Version('1.0.0')] = {'requires': [
     'firamono-regular.css==1.0.0',
     'firamono-bold.css==1.0.0'
     ]}
+
+assets['baseframe-firasans.css'][Version('1.0.0')] = 'baseframe/css/baseframe-firasans.css'
 
 # Asset packages
 assets['bootstrap.js'][Version('2.0.1')] = {'requires': [
@@ -195,7 +204,6 @@ assets['mustache.js'][Version('2.0.0')] = {'requires': [
 
 assets['extra.js'][Version('0.0.0')] = {'requires': [
     'jquery.form.js',
-    'jquery.tinymce.js',
     'bootstrap-datepicker.js',
     'jquery.timepicker.js',
     'select2.js',
@@ -205,6 +213,7 @@ assets['baseframe.js'][Version(__version__)] = {'requires': [
     'jquery.js<1.9.0',
     'bootstrap.js==2.0.1',
     'extra.js',
+    'jquery.tinymce.js>=3.0.0,<4.0.0',
     'baseframe-base.js==' + __version__,
     'baseframe-networkbar.js==' + __version__,
 ]}
@@ -214,6 +223,7 @@ assets['baseframe.css'][Version(__version__)] = {'requires': [
     'bootstrap-responsive.css==2.0.1',
     'select2.css',
     'jquery.timepicker.css',
+    'fontawesome.css==3.1.0',
     'baseframe-base.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
 ]}

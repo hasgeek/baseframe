@@ -1,0 +1,12 @@
+// All the places we need to override Baseframe fonts with Fira Sans
+
+$fira-font-family: "Fira Sans", "Helvetica Neue", Arial, sans-serif
+
+body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6
+  font-family: $fira-font-family
+
+.mce-container, .mce-container *, .mce-widget, .mce-widget *, .mce-reset
+  font-family: $fira-font-family !important
+
+.mce-ico
+  font-family: 'tinymce', $fira-font-family !important

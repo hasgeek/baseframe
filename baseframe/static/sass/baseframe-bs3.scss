@@ -9,8 +9,6 @@
 
 // Local settings
 @import "settings-bs3";
-@import "font-awesome";
-//@import "fonts";
 @import "layout";
 @import "bootstrap3-custom";
 @import "infobox";
@@ -23,7 +21,7 @@
 // @import "gridlines";
 
 /*
-	baseframe customizations 
+	baseframe customizations
 */
 #page-header {
     display: none;
@@ -37,6 +35,10 @@ header {
     }
     header {
         min-height: 0;
+    }
+    .listwidget.horizlist li {
+        display: inline-block;
+        margin-right: 1em
     }
 }
 

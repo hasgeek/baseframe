@@ -298,6 +298,11 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Source Sa
 
 $mob-icon-color: #999;
 
+// TODO: Confirm this doesn't hurt other BS3 apps
+header {
+    padding-top: 50px;
+}
+
 #hg-networkbar{  
     font: $networkbar-font;
     font-size: $networkbar-xs-font-size;
@@ -332,6 +337,7 @@ $mob-icon-color: #999;
         min-height: 50px;
         background-color: #F3F3F3;
         z-index: 1029;
+        @include box-shadow(0 1px 5px rgba(0,0,0,0.4));
     }
     .dropdown-backdrop {
         position: static;
@@ -446,6 +452,10 @@ $mob-icon-color: #999;
     }
 }
 @media screen and (min-width: 768px){
+    header {
+        padding-top: 0;
+    }
+
     #hg-networkbar{
         font-size: $networkbar-font-size;
         li > a.dropdown-toggle:after {
