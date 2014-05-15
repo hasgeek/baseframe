@@ -49,7 +49,6 @@ class BaseframeBlueprint(Blueprint):
         app.add_url_rule('/static/<path:filename>', endpoint='static',
             view_func=app.send_static_file, subdomain=subdomain)
 
-
         ignore_js = ['!jquery.js']
         ignore_css = []
         ext_js = []
