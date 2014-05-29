@@ -45,7 +45,7 @@
           {% if g.user -%}
             <li class="profile">
               {%- with orgs = g.user.organization_links() %}{% if orgs %}
-                <a href="#" class="hg-submenu">{{ g.user.fullname }}</a>
+                <a href="#" title="{{ g.user.pickername }}" class="hg-submenu">{{ g.user.fullname }}</a>
                 <ul>
                   <li><a href="{{ g.user.profile_url }}">My profile</a></li>
                   {%- for org in orgs %}
@@ -53,7 +53,7 @@
                   {%- endfor %}
                 </ul>
               {%- else %}
-                <a href="{{ g.user.profile_url }}">{{ g.user.fullname }}</a>
+                <a href="{{ g.user.profile_url }}" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
               {% endif %}{%- endwith %}
             </li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
@@ -123,7 +123,7 @@
           <li class="profile dropdown">
             {%- with orgs = g.user.organization_links() %}
               {% if orgs %}
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ g.user.fullname }}</a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
                 <ul class="dropdown-menu">
                   <li><a href="/profile">My profile</a></li>
                   {%- for org in orgs %}
@@ -131,7 +131,7 @@
                   {%- endfor %}             
                 </ul>
               {%- else %}
-                <a href="{{ g.user.profile_url }}">{{ g.user.fullname }}</a>
+                <a href="{{ g.user.profile_url }}" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
               {% endif %}
             {%- endwith %}
           </li>
