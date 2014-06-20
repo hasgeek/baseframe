@@ -1,6 +1,8 @@
 0.3.1
 -----
 
+* AllUrlsValid now takes custom messages and an invalid_urls list
+
 
 0.3.0
 -----
