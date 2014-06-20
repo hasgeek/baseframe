@@ -55,11 +55,25 @@ class ValidEmailDomain(object):
 class AllUrlsValid(object):
     """
     Validator to confirm an url address is likely to be valid because
-    if the status code is 200
+    if the status code is 200.
+
+    :param unicode message: Error message (None for default error message)
+    :param unicode message_urltext: Error message when the URL also has text (None to use default)
+    :param list invalid_urls: A list of (patterns, message) tuples for URLs that will be rejected,
+        where ``patterns`` is a list of strings or regular expressions. If ``invalid_urls`` is
+        a callable, it will be called to retrieve the list.
     """
-    def __init__(self):
-        pass
-    
+    def __init__(self, message=None, message_urltext=None, invalid_urls=[]):
+        self.message = message
+        self.message_urltext = message_urltext
+        self.invalid_urls = invalid_urls
+
+        if self.message is None:
+            self.message = _(u'The URL “{url}” is not valid or is currently inaccessible')
+
+        if self.message_urltext is None:
+            self.message_urltext = _(u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible')
+
     def __call__(self, form, field):
         if field.data:
             try:
@@ -67,16 +81,22 @@ class AllUrlsValid(object):
             except RuntimeError:
                 current_url = None
 
+            invalid_urls = self.invalid_urls
+            if callable(invalid_urls):
+                invalid_urls = invalid_urls()
+
             html_tree = html.fromstring(field.data)
             for text, href in [(atag.text_content(), atag.attrib.get('href')) for atag in html_tree.xpath("//a")]:
                 url = urljoin(current_url, href)  # Clean up relative URLs
                 ua = 'HasGeek/linkchecker'
 
+                r = None
                 try:
-
-                    code = requests.head(url, timeout=30, headers={'User-Agent': ua}).status_code
+                    r = requests.head(url, timeout=30, allow_redirects=True, headers={'User-Agent': ua})
+                    code = r.status_code
                     if code == 405:  # Some servers don't like HTTP HEAD requests, strange but true
-                        code = requests.get(url, timeout=30, headers={'User-Agent': ua}).status_code
+                        r = requests.get(url, timeout=30, allow_redirects=True, headers={'User-Agent': ua})
+                        code  =r.status_code
                 except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
                         requests.exceptions.ConnectionError,  # Name resolution or connection failed
                         requests.exceptions.Timeout):         # Didn't respond in time
@@ -87,9 +107,19 @@ class AllUrlsValid(object):
 
                 if code not in (200, 201, 202, 203, 204, 205, 206, 207, 208, 226):
                     if url == text:
-                        field.errors.append(_(u'The URL “{url}” is not valid or is currently inaccessible').format(url=href))
+                        field.errors.append(self.message.format(url=href))
                     else:
-                        field.errors.append(_(u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible').format(url=href, text=text))
+                        field.errors.append(self.message_urltext.format(url=href, text=text))
+                elif r is not None:
+                    # If load succeeded, confirm that the final URL (after expanding short URLs)
+                    # is not in the invalid_urls list
+                    for patterns, message in invalid_urls:
+                        for pattern in patterns:
+                            if isinstance(pattern, basestring) and pattern in r.url:
+                                field.errors.append(message.format(url=url, text=text))
+                            elif pattern.search(r.url) is not None:
+                                field.errors.append(message.format(url=url, text=text))
+
 
 
 class StripWhitespace(object):
