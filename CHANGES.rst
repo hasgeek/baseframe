@@ -2,6 +2,7 @@
 -----
 
 * AllUrlsValid now takes custom messages and an invalid_urls list
+* New ValidUrl validator for a single URL (takes the same parameters)
 
 
 0.3.0

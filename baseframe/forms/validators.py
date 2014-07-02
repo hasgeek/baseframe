@@ -12,7 +12,7 @@ from .. import b_ as _
 from ..signals import exception_catchall
 
 
-__all__ = ['ValidEmailDomain', 'AllUrlsValid', 'StripWhitespace', 'ValidName']
+__all__ = ['ValidEmailDomain', 'ValidUrl', 'AllUrlsValid', 'StripWhitespace', 'ValidName']
 
 
 class ValidEmailDomain(object):
@@ -52,10 +52,63 @@ class ValidEmailDomain(object):
             pass
 
 
+class ValidUrl(object):
+    """
+    Validator to confirm a URL is valid (returns 2xx status code)
+    """
+    def __init__(self, message=None, invalid_urls=[]):
+        self.message = message
+        self.invalid_urls = invalid_urls
+
+        if self.message is None:
+            self.message = _(u'The URL “{url}” is not valid or is currently inaccessible')
+
+    def __call__(self, form, field):
+        if field.data:
+            try:
+                current_url = request.url
+            except RuntimeError:
+                current_url = None
+
+            invalid_urls = self.invalid_urls
+            if callable(invalid_urls):
+                invalid_urls = invalid_urls()
+
+            url = urljoin(current_url, field.data)  # Clean up relative URLs
+            ua = 'HasGeek/linkchecker'
+
+            r = None
+            try:
+                r = requests.head(url, timeout=30, allow_redirects=True, headers={'User-Agent': ua})
+                code = r.status_code
+                if code == 405:  # Some servers don't like HTTP HEAD requests, strange but true
+                    r = requests.get(url, timeout=30, allow_redirects=True, headers={'User-Agent': ua})
+                    code  =r.status_code
+            except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
+                    requests.exceptions.ConnectionError,  # Name resolution or connection failed
+                    requests.exceptions.Timeout):         # Didn't respond in time
+                code = None
+            except Exception as e:
+                exception_catchall.send(e)
+                code = None
+
+            if code not in (200, 201, 202, 203, 204, 205, 206, 207, 208, 226):
+                raise wtforms.validators.StopValidation(self.message.format(url=field.data))
+            elif r is not None:
+                # If load succeeded, confirm that the final URL (after expanding short URLs)
+                # is not in the invalid_urls list
+                for patterns, message in invalid_urls:
+                    for pattern in patterns:
+                        if isinstance(pattern, basestring) and pattern in r.url:
+                            field.errors.append(message.format(url=url))
+                        elif pattern.search(r.url) is not None:
+                            field.errors.append(message.format(url=url))
+
+
 class AllUrlsValid(object):
     """
-    Validator to confirm an url address is likely to be valid because
-    if the status code is 200.
+    Validator to confirm all URLs in a HTML snippet are valid because loading
+    them returns 2xx status codes.
 
     :param unicode message: Error message (None for default error message)
     :param unicode message_urltext: Error message when the URL also has text (None to use default)
@@ -119,7 +172,6 @@ class AllUrlsValid(object):
                                 field.errors.append(message.format(url=url, text=text))
                             elif pattern.search(r.url) is not None:
                                 field.errors.append(message.format(url=url, text=text))
-
 
 
 class StripWhitespace(object):
