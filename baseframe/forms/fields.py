@@ -276,8 +276,9 @@ class NullTextField(wtforms.StringField):
     """
     Text field that returns None on empty strings.
     """
-    def _value(self):
-        return super(NullTextField, self)._value() or None
+    def __init__(self, *args, **kwargs):
+        kwargs['filters'] = tuple(kwargs.get('filters', ())) + (lambda d: d or None,)
+        super(NullTextField, self).__init__(*args, **kwargs)
 
 
 class AnnotatedTextField(wtforms.StringField):
