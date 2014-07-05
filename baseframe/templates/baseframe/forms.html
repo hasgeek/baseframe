@@ -42,8 +42,14 @@
       </label>
       {%- endif %}
       <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-9 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">
-        {%- if field.type in ['TextField', 'DateField', 'EmailField', 'URLField', 'TextAreaField', 'PasswordField'] %}
+        {%- if field.type in ['NullTextField', 'StringField', 'TextField', 'DateField', 'EmailField', 'URLField', 'TextAreaField', 'PasswordField'] %}
           {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+        {%- elif field.type in ['AnnotatedTextField', 'AnnotatedNullTextField'] %}
+          <div class="input-group">
+            {% if field.prefix %}<span class="input-group-addon">{{ field.prefix }}</span>{% endif %}
+            {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+            {% if field.suffix %}<span class="input-group-addon">{{ field.suffix }}</span>{% endif %}
+          </div>
         {%- elif field.type == 'FormField' %}
           {%- for subfield in field.form %}
             {{ renderfield(subfield, css_class, widget_css_class, sidetext, tabindex, autofocus, style) }}

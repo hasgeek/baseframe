@@ -398,6 +398,10 @@ table.mceLayout.focus {
   top: -13px;
   left: 20px;
 }
+.help-error a, .help-error a:active, .help-error a:hover, .help-error a:visited {
+  color: white;
+  text-decoration: underline;
+}
 
 .help-required {
   color: #b94a48;

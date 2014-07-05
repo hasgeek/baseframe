@@ -3,12 +3,12 @@
 from pytz import utc, timezone as pytz_timezone
 import wtforms
 import bleach
-from flask import json
 
 from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenMultiInput
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
-    'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'MarkdownField', 'ImgeeField']
+    'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField',
+    'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'ImgeeField']
 
 
 # Default tags and attributes to allow in HTML sanitization
@@ -270,6 +270,31 @@ class HiddenMultiField(wtforms.fields.TextField):
             self.data = []  # Calling ''.split(',') will give us [''] which is not "falsy"
         else:
             self.data = self.data.split(self.separator)
+
+
+class NullTextField(wtforms.StringField):
+    """
+    Text field that returns None on empty strings.
+    """
+    def _value(self):
+        return super(NullTextField, self)._value() or None
+
+
+class AnnotatedTextField(wtforms.StringField):
+    """
+    Text field with prefix and suffix annotations.
+    """
+    def __init__(self, *args, **kwargs):
+        self.prefix = kwargs.pop('prefix', None)
+        self.suffix = kwargs.pop('suffix', None)
+        super(AnnotatedTextField, self).__init__(*args, **kwargs)
+
+
+class AnnotatedNullTextField(AnnotatedTextField, NullTextField):
+    """
+    Combination of AnnotatedTextField and NullTextField
+    """
+    pass
 
 
 class MarkdownField(wtforms.TextAreaField):
