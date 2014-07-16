@@ -86,10 +86,13 @@ assets['codemirror.css'][Version('3.21.0')] = 'baseframe/js/codemirror/lib/codem
 assets['codemirror.mode.markdown.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/markdown/markdown.js'
 assets['codemirror.mode.gfm.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/gfm/gfm.js'
 assets['codemirror.mode.htmlmixed.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/htmlmixed/htmlmixed.js'
+assets['codemirror.mode.css.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/css/css.js'
 assets['codemirror.addon.mode.overlay.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/mode/overlay.js'
 assets['codemirror.addon.edit.continuelist.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/edit/continuelist.js'
 assets['codemirror.addon.edit.closebrackets.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/edit/closebrackets.js'
 assets['codemirror.addon.edit.matchbrackets.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/edit/matchbrackets.js'
+assets['codemirror.addon.hint.css-hint.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/hint/css-hint.js'
+assets['codemirror.addon.lint.css-lint.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/lint/css-lint.js'
 
 assets['codemirror-markdown.js'][Version('3.21.0')] = {'requires': [
     'codemirror.js==3.21.0',
@@ -101,6 +104,14 @@ assets['codemirror-markdown.js'][Version('3.21.0')] = {'requires': [
     'codemirror.addon.edit.closebrackets.js==3.21.0',
 ]}
 assets['codemirror-markdown.css'][Version('3.21.0')] = ('codemirror.css==3.21.0', 'baseframe/css/codemirror.css')
+assets['codemirror-css.js'][Version('3.21.0')] = {'requires': [
+    'codemirror.js==3.21.0',
+    'codemirror.mode.css.js==3.21.0',
+    'codemirror.addon.hint.css-hint.js==3.21.0',
+    'codemirror.addon.lint.css-lint.js==3.21.0',
+    'codemirror.addon.edit.closebrackets.js==3.21.0',
+]}
+
 assets['pygments-default.css'][Version('1.5.0')] = 'baseframe/css/pygments-default.css'
 assets['pygments-zenburn.css'][Version('1.5.0')] = 'baseframe/css/pygments-zenburn.css'
 assets['pygments.css'][Version('1.5.0')] = {'requires': 'pygments-default.css'}

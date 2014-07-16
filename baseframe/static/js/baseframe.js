@@ -21,9 +21,37 @@ function activate_widgets(){
         }
       };
 
+      var cm_css_config = { mode: 'css',
+        lineNumbers: false,
+        theme: "default",
+        lineWrapping: true,
+        autoCloseBrackets: true,
+        matchBrackets: true,
+        extraKeys: {
+          "Tab": false,
+          "Shift-Tab": false,
+          "Home": "goLineLeft",
+          "End": "goLineRight",
+          "Cmd-Left": "goLineLeft",
+          "Cmd-Right": "goLineRight"
+        }
+      };
+
       // Activate codemirror on all textareas with class='markdown'
       $('textarea.markdown').each(function(){
         var editor = CodeMirror.fromTextArea(this, cm_markdown_config);
+        var delay;
+        editor.on('change', function(instance){
+          clearTimeout(delay);
+          delay = setTimeout(function() {
+            editor.save();
+          }, 300);
+        });
+      });
+
+      // Activate codemirror on all textareas with class='stylesheet'
+      $('textarea.stylesheet').each(function() {
+        var editor = CodeMirror.fromTextArea(this, cm_css_config);
         var delay;
         editor.on('change', function(instance){
           clearTimeout(delay);

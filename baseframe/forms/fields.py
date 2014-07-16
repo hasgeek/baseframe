@@ -8,7 +8,7 @@ from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenMultiInput
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField',
-    'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'ImgeeField']
+    'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField']
 
 
 # Default tags and attributes to allow in HTML sanitization
@@ -306,6 +306,16 @@ class MarkdownField(wtforms.TextAreaField):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = "%s %s" % (c, 'markdown') if c else 'markdown'
         return super(MarkdownField, self).__call__(**kwargs)
+
+
+class StylesheetField(wtforms.TextAreaField):
+    """
+    TextArea field which has class='stylesheet'.
+    """
+    def __call__(self, **kwargs):
+        c = kwargs.pop('class', '') or kwargs.pop('class_', '')
+        kwargs['class'] = "%s %s" % (c, 'stylesheet') if c else 'stylesheet'
+        return super(StylesheetField, self).__call__(**kwargs)
 
 
 class ImgeeField(wtforms.TextField):
