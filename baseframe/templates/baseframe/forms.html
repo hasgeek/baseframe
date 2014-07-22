@@ -23,7 +23,7 @@
       {%- if css_class %} {{ css_class }} {%- endif -%}
       {%- if listwidget %} listwidget {%- if style == 'horizlist' %} horizlist {%- endif %}{%- endif -%}
       " id="field-{{ field.id }}">
-    {%- if field.widget.input_type == 'checkbox' %}
+    {%- if field.type == 'BooleanField' %}
       <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">
         <div class="checkbox">
           <label>{{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, rows=rows) }} {{ field.label.text }}</label>
@@ -33,6 +33,13 @@
           <p class="help-block">{{ field.description }}</p>
         {%- endif %}
       </div>
+    {%- elif field.type == 'FormField' %}
+      <fieldset>
+        <legend>{{ field.label.text }}</legend>
+        {%- for subfield in field.form %}
+          {{ renderfield(field=subfield, css_class=css_class, widget_css_class=widget_css_class, sidetext=sidetext, tabindex=tabindex, autofocus=False, nolabel=nolabel, style=style, rows=rows) }}
+        {%- endfor %}
+      </fieldset>
     {%- else %}
       {%- if not nolabel %}
       <label class="{% if style == 'horiz' -%} col-xs-12 col-sm-3 col-md-2 {%- else %} col-xs-12 {%- endif %} control-label" for="{{ field.id }}">{{ field.label.text }}
@@ -50,10 +57,6 @@
             {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
             {% if field.suffix %}<span class="input-group-addon">{{ field.suffix }}</span>{% endif %}
           </div>
-        {%- elif field.type == 'FormField' %}
-          {%- for subfield in field.form %}
-            {{ renderfield(subfield, css_class, widget_css_class, sidetext, tabindex, autofocus, style) }}
-          {%- endfor %}
         {%- else %}
           {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
         {%- endif %}
