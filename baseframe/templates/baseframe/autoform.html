@@ -23,12 +23,12 @@
           radioHighlight('{{ field.name }}', 'selected');
         {%- endif -%}
       {%- endfor %}
-    });
-  </script>
-  <script type="text/javascript">
-    $(function() {
+
       $('input.datetime-time').timepicker({ 'scrollDefaultNow': true });  
+
+      // Reset disabled state if page was reloaded (TODO: does this really get called?)
+      $('#{{ formid }} .submit-disabled').prop('disabled', false);
     });
   </script>
-  {{ ajaxform(formid, request, ajax) }}
+  {{ ajaxform(formid=formid, request=request, force=ajax) }}
 {% endblock %}

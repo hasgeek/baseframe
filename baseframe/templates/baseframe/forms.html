@@ -122,23 +122,46 @@
 </form>
 {% endmacro %}
 
-{% macro ajaxform(formid, request, force=false) -%}
-{% if force or request.is_xhr -%}
-<script type="text/javascript">
-  $(function() {
-    $("#{{ formid }}").ajaxForm({
-      target: '#{{ formid }}',
-      replaceTarget: true,
-    });
-    $('#{{ formid }} input[type="submit"]').click(function() {
-      $('#{{ formid }}').find(".loading").removeClass('hidden');
-    });
-    $('#{{ formid }} button[type="submit"]').click(function() {
-      $('#{{ formid }}').find(".loading").removeClass('hidden');
-    });
-  });
-</script>
-{%- endif %}
+{%- macro ajaxform(formid, request, force=false) %}
+  {%- if force or request.is_xhr %}
+    <script type="text/javascript">
+      $(function() {
+        $("#{{ formid }}").ajaxForm({
+          target: '#{{ formid }}',
+          replaceTarget: true,
+          beforeSubmit: function(formdata, form, options) {
+            form.find('input[type="submit"]').prop('disabled', true).addClass('submit-disabled');
+            form.find('button[type="submit"]').prop('disabled', true).addClass('submit-disabled');
+            form.find('.loading').removeClass('hidden');
+            return true;
+          },
+          error: function(context, xhr, status, errMsg) {
+            var form = $("#{{ formid }}");
+            form.find('input[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
+            form.find('button[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
+            form.find('.loading').addClass('hidden');
+            form.append('<div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert">&times;</a> An error occured when submitting the form</div>');
+          } // No comma or semicolon here
+        });
+      });
+    </script>
+  {%- else %}
+    <script type="text/javascript">
+      $(function() {
+        // Disable submit button when clicked. Prevent double click.
+        $('#{{ formid }} input[type="submit"]').click(function() {
+          $(this).addClass('submit-disabled').prop('disabled', true);
+          $('#{{ formid }}').find(".loading").removeClass('hidden');
+          this.form.submit();
+        });
+        $('#{{ formid }} button[type="submit"]').click(function() {
+          $(this).addClass('submit-disabled').prop('disabled', true);
+          $('#{{ formid }}').find(".loading").removeClass('hidden');
+          this.form.submit();
+        });
+      });
+    </script>
+  {%- endif %}
 {%- endmacro %}
 
 {% macro tinymce3_editor(field) -%}
