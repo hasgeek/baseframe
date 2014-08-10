@@ -57,7 +57,8 @@ def gen_assets_url(assets):
     else:
         abort(400)
 
-    return bundle.urls(env=current_app.assets)[0]
+    bundle.env = current_app.assets
+    return bundle.urls()[0]
 
 
 def ext_assets(assets):
