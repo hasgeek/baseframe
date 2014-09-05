@@ -92,7 +92,9 @@ class ValidUrl(object):
                 exception_catchall.send(e)
                 code = None
 
-            if code not in (200, 201, 202, 203, 204, 205, 206, 207, 208, 226):
+            if code not in (200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 999):
+                # 999 is a non-standard too-many-requests error. We can't do anything
+                # about it, so let it pass.
                 raise wtforms.validators.StopValidation(self.message.format(url=field.data))
             elif r is not None:
                 # If load succeeded, confirm that the final URL (after expanding short URLs)
