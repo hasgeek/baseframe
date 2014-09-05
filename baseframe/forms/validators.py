@@ -191,7 +191,8 @@ class StripWhitespace(object):
 class ValidName(object):
     def __init__(self, message=None):
         if not message:
-            message = __("Name contains unsupported characters")
+            message = __(u"This name contains unsupported characters. "
+                u"It should have letters, numbers and non-terminal hyphens only")
         self.message = message
 
     def __call__(self, form, field):
