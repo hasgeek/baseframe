@@ -4,11 +4,12 @@ from pytz import utc, timezone as pytz_timezone
 import wtforms
 import bleach
 
-from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenMultiInput
+from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField',
-    'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField']
+    'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
+    'FormField', 'UserSelectField', 'UserSelectMultiField']
 
 
 # Default tags and attributes to allow in HTML sanitization
@@ -252,7 +253,7 @@ class HiddenMultiField(wtforms.fields.TextField):
     used as an Ajax widget target. The optional ``separator`` parameter
     can be used to specify an alternate separator character (default ``','``).
     """
-    widget = HiddenMultiInput()
+    widget = HiddenInput()
 
     def __init__(self, *args, **kwargs):
         self.separator = kwargs.pop('separator', ',')
@@ -265,11 +266,80 @@ class HiddenMultiField(wtforms.fields.TextField):
             return ''
 
     def process_formdata(self, valuelist):
-        super(HiddenMultiField, self).process_formdata(valuelist)
+        retval = super(HiddenMultiField, self).process_formdata(valuelist)
         if not self.data:
             self.data = []  # Calling ''.split(',') will give us [''] which is not "falsy"
         else:
             self.data = self.data.split(self.separator)
+        return retval
+
+
+class UserSelectFieldBase(object):
+    """
+    Select a user
+    """
+    def __init__(self, *args, **kwargs):
+        self.usermodel = kwargs.pop('usermodel')
+        self.lastuser = kwargs.pop('lastuser')
+        self.separator = kwargs.pop('separator', ',')
+        super(UserSelectFieldBase, self).__init__(*args, **kwargs)
+
+    def _value(self):
+        if self.data:
+            return self.separator.join([u.userid for u in self.data])
+        else:
+            return ''
+
+    def process_formdata(self, valuelist):
+        retval = super(UserSelectFieldBase, self).process_formdata(valuelist)
+        if self.data:
+            userids = self.data.split(self.separator)
+        else:
+            userids = [] # Calling ''.split(',') will give us [''] which is an invalid userid
+        # Convert strings in userids into User objects
+        users = []
+        if userids:
+            usersdata = self.lastuser.getuser_by_userids(userids)
+            for userinfo in usersdata:
+                if userinfo['type'] == 'user':
+                    user = self.usermodel.query.filter_by(userid=userinfo['buid']).first()
+                    if not user:
+                        # New user in this app. Don't set username right now. It's not relevant
+                        # until first login and we don't want to deal with conflicts.
+                        # We don't add this user to the session. The view is responsible for that
+                        # (using SQLAlchemy cascades when assigning users to a collection)
+                        user = self.usermodel(userid=userinfo['buid'], fullname=userinfo['title'])
+                    users.append(user)
+        self.data = users
+        return retval
+
+
+class UserSelectField(UserSelectFieldBase, wtforms.fields.TextField):
+    """
+    Render a user select field that allows one user to be selected.
+    """
+    widget = HiddenInput()
+
+    def _value(self):
+        if self.data:
+            return self.data.userid
+        else:
+            return None
+
+    def process_formdata(self, valuelist):
+        retval = super(UserSelectField, self).process_formdata(valuelist)
+        if self.data:
+            self.data = self.data[0]
+        else:
+            self.data = None
+        return retval
+
+
+class UserSelectMultiField(UserSelectFieldBase, wtforms.fields.TextField):
+    """
+    Render a user select field that allows multiple users to be selected.
+    """
+    widget = HiddenInput()
 
 
 class NullTextField(wtforms.StringField):
@@ -346,3 +416,13 @@ class ImgeeField(wtforms.TextField):
             kwargs['data-img-size'] = self.img_size
         return super(ImgeeField, self).__call__(**kwargs)
 
+
+class FormField(wtforms.FormField):
+    """
+    FormField that removes CSRF in sub-forms.
+    """
+    def process(self, *args, **kwargs):
+        retval = super(FormField, self).process(*args, **kwargs)
+        self.form.csrf_enabled = False
+        del self.form.csrf_token
+        return retval

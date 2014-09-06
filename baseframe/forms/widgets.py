@@ -3,7 +3,7 @@
 import wtforms
 from flask import Markup
 
-__all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'HiddenMultiInput']
+__all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'HiddenInput']
 
 
 class TinyMce3(wtforms.widgets.TextArea):
@@ -72,8 +72,8 @@ class DateTimeInput(wtforms.widgets.Input):
             ))
 
 
-class HiddenMultiInput(wtforms.widgets.core.Input):
+class HiddenInput(wtforms.widgets.core.Input):
     """
-    Render a hidden input.
+    Render a hidden input. This widget exists solely to escape processing by form.hidden_tag()
     """
     input_type = 'hidden'

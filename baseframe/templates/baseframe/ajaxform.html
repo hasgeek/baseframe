@@ -1,25 +1,9 @@
-{% from "baseframe/forms.html" import renderform, ajaxform, tinymce3_editor, tinymce4_editor %}
+{% from "baseframe/forms.html" import renderform, ajaxform, widgetscripts %}
 {{ renderform(form=form, formid=formid, submit=submit, message=message, cancel_url=cancel_url, multipart=multipart) }}
-{% for field in form -%}
-  {%- if field.widget.input_type == 'tinymce3' -%}
-    {{ tinymce3_editor(field) }}
-  {%- elif field.widget.input_type == 'tinymce4' -%}
-    {{ tinymce4_editor(field) }}
-  {%- endif %}
-{%- endfor %}
-
 {{ ajaxform(formid=formid, request=request, force=true) }}
 
 <script type="text/javascript">
   activate_widgets();
 
-  {%- for field in form -%}
-    {%- if field.type == 'RadioField' or field.type == 'QuerySelectField' %}
-      radioHighlight('{{ field.name }}', 'selected');
-    {%- endif -%}
-  {%- endfor %}
-
-  $(function() {
-    $('input.datetime-time').timepicker({ 'scrollDefaultNow': true });
-  });
+  {{ widgetscripts(form, script=false) }}
 </script>

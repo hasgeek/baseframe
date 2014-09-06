@@ -2,7 +2,7 @@
 {% macro rendererrors(field) -%}
     {%- if field.errors -%}
       {%- for error in field.errors %}
-        <p class="help-error">{{ error }}</p>
+        <div><p class="help-error">{{ error }}</p></div>
       {%- endfor %}
     {%- endif %}
 {%- endmacro %}
@@ -18,61 +18,63 @@
     {%- set listwidget = false %}
   {%- endif -%}
 
-  <div class="form-group control-group {#- BS3: form-group, BS2: control-group -#}
-      {%- if field.errors %} error has-error {%- endif -%}
-      {%- if css_class %} {{ css_class }} {%- endif -%}
-      {%- if listwidget %} listwidget {%- if style == 'horizlist' %} horizlist {%- endif %}{%- endif -%}
-      " id="field-{{ field.id }}">
-    {%- if field.type == 'BooleanField' %}
-      <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">
-        <div class="checkbox">
-          <label>{{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, rows=rows) }} {{ field.label.text }}</label>
-        </div>
-        {{ rendererrors(field) }}
-        {%- if field.description %}
-          <p class="help-block">{{ field.description }}</p>
-        {%- endif %}
-      </div>
-    {%- elif field.type == 'FormField' %}
-      <fieldset>
-        <legend>{{ field.label.text }}</legend>
-        {%- for subfield in field.form %}
-          {{ renderfield(field=subfield, css_class=css_class, widget_css_class=widget_css_class, sidetext=sidetext, tabindex=tabindex, autofocus=False, nolabel=nolabel, style=style, rows=rows) }}
-        {%- endfor %}
-      </fieldset>
-    {%- else %}
-      {%- if not nolabel %}
-      <label class="{% if style == 'horiz' -%} col-xs-12 col-sm-3 col-md-2 {%- else %} col-xs-12 {%- endif %} control-label" for="{{ field.id }}">{{ field.label.text }}
-        {%- if field.flags.required -%}
-          <span class="help-required" title="Required">*</span>
-        {%- endif -%}
-      </label>
-      {%- endif %}
-      <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-9 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">
-        {%- if field.type in ['NullTextField', 'StringField', 'TextField', 'DateField', 'EmailField', 'URLField', 'TextAreaField', 'PasswordField'] %}
-          {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
-        {%- elif field.type in ['AnnotatedTextField', 'AnnotatedNullTextField'] %}
-          <div class="input-group">
-            {% if field.prefix %}<span class="input-group-addon">{{ field.prefix }}</span>{% endif %}
-            {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
-            {% if field.suffix %}<span class="input-group-addon">{{ field.suffix }}</span>{% endif %}
+  {%- if field.type == 'FormField' %}
+    <fieldset>
+      <legend>{{ field.label.text }}</legend>
+      {%- for subfield in field.form %}
+        {{ renderfield(field=subfield, css_class=css_class, widget_css_class=widget_css_class, sidetext=sidetext, tabindex=tabindex, autofocus=False, nolabel=nolabel, style=style, rows=rows) }}
+      {%- endfor %}
+    </fieldset>
+  {%- else %}
+    <div class="form-group control-group {#- BS3: form-group, BS2: control-group -#}
+        {%- if field.errors %} error has-error {%- endif -%}
+        {%- if css_class %} {{ css_class }} {%- endif -%}
+        {%- if listwidget %} listwidget {%- if style == 'horizlist' %} horizlist {%- endif %}{%- endif -%}
+        " id="field-{{ field.id }}">
+      {%- if field.type == 'BooleanField' %}
+        <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">
+          <div class="checkbox">
+            <label>{{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, rows=rows) }} {{ field.label.text }}</label>
           </div>
-        {%- else %}
-          {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+          {{ rendererrors(field) }}
+          {%- if field.description %}
+            <p class="help-block">{{ field.description }}</p>
+          {%- endif %}
+        </div>
+      {%- else %}
+        {%- if not nolabel %}
+        <label class="{% if style == 'horiz' -%} col-xs-12 col-sm-3 col-md-2 {%- else %} col-xs-12 {%- endif %} control-label" for="{{ field.id }}">{{ field.label.text }}
+          {%- if field.flags.required -%}
+            <span class="help-required" title="Required">*</span>
+          {%- endif -%}
+        </label>
         {%- endif %}
-        {%- if sidetext %}
-          <span class="help-inline">{{sidetext}}</span>
-        {%- endif %}
-        {{ rendererrors(field) }}
-        {%- if field.description %}
-          <p class="help-block">{{ field.description }}</p>
-        {%- endif %}
-      </div>
-    {%- endif %}
-  </div>
+        <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-9 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">
+          {%- if field.type in ['NullTextField', 'StringField', 'TextField', 'DateField', 'EmailField', 'URLField', 'TextAreaField', 'PasswordField'] %}
+            {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+          {%- elif field.type in ['AnnotatedTextField', 'AnnotatedNullTextField'] %}
+            <div class="input-group">
+              {% if field.prefix %}<span class="input-group-addon">{{ field.prefix }}</span>{% endif %}
+              {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+              {% if field.suffix %}<span class="input-group-addon">{{ field.suffix }}</span>{% endif %}
+            </div>
+          {%- else %}
+            {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+          {%- endif %}
+          {%- if sidetext %}
+            <span class="help-inline">{{sidetext}}</span>
+          {%- endif %}
+          {{ rendererrors(field) }}
+          {%- if field.description %}
+            <p class="help-block">{{ field.description }}</p>
+          {%- endif %}
+        </div>
+      {%- endif %}
+    </div>
+  {%- endif %}
 {%- endmacro %}
 
-{% macro rendersubmit(buttons=[], css_class="", tabindex='', cancel_url='', style='horiz') -%}
+{% macro rendersubmit(buttons=[], css_class="", tabindex='', cancel_url='', style='horiz', csrf_error=false) -%}
 <div class="form-group form-actions clearfix{% if css_class %} {{ css_class}}{% endif %}">
   <div {%- if style == 'horiz' %} class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10"{% else %} class="col-xs-12"{% endif %}>
     {% for name, value, widget_class in buttons -%}
@@ -84,6 +86,11 @@
     {% endfor %}
     {% if cancel_url %}<a href="{{ cancel_url }}" class="btn btn-default">{% trans %}Cancel{% endtrans %}</a>{% endif %}
     <span class="loading hidden">&nbsp;</span>
+    {% if csrf_error -%}
+      <div><p class="help-error">{% trans -%}
+        This form has timed out. Please submit again to confirm
+      {%- endtrans %}</p></div>
+    {%- endif %}
   </div>
 </div>
 {%- endmacro %}
@@ -98,12 +105,6 @@
   {% if message %}<p>{{ message }}</p>{% endif %}
   <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
   {{ form.hidden_tag() }}
-  {%- if form.csrf_token.errors %}
-    <div class="alert alert-error alert-danger">{% trans %}
-      This form timed out because it’s been a while since the page loaded.
-      Please submit again to confirm.
-    {% endtrans %}</div>
-  {% endif %}
   {%- set autofocus = true %}
   {% for field in form -%}
     {%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
@@ -118,7 +119,7 @@
 {% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=False, style='horiz') %}
 <form id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" {%- if style == 'horiz' %} class="form-horizontal"{% endif %}>
   {{ renderform_inner(form, formid or None, style=style) }}
-  {{ rendersubmit([(None, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url, style=style) }}
+  {{ rendersubmit([(None, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>
 {% endmacro %}
 
@@ -164,9 +165,11 @@
   {%- endif %}
 {%- endmacro %}
 
-{% macro tinymce3_editor(field) -%}
+{% macro tinymce3_editor(field, script=true) -%}
+  {%- if script %}
   <script type="text/javascript">
     $(function() {
+  {%- endif %}
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
         // Location of TinyMCE script
         script_url: {{ url_for("baseframe.static", filename="js/tinymce3/tiny_mce.js")|tojson }},
@@ -189,13 +192,17 @@
           });
         } // No comma or semicolon here
       });
+  {%- if script %}
     });
   </script>
+  {%- endif %}
 {% endmacro %}
 
-{% macro tinymce4_editor(field) -%}
+{% macro tinymce4_editor(field, script=true) -%}
+  {%- if script %}
   <script type="text/javascript">
     $(function() {
+  {%- endif %}
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
         {%- for k, v in field.tinymce_options.items() %}
         {{ k|tojson }}: {{ v|tojson }},
@@ -212,6 +219,30 @@
           });
         } // End of setup keyval
       });
+  {%- if script %}
     });
   </script>
+  {%- endif %}
+{% endmacro %}
+
+{% macro widgetscripts(form, script=true) %}
+  {%- if script %}
+  <script type="text/javascript">
+    $(function() {
+  {%- endif %}
+  {% for field in form -%}
+    {%- if field.type == 'FormField' %}
+      {{ widgetscripts(field.form, script=false) }}
+    {%- elif field.widget.input_type == 'tinymce3' -%}
+      {{ tinymce3_editor(field, script=false) }}
+    {%- elif field.widget.input_type == 'tinymce4' -%}
+      {{ tinymce4_editor(field, script=false) }}
+    {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
+      activate_lastuser_autocomplete({{ ('#'+field.id)|tojson }}, {{ field.lastuser.endpoint_url(field.lastuser.getuser_autocomplete_endpoint)|tojson }}, {{ field.lastuser.endpoint_url(field.lastuser.getuser_userids_endpoint)|tojson }});
+    {%- endif -%}
+  {%- endfor %}
+  {%- if script %}
+    });
+  </script>
+  {%- endif %}
 {% endmacro %}

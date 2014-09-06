@@ -235,12 +235,18 @@ table.mceLayout
     margin-left: 0
     margin-bottom: 0
 
+    li
+      position: relative
+      margin-left: 1.25em
+
     input
-      vertical-align: baseline
+      // vertical-align: baseline
+      position: absolute
+      left: -1.25em
 
     label
-      display: inline
-      vertical-align: baseline
+      display: inline-block
+      // vertical-align: baseline
 
 .form-horizontal .listwidget .control-label
   padding-top: 0
@@ -258,12 +264,14 @@ table.mceLayout
 
 .help-error
   margin-top: 11px
+  margin-bottom: 0
   border: 1px solid #b94a48
   color: white !important
   background: #b94a48
   padding: 4px 12px
   +border-radius(3px)
   position: relative
+  display: inline-block
 
   &:before
     display: block
@@ -307,6 +315,12 @@ input[type="url"], input[name="name"]
 .help-block
   font-size: 90%
   color: #777
+
+fieldset:not(:first-child)
+  margin-top: $body-line-height
+
+legend
+  margin-bottom: $body-line-height / 2
 
 // Single-button forms
 form.form-button

@@ -1,5 +1,5 @@
 {% extends "formlayout.html" %}
-{% from "baseframe/forms.html" import renderform, ajaxform, tinymce3_editor, tinymce4_editor %}
+{% from "baseframe/forms.html" import renderform, ajaxform, widgetscripts %}
 
 {% block content %}
   {%- if message %}
@@ -9,23 +9,10 @@
 {% endblock %}
 
 {% block footerscripts %}
-  {% for field in form -%}
-    {%- if field.widget.input_type == 'tinymce3' -%}
-      {{ tinymce3_editor(field) }}
-    {%- elif field.widget.input_type == 'tinymce4' -%}
-      {{ tinymce4_editor(field) }}
-    {%- endif %}
-  {%- endfor %}
   <script type="text/javascript">
     $(function() {
-      {%- for field in form -%}
-        {%- if field.type == 'RadioField' or field.type == 'QuerySelectField' %}
-          radioHighlight('{{ field.name }}', 'selected');
-        {%- endif -%}
-      {%- endfor %}
-
-      $('input.datetime-time').timepicker({ 'scrollDefaultNow': true });  
-
+      activate_widgets();
+      {{ widgetscripts(form, script=false) }};
       // Reset disabled state if page was reloaded (TODO: does this really get called?)
       $('#{{ formid }} .submit-disabled').prop('disabled', false);
     });

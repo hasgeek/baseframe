@@ -44,10 +44,10 @@ class BaseframeBlueprint(Blueprint):
         """
         if app.config.get('SERVER_NAME'):
             subdomain = app.config.get('STATIC_SUBDOMAIN', 'static')
+            app.add_url_rule('/static/<path:filename>', endpoint='static',
+                view_func=app.send_static_file, subdomain=subdomain)
         else:
             subdomain = None
-        app.add_url_rule('/static/<path:filename>', endpoint='static',
-            view_func=app.send_static_file, subdomain=subdomain)
 
         ignore_js = ['!jquery.js']
         ignore_css = []
@@ -187,11 +187,14 @@ def get_timezone():
 
 @baseframe.after_app_request
 def process_response(response):
+    if request.endpoint in ('static', 'baseframe.static'):
+        if 'Access-Control-Allow-Origin' not in response.headers:
+            response.headers['Access-Control-Allow-Origin'] = '*'  # TODO: Make this configurable
+
     # Prevent pages from being placed in an iframe. If the response already
     # set has a value for this option, let it pass through
     if 'X-Frame-Options' in response.headers:
         frameoptions = response.headers.get('X-Frame-Options')
-        # FIXME: There has to be a better way to signal this.
         if not frameoptions or frameoptions == 'ALLOW':
             response.headers.pop('X-Frame-Options')
     else:

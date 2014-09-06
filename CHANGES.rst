@@ -4,6 +4,9 @@
 * AllUrlsValid now takes custom messages and an invalid_urls list
 * New ValidUrl validator for a single URL (takes the same parameters)
 * New StylesheetField for CSS
+* New FormField for fieldsets
+* New UserSelectField and UserSelectMultiField for Lastuser autocomplete
+* Revamped forms.html and autoform generator
 
 
 0.3.0

@@ -581,12 +581,16 @@ table.mceLayout.focus {
   margin-left: 0;
   margin-bottom: 0;
 }
+.listwidget ul li, .listwidget ol li {
+  position: relative;
+  margin-left: 1.25em;
+}
 .listwidget ul input, .listwidget ol input {
-  vertical-align: baseline;
+  position: absolute;
+  left: -1.25em;
 }
 .listwidget ul label, .listwidget ol label {
-  display: inline;
-  vertical-align: baseline;
+  display: inline-block;
 }
 
 .form-horizontal .listwidget .control-label {
@@ -607,6 +611,7 @@ table.mceLayout.focus {
 
 .help-error {
   margin-top: 11px;
+  margin-bottom: 0;
   border: 1px solid #b94a48;
   color: white !important;
   background: #b94a48;
@@ -617,6 +622,7 @@ table.mceLayout.focus {
   -o-border-radius: 3px;
   border-radius: 3px;
   position: relative;
+  display: inline-block;
 }
 .help-error:before {
   display: block;
@@ -668,6 +674,14 @@ input[type="url"], input[name="name"] {
 .help-block {
   font-size: 90%;
   color: #777777;
+}
+
+fieldset:not(:first-child) {
+  margin-top: 20px;
+}
+
+legend {
+  margin-bottom: 10px;
 }
 
 form.form-button {

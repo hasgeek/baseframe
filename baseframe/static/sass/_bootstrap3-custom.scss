@@ -4,14 +4,24 @@
 .listwidget ul > li > label {
     font-weight: normal;
 }
-.selected, .listwidget ul > li.selected {
+.selected {
     label {
         font-weight: 600;
     }
 }
 
+.listwidget input[type=radio]:checked + label {
+    font-weight: 600;
+}
+
 .form-control {
     padding: 6px 6px
+}
+
+.form-horizontal {
+    .radio, .checkbox {
+        padding-top: 0;
+    }
 }
 
 .control-group, .form-group {
