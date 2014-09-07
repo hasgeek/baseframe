@@ -53,8 +53,8 @@ assets['jquery.form.js'][Version('2.96.0')] = ('jquery.js', 'baseframe/js/jquery
 assets['jquery.tinymce.js'][Version('3.5.10')] = ('jquery.js', 'baseframe/js/tinymce3/jquery.tinymce.js')
 assets['tinymce.js'][Version('3.5.10')] = 'baseframe/js/tinymce3/tiny_mce.js'
 assets['tiny_mce.js'][Version('3.5.10')] = {'requires': ['tinymce.js==3.5.10']}
-assets['jquery.tinymce.js'][Version('4.0.25')] = ('jquery.js', 'baseframe/js/tinymce4/jquery.tinymce.min.js')
-assets['tinymce.js'][Version('4.0.25')] = 'baseframe/js/tinymce4/tinymce.min.js'
+assets['jquery.tinymce.js'][Version('4.1.4')] = ('jquery.js', 'baseframe/js/tinymce4/jquery.tinymce.min.js')
+assets['tinymce.js'][Version('4.1.4')] = 'baseframe/js/tinymce4/tinymce.min.js'
 assets['bootstrap-datepicker.js'][Version('1.3.0')] = ('jquery.js', 'baseframe/js/bootstrap-datepicker.js')
 
 assets['jquery.ui.js'][Version('1.10.3')] = ('jquery.js', 'baseframe/js/jquery-ui.js')
