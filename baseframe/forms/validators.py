@@ -81,9 +81,9 @@ class ValidUrl(object):
             try:
                 r = requests.head(url, timeout=30, allow_redirects=True, headers={'User-Agent': ua})
                 code = r.status_code
-                if code == 405:  # Some servers don't like HTTP HEAD requests, strange but true
+                if code in (405, 502):  # Some servers don't like HTTP HEAD requests, strange but true
                     r = requests.get(url, timeout=30, allow_redirects=True, headers={'User-Agent': ua})
-                    code  =r.status_code
+                    code = r.status_code
             except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
                     requests.exceptions.ConnectionError,  # Name resolution or connection failed
                     requests.exceptions.Timeout):         # Didn't respond in time
