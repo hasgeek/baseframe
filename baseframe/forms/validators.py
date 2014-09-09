@@ -149,9 +149,9 @@ class AllUrlsValid(object):
                 try:
                     r = requests.head(url, timeout=30, allow_redirects=True, headers={'User-Agent': ua})
                     code = r.status_code
-                    if code == 405:  # Some servers don't like HTTP HEAD requests, strange but true
+                    if code in (405, 502):  # Some servers don't like HTTP HEAD requests, strange but true
                         r = requests.get(url, timeout=30, allow_redirects=True, headers={'User-Agent': ua})
-                        code  =r.status_code
+                        code = r.status_code
                 except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
                         requests.exceptions.ConnectionError,  # Name resolution or connection failed
                         requests.exceptions.Timeout):         # Didn't respond in time
@@ -160,7 +160,9 @@ class AllUrlsValid(object):
                     exception_catchall.send(e)
                     code = None
 
-                if code not in (200, 201, 202, 203, 204, 205, 206, 207, 208, 226):
+                if code not in (200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 999):
+                    # 999 is a non-standard too-many-requests error. We can't do anything
+                    # about it, so let it pass.
                     if url == text:
                         field.errors.append(self.message.format(url=href))
                     else:
