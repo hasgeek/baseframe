@@ -11,7 +11,6 @@
 {% block footerscripts %}
   <script type="text/javascript">
     $(function() {
-      activate_widgets();
       {{ widgetscripts(form, script=false) }};
       // Reset disabled state if page was reloaded (TODO: does this really get called?)
       $('#{{ formid }} .submit-disabled').prop('disabled', false);
