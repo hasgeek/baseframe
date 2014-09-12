@@ -1,55 +1,40 @@
 # -*- coding: utf-8 -*-
 
-import dns.resolver
 from urlparse import urljoin
 from flask import request
 import wtforms
 import requests
 from lxml import html
 from coaster import make_name, get_email_domain
+from pyisemail import is_email
 from .. import b__ as __
 from .. import b_ as _
 from ..signals import exception_catchall
 
 
-__all__ = ['ValidEmailDomain', 'ValidUrl', 'AllUrlsValid', 'StripWhitespace', 'ValidName']
+__all__ = ['ValidEmail', 'ValidEmailDomain', 'ValidUrl', 'AllUrlsValid', 'StripWhitespace', 'ValidName']
 
 
-class ValidEmailDomain(object):
+class ValidEmail(object):
     """
-    Validator to confirm an email address is likely to be valid because its
-    domain exists and has an MX record.
+    Validator to confirm an email address is likely to be valid because it is properly
+    formatted and the domain exists.
 
-    :param str message: Optional validation error message. If supplied, this message overrides the following three
-    :param str message_invalid: Message if the email address is invalid
-    :param str message_domain: Message if domain is not found
-    :param str message_email: Message if domain does not have an MX record
+    :param str message: Optional validation error message.
     """
-    message_invalid = __(u"That is not a valid email address")
-    message_domain = __(u"That domain does not exist")
-    message_email = __(u"That email address does not exist")
-
-    def __init__(self, message=None, message_invalid=None, message_domain=None, message_email=None):
+    def __init__(self, message=None):
         self.message = message
-        if message_invalid:
-            self.message_invalid = message_invalid
-        if message_domain:
-            self.message_domain = message_domain
-        if message_email:
-            self.message_email = message_email
 
     def __call__(self, form, field):
-        email_domain = get_email_domain(field.data)
-        if not email_domain:
-            raise wtforms.validators.StopValidation(self.message or self.message_invalid)
-        try:
-            dns.resolver.query(email_domain, 'MX')
-        except dns.resolver.NXDOMAIN:
-            raise wtforms.validators.StopValidation(self.message or self.message_domain)
-        except dns.resolver.NoAnswer:
-            raise wtforms.validators.StopValidation(self.message or self.message_email)
-        except (dns.resolver.Timeout, dns.resolver.NoNameservers):
-            pass
+        diagnosis = is_email(field.data, check_dns=True, diagnose=True)
+        if diagnosis.code == 0:
+            return
+        else:
+            raise wtforms.validators.StopValidation(self.message or _(diagnosis.message))
+
+
+# Legacy name
+ValidEmailDomain = ValidEmail
 
 
 class ValidUrl(object):

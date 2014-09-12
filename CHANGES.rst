@@ -7,6 +7,7 @@
 * New FormField for fieldsets
 * New UserSelectField and UserSelectMultiField for Lastuser autocomplete
 * Revamped forms.html and autoform generator
+* ValidEmailDomain validator is now ValidEmail and does syntax checks
 
 
 0.3.0

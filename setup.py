@@ -19,7 +19,7 @@ requires = [
     'bleach',
     'pytz',
     'requests',
-    'dnspython',
+    'pyIsEmail',
     'wtforms',
     'Flask',
     'Flask-Assets',
