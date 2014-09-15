@@ -50,7 +50,7 @@
         </label>
         {%- endif %}
         <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-9 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">
-          {%- if field.type in ['NullTextField', 'StringField', 'TextField', 'DateField', 'EmailField', 'URLField', 'TextAreaField', 'PasswordField', 'SelectField', 'QuerySelectField'] %}
+          {%- if field.widget.input_type in ['text', 'password', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month', 'number', 'search', 'tel', 'time', 'url', 'week'] or (field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField'] and field.widget.html_tag not in ['ul', 'ol']) %}
             {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
           {%- elif field.type in ['AnnotatedTextField', 'AnnotatedNullTextField'] %}
             <div class="input-group">
