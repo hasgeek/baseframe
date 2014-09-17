@@ -18,7 +18,6 @@ requires = [
     'semantic_version',
     'bleach',
     'pytz',
-    'requests',
     'pyIsEmail',
     'wtforms',
     'Flask',
@@ -31,6 +30,11 @@ requires = [
     'coaster',
     'lxml',
     'fluent-logger',
+    # For link validation with SNI SSL support
+    'requests',
+    'pyOpenSSL',
+    'ndg-httpsclient',
+    'pyasn1',
     ]
 
 
