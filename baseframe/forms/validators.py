@@ -64,10 +64,10 @@ class ValidUrl(object):
 
             r = None
             try:
-                r = requests.head(url, timeout=30, allow_redirects=True, headers={'User-Agent': ua})
+                r = requests.head(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': ua})
                 code = r.status_code
                 if code in (405, 502):  # Some servers don't like HTTP HEAD requests, strange but true
-                    r = requests.get(url, timeout=30, allow_redirects=True, headers={'User-Agent': ua})
+                    r = requests.get(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': ua})
                     code = r.status_code
             except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
                     requests.exceptions.ConnectionError,  # Name resolution or connection failed
@@ -132,10 +132,10 @@ class AllUrlsValid(object):
 
                 r = None
                 try:
-                    r = requests.head(url, timeout=30, allow_redirects=True, headers={'User-Agent': ua})
+                    r = requests.head(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': ua})
                     code = r.status_code
                     if code in (405, 502):  # Some servers don't like HTTP HEAD requests, strange but true
-                        r = requests.get(url, timeout=30, allow_redirects=True, headers={'User-Agent': ua})
+                        r = requests.get(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': ua})
                         code = r.status_code
                 except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
                         requests.exceptions.ConnectionError,  # Name resolution or connection failed
