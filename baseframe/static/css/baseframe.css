@@ -836,6 +836,7 @@ ul.grid > li.header {
   max-height: 2.5em;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.2;
 }
 .cardset li h3, .userset li h3 {
   font-size: 12px;
