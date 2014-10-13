@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from urlparse import urljoin
+import dns.resolver
+from pyisemail import is_email
 from flask import request
 import wtforms
 import requests
 from lxml import html
 from coaster import make_name, get_email_domain
-from pyisemail import is_email
 from .. import b__ as __
 from .. import b_ as _
 from ..signals import exception_catchall
@@ -26,7 +27,10 @@ class ValidEmail(object):
         self.message = message
 
     def __call__(self, form, field):
-        diagnosis = is_email(field.data, check_dns=True, diagnose=True)
+        try:
+            diagnosis = is_email(field.data, check_dns=True, diagnose=True)
+        except (dns.resolver.Timeout, dns.resolver.NoNameservers):
+            return
         if diagnosis.code == 0:
             return
         else:
