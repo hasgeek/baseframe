@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 from urlparse import urljoin
 import dns.resolver
 from pyisemail import is_email
@@ -7,13 +8,16 @@ from flask import request
 import wtforms
 import requests
 from lxml import html
-from coaster import make_name, get_email_domain
+from coaster.utils import make_name, deobfuscate_email
 from .. import b__ as __
 from .. import b_ as _
 from ..signals import exception_catchall
 
 
-__all__ = ['ValidEmail', 'ValidEmailDomain', 'ValidUrl', 'AllUrlsValid', 'StripWhitespace', 'ValidName']
+__all__ = ['ValidEmail', 'ValidEmailDomain', 'ValidUrl', 'AllUrlsValid', 'StripWhitespace', 'ValidName', 'NoObfuscatedEmail']
+
+
+EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b', re.I)
 
 
 class ValidEmail(object):
@@ -165,6 +169,27 @@ class AllUrlsValid(object):
                                 field.errors.append(message.format(url=url, text=text))
                             elif pattern.search(r.url) is not None:
                                 field.errors.append(message.format(url=url, text=text))
+
+
+class NoObfuscatedEmail(object):
+    """
+    Scan for obfuscated email addresses in the provided text and reject them
+    """
+    def __init__(self, message=None):
+        if not message:
+            message = __(u"Email address identified")
+        self.message = message
+
+    def __call__(self, form, field):
+        emails = EMAIL_RE.findall(deobfuscate_email(field.data or u''))
+
+        for email in emails:
+            try:
+                diagnosis = is_email(email, check_dns=True, diagnose=True)
+                if diagnosis.code == 0:
+                    raise wtforms.validators.StopValidation(self.message)
+            except (dns.resolver.Timeout, dns.resolver.NoNameservers):
+                pass
 
 
 class StripWhitespace(object):
