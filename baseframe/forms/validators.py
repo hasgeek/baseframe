@@ -74,7 +74,7 @@ class ValidUrl(object):
             try:
                 r = requests.head(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': ua})
                 code = r.status_code
-                if code in (405, 502):  # Some servers don't like HTTP HEAD requests, strange but true
+                if code in (405, 502, 503):  # Some servers don't like HTTP HEAD requests, strange but true
                     r = requests.get(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': ua})
                     code = r.status_code
             except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
@@ -142,7 +142,7 @@ class AllUrlsValid(object):
                 try:
                     r = requests.head(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': ua})
                     code = r.status_code
-                    if code in (405, 502):  # Some servers don't like HTTP HEAD requests, strange but true
+                    if code in (405, 502, 503):  # Some servers don't like HTTP HEAD requests, strange but true
                         r = requests.get(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': ua})
                         code = r.status_code
                 except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
