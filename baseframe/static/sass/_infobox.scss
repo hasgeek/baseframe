@@ -2,7 +2,7 @@
     dl.infobox {
         border: 1px solid $color-outline;
         @include border-radius(4px);
-        @include single-box-shadow(rgba(0, 0, 0, 0.1), 0, 1px, 2px);
+        @include box-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
         background: $color-infobox-definition;
         padding: $body-line-height / 2;
     }
@@ -15,7 +15,7 @@
         position: relative;
         border: 1px solid $color-outline;
         @include border-radius(4px);
-        @include single-box-shadow(rgba(0, 0, 0, 0.1), 0, 1px, 2px);
+        @include box-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
         padding: 0;
         background: $color-infobox-term;
 

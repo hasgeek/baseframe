@@ -21,8 +21,8 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
 
     More Info : http://www.quirksmode.org/css/box.html
   */
-  -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -37,13 +37,12 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
   line-height: 28px;
   color: #222;
   text-decoration: none;
-  -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
+  -webkit-border-radius: 3px;
   border-radius: 3px;
-  -webkit-background-clip: padding;
   -moz-background-clip: padding;
+  -o-background-clip: padding-box;
+  -webkit-background-clip: padding;
   background-clip: padding-box;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -55,31 +54,28 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
   background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(0.5, white));
   background-image: -webkit-linear-gradient(center bottom, #eeeeee 0%, white 50%);
   background-image: -moz-linear-gradient(center bottom, #eeeeee 0%, white 50%);
-  background-image: -o-linear-gradient(bottom, #eeeeee 0%, white 50%);
-  background-image: -ms-linear-gradient(top, white 0%, #eeeeee 50%);
+  background-image: -o-linear-gradient(bottom, #eeeeee 0%, #ffffff 50%);
+  background-image: -ms-linear-gradient(top, #ffffff 0%, #eeeeee 50%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#eeeeee', GradientType = 0);
-  background-image: linear-gradient(top, #ffffff 0%, #eeeeee 50%);
-  -webkit-transition: border-color ease-in-out, box-shadow ease-in-out;
-  -webkit-transition-delay: 0.15s, 0.15s;
-  -moz-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  background-image: linear-gradient(to bottom, #ffffff 0%, #eeeeee 50%);
+  -moz-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .select2-container.select2-drop-above .select2-choice {
   border-bottom-color: #ccc;
-  -webkit-border-radius: 0 0 3px 3px;
   -moz-border-radius: 0 0 3px 3px;
-  -ms-border-radius: 0 0 3px 3px;
-  -o-border-radius: 0 0 3px 3px;
+  -webkit-border-radius: 0;
   border-radius: 0 0 3px 3px;
   background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eeeeee), color-stop(0.9, white));
   background-image: -webkit-linear-gradient(center bottom, #eeeeee 0%, white 90%);
   background-image: -moz-linear-gradient(center bottom, #eeeeee 0%, white 90%);
   background-image: -o-linear-gradient(bottom, #eeeeee 0%, white 90%);
-  background-image: -ms-linear-gradient(top, #eeeeee 0%, white 90%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 );
-  background-image: linear-gradient(top, #eeeeee 0%, #ffffff 90%);
+  background-image: -ms-linear-gradient(top, #eeeeee 0%, #ffffff 90%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 );
+  background-image: linear-gradient(to bottom, #eeeeee 0%, #ffffff 90%);
 }
 
 .select2-container .select2-choice span {
@@ -130,13 +126,11 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
   color: #000;
   border: 1px solid #ccc;
   border-top: 0;
-  -webkit-border-radius: 0 0 3px 3px;
   -moz-border-radius: 0 0 3px 3px;
-  -ms-border-radius: 0 0 3px 3px;
-  -o-border-radius: 0 0 3px 3px;
+  -webkit-border-radius: 0;
   border-radius: 0 0 3px 3px;
-  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
@@ -144,13 +138,11 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
   margin-top: 1px;
   border-top: 1px solid #ccc;
   border-bottom: 0;
-  -webkit-border-radius: 3px 3px 0 0;
   -moz-border-radius: 3px 3px 0 0;
-  -ms-border-radius: 3px 3px 0 0;
-  -o-border-radius: 3px 3px 0 0;
+  -webkit-border-radius: 3px;
   border-radius: 3px 3px 0 0;
-  -webkit-box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.15);
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.15);
 }
 
@@ -162,22 +154,21 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
   right: 0;
   top: 0;
   border-left: 1px solid #ccc;
-  -webkit-border-radius: 0 2px 2px 0;
   -moz-border-radius: 0 2px 2px 0;
-  -ms-border-radius: 0 2px 2px 0;
-  -o-border-radius: 0 2px 2px 0;
+  -webkit-border-radius: 0;
   border-radius: 0 2px 2px 0;
-  -webkit-background-clip: padding;
   -moz-background-clip: padding;
+  -o-background-clip: padding-box;
+  -webkit-background-clip: padding;
   background-clip: padding-box;
   background: #ccc;
-  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #cccccc), color-stop(0.6, #eeeeee));
-  background-image: -webkit-linear-gradient(center bottom, #cccccc 0%, #eeeeee 60%);
-  background-image: -moz-linear-gradient(center bottom, #cccccc 0%, #eeeeee 60%);
-  background-image: -o-linear-gradient(bottom, #cccccc 0%, #eeeeee 60%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ccc), color-stop(0.6, #eee));
+  background-image: -webkit-linear-gradient(center bottom, #ccc 0%, #eee 60%);
+  background-image: -moz-linear-gradient(center bottom, #ccc 0%, #eee 60%);
+  background-image: -o-linear-gradient(bottom, #ccc 0%, #eee 60%);
   background-image: -ms-linear-gradient(top, #cccccc 0%, #eeeeee 60%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#eeeeee', endColorstr = '#cccccc', GradientType = 0);
-  background-image: linear-gradient(top, #cccccc 0%, #eeeeee 60%);
+  background-image: linear-gradient(to bottom, #cccccc 0%, #eeeeee 60%);
 }
 
 .select2-container .select2-choice div b {
@@ -214,21 +205,19 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
   outline: 0;
   font-size: 1em;
   border: 1px solid #ccc;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
+  -webkit-border-radius: 3px;
   border-radius: 3px;
-  background: white url('/_baseframe/img/select2.png?1352863174') no-repeat 100% -22px;
+  background: #fff url('/_baseframe/img/select2.png?1352863174') no-repeat 100% -22px;
 }
 
 .select2-search input:focus {
   border: 1px solid rgba(82, 168, 236, 0.8);
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
 }
 
@@ -237,29 +226,28 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
 }
 
 .select2-search input.select2-active {
-  background: white url('/_baseframe/img/spinner.gif?1347253688') no-repeat 100%;
+  background: #fff url('/_baseframe/img/spinner.gif?1347253688') no-repeat 100%;
 }
 
 .select2-container-active .select2-choice,
 .select2-container-active .select2-choices {
   border: 1px solid #66afe9;
   outline: none;
-  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6), inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -moz-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6), inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6), inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: 0 0 8px rgba(82, 168, 236, 0.6), inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out, box-shadow ease-in-out;
-  -webkit-transition-delay: 0.15s, 0.15s;
-  -moz-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -moz-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .select2-dropdown-open .select2-choice {
   border: 1px solid #ccc;
   border-bottom-color: transparent;
-  -webkit-box-shadow: 0 1px 0 white inset;
-  -moz-box-shadow: 0 1px 0 white inset;
-  box-shadow: 0 1px 0 white inset;
+  -moz-box-shadow: 0 1px 0 #fff inset;
+  -webkit-box-shadow: 0 1px 0 #fff inset;
+  box-shadow: 0 1px 0 #fff inset;
   -moz-border-radius-bottomleft: 0;
   -webkit-border-bottom-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -271,9 +259,9 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
   background-image: -webkit-linear-gradient(center bottom, white 0%, #eeeeee 50%);
   background-image: -moz-linear-gradient(center bottom, white 0%, #eeeeee 50%);
   background-image: -o-linear-gradient(bottom, white 0%, #eeeeee 50%);
-  background-image: -ms-linear-gradient(top, white 0%, #eeeeee 50%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
-  background-image: linear-gradient(top, #ffffff 0%, #eeeeee 50%);
+  background-image: -ms-linear-gradient(top, #ffffff 0%, #eeeeee 50%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+  background-image: linear-gradient(to bottom, #ffffff 0%, #eeeeee 50%);
 }
 
 .select2-dropdown-open .select2-choice div {
@@ -294,7 +282,7 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .select2-results ul.select2-result-sub {
@@ -437,13 +425,11 @@ disabled look for disabled choices in the results dropdown
   cursor: text;
   overflow: hidden;
   background-color: #fff;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
+  -webkit-border-radius: 3px;
   border-radius: 3px;
 }
 
@@ -453,24 +439,22 @@ disabled look for disabled choices in the results dropdown
 
 .select2-container-multi .select2-choices {
   min-height: 30px;
-  -webkit-transition: border-color ease-in-out, box-shadow ease-in-out;
-  -webkit-transition-delay: 0.15s, 0.15s;
-  -moz-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -moz-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .select2-container-multi.select2-container-active .select2-choices {
   border: 1px solid #66afe9;
   outline: none;
-  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6), inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -moz-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6), inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6), inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: 0 0 8px rgba(82, 168, 236, 0.6), inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out, box-shadow ease-in-out;
-  -webkit-transition-delay: 0.15s, 0.15s;
-  -moz-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -moz-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .select2-container-multi .select2-choices li {
@@ -491,14 +475,14 @@ disabled look for disabled choices in the results dropdown
   color: #666;
   outline: 0;
   border: 0;
-  -webkit-box-shadow: none;
   -moz-box-shadow: none;
+  -webkit-box-shadow: none;
   box-shadow: none;
   background: transparent !important;
 }
 
 .select2-container-multi .select2-choices .select2-search-field input.select2-active {
-  background: white url('/_baseframe/img/spinner.gif?1347253688') no-repeat 100% !important;
+  background: #fff url('/_baseframe/img/spinner.gif?1347253688') no-repeat 100% !important;
 }
 
 .select2-default {
@@ -513,16 +497,15 @@ disabled look for disabled choices in the results dropdown
   color: #333;
   cursor: default;
   border: 1px solid #ccc;
-  -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
+  -webkit-border-radius: 3px;
   border-radius: 3px;
-  -webkit-box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
-  box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
-  -webkit-background-clip: padding;
+  -moz-box-shadow: 0 0 2px #ffffff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: 0 0 2px #ffffff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0 2px #ffffff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
   -moz-background-clip: padding;
+  -o-background-clip: padding-box;
+  -webkit-background-clip: padding;
   background-clip: padding-box;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -531,13 +514,13 @@ disabled look for disabled choices in the results dropdown
   -ms-user-select: none;
   user-select: none;
   background-color: #e4e4e4;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#f4f4f4', GradientType=0 );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#f4f4f4', GradientType=0 );
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), color-stop(100%, #eeeeee));
   background-image: -webkit-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
   background-image: -moz-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
   background-image: -o-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
   background-image: -ms-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
-  background-image: linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  background-image: linear-gradient(to bottom, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
 }
 
 .select2-container-multi .select2-choices .select2-search-choice span {
