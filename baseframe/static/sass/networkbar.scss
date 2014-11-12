@@ -299,9 +299,9 @@ $networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height} "Source Sa
 $mob-icon-color: #999;
 
 // TODO: Confirm this doesn't hurt other BS3 apps
-header {
-    padding-top: 50px;
-}
+// header {
+//     padding-top: 50px;
+// }
 
 #hg-networkbar{  
     font: $networkbar-font;

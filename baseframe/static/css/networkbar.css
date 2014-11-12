@@ -339,10 +339,6 @@
     border-bottom: 2px solid #df5e0e;
   }
 }
-header {
-  padding-top: 50px;
-}
-
 #hg-networkbar {
   font: 14px/18px "Source Sans Pro", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
   font-size: 14px;
