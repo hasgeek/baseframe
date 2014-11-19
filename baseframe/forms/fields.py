@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
+from urlparse import urljoin
 from pytz import utc, timezone as pytz_timezone
+from flask import current_app
 import wtforms
 import bleach
 
 from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
-    'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField',
+    'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'TextListField',
     'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
-    'FormField', 'UserSelectField', 'UserSelectMultiField']
+    'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField']
 
 
 # Default tags and attributes to allow in HTML sanitization
@@ -274,6 +276,24 @@ class HiddenMultiField(wtforms.fields.TextField):
         return retval
 
 
+class TextListField(wtforms.fields.TextAreaField):
+    """
+    A list field that renders as a textarea with one line per list item.
+    """
+
+    def _value(self):
+        if self.data:
+            return u'\r\n'.join(self.data)
+        else:
+            return u''
+
+    def process_formdata(self, valuelist):
+        if valuelist and valuelist[0]:
+            self.data = [x for x in valuelist[0].replace('\r\n', '\n').replace('\r', '\n').split('\n')]
+        else:
+            self.data = []
+
+
 class UserSelectFieldBase(object):
     """
     Select a user
@@ -338,6 +358,62 @@ class UserSelectField(UserSelectFieldBase, wtforms.fields.TextField):
 class UserSelectMultiField(UserSelectFieldBase, wtforms.fields.TextField):
     """
     Render a user select field that allows multiple users to be selected.
+    """
+    widget = HiddenInput()
+
+
+class GeonameSelectFieldBase(object):
+    """
+    Select a geoname location
+    """
+    def __init__(self, *args, **kwargs):
+        self.separator = kwargs.pop('separator', ',')
+        server = current_app.config.get('HASCORE_SERVER', 'https://api.hasgeek.com/')
+        self.autocomplete_endpoint = urljoin(server, '/1/geo/autocomplete')
+        self.getname_endpoint = urljoin(server, '/1/geo/get_by_names')
+
+        super(GeonameSelectFieldBase, self).__init__(*args, **kwargs)
+
+    def _value(self):
+        if self.data:
+            return self.separator.join([unicode(l) for l in self.data])
+        else:
+            return ''
+
+    def process_formdata(self, valuelist):
+        retval = super(GeonameSelectFieldBase, self).process_formdata(valuelist)
+        if self.data:
+            geonameids = self.data.split(self.separator)
+        else:
+            geonameids = [] # Calling ''.split(',') will give us [''] which is an invalid geonameid
+        self.data = geonameids
+        return retval
+
+
+class GeonameSelectField(GeonameSelectFieldBase, wtforms.fields.TextField):
+    """
+    Render a geoname select field that allows one geoname to be selected.
+    """
+    widget = HiddenInput()
+
+    def _value(self):
+        if self.data:
+            return self.data.geonameid
+        else:
+            return None
+
+    def process_formdata(self, valuelist):
+        retval = super(GeonameSelectField, self).process_formdata(valuelist)
+        if self.data:
+            self.data = self.data[0]
+        else:
+            self.data = None
+        return retval
+
+
+class GeonameSelectMultiField(GeonameSelectFieldBase, wtforms.fields.TextField):
+    """
+    Render a geoname select field that allows multiple geonames to be selected.
     """
     widget = HiddenInput()
 

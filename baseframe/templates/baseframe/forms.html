@@ -56,7 +56,7 @@
               {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               {% if field.suffix %}<span class="input-group-addon">{{ field.suffix }}</span>{% endif %}
             </div>
-          {%- elif field.widget.input_type in ['text', 'password', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month', 'number', 'search', 'tel', 'time', 'url', 'week'] or (field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextAreaField'] and field.widget.html_tag not in ['ul', 'ol']) %}
+          {%- elif field.widget.input_type in ['text', 'password', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month', 'number', 'search', 'tel', 'time', 'url', 'week'] or (field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextAreaField', 'TextListField'] and field.widget.html_tag not in ['ul', 'ol']) %}
             {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
           {%- else %}
             {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
@@ -239,6 +239,8 @@
       {{ tinymce4_editor(field, script=false) }}
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
       activate_lastuser_autocomplete({{ ('#'+field.id)|tojson }}, {{ field.lastuser.endpoint_url(field.lastuser.getuser_autocomplete_endpoint)|tojson }}, {{ field.lastuser.endpoint_url(field.lastuser.getuser_userids_endpoint)|tojson }});
+    {%- elif field.type in ['GeonameSelectField', 'GeonameSelectMultiField'] %}
+      activate_geoname_autocomplete({{ ('#'+field.id)|tojson }}, {{ field.autocomplete_endpoint|tojson }}, {{ field.getname_endpoint|tojson }});
     {%- endif -%}
   {%- endfor %}
   {%- if script %}

@@ -122,7 +122,55 @@ function activate_lastuser_autocomplete(selector, autocomplete_endpoint, getuser
       }
     }
   });
+}
 
+function activate_geoname_autocomplete(selector, autocomplete_endpoint, getname_endpoint) {
+  $(selector).select2({
+    placeholder: "Search for a location",
+    multiple: true,
+    minimumInputLength: 2,
+    ajax: {
+      url: autocomplete_endpoint,
+      dataType: "jsonp",
+      data: function(term, page) {
+        return {
+          q: term
+        };
+      },
+      results: function(data, page) {
+        var rdata = [];
+        if (data.status == 'ok') {
+          for (var i=0; i < data.result.length; i++) {
+            rdata.push({
+              id: data.result[i].geonameid, text: data.result[i].ascii_title
+            });
+          }
+        }
+        return {more: false, results: rdata};
+      }
+    },
+    initSelection: function(element, callback) {
+      var val = $(element).val();
+      if (val !== '') {
+        var qs = '?name=' + val.replace(/,/g, '&name=');
+        $.ajax(getname_endpoint + qs, {
+          accepts: "application/json",
+          dataType: "jsonp"
+        }).done(function(data) {
+          $(element).val('');  // Clear it in preparation for incoming data
+          var rdata = [];
+          if (data.status == 'ok') {
+            for (var i=0; i < data.result.length; i++) {
+              rdata.push({
+                id: data.result[i].geonameid, text: data.result[i].ascii_title
+              });
+            }
+          }
+          callback(rdata);
+        });
+      }
+    }
+  });
 }
 
 $(function() {
