@@ -30,7 +30,7 @@ def networkbar_links():
 
 def asset_key(assets):
     return make_name('-'.join(assets).replace(
-            '==', '-eq-').replace('>=', '-gte-').replace('<=', '-lte-').replace('>', '-gt-').replace('<', '-lt-'),
+        '==', '-eq-').replace('>=', '-gte-').replace('<=', '-lte-').replace('>', '-gt-').replace('<', '-lt-'),
         maxlength=250)
 
 
@@ -50,7 +50,7 @@ def gen_assets_url(assets):
     if is_js:
         # TODO: Move this !jquery.js to somewhere more relevant
         bundle = Bundle(assets_repo.require(*(['!jquery.js'] + assets)),
-            output='gen/' + output_name + '.js', filters='closure_js')
+            output='gen/' + output_name + '.js', filters='uglipyjs')
     elif is_css:
         bundle = Bundle(assets_repo.require(*assets),
             output='gen/' + output_name + '.css', filters=['cssrewrite', 'cssmin'])

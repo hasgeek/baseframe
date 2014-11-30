@@ -153,22 +153,6 @@ Version: 3.3.2 Timestamp: Mon Mar 25 12:14:18 PDT 2013
   position: absolute;
   right: 0;
   top: 0;
-  border-left: 1px solid #ccc;
-  -moz-border-radius: 0 2px 2px 0;
-  -webkit-border-radius: 0;
-  border-radius: 0 2px 2px 0;
-  -moz-background-clip: padding;
-  -o-background-clip: padding-box;
-  -webkit-background-clip: padding;
-  background-clip: padding-box;
-  background: #ccc;
-  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ccc), color-stop(0.6, #eee));
-  background-image: -webkit-linear-gradient(center bottom, #ccc 0%, #eee 60%);
-  background-image: -moz-linear-gradient(center bottom, #ccc 0%, #eee 60%);
-  background-image: -o-linear-gradient(bottom, #ccc 0%, #eee 60%);
-  background-image: -ms-linear-gradient(top, #cccccc 0%, #eeeeee 60%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#eeeeee', endColorstr = '#cccccc', GradientType = 0);
-  background-image: linear-gradient(to bottom, #cccccc 0%, #eeeeee 60%);
 }
 
 .select2-container .select2-choice div b {
