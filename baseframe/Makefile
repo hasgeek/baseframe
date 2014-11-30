@@ -2,7 +2,7 @@
 all: tinymce
 
 tinymce3_zip = tinymce_3.5.11_jquery.zip
-tinymce4_zip = tinymce_4.1.4_jquery.zip
+tinymce4_zip = tinymce_4.1.7_jquery.zip
 
 tinymce:
 	curl -L -O http://download.moxiecode.com/tinymce/$(tinymce3_zip)
