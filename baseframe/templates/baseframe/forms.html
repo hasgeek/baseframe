@@ -99,7 +99,7 @@
   {%- if form.errors %}
     <div class="alert alert-error alert-danger">
       <a class="close" data-dismiss="alert">×</a>
-      Please correct the indicated errors.
+      {% trans %}Please review the indicated issues{% endtrans %}
     </div>
   {%- endif %}
   {% if message %}<p>{{ message }}</p>{% endif %}
