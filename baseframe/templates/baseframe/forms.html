@@ -8,7 +8,7 @@
 {%- endmacro %}
 
 {# change renderfield.mustache also while changing here #}
-{% macro renderfield(field, css_class="", widget_css_class="", sidetext=None, tabindex=None, autofocus=False, nolabel=False, style='horiz', rows=none) -%}
+{% macro renderfield(field, css_class="", widget_css_class="", sidetext=none, tabindex=none, autofocus=false, nolabel=false, style='horiz', rows=none) -%}
 
   {%- if field.widget.html_tag in ['ul', 'ol'] %}
     {%- set listwidget = true %}
@@ -22,7 +22,7 @@
     <fieldset>
       <legend>{{ field.label.text }}</legend>
       {%- for subfield in field.form %}
-        {{ renderfield(field=subfield, css_class=css_class, widget_css_class=widget_css_class, sidetext=sidetext, tabindex=tabindex, autofocus=False, nolabel=nolabel, style=style, rows=rows) }}
+        {{ renderfield(field=subfield, css_class=css_class, widget_css_class=widget_css_class, sidetext=sidetext, tabindex=tabindex, autofocus=false, nolabel=nolabel, style=style, rows=rows) }}
       {%- endfor %}
     </fieldset>
   {%- else %}
@@ -116,10 +116,10 @@
   {% endfor %}
 {%- endmacro %}
 
-{% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=False, style='horiz') %}
+{% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=false, style='horiz') %}
 <form id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" {%- if style == 'horiz' %} class="form-horizontal"{% endif %}>
-  {{ renderform_inner(form, formid or None, style=style) }}
-  {{ rendersubmit([(None, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
+  {{ renderform_inner(form, formid or none, style=style) }}
+  {{ rendersubmit([(none, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>
 {% endmacro %}
 
