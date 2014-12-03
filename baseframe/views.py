@@ -20,6 +20,7 @@ def networkbar_links_fetcher():
     except:  # Catch all exceptions
         return []
 
+
 def networkbar_links():
     links = current_app.config.get('NETWORKBAR_LINKS')
     if links:
