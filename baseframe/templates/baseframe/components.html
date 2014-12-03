@@ -181,7 +181,6 @@
     }
 
     li.hg-nw-bar{
-      margin-top: 1px;
     }
     
     .hg-site-nav > li > a {
@@ -200,7 +199,6 @@
       padding: 10px 12px;
       height: 20em;
       overflow-y: auto;
-      margin-top: 1em;
     }
 
     .block-dropdown>li{
@@ -238,7 +236,6 @@
     }
 
     a#hg-user-btn {
-      margin-top: 1px;
       color:#777;
     }
 
@@ -258,12 +255,10 @@
     }
 
     li.site-nav-collapse {
-      margin-top: 0;
-      margin-left: 8px;
-      margin-right: 0;
+      margin: 0 0 0 8px;
     }
 
-    @media (min-width: 992px) {
+    @media (min-width: 768px) {
       ul.hg-header-app-nav {
         margin-left: 0;
       }
@@ -285,13 +280,23 @@
 
     .hg-site-nav-toggle {
       padding: 0 8px;
+      border: none;
+      margin-right: 2px;
     }
 
     a#hg-app-drawer {
       color: #777;
     }
-  </style>
+    
+    ul.hg-subnav {
+      margin-bottom: 0;
+    }
 
+    ul.hg-subnav > li > a {
+      padding: 12px 15px;
+    }
+  </style>
+  
   <nav class="navbar navbar-default navbar-fixed-top" id="hgnav" role="navigation">
     <div class="container">
       <div class="navbar-header pull-left">
