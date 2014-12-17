@@ -24,9 +24,13 @@
     <meta name="google-site-verification" content="{{ config['GOOGLE_SITE_VERIFICATION'] }}" />
   {%- endif %}
   <link rel="icon" href="/favicon.ico" />
+  {%- block canonical_url %}
+    <link rel="canonical" href="{{ request.base_url }}" />
+    <meta property="og:url" content="{{ request.base_url }}" />
+  {%- endblock %}
   {%- block image_src %}
-    <link rel="image_src" href="{{ url_for('baseframe.static', filename='img/logo@2x.png', _external=true) }}" />
-    <meta property="og:image" content="{{ url_for('baseframe.static', filename='img/logo@2x.png', _external=true) }}" />
+    <link rel="image_src" href="{{ url_for('baseframe.static', filename='img/logo-large.png', _external=true) }}" />
+    <meta property="og:image" content="{{ url_for('baseframe.static', filename='img/logo-large.png', _external=true) }}" />
   {%- endblock %}
   <meta name="referrer" content="{% block metareferrer %}always{% endblock %}" />
 
