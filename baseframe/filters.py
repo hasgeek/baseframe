@@ -5,7 +5,9 @@ from . import baseframe, current_app
 from flask import Markup, request
 from datetime import datetime
 import os
+from coaster.utils import md5sum
 from coaster.gfm import markdown
+
 
 @baseframe.app_template_filter('age')
 def age(dt):
@@ -70,6 +72,32 @@ def nossl(url):
     return url
 
 
+@baseframe.app_template_filter('avatar_url')
+def avatar_url(user, size=None):
+    if isinstance(size, (list, tuple)):
+        size = u'x'.join(size)
+    if user.avatar:
+        if size:
+            # TODO: Use a URL parser
+            if u'?' in user.avatar:
+                return user.avatar + u'&size=' + unicode(size)
+            else:
+                return user.avatar + u'?size=' + unicode(size)
+        else:
+            return user.avatar
+    if user.email:
+        if isinstance(user.email, basestring):
+            hash = md5sum(user.email)  # Flask-Lastuser's User model has email as a string
+        else:
+            hash = user.email.md5sum   # Lastuser's User model has email as a UserEmail object
+        gravatar = u'//www.gravatar.com/avatar/' + hash + u'?d=mm'
+        if size:
+            gravatar += u'&s=' + unicode(size)
+        return gravatar
+    # Return Gravatar's missing man image
+    return u'//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm'
+
+
 @baseframe.app_template_filter('render_field_options')
 def render_field_options(field, **kwargs):
     """
@@ -88,14 +116,15 @@ def form_field_to_json(field, **kwargs):
     d['errors'] = list(dict(error=e) for e in field.errors)
     d['is_listwidget'] = bool(hasattr(field.widget, 'html_tag') and field.widget.html_tag in ['ul', 'ol'])
     try:
-    	d['is_checkbox'] = (field.widget.input_type == 'checkbox')
+        d['is_checkbox'] = (field.widget.input_type == 'checkbox')
     except AttributeError:
-    	d['is_checkbox'] = False
+        d['is_checkbox'] = False
     d['is_required'] = bool(field.flags.required)
     d['render_html'] = Markup(render_field_options(field, **kwargs))
     return d
 
+
 @baseframe.app_template_filter('markdown')
-def field_markdown(field, **kwargs):
+def field_markdown(field):
     html = markdown(field)
     return Markup(html)

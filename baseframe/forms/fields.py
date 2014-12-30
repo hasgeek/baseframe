@@ -315,11 +315,12 @@ class UserSelectFieldBase(object):
         if self.data:
             userids = self.data.split(self.separator)
         else:
-            userids = [] # Calling ''.split(',') will give us [''] which is an invalid userid
+            userids = []  # Calling ''.split(',') will give us [''] which is an invalid userid
         # Convert strings in userids into User objects
         users = []
         if userids:
             usersdata = self.lastuser.getuser_by_userids(userids)
+            # TODO: Move all of this inside the getuser method with user=True, create=True
             for userinfo in usersdata:
                 if userinfo['type'] == 'user':
                     user = self.usermodel.query.filter_by(userid=userinfo['buid']).first()
@@ -385,7 +386,7 @@ class GeonameSelectFieldBase(object):
         if self.data:
             geonameids = self.data.split(self.separator)
         else:
-            geonameids = [] # Calling ''.split(',') will give us [''] which is an invalid geonameid
+            geonameids = []  # Calling ''.split(',') will give us [''] which is an invalid geonameid
         self.data = geonameids
         return retval
 
@@ -483,9 +484,9 @@ class ImgeeField(wtforms.TextField):
 
     def __call__(self, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = "%s %s" % (c, 'imgee-url-holder') if c else 'imgee-url-holder'
+        kwargs['class'] = "%s %s" % (c.strip(), 'imgee-url-holder') if c else 'imgee-url-holder'
         if self.profile:
-            kwargs['data-profile'] = self.profile
+            kwargs['data-profile'] = self.profile() if callable(self.profile) else self.profile
         if self.img_label:
             kwargs['data-img-label'] = self.img_label
         if self.img_size:

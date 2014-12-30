@@ -5,8 +5,9 @@ from flask import request, redirect
 from coaster.views import render_with
 from werkzeug.routing import NotFound, MethodNotAllowed, RequestRedirect
 
+
 @baseframe.app_errorhandler(404)
-@render_with('404.html')
+@render_with('404.html', json=True)
 def error404(e):
     if request.path.endswith('/') and request.method == 'GET':
         newpath = request.path[:-1]
@@ -23,14 +24,14 @@ def error404(e):
 
 
 @baseframe.app_errorhandler(403)
-@render_with('403.html')
+@render_with('403.html', json=True)
 def error403(e):
     baseframe_translations.as_default()
     return {'error': "403 Forbidden"}, 403
 
 
 @baseframe.app_errorhandler(500)
-@render_with('500.html')
+@render_with('500.html', json=True)
 def error500(e):
     baseframe_translations.as_default()
     return {'error': "500 Internal Server Error"}, 500
