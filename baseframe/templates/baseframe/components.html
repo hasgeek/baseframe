@@ -160,3 +160,260 @@
   </nav>
 {%- endmacro %}
 
+{% macro hgnav(site_title="HasGeek", site_nav=none, hasgeek_auth=true, hasgeek_network=true) %}
+  <style>
+    body {
+      padding-top: 70px;
+    }
+
+    #hgnav {
+      background: #fff;
+    }
+
+    #hgnav {
+      min-height: 0;
+      margin-bottom: 0;
+    }
+
+    #hgnav .page-header {
+      margin-bottom: 0;
+    }
+
+    #hgnav .page-header h1 {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 768px) {
+      #hgnav .page-header h1 {
+        font-size: 16px;
+      }
+    }
+
+    #hgnav .nav {
+      margin-bottom: 0;
+    }
+
+    #hgnav .nav > li {
+      line-height: 36px;
+    }
+
+    #hgnav .nav > li > a {
+      padding: 0 15px;
+    }
+
+    a.hg-navbar-brand {
+      padding-left: 0;
+    }
+
+    li.hg-nw-bar{
+    }
+    
+    .hg-site-nav > li > a {
+      padding-top: 9px;
+      padding-right: 0px;
+    }
+
+    @media (max-width: 768px) {
+      .hg-site-nav {
+        width: 100%;
+      }
+    }
+
+    .block-dropdown {
+      width: 19em;
+      padding: 10px 12px;
+      height: 20em;
+      overflow-y: auto;
+    }
+
+    .block-dropdown>li{
+      float: left;
+      width: 4em;
+      height: 100px;
+      list-style-type: none;
+      display: inline-block;
+      margin-right: 8%;
+    }
+
+    .block-dropdown>li>a{
+      font-size: 12px;
+      text-align: left;
+      padding: 20px;
+      text-align: left;
+      white-space: normal;
+    }
+
+    .block-dropdown>li>a:hover{
+      background-color: transparent;
+      /*border: 1px solid #f2f2f2;*/
+    }
+
+    .block-dropdown>li>a>img{
+      max-width: 50px;
+      height: 30px;
+    }
+
+    a#hg-login-btn {
+      margin-top: 6px;
+      padding: 4px 10px;
+      margin-right: 4px;
+      margin-left: 12px;
+    }
+
+    a#hg-user-btn {
+      color:#777;
+    }
+
+    a#hg-login-btn:hover {
+      background-color: #285E8E;
+    }
+
+    ul.hg-header-app-nav {
+      margin-left: 6px;
+      margin-bottom: 0;
+    }
+
+    ul.hg-header-app-nav > li {
+      padding-left: 0;
+      padding-right: 0;
+      margin-right: 4px;
+    }
+
+    li.site-nav-collapse {
+      margin: 0 0 0 8px;
+    }
+
+    @media (min-width: 768px) {
+      ul.hg-header-app-nav {
+        margin-left: 0;
+      }
+
+      ul.hg-header-app-nav > li {
+        margin-right: -10px;
+      }
+    }
+
+    a.site-header > h1 {
+      font-size: 18px;
+      margin-bottom: -10px;
+      margin-top: 2px;
+    }
+
+    a.site-header > small {
+      font-size: 70%;
+    }
+
+    .hg-site-nav-toggle {
+      padding: 0 8px;
+      border: none;
+      margin-right: 2px;
+    }
+
+    a#hg-app-drawer {
+      color: #777;
+    }
+    
+    ul.hg-subnav {
+      margin-bottom: 0;
+    }
+
+    ul.hg-subnav > li > a {
+      padding: 12px 15px;
+    }
+  </style>
+  
+  <nav class="navbar navbar-default navbar-fixed-top" id="hgnav" role="navigation">
+    <div class="container">
+      <div class="navbar-header pull-left">
+        <ul class="list-inline hg-header-app-nav">
+          <li class="navbar-text pull-left dropdown site-nav-collapse">
+            {% if site_nav %}
+              <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle pull-right hg-site-nav-toggle">
+                <i class="fa fa-bars"></i>
+              </button>
+            {% endif %}
+          </li>
+          <li>
+            {{site_title}}
+          </li>
+        </ul>
+      </div>
+      <div class="navbar-header pull-right">
+        <ul class="nav pull-right">
+          <li class="dropdown pull-left">
+            {% if hasgeek_auth %}
+              {{add_hasgeek_auth()}}
+            {%- endif %}
+          </li>
+          <li class="dropdown pull-right hg-nw-bar">
+            {% if hasgeek_network %}
+              {{add_hasgeek_network()}}
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+      <div class="nav navbar-nav collapse navbar-collapse navbar-right hg-site-nav">
+        {% if site_nav %}
+          {{site_nav}}
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+{%- endmacro %}
+
+{% macro add_hasgeek_auth() %}
+  {% if g.user -%}
+    <a href="#" data-toggle="dropdown" class="dropdown-toggle" id="hg-user-btn">
+      <i class="fa fa-user"></i><b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu pull-right">
+      <li>
+        {%- with orgs = g.user.organization_links() %}
+        {% if orgs %}
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
+        <ul class="dropdown-menu">
+          <li><a href="/profile">My profile</a></li>
+          {%- for org in orgs %}
+          <li><a href="{{ org.link }}">{{ org.title }}</a></li>
+          {%- endfor %}             
+        </ul>
+        {%- else %}
+        <a href="{{ g.user.profile_url }}" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
+        {% endif %}
+        {%- endwith %}
+      </li>
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+  {%- else %}
+    <a href="{{ url_for('login') }}" class='btn btn-primary btn-sm' id="hg-login-btn">Login</a>
+  {%- endif %}
+{%- endmacro %}
+
+{% macro add_hasgeek_network() %}
+  {% with %}
+    {% set network_links=[
+    {'title': 'HasGeek', 'url': 'http://hasgeek.com', 'icon': 'https://hasgeek.com/static/img/hg-banner.png'},
+    {'title': 'Droidcon India', 'url': 'https://droidcon.in/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/droidcon14.png'},
+    {'title': 'Meta Refresh', 'url': 'https://metarefresh.in/2014/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/metarefresh.png'},
+    {'title': 'Blog', 'url': 'https://blog.hasgeek.com/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_blog.png'},
+    {'title': 'Hasjob', 'url': 'https://hasjob.co/', 'icon': 'https://static.hasjob.co/static/img/logo-star.png'},
+    {'title': 'HGTV', 'url': 'https://hasgeek.tv/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_hgtv.png'},
+    {'title': 'Funnel', 'url': 'https://talkfunnel.com/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_funnel.png'},
+    {'title': 'Geekup', 'url': 'https://geekup.in/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_geekup.png'},
+    {'title': 'Surveys', 'url': 'https://survey.hasgeek.com/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_survey.png'}
+    ]%}
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="hg-app-drawer">
+      <i class="fa fa-th"></i>
+    </a>
+    <ul class="dropdown-menu block-dropdown" role="menu">
+      {%- for link in network_links %}
+      <li>
+        <a href="{{link['url']}}">
+          <img src="{{link['icon']}}" alt="...">
+          <h6>{{link['title']}}</h6>
+        </a>
+      </li>
+      {%- endfor  %}
+    </ul>
+  {% endwith %}
+{%- endmacro %}

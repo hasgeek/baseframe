@@ -179,16 +179,16 @@ def get_timezone():
     if user is not None:
         if hasattr(user, 'tz'):
             return user.tz
-        else:
+        elif hasattr(user, 'timezone'):
             return timezone(user.timezone)
-    else:
-        return app.config.get('tz') or timezone('UTC')
+    return app.config.get('tz') or timezone('UTC')
 
 
 @baseframe.after_app_request
 def process_response(response):
     if request.endpoint in ('static', 'baseframe.static'):
         if 'Access-Control-Allow-Origin' not in response.headers:
+            # This is required for webfont resources
             response.headers['Access-Control-Allow-Origin'] = '*'  # TODO: Make this configurable
 
     # Prevent pages from being placed in an iframe. If the response already
