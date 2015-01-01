@@ -220,27 +220,28 @@
     }
 
     .block-dropdown {
-      width: 19em;
-      padding: 10px 12px;
-      height: 20em;
+      width: 185px;
+      padding: 22px 0px 0px 20px;
+      height: auto;
       overflow-y: auto;
+      margin: 0;
     }
 
-    .block-dropdown>li{
+    .block-dropdown>li {
       float: left;
-      width: 4em;
-      height: 100px;
+      height: auto;
       list-style-type: none;
       display: inline-block;
-      margin-right: 8%;
+      margin-right: 30px;
+      margin-bottom: 10px;
+      width: 3em;
     }
 
     .block-dropdown>li>a{
       font-size: 12px;
-      text-align: left;
-      padding: 20px;
-      text-align: left;
+      text-align: center;
       white-space: normal;
+      padding: 0;
     }
 
     .block-dropdown>li>a:hover{
@@ -393,14 +394,9 @@
   {% with %}
     {% set network_links=[
     {'title': 'HasGeek', 'url': 'http://hasgeek.com', 'icon': 'https://hasgeek.com/static/img/hg-banner.png'},
-    {'title': 'Droidcon India', 'url': 'https://droidcon.in/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/droidcon14.png'},
-    {'title': 'Meta Refresh', 'url': 'https://metarefresh.in/2014/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/metarefresh.png'},
-    {'title': 'Blog', 'url': 'https://blog.hasgeek.com/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_blog.png'},
+    {'title': 'Talkfunnel', 'url': 'https://talkfunnel.com/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_funnel.png'},
     {'title': 'Hasjob', 'url': 'https://hasjob.co/', 'icon': 'https://static.hasjob.co/static/img/logo-star.png'},
     {'title': 'HGTV', 'url': 'https://hasgeek.tv/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_hgtv.png'},
-    {'title': 'Funnel', 'url': 'https://talkfunnel.com/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_funnel.png'},
-    {'title': 'Geekup', 'url': 'https://geekup.in/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_geekup.png'},
-    {'title': 'Surveys', 'url': 'https://survey.hasgeek.com/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_survey.png'}
     ]%}
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="hg-app-drawer">
       <i class="fa fa-th"></i>
