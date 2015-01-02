@@ -44,29 +44,23 @@ class ValidEmail(object):
 # Legacy name
 ValidEmailDomain = ValidEmail
 
+
 class ValidUrl(object):
     """
     Validator to confirm a URL is valid (returns 2xx status code)
+
+    :param unicode message: Error message (None for default error message)
+    :param unicode message_urltext: Unused parameter, only used in the :class:`AllUrlsValid` validator
+    :param list invalid_urls: A list of (patterns, message) tuples for URLs that will be rejected,
+        where ``patterns`` is a list of strings or regular expressions. If ``invalid_urls`` is
+        a callable, it will be called to retrieve the list.
     """
-    user_agent='HasGeek/linkchecker'
-    # 999 is a non-standard too-many-requests error. We can't do anything
-    # about it, so let it pass.
-    success_codes = (200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 999)
+    user_agent = 'HasGeek/linkchecker'
 
     def __init__(self, message=None, message_urltext=None, invalid_urls=[]):
         self.message = message or _(u'The URL “{url}” is not valid or is currently inaccessible')
         self.invalid_urls = invalid_urls
         self.message_urltext = message_urltext or _(u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible')
-
-    def check_invalid_urls(self, invalid_urls, url, text=None):
-        errors = []
-        for patterns, message in invalid_urls:
-            for pattern in patterns:
-                # For text patterns, do a substring search. For regex patterns (assumed if not text),
-                # do a regex search.
-                if (isinstance(pattern, basestring) and pattern in url) or (pattern.search(url) is not None):
-                    errors.append(message.format(url=url, text=text))
-        return errors
 
     def check_url(self, field, invalid_urls, url, text=None):
         r = None
@@ -84,8 +78,16 @@ class ValidUrl(object):
             exception_catchall.send(e)
             code = None
 
-        if r is not None and code in self.success_codes:
-            field.errors.extend(self.check_invalid_urls(invalid_urls, url))
+        if r is not None and code in (200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 999):
+            # 999 is a non-standard too-many-requests error. We can't look past it to
+            # check a URL, so we let it pass.
+            for patterns, message in invalid_urls:
+                for pattern in patterns:
+                    # For text patterns, do a substring search. For regex patterns (assumed so if not text),
+                    # do a regex search. Test with the final URL from the response, after redirects,
+                    # but report errors using the URL the user provided.
+                    if (isinstance(pattern, basestring) and pattern in r.url) or (pattern.search(r.url) is not None):
+                        field.errors.append(message.format(url=url, text=text))
         else:
             if text is not None and url != text:
                 field.errors.append(self.message_urltext.format(url=url, text=text))
