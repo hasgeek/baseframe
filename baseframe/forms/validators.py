@@ -62,7 +62,8 @@ class ValidUrl(object):
         self.invalid_urls = invalid_urls
         self.message_urltext = message_urltext or _(u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible')
 
-    def check_url(self, field, invalid_urls, url, text=None):
+    def call_inner(self, field, url, invalid_urls, text=None):
+        print(url)
         r = None
         try:
             r = requests.head(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
@@ -94,15 +95,11 @@ class ValidUrl(object):
             else:
                 field.errors.append(self.message.format(url=url))
 
-    def call_inner(self, field, current_url, invalid_urls):
-        return self.check_url(field, invalid_urls, urljoin(current_url, field.data))
-
     def __call__(self, form, field):
         if field.data:
             current_url = request.url if request else None
             invalid_urls = self.invalid_urls() if callable(self.invalid_urls) else self.invalid_urls
-
-            return self.call_inner(field, current_url, invalid_urls)
+            self.call_inner(field, urljoin(current_url, field.data), invalid_urls)
 
 
 class AllUrlsValid(ValidUrl):
@@ -119,7 +116,7 @@ class AllUrlsValid(ValidUrl):
     def call_inner(self, field, current_url, invalid_urls):
         html_tree = html.fromstring(field.data)
         for text, href in [(atag.text_content(), atag.attrib.get('href')) for atag in html_tree.xpath("//a")]:
-            self.check_url(field, invalid_urls, urljoin(current_url, href), text)
+            super(AllUrlsValid, self).call_inner(field, urljoin(current_url, href), invalid_urls, text)
 
 
 class NoObfuscatedEmail(object):
