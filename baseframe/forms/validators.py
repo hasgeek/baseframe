@@ -63,7 +63,6 @@ class ValidUrl(object):
         self.message_urltext = message_urltext or _(u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible')
 
     def call_inner(self, field, url, invalid_urls, text=None):
-        print(url)
         r = None
         try:
             r = requests.head(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
