@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+from urllib import quote as urlquote
 from urlparse import urljoin
 import dns.resolver
 from pyisemail import is_email
@@ -9,8 +10,7 @@ import wtforms
 import requests
 from lxml import html
 from coaster.utils import make_name, deobfuscate_email
-from .. import b__ as __
-from .. import b_ as _
+from .. import b_ as _, b__ as __, asset_cache
 from ..signals import exception_catchall
 
 
@@ -62,40 +62,59 @@ class ValidUrl(object):
         self.invalid_urls = invalid_urls
         self.message_urltext = message_urltext or _(u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible')
 
-    def check_url(self, field, invalid_urls, url, text=None):
-        r = None
-        try:
-            r = requests.head(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
-            code = r.status_code
-            if code in (405, 502, 503):  # Some servers don't like HTTP HEAD requests, strange but true
-                r = requests.get(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
-                code = r.status_code
-        except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
-                requests.exceptions.ConnectionError,  # Name resolution or connection failed
-                requests.exceptions.Timeout):         # Didn't respond in time
-            code = None
-        except Exception as e:
-            exception_catchall.send(e)
-            code = None
+    def check_url(self, invalid_urls, url, text=None):
+        cache_key = 'linkchecker/' + urlquote(url, safe='')
+        cache_check = asset_cache.get(cache_key)
+        # Read from cache, but assume cache may be broken
+        # since Flask-Cache stores data as a pickle,
+        # which is version-specific
+        if cache_check and isinstance(cache_check, dict):
+            rurl = cache_check.get('url')
+            code = cache_check.get('code')
+        else:
+            rurl = None  # rurl is the response URL after following redirects
 
-        if r is not None and code in (200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 999):
+        if not rurl or not code:
+            try:
+                r = requests.head(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
+                code = r.status_code
+                if code in (405, 502, 503):  # Some servers don't like HTTP HEAD requests, strange but true
+                    r = requests.get(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
+                    code = r.status_code
+                rurl = r.url
+            except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
+                    requests.exceptions.ConnectionError,  # Name resolution or connection failed
+                    requests.exceptions.Timeout):         # Didn't respond in time
+                code = None
+            except Exception as e:
+                exception_catchall.send(e)
+                code = None
+
+        if rurl is not None and code in (200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 999):
             # 999 is a non-standard too-many-requests error. We can't look past it to
-            # check a URL, so we let it pass.
+            # check a URL, so we let it pass
+
+            # The URL works, so now we check if it's in a reject list
             for patterns, message in invalid_urls:
                 for pattern in patterns:
                     # For text patterns, do a substring search. For regex patterns (assumed so if not text),
                     # do a regex search. Test with the final URL from the response, after redirects,
-                    # but report errors using the URL the user provided.
-                    if (isinstance(pattern, basestring) and pattern in r.url) or (pattern.search(r.url) is not None):
-                        field.errors.append(message.format(url=url, text=text))
+                    # but report errors using the URL the user provided
+                    if (isinstance(pattern, basestring) and pattern in rurl) or (pattern.search(rurl) is not None):
+                        return message.format(url=url, text=text)
+            # All good. The URL works and isn't invalid, so save to cache and return without an error message
+            asset_cache.set(cache_key, {'url': rurl, 'code': code}, timeout=86400)
+            return
         else:
             if text is not None and url != text:
-                field.errors.append(self.message_urltext.format(url=url, text=text))
+                return self.message_urltext.format(url=url, text=text)
             else:
-                field.errors.append(self.message.format(url=url))
+                return self.message.format(url=url)
 
     def call_inner(self, field, current_url, invalid_urls):
-        return self.check_url(field, invalid_urls, urljoin(current_url, field.data))
+        error = self.check_url(invalid_urls, urljoin(current_url, field.data))
+        if error:
+            raise wtforms.validators.StopValidation(error)
 
     def __call__(self, form, field):
         if field.data:
@@ -119,7 +138,11 @@ class AllUrlsValid(ValidUrl):
     def call_inner(self, field, current_url, invalid_urls):
         html_tree = html.fromstring(field.data)
         for text, href in [(atag.text_content(), atag.attrib.get('href')) for atag in html_tree.xpath("//a")]:
-            self.check_url(field, invalid_urls, urljoin(current_url, href), text)
+            error = self.check_url(invalid_urls, urljoin(current_url, href), text)
+            if error:
+                field.errors.append(error)
+        if field.errors:
+            raise wtforms.validators.StopValidation()
 
 
 class NoObfuscatedEmail(object):
