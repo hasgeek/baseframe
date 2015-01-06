@@ -85,11 +85,12 @@ def avatar_url(user, size=None):
                 return user.avatar + u'?size=' + unicode(size)
         else:
             return user.avatar
-    if user.email:
-        if isinstance(user.email, basestring):
+    email = user.email
+    if email:
+        if isinstance(email, basestring):
             hash = md5sum(user.email)  # Flask-Lastuser's User model has email as a string
         else:
-            hash = user.email.md5sum   # Lastuser's User model has email as a UserEmail object
+            hash = email.md5sum   # Lastuser's User model has email as a UserEmail object
         gravatar = u'//www.gravatar.com/avatar/' + hash + u'?d=mm'
         if size:
             gravatar += u'&s=' + unicode(size)
