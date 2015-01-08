@@ -65,7 +65,7 @@
             <li><a href="{{ url_for('login') }}">Login or sign up</a></li>
           {%- endif %}      
         </ul>
-        {%- if beacon and not g.user %}
+        {%- if login and beacon and not g.user %}
           {%- if g.lastuser %}
             {{ networkbar_login_beacon(g.lastuser.endpoint_url(g.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
           {%- endif %}
@@ -360,6 +360,11 @@
       </div>
     </div>
   </nav>
+  {%- if login and beacon and not g.user %}
+    {%- if g.lastuser %}
+      {{ networkbar_login_beacon(g.lastuser.endpoint_url(g.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
+    {%- endif %}
+  {%- endif %}
 {%- endmacro %}
 
 {% macro add_hasgeek_auth() %}
