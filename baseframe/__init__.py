@@ -8,7 +8,7 @@ from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
 from flask.ext.babelex import Babel, Domain
 from flask.ext.mustache import FlaskMustache
-from ._version import *
+from ._version import *  # NOQA
 from .assets import assets, Version
 from . import translations
 
