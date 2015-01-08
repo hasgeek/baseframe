@@ -291,7 +291,7 @@ table.mceLayout
     top: -13px
     left: 20px
 
-  a, a:active, a:hover, a:visited
+  a, a:active, a:hover, a:visited, a:focus
     color: white
     text-decoration: underline
 
@@ -423,7 +423,7 @@ ul.grid
       +transition-property("background")
       +transition-duration(0.2s)
 
-      &:hover
+      &:hover, &:focus
         color: inherit
         text-decoration: none
         background: $color-card-bg-hover
