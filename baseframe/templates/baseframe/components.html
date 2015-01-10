@@ -367,10 +367,26 @@
   {%- endif %}
 {%- endmacro %}
 
+{% macro add_hasgeek_notify() %}
+  {% if g.user -%}
+    <a href="#" data-toggle="dropdown" class="dropdown-toggle" id="hg-user-btn">
+      <i class="fa fa-bell-o"></i><sup class="notify">3</sup>
+    </a>
+    <ul class="dropdown-menu pull-right">
+      <li><a href="#">Sample notification 1</a></li>
+      <li><a href="#">Sample notification 2</a></li>
+      <li><a href="#">Sample notification 3</a></li>
+    </ul>
+  {%- else %}
+    <a href="{{ url_for('login') }}" class='btn btn-primary btn-sm' id="hg-login-btn">Login</a>
+  {%- endif %}
+{%- endmacro %}
+
 {% macro add_hasgeek_auth() %}
   {% if g.user -%}
     <a href="#" data-toggle="dropdown" class="dropdown-toggle" id="hg-user-btn">
-      <i class="fa fa-user"></i><b class="caret"></b>
+      <!-- <i class="fa fa-user"></i><b class="caret"></b> -->
+      <div class="nwb-profile-pic"></div>
     </a>
     <ul class="dropdown-menu pull-right">
       <li>
@@ -417,4 +433,219 @@
       {%- endfor  %}
     </ul>
   {% endwith %}
+{%- endmacro %}
+
+
+{% macro hgpanel(site_title="HasGeek", site_nav=none, hasgeek_auth=true, hasgeek_network=true) %}
+  <style>
+    body {
+      padding-top: 70px;
+    }
+
+    #hg-panel {
+      background: #fff;
+
+    }
+
+    #hg-panel {
+      min-height: 0;
+      margin-bottom: 0;
+    }
+
+    #hg-panel .page-header {
+      margin-bottom: 0;
+    }
+
+    #hg-panel .page-header h1 {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 768px) {
+      #hg-panel .page-header h1 {
+        font-size: 16px;
+      }
+    }
+
+    #hg-panel .nav {
+      margin-bottom: 0;
+    }
+
+    #hg-panel .nav > li {
+      line-height: 36px;
+    }
+
+    #hg-panel .nav > li > a {
+      padding: 0 15px;
+    }
+
+    a.hg-navbar-brand {
+      padding-left: 0;
+    }
+
+    li.hg-nw-bar{
+    }
+    
+    .hg-site-nav > li > a {
+      padding-top: 9px;
+      padding-right: 0px;
+    }
+
+    @media (max-width: 768px) {
+      .hg-site-nav {
+        width: 100%;
+      }
+    }
+
+    .block-dropdown {
+      width: 185px;
+      padding: 22px 0px 0px 20px;
+      height: auto;
+      overflow-y: auto;
+      margin: 0;
+    }
+
+    .block-dropdown>li {
+      float: left;
+      height: auto;
+      list-style-type: none;
+      display: inline-block;
+      margin-right: 30px;
+      margin-bottom: 10px;
+      width: 3em;
+    }
+
+    .block-dropdown>li>a{
+      font-size: 12px;
+      text-align: center;
+      white-space: normal;
+      padding: 0;
+    }
+
+    .block-dropdown>li>a:hover{
+      background-color: transparent;
+      /*border: 1px solid #f2f2f2;*/
+    }
+
+    .block-dropdown>li>a>img{
+      max-width: 50px;
+      height: 30px;
+    }
+
+    a#hg-login-btn {
+      margin-top: 6px;
+      padding: 4px 10px;
+      margin-right: 4px;
+      margin-left: 12px;
+    }
+
+    a#hg-user-btn {
+      color: #667C85;
+    }
+
+    a#hg-login-btn:hover {
+      background-color: #285E8E;
+    }
+
+    ul.hg-header-app-nav {
+      margin-left: 6px;
+      margin-bottom: 0;
+    }
+
+    ul.hg-header-app-nav > li {
+      padding-left: 0;
+      padding-right: 0;
+      margin-right: 4px;
+    }
+
+    li.site-nav-collapse {
+      margin: 0 0 0 8px;
+    }
+
+    @media (min-width: 768px) {
+      ul.hg-header-app-nav {
+        margin-left: 0;
+      }
+
+      ul.hg-header-app-nav > li {
+        margin-right: -10px;
+      }
+    }
+
+    a.site-header > h1 {
+      font-size: 18px;
+      margin-bottom: -10px;
+      margin-top: 2px;
+    }
+
+    a.site-header > small {
+      font-size: 70%;
+    }
+
+    .hg-site-nav-toggle {
+      padding: 0 8px;
+      border: none;
+      margin-right: 2px;
+    }
+
+    a#hg-app-drawer {
+      color: #667C85;
+    }
+    
+    ul.hg-subnav {
+      margin-bottom: 0;
+    }
+
+    ul.hg-subnav > li > a {
+      padding: 12px 15px;
+    }
+  </style>
+  
+  <nav class="navbar navbar-default navbar-fixed-top" id="hg-panel" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header pull-left">
+        <ul class="list-inline hg-header-app-nav">
+          <li class="navbar-text pull-left dropdown site-nav-collapse">
+            {% if site_nav %}
+              <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle pull-right hg-site-nav-toggle">
+                <i class="fa fa-bars"></i>
+              </button>
+            {% endif %}
+          </li>
+          <li id="hamberger-icon"><a href=""><i class="fa fa-bars"></i></a>&nbsp;&nbsp;</li>
+          <li id="nav-title">
+            {{site_title}}
+          </li>
+        </ul>
+      </div>
+      <div class="navbar-header pull-right">
+        <ul class="nav pull-right">
+          <li class="dropdown pull-left">
+            {% if hasgeek_auth %}
+              {{add_hasgeek_notify()}}
+            {%- endif %}
+          </li>
+          <li class="dropdown pull-left">
+            {% if hasgeek_auth %}
+              {{add_hasgeek_auth()}}
+            {%- endif %}
+          </li>
+          <li class="dropdown pull-right hg-nw-bar">
+            {% if hasgeek_network %}
+              {{add_hasgeek_network()}}
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+      <div class="nav navbar-nav collapse navbar-collapse navbar-right hg-site-nav">
+        {% if site_nav %}
+          {{site_nav}}
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  {%- if not g.user %}
+    {%- if g.lastuser %}
+      {{ networkbar_login_beacon(g.lastuser.endpoint_url(g.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
+    {%- endif %}
+  {%- endif %}
 {%- endmacro %}

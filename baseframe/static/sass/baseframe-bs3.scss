@@ -58,3 +58,119 @@ header {
 .select2-dropdown-open .select2-choice div b {
     background-position: -17px 5px;
 }
+
+#hamberger-icon {
+    margin-right: 1em;
+    a {
+        color: #D5E0E5;
+    }
+}
+ul.hg-header-app-nav {
+    h1 {
+        text-transform: uppercase;
+        font-size: 15px;
+    }
+    .fa-angle-right {
+        padding: 0 0.2em;
+    }
+
+}
+li.hg-nwbar {
+    i {
+        color: #667C85;
+    }
+}
+.nwb-profile-pic {
+    height: 1.6em;
+    width: 1.6em;
+    padding: 1.12em;
+    border-radius: 50%;
+    background-image: url('../img/user-placeholder.jpg');
+    background-size: 100%;
+}
+
+sup.notify {
+    background-color: #df5e0e;
+    color: white;
+    font-size: .65em;
+    border-radius: 50%;
+    display: block;
+    height: 1.4em;
+    width: 1.4em;
+    line-height: 1.45em;
+    text-align: center;
+    vertical-align: middle;
+    position: absolute;
+    right: 0.5em;
+    top: 0.5em;
+}
+/* sidebar layout */
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.two-pane-app {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    *, *:after, *:before {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box; 
+    }
+}
+
+.two-pane-app .bottom {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%; 
+    .left {
+        border-right: 0.0625em solid #D5E0E5;
+        position: absolute;
+        width: 280px;
+        height: 100%;
+        overflow: auto; 
+        background: #F8FAFB;
+        .logo{
+            width: 100%;
+            border-bottom: 0.0625em solid #D5E0E5;
+            background-color: #FFF;
+            img {
+                width: 30%;
+                margin: 0 auto;
+                display: block;
+            }
+        }
+        .sidebar {
+            padding-top: 1em;
+        }
+        .select2-container .select2-choice {
+            background-image: none;
+            border-color: #D5E0E5;
+            padding: 0 0 0 0.9em;
+        }
+        .select2-container .select2-choice, .form-control {
+            border-radius: 1.5em;
+        }
+        .select2-drop {
+            width: 80%;
+        }
+    }
+    .right {
+        position: absolute;
+        width: calc(100% - 280px);
+        right: 0;
+        top: 2em;
+        height: 100%;
+        overflow: auto;
+        padding: 1.25em;
+    }
+}
+
+#hg-panel.navbar-fixed-top, #hg-panel.navbar-fixed-bottom {
+    left: 280px;
+}
