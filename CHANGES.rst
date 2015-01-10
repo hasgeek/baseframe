@@ -9,6 +9,7 @@
 * Revamped forms.html and autoform generator
 * ValidEmailDomain validator is now ValidEmail and does syntax checks
 * New NoObfuscatedEmail validator looks for obfuscated emails
+* New dynamic_form(fields) constructs forms from field definitions
 
 
 0.3.0
