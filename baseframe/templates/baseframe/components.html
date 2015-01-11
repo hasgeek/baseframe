@@ -94,7 +94,7 @@
   {%- endfor %}
 {% endmacro %}
 
-{% macro responsive_networkbar(siteid=none, login=false, baseclass=none, containerclass="container", beacon=true, app_links=[]) -%}
+{% macro responsive_networkbar(siteid=none, login=false, baseclass=none, containerclass="container", beacon=true, links=[]) -%}
   <nav class="navbar navbar-default navbar-fixed-top" id="hg-networkbar" role="navigation">
     <div class="container">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -128,8 +128,8 @@
       {%- if login %}
       <div class="collapse navbar-collapse navbar-ex2-collapse">
         <ul class="nav navbar-nav navbar-right">
-          {%- for link in app_links %}
-            <li><a href="{{ link.url }}" class="{{ link.class }}">{{ link.title }}</a></li>
+          {%- for link in links %}
+            <li><a href="{{ link.url }}" {%- if link.rel %} class="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>{{ link.title }}</a></li>
           {%- endfor %}
           {% if g.user -%}
           <li class="profile dropdown">
