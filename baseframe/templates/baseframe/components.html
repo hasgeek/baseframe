@@ -129,7 +129,7 @@
       <div class="collapse navbar-collapse navbar-ex2-collapse">
         <ul class="nav navbar-nav navbar-right">
           {%- for link in links %}
-            <li><a href="{{ link.url }}" {%- if link.rel %} class="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>{{ link.title }}</a></li>
+            <li><a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>{{ link.title }}</a></li>
           {%- endfor %}
           {% if g.user -%}
           <li class="profile dropdown">
