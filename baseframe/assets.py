@@ -254,3 +254,8 @@ assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
     'baseframe-base-bs3.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
 ]}
+
+assets['locationpicker.jquery.js'][Version('0.1.12')] = ('baseframe/js/locationpicker.jquery.js')
+assets['map-marker.js'][Version(__version__)] = {'requires': [
+    'locationpicker.jquery.js'
+]}

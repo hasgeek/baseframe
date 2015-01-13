@@ -17,7 +17,6 @@
   {%- else %}
     {%- set listwidget = false %}
   {%- endif -%}
-
   {%- if field.type == 'FormField' %}
     <fieldset>
       <legend>{{ field.label.text }}</legend>
@@ -58,6 +57,8 @@
             </div>
           {%- elif field.widget.input_type in ['text', 'password', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month', 'number', 'search', 'tel', 'time', 'url', 'week'] or (field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextAreaField', 'TextListField'] and field.widget.html_tag not in ['ul', 'ol']) %}
             {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+          {%- elif field.type == 'MapMarkerField' %}
+            {{init_map(field)}}
           {%- else %}
             {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
           {%- endif %}
@@ -247,4 +248,26 @@
     });
   </script>
   {%- endif %}
+{% endmacro %}
+
+{% macro add_map_marker_widget(field) %}
+  <style>
+    .map {
+      width: 100%;
+      height: 20em;
+      margin-top: 12px;
+    }
+  </style>
+  <input type="text" class="form-control" id="{{field.location_id}}" placeholder="Enter a location" size="70">
+  <div id="{{field.map_id}}" class='map'></div>
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function(event) {
+      new window.Baseframe.MapMarker({
+        map_id: "{{field.map_id}}",
+        longitude_id: "{{field.longitude_id}}",
+        latitude_id: "{{field.latitude_id}}",
+        location_id: "{{field.location_id}}"
+      })
+    });
+  </script>
 {% endmacro %}
