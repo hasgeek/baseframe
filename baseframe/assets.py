@@ -176,16 +176,16 @@ assets['baseframe-firasans.css'][Version('1.0.0')] = 'baseframe/css/baseframe-fi
 assets['bootstrap.js'][Version('2.0.1')] = {'requires': [
     'bootstrap-alert.js==2.0.1',
     'bootstrap-button.js==2.0.1',
-    #'bootstrap-carousel.js==2.0.1',
-    #'bootstrap-collapse.js==2.0.1',
+    # 'bootstrap-carousel.js==2.0.1',
+    # 'bootstrap-collapse.js==2.0.1',
     'bootstrap-dropdown.js==2.0.1',
     'bootstrap-modal.js==2.0.1',
     'bootstrap-tooltip.js==2.0.1',
-    #'bootstrap-popover.js==2.0.1',
-    #'bootstrap-scrollspy.js==2.0.1',
+    # 'bootstrap-popover.js==2.0.1',
+    # 'bootstrap-scrollspy.js==2.0.1',
     'bootstrap-tab.js==2.0.1',
     'bootstrap-transition.js==2.0.1',
-    #'bootstrap-typeahead.js==2.0.1',
+    # 'bootstrap-typeahead.js==2.0.1',
 ]}
 
 assets['bootstrap.js'][Version('3.3.1')] = {'requires': [
