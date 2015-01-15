@@ -251,13 +251,6 @@
 {% endmacro %}
 
 {% macro map_marker_widget(field) %}
-  <style>
-    .map {
-      width: 100%;
-      height: 20em;
-      margin-top: 12px;
-    }
-  </style>
   <input type="text" class="form-control" id="{{field.location_id}}" placeholder="Enter a location" size="70">
   <div id="{{field.map_id}}" class='map'></div>
   <script type="text/javascript">
