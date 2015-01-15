@@ -60,12 +60,16 @@ assets['bootstrap-datepicker.js'][Version('1.3.0')] = ('jquery.js', 'baseframe/j
 assets['jquery.ui.js'][Version('1.10.3')] = ('jquery.js', 'baseframe/js/jquery-ui.js')
 assets['jquery.ui.css'][Version('1.10.3')] = 'baseframe/css/jquery-ui.css'
 
+assets['jquery.liblink.js'][Version('0.0.0')] = ('jquery.js', 'baseframe/js/jquery.liblink.js')
+assets['jquery.wnumb.js'][Version('0.0.0')] = ('jquery.js', 'baseframe/js/jquery.wnumb.js')
 assets['jquery.range-slider.js'][Version('5.3.0')] = ('jquery.js', 'jquery.ui.js', 'baseframe/js/jQRangeSlider-min.js')
 assets['jquery.range-slider.css'][Version('5.3.0')] = ('jquery.ui.css', 'baseframe/css/jQRangeSlider.css')
-assets['jquery.nouislider.js'][Version('6.0.0')] = ('jquery.js', 'baseframe/js/jquery.nouislider.min.js')
-assets['jquery.nouislider.css'][Version('6.0.0')] = ('baseframe/css/jquery.nouislider.min.css')
+assets['jquery.nouislider.js'][Version('7.0.10')] = ('jquery.js', 'baseframe/js/jquery.nouislider.min.js')
+assets['jquery.nouislider.css'][Version('7.0.10')] = ('baseframe/css/jquery.nouislider.min.css')
 
+# textarea-expander is deprecated. Use autosize instead
 assets['jquery.textarea-expander.js'][Version('1.0.0')] = ('jquery.js', 'baseframe/js/jquery.textarea-expander.js')
+assets['jquery.autosize.js'][Version('1.18.17')] = ('jquery.js', 'baseframe/js/jquery.autosize.js')
 
 assets['jquery.oembed.js'][Version('1.0.1')] = ('jquery.js', 'baseframe/js/jquery.oembed.js')
 assets['jquery.oembed.css'][Version('1.0.1')] = ('baseframe/css/jquery.oembed.css')
