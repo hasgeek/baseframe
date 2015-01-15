@@ -507,9 +507,9 @@ class FormField(wtforms.FormField):
 class MapMarkerField(wtforms.Field):
     """
     Adds a map widget that allows the user to search for a location and drag the marker on the map.
-    See the add_map_marker_widget macro in forms.html.
+    See the map_marker_widget macro in forms.html.
     """
-    def __init__(self, label='', validators=None, attr='map', map_id='map', latitude_id='', longitude_id='', **kwargs):
+    def __init__(self, label='', validators=None, map_id='map', latitude_id='', longitude_id='', **kwargs):
         self.map_id = map_id
         self.location_id = self.map_id + "_location"
         self.latitude_id = latitude_id
