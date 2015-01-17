@@ -10,6 +10,7 @@ function activate_widgets() {
       theme: "default",
       lineWrapping: true,
       autoCloseBrackets: true,
+      viewportMargin: Infinity,
       extraKeys: {
         "Enter": "newlineAndIndentContinueMarkdownList",
         "Tab": false,
@@ -27,6 +28,7 @@ function activate_widgets() {
       lineWrapping: true,
       autoCloseBrackets: true,
       matchBrackets: true,
+      viewportMargin: Infinity,
       extraKeys: {
         "Tab": false,
         "Shift-Tab": false,
