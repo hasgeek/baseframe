@@ -9,7 +9,8 @@
 * Revamped forms.html and autoform generator
 * ValidEmailDomain validator is now ValidEmail and does syntax checks
 * New NoObfuscatedEmail validator looks for obfuscated emails
-* New dynamic_form(fields) constructs forms from field definitions
+* New FormGenerator constructs forms from field definitions
+* New CoordinatesField renders a map marker drag widget, falling back to lat/lon text fields
 
 
 0.3.0
