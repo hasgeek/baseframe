@@ -660,6 +660,11 @@ input[type="url"], input[name="name"] {
   font-family: Consolas, Inconsolata, Menlo, "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
 }
 
+input[name="coordinates"] {
+  width: auto;
+  display: inline;
+}
+
 .help-block {
   font-size: 90%;
   color: #777;
@@ -895,6 +900,12 @@ ul.grid > li.header {
     margin-bottom: 20px !important;
   }
 }
+.map-marker {
+  margin-top: 10px;
+  width: 100%;
+  height: 20em;
+}
+
 @media screen and (max-width: 767px) {
   dl.infobox {
     border: 1px solid #b7b7b7;

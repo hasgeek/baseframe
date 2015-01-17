@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
 
+from decimal import Decimal, InvalidOperation as DecimalError
 from urlparse import urljoin
 from pytz import utc, timezone as pytz_timezone
 from flask import current_app
 import wtforms
+from wtforms.compat import text_type
 import bleach
 
-from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput
+from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput, CoordinatesInput
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'TextListField',
     'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
-    'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField', 'MapMarkerField']
+    'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
+    'CoordinatesField']
 
 
 # Default tags and attributes to allow in HTML sanitization
@@ -484,7 +487,7 @@ class ImgeeField(wtforms.TextField):
 
     def __call__(self, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = "%s %s" % (c.strip(), 'imgee-url-holder') if c else 'imgee-url-holder'
+        kwargs['class'] = ("%s %s" % (c.strip(), 'imgee-url-holder') if c else 'imgee-url-holder').strip()
         if self.profile:
             kwargs['data-profile'] = self.profile() if callable(self.profile) else self.profile
         if self.img_label:
@@ -504,19 +507,30 @@ class FormField(wtforms.FormField):
         del self.form.csrf_token
         return retval
 
-class MapMarkerField(wtforms.Field):
-    """
-    Adds a map widget that allows the user to search for a location and drag the marker on the map.
-    See the map_marker_widget macro in forms.html.
-    """
-    def __init__(self, label='', field_name='', latitude_field="latitude", longitude_field="longitude", validators=None, **kwargs):
-        self.map_id = field_name or 'map'
-        self.location_id = self.map_id + "_location"
-        prefix = field_name + '_' if field_name else ''
-        self.latitude_id = prefix + latitude_field
-        self.longitude_id = prefix + longitude_field
-        g.gmap = True
-        super(MapMarkerField, self).__init__(label, validators, **kwargs)
 
-    def __call__(self, **kwargs):
-        return super(MapMarkerField, self).__call__(**kwargs)
+class CoordinatesField(wtforms.Field):
+    """
+    Adds latitude and longitude fields and returns them as a tuple.
+    """
+    widget = CoordinatesInput()
+
+    def process_formdata(self, valuelist):
+        if valuelist and len(valuelist) == 2:
+            try:
+                latitude = Decimal(valuelist[0])
+            except DecimalError:
+                latitude = None
+            try:
+                longitude = Decimal(valuelist[1])
+            except DecimalError:
+                longitude = None
+
+            self.data = latitude, longitude
+        else:
+            self.data = None, None
+
+    def _value(self):
+        if self.data is not None and self.data != (None, None):
+            return text_type(self.data[0]), text_type(self.data[1])
+        else:
+            return '', ''

@@ -1,5 +1,5 @@
 {% extends "formlayout.html" %}
-{% from "baseframe/forms.html" import renderform, ajaxform, widgetscripts %}
+{% from "baseframe/forms.html" import renderform, ajaxform, widget_ext_scripts, widgetscripts %}
 
 {% block content %}
   {%- if message %}
@@ -9,9 +9,10 @@
 {% endblock %}
 
 {% block footerscripts %}
+  {{ widget_ext_scripts(form) }}
   <script type="text/javascript">
     $(function() {
-      {{ widgetscripts(form, script=false) }};
+      {{ widgetscripts(form, script=false) }}
       // Reset disabled state if page was reloaded (TODO: does this really get called?)
       $('#{{ formid }} .submit-disabled').prop('disabled', false);
     });

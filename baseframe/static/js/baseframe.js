@@ -254,8 +254,8 @@ window.Baseframe.MapMarker.prototype.activate = function(){
     location: self.getDefaultLocation(),
     radius: 0,
     inputBinding: {
-      longitudeInput: $("#" + this.field.longitude_id),
       latitudeInput: $("#" + this.field.latitude_id),
+      longitudeInput: $("#" + this.field.longitude_id),
       locationNameInput: $("#" + this.field.location_id)
     },
     enableAutocomplete: true,
@@ -270,12 +270,12 @@ window.Baseframe.MapMarker.prototype.activate = function(){
 
 window.Baseframe.MapMarker.prototype.getDefaultLocation = function() {
   var latitude, longitude;
-  if ($("#" + this.field.longitude_id).val() === '' && $("#" + this.field.latitude_id).val() === '') {
-    longitude = Baseframe.Config.defaultLongitude;
+  if ($("#" + this.field.latitude_id).val() === '' && $("#" + this.field.longitude_id).val() === '') {
     latitude = Baseframe.Config.defaultLatitude;
+    longitude = Baseframe.Config.defaultLongitude;
   } else {
-    longitude = $("#" + this.field.longitude_id).val();
     latitude = $("#" + this.field.latitude_id).val();
+    longitude = $("#" + this.field.longitude_id).val();
   }
-  return {longitude: longitude, latitude: latitude};
+  return {latitude: latitude, longitude: longitude};
 };
