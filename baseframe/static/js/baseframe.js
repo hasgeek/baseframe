@@ -217,3 +217,65 @@ $(function() {
   // Code notice
   console.log("Hello, curious geek. Our source is at https://github.com/hasgeek. Why not contribute a patch?");
 });
+
+// Single Global Baseframe Object that serves as a namespace
+window.Baseframe = {
+};
+
+window.Baseframe.Config = {
+  defaultLatitude: "12.961443",
+  defaultLongitude: "77.64435000000003"
+};
+
+window.Baseframe.Forms = {
+  preventSubmitOnEnter: function(id){
+    $('#' + id).on("keyup keypress", function(e) {
+      var code = e.keyCode || e.which; 
+      if (code === 13) {               
+        e.preventDefault();
+        return false;
+      }
+    });
+  }
+}
+
+window.Baseframe.MapMarker = function(field){
+  this.field = field;
+  this.activate();
+  return this;
+};
+
+window.Baseframe.MapMarker.prototype.activate = function(){
+  var self = this;
+  Baseframe.Forms.preventSubmitOnEnter(this.field.location_id);
+
+  // locationpicker.jquery.js
+  $("#" + this.field.map_id).locationpicker({
+    location: self.getDefaultLocation(),
+    radius: 0,
+    inputBinding: {
+      latitudeInput: $("#" + this.field.latitude_id),
+      longitudeInput: $("#" + this.field.longitude_id),
+      locationNameInput: $("#" + this.field.location_id)
+    },
+    enableAutocomplete: true,
+    onchanged: function(currentLocation, radius, isMarkerDropped) {
+    },
+    onlocationnotfound: function(locationName) {
+    },
+    oninitialized: function (component) {
+    }
+  });
+};
+
+window.Baseframe.MapMarker.prototype.getDefaultLocation = function() {
+  var latitude, longitude;
+  if ($("#" + this.field.latitude_id).val() === '' && $("#" + this.field.longitude_id).val() === '') {
+    latitude = Baseframe.Config.defaultLatitude;
+    longitude = Baseframe.Config.defaultLongitude;
+  } else {
+    latitude = $("#" + this.field.latitude_id).val();
+    longitude = $("#" + this.field.longitude_id).val();
+  }
+  return {latitude: latitude, longitude: longitude};
+};

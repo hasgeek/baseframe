@@ -431,6 +431,11 @@ input[type="url"], input[name="name"] {
   font-family: Consolas, Inconsolata, Menlo, "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace;
 }
 
+input[name="coordinates"] {
+  width: auto;
+  display: inline;
+}
+
 .help-block {
   font-size: 90%;
   color: #777;
@@ -666,6 +671,12 @@ ul.grid > li.header {
     margin-bottom: 24px !important;
   }
 }
+.map-marker {
+  margin-top: 12px;
+  width: 100%;
+  height: 20em;
+}
+
 .listwidget ul > li > label {
   font-weight: normal;
 }

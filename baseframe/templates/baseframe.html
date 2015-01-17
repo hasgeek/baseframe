@@ -118,7 +118,7 @@
   {% assets "js_all" -%}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {%- endassets -%}
-
+  
   {%- if config['GA_CODE'] and not config['DEBUG'] -%}
     <script type="text/javascript">
       var _gaq = [['_setAccount', '{{ config['GA_CODE'] }}'], ['_trackPageview']];
