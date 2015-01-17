@@ -63,7 +63,7 @@ class ValidUrl(object):
         self.message_urltext = message_urltext or _(u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible')
 
     def check_url(self, invalid_urls, url, text=None):
-        cache_key = 'linkchecker/' + urlquote(url, safe='')
+        cache_key = 'linkchecker/' + urlquote(url.encode('utf-8') if isinstance(url, unicode) else url, safe='')
         cache_check = asset_cache.get(cache_key)
         # Read from cache, but assume cache may be broken
         # since Flask-Cache stores data as a pickle,

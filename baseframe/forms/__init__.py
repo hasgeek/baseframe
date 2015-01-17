@@ -21,7 +21,7 @@ field_registry = {
     'SelectField': wtforms.fields.SelectField,
     'SelectMultipleField': wtforms.fields.SelectMultipleField,
     'RadioField': wtforms.fields.RadioField,
-    'StringField': wtforms.fields.StringField,
+    'TextField': wtforms.fields.StringField,
     'IntegerField': wtforms.fields.html5.IntegerField,
     'DecimalField': wtforms.fields.html5.DecimalField,
     'FloatField': wtforms.fields.FloatField,
@@ -44,6 +44,8 @@ field_registry = {
     'MarkdownField': MarkdownField,
     'ImageField': ImgeeField,
     }
+
+widget_registry = {}
 
 validator_registry = {
     'Length': (wtforms.validators.Length, 'min', 'max', 'message'),
@@ -99,41 +101,56 @@ class ConfirmDeleteForm(Form):
     cancel = wtforms.fields.SubmitField(__(u"Cancel"))
 
 
-def dynamic_form(fields):
+class FormGenerator(object):
     """
-    Dynamically create a form based on a JSON-compatible data structure, an array of dictionaries
-    defining each field.
+    Creates forms from a JSON-compatible dictionary structure
+    based on the allowed set of fields, widgets and validators.
     """
-    class DynamicForm(Form):
-        pass
+    def __init__(self, fields=None, widgets=None, validators=None, default_field='TextField'):
+        # If using global defaults, make a copy in this class so that
+        # they can be customised post-init without clobbering the globals
+        self.fields = fields or dict(field_registry)
+        self.widgets = widgets or dict(widget_registry)
+        self.validators = validators or dict(validator_registry)
 
-    for fielddata in fields:
-        fielddata = dict(fielddata)  # Make a copy
-        name = fielddata.pop('name', None)
-        type_ = fielddata.pop('type', None)
-        if not name:
-            continue  # Skip unnamed fields
-        if not type_:
-            type_ = 'StringField'  # Default to string input
+        self.default_field = default_field
 
-        # Make a list of validators
-        validators = []
-        validators_data = fielddata.pop('validators', [])
-        for v in validators_data:
-            if isinstance(v, basestring) and v in validator_registry:
-                validators.append(validator_registry[v][0]())
-            else:
-                valname = v.pop('type', None)
-                valparams = {}
-                if valname:
-                    for paramname in v:
-                        if paramname in validator_registry[valname][1:]:
-                            valparams[paramname] = v[paramname]
-                    validators.append(validator_registry[valname][0](**valparams))
+    def generate(self, formstruct):
+        """
+        Generate a dynamic form from the given data structure.
+        """
+        class DynamicForm(Form):
+            pass
 
-        # TODO: Also validate the parameters in fielddata, like with validators above
-        setattr(DynamicForm, name, field_registry[type_](validators=validators, **fielddata))
-    return DynamicForm()
+        for fielddata in formstruct:
+            fielddata = dict(fielddata)  # Make a copy
+            name = fielddata.pop('name', None)
+            type_ = fielddata.pop('type', None)
+            if not name:
+                continue  # Skip unnamed fields
+            if not type_:
+                type_ = self.default_field  # Default to string input
+
+            # TODO: Process widget requests
+
+            # Make a list of validators
+            validators = []
+            validators_data = fielddata.pop('validators', [])
+            for v in validators_data:
+                if isinstance(v, basestring) and v in validator_registry:
+                    validators.append(validator_registry[v][0]())
+                else:
+                    valname = v.pop('type', None)
+                    valparams = {}
+                    if valname:
+                        for paramname in v:
+                            if paramname in validator_registry[valname][1:]:
+                                valparams[paramname] = v[paramname]
+                        validators.append(validator_registry[valname][0](**valparams))
+
+            # TODO: Also validate the parameters in fielddata, like with validators above
+            setattr(DynamicForm, name, field_registry[type_](validators=validators, **fielddata))
+        return DynamicForm
 
 
 def render_form(form, title, message='', formid='form', submit=__(u"Submit"), cancel_url=None, ajax=False):
@@ -141,14 +158,18 @@ def render_form(form, title, message='', formid='form', submit=__(u"Submit"), ca
     for field in form:
         if isinstance(field.widget, wtforms.widgets.FileInput):
             multipart = True
+    if form.errors:
+        code = 400
+    else:
+        code = 200
     if request.is_xhr and ajax:
         return make_response(render_template('baseframe/ajaxform.html', form=form, title=title,
             message=message, formid=formid, submit=submit,
-            cancel_url=cancel_url, multipart=multipart))
+            cancel_url=cancel_url, multipart=multipart), code)
     else:
         return make_response(render_template('baseframe/autoform.html', form=form, title=title,
             message=message, formid=formid, submit=submit,
-            cancel_url=cancel_url, ajax=ajax, multipart=multipart))
+            cancel_url=cancel_url, ajax=ajax, multipart=multipart), code)
 
 
 def render_message(title, message, code=200):
