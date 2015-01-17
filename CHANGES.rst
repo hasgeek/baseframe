@@ -11,6 +11,7 @@
 * New NoObfuscatedEmail validator looks for obfuscated emails
 * New FormGenerator constructs forms from field definitions
 * New CoordinatesField renders a map marker drag widget, falling back to lat/lon text fields
+* Codemirror is now an external dependency installed via Makefile
 
 
 0.3.0

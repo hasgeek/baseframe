@@ -45,7 +45,7 @@ class BaseframeBuildPy(build_py):
         if not self._dry_run:
             curdir = os.getcwd()
             os.chdir(os.path.join(self.build_lib, 'baseframe'))
-            os.system("make tinymce")
+            os.system("make")
             os.chdir(curdir)
         return result
 

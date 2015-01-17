@@ -86,36 +86,36 @@ assets['jquery.locationpicker.js'][Version('0.1.12')] = ('jquery.js', 'baseframe
 assets['select2.js'][Version('3.3.2')] = ('jquery.js>=1.4.6', 'baseframe/js/select2.js')
 assets['select2.css'][Version('3.3.2')] = 'baseframe/css/select2.css'
 
-assets['codemirror.js'][Version('3.21.0')] = 'baseframe/js/codemirror/lib/codemirror.js'
-assets['codemirror.css'][Version('3.21.0')] = 'baseframe/js/codemirror/lib/codemirror.css'
+assets['codemirror.js'][Version('4.11.0')] = 'baseframe/js/codemirror/lib/codemirror.js'
+assets['codemirror.css'][Version('4.11.0')] = 'baseframe/js/codemirror/lib/codemirror.css'
 
-assets['codemirror.mode.markdown.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/markdown/markdown.js'
-assets['codemirror.mode.gfm.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/gfm/gfm.js'
-assets['codemirror.mode.htmlmixed.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/htmlmixed/htmlmixed.js'
-assets['codemirror.mode.css.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/css/css.js'
-assets['codemirror.addon.mode.overlay.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/mode/overlay.js'
-assets['codemirror.addon.edit.continuelist.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/edit/continuelist.js'
-assets['codemirror.addon.edit.closebrackets.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/edit/closebrackets.js'
-assets['codemirror.addon.edit.matchbrackets.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/edit/matchbrackets.js'
-assets['codemirror.addon.hint.css-hint.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/hint/css-hint.js'
-assets['codemirror.addon.lint.css-lint.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/lint/css-lint.js'
+assets['codemirror.mode.markdown.js'][Version('4.11.0')] = 'baseframe/js/codemirror/mode/markdown/markdown.js'
+assets['codemirror.mode.gfm.js'][Version('4.11.0')] = 'baseframe/js/codemirror/mode/gfm/gfm.js'
+assets['codemirror.mode.htmlmixed.js'][Version('4.11.0')] = 'baseframe/js/codemirror/mode/htmlmixed/htmlmixed.js'
+assets['codemirror.mode.css.js'][Version('4.11.0')] = 'baseframe/js/codemirror/mode/css/css.js'
+assets['codemirror.addon.mode.overlay.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/mode/overlay.js'
+assets['codemirror.addon.edit.continuelist.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/edit/continuelist.js'
+assets['codemirror.addon.edit.closebrackets.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/edit/closebrackets.js'
+assets['codemirror.addon.edit.matchbrackets.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/edit/matchbrackets.js'
+assets['codemirror.addon.hint.css-hint.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/hint/css-hint.js'
+assets['codemirror.addon.lint.css-lint.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/lint/css-lint.js'
 
-assets['codemirror-markdown.js'][Version('3.21.0')] = {'requires': [
-    'codemirror.js==3.21.0',
-    'codemirror.mode.markdown.js==3.21.0',
-    'codemirror.mode.gfm.js==3.21.0',
-    'codemirror.mode.htmlmixed.js==3.21.0',
-    'codemirror.addon.mode.overlay.js==3.21.0',
-    'codemirror.addon.edit.continuelist.js==3.21.0',
-    'codemirror.addon.edit.closebrackets.js==3.21.0',
+assets['codemirror-markdown.js'][Version('4.11.0')] = {'requires': [
+    'codemirror.js==4.11.0',
+    'codemirror.mode.markdown.js==4.11.0',
+    'codemirror.mode.gfm.js==4.11.0',
+    'codemirror.mode.htmlmixed.js==4.11.0',
+    'codemirror.addon.mode.overlay.js==4.11.0',
+    'codemirror.addon.edit.continuelist.js==4.11.0',
+    'codemirror.addon.edit.closebrackets.js==4.11.0',
 ]}
-assets['codemirror-markdown.css'][Version('3.21.0')] = ('codemirror.css==3.21.0', 'baseframe/css/codemirror.css')
-assets['codemirror-css.js'][Version('3.21.0')] = {'requires': [
-    'codemirror.js==3.21.0',
-    'codemirror.mode.css.js==3.21.0',
-    'codemirror.addon.hint.css-hint.js==3.21.0',
-    'codemirror.addon.lint.css-lint.js==3.21.0',
-    'codemirror.addon.edit.closebrackets.js==3.21.0',
+assets['codemirror-markdown.css'][Version('4.11.0')] = ('codemirror.css==4.11.0', 'baseframe/css/codemirror.css')
+assets['codemirror-css.js'][Version('4.11.0')] = {'requires': [
+    'codemirror.js==4.11.0',
+    'codemirror.mode.css.js==4.11.0',
+    'codemirror.addon.hint.css-hint.js==4.11.0',
+    'codemirror.addon.lint.css-lint.js==4.11.0',
+    'codemirror.addon.edit.closebrackets.js==4.11.0',
 ]}
 
 assets['pygments-default.css'][Version('1.5.0')] = 'baseframe/css/pygments-default.css'
