@@ -7,6 +7,7 @@ from datetime import datetime
 import os
 from coaster.utils import md5sum
 from coaster.gfm import markdown
+from .views import ext_assets
 
 
 @baseframe.app_template_filter('age')
@@ -129,3 +130,14 @@ def form_field_to_json(field, **kwargs):
 def field_markdown(field):
     html = markdown(field)
     return Markup(html)
+
+
+@baseframe.app_template_filter('ext_asset_url')
+def ext_asset_url(asset):
+    """
+    This filter makes ext_assets available to templates.
+    """
+    if isinstance(asset, basestring):
+        return ext_assets([asset])
+    else:
+        return ext_assets(asset)

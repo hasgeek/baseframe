@@ -36,7 +36,7 @@
 
   <!-- Included CSS Files -->
   {%- for asset in config.get('ext_css', []) %}
-    <link rel="stylesheet" type="text/css" href="{{ ext_assets(asset) }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset|ext_asset_url }}" />
   {%- endfor %}
   {% assets "css_all" -%}
     <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
@@ -113,7 +113,7 @@
     </script>
   <!--<![endif]-->
   {%- for asset in config.get('ext_js', []) %}
-    <script type="text/javascript" src="{{ ext_assets(asset) }}"></script>
+    <script type="text/javascript" src="{{ asset|ext_asset_url }}"></script>
   {%- endfor %}
   {% assets "js_all" -%}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
