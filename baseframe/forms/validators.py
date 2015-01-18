@@ -79,7 +79,7 @@ class ValidUrl(object):
             try:
                 r = requests.head(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
                 code = r.status_code
-                if code in (405, 502, 503):  # Some servers don't like HTTP HEAD requests, strange but true
+                if code in (404, 405, 502, 503):  # Some servers don't like HTTP HEAD requests, strange but true
                     r = requests.get(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
                     code = r.status_code
                 rurl = r.url
