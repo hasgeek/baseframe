@@ -77,11 +77,8 @@ class ValidUrl(object):
 
         if not rurl or not code:
             try:
-                r = requests.head(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
+                r = requests.get(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
                 code = r.status_code
-                if code in (405, 502, 503):  # Some servers don't like HTTP HEAD requests, strange but true
-                    r = requests.get(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
-                    code = r.status_code
                 rurl = r.url
             except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
                     requests.exceptions.ConnectionError,  # Name resolution or connection failed
