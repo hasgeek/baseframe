@@ -159,7 +159,7 @@ def render_form(form, title, message='', formid='form', submit=__(u"Submit"), ca
         if isinstance(field.widget, wtforms.widgets.FileInput):
             multipart = True
     if form.errors:
-        code = 400
+        code = 200  # 400
     else:
         code = 200
     if request.is_xhr and ajax:
