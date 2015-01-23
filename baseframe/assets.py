@@ -49,6 +49,9 @@ assets['bootstrap-tab.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/j
 assets['bootstrap-tooltip.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/tooltip.js')
 assets['bootstrap-transition.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/transition.js')
 
+# Bootstrap Social - commit #918fc55c3c938377a7618ec0f115846e50d4b883
+assets['bootstrap-social.css'][Version('1.0.0')] = ('bootstrap.css>=3.0.0', 'baseframe/css/bootstrap-social.css')
+
 assets['jquery.form.js'][Version('2.96.0')] = ('jquery.js', 'baseframe/js/jquery.form.js')
 assets['jquery.tinymce.js'][Version('3.5.10')] = ('jquery.js', 'baseframe/js/tinymce3/jquery.tinymce.js')
 assets['tinymce.js'][Version('3.5.10')] = 'baseframe/js/tinymce3/tiny_mce.js'
