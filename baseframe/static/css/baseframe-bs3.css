@@ -906,11 +906,6 @@ span[class^="icon-"]:before, span[class*=" icon-"]:before {
   top: 0.1em !important;
 }
 
-.btn .caret {
-  margin-top: 10px;
-  margin-left: 0;
-}
-
 .dropdown-right {
   left: auto;
   right: 0;
