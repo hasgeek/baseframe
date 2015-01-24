@@ -60,48 +60,50 @@
       <div class="two-pane-app">
         <div class="top"></div>
         <div class="bottom">
-          <div class="left">
+          <div class="left in">
             {% block logo -%}
               <div id="logo"><a href="{{ request.script_root or '/' }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
             {%- endblock %}
             {% block sidebar -%}{%- endblock %}
           </div>
-          <div class="right">
-            <!-- headerbox -->
-            {% block headerbox -%}
-            <header>
-              {% block networkbar %}{{ networkbar(siteid=config['SITE_ID'], login=config['LASTUSER_CLIENT_ID'] and true or false) }}{% endblock %}
-              <div class="container-fluid">
-                <div id="page-header">
-                  
-                  {%- block header %}{% endblock %}
-                </div>
-              </div>
-            </header>
-            {%- endblock %}
-            <!-- /headerbox -->
-
-            {% block main -%}
-              {% block contenthead %}{% endblock %}
-              <div class="container-fluid" id="main-content">
-                {%- block messages %}{{ flash_messages() }}{% endblock %}
-                {%- block baseheadline %}{% endblock %}
-                {%- block basecontent %}{% endblock %}
-              </div>
-            {%- endblock %}
-            <!-- /container -->
-            <div id="root_footer"></div>
-            {% block basefooter -%}
-              <footer>
-                <div class="footer-inner">
-                  <div class="container-fluid">
-                    {% block footer -%}
-                      <span class="no-print">{% if 'FOOTER_MESSAGE' in config %}{{ config['FOOTER_MESSAGE'] }}{% else %}{% trans %}Copyright &copy; 2010-15 HasGeek{% endtrans %}{% endif %}</span>
-                    {%- endblock %}
+          <div class="right in">
+            <div class="wrapper">
+              <!-- headerbox -->
+              {% block headerbox -%}
+              <header>
+                {% block networkbar %}{{ networkbar(siteid=config['SITE_ID'], login=config['LASTUSER_CLIENT_ID'] and true or false) }}{% endblock %}
+                <div class="container-fluid">
+                  <div id="page-header">
+                    
+                    {%- block header %}{% endblock %}
                   </div>
                 </div>
-              </footer>
-            {%- endblock %}
+              </header>
+              {%- endblock %}
+              <!-- /headerbox -->
+
+              {% block main -%}
+                {% block contenthead %}{% endblock %}
+                <div class="container-fluid" id="main-content">
+                  {%- block messages %}{{ flash_messages() }}{% endblock %}
+                  {%- block baseheadline %}{% endblock %}
+                  {%- block basecontent %}{% endblock %}
+                </div>
+              {%- endblock %}
+              <!-- /container -->
+              <div id="root_footer"></div>
+              {% block basefooter -%}
+                <footer>
+                  <div class="footer-inner">
+                    <div class="container-fluid">
+                      {% block footer -%}
+                        <span class="no-print">{% if 'FOOTER_MESSAGE' in config %}{{ config['FOOTER_MESSAGE'] }}{% else %}{% trans %}Copyright &copy; 2010-15 HasGeek{% endtrans %}{% endif %}</span>
+                      {%- endblock %}
+                    </div>
+                  </div>
+                </footer>
+              {%- endblock %}
+            </div>
           </div>
         </div>
       </div>

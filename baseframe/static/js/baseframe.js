@@ -212,7 +212,6 @@ $(function() {
   }
 });
 
-
 $(function() {
   // Code notice
   console.log("Hello, curious geek. Our source is at https://github.com/hasgeek. Why not contribute a patch?");

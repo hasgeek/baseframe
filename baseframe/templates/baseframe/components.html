@@ -386,7 +386,9 @@
   {% if g.user -%}
     <a href="#" data-toggle="dropdown" class="dropdown-toggle" id="hg-user-btn">
       <!-- <i class="fa fa-user"></i><b class="caret"></b> -->
-      <div class="nwb-profile-pic"></div>
+      <div class="nwb-profile-wrapper">
+        <div class="nwb-profile-pic"></div>
+      </div>
     </a>
     <ul class="dropdown-menu pull-right">
       <li>
@@ -611,7 +613,7 @@
               </button>
             {% endif %}
           </li>
-          <li id="hamberger-icon"><a href=""><i class="fa fa-bars"></i></a>&nbsp;&nbsp;</li>
+          <li id="collapse-icon"><a><i class="fa fa-bars"></i></a>&nbsp;&nbsp;</li>
           <li id="nav-title">
             {{site_title}}
           </li>

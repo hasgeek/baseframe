@@ -26,6 +26,13 @@ $(function(){
 			$('.navbar-ex1-collapse').animate({height:"2px"});
 		}
 	});
+	// two pane sidebar collapse
+	$('#collapse-icon i').click(function() {
+		$('.two-pane-app .left').toggleClass('in');
+		$('.two-pane-app .right').toggleClass('in');
+		$('.two-pane-app .left').toggleClass('out');
+		$('.two-pane-app .right').toggleClass('out');
+	});
 });
 
 $(function(){
