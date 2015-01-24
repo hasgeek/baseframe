@@ -322,18 +322,21 @@ class UserSelectFieldBase(object):
         # Convert strings in userids into User objects
         users = []
         if userids:
-            usersdata = self.lastuser.getuser_by_userids(userids)
-            # TODO: Move all of this inside the getuser method with user=True, create=True
-            for userinfo in usersdata:
-                if userinfo['type'] == 'user':
-                    user = self.usermodel.query.filter_by(userid=userinfo['buid']).first()
-                    if not user:
-                        # New user in this app. Don't set username right now. It's not relevant
-                        # until first login and we don't want to deal with conflicts.
-                        # We don't add this user to the session. The view is responsible for that
-                        # (using SQLAlchemy cascades when assigning users to a collection)
-                        user = self.usermodel(userid=userinfo['buid'], fullname=userinfo['title'])
-                    users.append(user)
+            if self.lastuser:
+                usersdata = self.lastuser.getuser_by_userids(userids)
+                # TODO: Move all of this inside the getuser method with user=True, create=True
+                for userinfo in usersdata:
+                    if userinfo['type'] == 'user':
+                        user = self.usermodel.query.filter_by(userid=userinfo['buid']).first()
+                        if not user:
+                            # New user in this app. Don't set username right now. It's not relevant
+                            # until first login and we don't want to deal with conflicts.
+                            # We don't add this user to the session. The view is responsible for that
+                            # (using SQLAlchemy cascades when assigning users to a collection)
+                            user = self.usermodel(userid=userinfo['buid'], fullname=userinfo['title'])
+                        users.append(user)
+            else:
+                users = self.usermodel.all(userids=userids)
         self.data = users
         return retval
 
