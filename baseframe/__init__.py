@@ -42,6 +42,7 @@ class BaseframeBlueprint(Blueprint):
         :param bundle_js: Bundle of additional JavaScript
         :param bundle_css: Bundle of additional CSS
         """
+        app.jinja_env.add_extension('jinja2.ext.do')
         if app.config.get('SERVER_NAME'):
             subdomain = app.config.get('STATIC_SUBDOMAIN', 'static')
             app.add_url_rule('/static/<path:filename>', endpoint='static',

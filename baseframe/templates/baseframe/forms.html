@@ -17,7 +17,6 @@
   {%- else %}
     {%- set listwidget = false %}
   {%- endif -%}
-
   {%- if field.type == 'FormField' %}
     <fieldset>
       <legend>{{ field.label.text }}</legend>
@@ -56,7 +55,9 @@
               {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               {% if field.suffix %}<span class="input-group-addon">{{ field.suffix }}</span>{% endif %}
             </div>
-          {%- elif field.widget.input_type in ['text', 'password', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month', 'number', 'search', 'tel', 'time', 'url', 'week'] or (field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextAreaField', 'TextListField'] and field.widget.html_tag not in ['ul', 'ol']) %}
+          {%- elif field.type == 'CoordinatesField' %}
+            {{ map_marker_widget(field) }}
+          {%- elif field.widget.input_type in ['text', 'password', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month', 'number', 'search', 'tel', 'time', 'url', 'week'] or (field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextAreaField', 'TextListField', 'MarkdownField'] and field.widget.html_tag not in ['ul', 'ol']) %}
             {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
           {%- else %}
             {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
@@ -225,12 +226,45 @@
   {%- endif %}
 {% endmacro %}
 
-{% macro widgetscripts(form, script=true) %}
+{% macro map_marker_widget(field) %}
+  <div class="input-group no-jshidden">
+    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+    <input type="text" class="form-control" id="{{ field.id }}_search" placeholder="Enter a location">
+  </div>
+  <div id="{{ field.id }}_map" class="no-jshidden map-marker"></div>
+  <div class="jshidden">{{ field(class="field-" + field.id + " form-control") }}</div>
+{% endmacro %}
+
+{% macro map_marker_script(field) %}
+  new window.Baseframe.MapMarker({
+    location_id: "{{ field.id}}_search",
+    map_id: "{{ field.id }}_map",
+    latitude_id: "{{ field.id }}_latitude",
+    longitude_id: "{{ field.id}}_longitude"
+  });
+{% endmacro %}
+
+{% macro widget_ext_scripts(form) %}
+  {%- with scripts = {} %}
+    {%- for field in form %}
+      {%- if field.type == 'CoordinatesField' %}
+        {#- We're using setdefault instead of a simple = because the do extension doesn't support assignment #}
+        {%- do scripts.setdefault('gmap', '//maps.google.com/maps/api/js?sensor=false&libraries=places') %}
+        {%- do scripts.setdefault('locationpicker', 'jquery.locationpicker.js'|ext_asset_url) %}
+      {%- endif %}
+    {%- endfor %}
+    {%- for key in scripts %}
+      <script type="text/javascript" src="{{ scripts[key] }}"></script>
+    {%- endfor %}
+  {%- endwith %}
+{% endmacro %}
+
+{% macro widgetscripts(form, script=true) -%}
   {%- if script %}
   <script type="text/javascript">
     $(function() {
   {%- endif %}
-  {% for field in form -%}
+  {%- for field in form -%}
     {%- if field.type == 'FormField' %}
       {{ widgetscripts(field.form, script=false) }}
     {%- elif field.widget.input_type == 'tinymce3' -%}
@@ -241,10 +275,12 @@
       activate_lastuser_autocomplete({{ ('#'+field.id)|tojson }}, {{ field.lastuser.endpoint_url(field.lastuser.getuser_autocomplete_endpoint)|tojson }}, {{ field.lastuser.endpoint_url(field.lastuser.getuser_userids_endpoint)|tojson }});
     {%- elif field.type in ['GeonameSelectField', 'GeonameSelectMultiField'] %}
       activate_geoname_autocomplete({{ ('#'+field.id)|tojson }}, {{ field.autocomplete_endpoint|tojson }}, {{ field.getname_endpoint|tojson }});
+    {%- elif field.type == 'CoordinatesField' -%}
+      {{ map_marker_script(field) }}
     {%- endif -%}
-  {%- endfor %}
+  {%- endfor -%}
   {%- if script %}
     });
   </script>
-  {%- endif %}
+  {%- endif -%}
 {% endmacro %}

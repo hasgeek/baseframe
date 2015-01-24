@@ -34,20 +34,23 @@ assets['bootstrap-tab.js'][Version('2.0.1')] = ('jquery.js', 'baseframe/js/boots
 assets['bootstrap-transition.js'][Version('2.0.1')] = ('jquery.js', 'baseframe/js/bootstrap/bootstrap-transition.js')
 assets['bootstrap-typeahead.js'][Version('2.0.1')] = ('jquery.js', 'baseframe/js/bootstrap/bootstrap-typeahead.js')
 
-# Bootstrap 3.0.0
-assets['bootstrap.css'][Version('3.0.0')] = 'baseframe/css/bootstrap3/bootstrap.css'
-assets['bootstrap-affix.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/affix.js')
-assets['bootstrap-alert.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/alert.js')
-assets['bootstrap-button.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/button.js')
-assets['bootstrap-carousel.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/carousel.js')
-assets['bootstrap-collapse.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/collapse.js')
-assets['bootstrap-dropdown.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/dropdown.js')
-assets['bootstrap-modal.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/modal.js')
-assets['bootstrap-popover.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/popover.js')
-assets['bootstrap-scrollspy.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/scrollspy.js')
-assets['bootstrap-tab.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/tab.js')
-assets['bootstrap-tooltip.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/tooltip.js')
-assets['bootstrap-transition.js'][Version('3.0.0')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/transition.js')
+# Bootstrap 3.3.1
+assets['bootstrap.css'][Version('3.3.1')] = 'baseframe/css/bootstrap3/bootstrap.css'
+assets['bootstrap-affix.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/affix.js')
+assets['bootstrap-alert.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/alert.js')
+assets['bootstrap-button.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/button.js')
+assets['bootstrap-carousel.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/carousel.js')
+assets['bootstrap-collapse.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/collapse.js')
+assets['bootstrap-dropdown.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/dropdown.js')
+assets['bootstrap-modal.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/modal.js')
+assets['bootstrap-popover.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/popover.js')
+assets['bootstrap-scrollspy.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/scrollspy.js')
+assets['bootstrap-tab.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/tab.js')
+assets['bootstrap-tooltip.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/tooltip.js')
+assets['bootstrap-transition.js'][Version('3.3.1')] = ('jquery.js>=1.9.0', 'baseframe/js/bootstrap3/transition.js')
+
+# Bootstrap Social - commit #918fc55c3c938377a7618ec0f115846e50d4b883
+assets['bootstrap-social.css'][Version('1.0.0')] = ('bootstrap.css>=3.0.0', 'baseframe/css/bootstrap-social.css')
 
 assets['jquery.form.js'][Version('2.96.0')] = ('jquery.js', 'baseframe/js/jquery.form.js')
 assets['jquery.tinymce.js'][Version('3.5.10')] = ('jquery.js', 'baseframe/js/tinymce3/jquery.tinymce.js')
@@ -60,12 +63,16 @@ assets['bootstrap-datepicker.js'][Version('1.3.0')] = ('jquery.js', 'baseframe/j
 assets['jquery.ui.js'][Version('1.10.3')] = ('jquery.js', 'baseframe/js/jquery-ui.js')
 assets['jquery.ui.css'][Version('1.10.3')] = 'baseframe/css/jquery-ui.css'
 
+assets['jquery.liblink.js'][Version('0.0.0')] = ('jquery.js', 'baseframe/js/jquery.liblink.js')
+assets['jquery.wnumb.js'][Version('0.0.0')] = ('jquery.js', 'baseframe/js/jquery.wnumb.js')
 assets['jquery.range-slider.js'][Version('5.3.0')] = ('jquery.js', 'jquery.ui.js', 'baseframe/js/jQRangeSlider-min.js')
 assets['jquery.range-slider.css'][Version('5.3.0')] = ('jquery.ui.css', 'baseframe/css/jQRangeSlider.css')
-assets['jquery.nouislider.js'][Version('6.0.0')] = ('jquery.js', 'baseframe/js/jquery.nouislider.min.js')
-assets['jquery.nouislider.css'][Version('6.0.0')] = ('baseframe/css/jquery.nouislider.min.css')
+assets['jquery.nouislider.js'][Version('7.0.10')] = ('jquery.js', 'baseframe/js/jquery.nouislider.min.js')
+assets['jquery.nouislider.css'][Version('7.0.10')] = ('baseframe/css/jquery.nouislider.min.css')
 
+# textarea-expander is deprecated. Use autosize instead
 assets['jquery.textarea-expander.js'][Version('1.0.0')] = ('jquery.js', 'baseframe/js/jquery.textarea-expander.js')
+assets['jquery.autosize.js'][Version('1.18.17')] = ('jquery.js', 'baseframe/js/jquery.autosize.js')
 
 assets['jquery.oembed.js'][Version('1.0.1')] = ('jquery.js', 'baseframe/js/jquery.oembed.js')
 assets['jquery.oembed.css'][Version('1.0.1')] = ('baseframe/css/jquery.oembed.css')
@@ -77,39 +84,41 @@ assets['jquery.fullcalendar.js'][Version('1.6.4')] = ('jquery.js', 'jquery.ui.js
 assets['jquery.fullcalendar.css'][Version('1.6.4')] = ('jquery.ui.css', 'baseframe/js/fullcalendar/fullcalendar.css')
 assets['jquery.fullcalendar.gcal.js'][Version('1.6.4')] = ('jquery.fullcalendar.js', 'baseframe/js/fullcalendar/gcal.js')
 
+assets['jquery.locationpicker.js'][Version('0.1.12')] = ('jquery.js', 'baseframe/js/jquery.locationpicker.js')
+
 assets['select2.js'][Version('3.3.2')] = ('jquery.js>=1.4.6', 'baseframe/js/select2.js')
 assets['select2.css'][Version('3.3.2')] = 'baseframe/css/select2.css'
 
-assets['codemirror.js'][Version('3.21.0')] = 'baseframe/js/codemirror/lib/codemirror.js'
-assets['codemirror.css'][Version('3.21.0')] = 'baseframe/js/codemirror/lib/codemirror.css'
+assets['codemirror.js'][Version('4.11.0')] = 'baseframe/js/codemirror/lib/codemirror.js'
+assets['codemirror.css'][Version('4.11.0')] = 'baseframe/js/codemirror/lib/codemirror.css'
 
-assets['codemirror.mode.markdown.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/markdown/markdown.js'
-assets['codemirror.mode.gfm.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/gfm/gfm.js'
-assets['codemirror.mode.htmlmixed.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/htmlmixed/htmlmixed.js'
-assets['codemirror.mode.css.js'][Version('3.21.0')] = 'baseframe/js/codemirror/mode/css/css.js'
-assets['codemirror.addon.mode.overlay.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/mode/overlay.js'
-assets['codemirror.addon.edit.continuelist.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/edit/continuelist.js'
-assets['codemirror.addon.edit.closebrackets.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/edit/closebrackets.js'
-assets['codemirror.addon.edit.matchbrackets.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/edit/matchbrackets.js'
-assets['codemirror.addon.hint.css-hint.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/hint/css-hint.js'
-assets['codemirror.addon.lint.css-lint.js'][Version('3.21.0')] = 'baseframe/js/codemirror/addon/lint/css-lint.js'
+assets['codemirror.mode.markdown.js'][Version('4.11.0')] = 'baseframe/js/codemirror/mode/markdown/markdown.js'
+assets['codemirror.mode.gfm.js'][Version('4.11.0')] = 'baseframe/js/codemirror/mode/gfm/gfm.js'
+assets['codemirror.mode.htmlmixed.js'][Version('4.11.0')] = 'baseframe/js/codemirror/mode/htmlmixed/htmlmixed.js'
+assets['codemirror.mode.css.js'][Version('4.11.0')] = 'baseframe/js/codemirror/mode/css/css.js'
+assets['codemirror.addon.mode.overlay.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/mode/overlay.js'
+assets['codemirror.addon.edit.continuelist.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/edit/continuelist.js'
+assets['codemirror.addon.edit.closebrackets.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/edit/closebrackets.js'
+assets['codemirror.addon.edit.matchbrackets.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/edit/matchbrackets.js'
+assets['codemirror.addon.hint.css-hint.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/hint/css-hint.js'
+assets['codemirror.addon.lint.css-lint.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/lint/css-lint.js'
 
-assets['codemirror-markdown.js'][Version('3.21.0')] = {'requires': [
-    'codemirror.js==3.21.0',
-    'codemirror.mode.markdown.js==3.21.0',
-    'codemirror.mode.gfm.js==3.21.0',
-    'codemirror.mode.htmlmixed.js==3.21.0',
-    'codemirror.addon.mode.overlay.js==3.21.0',
-    'codemirror.addon.edit.continuelist.js==3.21.0',
-    'codemirror.addon.edit.closebrackets.js==3.21.0',
+assets['codemirror-markdown.js'][Version('4.11.0')] = {'requires': [
+    'codemirror.js==4.11.0',
+    'codemirror.mode.markdown.js==4.11.0',
+    'codemirror.mode.gfm.js==4.11.0',
+    'codemirror.mode.htmlmixed.js==4.11.0',
+    'codemirror.addon.mode.overlay.js==4.11.0',
+    'codemirror.addon.edit.continuelist.js==4.11.0',
+    'codemirror.addon.edit.closebrackets.js==4.11.0',
 ]}
-assets['codemirror-markdown.css'][Version('3.21.0')] = ('codemirror.css==3.21.0', 'baseframe/css/codemirror.css')
-assets['codemirror-css.js'][Version('3.21.0')] = {'requires': [
-    'codemirror.js==3.21.0',
-    'codemirror.mode.css.js==3.21.0',
-    'codemirror.addon.hint.css-hint.js==3.21.0',
-    'codemirror.addon.lint.css-lint.js==3.21.0',
-    'codemirror.addon.edit.closebrackets.js==3.21.0',
+assets['codemirror-markdown.css'][Version('4.11.0')] = ('codemirror.css==4.11.0', 'baseframe/css/codemirror.css')
+assets['codemirror-css.js'][Version('4.11.0')] = {'requires': [
+    'codemirror.js==4.11.0',
+    'codemirror.mode.css.js==4.11.0',
+    'codemirror.addon.hint.css-hint.js==4.11.0',
+    'codemirror.addon.lint.css-lint.js==4.11.0',
+    'codemirror.addon.edit.closebrackets.js==4.11.0',
 ]}
 
 assets['pygments-default.css'][Version('1.5.0')] = 'baseframe/css/pygments-default.css'
@@ -176,31 +185,31 @@ assets['baseframe-firasans.css'][Version('1.0.0')] = 'baseframe/css/baseframe-fi
 assets['bootstrap.js'][Version('2.0.1')] = {'requires': [
     'bootstrap-alert.js==2.0.1',
     'bootstrap-button.js==2.0.1',
-    #'bootstrap-carousel.js==2.0.1',
-    #'bootstrap-collapse.js==2.0.1',
+    # 'bootstrap-carousel.js==2.0.1',
+    # 'bootstrap-collapse.js==2.0.1',
     'bootstrap-dropdown.js==2.0.1',
     'bootstrap-modal.js==2.0.1',
     'bootstrap-tooltip.js==2.0.1',
-    #'bootstrap-popover.js==2.0.1',
-    #'bootstrap-scrollspy.js==2.0.1',
+    # 'bootstrap-popover.js==2.0.1',
+    # 'bootstrap-scrollspy.js==2.0.1',
     'bootstrap-tab.js==2.0.1',
     'bootstrap-transition.js==2.0.1',
-    #'bootstrap-typeahead.js==2.0.1',
+    # 'bootstrap-typeahead.js==2.0.1',
 ]}
 
-assets['bootstrap.js'][Version('3.0.0')] = {'requires': [
-    'bootstrap-transition.js==3.0.0',
-    'bootstrap-alert.js==3.0.0',
-    'bootstrap-button.js==3.0.0',
-    'bootstrap-carousel.js==3.0.0',
-    'bootstrap-collapse.js==3.0.0',
-    'bootstrap-dropdown.js==3.0.0',
-    'bootstrap-modal.js==3.0.0',
-    'bootstrap-tooltip.js==3.0.0',
-    'bootstrap-popover.js==3.0.0',
-    'bootstrap-scrollspy.js==3.0.0',
-    'bootstrap-tab.js==3.0.0',
-    'bootstrap-affix.js==3.0.0',
+assets['bootstrap.js'][Version('3.3.1')] = {'requires': [
+    'bootstrap-transition.js==3.3.1',
+    'bootstrap-alert.js==3.3.1',
+    'bootstrap-button.js==3.3.1',
+    'bootstrap-carousel.js==3.3.1',
+    'bootstrap-collapse.js==3.3.1',
+    'bootstrap-dropdown.js==3.3.1',
+    'bootstrap-modal.js==3.3.1',
+    'bootstrap-tooltip.js==3.3.1',
+    'bootstrap-popover.js==3.3.1',
+    'bootstrap-scrollspy.js==3.3.1',
+    'bootstrap-tab.js==3.3.1',
+    'bootstrap-affix.js==3.3.1',
 ]}
 
 assets['bootstrap3-editable.js'][Version('1.5.1')] = ('bootstrap.js>=3.0.0',

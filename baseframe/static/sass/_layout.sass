@@ -321,6 +321,10 @@ input[name="title"], .field-title
 input[type="url"], input[name="name"]
   font-family: Consolas, Inconsolata, Menlo, "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace
 
+input[name="coordinates"]
+  width: auto
+  display: inline
+
 .help-block
   font-size: 90%
   color: #777
@@ -510,3 +514,9 @@ ul.grid
     padding-left: 0
   .cardset li, .userset li
     margin-bottom: $body-line-height !important
+
+// FIXME: Make this properly responsive
+.map-marker
+  margin-top: $body-line-height / 2
+  width: 100%
+  height: 20em

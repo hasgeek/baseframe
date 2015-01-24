@@ -3,6 +3,8 @@
 @import "settings-bs3";
 
 .CodeMirror {
+    height: auto;
+    min-height: 6em;
     font-family: $monospace-font-family;
     border: 1px solid #CCC;
     border-radius: 4px;

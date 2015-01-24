@@ -10,6 +10,7 @@ function activate_widgets() {
       theme: "default",
       lineWrapping: true,
       autoCloseBrackets: true,
+      viewportMargin: Infinity,
       extraKeys: {
         "Enter": "newlineAndIndentContinueMarkdownList",
         "Tab": false,
@@ -27,6 +28,7 @@ function activate_widgets() {
       lineWrapping: true,
       autoCloseBrackets: true,
       matchBrackets: true,
+      viewportMargin: Infinity,
       extraKeys: {
         "Tab": false,
         "Shift-Tab": false,
@@ -216,3 +218,110 @@ $(function() {
   // Code notice
   console.log("Hello, curious geek. Our source is at https://github.com/hasgeek. Why not contribute a patch?");
 });
+
+// Single Global Baseframe Object that serves as a namespace
+window.Baseframe = {
+};
+
+window.Baseframe.Config = {
+  defaultLatitude: "12.961443",
+  defaultLongitude: "77.64435000000003"
+};
+
+window.Baseframe.Forms = {
+  preventSubmitOnEnter: function(id){
+    $('#' + id).on("keyup keypress", function(e) {
+      var code = e.keyCode || e.which; 
+      if (code === 13) {               
+        e.preventDefault();
+        return false;
+      }
+    });
+  },
+  lastuserAutocomplete: function(options) {
+    var assembleUsers = function(users) {
+      return users.map(function(user){
+        return {id: user.buid, text: user.label};
+      });
+    };
+
+    $("#" + options.id).select2({
+      placeholder: "Search for a user",
+      multiple: options.multiple,
+      minimumInputLength: 2,
+      ajax: {
+        url: options.autocomplete_endpoint,
+        dataType: "jsonp",
+        data: function(term, page) {
+          return {
+            q: term
+          };
+        },
+        results: function(data, page) {
+          var users = [];
+          if (data.status == 'ok') {
+            users = assembleUsers(data.users);
+          }
+          return {more: false, results: users};
+        }
+      },
+      initSelection: function(element, callback) {
+        var val = $(element).val();
+        if (val !== '') {
+          $.ajax(options.getuser_endpoint + '?userid=' + val.replace(/,/g, '&userid='), {
+            accepts: "application/json",
+            dataType: "jsonp"
+          }).done(function(data) {
+            $(element).val('');  // Clear it in preparation for incoming data
+            var results = [];
+            if (data.status == 'ok') {
+              results = assembleUsers(data.results);
+            }
+            callback(results);
+          });
+        }
+      }
+    });
+  }
+};
+
+window.Baseframe.MapMarker = function(field){
+  this.field = field;
+  this.activate();
+  return this;
+};
+
+window.Baseframe.MapMarker.prototype.activate = function(){
+  var self = this;
+  Baseframe.Forms.preventSubmitOnEnter(this.field.location_id);
+
+  // locationpicker.jquery.js
+  $("#" + this.field.map_id).locationpicker({
+    location: self.getDefaultLocation(),
+    radius: 0,
+    inputBinding: {
+      latitudeInput: $("#" + this.field.latitude_id),
+      longitudeInput: $("#" + this.field.longitude_id),
+      locationNameInput: $("#" + this.field.location_id)
+    },
+    enableAutocomplete: true,
+    onchanged: function(currentLocation, radius, isMarkerDropped) {
+    },
+    onlocationnotfound: function(locationName) {
+    },
+    oninitialized: function (component) {
+    }
+  });
+};
+
+window.Baseframe.MapMarker.prototype.getDefaultLocation = function() {
+  var latitude, longitude;
+  if ($("#" + this.field.latitude_id).val() === '' && $("#" + this.field.longitude_id).val() === '') {
+    latitude = Baseframe.Config.defaultLatitude;
+    longitude = Baseframe.Config.defaultLongitude;
+  } else {
+    latitude = $("#" + this.field.latitude_id).val();
+    longitude = $("#" + this.field.longitude_id).val();
+  }
+  return {latitude: latitude, longitude: longitude};
+};

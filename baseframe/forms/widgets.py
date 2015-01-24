@@ -2,8 +2,9 @@
 
 import wtforms
 from flask import Markup
+from .. import b_ as _
 
-__all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'HiddenInput']
+__all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'HiddenInput', 'CoordinatesInput']
 
 
 class TinyMce3(wtforms.widgets.TextArea):
@@ -77,3 +78,31 @@ class HiddenInput(wtforms.widgets.core.Input):
     Render a hidden input. This widget exists solely to escape processing by form.hidden_tag()
     """
     input_type = 'hidden'
+
+
+class CoordinatesInput(wtforms.widgets.core.Input):
+    """
+    Render latitude and longitude coordinates
+    """
+    input_type = 'text'
+
+    def __call__(self, field, **kwargs):
+        id_ = kwargs.pop('id', field.id)
+        kwargs.setdefault('type', self.input_type)
+        kwargs.setdefault('size', 10)  # 9 digits precision and +/- sign
+        kwargs.pop('placeholder', None)  # Discard placeholder, use custom values for each input below
+        value = kwargs.pop('value', None)
+        if not value:
+            value = field._value()
+        if not value:
+            value = ['', '']
+        elif isinstance(value, basestring):
+            value = value.split(',', 1)
+        if len(value) < 2:
+            value.append('')
+
+        return Markup('<input %s> <input %s>' % (
+            self.html_params(id=id_ + '_latitude', name=field.name, placeholder=_("Latitude"),
+                value=value[0], **kwargs),
+            self.html_params(id=id_ + '_longitude', name=field.name, placeholder=_("Longitude"),
+                value=value[1], **kwargs)))

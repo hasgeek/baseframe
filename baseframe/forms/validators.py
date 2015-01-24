@@ -14,7 +14,8 @@ from .. import b_ as _, b__ as __, asset_cache
 from ..signals import exception_catchall
 
 
-__all__ = ['ValidEmail', 'ValidEmailDomain', 'ValidUrl', 'AllUrlsValid', 'StripWhitespace', 'ValidName', 'NoObfuscatedEmail']
+__all__ = ['ValidEmail', 'ValidEmailDomain', 'ValidUrl', 'AllUrlsValid', 'StripWhitespace', 'ValidName',
+    'NoObfuscatedEmail', 'ValidCoordinates']
 
 
 EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b', re.I)
@@ -63,7 +64,7 @@ class ValidUrl(object):
         self.message_urltext = message_urltext or _(u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible')
 
     def check_url(self, invalid_urls, url, text=None):
-        cache_key = 'linkchecker/' + urlquote(url, safe='')
+        cache_key = 'linkchecker/' + urlquote(url.encode('utf-8') if isinstance(url, unicode) else url, safe='')
         cache_check = asset_cache.get(cache_key)
         # Read from cache, but assume cache may be broken
         # since Flask-Cache stores data as a pickle,
@@ -76,11 +77,8 @@ class ValidUrl(object):
 
         if not rurl or not code:
             try:
-                r = requests.head(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
+                r = requests.get(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
                 code = r.status_code
-                if code in (405, 502, 503):  # Some servers don't like HTTP HEAD requests, strange but true
-                    r = requests.get(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
-                    code = r.status_code
                 rurl = r.url
             except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
                     requests.exceptions.ConnectionError,  # Name resolution or connection failed
@@ -188,3 +186,18 @@ class ValidName(object):
     def __call__(self, form, field):
         if make_name(field.data) != field.data:
             raise wtforms.validators.StopValidation(self.message)
+
+
+class ValidCoordinates(object):
+    def __init__(self, message=None, message_latitude=None, message_longitude=None):
+        self.message = message or __(u"Valid latitude and longitude expected")
+        self.message_latitude = message_latitude or __(u"Latitude must be within ± 90 degrees")
+        self.message_longitude = message_longitude or __(u"Longitude must be within ± 180 degrees")
+
+    def __call__(self, form, field):
+        if len(field.data) != 2:
+            raise wtforms.validators.StopValidation(self.message)
+        if not -90 <= field.data[0] <= 90:
+            raise wtforms.validators.StopValidation(self.message_latitude)
+        if not -180 <= field.data[1] <= 180:
+            raise wtforms.validators.StopValidation(self.message_longitude)

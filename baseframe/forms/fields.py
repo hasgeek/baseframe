@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
 
+from decimal import Decimal, InvalidOperation as DecimalError
 from urlparse import urljoin
 from pytz import utc, timezone as pytz_timezone
 from flask import current_app
 import wtforms
+from wtforms.compat import text_type
 import bleach
 
-from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput
+from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput, CoordinatesInput
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'TextListField',
     'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
-    'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField']
+    'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
+    'CoordinatesField']
 
 
 # Default tags and attributes to allow in HTML sanitization
@@ -319,18 +322,21 @@ class UserSelectFieldBase(object):
         # Convert strings in userids into User objects
         users = []
         if userids:
-            usersdata = self.lastuser.getuser_by_userids(userids)
-            # TODO: Move all of this inside the getuser method with user=True, create=True
-            for userinfo in usersdata:
-                if userinfo['type'] == 'user':
-                    user = self.usermodel.query.filter_by(userid=userinfo['buid']).first()
-                    if not user:
-                        # New user in this app. Don't set username right now. It's not relevant
-                        # until first login and we don't want to deal with conflicts.
-                        # We don't add this user to the session. The view is responsible for that
-                        # (using SQLAlchemy cascades when assigning users to a collection)
-                        user = self.usermodel(userid=userinfo['buid'], fullname=userinfo['title'])
-                    users.append(user)
+            if self.lastuser:
+                usersdata = self.lastuser.getuser_by_userids(userids)
+                # TODO: Move all of this inside the getuser method with user=True, create=True
+                for userinfo in usersdata:
+                    if userinfo['type'] == 'user':
+                        user = self.usermodel.query.filter_by(userid=userinfo['buid']).first()
+                        if not user:
+                            # New user in this app. Don't set username right now. It's not relevant
+                            # until first login and we don't want to deal with conflicts.
+                            # We don't add this user to the session. The view is responsible for that
+                            # (using SQLAlchemy cascades when assigning users to a collection)
+                            user = self.usermodel(userid=userinfo['buid'], fullname=userinfo['title'])
+                        users.append(user)
+            else:
+                users = self.usermodel.all(userids=userids)
         self.data = users
         return retval
 
@@ -484,7 +490,7 @@ class ImgeeField(wtforms.TextField):
 
     def __call__(self, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = "%s %s" % (c.strip(), 'imgee-url-holder') if c else 'imgee-url-holder'
+        kwargs['class'] = ("%s %s" % (c.strip(), 'imgee-url-holder') if c else 'imgee-url-holder').strip()
         if self.profile:
             kwargs['data-profile'] = self.profile() if callable(self.profile) else self.profile
         if self.img_label:
@@ -503,3 +509,31 @@ class FormField(wtforms.FormField):
         self.form.csrf_enabled = False
         del self.form.csrf_token
         return retval
+
+
+class CoordinatesField(wtforms.Field):
+    """
+    Adds latitude and longitude fields and returns them as a tuple.
+    """
+    widget = CoordinatesInput()
+
+    def process_formdata(self, valuelist):
+        if valuelist and len(valuelist) == 2:
+            try:
+                latitude = Decimal(valuelist[0])
+            except DecimalError:
+                latitude = None
+            try:
+                longitude = Decimal(valuelist[1])
+            except DecimalError:
+                longitude = None
+
+            self.data = latitude, longitude
+        else:
+            self.data = None, None
+
+    def _value(self):
+        if self.data is not None and self.data != (None, None):
+            return text_type(self.data[0]), text_type(self.data[1])
+        else:
+            return '', ''
