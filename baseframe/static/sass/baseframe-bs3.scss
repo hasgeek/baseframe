@@ -5,6 +5,7 @@
 // Compass
 @import "compass";
 @import "compass/layout";
+@import "compass/css3/transition";
 
 // Local settings
 @import "settings-bs3";
@@ -59,12 +60,6 @@ header {
     background-position: -17px 5px;
 }
 
-#collapse-icon {
-    margin-right: 1em;
-    a {
-        color: #D5E0E5;
-    }
-}
 ul.hg-header-app-nav {
     h1 {
         text-transform: uppercase;
@@ -138,7 +133,7 @@ html, body {
         height: 100%;
         overflow: auto; 
         background: #F8FAFB;
-        -webkit-transition: all 0.5s ease-in-out;
+        @include single-transition(all, 0.5s, ease-in-out, 0);
         &.in {
             width: 280px;
         }
@@ -178,18 +173,18 @@ html, body {
         overflow: auto;
         &.in {
             width: calc(100% - 280px);
-            -webkit-transition: all 0.5s ease-in-out;
+            @include single-transition(all, 0.5s, ease-in-out, 0);
             #hg-panel.navbar-fixed-top, #hg-panel.navbar-fixed-bottom {
                 left: 280px;
-                -webkit-transition: all 0.5s ease-in-out;
+                @include single-transition(all, 0.5s, ease-in-out, 0);
             }
         }
         &.out {
             width: 100%;
-            -webkit-transition: all 0.5s ease-in-out;
+            @include single-transition(all, 0.5s, ease-in-out, 0);
             #hg-panel.navbar-fixed-top, #hg-panel.navbar-fixed-bottom {
                 left: 0;
-                -webkit-transition: all 0.5s ease-in-out;
+                @include single-transition(all, 0.5s, ease-in-out, 0);
             }
         }
         & > .wrapper {
@@ -224,3 +219,44 @@ footer .container-fluid {
 #hg-panel {
     height: 2.25em;
 }
+
+$collapse-icon-width-expanded: 1.6em;
+$collapse-icon-width-shrinked: 1.1em;
+
+
+#collapse-icon {
+    margin-right: 1em;
+    float: left;
+    cursor: pointer;
+    a {
+        margin-top: 0.5em;
+        display: block;
+    }
+    .bar {
+        height: 0.2em;
+        background-color: #D5E0E5;
+        margin: 0.1em 0;
+        float: left;
+    }
+    &:hover .bar {
+        background-color: #C5CFD3;
+        
+    }
+}
+.right.in #collapse-icon {
+    width: $collapse-icon-width-shrinked;
+    @include single-transition(all, 0.5s, ease-in-out, 0);
+    .bar {
+        width: $collapse-icon-width-shrinked;
+        @include single-transition(all, 0.5s, ease-in-out, 0);
+    }
+}
+.right.out #collapse-icon {
+    width: $collapse-icon-width-expanded;
+    @include single-transition(all, 0.5s, ease-in-out, 0);
+    .bar {
+        width: $collapse-icon-width-expanded;
+        @include single-transition(all, 0.5s, ease-in-out, 0);
+    }
+}
+

@@ -1504,13 +1504,6 @@ header {
   background-position: -17px 5px;
 }
 
-#collapse-icon {
-  margin-right: 1em;
-}
-#collapse-icon a {
-  color: #D5E0E5;
-}
-
 ul.hg-header-app-nav h1 {
   text-transform: uppercase;
   font-size: 15px;
@@ -1582,7 +1575,10 @@ html, body {
   height: 100%;
   overflow: auto;
   background: #F8FAFB;
-  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s 0;
+  -o-transition: all 0.5s 0;
+  -webkit-transition: all 0.5s 0;
+  transition: all 0.5s 0;
 }
 .two-pane-app .bottom .left.in {
   width: 280px;
@@ -1623,19 +1619,31 @@ html, body {
 }
 .two-pane-app .bottom .right.in {
   width: calc(100% - 280px);
-  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s 0;
+  -o-transition: all 0.5s 0;
+  -webkit-transition: all 0.5s 0;
+  transition: all 0.5s 0;
 }
 .two-pane-app .bottom .right.in #hg-panel.navbar-fixed-top, .two-pane-app .bottom .right.in #hg-panel.navbar-fixed-bottom {
   left: 280px;
-  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s 0;
+  -o-transition: all 0.5s 0;
+  -webkit-transition: all 0.5s 0;
+  transition: all 0.5s 0;
 }
 .two-pane-app .bottom .right.out {
   width: 100%;
-  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s 0;
+  -o-transition: all 0.5s 0;
+  -webkit-transition: all 0.5s 0;
+  transition: all 0.5s 0;
 }
 .two-pane-app .bottom .right.out #hg-panel.navbar-fixed-top, .two-pane-app .bottom .right.out #hg-panel.navbar-fixed-bottom {
   left: 0;
-  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s 0;
+  -o-transition: all 0.5s 0;
+  -webkit-transition: all 0.5s 0;
+  transition: all 0.5s 0;
 }
 .two-pane-app .bottom .right > .wrapper {
   padding-top: 2.25em;
@@ -1667,4 +1675,53 @@ footer .container-fluid {
 
 #hg-panel {
   height: 2.25em;
+}
+
+#collapse-icon {
+  margin-right: 1em;
+  float: left;
+  cursor: pointer;
+}
+#collapse-icon a {
+  margin-top: 0.5em;
+  display: block;
+}
+#collapse-icon .bar {
+  height: 0.2em;
+  background-color: #D5E0E5;
+  margin: 0.1em 0;
+  float: left;
+}
+#collapse-icon:hover .bar {
+  background-color: #C5CFD3;
+}
+
+.right.in #collapse-icon {
+  width: 1.1em;
+  -moz-transition: all 0.5s 0;
+  -o-transition: all 0.5s 0;
+  -webkit-transition: all 0.5s 0;
+  transition: all 0.5s 0;
+}
+.right.in #collapse-icon .bar {
+  width: 1.1em;
+  -moz-transition: all 0.5s 0;
+  -o-transition: all 0.5s 0;
+  -webkit-transition: all 0.5s 0;
+  transition: all 0.5s 0;
+}
+
+.right.out #collapse-icon {
+  width: 1.6em;
+  -moz-transition: all 0.5s 0;
+  -o-transition: all 0.5s 0;
+  -webkit-transition: all 0.5s 0;
+  transition: all 0.5s 0;
+}
+.right.out #collapse-icon .bar {
+  width: 1.6em;
+  -moz-transition: all 0.5s 0;
+  -o-transition: all 0.5s 0;
+  -webkit-transition: all 0.5s 0;
+  transition: all 0.5s 0;
 }
