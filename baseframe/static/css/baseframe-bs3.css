@@ -1588,7 +1588,7 @@ html, body {
 }
 .two-pane-app .bottom .left .logo {
   width: 100%;
-  /* border-bottom: 0.0625em solid #D5E0E5;
+  /* border-bottom: 0.0625em solid $hg-panel-dark-gray;
   background-color: #FFF; */
 }
 .two-pane-app .bottom .left .logo img {
@@ -1597,18 +1597,17 @@ html, body {
   display: block;
 }
 .two-pane-app .bottom .left .sidebar {
-  padding-top: 1em;
+  padding-top: 2em;
 }
-.two-pane-app .bottom .left .select2-container .select2-choice {
-  background-image: none;
-  border-color: #D5E0E5;
-  padding: 0 0 0 0.9em;
+.two-pane-app .bottom .left input[type="text"].form-control {
+  border: 0;
+  box-shadow: none;
+  background-color: transparent;
+  border-bottom: 1px solid #999;
+  border-radius: 0;
 }
-.two-pane-app .bottom .left .select2-container .select2-choice, .two-pane-app .bottom .left .form-control {
-  border-radius: 1.5em;
-}
-.two-pane-app .bottom .left .select2-drop {
-  width: 80%;
+.two-pane-app .bottom .left input[type="text"].form-control:focus {
+  border-bottom: 1px solid #df5e0e;
 }
 .two-pane-app .bottom .right {
   position: absolute;
@@ -1697,14 +1696,14 @@ footer .container-fluid {
 }
 
 .right.in #collapse-icon {
-  width: 1.1em;
+  width: 0.9em;
   -moz-transition: all 0.5s 0;
   -o-transition: all 0.5s 0;
   -webkit-transition: all 0.5s 0;
   transition: all 0.5s 0;
 }
 .right.in #collapse-icon .bar {
-  width: 1.1em;
+  width: 0.9em;
   -moz-transition: all 0.5s 0;
   -o-transition: all 0.5s 0;
   -webkit-transition: all 0.5s 0;
@@ -1712,14 +1711,14 @@ footer .container-fluid {
 }
 
 .right.out #collapse-icon {
-  width: 1.6em;
+  width: 1.4em;
   -moz-transition: all 0.5s 0;
   -o-transition: all 0.5s 0;
   -webkit-transition: all 0.5s 0;
   transition: all 0.5s 0;
 }
 .right.out #collapse-icon .bar {
-  width: 1.6em;
+  width: 1.4em;
   -moz-transition: all 0.5s 0;
   -o-transition: all 0.5s 0;
   -webkit-transition: all 0.5s 0;

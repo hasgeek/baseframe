@@ -20,6 +20,10 @@
 // Only import this when in debug mode
 // @import "gridlines";
 
+$collapse-icon-width-expanded: 1.4em;
+$collapse-icon-width-shrinked: 0.9em;
+$hg-panel-dark-gray: #D5E0E5;
+
 /*
 	baseframe customizations
 */
@@ -128,7 +132,7 @@ html, body {
     bottom: 0;
     width: 100%; 
     .left {
-        border-right: 0.0625em solid #D5E0E5;
+        border-right: 0.0625em solid $hg-panel-dark-gray;
         position: absolute;
         height: 100%;
         overflow: auto; 
@@ -142,7 +146,7 @@ html, body {
         }
         .logo{
             width: 100%;
-            /* border-bottom: 0.0625em solid #D5E0E5;
+            /* border-bottom: 0.0625em solid $hg-panel-dark-gray;
             background-color: #FFF; */
             img {
                 width: 44%;
@@ -151,19 +155,18 @@ html, body {
             }
         }
         .sidebar {
-            padding-top: 1em;
+            padding-top: 2em;
         }
-        .select2-container .select2-choice {
-            background-image: none;
-            border-color: #D5E0E5;
-            padding: 0 0 0 0.9em;
-        }
-        .select2-container .select2-choice, .form-control {
-            border-radius: 1.5em;
-        }
-        .select2-drop {
-            width: 80%;
-        }
+        input[type="text"].form-control {
+            border: 0;
+            box-shadow: none;
+            background-color: transparent;
+            border-bottom: 1px solid #999;
+            border-radius: 0;
+            &:focus {
+                border-bottom: 1px solid #df5e0e;
+            }
+        } 
     }
     .right {
         position: absolute;
@@ -220,9 +223,6 @@ footer .container-fluid {
     height: 2.25em;
 }
 
-$collapse-icon-width-expanded: 1.6em;
-$collapse-icon-width-shrinked: 1.1em;
-
 
 #collapse-icon {
     margin-right: 1em;
@@ -234,7 +234,7 @@ $collapse-icon-width-shrinked: 1.1em;
     }
     .bar {
         height: 0.2em;
-        background-color: #D5E0E5;
+        background-color: $hg-panel-dark-gray;
         margin: 0.1em 0;
         float: left;
     }
