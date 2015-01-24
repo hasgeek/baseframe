@@ -24,6 +24,8 @@ $collapse-icon-width: 1.4em;
 $collapse-icon-width-expanded: 1.1em;
 $collapse-icon-width-shrinked: 0.8em;
 $hg-panel-dark-gray: #D5E0E5;
+$hamburger-inactive: #A3A3A3;
+$hamburger-active: #667C85;
 
 /*
 	baseframe customizations
@@ -196,6 +198,9 @@ html, body {
                     @include single-transition(all, 0.5s, ease-in-out, 0);
                 }
             }
+            #hamburger-icon {
+                color: $hamburger-active;
+            }
         }
         &.out {
             width: 100%;
@@ -211,6 +216,9 @@ html, body {
                     width: $collapse-icon-width-shrinked;
                     @include single-transition(all, 0.5s, ease-in-out, 0);
                 }
+            }
+            #hamburger-icon {
+                color: $hamburger-inactive;
             }
         }
 
@@ -266,9 +274,18 @@ footer .container-fluid {
         margin: 0.1em 0;
         float: left;
     }
+
     &:hover .bar {
         background-color: #C5CFD3;
         
+    }
+}
+#hamburger-icon {
+    margin-right: 0.5em;
+    color: #A3A3A3;
+    margin-left: 1em;
+    &:hover {
+        color: #333;
     }
 }
 
@@ -301,6 +318,12 @@ footer .container-fluid {
                         @include single-transition(all, 0.5s, ease-in-out, 0);
                     }
                 }
+                #hamburger-icon {
+                    color: $hamburger-inactive;
+                    &:hover {
+                        color: $hamburger-active;
+                    }
+                }
             }
             &.out {
                 width: 100%;
@@ -316,6 +339,9 @@ footer .container-fluid {
                         width: $collapse-icon-width-expanded;
                         @include single-transition(all, 0.5s, ease-in-out, 0);
                     }
+                }
+                #hamburger-icon {
+                    color: $hamburger-active;
                 }
             }
 

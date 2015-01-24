@@ -1649,6 +1649,9 @@ html, body {
   -webkit-transition: all 0.5s 0;
   transition: all 0.5s 0;
 }
+.two-pane-app .bottom .right.in #hamburger-icon {
+  color: #667C85;
+}
 .two-pane-app .bottom .right.out {
   width: 100%;
   -moz-transition: all 0.5s 0;
@@ -1676,6 +1679,9 @@ html, body {
   -o-transition: all 0.5s 0;
   -webkit-transition: all 0.5s 0;
   transition: all 0.5s 0;
+}
+.two-pane-app .bottom .right.out #hamburger-icon {
+  color: #A3A3A3;
 }
 .two-pane-app .bottom .right ul.hg-header-app-nav {
   margin-left: 0;
@@ -1731,6 +1737,15 @@ footer .container-fluid {
   background-color: #C5CFD3;
 }
 
+#hamburger-icon {
+  margin-right: 0.5em;
+  color: #A3A3A3;
+  margin-left: 1em;
+}
+#hamburger-icon:hover {
+  color: #333;
+}
+
 @media screen and (min-width: 768px) {
   .two-pane-app .bottom .left {
     top: 0;
@@ -1771,6 +1786,12 @@ footer .container-fluid {
     -webkit-transition: all 0.5s 0;
     transition: all 0.5s 0;
   }
+  .two-pane-app .bottom .right.in #hamburger-icon {
+    color: #A3A3A3;
+  }
+  .two-pane-app .bottom .right.in #hamburger-icon:hover {
+    color: #667C85;
+  }
   .two-pane-app .bottom .right.out {
     width: 100%;
     -moz-transition: all 0.5s 0;
@@ -1798,6 +1819,9 @@ footer .container-fluid {
     -o-transition: all 0.5s 0;
     -webkit-transition: all 0.5s 0;
     transition: all 0.5s 0;
+  }
+  .two-pane-app .bottom .right.out #hamburger-icon {
+    color: #667C85;
   }
   .two-pane-app .bottom .right ul.hg-header-app-nav {
     margin-left: 6px;

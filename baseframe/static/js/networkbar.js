@@ -27,7 +27,8 @@ $(function(){
 		}
 	});
 	// two pane sidebar collapse
-	$('#collapse-icon').click(function() {
+	//$('#collapse-icon').click(function() {
+	$('#hamburger-icon').click(function() {
 		$('.two-pane-app .left').toggleClass('in');
 		$('.two-pane-app .right').toggleClass('in');
 		$('.two-pane-app .left').toggleClass('out');
