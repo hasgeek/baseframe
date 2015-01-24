@@ -1572,9 +1572,11 @@ html, body {
 .two-pane-app .bottom .left {
   border-right: 0.0625em solid #D5E0E5;
   position: absolute;
+  top: 2.25em;
   height: 100%;
   overflow: auto;
   background: #F8FAFB;
+  z-index: 2;
   -moz-transition: all 0.5s 0;
   -o-transition: all 0.5s 0;
   -webkit-transition: all 0.5s 0;
@@ -1582,9 +1584,11 @@ html, body {
 }
 .two-pane-app .bottom .left.in {
   width: 280px;
+  left: -280px;
 }
 .two-pane-app .bottom .left.out {
-  width: 0;
+  width: 280px;
+  left: 0;
 }
 .two-pane-app .bottom .left .logo {
   width: 100%;
@@ -1615,16 +1619,31 @@ html, body {
   top: 0;
   height: 100%;
   overflow: auto;
+  z-index: 1;
 }
 .two-pane-app .bottom .right.in {
-  width: calc(100% - 280px);
+  width: 100%;
   -moz-transition: all 0.5s 0;
   -o-transition: all 0.5s 0;
   -webkit-transition: all 0.5s 0;
   transition: all 0.5s 0;
 }
 .two-pane-app .bottom .right.in #hg-panel.navbar-fixed-top, .two-pane-app .bottom .right.in #hg-panel.navbar-fixed-bottom {
-  left: 280px;
+  left: 0;
+  -moz-transition: all 0.5s 0;
+  -o-transition: all 0.5s 0;
+  -webkit-transition: all 0.5s 0;
+  transition: all 0.5s 0;
+}
+.two-pane-app .bottom .right.in #collapse-icon {
+  width: 1.4em;
+  -moz-transition: all 0.5s 0;
+  -o-transition: all 0.5s 0;
+  -webkit-transition: all 0.5s 0;
+  transition: all 0.5s 0;
+}
+.two-pane-app .bottom .right.in #collapse-icon .bar {
+  width: 1.1em;
   -moz-transition: all 0.5s 0;
   -o-transition: all 0.5s 0;
   -webkit-transition: all 0.5s 0;
@@ -1643,6 +1662,23 @@ html, body {
   -o-transition: all 0.5s 0;
   -webkit-transition: all 0.5s 0;
   transition: all 0.5s 0;
+}
+.two-pane-app .bottom .right.out #collapse-icon {
+  width: 1.4em;
+  -moz-transition: all 0.5s 0;
+  -o-transition: all 0.5s 0;
+  -webkit-transition: all 0.5s 0;
+  transition: all 0.5s 0;
+}
+.two-pane-app .bottom .right.out #collapse-icon .bar {
+  width: 0.8em;
+  -moz-transition: all 0.5s 0;
+  -o-transition: all 0.5s 0;
+  -webkit-transition: all 0.5s 0;
+  transition: all 0.5s 0;
+}
+.two-pane-app .bottom .right ul.hg-header-app-nav {
+  margin-left: 0;
 }
 .two-pane-app .bottom .right > .wrapper {
   padding-top: 2.25em;
@@ -1677,9 +1713,9 @@ footer .container-fluid {
 }
 
 #collapse-icon {
-  margin-right: 1em;
   float: left;
   cursor: pointer;
+  margin-right: 0;
 }
 #collapse-icon a {
   margin-top: 0.5em;
@@ -1695,32 +1731,75 @@ footer .container-fluid {
   background-color: #C5CFD3;
 }
 
-.right.in #collapse-icon {
-  width: 0.9em;
-  -moz-transition: all 0.5s 0;
-  -o-transition: all 0.5s 0;
-  -webkit-transition: all 0.5s 0;
-  transition: all 0.5s 0;
-}
-.right.in #collapse-icon .bar {
-  width: 0.9em;
-  -moz-transition: all 0.5s 0;
-  -o-transition: all 0.5s 0;
-  -webkit-transition: all 0.5s 0;
-  transition: all 0.5s 0;
-}
-
-.right.out #collapse-icon {
-  width: 1.4em;
-  -moz-transition: all 0.5s 0;
-  -o-transition: all 0.5s 0;
-  -webkit-transition: all 0.5s 0;
-  transition: all 0.5s 0;
-}
-.right.out #collapse-icon .bar {
-  width: 1.4em;
-  -moz-transition: all 0.5s 0;
-  -o-transition: all 0.5s 0;
-  -webkit-transition: all 0.5s 0;
-  transition: all 0.5s 0;
+@media screen and (min-width: 768px) {
+  .two-pane-app .bottom .left {
+    top: 0;
+  }
+  .two-pane-app .bottom .left.in {
+    width: 280px;
+    left: 0;
+  }
+  .two-pane-app .bottom .left.out {
+    width: 0;
+    left: 0;
+  }
+  .two-pane-app .bottom .right.in {
+    width: calc(100% - 280px);
+    -moz-transition: all 0.5s 0;
+    -o-transition: all 0.5s 0;
+    -webkit-transition: all 0.5s 0;
+    transition: all 0.5s 0;
+  }
+  .two-pane-app .bottom .right.in #hg-panel.navbar-fixed-top, .two-pane-app .bottom .right.in #hg-panel.navbar-fixed-bottom {
+    left: 280px;
+    -moz-transition: all 0.5s 0;
+    -o-transition: all 0.5s 0;
+    -webkit-transition: all 0.5s 0;
+    transition: all 0.5s 0;
+  }
+  .two-pane-app .bottom .right.in #collapse-icon {
+    width: 1.4em;
+    -moz-transition: all 0.5s 0;
+    -o-transition: all 0.5s 0;
+    -webkit-transition: all 0.5s 0;
+    transition: all 0.5s 0;
+  }
+  .two-pane-app .bottom .right.in #collapse-icon .bar {
+    width: 0.8em;
+    -moz-transition: all 0.5s 0;
+    -o-transition: all 0.5s 0;
+    -webkit-transition: all 0.5s 0;
+    transition: all 0.5s 0;
+  }
+  .two-pane-app .bottom .right.out {
+    width: 100%;
+    -moz-transition: all 0.5s 0;
+    -o-transition: all 0.5s 0;
+    -webkit-transition: all 0.5s 0;
+    transition: all 0.5s 0;
+  }
+  .two-pane-app .bottom .right.out #hg-panel.navbar-fixed-top, .two-pane-app .bottom .right.out #hg-panel.navbar-fixed-bottom {
+    left: 0;
+    -moz-transition: all 0.5s 0;
+    -o-transition: all 0.5s 0;
+    -webkit-transition: all 0.5s 0;
+    transition: all 0.5s 0;
+  }
+  .two-pane-app .bottom .right.out #collapse-icon {
+    width: 1.4em;
+    -moz-transition: all 0.5s 0;
+    -o-transition: all 0.5s 0;
+    -webkit-transition: all 0.5s 0;
+    transition: all 0.5s 0;
+  }
+  .two-pane-app .bottom .right.out #collapse-icon .bar {
+    width: 1.1em;
+    -moz-transition: all 0.5s 0;
+    -o-transition: all 0.5s 0;
+    -webkit-transition: all 0.5s 0;
+    transition: all 0.5s 0;
+  }
+  .two-pane-app .bottom .right ul.hg-header-app-nav {
+    margin-left: 6px;
+  }
 }

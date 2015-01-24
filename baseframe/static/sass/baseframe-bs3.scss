@@ -20,8 +20,9 @@
 // Only import this when in debug mode
 // @import "gridlines";
 
-$collapse-icon-width-expanded: 1.4em;
-$collapse-icon-width-shrinked: 0.9em;
+$collapse-icon-width: 1.4em;
+$collapse-icon-width-expanded: 1.1em;
+$collapse-icon-width-shrinked: 0.8em;
 $hg-panel-dark-gray: #D5E0E5;
 
 /*
@@ -134,15 +135,20 @@ html, body {
     .left {
         border-right: 0.0625em solid $hg-panel-dark-gray;
         position: absolute;
+        top: 2.25em;
         height: 100%;
         overflow: auto; 
         background: #F8FAFB;
+        z-index: 2;
         @include single-transition(all, 0.5s, ease-in-out, 0);
         &.in {
             width: 280px;
+            left: -280px;
         }
         &.out {
-            width: 0;
+            width: 280px;
+            left: 0;
+
         }
         .logo{
             width: 100%;
@@ -174,12 +180,21 @@ html, body {
         top: 0;
         height: 100%;
         overflow: auto;
+        z-index: 1;
         &.in {
-            width: calc(100% - 280px);
+            width: 100%;
             @include single-transition(all, 0.5s, ease-in-out, 0);
             #hg-panel.navbar-fixed-top, #hg-panel.navbar-fixed-bottom {
-                left: 280px;
+                left: 0;
                 @include single-transition(all, 0.5s, ease-in-out, 0);
+            }
+            #collapse-icon {
+                width: $collapse-icon-width;
+                @include single-transition(all, 0.5s, ease-in-out, 0);
+                .bar {
+                    width: $collapse-icon-width-expanded;
+                    @include single-transition(all, 0.5s, ease-in-out, 0);
+                }
             }
         }
         &.out {
@@ -189,7 +204,20 @@ html, body {
                 left: 0;
                 @include single-transition(all, 0.5s, ease-in-out, 0);
             }
+            #collapse-icon {
+                width: $collapse-icon-width;
+                @include single-transition(all, 0.5s, ease-in-out, 0);
+                .bar {
+                    width: $collapse-icon-width-shrinked;
+                    @include single-transition(all, 0.5s, ease-in-out, 0);
+                }
+            }
         }
+
+        ul.hg-header-app-nav {
+            margin-left: 0;
+        }
+
         & > .wrapper {
             padding-top: 2.25em;
             min-height: 100%;
@@ -223,11 +251,11 @@ footer .container-fluid {
     height: 2.25em;
 }
 
-
 #collapse-icon {
-    margin-right: 1em;
     float: left;
     cursor: pointer;
+    margin-right: 0;
+
     a {
         margin-top: 0.5em;
         display: block;
@@ -243,20 +271,57 @@ footer .container-fluid {
         
     }
 }
-.right.in #collapse-icon {
-    width: $collapse-icon-width-shrinked;
-    @include single-transition(all, 0.5s, ease-in-out, 0);
-    .bar {
-        width: $collapse-icon-width-shrinked;
-        @include single-transition(all, 0.5s, ease-in-out, 0);
-    }
-}
-.right.out #collapse-icon {
-    width: $collapse-icon-width-expanded;
-    @include single-transition(all, 0.5s, ease-in-out, 0);
-    .bar {
-        width: $collapse-icon-width-expanded;
-        @include single-transition(all, 0.5s, ease-in-out, 0);
-    }
-}
 
+@media screen and (min-width: 768px) {
+    .two-pane-app .bottom {
+        .left {
+            top: 0;
+            &.in {
+                width: 280px;
+                left: 0;
+            }
+            &.out {
+                width: 0;
+                left: 0;
+            }
+        }
+        .right {
+            &.in {
+                width: calc(100% - 280px);
+                @include single-transition(all, 0.5s, ease-in-out, 0);
+                #hg-panel.navbar-fixed-top, #hg-panel.navbar-fixed-bottom {
+                    left: 280px;
+                    @include single-transition(all, 0.5s, ease-in-out, 0);
+                }
+                #collapse-icon {
+                    width: $collapse-icon-width;
+                    @include single-transition(all, 0.5s, ease-in-out, 0);
+                    .bar {
+                        width: $collapse-icon-width-shrinked;
+                        @include single-transition(all, 0.5s, ease-in-out, 0);
+                    }
+                }
+            }
+            &.out {
+                width: 100%;
+                @include single-transition(all, 0.5s, ease-in-out, 0);
+                #hg-panel.navbar-fixed-top, #hg-panel.navbar-fixed-bottom {
+                    left: 0;
+                    @include single-transition(all, 0.5s, ease-in-out, 0);
+                }
+                #collapse-icon {
+                    width: $collapse-icon-width;
+                    @include single-transition(all, 0.5s, ease-in-out, 0);
+                    .bar {
+                        width: $collapse-icon-width-expanded;
+                        @include single-transition(all, 0.5s, ease-in-out, 0);
+                    }
+                }
+            }
+
+            ul.hg-header-app-nav {
+                margin-left: 6px;
+            }
+        }
+    }
+}
