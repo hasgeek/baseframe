@@ -64,20 +64,22 @@ $(function(){
 			$(this).removeClass('has-content');
 		}
 	});
-	
+	// close the sidebar when networkbar dropdowns are clicked
 	if (Modernizr.mq('only screen and (max-width: 768px)')) {
-		// close the sidebar when networkbar dropdowns are clicked
 		$('#hg-panel .nav.pull-right > li > a').click(function() {
 			if ($('#left').hasClass('out')) {
 				mobCloseSidebar();
 			}
 		});
-		// swipe toggle for sidebar
+	}
+
+	// swipe toggle for sidebar
+	if (Modernizr.mq('only screen and (max-width: 768px)')) {
 		$(function() {
 			$("#right .wrapper").swipe( {
 				swipeRight:function(event) {
 					if (event.pageX < 150) {
-						mobOpenSidebar();
+						mobOpenSidebar(); 
 					}
 				},
 				swipeLeft:function(event) {
