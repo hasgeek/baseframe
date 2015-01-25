@@ -26,15 +26,34 @@ $(function(){
 			$('.navbar-ex1-collapse').animate({height:"2px"});
 		}
 	});
+	if (Modernizr.touch){
+		$('.navbar-toggle').click(function(){
+			if(!$('.navbar-collapse').hasClass('in')){
+				$('body').addClass('nav-open');
+			}else{
+				$('body').removeClass('nav-open');
+			}	
+		});	
+	}
 });
+
+var toggleSidebar = function() {
+	$('#left').toggleClass('in');
+	$('#left').toggleClass('out');
+	$('#right').toggleClass('in');
+	$('#right').toggleClass('out');
+}
+var mobCloseSidebar = function() {
+	$('#left, #right').removeClass('out').addClass('in');
+}
+var mobOpenSidebar = function() {
+	$('#left, #right').removeClass('in').addClass('out');
+}
 
 $(function(){
 	// two pane sidebar collapse
 	$('#hamburger-icon').click(function() {
-		$('#left').toggleClass('in');
-		$('#right').toggleClass('in');
-		$('#left').toggleClass('out');
-		$('#right').toggleClass('out');
+		toggleSidebar();
 	});
 	// sidebar form floating label
 	$('#left .form-group input').focusout(function() {		
@@ -45,27 +64,28 @@ $(function(){
 			$(this).removeClass('has-content');
 		}
 	});
-	// close the sidebar when networkbar dropdowns are clicked
+	
 	if (Modernizr.mq('only screen and (max-width: 768px)')) {
+		// close the sidebar when networkbar dropdowns are clicked
 		$('#hg-panel .nav.pull-right > li > a').click(function() {
 			if ($('#left').hasClass('out')) {
-				$('#left').toggleClass('in');
-				$('#right').toggleClass('in');
-				$('#left').toggleClass('out');
-				$('#right').toggleClass('out');
+				mobCloseSidebar();
 			}
 		});
-	}
-});
-
-$(function(){
-	if (Modernizr.touch){
-		$('.navbar-toggle').click(function(){
-			if(!$('.navbar-collapse').hasClass('in')){
-				$('body').addClass('nav-open');
-			}else{
-				$('body').removeClass('nav-open');
-			}	
-		});	
+		// swipe toggle for sidebar
+		$(function() {
+			$("#right .wrapper").swipe( {
+				swipeRight:function(event) {
+					if (event.pageX < 150) {
+						mobOpenSidebar();
+					}
+				},
+				swipeLeft:function(event) {
+					if (event.pageX > 200) {
+						mobCloseSidebar();
+					}
+				}
+			});
+		});
 	}
 });

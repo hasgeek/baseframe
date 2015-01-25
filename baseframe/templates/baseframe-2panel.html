@@ -127,6 +127,7 @@
         document.write('<script type="text/javascript" src="{{ url_for("baseframe.static", filename="js/jquery-2.1.3.min.js") }}"><\/script>');
     </script>
   <!--<![endif]-->
+  <script src="{{ url_for('baseframe.static', filename='js/jquery.touchSwipe.min.js') }}"></script>
   {%- for asset in config.get('ext_js', []) %}
     <script type="text/javascript" src="{{ asset|ext_asset_url }}"></script>
   {%- endfor %}
