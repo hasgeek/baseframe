@@ -425,7 +425,7 @@
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="hg-app-drawer">
       <i class="fa fa-th"></i>
     </a>
-    <ul class="dropdown-menu block-dropdown" role="menu">
+    <ul class="dropdown-menu block-dropdown pull-right" role="menu">
       {%- for link in network_links %}
       <li>
         <a href="{{link['url']}}">
@@ -442,47 +442,31 @@
 {% macro hgpanel(site_title="HasGeek", site_nav=none, hasgeek_auth=true, hasgeek_network=true) %}  
   <nav class="navbar navbar-default navbar-fixed-top" id="hg-panel" role="navigation">
     <div class="container-fluid">
-      <div class="navbar-header pull-left">
-        <ul class="list-inline hg-header-app-nav">
-          <li class="navbar-text pull-left dropdown site-nav-collapse">
-            {% if site_nav %}
-              <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle pull-right hg-site-nav-toggle">
-                <i class="fa fa-bars"></i>
-              </button>
-            {% endif %}
-          </li>
-          <li id="hamburger-icon"><i class="fa fa-reorder"></i></li>
-          <!-- <li id="collapse-icon">
-            <a>
-              <div class="bar"></div>
-              <div class="bar"></div>
-              <div class="bar"></div>
-            </a>
-          </li> -->
-          <li id="nav-title">
-            {{site_title}}
-          </li>
-        </ul>
-      </div>
-      <div class="navbar-header pull-right">
-        <ul class="nav pull-right">
-          <li class="dropdown pull-left">
-            {% if hasgeek_auth %}
-              {{add_hasgeek_notify()}}
-            {%- endif %}
-          </li>
-          <li class="dropdown pull-left">
-            {% if hasgeek_auth %}
-              {{add_hasgeek_auth()}}
-            {%- endif %}
-          </li>
-          <li class="dropdown pull-right hg-nw-bar">
-            {% if hasgeek_network %}
-              {{add_hasgeek_network()}}
-            {% endif %}
-          </li>
-        </ul>
-      </div>
+      <ul class="nav pull-left">
+        <li id="hamburger-icon" class="pull-left">
+          <i class="fa fa-reorder"></i>
+        </li>
+        <li id="nav-title" class="dropdown pull-left">
+          {{site_title}}
+        </li>
+      </ul>
+      <ul class="nav pull-right">
+        <li class="dropdown pull-left">
+          {% if hasgeek_auth %}
+            {{add_hasgeek_notify()}}
+          {%- endif %}
+        </li>
+        <li class="dropdown pull-left">
+          {% if hasgeek_auth %}
+            {{add_hasgeek_auth()}}
+          {%- endif %}
+        </li>
+        <li class="dropdown pull-left hg-nw-bar">
+          {% if hasgeek_network %}
+            {{add_hasgeek_network()}}
+          {% endif %}
+        </li>
+      </ul>
       <div class="nav navbar-nav collapse navbar-collapse navbar-right hg-site-nav">
         {% if site_nav %}
           {{site_nav}}
