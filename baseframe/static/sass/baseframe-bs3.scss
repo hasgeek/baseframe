@@ -257,6 +257,9 @@ html, body {
             }
             #hamburger-icon {
                 color: $hamburger-active;
+                &:hover {
+                    color: $hamburger-inactive;
+                }
             }
         }
         &.out {
@@ -316,6 +319,112 @@ footer .container-fluid {
 
 #hg-panel {
     height: 2.25em;
+    min-height: 0;
+    margin-bottom: 0;
+    background: #fff;
+    .page-header {
+        margin-bottom: 0;
+        h1 {
+            margin-bottom: 0;
+        }
+    }
+    .nav {
+        margin-bottom: 0;
+        & > li {
+            line-height: 36px;
+            & > a {
+                padding: 0 15px;
+            }
+        }
+    }
+    .dropdown-menu {
+        margin: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    #hg-panel .page-header h1 {
+        font-size: 16px;
+    }
+} 
+
+.hg-site-nav > li > a {
+    padding-top: 9px;
+    padding-right: 0px;
+}
+
+@media (max-width: 768px) {
+    .hg-site-nav {
+        width: 100%;
+    }
+}
+
+.block-dropdown {
+    width: 185px;
+    padding: 22px 0px 0px 20px;
+    height: auto;
+    overflow-y: auto;
+    margin: 0;
+    & > li {
+        float: left;
+        height: auto;
+        list-style-type: none;
+        display: inline-block;
+        margin-right: 30px;
+        margin-bottom: 10px;
+        width: 3em;
+        & > a{
+            font-size: 12px;
+            text-align: center;
+            white-space: normal;
+            padding: 0;
+            &:hover{
+                background-color: transparent;
+                /*border: 1px solid #f2f2f2;*/
+            }
+            &>img{
+                max-width: 50px;
+                height: 30px;
+            }
+        }
+    }
+}
+
+a#hg-notify-btn, a#hg-notify-btn, a#hg-app-drawer {
+  color: #667C85;
+}
+
+a#hg-login-btn {
+    margin-top: 6px;
+    padding: 4px 10px;
+    margin-right: 4px;
+    margin-left: 12px;
+    &:hover {
+        background-color: #285E8E;
+    }
+}
+
+ul.hg-header-app-nav {
+    margin-left: 6px;
+    margin-bottom: 0;
+    &> li {
+        padding-left: 0;
+        padding-right: 0;
+        margin-right: 4px;
+    }
+}
+@media (min-width: 768px) {
+    ul.hg-header-app-nav {
+        margin-left: 0;
+    }
+
+    ul.hg-header-app-nav > li {
+        margin-right: -10px;
+    }
+}
+
+li.site-nav-collapse {
+    margin: 0 0 0 8px;
 }
 
 #collapse-icon {
@@ -404,6 +513,9 @@ footer .container-fluid {
                 }
                 #hamburger-icon {
                     color: $hamburger-active;
+                    &:hover {
+                        color: $hamburger-inactive;
+                    }
                 }
             }
 
