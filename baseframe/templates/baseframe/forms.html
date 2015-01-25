@@ -274,9 +274,9 @@
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
       Baseframe.Forms.lastuserAutocomplete({
         id: {{ field.id|tojson }},
-        multiple: {{field.multiple|tojson}},
-        autocomplete_endpoint: {{field.autocomplete_endpoint|tojson}},
-        getuser_endpoint: {{field.getuser_endpoint|tojson}}
+        multiple: {{ field.multiple|tojson }},
+        autocomplete_endpoint: {{ field.autocomplete_endpoint|tojson }},
+        getuser_endpoint: {{ field.getuser_endpoint|tojson }}
       });
     {%- elif field.type in ['GeonameSelectField', 'GeonameSelectMultiField'] %}
       activate_geoname_autocomplete({{ ('#'+field.id)|tojson }}, {{ field.autocomplete_endpoint|tojson }}, {{ field.getname_endpoint|tojson }});
