@@ -57,16 +57,16 @@
   {% block root -%}
     <div id="root">
 
-      <div class="two-pane-app">
+      <div id="two-pane-app">
         <div class="top"></div>
         <div class="bottom">
-          <div class="left in">
+          <div id="left" class="in">
             {% block logo -%}
               <div id="logo"><a href="{{ request.script_root or '/' }}" title="Home">{{ config['SITE_TITLE'] }}</a></div>
             {%- endblock %}
             {% block sidebar -%}{%- endblock %}
           </div>
-          <div class="right in">
+          <div id="right" class="in">
             <div class="wrapper">
               <!-- headerbox -->
               {% block headerbox -%}

@@ -26,18 +26,18 @@ $(function(){
 			$('.navbar-ex1-collapse').animate({height:"2px"});
 		}
 	});
-	// two pane sidebar collapse
-	//$('#collapse-icon').click(function() {
-	$('#hamburger-icon').click(function() {
-		$('.two-pane-app .left').toggleClass('in');
-		$('.two-pane-app .right').toggleClass('in');
-		$('.two-pane-app .left').toggleClass('out');
-		$('.two-pane-app .right').toggleClass('out');
-	});
 });
 
 $(function(){
-	$('.sidebar .form-group input').focusout(function() {		
+	// two pane sidebar collapse
+	$('#hamburger-icon').click(function() {
+		$('#left').toggleClass('in');
+		$('#right').toggleClass('in');
+		$('#left').toggleClass('out');
+		$('#right').toggleClass('out');
+	});
+	// sidebar form floating label
+	$('#left .form-group input').focusout(function() {		
 		var inputContent = $(this).val();
 		if ( inputContent !== '' ) {
 			$(this).addClass('has-content');
@@ -45,6 +45,17 @@ $(function(){
 			$(this).removeClass('has-content');
 		}
 	});
+	// close the sidebar when networkbar dropdowns are clicked
+	if (Modernizr.mq('only screen and (max-width: 768px)')) {
+		$('#hg-panel .nav.pull-right > li > a').click(function() {
+			if ($('#left').hasClass('out')) {
+				$('#left').toggleClass('in');
+				$('#right').toggleClass('in');
+				$('#left').toggleClass('out');
+				$('#right').toggleClass('out');
+			}
+		});
+	}
 });
 
 $(function(){

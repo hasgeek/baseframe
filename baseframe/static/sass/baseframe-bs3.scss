@@ -116,7 +116,7 @@ html, body {
     overflow: hidden;
 }
 
-.two-pane-app {
+#two-pane-app {
     position: absolute;
     top: 0;
     left: 0;
@@ -129,12 +129,12 @@ html, body {
     }
 }
 
-.two-pane-app .bottom {
+#two-pane-app .bottom {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 100%; 
-    .left {
+    #left {
         border-right: 0.0625em solid $hg-panel-dark-gray;
         position: absolute;
         top: 2.25em;
@@ -233,7 +233,7 @@ html, body {
         */
 
     }
-    .right {
+    #right {
         position: absolute;
         right: 0;
         top: 0;
@@ -370,6 +370,7 @@ footer .container-fluid {
     }
     .dropdown-menu {
         margin: 0;
+        z-index: 3;
     }
 }
 
@@ -478,8 +479,8 @@ li.site-nav-collapse {
     #hamburger-icon {
         margin-left: 0;
     }
-    .two-pane-app .bottom {
-        .left {
+    #two-pane-app .bottom {
+        #left {
             top: 0;
             &.in {
                 width: 280px;
@@ -490,7 +491,7 @@ li.site-nav-collapse {
                 left: 0;
             }
         }
-        .right {
+        #right {
             &.in {
                 width: calc(100% - 280px);
                 @include single-transition(all, 0.5s, ease-in-out, 0);
