@@ -77,55 +77,6 @@ function radioHighlight(radioName, highlightClass) {
   $(selector).click(handler);
 }
 
-function activate_lastuser_autocomplete(selector, autocomplete_endpoint, getuser_endpoint) {
-  $(selector).select2({
-    placeholder: "Search for a user",
-    multiple: true,
-    minimumInputLength: 2,
-    ajax: {
-      url: autocomplete_endpoint,
-      dataType: "jsonp",
-      data: function(term, page) {
-        return {
-          q: term
-        };
-      },
-      results: function(data, page) {
-        var rdata = [];
-        if (data.status == 'ok') {
-          for (var i=0; i < data.users.length; i++) {
-            rdata.push({
-              id: data.users[i].buid, text: data.users[i].label
-            });
-          }
-        }
-        return {more: false, results: rdata};
-      }
-    },
-    initSelection: function(element, callback) {
-      var val = $(element).val();
-      if (val !== '') {
-        var qs = '?userid=' + val.replace(/,/g, '&userid=');
-        $.ajax(getuser_endpoint + qs, {
-          accepts: "application/json",
-          dataType: "jsonp"
-        }).done(function(data) {
-          $(element).val('');  // Clear it in preparation for incoming data
-          var rdata = [];
-          if (data.status == 'ok') {
-            for (var i=0; i < data.results.length; i++) {
-              rdata.push({
-                id: data.results[i].buid, text: data.results[i].label
-              });
-            }
-          }
-          callback(rdata);
-        });
-      }
-    }
-  });
-}
-
 function activate_geoname_autocomplete(selector, autocomplete_endpoint, getname_endpoint) {
   $(selector).select2({
     placeholder: "Search for a location",

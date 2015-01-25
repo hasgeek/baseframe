@@ -305,7 +305,14 @@ class UserSelectFieldBase(object):
         self.usermodel = kwargs.pop('usermodel')
         self.lastuser = kwargs.pop('lastuser')
         self.separator = kwargs.pop('separator', ',')
+        if self.lastuser:
+            self.autocomplete_endpoint = self.lastuser.endpoint_url(self.lastuser.getuser_autocomplete_endpoint)
+            self.getuser_endpoint = self.lastuser.endpoint_url(self.lastuser.getuser_userids_endpoint)
+        else:
+            self.autocomplete_endpoint = kwargs.pop('autocomplete_endpoint')()
+            self.getuser_endpoint = kwargs.pop('getuser_endpoint')()
         super(UserSelectFieldBase, self).__init__(*args, **kwargs)
+
 
     def _value(self):
         if self.data:
@@ -337,15 +344,20 @@ class UserSelectFieldBase(object):
                         users.append(user)
             else:
                 users = self.usermodel.all(userids=userids)
+
         self.data = users
         return retval
-
+    
 
 class UserSelectField(UserSelectFieldBase, wtforms.fields.TextField):
     """
     Render a user select field that allows one user to be selected.
     """
     widget = HiddenInput()
+
+    def __init__(self, *args, **kwargs):
+        self.multiple = "false"
+        super(UserSelectField, self).__init__(*args, **kwargs)
 
     def _value(self):
         if self.data:
@@ -367,6 +379,10 @@ class UserSelectMultiField(UserSelectFieldBase, wtforms.fields.TextField):
     Render a user select field that allows multiple users to be selected.
     """
     widget = HiddenInput()
+
+    def __init__(self, *args, **kwargs):
+        self.multiple = "true"
+        super(UserSelectMultiField, self).__init__(*args, **kwargs)
 
 
 class GeonameSelectFieldBase(object):
