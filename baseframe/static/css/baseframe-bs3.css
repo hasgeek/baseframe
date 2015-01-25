@@ -1587,6 +1587,17 @@ html, body {
   -o-transition: all 0.5s 0;
   -webkit-transition: all 0.5s 0;
   transition: all 0.5s 0;
+  /*input[type="text"].form-control {
+      border: 0;
+      box-shadow: none;
+      background-color: transparent;
+      border-bottom: 1px solid #999;
+      border-radius: 0;
+      &:focus {
+          border-bottom: 1px solid #df5e0e;
+      }
+  } 
+  */
 }
 .two-pane-app .bottom .left.in {
   width: 280px;
@@ -1609,15 +1620,52 @@ html, body {
 .two-pane-app .bottom .left .sidebar {
   padding-top: 2em;
 }
-.two-pane-app .bottom .left input[type="text"].form-control {
-  border: 0;
+.two-pane-app .bottom .left .sidebar .form-control {
+  padding: 6px 0;
+}
+.two-pane-app .bottom .left .sidebar input {
+  background: none;
+  border-bottom: 1px solid #A3A3A3;
   box-shadow: none;
-  background-color: transparent;
-  border-bottom: 1px solid #999;
+  color: #333;
   border-radius: 0;
 }
-.two-pane-app .bottom .left input[type="text"].form-control:focus {
-  border-bottom: 1px solid #df5e0e;
+.two-pane-app .bottom .left .sidebar input:focus, .two-pane-app .bottom .left .sidebar input:active {
+  outline: none;
+  box-shadow: none;
+  background: none;
+  border-bottom-color: #df5e0e;
+}
+.two-pane-app .bottom .left .sidebar input[type="text"], .two-pane-app .bottom .left .sidebar input[type="email"] {
+  border-width: 0 0 1px 0;
+}
+.two-pane-app .bottom .left .sidebar input[type="submit"]:active {
+  color: #fff;
+  background: #1190be;
+}
+.two-pane-app .bottom .left .sidebar .form-group {
+  position: relative;
+}
+.two-pane-app .bottom .left .sidebar .form-group label {
+  position: absolute;
+  top: 0.5rem;
+  left: 0rem;
+  pointer-events: none;
+  color: #999;
+  font-family: "Source Sans Pro","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Arial,sans-serif;
+  -webkit-transition: all 0.15s ease-out 0s;
+  transition: all 0.15s ease-out 0s;
+  font-weight: 400;
+}
+.two-pane-app .bottom .left .sidebar .form-group input:focus + label,
+.two-pane-app .bottom .left .sidebar .form-group input.has-content + label {
+  top: -0.5rem;
+  font-size: 10px;
+  color: #A3A3A3;
+}
+.two-pane-app .bottom .left > .container-fluid {
+  padding-left: 0;
+  padding-right: 0;
 }
 .two-pane-app .bottom .right {
   position: absolute;
@@ -1700,6 +1748,8 @@ html, body {
 .two-pane-app .bottom .right > .wrapper > .container-fluid {
   margin: 1.25em;
   padding-bottom: 57px;
+  padding-left: 0;
+  padding-right: 0;
 }
 .two-pane-app .bottom .right footer {
   position: absolute;
@@ -1747,12 +1797,17 @@ footer .container-fluid {
   margin-right: 0.5em;
   color: #A3A3A3;
   margin-left: 1em;
+  cursor: pointer;
 }
 #hamburger-icon:hover {
   color: #333;
 }
 
 @media screen and (min-width: 768px) {
+  #hamburger-icon {
+    margin-left: 0;
+  }
+
   .two-pane-app .bottom .left {
     top: 0;
   }

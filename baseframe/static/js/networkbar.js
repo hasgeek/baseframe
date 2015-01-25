@@ -37,6 +37,17 @@ $(function(){
 });
 
 $(function(){
+	$('.sidebar .form-group input').focusout(function() {		
+		var inputContent = $(this).val();
+		if ( inputContent !== '' ) {
+			$(this).addClass('has-content');
+		} else {
+			$(this).removeClass('has-content');
+		}
+	});
+});
+
+$(function(){
 	if (Modernizr.touch){
 		$('.navbar-toggle').click(function(){
 			if(!$('.navbar-collapse').hasClass('in')){
