@@ -313,7 +313,6 @@ class UserSelectFieldBase(object):
             self.getuser_endpoint = kwargs.pop('getuser_endpoint')()
         super(UserSelectFieldBase, self).__init__(*args, **kwargs)
 
-
     def _value(self):
         if self.data:
             return self.separator.join([u.userid for u in self.data])
@@ -347,17 +346,14 @@ class UserSelectFieldBase(object):
 
         self.data = users
         return retval
-    
+
 
 class UserSelectField(UserSelectFieldBase, wtforms.fields.TextField):
     """
     Render a user select field that allows one user to be selected.
     """
     widget = HiddenInput()
-
-    def __init__(self, *args, **kwargs):
-        self.multiple = "false"
-        super(UserSelectField, self).__init__(*args, **kwargs)
+    multiple = False
 
     def _value(self):
         if self.data:
@@ -379,10 +375,7 @@ class UserSelectMultiField(UserSelectFieldBase, wtforms.fields.TextField):
     Render a user select field that allows multiple users to be selected.
     """
     widget = HiddenInput()
-
-    def __init__(self, *args, **kwargs):
-        self.multiple = "true"
-        super(UserSelectMultiField, self).__init__(*args, **kwargs)
+    multiple = True
 
 
 class GeonameSelectFieldBase(object):

@@ -273,8 +273,8 @@
       {{ tinymce4_editor(field, script=false) }}
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
       Baseframe.Forms.lastuserAutocomplete({
-        id: "{{field.id}}",
-        multiple: {{field.multiple}},
+        id: {{ field.id|tojson }},
+        multiple: {{field.multiple|tojson}},
         autocomplete_endpoint: {{field.autocomplete_endpoint|tojson}},
         getuser_endpoint: {{field.getuser_endpoint|tojson}}
       });
