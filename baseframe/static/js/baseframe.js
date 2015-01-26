@@ -205,8 +205,15 @@ window.Baseframe.Forms = {
         url: options.autocomplete_endpoint,
         dataType: "jsonp",
         data: function(term, page) {
-          return {
-            q: term
+          if ('client_id' in options) {
+            return {
+              q: term,
+              client_id: options.client_id
+            };
+          } else {
+            return {
+              q: term
+            };
           };
         },
         results: function(data, page) {
@@ -219,8 +226,13 @@ window.Baseframe.Forms = {
       },
       initSelection: function(element, callback) {
         var val = $(element).val();
+        var data = {};
         if (val !== '') {
+          if ('client_id' in options) {
+            data = {client_id: options.client_id};
+          };
           $.ajax(options.getuser_endpoint + '?userid=' + val.replace(/,/g, '&userid='), {
+            data: data,
             accepts: "application/json",
             dataType: "jsonp"
           }).done(function(data) {
