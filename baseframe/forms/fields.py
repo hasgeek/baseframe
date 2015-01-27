@@ -359,7 +359,7 @@ class UserSelectField(UserSelectFieldBase, wtforms.fields.TextField):
         if self.data:
             return self.data.userid
         else:
-            return None
+            return ''
 
     def process_formdata(self, valuelist):
         retval = super(UserSelectField, self).process_formdata(valuelist)
