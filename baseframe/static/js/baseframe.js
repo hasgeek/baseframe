@@ -208,7 +208,8 @@ window.Baseframe.Forms = {
           if ('client_id' in options) {
             return {
               q: term,
-              client_id: options.client_id
+              client_id: options.client_id,
+              session: options.session_id
             };
           } else {
             return {
@@ -229,7 +230,7 @@ window.Baseframe.Forms = {
         var data = {};
         if (val !== '') {
           if ('client_id' in options) {
-            data = {client_id: options.client_id};
+            data = {client_id: options.client_id, session: options.session_id};
           };
           $.ajax(options.getuser_endpoint + '?userid=' + val.replace(/,/g, '&userid='), {
             data: data,

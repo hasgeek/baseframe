@@ -278,7 +278,8 @@
           multiple: {{ field.multiple|tojson }},
           autocomplete_endpoint: {{ field.autocomplete_endpoint|tojson }},
           getuser_endpoint: {{ field.getuser_endpoint|tojson }},
-          client_id: {{ config['LASTUSER_CLIENT_ID']|tojson }}
+          client_id: {{ config['LASTUSER_CLIENT_ID']|tojson }},
+          session_id: {{ session['lastuser_sessionid']|tojson }}
         });
       {%- else %}
         Baseframe.Forms.lastuserAutocomplete({
