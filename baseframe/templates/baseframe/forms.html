@@ -272,7 +272,7 @@
     {%- elif field.widget.input_type == 'tinymce4' -%}
       {{ tinymce4_editor(field, script=false) }}
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
-      {%- if config['LASTUSER_CLIENT_ID'] %}
+      {%- if config['LASTUSER_CLIENT_ID'] and 'lastuser_sessionid' in session %}
         Baseframe.Forms.lastuserAutocomplete({
           id: {{ field.id|tojson }},
           multiple: {{ field.multiple|tojson }},
