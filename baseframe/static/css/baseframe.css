@@ -643,6 +643,7 @@ table.mceLayout.focus {
 }
 
 input.datetime-date, input.datetime-time {
+  display: inline;
   width: 6em;
 }
 

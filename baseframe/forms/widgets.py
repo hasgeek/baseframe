@@ -66,9 +66,12 @@ class DateTimeInput(wtforms.widgets.Input):
             value = field._value()
         if not value:
             value = ' '
+        class_ = kwargs.pop('class', kwargs.pop('class_', ''))
         date_value, time_value = value.split(' ', 1)
-        return Markup(u'<input type="text" class="datetime-date" data-datepicker="datepicker" %s /> <input type="text" class="datetime-time" %s />' % (
+        return Markup(u'<input type="text" class="datetime-date %s" data-datepicker="datepicker" %s /> <input type="text" class="datetime-time %s" %s />' % (
+            class_,
             wtforms.widgets.html_params(name=field.name, id=field_id + '-date', value=date_value, **kwargs),
+            class_,
             wtforms.widgets.html_params(name=field.name, id=field_id + '-time', value=time_value, **kwargs)
             ))
 

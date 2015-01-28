@@ -212,7 +212,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
             format='%Y-%m-%d %I:%M%p', timezone=None, **kwargs):
         super(DateTimeField, self).__init__(label, validators, **kwargs)
         self.format = format
-        self.timezone = timezone
+        self.timezone = timezone() if callable(timezone) else timezone
         self._timezone_converted = None
 
     @property
