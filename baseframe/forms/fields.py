@@ -593,7 +593,10 @@ class RadioMatrixField(wtforms.Field):
             self.process_errors.append(e.args[0])
 
     def process_data(self, data):
-        self.data = {fname: getattr(data, fname) for fname, ftitle in self.fields}
+        if data:
+            self.data = {fname: getattr(data, fname) for fname, ftitle in self.fields}
+        else:
+            self.data = {}
 
     def process_formdata(self, raw_data):
         self.data = {key: self.coerce(value) for key, value in raw_data.items()}
