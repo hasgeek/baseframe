@@ -6,15 +6,16 @@ from pytz import utc, timezone as pytz_timezone
 from flask import current_app
 import wtforms
 from wtforms.compat import text_type
+from wtforms.utils import unset_value
 import bleach
 
-from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput, CoordinatesInput
+from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput, CoordinatesInput, RadioMatrixInput
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'TextListField',
     'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
     'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
-    'CoordinatesField']
+    'CoordinatesField', 'RadioMatrixField']
 
 
 # Default tags and attributes to allow in HTML sanitization
@@ -546,3 +547,60 @@ class CoordinatesField(wtforms.Field):
             return text_type(self.data[0]), text_type(self.data[1])
         else:
             return '', ''
+
+
+class RadioMatrixField(wtforms.Field):
+    """
+    Presents a matrix of questions (rows) and choices (columns). Saves each row as either
+    an attr or a dict key on the target field in the object.
+    """
+    widget = RadioMatrixInput()
+
+    def __init__(self, label=None, validators=None, coerce=text_type, fields=(), choices=(), **kwargs):
+        super(RadioMatrixField, self).__init__(label, validators, **kwargs)
+        self.coerce = coerce
+        self.fields = fields
+        self.choices = choices
+        self._obj = None
+
+    def process(self, formdata, data=unset_value):
+        self.process_errors = []
+        if data is unset_value:
+            try:
+                data = self.default()
+            except TypeError:
+                data = self.default
+
+        self.object_data = data
+
+        try:
+            self.process_data(data)
+        except ValueError as e:
+            self.process_errors.append(e.args[0])
+
+        if formdata:
+            raw_data = {}
+            for fname, ftitle in self.fields:
+                if fname in formdata:
+                    raw_data[fname] = formdata[fname]
+            self.raw_data = raw_data
+            self.process_formdata(raw_data)
+
+        try:
+            for filter in self.filters:
+                self.data = filter(self.data)
+        except ValueError as e:
+            self.process_errors.append(e.args[0])
+
+    def process_data(self, data):
+        self.data = {fname: getattr(data, fname) for fname, ftitle in self.fields}
+
+    def process_formdata(self, raw_data):
+        self.data = {key: self.coerce(value) for key, value in raw_data.items()}
+
+    def populate_obj(self, obj, name):
+        # 'name' is the name of this field in the form. Ignore it for RadioMatrixField
+
+        for fname, ftitle in self.fields:
+            if fname in self.data:
+                setattr(obj, fname, self.data[fname])

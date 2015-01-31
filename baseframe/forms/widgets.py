@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import wtforms
+from wtforms.compat import text_type
 from flask import Markup
 from .. import b_ as _
 
-__all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'HiddenInput', 'CoordinatesInput']
+__all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'HiddenInput', 'CoordinatesInput',
+    'RadioMatrixInput']
 
 
 class TinyMce3(wtforms.widgets.TextArea):
@@ -109,3 +111,36 @@ class CoordinatesInput(wtforms.widgets.core.Input):
                 value=value[0], **kwargs),
             self.html_params(id=id_ + '_longitude', name=field.name, placeholder=_("Longitude"),
                 value=value[1], **kwargs)))
+
+
+class RadioMatrixInput(object):
+    """
+    Render a table with a radio matrix
+    """
+
+    def __call__(self, field, **kwargs):
+
+        rendered = []
+        rendered.append('<table class="%s">' % kwargs.pop('table_class', 'table'))
+        rendered.append('<thead>')
+        rendered.append('<tr>')
+        rendered.append('<th>%s</th>' % field.label)
+        for value, label in field.choices:
+            rendered.append('<th>%s</th>' % label)
+        rendered.append('</th>')
+        rendered.append('</thead>')
+        rendered.append('<tbody>')
+        for name, title in field.fields:
+            rendered.append('<tr>')
+            rendered.append('<td>%s</td>' % title)
+            selected = field.data.get(name)
+            for value, label in field.choices:
+                params = {'type': 'radio', 'name': name, 'value': value}
+                if text_type(selected) == text_type(value):
+                    params['checked'] = True
+                rendered.append('<td><input %s/></td>' % wtforms.widgets.html_params(**params))
+            rendered.append('</tr>')
+        rendered.append('</tbody>')
+        rendered.append('</table>')
+
+        return Markup('\n'.join(rendered))
