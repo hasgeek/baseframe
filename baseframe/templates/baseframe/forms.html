@@ -33,6 +33,9 @@
       {%- if field.type == 'RadioMatrixField' %}
         <div class="col-xs-12">
           {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class) }}
+          {%- if field.description %}
+            <p class="help-block">{{ field.description }}</p>
+          {%- endif %}
         </div>
       {%- elif field.type == 'BooleanField' %}
         <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">

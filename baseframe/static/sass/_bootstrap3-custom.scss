@@ -26,6 +26,9 @@
 
 .control-group, .form-group {
     margin-bottom: $body-font-size * 0.94;
+    .table {
+        margin-bottom: 0;
+    }
     .help-block {
         margin-bottom: 0;
     }

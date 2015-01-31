@@ -701,6 +701,9 @@ ul.grid > li.header {
 .control-group, .form-group {
   margin-bottom: 15.04px;
 }
+.control-group .table, .form-group .table {
+  margin-bottom: 0;
+}
 .control-group .help-block, .form-group .help-block {
   margin-bottom: 0;
 }
