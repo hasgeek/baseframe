@@ -6,7 +6,7 @@ from flask import Markup
 from .. import b_ as _
 
 __all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'HiddenInput', 'CoordinatesInput',
-    'RadioMatrixInput']
+    'RadioMatrixInput', 'InlineListWidget']
 
 
 class TinyMce3(wtforms.widgets.TextArea):
@@ -144,3 +144,31 @@ class RadioMatrixInput(object):
         rendered.append('</table>')
 
         return Markup('\n'.join(rendered))
+
+
+class InlineListWidget(object):
+    """
+    Renders a list of fields as buttons.
+
+    This is used for fields which encapsulate many inner fields as subfields.
+    The widget will try to iterate the field to get access to the subfields and
+    call them to render them.
+
+    If `prefix_label` is set, the subfield's label is printed before the field,
+    otherwise afterwards. The latter is useful for iterating radios or
+    checkboxes.
+    """
+    def __init__(self, html_tag='div', class_='', class_prefix=''):
+        self.html_tag = html_tag
+        self.class_ = ''
+        self.class_prefix = class_prefix
+
+    def __call__(self, field, **kwargs):
+        kwargs.setdefault('id', field.id)
+        kwargs['class_'] = (kwargs.pop('class_', kwargs.pop('class', '')).strip() + ' ' + self.class_).strip()
+        html = ['<%s %s>' % (self.html_tag, wtforms.widgets.html_params(**kwargs))]
+        for subfield in field:
+            html.append('<label for="%s" class="%s%s">%s %s</label>' % (
+                subfield.id, self.class_prefix, subfield.data, subfield(), subfield.label.text))
+        html.append('</%s>' % self.html_tag)
+        return Markup('\n'.join(html))

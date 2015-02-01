@@ -450,6 +450,10 @@ legend {
   margin-bottom: 12px;
 }
 
+.button-bar .btn {
+  margin-bottom: 5px;
+}
+
 form.form-button {
   margin: 0;
   display: inline-block;
