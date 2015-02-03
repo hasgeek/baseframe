@@ -6,15 +6,16 @@ from pytz import utc, timezone as pytz_timezone
 from flask import current_app
 import wtforms
 from wtforms.compat import text_type
+from wtforms.utils import unset_value
 import bleach
 
-from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput, CoordinatesInput
+from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput, CoordinatesInput, RadioMatrixInput
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'TextListField',
     'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
     'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
-    'CoordinatesField']
+    'CoordinatesField', 'RadioMatrixField']
 
 
 # Default tags and attributes to allow in HTML sanitization
@@ -212,7 +213,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
             format='%Y-%m-%d %I:%M%p', timezone=None, **kwargs):
         super(DateTimeField, self).__init__(label, validators, **kwargs)
         self.format = format
-        self.timezone = timezone
+        self.timezone = timezone() if callable(timezone) else timezone
         self._timezone_converted = None
 
     @property
@@ -305,6 +306,12 @@ class UserSelectFieldBase(object):
         self.usermodel = kwargs.pop('usermodel')
         self.lastuser = kwargs.pop('lastuser')
         self.separator = kwargs.pop('separator', ',')
+        if self.lastuser:
+            self.autocomplete_endpoint = self.lastuser.endpoint_url(self.lastuser.getuser_autocomplete_endpoint)
+            self.getuser_endpoint = self.lastuser.endpoint_url(self.lastuser.getuser_userids_endpoint)
+        else:
+            self.autocomplete_endpoint = kwargs.pop('autocomplete_endpoint')()
+            self.getuser_endpoint = kwargs.pop('getuser_endpoint')()
         super(UserSelectFieldBase, self).__init__(*args, **kwargs)
 
     def _value(self):
@@ -337,6 +344,7 @@ class UserSelectFieldBase(object):
                         users.append(user)
             else:
                 users = self.usermodel.all(userids=userids)
+
         self.data = users
         return retval
 
@@ -346,12 +354,13 @@ class UserSelectField(UserSelectFieldBase, wtforms.fields.TextField):
     Render a user select field that allows one user to be selected.
     """
     widget = HiddenInput()
+    multiple = False
 
     def _value(self):
         if self.data:
             return self.data.userid
         else:
-            return None
+            return ''
 
     def process_formdata(self, valuelist):
         retval = super(UserSelectField, self).process_formdata(valuelist)
@@ -367,6 +376,7 @@ class UserSelectMultiField(UserSelectFieldBase, wtforms.fields.TextField):
     Render a user select field that allows multiple users to be selected.
     """
     widget = HiddenInput()
+    multiple = True
 
 
 class GeonameSelectFieldBase(object):
@@ -537,3 +547,63 @@ class CoordinatesField(wtforms.Field):
             return text_type(self.data[0]), text_type(self.data[1])
         else:
             return '', ''
+
+
+class RadioMatrixField(wtforms.Field):
+    """
+    Presents a matrix of questions (rows) and choices (columns). Saves each row as either
+    an attr or a dict key on the target field in the object.
+    """
+    widget = RadioMatrixInput()
+
+    def __init__(self, label=None, validators=None, coerce=text_type, fields=(), choices=(), **kwargs):
+        super(RadioMatrixField, self).__init__(label, validators, **kwargs)
+        self.coerce = coerce
+        self.fields = fields
+        self.choices = choices
+        self._obj = None
+
+    def process(self, formdata, data=unset_value):
+        self.process_errors = []
+        if data is unset_value:
+            try:
+                data = self.default()
+            except TypeError:
+                data = self.default
+
+        self.object_data = data
+
+        try:
+            self.process_data(data)
+        except ValueError as e:
+            self.process_errors.append(e.args[0])
+
+        if formdata:
+            raw_data = {}
+            for fname, ftitle in self.fields:
+                if fname in formdata:
+                    raw_data[fname] = formdata[fname]
+            self.raw_data = raw_data
+            self.process_formdata(raw_data)
+
+        try:
+            for filter in self.filters:
+                self.data = filter(self.data)
+        except ValueError as e:
+            self.process_errors.append(e.args[0])
+
+    def process_data(self, data):
+        if data:
+            self.data = {fname: getattr(data, fname) for fname, ftitle in self.fields}
+        else:
+            self.data = {}
+
+    def process_formdata(self, raw_data):
+        self.data = {key: self.coerce(value) for key, value in raw_data.items()}
+
+    def populate_obj(self, obj, name):
+        # 'name' is the name of this field in the form. Ignore it for RadioMatrixField
+
+        for fname, ftitle in self.fields:
+            if fname in self.data:
+                setattr(obj, fname, self.data[fname])

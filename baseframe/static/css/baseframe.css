@@ -643,6 +643,7 @@ table.mceLayout.focus {
 }
 
 input.datetime-date, input.datetime-time {
+  display: inline;
   width: 6em;
 }
 
@@ -676,6 +677,10 @@ fieldset:not(:first-child) {
 
 legend {
   margin-bottom: 10px;
+}
+
+.button-bar .btn {
+  margin-bottom: 5px;
 }
 
 form.form-button {

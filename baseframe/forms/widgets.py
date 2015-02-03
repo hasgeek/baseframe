@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import wtforms
+from wtforms.compat import text_type
 from flask import Markup
 from .. import b_ as _
 
-__all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'HiddenInput', 'CoordinatesInput']
+__all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'HiddenInput', 'CoordinatesInput',
+    'RadioMatrixInput', 'InlineListWidget']
 
 
 class TinyMce3(wtforms.widgets.TextArea):
@@ -66,9 +68,12 @@ class DateTimeInput(wtforms.widgets.Input):
             value = field._value()
         if not value:
             value = ' '
+        class_ = kwargs.pop('class', kwargs.pop('class_', ''))
         date_value, time_value = value.split(' ', 1)
-        return Markup(u'<input type="text" class="datetime-date" data-datepicker="datepicker" %s /> <input type="text" class="datetime-time" %s />' % (
+        return Markup(u'<input type="text" class="datetime-date %s" data-datepicker="datepicker" %s /> <input type="text" class="datetime-time %s" %s />' % (
+            class_,
             wtforms.widgets.html_params(name=field.name, id=field_id + '-date', value=date_value, **kwargs),
+            class_,
             wtforms.widgets.html_params(name=field.name, id=field_id + '-time', value=time_value, **kwargs)
             ))
 
@@ -106,3 +111,64 @@ class CoordinatesInput(wtforms.widgets.core.Input):
                 value=value[0], **kwargs),
             self.html_params(id=id_ + '_longitude', name=field.name, placeholder=_("Longitude"),
                 value=value[1], **kwargs)))
+
+
+class RadioMatrixInput(object):
+    """
+    Render a table with a radio matrix
+    """
+
+    def __call__(self, field, **kwargs):
+
+        rendered = []
+        rendered.append('<table class="%s">' % kwargs.pop('table_class', 'table'))
+        rendered.append('<thead>')
+        rendered.append('<tr>')
+        rendered.append('<th>%s</th>' % field.label)
+        for value, label in field.choices:
+            rendered.append('<th>%s</th>' % label)
+        rendered.append('</th>')
+        rendered.append('</thead>')
+        rendered.append('<tbody>')
+        for name, title in field.fields:
+            rendered.append('<tr>')
+            rendered.append('<td>%s</td>' % title)
+            selected = field.data.get(name)
+            for value, label in field.choices:
+                params = {'type': 'radio', 'name': name, 'value': value}
+                if text_type(selected) == text_type(value):
+                    params['checked'] = True
+                rendered.append('<td><input %s/></td>' % wtforms.widgets.html_params(**params))
+            rendered.append('</tr>')
+        rendered.append('</tbody>')
+        rendered.append('</table>')
+
+        return Markup('\n'.join(rendered))
+
+
+class InlineListWidget(object):
+    """
+    Renders a list of fields as buttons.
+
+    This is used for fields which encapsulate many inner fields as subfields.
+    The widget will try to iterate the field to get access to the subfields and
+    call them to render them.
+
+    If `prefix_label` is set, the subfield's label is printed before the field,
+    otherwise afterwards. The latter is useful for iterating radios or
+    checkboxes.
+    """
+    def __init__(self, html_tag='div', class_='', class_prefix=''):
+        self.html_tag = html_tag
+        self.class_ = ''
+        self.class_prefix = class_prefix
+
+    def __call__(self, field, **kwargs):
+        kwargs.setdefault('id', field.id)
+        kwargs['class_'] = (kwargs.pop('class_', kwargs.pop('class', '')).strip() + ' ' + self.class_).strip()
+        html = ['<%s %s>' % (self.html_tag, wtforms.widgets.html_params(**kwargs))]
+        for subfield in field:
+            html.append('<label for="%s" class="%s%s">%s %s</label>' % (
+                subfield.id, self.class_prefix, subfield.data, subfield(), subfield.label.text))
+        html.append('</%s>' % self.html_tag)
+        return Markup('\n'.join(html))

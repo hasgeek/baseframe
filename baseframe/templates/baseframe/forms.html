@@ -30,7 +30,14 @@
         {%- if css_class %} {{ css_class }} {%- endif -%}
         {%- if listwidget %} listwidget {%- if style == 'horizlist' %} horizlist {%- endif %}{%- endif -%}
         " id="field-{{ field.id }}">
-      {%- if field.type == 'BooleanField' %}
+      {%- if field.type == 'RadioMatrixField' %}
+        <div class="col-xs-12">
+          {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class) }}
+          {%- if field.description %}
+            <p class="help-block">{{ field.description }}</p>
+          {%- endif %}
+        </div>
+      {%- elif field.type == 'BooleanField' %}
         <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">
           <div class="checkbox">
             <label>{{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, rows=rows) }} {{ field.label.text }}</label>
@@ -272,7 +279,23 @@
     {%- elif field.widget.input_type == 'tinymce4' -%}
       {{ tinymce4_editor(field, script=false) }}
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
-      activate_lastuser_autocomplete({{ ('#'+field.id)|tojson }}, {{ field.lastuser.endpoint_url(field.lastuser.getuser_autocomplete_endpoint)|tojson }}, {{ field.lastuser.endpoint_url(field.lastuser.getuser_userids_endpoint)|tojson }});
+      {%- if config['LASTUSER_CLIENT_ID'] and 'lastuser_sessionid' in session %}
+        Baseframe.Forms.lastuserAutocomplete({
+          id: {{ field.id|tojson }},
+          multiple: {{ field.multiple|tojson }},
+          autocomplete_endpoint: {{ field.autocomplete_endpoint|tojson }},
+          getuser_endpoint: {{ field.getuser_endpoint|tojson }},
+          client_id: {{ config['LASTUSER_CLIENT_ID']|tojson }},
+          session_id: {{ session['lastuser_sessionid']|tojson }}
+        });
+      {%- else %}
+        Baseframe.Forms.lastuserAutocomplete({
+          id: {{ field.id|tojson }},
+          multiple: {{ field.multiple|tojson }},
+          autocomplete_endpoint: {{ field.autocomplete_endpoint|tojson }},
+          getuser_endpoint: {{ field.getuser_endpoint|tojson }}
+        });
+      {%- endif %}
     {%- elif field.type in ['GeonameSelectField', 'GeonameSelectMultiField'] %}
       activate_geoname_autocomplete({{ ('#'+field.id)|tojson }}, {{ field.autocomplete_endpoint|tojson }}, {{ field.getname_endpoint|tojson }});
     {%- elif field.type == 'CoordinatesField' -%}

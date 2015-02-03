@@ -414,6 +414,7 @@ table.mceLayout.focus {
 }
 
 input.datetime-date, input.datetime-time {
+  display: inline;
   width: 6em;
 }
 
@@ -447,6 +448,10 @@ fieldset:not(:first-child) {
 
 legend {
   margin-bottom: 12px;
+}
+
+.button-bar .btn {
+  margin-bottom: 5px;
 }
 
 form.form-button {
@@ -699,6 +704,9 @@ ul.grid > li.header {
 
 .control-group, .form-group {
   margin-bottom: 15.04px;
+}
+.control-group .table, .form-group .table {
+  margin-bottom: 0;
 }
 .control-group .help-block, .form-group .help-block {
   margin-bottom: 0;
