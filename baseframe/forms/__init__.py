@@ -93,7 +93,6 @@ class Form(BaseForm):
             form_validation_error.send(self)
         else:
             form_validation_success.send(self)
-        return result
 
 
 class ConfirmDeleteForm(Form):
