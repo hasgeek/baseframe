@@ -1356,6 +1356,7 @@ webmail_domains = set([
     'yahoo.com.br',
     'yahoo.es',
     'yahoomail.com',
+    'yandex.com',
     'yandex.ru',
     'yap.com.au',
     'yawmail.com',
