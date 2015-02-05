@@ -82,8 +82,13 @@ class Form(BaseForm):
         else:
             self.edit_id = None
 
-    def validate(self):
+    def validate(self, send_signals=True):
         result = super(Form, self).validate()
+        if send_signals:
+            self.send_signals()
+        return result
+
+    def send_signals(self):
         if self.errors:
             form_validation_error.send(self)
         else:
