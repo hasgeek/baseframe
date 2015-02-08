@@ -20,7 +20,7 @@ requires = [
     'pytz',
     'pyIsEmail',
     'dnspython',
-    'wtforms',
+    'WTForms>=2.0',
     'Flask>=0.10.0',
     'Flask-Assets',
     'Flask-WTF',
