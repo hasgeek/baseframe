@@ -1,11 +1,11 @@
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: "Fira Sans", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Fira Sans", Arial, sans-serif;
 }
 
 .mce-container, .mce-container *, .mce-widget, .mce-widget *, .mce-reset {
-  font-family: "Fira Sans", "Helvetica Neue", Arial, sans-serif !important;
+  font-family: "Fira Sans", Arial, sans-serif !important;
 }
 
 .mce-ico {
-  font-family: "tinymce", "Fira Sans", "Helvetica Neue", Arial, sans-serif !important;
+  font-family: "tinymce", "Fira Sans", Arial, sans-serif !important;
 }
