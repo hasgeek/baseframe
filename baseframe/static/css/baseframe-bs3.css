@@ -700,6 +700,7 @@ ul.grid > li.header {
 
 .form-horizontal .radio, .form-horizontal .checkbox {
   padding-top: 0;
+  min-height: 24px;
 }
 
 .control-group, .form-group {

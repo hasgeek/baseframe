@@ -21,6 +21,7 @@
 .form-horizontal {
     .radio, .checkbox {
         padding-top: 0;
+        min-height: $body-line-height;
     }
 }
 
