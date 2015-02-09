@@ -9,6 +9,22 @@
   @jackerhack
   Bangalore, india
 
+  Shreyas Satish
+  http://shreyas.io/
+  @shreyas_satish
+  Bangalore, India
+
+  Karthik Balakrishnan
+  http://www.karthikbalakrishnan.com/
+  @karthikb351
+  Bangalore, India
+
+  Rudraksh MK
+  @rudimk
+  New Delhi, India
+
+/* ALUMNI */
+
   Mitesh B Ashar
   http://www.miteshashar.com/
   @iMBA
@@ -23,9 +39,6 @@
   http://ajantriks.net
   @ajantriks
   New Delhi, India
-
-
-/* ALUMNI */
 
   Pratul Kalia
   http://uncommon.is/
