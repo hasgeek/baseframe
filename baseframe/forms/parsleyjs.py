@@ -15,24 +15,26 @@ __author__ = 'Johannes Gehrs (jgehrs@gmail.com)'
 import re
 import copy
 
-from wtforms.validators import Length, NumberRange, Email, EqualTo, IPAddress, \
-    Regexp, URL, AnyOf
+from wtforms.validators import (Length, NumberRange, Email, EqualTo, IPAddress,
+    Regexp, URL, AnyOf)
 try:
     from wtforms.validators import DataRequired
 except ImportError:
     # wtforms < 2.x
     from wtforms.validators import Required as DataRequired
 
-from wtforms.widgets import TextInput as _TextInput, PasswordInput as _PasswordInput, \
-    CheckboxInput as _CheckboxInput, Select as _Select, TextArea as _TextArea, \
-    ListWidget as _ListWidget, HiddenInput as _HiddenInput, Input
-from wtforms.widgets.html5 import TelInput as _TelInput, URLInput as _URLInput, EmailInput as _EmailInput
-from wtforms.fields import StringField as _StringField, BooleanField as _BooleanField, \
-    DecimalField as _DecimalField, IntegerField as _IntegerField, \
-    FloatField as _FloatField, PasswordField as _PasswordField, \
-    SelectField as _SelectField, TextAreaField as _TextAreaField, \
-    RadioField as _RadioField
-from wtforms.fields.html5 import URLField as _URLField, EmailField as _EmailField, TelField as _TelField
+from wtforms.widgets import (TextInput as _TextInput, PasswordInput as _PasswordInput,
+    CheckboxInput as _CheckboxInput, Select as _Select, TextArea as _TextArea,
+    ListWidget as _ListWidget, HiddenInput as _HiddenInput, Input)
+from wtforms.widgets.html5 import (TelInput as _TelInput, URLInput as _URLInput, EmailInput as _EmailInput,
+    DateInput as _DateInput, NumberInput as _NumberInput)
+from wtforms.fields import (StringField as _StringField, BooleanField as _BooleanField,
+    DecimalField as _DecimalField, IntegerField as _IntegerField,
+    FloatField as _FloatField, PasswordField as _PasswordField,
+    SelectField as _SelectField, TextAreaField as _TextAreaField,
+    RadioField as _RadioField)
+from wtforms.fields.html5 import (URLField as _URLField, EmailField as _EmailField, TelField as _TelField,
+    DateField as _DateField)
 
 
 __all__ = [
@@ -40,10 +42,10 @@ __all__ = [
     'parsley_kwargs', 'ParsleyInputMixin',
     # Widgets
     'TextInput', 'PasswordInput', 'HiddenInput', 'TextArea', 'CheckboxInput', 'Select', 'ListWidget',
-    'TelInput', 'URLInput', 'EmailInput',
+    'TelInput', 'URLInput', 'EmailInput', 'DateInput', 'NumberInput',
     # Fields
     'StringField', 'IntegerField', 'RadioField', 'BooleanField', 'DecimalField', 'FloatField', 'PasswordField',
-    'HiddenField', 'TextAreaField', 'SelectField', 'TelField', 'URLField', 'EmailField']
+    'HiddenField', 'TextAreaField', 'SelectField', 'TelField', 'URLField', 'EmailField', 'DateField']
 
 
 def parsley_kwargs(field, kwargs):
@@ -58,7 +60,7 @@ def parsley_kwargs(field, kwargs):
     to explicitly provide the ECMA script regex.
     See http://flask.pocoo.org/docs/patterns/wtforms/#forms-in-templates
 
-    Note that the WTForms url vaidator probably is a bit more liberal than the parsley
+    Note that the WTForms url validator probably is a bit more liberal than the parsley
     one. Do check if the behaviour suits your needs.
     """
     new_kwargs = copy.deepcopy(kwargs)
@@ -213,6 +215,14 @@ class EmailInput(_EmailInput, ParsleyInputMixin):
     pass
 
 
+class DateInput(_DateInput, ParsleyInputMixin):
+    pass
+
+
+class NumberInput(_NumberInput, ParsleyInputMixin):
+    pass
+
+
 class Select(_Select):
     def __call__(self, field, **kwargs):
         kwargs = parsley_kwargs(field, kwargs)
@@ -226,65 +236,56 @@ class ListWidget(_ListWidget):
 
 
 class StringField(_StringField):
-    def __init__(self, *args, **kwargs):
-        super(StringField, self).__init__(widget=TextInput(), *args, **kwargs)
+    widget = TextInput()
 
 
 class IntegerField(_IntegerField):
-    def __init__(self, *args, **kwargs):
-        super(IntegerField, self).__init__(widget=TextInput(), *args, **kwargs)
+    widget = NumberInput()
 
 
 class RadioField(_RadioField):
-    def __init__(self, *args, **kwargs):
-        super(RadioField, self).__init__(widget=ListWidget(), *args, **kwargs)
+    widget = ListWidget()
 
 
 class BooleanField(_BooleanField):
-    def __init__(self, *args, **kwargs):
-        super(BooleanField, self).__init__(widget=CheckboxInput(), *args, **kwargs)
+    widget = CheckboxInput()
 
 
 class DecimalField(_DecimalField):
-    def __init__(self, *args, **kwargs):
-        super(DecimalField, self).__init__(widget=TextInput(), *args, **kwargs)
+    widget = NumberInput()
 
 
 class FloatField(_FloatField):
-    def __init__(self, *args, **kwargs):
-        super(FloatField, self).__init__(widget=TextInput(), *args, **kwargs)
+    widget = NumberInput()
 
 
 class PasswordField(_PasswordField):
-    def __init__(self, *args, **kwargs):
-        super(PasswordField, self).__init__(widget=PasswordInput(), *args, **kwargs)
+    widget = PasswordInput()
 
 
 class HiddenField(_PasswordField):
-    def __init__(self, *args, **kwargs):
-        super(HiddenField, self).__init__(widget=HiddenInput(), *args, **kwargs)
+    widget = HiddenInput()
 
 
 class TextAreaField(_TextAreaField):
-    def __init__(self, *args, **kwargs):
-        super(TextAreaField, self).__init__(widget=TextArea(), *args, **kwargs)
+    widget = TextArea()
 
 
 class SelectField(_SelectField):
-    def __init__(self, *args, **kwargs):
-        super(SelectField, self).__init__(widget=Select(), *args, **kwargs)
+    widget = Select()
 
 
 class TelField(_TelField):
-    def __init__(self, *args, **kwargs):
-        super(TelField, self).__init__(widget=TelInput(), *args, **kwargs)
+    widget = TelInput()
 
 
 class URLField(_URLField):
-    def __init__(self, *args, **kwargs):
-        super(URLField, self).__init__(widget=URLInput(), *args, **kwargs)
+    widget = URLInput()
 
 
 class EmailField(_EmailField):
-    def __init__(self, *args, **kwargs):
-        super(EmailField, self).__init__(widget=EmailInput(), *args, **kwargs)
+    widget = EmailInput()
+
+
+class DateField(_DateField):
+    widget = DateInput()

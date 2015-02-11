@@ -294,6 +294,10 @@ window.Baseframe.MapMarker.prototype.getDefaultLocation = function() {
 window.ParsleyConfig = {
   errorsWrapper: '<div></div>',
   errorTemplate: '<p class="help-error"></p>',
+  errorClass: 'has-error',
+  classHandler: function(ParsleyField) {
+    return ParsleyField.$element.closest('.form-group');
+  },
   i18n: {
     en: {
     }

@@ -20,7 +20,7 @@ field_registry = {
     'URLField': bparsleyjs.URLField,
     'EmailField': bparsleyjs.EmailField,
     'DateTimeField': bfields.DateTimeField,
-    'DateField': bfields.DateField,
+    'DateField': bparsleyjs.DateField,
     'TextAreaField': bparsleyjs.TextAreaField,
     'PasswordField': bparsleyjs.PasswordField,
     # Baseframe fields
