@@ -298,6 +298,9 @@ window.ParsleyConfig = {
   classHandler: function(ParsleyField) {
     return ParsleyField.$element.closest('.form-group');
   },
+  errorsContainer: function(ParsleyField) {
+    return ParsleyField.$element.closest('.controls');
+  },
   i18n: {
     en: {
     }
