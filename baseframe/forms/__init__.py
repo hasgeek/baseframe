@@ -11,28 +11,31 @@ from flask.ext.wtf import Form as BaseForm
 from .. import b__ as __
 from ..signals import form_validation_error, form_validation_success
 
-from .fields import *      # NOQA
-from .widgets import *     # NOQA
-from .validators import *  # NOQA
+from .patch_wtforms import *  # NOQA
+from .fields import *         # NOQA
+from .widgets import *        # NOQA
+from .validators import *     # NOQA
+from .parsleyjs import *      # NOQA
+
 # SQLAlchemy-based fields/widgets/validators are not automatically imported here
 
 # Use a hardcoded list to control what is available to user-facing apps
 field_registry = {
-    'SelectField': wtforms.fields.SelectField,
+    'SelectField': SelectField,
     'SelectMultipleField': wtforms.fields.SelectMultipleField,
-    'RadioField': wtforms.fields.RadioField,
-    'TextField': wtforms.fields.StringField,
-    'IntegerField': wtforms.fields.html5.IntegerField,
-    'DecimalField': wtforms.fields.html5.DecimalField,
-    'FloatField': wtforms.fields.FloatField,
-    'BooleanField': wtforms.fields.BooleanField,
+    'RadioField': RadioField,
+    'StringField': StringField,
+    'IntegerField': IntegerField,
+    'DecimalField': DecimalField,
+    'FloatField': FloatField,
+    'BooleanField': BooleanField,
     'TelField': wtforms.fields.html5.TelField,
     'URLField': wtforms.fields.html5.URLField,
     'EmailField': wtforms.fields.html5.EmailField,
-    'DateTimeField': wtforms.fields.html5.DateTimeField,
-    'DateField': wtforms.fields.html5.DateField,
-    'TextAreaField': wtforms.fields.TextAreaField,
-    'PasswordField': wtforms.fields.PasswordField,
+    'DateTimeField': DateTimeField,
+    'DateField': wtforms.fields.DateField,
+    'TextAreaField': TextAreaField,
+    'PasswordField': PasswordField,
     # Baseframe fields
     'RichTextField': TinyMce4Field,
     'TextListField': TextListField,

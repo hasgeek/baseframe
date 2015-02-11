@@ -290,3 +290,8 @@ window.Baseframe.MapMarker.prototype.getDefaultLocation = function() {
   }
   return {latitude: latitude, longitude: longitude};
 };
+
+window.ParsleyConfig = {
+  errorsWrapper: '<div></div>',
+  errorTemplate: '<p class="help-error"></p>'
+};
