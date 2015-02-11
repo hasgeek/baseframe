@@ -137,7 +137,10 @@ assets['timezone.js'][Version('0.0.0')] = 'baseframe/js/detect_timezone.js'
 assets['socialite.js'][Version('2.0.0')] = 'baseframe/js/socialite.js'
 assets['swfobject.js'][Version('2.2.0')] = 'baseframe/js/swfobject.js'
 assets['parsley.js'][Version('2.0.7')] = ('jquery.js', 'baseframe/js/parsley.js')
-assets['parsley.remote.js'][Version('2.0.7')] = ('parsley.js', 'baseframe/js/parsley.remote.js')
+assets['parsley.remote.js'][Version('2.0.7')] = {
+    'provides': 'parsley.js',
+    'bundle': 'baseframe/js/parsley.remote.js',
+    }
 
 assets['animate.css'][Version('0.0.0')] = 'baseframe/css/animate.css'
 
