@@ -5,7 +5,7 @@ from urlparse import urljoin
 from pytz import utc, timezone as pytz_timezone
 from flask import current_app
 import wtforms
-from wtforms.fields import SelectMultipleField, SubmitField
+from wtforms.fields import SelectMultipleField, SubmitField, FileField
 from wtforms.compat import text_type
 from wtforms.utils import unset_value
 import bleach
@@ -19,7 +19,7 @@ __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
     'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
     'CoordinatesField', 'RadioMatrixField',
     # Imported from WTForms:
-    'SelectMultipleField', 'SubmitField']
+    'SelectMultipleField', 'SubmitField', 'FileField']
 
 
 # Default tags and attributes to allow in HTML sanitization

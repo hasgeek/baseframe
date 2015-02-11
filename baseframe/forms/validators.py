@@ -7,7 +7,8 @@ import dns.resolver
 from pyisemail import is_email
 from flask import request
 import wtforms
-from wtforms.validators import DataRequired, Optional, Length, EqualTo, URL, ValidationError, StopValidation
+from wtforms.validators import (DataRequired, InputRequired, Optional, Length, EqualTo, URL,
+    ValidationError, StopValidation)
 import requests
 from lxml import html
 from coaster.utils import make_name, deobfuscate_email
@@ -18,7 +19,7 @@ from ..signals import exception_catchall
 __all__ = ['ValidEmail', 'ValidEmailDomain', 'ValidUrl', 'AllUrlsValid', 'StripWhitespace', 'ValidName',
     'NoObfuscatedEmail', 'ValidCoordinates',
     # WTForms validators
-    'DataRequired', 'Optional', 'Length', 'EqualTo', 'URL', 'ValidationError', 'StopValidation']
+    'DataRequired', 'InputRequired', 'Optional', 'Length', 'EqualTo', 'URL', 'ValidationError', 'StopValidation']
 
 
 EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b', re.I)

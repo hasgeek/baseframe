@@ -596,10 +596,6 @@ table.mceLayout.focus {
   vertical-align: baseline;
 }
 
-.controls.inline label, .listwidget ul label {
-  margin-left: 0.25em;
-}
-
 .help-error {
   margin-top: 11px;
   margin-bottom: 0;
