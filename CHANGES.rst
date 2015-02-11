@@ -14,6 +14,7 @@
 * Codemirror is now an external dependency installed via Makefile
 * New RadioMatrixField for a table of fields and choices
 * New InlineListWidget to list radio options inline
+* Added ParsleyJS validation and reorganized forms to be more modular
 
 
 0.3.0

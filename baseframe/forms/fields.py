@@ -5,17 +5,21 @@ from urlparse import urljoin
 from pytz import utc, timezone as pytz_timezone
 from flask import current_app
 import wtforms
+from wtforms.fields import SelectMultipleField, DateField, SubmitField
 from wtforms.compat import text_type
 from wtforms.utils import unset_value
 import bleach
 
 from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput, CoordinatesInput, RadioMatrixInput
+from .parsleyjs import TextAreaField, StringField, URLField
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'TextListField',
     'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
     'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
-    'CoordinatesField', 'RadioMatrixField']
+    'CoordinatesField', 'RadioMatrixField',
+    # Imported from WTForms:
+    'SelectMultipleField', 'DateField', 'SubmitField']
 
 
 # Default tags and attributes to allow in HTML sanitization
@@ -23,7 +27,7 @@ SANITIZE_TAGS = ['p', 'br', 'strong', 'em', 'sup', 'sub', 'h3', 'h4', 'h5', 'h6'
 SANITIZE_ATTRIBUTES = {'a': ['href', 'title', 'target']}
 
 
-class TinyMce3Field(wtforms.fields.TextAreaField):
+class TinyMce3Field(TextAreaField):
     """
     Rich text field using TinyMCE 3.
     """
@@ -115,7 +119,7 @@ class TinyMce3Field(wtforms.fields.TextAreaField):
                 self.data = bleach.linkify(self.data, callbacks=[])
 
 
-class TinyMce4Field(wtforms.fields.TextAreaField):
+class TinyMce4Field(TextAreaField):
     """
     Rich text field using TinyMCE 4.
     """
@@ -253,7 +257,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
             self._timezone_converted = True
 
 
-class HiddenMultiField(wtforms.fields.TextField):
+class HiddenMultiField(wtforms.fields.StringField):
     """
     A hidden field that stores multiple comma-separated values, meant to be
     used as an Ajax widget target. The optional ``separator`` parameter
@@ -349,7 +353,7 @@ class UserSelectFieldBase(object):
         return retval
 
 
-class UserSelectField(UserSelectFieldBase, wtforms.fields.TextField):
+class UserSelectField(UserSelectFieldBase, StringField):
     """
     Render a user select field that allows one user to be selected.
     """
@@ -371,7 +375,7 @@ class UserSelectField(UserSelectFieldBase, wtforms.fields.TextField):
         return retval
 
 
-class UserSelectMultiField(UserSelectFieldBase, wtforms.fields.TextField):
+class UserSelectMultiField(UserSelectFieldBase, StringField):
     """
     Render a user select field that allows multiple users to be selected.
     """
@@ -407,7 +411,7 @@ class GeonameSelectFieldBase(object):
         return retval
 
 
-class GeonameSelectField(GeonameSelectFieldBase, wtforms.fields.TextField):
+class GeonameSelectField(GeonameSelectFieldBase, StringField):
     """
     Render a geoname select field that allows one geoname to be selected.
     """
@@ -428,14 +432,14 @@ class GeonameSelectField(GeonameSelectFieldBase, wtforms.fields.TextField):
         return retval
 
 
-class GeonameSelectMultiField(GeonameSelectFieldBase, wtforms.fields.TextField):
+class GeonameSelectMultiField(GeonameSelectFieldBase, StringField):
     """
     Render a geoname select field that allows multiple geonames to be selected.
     """
     widget = HiddenInput()
 
 
-class NullTextField(wtforms.StringField):
+class NullTextField(StringField):
     """
     Text field that returns None on empty strings.
     """
@@ -444,7 +448,7 @@ class NullTextField(wtforms.StringField):
         super(NullTextField, self).__init__(*args, **kwargs)
 
 
-class AnnotatedTextField(wtforms.StringField):
+class AnnotatedTextField(StringField):
     """
     Text field with prefix and suffix annotations.
     """
@@ -461,7 +465,7 @@ class AnnotatedNullTextField(AnnotatedTextField, NullTextField):
     pass
 
 
-class MarkdownField(wtforms.TextAreaField):
+class MarkdownField(TextAreaField):
     """
     TextArea field which has class='markdown'.
     """
@@ -481,14 +485,14 @@ class StylesheetField(wtforms.TextAreaField):
         return super(StylesheetField, self).__call__(**kwargs)
 
 
-class ImgeeField(wtforms.TextField):
+class ImgeeField(URLField):
     """
-    A TextField, which lets the user choose image from Imgee. The field is filled
+    A URLField which lets the user choose an image from Imgee. The field is filled
     with the url of the image chosen.
 
     Example usage:
     image = ImgeeField(label='Logo', description='Your company logo here',
-            validators=[validators.Required()],
+            validators=[validators.DataRequired()],
             profile='foo', img_label='logos', img_size='100x75')
         )
     """

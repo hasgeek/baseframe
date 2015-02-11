@@ -16,7 +16,7 @@ import re
 import copy
 
 from wtforms.validators import Length, NumberRange, Email, EqualTo, IPAddress, \
-    Regexp, URL, AnyOf, Optional
+    Regexp, URL, AnyOf
 try:
     from wtforms.validators import DataRequired
 except ImportError:
@@ -26,20 +26,24 @@ except ImportError:
 from wtforms.widgets import TextInput as _TextInput, PasswordInput as _PasswordInput, \
     CheckboxInput as _CheckboxInput, Select as _Select, TextArea as _TextArea, \
     ListWidget as _ListWidget, HiddenInput as _HiddenInput, Input
+from wtforms.widgets.html5 import TelInput as _TelInput, URLInput as _URLInput, EmailInput as _EmailInput
 from wtforms.fields import StringField as _StringField, BooleanField as _BooleanField, \
     DecimalField as _DecimalField, IntegerField as _IntegerField, \
     FloatField as _FloatField, PasswordField as _PasswordField, \
     SelectField as _SelectField, TextAreaField as _TextAreaField, \
     RadioField as _RadioField
+from wtforms.fields.html5 import URLField as _URLField, EmailField as _EmailField, TelField as _TelField
+
 
 __all__ = [
     # ParsleyJS helpers
     'parsley_kwargs', 'ParsleyInputMixin',
     # Widgets
     'TextInput', 'PasswordInput', 'HiddenInput', 'TextArea', 'CheckboxInput', 'Select', 'ListWidget',
+    'TelInput', 'URLInput', 'EmailInput',
     # Fields
     'StringField', 'IntegerField', 'RadioField', 'BooleanField', 'DecimalField', 'FloatField', 'PasswordField',
-    'HiddenField', 'TextAreaField', 'SelectField']
+    'HiddenField', 'TextAreaField', 'SelectField', 'TelField', 'URLField', 'EmailField']
 
 
 def parsley_kwargs(field, kwargs):
@@ -197,6 +201,18 @@ class CheckboxInput(_CheckboxInput, ParsleyInputMixin):
     pass
 
 
+class TelInput(_TelInput, ParsleyInputMixin):
+    pass
+
+
+class URLInput(_URLInput, ParsleyInputMixin):
+    pass
+
+
+class EmailInput(_EmailInput, ParsleyInputMixin):
+    pass
+
+
 class Select(_Select):
     def __call__(self, field, **kwargs):
         kwargs = parsley_kwargs(field, kwargs)
@@ -257,3 +273,18 @@ class TextAreaField(_TextAreaField):
 class SelectField(_SelectField):
     def __init__(self, *args, **kwargs):
         super(SelectField, self).__init__(widget=Select(), *args, **kwargs)
+
+
+class TelField(_TelField):
+    def __init__(self, *args, **kwargs):
+        super(TelField, self).__init__(widget=TelInput(), *args, **kwargs)
+
+
+class URLField(_URLField):
+    def __init__(self, *args, **kwargs):
+        super(URLField, self).__init__(widget=URLInput(), *args, **kwargs)
+
+
+class EmailField(_EmailField):
+    def __init__(self, *args, **kwargs):
+        super(EmailField, self).__init__(widget=EmailInput(), *args, **kwargs)

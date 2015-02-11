@@ -210,9 +210,9 @@ b_ = _
 b__ = __
 from flask.ext.babelex import gettext as _, lazy_gettext as __
 
-from .views import *
-from .errors import *
-from .filters import *
+from .views import *    # NOQA
+from .errors import *   # NOQA
+from .filters import *  # NOQA
 
 # Deprecated imports
-from .deprecated import *
+from .deprecated import *  # NOQA
