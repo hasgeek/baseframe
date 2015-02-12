@@ -709,6 +709,11 @@ ul.grid > li.header {
   margin-bottom: 0;
 }
 
+.form-group + .help-error, .form-group + div > .help-error {
+  margin-top: -4px;
+  margin-bottom: 15px;
+}
+
 @media screen and (min-width: 768px) {
   .form-horizontal .help-required {
     position: absolute;
