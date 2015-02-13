@@ -157,7 +157,7 @@ assets['marked.js'][Version('0.3.0')] = 'baseframe/js/marked.js'
 
 # Font Awesome
 assets['fontawesome.css'][Version('3.1.0')] = 'baseframe/css/fontawesome-3.1.css'
-assets['fontawesome.css'][Version('4.1.0')] = 'baseframe/css/fontawesome-4.1.css'
+assets['fontawesome.css'][Version('4.3.0')] = 'baseframe/css/fontawesome-4.3.css'
 
 # Fira Sans and Fira Mono
 assets['firasans-regular.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-regular.css'
