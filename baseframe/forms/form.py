@@ -6,6 +6,8 @@ from flask.ext.wtf import Form as BaseForm
 from ..signals import form_validation_error, form_validation_success
 from . import fields as bfields, validators as bvalidators, parsleyjs as bparsleyjs
 
+__all__ = ['field_registry', 'widget_registry', 'validator_registry', 'Form', 'FormGenerator']
+
 # Use a hardcoded list to control what is available to user-facing apps
 field_registry = {
     'SelectField': bparsleyjs.SelectField,

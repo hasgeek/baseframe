@@ -4,10 +4,10 @@ from __future__ import absolute_import
 from pytz import timezone
 from flask import g, Blueprint, request
 from coaster.assets import split_namespec
+from flask.ext.wtf import CsrfProtect
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
 from flask.ext.babelex import Babel, Domain
-from flask.ext.mustache import FlaskMustache
 from ._version import *  # NOQA
 from .assets import assets, Version
 from . import translations
@@ -18,6 +18,7 @@ networkbar_cache = Cache(with_jinja2_ext=False)
 asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
 babel = Babel()
+csrf = CsrfProtect()
 
 baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
 _ = baseframe_translations.gettext
@@ -25,7 +26,8 @@ __ = baseframe_translations.lazy_gettext
 
 
 class BaseframeBlueprint(Blueprint):
-    def init_app(self, app, requires=[], ext_requires=[], bundle_js=None, bundle_css=None, assetenv=None):
+    def init_app(self, app, requires=[], ext_requires=[], bundle_js=None, bundle_css=None, assetenv=None,
+            enable_csrf=False):
         """
         Initialize an app and load necessary assets.
 
@@ -117,7 +119,8 @@ class BaseframeBlueprint(Blueprint):
         asset_cache.init_app(app, config=acacheconfig)
         cache.init_app(app)
         babel.init_app(app)
-        FlaskMustache(app)
+        if enable_csrf:
+            csrf.init_app(app)
 
         # If this app has a Lastuser extension registered, give it a cache
         lastuser = getattr(app, 'extensions', {}).get('lastuser')
