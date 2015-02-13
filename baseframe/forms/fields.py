@@ -109,7 +109,7 @@ class TinyMce3Field(TextAreaField):
     def process_formdata(self, valuelist):
         super(TinyMce3Field, self).process_formdata(valuelist)
         # Sanitize data
-        self.data = bleach.clean(self.data,
+        self.data = bleach.clean(self.data, strip=True,
             tags=self.sanitize_tags,
             attributes=self.sanitize_attributes)
         if self.linkify:
@@ -193,7 +193,7 @@ class TinyMce4Field(TextAreaField):
     def process_formdata(self, valuelist):
         super(TinyMce4Field, self).process_formdata(valuelist)
         # Sanitize data
-        self.data = bleach.clean(self.data,
+        self.data = bleach.clean(self.data, strip=True,
             tags=self.sanitize_tags,
             attributes=self.sanitize_attributes)
         if self.linkify:
