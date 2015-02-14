@@ -4,10 +4,11 @@
 SQLAlchemy-based form fields and widgets
 """
 
-import wtforms
+from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from .. import b__ as __
+from .validators import StopValidation
 
-__all__ = ['AvailableName']
+__all__ = ['AvailableName', 'QuerySelectField', 'QuerySelectMultipleField']
 
 
 class AvailableName(object):
@@ -34,4 +35,4 @@ class AvailableName(object):
             if scoped:
                 query = query.filter_by(parent=form.edit_parent)
             if query.notempty():
-                raise wtforms.validators.StopValidation(self.message)
+                raise StopValidation(self.message)

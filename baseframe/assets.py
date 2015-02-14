@@ -136,8 +136,11 @@ assets['jquery.sparkline.js'][Version('2.1.2')] = ('jquery.js', 'baseframe/js/jq
 assets['timezone.js'][Version('0.0.0')] = 'baseframe/js/detect_timezone.js'
 assets['socialite.js'][Version('2.0.0')] = 'baseframe/js/socialite.js'
 assets['swfobject.js'][Version('2.2.0')] = 'baseframe/js/swfobject.js'
-assets['parsley.js'][Version('1.1.13')] = ('jquery.js', 'baseframe/js/parsley.js')
-assets['parsley.extend.js'][Version('1.1.13')] = ('parsley.js', 'baseframe/js/parsley.extend.js')
+assets['parsley.js'][Version('2.0.7')] = ('jquery.js', 'baseframe/js/parsley.js')
+assets['parsley.remote.js'][Version('2.0.7')] = {
+    'provides': 'parsley.js',
+    'bundle': 'baseframe/js/parsley.remote.js',
+    }
 
 assets['animate.css'][Version('0.0.0')] = 'baseframe/css/animate.css'
 
@@ -154,7 +157,7 @@ assets['marked.js'][Version('0.3.0')] = 'baseframe/js/marked.js'
 
 # Font Awesome
 assets['fontawesome.css'][Version('3.1.0')] = 'baseframe/css/fontawesome-3.1.css'
-assets['fontawesome.css'][Version('4.1.0')] = 'baseframe/css/fontawesome-4.1.css'
+assets['fontawesome.css'][Version('4.3.0')] = 'baseframe/css/fontawesome-4.3.css'
 
 # Fira Sans and Fira Mono
 assets['firasans-regular.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-regular.css'

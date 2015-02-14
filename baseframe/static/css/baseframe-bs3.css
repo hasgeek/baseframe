@@ -367,10 +367,6 @@ table.mceLayout.focus {
   vertical-align: baseline;
 }
 
-.controls.inline label, .listwidget ul label {
-  margin-left: 0.25em;
-}
-
 .help-error {
   margin-top: 11px;
   margin-bottom: 0;
@@ -700,6 +696,7 @@ ul.grid > li.header {
 
 .form-horizontal .radio, .form-horizontal .checkbox {
   padding-top: 0;
+  min-height: 24px;
 }
 
 .control-group, .form-group {
@@ -710,6 +707,11 @@ ul.grid > li.header {
 }
 .control-group .help-block, .form-group .help-block {
   margin-bottom: 0;
+}
+
+.form-group + .help-error, .form-group + div > .help-error {
+  margin-top: -4px;
+  margin-bottom: 15px;
 }
 
 @media screen and (min-width: 768px) {

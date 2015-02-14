@@ -1,6 +1,6 @@
 // All the places we need to override Baseframe fonts with Fira Sans
 
-$fira-font-family: "Fira Sans", "Helvetica Neue", Arial, sans-serif
+$fira-font-family: "Fira Sans", Arial, sans-serif
 
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6
   font-family: $fira-font-family
@@ -10,3 +10,7 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6
 
 .mce-ico
   font-family: 'tinymce', $fira-font-family !important
+
+// Set bold font weight to 700
+.usertools li.profile, .help-required, .control-label, input[name="title"], .field-title, ul.grid > li.header, .selected label, .listwidget input[type=radio]:checked + label, strong, b, .well.nav .nav-header, .datepicker .nav, .datepicker .dow, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6
+  font-weight: bold

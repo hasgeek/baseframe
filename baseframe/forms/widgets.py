@@ -2,11 +2,12 @@
 
 import wtforms
 from wtforms.compat import text_type
+from wtforms.widgets import RadioInput
 from flask import Markup
 from .. import b_ as _
 
 __all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'HiddenInput', 'CoordinatesInput',
-    'RadioMatrixInput', 'InlineListWidget']
+    'RadioMatrixInput', 'InlineListWidget', 'RadioInput']
 
 
 class TinyMce3(wtforms.widgets.TextArea):

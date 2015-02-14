@@ -21,6 +21,7 @@
 .form-horizontal {
     .radio, .checkbox {
         padding-top: 0;
+        min-height: $body-line-height;
     }
 }
 
@@ -32,6 +33,11 @@
     .help-block {
         margin-bottom: 0;
     }
+}
+
+.form-group + .help-error, .form-group + div > .help-error {
+    margin-top: -4px;
+    margin-bottom: 15px;
 }
 
 @media screen and (min-width: 768px){

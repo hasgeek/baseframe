@@ -18,4 +18,11 @@
     });
   </script>
   {{ ajaxform(formid=formid, request=request, force=ajax) }}
+  <script src="{{ 'parsley.js'|ext_asset_url }}" type="text/javascript"></script>
+  <script type="text/javascript">
+    // In a separate script block in case the autosize plugin isn't present
+    $(function() {
+      $('textarea').autosize();
+    })
+  </script>
 {% endblock %}

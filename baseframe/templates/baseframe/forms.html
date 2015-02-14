@@ -1,4 +1,3 @@
-{# change rendererrors.mustache also while changing here #}
 {% macro rendererrors(field) -%}
     {%- if field.errors -%}
       {%- for error in field.errors %}
@@ -7,7 +6,6 @@
     {%- endif %}
 {%- endmacro %}
 
-{# change renderfield.mustache also while changing here #}
 {% macro renderfield(field, css_class="", widget_css_class="", sidetext=none, tabindex=none, autofocus=false, nolabel=false, style='horiz', rows=none) -%}
 
   {%- if field.widget.html_tag in ['ul', 'ol'] %}
@@ -125,7 +123,7 @@
 {%- endmacro %}
 
 {% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=false, style='horiz') %}
-<form id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" {%- if style == 'horiz' %} class="form-horizontal"{% endif %}>
+<form data-parsley-validate id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" {%- if style == 'horiz' %} class="form-horizontal"{% endif %}>
   {{ renderform_inner(form, formid or none, style=style) }}
   {{ rendersubmit([(none, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>

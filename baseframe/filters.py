@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from . import b_ as _
-from . import baseframe, current_app
-from flask import Markup, request
-from datetime import datetime
 import os
+from datetime import datetime
+from flask import Markup, request
+
 from coaster.utils import md5sum
 from coaster.gfm import markdown
+from coaster.nlp import extract_text_blocks
+
+from . import b_ as _, cache
+from . import baseframe, current_app
 from .views import ext_assets
 
 
@@ -141,3 +144,14 @@ def ext_asset_url(asset):
         return ext_assets([asset])
     else:
         return ext_assets(asset)
+
+
+@baseframe.app_template_filter('firstline')
+@cache.memoize(timeout=600)
+def firstline(html):
+    """
+    Returns the first line from a HTML blob as plain text
+    """
+    result = extract_text_blocks(html)
+    if result:
+        return result[0]
