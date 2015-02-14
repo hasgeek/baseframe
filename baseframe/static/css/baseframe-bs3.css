@@ -1830,10 +1830,10 @@ footer .container-fluid {
   padding: 0 15px;
 }
 #hg-panel .nav.pull-right {
-  width: 9.2em;
+  width: 9.3em;
 }
 #hg-panel .nav.pull-left {
-  width: calc(100% - 9.2em);
+  width: calc(100% - 9.3em);
 }
 #hg-panel .dropdown-menu {
   margin: 0;
