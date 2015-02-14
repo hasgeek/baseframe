@@ -127,11 +127,6 @@ function activate_geoname_autocomplete(selector, autocomplete_endpoint, getname_
 }
 
 $(function() {
-  // Activate Chrome/Windows font hack
-  if ((navigator.userAgent.toLowerCase().indexOf('chrome') > -1) && (navigator.userAgent.toLowerCase().indexOf('windows') > -1)) {
-    document.body.style.webkitTextStroke = '0.2px';
-  }
-
   // activate all widgets
   activate_widgets();
 
