@@ -6,7 +6,7 @@ from flask import Markup, request
 
 from coaster.utils import md5sum
 from coaster.gfm import markdown
-from coaster.nlp import extract_text_blocks
+from coaster.utils import text_blocks
 
 from . import b_ as _, cache
 from . import baseframe, current_app
@@ -152,6 +152,6 @@ def firstline(html):
     """
     Returns the first line from a HTML blob as plain text
     """
-    result = extract_text_blocks(html)
+    result = text_blocks(html)
     if result:
         return result[0]
