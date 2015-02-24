@@ -228,7 +228,7 @@ assets['mustache.js'][Version('2.0.0')] = {'requires': [
 
 assets['extra.js'][Version('0.0.0')] = {'requires': [
     'jquery.form.js',
-    'bootstrap-datepicker.js',
+    # 'bootstrap-datepicker.js',
     'jquery.timepicker.js',
     'select2.js',
 ]}

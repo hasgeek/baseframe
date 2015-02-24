@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 from decimal import Decimal, InvalidOperation as DecimalError
 from urlparse import urljoin
 from pytz import utc, timezone as pytz_timezone
@@ -214,7 +215,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
     widget = DateTimeInput()
 
     def __init__(self, label=None, validators=None,
-            format='%Y-%m-%d %I:%M%p', timezone=None, **kwargs):
+            format='%Y-%m-%d %H:%M', timezone=None, **kwargs):
         super(DateTimeField, self).__init__(label, validators, **kwargs)
         self.format = format
         self.timezone = timezone() if callable(timezone) else timezone
@@ -229,8 +230,10 @@ class DateTimeField(wtforms.fields.DateTimeField):
         self._timezone = value
         if value:
             self.tz = pytz_timezone(value)
+            self.tzname = utc.localize(datetime.utcnow()).astimezone(self.tz).tzname()
         else:
             self.tz = utc
+            self.tzname = 'UTC'
 
     def _value(self):
         if self.data:
