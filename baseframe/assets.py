@@ -77,8 +77,8 @@ assets['jquery.autosize.js'][Version('1.18.17')] = ('jquery.js', 'baseframe/js/j
 assets['jquery.oembed.js'][Version('1.0.1')] = ('jquery.js', 'baseframe/js/jquery.oembed.js')
 assets['jquery.oembed.css'][Version('1.0.1')] = ('baseframe/css/jquery.oembed.css')
 
-assets['jquery.timepicker.js'][Version('1.0.7')] = ('jquery.js>=1.7.0', 'baseframe/js/jquery.timepicker.js')
-assets['jquery.timepicker.css'][Version('1.0.7')] = 'baseframe/css/jquery.timepicker.css'
+assets['jquery.timepicker.js'][Version('1.6.0')] = ('jquery.js>=1.7.0', 'baseframe/js/jquery.timepicker.js')
+assets['jquery.timepicker.css'][Version('1.6.0')] = 'baseframe/css/jquery.timepicker.css'
 
 assets['jquery.fullcalendar.js'][Version('1.6.4')] = ('jquery.js', 'jquery.ui.js', 'baseframe/js/fullcalendar/fullcalendar.js')
 assets['jquery.fullcalendar.css'][Version('1.6.4')] = ('jquery.ui.css', 'baseframe/js/fullcalendar/fullcalendar.css')
