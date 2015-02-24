@@ -109,6 +109,8 @@ def render_field_options(field, **kwargs):
     Remove HTML attributes with a value of None or False before rendering a field.
     """
     d = dict((k, v) for k, v in kwargs.items() if v is not None and v is not False)
+    if hasattr(field, 'widget_attrs'):
+        d.update(field.widget_attrs)
     return field(**d)
 
 
