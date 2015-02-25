@@ -95,7 +95,7 @@ function activate_geoname_autocomplete(selector, autocomplete_endpoint, getname_
         if (data.status == 'ok') {
           for (var i=0; i < data.result.length; i++) {
             rdata.push({
-              id: data.result[i].geonameid, text: data.result[i].ascii_title
+              id: data.result[i].geonameid, text: data.result[i].picker_title
             });
           }
         }
@@ -115,7 +115,7 @@ function activate_geoname_autocomplete(selector, autocomplete_endpoint, getname_
           if (data.status == 'ok') {
             for (var i=0; i < data.result.length; i++) {
               rdata.push({
-                id: data.result[i].geonameid, text: data.result[i].ascii_title
+                id: data.result[i].geonameid, text: data.result[i].picker_title
               });
             }
           }
