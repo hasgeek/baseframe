@@ -214,10 +214,10 @@ table.mceLayout {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
-  -moz-transition: border 0.2s linear, box-shadow 0.2s linear;
-  -o-transition: border 0.2s linear, box-shadow 0.2s linear;
-  -webkit-transition: border 0.2s linear, box-shadow 0.2s linear;
-  transition: border 0.2s linear, box-shadow 0.2s linear;
+  -moz-transition: border 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -o-transition: border 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: border 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   border: 1px solid #ccc !important;
   -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.5) inset;
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.5) inset;
@@ -242,14 +242,14 @@ table.mceLayout tr.mceLast td.mceLast {
   border-bottom: none !important;
 }
 table.mceLayout.focus {
-  border: 1px solid rgba(82, 168, 236, 0.8) !important;
-  -moz-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
-  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
-  box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
-  -moz-transition: border 0.2s linear, box-shadow 0.2s linear;
-  -o-transition: border 0.2s linear, box-shadow 0.2s linear;
-  -webkit-transition: border 0.2s linear, box-shadow 0.2s linear;
-  transition: border 0.2s linear, box-shadow 0.2s linear;
+  border: 1px solid #66afe9 !important;
+  -moz-box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+  -webkit-box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+  -moz-transition: border 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -o-transition: border 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: border 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .mce-tinymce {
@@ -259,23 +259,23 @@ table.mceLayout.focus {
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   box-shadow: none;
-  -moz-transition: border 0.2s linear, box-shadow 0.15s linear;
-  -o-transition: border 0.2s linear, box-shadow 0.15s linear;
-  -webkit-transition: border 0.2s linear, box-shadow 0.15s linear;
-  transition: border 0.2s linear, box-shadow 0.15s linear;
+  -moz-transition: border 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -o-transition: border 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: border 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   -moz-box-sizing: border-box !important;
   -webkit-box-sizing: border-box !important;
   box-sizing: border-box !important;
 }
 .mce-tinymce.active {
-  border-color: rgba(82, 168, 236, 0.8) !important;
-  -moz-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
-  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
-  box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
-  -moz-transition: border 0.2s linear, box-shadow 0.15s linear;
-  -o-transition: border 0.2s linear, box-shadow 0.15s linear;
-  -webkit-transition: border 0.2s linear, box-shadow 0.15s linear;
-  transition: border 0.2s linear, box-shadow 0.15s linear;
+  border-color: #66afe9 !important;
+  -moz-box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+  -webkit-box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+  -moz-transition: border 0.2s ease-in-out, box-shadow 0.15s ease-in-out;
+  -o-transition: border 0.2s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: border 0.2s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border 0.2s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .mce-panel {
@@ -453,6 +453,32 @@ legend {
 
 .button-bar .btn {
   margin-bottom: 5px;
+}
+
+.btn {
+  -moz-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -o-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.btn:hover {
+  -moz-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -o-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.btn:focus {
+  outline: none;
+  -moz-box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+  -webkit-box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+  -moz-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -o-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.btn.btn-default:focus {
+  border-color: #66afe9 !important;
 }
 
 form.form-button {

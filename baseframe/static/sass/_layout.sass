@@ -1,5 +1,4 @@
-@import "compass/typography/text/replacement"
-@import "compass/layout/sticky-footer"
+@import "compass"
 
 body
   overflow-y: scroll
@@ -168,7 +167,7 @@ footer .container
 // Rich text editor
 table.mceLayout
   @include border-radius(4px)
-  @include transition(border linear .2s, box-shadow linear .2s)
+  @include transition(border ease-in-out .15s, box-shadow ease-in-out .15s)
   border: 1px solid #ccc !important
   +box-shadow(0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(255, 255, 255, 0.5) inset)
   tr.mceFirst td.mceToolbar.mceFirst
@@ -180,21 +179,21 @@ table.mceLayout
     @include border-bottom-right-radius(4px)
     border-bottom: none !important
   &.focus
-    border: 1px solid rgba(82,168,236,.8) !important
-    @include box-shadow(0 0 8px rgba(82,168,236,.6))
-    @include transition(border linear .2s, box-shadow linear .2s)
+    border: 1px solid $color-focus-border !important
+    @include box-shadow(0 0 8px $color-focus-glow)
+    @include transition(border ease-in-out .15s, box-shadow ease-in-out .15s)
 
 // TinyMCE 4 customizations
 .mce-tinymce
   +border-radius(4px !important)
   +box-shadow(none)
-  +transition(border linear .2s, box-shadow linear .15s)
+  +transition(border ease-in-out .15s, box-shadow ease-in-out .15s)
   +box-sizing(border-box !important)
 
   &.active
-    border-color: rgba(82,168,236,.8) !important
-    +box-shadow(0 0 8px rgba(82,168,236,.6))
-    +transition(border linear .2s, box-shadow linear .15s)
+    border-color: $color-focus-border !important
+    +box-shadow(0 0 8px $color-focus-glow)
+    +transition(border ease-in-out .2s, box-shadow ease-in-out .15s)
 
 .mce-panel
   background-image: none !important
@@ -342,6 +341,18 @@ legend
 
 .button-bar .btn
   margin-bottom: 5px
+
+.btn
+  +transition(border ease-in-out .15s, background-color ease-in-out .15s, box-shadow ease-in-out .15s)
+  &:hover
+    +transition(border ease-in-out .15s, background-color ease-in-out .15s, box-shadow ease-in-out .15s)
+  &:focus
+    outline: none
+    +box-shadow(0 0 8px $color-focus-glow)
+    +transition(border ease-in-out .15s, background-color ease-in-out .15s, box-shadow ease-in-out .15s)
+  &.btn-default:focus
+    border-color: $color-focus-border !important // Required to override border-bottom
+
 
 // Single-button forms
 form.form-button
