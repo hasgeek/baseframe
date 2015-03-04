@@ -690,21 +690,17 @@ legend {
   -webkit-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-.btn:hover {
+.btn:hover, .btn:focus, .btn:active, .btn:active:focus {
   -moz-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   -o-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   -webkit-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-.btn:focus {
+.btn:focus, .btn:active, .btn:active:focus {
   outline: none;
   -moz-box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
   -webkit-box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
   box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
-  -moz-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  -o-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  -webkit-transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  transition: border 0.15s ease-in-out, background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 .btn.btn-default:focus {
   border-color: #66afe9 !important;

@@ -344,12 +344,11 @@ legend
 
 .btn
   +transition(border ease-in-out .15s, background-color ease-in-out .15s, box-shadow ease-in-out .15s)
-  &:hover
+  &:hover, &:focus, &:active, &:active:focus
     +transition(border ease-in-out .15s, background-color ease-in-out .15s, box-shadow ease-in-out .15s)
-  &:focus
+  &:focus, &:active, &:active:focus
     outline: none
     +box-shadow(0 0 8px $color-focus-glow)
-    +transition(border ease-in-out .15s, background-color ease-in-out .15s, box-shadow ease-in-out .15s)
   &.btn-default:focus
     border-color: $color-focus-border !important // Required to override border-bottom
 
