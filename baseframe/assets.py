@@ -103,6 +103,7 @@ assets['codemirror.addon.edit.closebrackets.js'][Version('4.11.0')] = 'baseframe
 assets['codemirror.addon.edit.matchbrackets.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/edit/matchbrackets.js'
 assets['codemirror.addon.hint.css-hint.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/hint/css-hint.js'
 assets['codemirror.addon.lint.css-lint.js'][Version('4.11.0')] = 'baseframe/js/codemirror/addon/lint/css-lint.js'
+assets['bootstrap-multiselect.js'][Version('2.0.0')] = 'baseframe/js/bootstrap-multiselect.js'
 
 assets['codemirror-markdown.js'][Version('4.11.0')] = {'requires': [
     'codemirror.js==4.11.0',
