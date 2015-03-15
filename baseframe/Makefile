@@ -28,4 +28,4 @@ codemirror:
 	mv codemirror-*/lib static/js/codemirror
 	mv codemirror-*/mode static/js/codemirror
 	mv codemirror-*/theme static/js/codemirror
-	rm -rf codemirror-*
+	rm -rf $(codemirror_zip) codemirror-*
