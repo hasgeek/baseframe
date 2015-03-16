@@ -267,3 +267,5 @@ assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
     'baseframe-base-bs3.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
 ]}
+
+assets['bootstrap-multiselect.js'][Version('0.9.11')] = 'baseframe/js/bootstrap-multiselect.js'
