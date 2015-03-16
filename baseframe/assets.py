@@ -90,6 +90,9 @@ assets['jquery.appear.js'][Version('0.3.3')] = ('jquery.js', 'baseframe/js/jquer
 assets['select2.js'][Version('3.3.2')] = ('jquery.js>=1.4.6', 'baseframe/js/select2.js')
 assets['select2.css'][Version('3.3.2')] = 'baseframe/css/select2.css'
 
+assets['bootstrap-multiselect.css'][Version('0.9.11')] = 'baseframe/css/bootstrap-multiselect.css'
+assets['bootstrap-multiselect.js'][Version('0.9.11')] = 'baseframe/js/bootstrap-multiselect.js'
+
 assets['codemirror.js'][Version('4.11.0')] = 'baseframe/js/codemirror/lib/codemirror.js'
 assets['codemirror.css'][Version('4.11.0')] = 'baseframe/js/codemirror/lib/codemirror.css'
 
@@ -267,5 +270,3 @@ assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
     'baseframe-base-bs3.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
 ]}
-
-assets['bootstrap-multiselect.js'][Version('0.9.11')] = 'baseframe/js/bootstrap-multiselect.js'
