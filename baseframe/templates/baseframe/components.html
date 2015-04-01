@@ -163,7 +163,7 @@
   </nav>
 {%- endmacro %}
 
-{% macro hgnav(site_title="HasGeek", site_nav=none, hasgeek_auth=true, hasgeek_network=true) %}
+{% macro hgnav(site_title="HasGeek", site_nav=none, hasgeek_auth=true, hasgeek_network=true, links=[]) %}
   <style>
     body {
       padding-top: 70px;
@@ -227,7 +227,6 @@
       padding: 22px 0px 0px 20px;
       height: auto;
       overflow-y: auto;
-      margin: 0;
     }
 
     .block-dropdown>li {
@@ -273,7 +272,7 @@
     }
 
     ul.hg-header-app-nav {
-      margin-left: 6px;
+      margin-left: 15px;
       margin-bottom: 0;
     }
 
@@ -346,7 +345,7 @@
         <ul class="nav pull-right">
           <li class="dropdown pull-left">
             {% if hasgeek_auth %}
-              {{add_hasgeek_auth()}}
+              {{add_hasgeek_auth(links)}}
             {%- endif %}
           </li>
           <li class="dropdown pull-right hg-nw-bar">
@@ -370,12 +369,15 @@
   {%- endif %}
 {%- endmacro %}
 
-{% macro add_hasgeek_auth() %}
+{% macro add_hasgeek_auth(links) %}
   {% if g.user -%}
     <a href="#" data-toggle="dropdown" class="dropdown-toggle" id="hg-user-btn">
       <i class="fa fa-user"></i><b class="caret"></b>
     </a>
     <ul class="dropdown-menu pull-right">
+      {%- for link in links %}
+        <li><a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>{{ link.title }}</a></li>
+      {%- endfor %}
       <li>
         {%- with orgs = g.user.organization_links() %}
         {% if orgs %}
