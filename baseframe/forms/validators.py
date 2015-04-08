@@ -16,13 +16,44 @@ from .. import b_ as _, b__ as __, asset_cache
 from ..signals import exception_catchall
 
 
-__all__ = ['ValidEmail', 'ValidEmailDomain', 'ValidUrl', 'AllUrlsValid', 'StripWhitespace', 'ValidName',
-    'NoObfuscatedEmail', 'ValidCoordinates',
+__all__ = ['OptionalIf', 'OptionalIfNot', 'ValidEmail', 'ValidEmailDomain', 'ValidUrl', 'AllUrlsValid',
+    'StripWhitespace', 'ValidName', 'NoObfuscatedEmail', 'ValidCoordinates',
     # WTForms validators
     'DataRequired', 'InputRequired', 'Optional', 'Length', 'EqualTo', 'URL', 'ValidationError', 'StopValidation']
 
 
 EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b', re.I)
+
+
+class OptionalIf(object):
+    """
+    Validator that makes this field optional if the value of some other field is true.
+    """
+    def __init__(self, fieldname, message=None):
+        self.fieldname = fieldname
+        self.message = message or __("This is required")
+
+    def __call__(self, form, field):
+        print "Validating field", field
+        if not field.data:
+            print "Field is empty"
+            print "Other", bool(getattr(form, self.fieldname).data)
+            if getattr(form, self.fieldname).data:
+                raise StopValidation()
+            else:
+                raise StopValidation(self.message)
+
+
+class OptionalIfNot(OptionalIf):
+    """
+    Validator that makes this field optional if the value of some other field is false.
+    """
+    def __call__(self, form, field):
+        if not field.data:
+            if not getattr(form, self.fieldname).data:
+                raise StopValidation()
+            else:
+                raise StopValidation(self.message)
 
 
 class ValidEmail(object):
