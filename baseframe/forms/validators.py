@@ -34,10 +34,7 @@ class OptionalIf(object):
         self.message = message or __("This is required")
 
     def __call__(self, form, field):
-        print "Validating field", field
         if not field.data:
-            print "Field is empty"
-            print "Other", bool(getattr(form, self.fieldname).data)
             if getattr(form, self.fieldname).data:
                 raise StopValidation()
             else:
