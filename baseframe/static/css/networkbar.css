@@ -730,9 +730,11 @@
 }
 #hgnav .nav > li {
   line-height: 36px;
+  color: #777;
 }
 #hgnav .nav > li > a {
   padding: 0 15px;
+  color: #777;
 }
 #hgnav a.hg-navbar-brand {
   padding-left: 0;
@@ -784,7 +786,7 @@
   margin-right: 4px;
 }
 #hgnav li.site-nav-collapse {
-  margin: 0 0 0 8px;
+  margin: 0;
 }
 #hgnav a.site-header > h1 {
   font-size: 18px;
@@ -797,7 +799,7 @@
 #hgnav .hg-site-nav-toggle {
   padding: 0 8px;
   border: none;
-  margin-right: 2px;
+  margin: 5px 2px 0 0;
 }
 #hgnav a#hg-app-drawer {
   color: #777;
