@@ -657,7 +657,6 @@ $mob-icon-color: #999;
 
     .nav > li > a {
         padding: 0 15px;
-        color: #777;
     }
 
     a.hg-navbar-brand {
@@ -700,8 +699,7 @@ $mob-icon-color: #999;
 
     a#hg-login-btn {
         margin-top: 6px;
-        margin-right: 4px;
-        margin-left: 12px;
+        padding: 0 6px;
     }
 
     a#hg-user-btn {
@@ -720,7 +718,6 @@ $mob-icon-color: #999;
     ul.hg-header-app-nav > li {
         padding-left: 0;
         padding-right: 0;
-        margin-right: 4px;
     }
 
     li.site-nav-collapse {
@@ -775,6 +772,9 @@ $mob-icon-color: #999;
 
     ul.hg-header-app-nav > li {
         margin-right: -10px;
+    }
+    a#hg-login-btn {
+        padding: 0 15px;
     }
   }
 }
