@@ -656,14 +656,11 @@ $mob-icon-color: #999;
     }
 
     .nav > li > a {
-        padding: 0 15px;
+        padding: 0 10px;
     }
 
     a.hg-navbar-brand {
         padding-left: 0;
-    }
-
-    li.hg-nw-bar{
     }
 
     .hg-site-nav > li > a {
@@ -710,18 +707,9 @@ $mob-icon-color: #999;
         background-color: #285E8E;
     }
 
-    ul.hg-header-app-nav {
-        margin-left: 15px;
+    .hg-header-app-nav {
+        margin-left: 0;
         margin-bottom: 0;
-    }
-
-    ul.hg-header-app-nav > li {
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    li.site-nav-collapse {
-        margin: 0;
     }
 
     a.site-header > h1 {
@@ -735,9 +723,7 @@ $mob-icon-color: #999;
     }
 
     .hg-site-nav-toggle {
-        padding: 0 8px;
-        border: none;
-        margin: 5px 2px 0 0;
+        color: #777
     }
 
     a#hg-app-drawer {
@@ -750,6 +736,9 @@ $mob-icon-color: #999;
 
     ul.hg-subnav > li > a {
         padding: 12px 15px;
+    }
+    .auth-links{
+        border-top: 1px solid #ddd;
     }
 }
 
@@ -776,6 +765,9 @@ $mob-icon-color: #999;
     a#hg-login-btn {
         padding: 0 15px;
         margin-right: 4px;
+    }
+    .nav > li > a {
+        padding: 0 15px;
     }
   }
 }

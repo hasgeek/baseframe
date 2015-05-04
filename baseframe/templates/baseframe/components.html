@@ -166,19 +166,8 @@
 {% macro hgnav(site_title="HasGeek", site_nav=none, auth=true, network=true, links=[]) %}
   <nav class="navbar navbar-default navbar-fixed-top" id="hgnav" role="navigation">
     <div class="container">
-      <div class="navbar-header pull-left">
-        <ul class="list-inline hg-header-app-nav">
-          <li class="navbar-text pull-left dropdown site-nav-collapse">
-            {% if site_nav %}
-              <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle pull-right hg-site-nav-toggle">
-                <i class="fa fa-bars"></i>
-              </button>
-            {% endif %}
-          </li>
-          <li>
+      <div class="navbar-header pull-left hg-header-app-nav">
             {{site_title}}
-          </li>
-        </ul>
       </div>
       <div class="navbar-header pull-right">
         <ul class="nav pull-right">
@@ -187,6 +176,13 @@
               {{add_hasgeek_auth(links)}}
             {%- endif %}
           </li>
+          {% if site_nav %}
+          <li class="dropdown pull-left">
+              <a href="#" data-toggle="collapse" data-target=".navbar-collapse" class="menu-toggle hg-site-nav-toggle">
+                <i class="fa fa-bars"></i>
+              </a>
+          </li>
+          {% endif %}
           <li class="dropdown pull-right hg-nw-bar">
             {% if network %}
               {{add_hasgeek_network()}}
@@ -194,11 +190,11 @@
           </li>
         </ul>
       </div>
+      {% if site_nav %}
       <div class="nav collapse navbar-collapse navbar-right hg-site-nav" id="hg-sitenav">
-        {% if site_nav %}
-          {{site_nav}}
-        {% endif %}
+        {{site_nav}}
       </div>
+      {% endif %}
     </div>
   </nav>
   {%- if not g.user %}
@@ -217,7 +213,7 @@
       {%- for link in links %}
         <li><a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>{{ link.title }}</a></li>
       {%- endfor %}
-      <li>
+      <li class="auth-links">
         {%- with orgs = g.user.organization_links() %}
         {% if orgs %}
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
