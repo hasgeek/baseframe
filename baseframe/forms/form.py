@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import wtforms
+from wtforms.compat import iteritems
 from flask.ext.wtf import Form as BaseForm
 
 from ..signals import form_validation_error, form_validation_success
@@ -85,6 +86,9 @@ class Form(BaseForm):
             form_validation_error.send(self)
         else:
             form_validation_success.send(self)
+
+    def errors_with_data(self):
+        return {name: {'data': f.data, 'errors': f.errors} for name, f in iteritems(self._fields) if f.errors}
 
 
 class FormGenerator(object):
