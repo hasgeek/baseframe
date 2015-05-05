@@ -17,6 +17,7 @@
 * Added ParsleyJS validation and reorganized forms to be more modular
 * Added app-global CSRF protection (optional) and removed Mustache dependency
 * Added ``firstline`` filter to extract first line of text from a HTML block
+* ``OptionalIf`` and ``OptionalIfNot`` validators
 
 0.3.0
 -----

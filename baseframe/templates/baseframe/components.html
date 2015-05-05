@@ -178,9 +178,9 @@
           </li>
           {% if site_nav %}
           <li class="dropdown pull-left">
-              <a href="#" data-toggle="collapse" data-target=".navbar-collapse" class="menu-toggle hg-site-nav-toggle">
+              <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="menu-toggle hg-site-nav-toggle">
                 <i class="fa fa-bars"></i>
-              </a>
+              </button> 
           </li>
           {% endif %}
           <li class="dropdown pull-right hg-nw-bar">
@@ -206,9 +206,9 @@
 
 {% macro add_hasgeek_auth(links) %}
   {% if g.user -%}
-    <a href="#" data-toggle="dropdown" class="dropdown-toggle" id="hg-user-btn">
+    <button type="button" data-toggle="dropdown" class="dropdown-toggle" id="hg-user-btn">
       <i class="fa fa-user"></i><b class="caret"></b>
-    </a>
+    </button>
     <ul class="dropdown-menu pull-right">
       {%- for link in links %}
         <li><a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>{{ link.title }}</a></li>
@@ -243,9 +243,9 @@
     {'title': 'Hasjob', 'url': 'https://hasjob.co/', 'icon': 'https://static.hasjob.co/static/img/logo-star.png'},
     {'title': 'HGTV', 'url': 'https://hasgeek.tv/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_hgtv.png'},
     ]%}
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="hg-app-drawer">
+    <button type="button" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="hg-app-drawer">
       <i class="fa fa-th"></i>
-    </a>
+    </button>
     <ul class="dropdown-menu block-dropdown" role="menu">
       {%- for link in network_links %}
       <li>

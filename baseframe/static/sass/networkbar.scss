@@ -655,8 +655,17 @@ $mob-icon-color: #999;
         color: #777;
     }
 
-    .nav > li > a {
+    .nav > li > button {
         padding: 0 10px;
+        border: none;
+        background: none;
+    }
+
+    .nav > li > button:hover,
+    .nav > li > button:focus{
+        background-color: #EEE;
+        border: none;
+        outline: none;
     }
 
     a.hg-navbar-brand {
@@ -694,13 +703,14 @@ $mob-icon-color: #999;
         height: 30px;
     }
 
-    a#hg-login-btn {
-        margin-top: 6px;
-        padding: 0 6px;
-    }
-
     a#hg-user-btn {
         color:#777;
+    }
+
+    a#hg-login-btn {
+        margin-top: 6px;
+        margin-right: 4px;
+        padding: 0 6px;
     }
 
     a#hg-login-btn:hover {
@@ -764,9 +774,8 @@ $mob-icon-color: #999;
     }
     a#hg-login-btn {
         padding: 0 15px;
-        margin-right: 4px;
     }
-    .nav > li > a {
+    .nav > li > button {
         padding: 0 15px;
     }
   }

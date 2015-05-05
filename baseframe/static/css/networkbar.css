@@ -732,8 +732,16 @@
   line-height: 36px;
   color: #777;
 }
-#hgnav .nav > li > a {
+#hgnav .nav > li > button {
   padding: 0 10px;
+  border: none;
+  background: none;
+}
+#hgnav .nav > li > button:hover,
+#hgnav .nav > li > button:focus {
+  background-color: #EEE;
+  border: none;
+  outline: none;
 }
 #hgnav a.hg-navbar-brand {
   padding-left: 0;
@@ -764,12 +772,13 @@
   max-width: 50px;
   height: 30px;
 }
-#hgnav a#hg-login-btn {
-  margin-top: 6px;
-  padding: 0 6px;
-}
 #hgnav a#hg-user-btn {
   color: #777;
+}
+#hgnav a#hg-login-btn {
+  margin-top: 6px;
+  margin-right: 4px;
+  padding: 0 6px;
 }
 #hgnav a#hg-login-btn:hover {
   background-color: #285E8E;
@@ -819,9 +828,8 @@
   }
   #hgnav a#hg-login-btn {
     padding: 0 15px;
-    margin-right: 4px;
   }
-  #hgnav .nav > li > a {
+  #hgnav .nav > li > button {
     padding: 0 15px;
   }
 }
