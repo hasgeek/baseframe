@@ -722,6 +722,10 @@ $mob-icon-color: #999;
         margin-bottom: 0;
     }
 
+    .hg-header-nav {
+        margin: 0;
+    }
+
     a.site-header > h1 {
         font-size: 18px;
         margin-bottom: -10px;
@@ -773,9 +777,6 @@ $mob-icon-color: #999;
         margin-right: -10px;
     }
     a#hg-login-btn {
-        padding: 0 15px;
-    }
-    .nav > li > button {
         padding: 0 15px;
     }
   }

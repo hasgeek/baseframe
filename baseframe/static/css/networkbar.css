@@ -787,6 +787,9 @@
   margin-left: 0;
   margin-bottom: 0;
 }
+#hgnav .hg-header-nav {
+  margin: 0;
+}
 #hgnav a.site-header > h1 {
   font-size: 18px;
   margin-bottom: -10px;
@@ -827,9 +830,6 @@
     margin-right: -10px;
   }
   #hgnav a#hg-login-btn {
-    padding: 0 15px;
-  }
-  #hgnav .nav > li > button {
     padding: 0 15px;
   }
 }
