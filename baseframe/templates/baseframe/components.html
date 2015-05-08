@@ -213,7 +213,7 @@
       {%- for link in links %}
         <li><a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>{{ link.title }}</a></li>
       {%- endfor %}
-      <li class="auth-links">
+      <li {% if links %} class="separator-authlinks" {%- endif %}>
         {%- with orgs = g.user.organization_links() %}
         {% if orgs %}
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
