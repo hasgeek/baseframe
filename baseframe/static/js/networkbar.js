@@ -26,9 +26,6 @@ $(function(){
 			$('.navbar-ex1-collapse').animate({height:"2px"});
 		}
 	});
-});
-
-$(function(){
 	if (Modernizr.touch){
 		$('.navbar-toggle').click(function(){
 			if(!$('.navbar-collapse').hasClass('in')){
@@ -37,5 +34,60 @@ $(function(){
 				$('body').removeClass('nav-open');
 			}	
 		});	
+	}
+});
+
+var toggleSidebar = function() {
+	$('#left').toggleClass('in');
+	$('#left').toggleClass('out');
+	$('#right').toggleClass('in');
+	$('#right').toggleClass('out');
+}
+var mobCloseSidebar = function() {
+	$('#left, #right').removeClass('out').addClass('in');
+}
+var mobOpenSidebar = function() {
+	$('#left, #right').removeClass('in').addClass('out');
+}
+
+$(function(){
+	// two pane sidebar collapse
+	$('#hamburger-icon').click(function() {
+		toggleSidebar();
+	});
+	// sidebar form floating label
+	$('#left .form-group input').focusout(function() {		
+		var inputContent = $(this).val();
+		if ( inputContent !== '' ) {
+			$(this).addClass('has-content');
+		} else {
+			$(this).removeClass('has-content');
+		}
+	});
+	// close the sidebar when networkbar dropdowns are clicked
+	if (Modernizr.mq('only screen and (max-width: 768px)')) {
+		$('#hg-panel .nav.pull-right > li > a').click(function() {
+			if ($('#left').hasClass('out')) {
+				mobCloseSidebar();
+			}
+		});
+	}
+
+	// swipe toggle for sidebar
+	if (Modernizr.mq('only screen and (max-width: 768px)')) {
+		$(function() {
+			$("#right .wrapper").swipe( {
+				swipeRight:function(event) {
+					if (event.pageX < 150) {
+						mobOpenSidebar(); 
+					}
+				},
+				swipeLeft:function(event) {
+					if (event.pageX > 200) {
+						mobCloseSidebar();
+					}
+				}
+			});
+		});
 	}
 });

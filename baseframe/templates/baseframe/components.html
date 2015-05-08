@@ -370,10 +370,26 @@
   {%- endif %}
 {%- endmacro %}
 
+{% macro add_hasgeek_notify() %}
+  {% if g.user -%}
+    <a href="#" data-toggle="dropdown" class="dropdown-toggle" id="hg-notify-btn">
+      <i class="fa fa-bell-o"></i><sup class="notify">3</sup>
+    </a>
+    <ul class="dropdown-menu pull-right">
+      <li><a href="#">Sample notification 1</a></li>
+      <li><a href="#">Sample notification 2</a></li>
+      <li><a href="#">Sample notification 3</a></li>
+    </ul>
+  {%- endif %}
+{%- endmacro %}
+
 {% macro add_hasgeek_auth() %}
   {% if g.user -%}
     <a href="#" data-toggle="dropdown" class="dropdown-toggle" id="hg-user-btn">
-      <i class="fa fa-user"></i><b class="caret"></b>
+      <!-- <i class="fa fa-user"></i><b class="caret"></b> -->
+      <div class="nwb-profile-wrapper">
+        <div class="nwb-profile-pic"></div>
+      </div>
     </a>
     <ul class="dropdown-menu pull-right">
       <li>
@@ -409,7 +425,7 @@
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="hg-app-drawer">
       <i class="fa fa-th"></i>
     </a>
-    <ul class="dropdown-menu block-dropdown" role="menu">
+    <ul class="dropdown-menu block-dropdown pull-right" role="menu">
       {%- for link in network_links %}
       <li>
         <a href="{{link['url']}}">
@@ -420,4 +436,47 @@
       {%- endfor  %}
     </ul>
   {% endwith %}
+{%- endmacro %}
+
+
+{% macro hgpanel(site_title="HasGeek", site_nav=none, hasgeek_auth=true, hasgeek_network=true) %}  
+  <nav class="navbar navbar-default navbar-fixed-top" id="hg-panel" role="navigation">
+    <div class="container-fluid">
+      <ul class="nav pull-left">
+        <li id="hamburger-icon" class="pull-left">
+          <i class="fa fa-reorder"></i>
+        </li>
+        <li id="nav-title" class="dropdown pull-left">
+          {{site_title}}
+        </li>
+      </ul>
+      <ul class="nav pull-right">
+        <li class="dropdown pull-left">
+          {% if hasgeek_auth %}
+            {{add_hasgeek_notify()}}
+          {%- endif %}
+        </li>
+        <li class="dropdown pull-left">
+          {% if hasgeek_auth %}
+            {{add_hasgeek_auth()}}
+          {%- endif %}
+        </li>
+        <li class="dropdown pull-left hg-nw-bar">
+          {% if hasgeek_network %}
+            {{add_hasgeek_network()}}
+          {% endif %}
+        </li>
+      </ul>
+      <div class="nav navbar-nav collapse navbar-collapse navbar-right hg-site-nav">
+        {% if site_nav %}
+          {{site_nav}}
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  {%- if not g.user %}
+    {%- if g.lastuser %}
+      {{ networkbar_login_beacon(g.lastuser.endpoint_url(g.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
+    {%- endif %}
+  {%- endif %}
 {%- endmacro %}
