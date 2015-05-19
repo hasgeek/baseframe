@@ -207,7 +207,7 @@
 {% macro add_hasgeek_auth(links) %}
   {% if g.user -%}
     <button type="button" data-toggle="dropdown" class="dropdown-toggle" id="hg-user-btn">
-      <i class="fa fa-user"></i><b class="caret"></b>
+      <i class="fa fa-user"></i>
     </button>
     <ul class="dropdown-menu pull-right">
       {%- for link in links %}
