@@ -202,9 +202,9 @@ class StripWhitespace(object):
         self.right = right
 
     def __call__(self, form, field):
-        if self.left:
+        if self.left and field.data:
             field.data = field.data.lstrip()
-        if self.right:
+        if self.right and field.data:
             field.data = field.data.rstrip()
 
 
