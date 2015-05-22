@@ -163,7 +163,7 @@
   </nav>
 {%- endmacro %}
 
-{% macro hgnav(site_title="HasGeek", site_nav=none, auth=true, network=true, links=[]) %}
+{% macro hgnav(site_title="HasGeek", site_nav=none, auth=true, network=true, links=[], loginbtntext="Login") %}
   <nav class="navbar navbar-default navbar-fixed-top" id="hgnav" role="navigation">
     <div class="container">
       <div class="navbar-header pull-left hg-header-app-nav">
@@ -173,7 +173,7 @@
         <ul class="nav pull-right">
           <li class="dropdown pull-left">
             {% if auth %}
-              {{add_hasgeek_auth(links)}}
+              {{add_hasgeek_auth(links, loginbtntext)}}
             {%- endif %}
           </li>
           {% if site_nav %}
@@ -204,7 +204,7 @@
   {%- endif %}
 {%- endmacro %}
 
-{% macro add_hasgeek_auth(links) %}
+{% macro add_hasgeek_auth(links, loginbtntext) %}
   {% if g.user -%}
     <button type="button" data-toggle="dropdown" class="dropdown-toggle" id="hg-user-btn">
       <i class="fa fa-user"></i>
@@ -231,7 +231,7 @@
       <li><a href="{{ url_for('logout') }}">Logout</a></li>
     </ul>
   {%- else %}
-    <a href="{{ url_for('login') }}" class='btn btn-primary btn-sm' id="hg-login-btn">Login</a>
+    <a href="{{ url_for('login') }}" class='btn btn-primary btn-sm' id="hg-login-btn">{{ loginbtntext }}</a>
   {%- endif %}
 {%- endmacro %}
 
