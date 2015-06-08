@@ -216,13 +216,10 @@
       <li {% if links %} class="separator-authlinks" {%- endif %}>
         {%- with orgs = g.user.organization_links() %}
         {% if orgs %}
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
-        <ul class="dropdown-menu">
-          <li><a href="/profile">My profile</a></li>
+          <a href="/profile">My profile</a></li>
           {%- for org in orgs %}
           <li><a href="{{ org.link }}">{{ org.title }}</a></li>
           {%- endfor %}             
-        </ul>
         {%- else %}
         <a href="{{ g.user.profile_url }}" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
         {% endif %}
