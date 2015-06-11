@@ -643,7 +643,7 @@ $mob-icon-color: #999;
 
     .page-header h1 {
         margin-bottom: 0;
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .nav {
@@ -753,6 +753,13 @@ $mob-icon-color: #999;
     }
     .separator-authlinks{
         border-top: 1px solid #ddd;
+    }
+}
+@media (min-width: 360px) {
+    #hgnav {
+        .page-header h1 {
+            font-size: 18px;
+        } 
     }
 }
 
