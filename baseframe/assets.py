@@ -270,3 +270,6 @@ assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
     'baseframe-base-bs3.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
 ]}
+
+assets['footable.js'][Version('2.0.3')] = 'baseframe/js/footable.js'
+assets['footable.css'][Version('2.0.3')] = 'baseframe/css/footable.css'
