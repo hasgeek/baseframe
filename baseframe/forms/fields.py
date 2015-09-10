@@ -165,6 +165,8 @@ class TinyMce4Field(TextAreaField):
         tinymce_options.setdefault('statusbar', False)
         tinymce_options.setdefault('menubar', False)
         tinymce_options.setdefault('resize', True)
+        tinymce_options.setdefault('relative_urls', False)
+        tinymce_options.setdefault('remove_script_host', False)
 
         # Remove options that cannot be set by callers
         tinymce_options.pop('content_css', None)
