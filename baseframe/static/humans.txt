@@ -18,11 +18,12 @@
   http://www.karthikbalakrishnan.com/
   @karthikb351
   Bangalore, India
+  
+  Vidya Ramakrishnan
+  @vidya_ramki
+  Bangalore, India
 
-  Rudraksh MK
-  @rudimk
-  New Delhi, India
-
+  
 /* ALUMNI */
 
   Mitesh B Ashar
@@ -85,7 +86,10 @@
   Aditya Yadav
   @NetRoY
   Berlin, Germany
-
+  
+  Rudraksh MK
+  @rudimk
+  New Delhi, India
 
 /* THANKS */
 
