@@ -186,7 +186,6 @@ class NoObfuscatedEmail(object):
 
     def __call__(self, form, field):
         emails = EMAIL_RE.findall(deobfuscate_email(field.data or u''))
-
         for email in emails:
             try:
                 diagnosis = is_email(email, check_dns=True, diagnose=True)
