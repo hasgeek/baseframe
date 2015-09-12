@@ -145,6 +145,11 @@ assets['parsley.remote.js'][Version('2.0.7')] = {
     'bundle': 'baseframe/js/parsley.remote.js',
     }
 
+
+# FooTable
+assets['footable.js'][Version('2.0.3')] = ('jquery.js', 'baseframe/js/footable.js')
+assets['footable.css'][Version('2.0.3')] = 'baseframe/css/footable.css'
+
 assets['animate.css'][Version('0.0.0')] = 'baseframe/css/animate.css'
 
 assets['matchmedia.js'][Version('0.0.0')] = 'baseframe/js/matchmedia.js'
@@ -270,6 +275,3 @@ assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
     'baseframe-base-bs3.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
 ]}
-
-assets['footable.js'][Version('2.0.3')] = 'baseframe/js/footable.js'
-assets['footable.css'][Version('2.0.3')] = 'baseframe/css/footable.css'
