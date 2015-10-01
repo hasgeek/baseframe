@@ -167,6 +167,10 @@ assets['marked.js'][Version('0.3.0')] = 'baseframe/js/marked.js'
 assets['fontawesome.css'][Version('3.1.0')] = 'baseframe/css/fontawesome-3.1.css'
 assets['fontawesome.css'][Version('4.4.0')] = 'baseframe/css/fontawesome-4.4.css'
 
+# Social icons
+assets['rrssb.js'][Version('1.8.5')] = 'baseframe/js/rrssb.js'
+assets['rrssb.css'][Version('1.8.5')] = 'baseframe/css/rrssb.css'
+
 # Fira Sans and Fira Mono
 assets['firasans-regular.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-regular.css'
 assets['firasans-regularitalic.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-regularitalic.css'
