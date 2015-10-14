@@ -18,6 +18,7 @@
 * Added app-global CSRF protection (optional) and removed Mustache dependency
 * Added ``firstline`` filter to extract first line of text from a HTML block
 * ``OptionalIf`` and ``OptionalIfNot`` validators
+* Added new networkbar for use in Hasjob and Funnel
 
 0.3.0
 -----
