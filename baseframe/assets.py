@@ -150,6 +150,9 @@ assets['parsley.remote.js'][Version('2.0.7')] = {
 assets['footable.js'][Version('2.0.3')] = ('jquery.js', 'baseframe/js/footable.js')
 assets['footable.css'][Version('2.0.3')] = 'baseframe/css/footable.css'
 
+# Ractive
+assets['ractive.js'][Version('0.7.3')] = 'baseframe/js/ractive.js'
+
 assets['animate.css'][Version('0.0.0')] = 'baseframe/css/animate.css'
 
 assets['matchmedia.js'][Version('0.0.0')] = 'baseframe/js/matchmedia.js'
