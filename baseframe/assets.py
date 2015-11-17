@@ -150,6 +150,10 @@ assets['parsley.remote.js'][Version('2.0.7')] = {
 assets['footable.js'][Version('2.0.3')] = ('jquery.js', 'baseframe/js/footable.js')
 assets['footable.css'][Version('2.0.3')] = 'baseframe/css/footable.css'
 
+# NProgress
+assets['nprogress.js'][Version('0.2.0')] = 'baseframe/js/nprogress.js'
+assets['nprogress.css'][Version('0.2.0')] = 'baseframe/css/nprogress.css'
+
 # Ractive
 assets['ractive.js'][Version('0.7.3')] = 'baseframe/js/ractive.js'
 
