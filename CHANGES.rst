@@ -19,6 +19,8 @@
 * Added ``firstline`` filter to extract first line of text from a HTML block
 * ``OptionalIf`` and ``OptionalIfNot`` validators
 * Added new networkbar for use in Hasjob and Funnel
+* Replace ``csrf_form`` in template context with ``csrf_token``, regardless of whether
+  global CSRF is enabled
 
 0.3.0
 -----

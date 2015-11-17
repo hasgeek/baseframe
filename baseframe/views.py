@@ -6,10 +6,10 @@ from datetime import datetime, timedelta
 from urlparse import urljoin
 from flask import current_app, send_from_directory, render_template, abort
 from flask.ext.assets import Bundle
+from flask.ext.wtf.csrf import generate_csrf
 from coaster.utils import make_name
 from coaster.assets import split_namespec
 from . import baseframe, networkbar_cache, asset_cache, assets as assets_repo
-from .forms import Form
 
 
 @networkbar_cache.cached(key_prefix='networkbar_links')
@@ -88,7 +88,7 @@ def ext_assets(assets):
 def baseframe_context():
     return {
         'networkbar_links': networkbar_links,
-        'csrf_form': Form,
+        'csrf_token': generate_csrf,
     }
 
 

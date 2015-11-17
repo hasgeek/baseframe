@@ -43,6 +43,8 @@ class BaseframeBlueprint(Blueprint):
             ``requires`` if there is no asset server
         :param bundle_js: Bundle of additional JavaScript
         :param bundle_css: Bundle of additional CSS
+        :param assetenv: Environment for assets (in case your app needs a custom environment)
+        :param bool enable_csrf: Enable global CSRF for all requests in your app
         """
         app.jinja_env.add_extension('jinja2.ext.do')
         if app.config.get('SERVER_NAME'):
