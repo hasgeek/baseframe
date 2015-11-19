@@ -329,4 +329,21 @@ $(function() {
     digits:       "This value should be digits",
     alphanum:     "This value should be alphanumeric"
   });
+
+  var csrfRefresh = function() {
+    $.ajax({
+      type: 'GET',
+      url:  '/api/baseframe/1/csrf/refresh',
+      timeout: 5000,
+      dataType: 'json',
+      success: function(data) {
+        $('meta[name="csrf-token"]').attr('content', data.csrf_token);
+        $('input[name="csrf_token"]').val(data.csrf_token);
+      }
+    });
+  };
+
+  //Request for new CSRF token and update the page every 30 mins
+  setInterval(csrfRefresh, 1800000);
+
 });
