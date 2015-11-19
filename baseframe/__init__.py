@@ -8,6 +8,7 @@ from flask.ext.wtf import CsrfProtect
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
 from flask.ext.babelex import Babel, Domain
+from flask.ext.debugtoolbar import DebugToolbarExtension
 from ._version import *  # NOQA
 from .assets import assets, Version
 from . import translations
@@ -19,6 +20,7 @@ asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
 babel = Babel()
 csrf = CsrfProtect()
+toolbar = DebugToolbarExtension()
 
 baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
 _ = baseframe_translations.gettext
@@ -121,6 +123,7 @@ class BaseframeBlueprint(Blueprint):
         asset_cache.init_app(app, config=acacheconfig)
         cache.init_app(app)
         babel.init_app(app)
+        toolbar.init_app(app)
         if enable_csrf:
             csrf.init_app(app)
 
