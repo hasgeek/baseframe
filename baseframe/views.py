@@ -3,8 +3,8 @@
 import os
 import requests
 from datetime import datetime, timedelta
-from urlparse import urljoin
-from flask import current_app, send_from_directory, render_template, abort
+from urlparse import urlparse, urljoin
+from flask import current_app, send_from_directory, render_template, abort, request, jsonify
 from flask.ext.assets import Bundle
 from flask.ext.wtf.csrf import generate_csrf
 from coaster.utils import make_name
@@ -137,4 +137,22 @@ def editorcss(subdomain=None):
     response = current_app.response_class(render_template('editor.css'),
         mimetype='text/css',
         headers={'Expires': (datetime.utcnow() + timedelta(minutes=60)).strftime('%a, %d %b %Y %H:%M:%S GMT')})
+    return response
+
+
+@baseframe.route('/api/baseframe/1/csrf/refresh', subdomain='<subdomain>')
+@baseframe.route('/api/baseframe/1/csrf/refresh', defaults={'subdomain': None})
+def csrf_refresh(subdomain=None):
+    parsed_host = urlparse(request.url_root)
+    origin = parsed_host.scheme + u'://' + parsed_host.netloc
+    if 'Origin' in request.headers:
+        # Origin is present in (a) cross-site requests and (b) same site requests in some browsers.
+        # Therefore, if Origin is present, confirm it matches our domain.
+        if request.headers['Origin'] != origin:
+            abort(403)
+
+    response = jsonify(csrf_token=generate_csrf())
+    response.headers['Access-Control-Allow-Origin'] = origin
+    response.headers['Vary'] = 'Origin'
+    response.headers['Expires'] = (datetime.utcnow() + timedelta(minutes=10)).strftime('%a, %d %b %Y %H:%M:%S GMT')
     return response
