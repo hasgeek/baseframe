@@ -343,7 +343,7 @@ $(function() {
     });
   };
 
-  //Request for new CSRF token and update the page every 30 mins
-  setInterval(csrfRefresh, 1800000);
+  //Request for new CSRF token and update the page every 15 mins
+  setInterval(csrfRefresh, 900000);
 
 });
