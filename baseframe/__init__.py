@@ -27,6 +27,15 @@ _ = baseframe_translations.gettext
 __ = baseframe_translations.lazy_gettext
 
 
+def _select_jinja_autoescape(filename):
+    """
+    Returns `True` if autoescaping should be active for the given template name.
+    """
+    if filename is None:
+        return False
+    return filename.endswith(('.html', '.htm', '.xml', '.xhtml', '.html.jinja', '.html.jinja2'))
+
+
 class BaseframeBlueprint(Blueprint):
     def init_app(self, app, requires=[], ext_requires=[], bundle_js=None, bundle_css=None, assetenv=None,
             enable_csrf=False):
@@ -49,6 +58,7 @@ class BaseframeBlueprint(Blueprint):
         :param bool enable_csrf: Enable global CSRF for all requests in your app
         """
         app.jinja_env.add_extension('jinja2.ext.do')
+        app.jinja_env.autoescape = _select_jinja_autoescape
         if app.config.get('SERVER_NAME'):
             subdomain = app.config.get('STATIC_SUBDOMAIN', 'static')
             app.add_url_rule('/static/<path:filename>', endpoint='static',
