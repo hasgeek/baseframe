@@ -3,7 +3,7 @@ all: tinymce codemirror
 
 tinymce3_zip = tinymce_3.5.11_jquery.zip
 tinymce4_zip = tinymce_4.1.7_jquery.zip
-codemirror_zip = codemirror.zip
+codemirror_ver = 5.8.0
 
 tinymce:
 	curl -L -O http://download.moxiecode.com/tinymce/$(tinymce3_zip)
@@ -19,13 +19,13 @@ tinymce:
 	rm -rf $(tinymce4_zip) tinymce
 
 codemirror:
-	curl -L -O http://codemirror.net/$(codemirror_zip)
-	unzip $(codemirror_zip)
+	curl -L -O https://github.com/codemirror/CodeMirror/archive/$(codemirror_ver).zip
+	unzip $(codemirror_ver).zip
 	rm -rf static/js/codemirror
 	mkdir static/js/codemirror
-	mv codemirror-*/addon static/js/codemirror
-	mv codemirror-*/keymap static/js/codemirror
-	mv codemirror-*/lib static/js/codemirror
-	mv codemirror-*/mode static/js/codemirror
-	mv codemirror-*/theme static/js/codemirror
-	rm -rf $(codemirror_zip) codemirror-*
+	mv CodeMirror-$(codemirror_ver)/addon static/js/codemirror
+	mv CodeMirror-$(codemirror_ver)/keymap static/js/codemirror
+	mv CodeMirror-$(codemirror_ver)/lib static/js/codemirror
+	mv CodeMirror-$(codemirror_ver)/mode static/js/codemirror
+	mv CodeMirror-$(codemirror_ver)/theme static/js/codemirror
+	rm -rf $(codemirror_ver).zip CodeMirror-$(codemirror_ver)
