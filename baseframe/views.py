@@ -4,11 +4,12 @@ import os
 import requests
 from datetime import datetime, timedelta
 from urlparse import urlparse, urljoin
-from flask import current_app, send_from_directory, render_template, abort, request, jsonify
+from flask import current_app, send_from_directory, render_template, abort, request
 from flask.ext.assets import Bundle
 from flask.ext.wtf.csrf import generate_csrf
 from coaster.utils import make_name
 from coaster.assets import split_namespec
+from coaster.views import render_with
 from . import baseframe, networkbar_cache, asset_cache, assets as assets_repo
 
 
@@ -142,6 +143,9 @@ def editorcss(subdomain=None):
 
 @baseframe.route('/api/baseframe/1/csrf/refresh', subdomain='<subdomain>')
 @baseframe.route('/api/baseframe/1/csrf/refresh', defaults={'subdomain': None})
+@render_with({
+    'text/plain': lambda r: r['csrf_token'],
+    }, json=True, jsonp=False)
 def csrf_refresh(subdomain=None):
     parsed_host = urlparse(request.url_root)
     origin = parsed_host.scheme + u'://' + parsed_host.netloc
@@ -151,8 +155,8 @@ def csrf_refresh(subdomain=None):
         if request.headers['Origin'] != origin:
             abort(403)
 
-    response = jsonify(csrf_token=generate_csrf())
-    response.headers['Access-Control-Allow-Origin'] = origin
-    response.headers['Vary'] = 'Origin'
-    response.headers['Expires'] = (datetime.utcnow() + timedelta(minutes=10)).strftime('%a, %d %b %Y %H:%M:%S GMT')
-    return response
+    return {'csrf_token': generate_csrf()}, 200, {
+        'Access-Control-Allow-Origin': origin,
+        'Vary': 'Origin',
+        'Expires': (datetime.utcnow() + timedelta(minutes=10)).strftime('%a, %d %b %Y %H:%M:%S GMT')
+        }
