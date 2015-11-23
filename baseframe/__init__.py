@@ -179,7 +179,7 @@ baseframe = BaseframeBlueprint('baseframe', __name__,
 def get_locale():
     # If a user is logged in and the user object specifies a locale, use it
     user = getattr(g, 'user', None)
-    if user is not None and hasattr(user, 'locale'):
+    if user is not None and hasattr(user, 'locale') and user.locale:
         return user.locale
     # Otherwise try to guess the language from the user accept
     # header the browser transmits. We support a few in this
