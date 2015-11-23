@@ -210,6 +210,16 @@ def process_response(response):
             # This is required for webfont resources
             response.headers['Access-Control-Allow-Origin'] = '*'  # TODO: Make this configurable
 
+    if 'Vary' in response.headers:
+        vary_values = [item.strip() for item in response.headers['Vary'].split(',')]
+        if 'Accept-Language' not in vary_values:
+            vary_values.append('Accept-Language')
+        if 'Cookie' not in vary_values:
+            vary_values.append('Cookie')
+        response.headers['Vary'] = ', '.join(vary_values)
+    else:
+        response.headers['Vary'] = 'Accept-Language, Cookie'
+
     # Prevent pages from being placed in an iframe. If the response already
     # set has a value for this option, let it pass through
     if 'X-Frame-Options' in response.headers:
