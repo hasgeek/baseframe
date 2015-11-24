@@ -208,7 +208,9 @@ def process_response(response):
     if request.endpoint in ('static', 'baseframe.static'):
         if 'Access-Control-Allow-Origin' not in response.headers:
             # This is required for webfont resources
-            response.headers['Access-Control-Allow-Origin'] = '*'  # TODO: Make this configurable
+            # Note: We do not serve static assets in production, nginx does.
+            # That means this piece of code will never be called in production.
+            response.headers['Access-Control-Allow-Origin'] = '*'
 
     if 'Vary' in response.headers:
         vary_values = [item.strip() for item in response.headers['Vary'].split(',')]
