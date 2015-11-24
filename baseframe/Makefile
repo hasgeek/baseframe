@@ -1,9 +1,9 @@
 # Makefile for tinymce
 all: tinymce codemirror
 
-tinymce3_zip = tinymce_3.5.11_jquery.zip
 tinymce4_zip = tinymce_4.3.0_jquery.zip
-codemirror_ver = 5.8.0
+tinymce4_zip = tinymce_4.1.7_jquery.zip
+codemirror_ver = 4.11.0
 
 tinymce:
 	curl -L -O http://download.moxiecode.com/tinymce/$(tinymce3_zip)
