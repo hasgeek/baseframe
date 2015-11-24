@@ -232,6 +232,10 @@ def process_response(response):
         if hasattr(g, 'login_required') and g.login_required:
             # Protect only login_required pages from appearing in frames
             response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+
+    # In memoriam. http://www.gnuterrypratchett.com/
+    response.headers['X-Clacks-Overhead'] = 'GNU Terry Pratchett'
+
     return response
 
 
