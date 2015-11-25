@@ -17,7 +17,10 @@ def error404(e):
             matchinfo = adapter.match(newpath)
             if matchinfo[0] != request.endpoint:
                 # Redirect only if it's not back to the same endpoint
-                return redirect(request.url[:-1])
+                redirect_url = request.base_url[:-1]
+                if request.query_string:
+                    redirect_url = redirect_url + u'?' + request.query_string
+                return redirect(redirect_url)
         except (NotFound, RequestRedirect, MethodNotAllowed):
             pass
     baseframe_translations.as_default()
