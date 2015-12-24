@@ -163,7 +163,7 @@
   </nav>
 {%- endmacro %}
 
-{% macro hgnav(site_title="HasGeek", site_nav=none, auth=true, network=true, links=[], loginbtntext="Login") %}
+{% macro hgnav(site_title="HasGeek", site_nav=none, auth=true, network=true, site_links=[], user_links=[], loginbtntext="Login") %}
   <nav class="navbar navbar-default navbar-fixed-top" id="hgnav" role="navigation">
     <div class="container">
       <div class="navbar-header pull-left hg-header-app-nav">
@@ -171,9 +171,16 @@
       </div>
       <div class="navbar-header pull-right hg-header-nav">
         <ul class="nav pull-right">
+          {%- for link in site_links %}
+            <li class="dropdown pull-left">
+              <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>
+                {{ link.title }}
+              </a>
+            </li>
+          {%- endfor %}
           <li class="dropdown pull-left">
             {% if auth %}
-              {{add_hasgeek_auth(links, loginbtntext)}}
+              {{add_hasgeek_auth(user_links, loginbtntext)}}
             {%- endif %}
           </li>
           {% if site_nav %}
