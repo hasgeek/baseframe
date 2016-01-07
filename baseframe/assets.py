@@ -157,6 +157,9 @@ assets['nprogress.css'][Version('0.2.0')] = 'baseframe/css/nprogress.css'
 # Ractive
 assets['ractive.js'][Version('0.7.3')] = 'baseframe/js/ractive.js'
 
+# Hammer
+assets['hammer.js'][Version('2.0.6')] = 'baseframe/js/hammer.min.js'
+
 assets['animate.css'][Version('0.0.0')] = 'baseframe/css/animate.css'
 
 assets['matchmedia.js'][Version('0.0.0')] = 'baseframe/js/matchmedia.js'
