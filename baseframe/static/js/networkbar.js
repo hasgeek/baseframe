@@ -27,15 +27,3 @@ $(function(){
 		}
 	});
 });
-
-$(function(){
-	if (Modernizr.touch){
-		$('.menu-toggle').click(function(){
-			if(!$('.navbar-collapse').hasClass('in')){
-				$('body').addClass('nav-open');
-			}else{
-				$('body').removeClass('nav-open');
-			}	
-		});	
-	}
-});

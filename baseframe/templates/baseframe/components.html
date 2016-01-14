@@ -163,11 +163,11 @@
   </nav>
 {%- endmacro %}
 
-{% macro hgnav(site_title="HasGeek", site_nav=none, auth=true, network=true, site_links=[], user_links=[], loginbtntext="Login") %}
+{% macro hgnav(site_title="HasGeek", site_nav_button=none, site_nav=none, auth=true, network=true, site_links=[], user_links=[], loginbtntext="Login") %}
   <nav class="navbar navbar-default navbar-fixed-top" id="hgnav" role="navigation">
     <div class="container">
       <div class="navbar-header pull-left hg-header-app-nav">
-            {{site_title}}
+        {{site_title}}
       </div>
       <div class="navbar-header pull-right hg-header-nav">
         <ul class="nav pull-right">
@@ -183,11 +183,15 @@
               {{add_hasgeek_auth(user_links, loginbtntext)}}
             {%- endif %}
           </li>
-          {% if site_nav %}
+          {% if site_nav_button %}
+          <li class="dropdown pull-left">
+            {{site_nav_button}}
+          </li>
+          {% elif site_nav %}
           <li class="dropdown pull-left">
               <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="menu-toggle hg-site-nav-toggle">
                 <i class="fa fa-bars"></i>
-              </button> 
+              </button>
           </li>
           {% endif %}
           <li class="dropdown pull-right hg-nw-bar">
@@ -197,7 +201,9 @@
           </li>
         </ul>
       </div>
-      {% if site_nav %}
+      {% if site_nav_button %}
+        {{site_nav}}
+      {% elif site_nav %}
       <div class="nav collapse navbar-collapse navbar-right hg-site-nav" id="hg-sitenav">
         {{site_nav}}
       </div>
