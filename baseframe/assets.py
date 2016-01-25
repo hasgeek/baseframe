@@ -205,6 +205,29 @@ assets['firamono.css'][Version('1.0.0')] = {'requires': [
     'firamono-bold.css==1.0.0'
     ]}
 
+
+assets['firasans-regular.css'][Version('4.2.0')] = 'baseframe/fonts/fira-4/firasans-regular.css'
+assets['firasans-regular-italic.css'][Version('4.2.0')] = 'baseframe/fonts/fira-4/firasans-regular-italic.css'
+assets['firasans-bold.css'][Version('4.2.0')] = 'baseframe/fonts/fira-4/firasans-bold.css'
+assets['firasans-bold-italic.css'][Version('4.2.0')] = 'baseframe/fonts/fira-4/firasans-bold-italic.css'
+
+assets['firasans.css'][Version('4.2.0')] = {'requires': [
+    'firasans-regular.css==4.2.0',
+    'firasans-regular-italic.css==4.2.0',
+    'firasans-bold.css==4.2.0',
+    'firasans-bold-italic.css==4.2.0'
+    ]}
+
+
+assets['firamono-regular.css'][Version('4.2.0')] = 'baseframe/css/fira/firamono-regular.css'
+assets['firamono-bold.css'][Version('4.2.0')] = 'baseframe/css/fira/firamono-bold.css'
+
+assets['firamono.css'][Version('4.2.0')] = {'requires': [
+    'firamono-regular.css==4.2.0',
+    'firamono-bold.css==4.2.0'
+    ]}
+
+
 assets['baseframe-firasans.css'][Version('1.0.0')] = 'baseframe/css/baseframe-firasans.css'
 
 # Asset packages
