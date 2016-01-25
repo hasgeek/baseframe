@@ -219,8 +219,8 @@ assets['firasans.css'][Version('4.2.0')] = {'requires': [
     ]}
 
 
-assets['firamono-regular.css'][Version('4.2.0')] = 'baseframe/css/fira/firamono-regular.css'
-assets['firamono-bold.css'][Version('4.2.0')] = 'baseframe/css/fira/firamono-bold.css'
+assets['firamono-regular.css'][Version('4.2.0')] = 'baseframe/fonts/fira/firamono-regular.css'
+assets['firamono-bold.css'][Version('4.2.0')] = 'baseframe/fonts/fira/firamono-bold.css'
 
 assets['firamono.css'][Version('4.2.0')] = {'requires': [
     'firamono-regular.css==4.2.0',
