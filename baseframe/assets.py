@@ -199,6 +199,7 @@ assets['firasans.css'][Version('1.0.0')] = {'requires': [
     'firasans-bold.css==1.0.0',
     'firasans-bolditalic.css==1.0.0'
     ]}
+assets['firasans.css'][Version('4.2.0')] = 'baseframe/fonts/fira-4/fira.css'
 
 assets['firamono.css'][Version('1.0.0')] = {'requires': [
     'firamono-regular.css==1.0.0',
