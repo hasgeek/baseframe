@@ -18,7 +18,7 @@ requires = [
     'semantic_version',
     'bleach',
     'pytz',
-    'pyIsEmail>=1.3.1',
+    'pyIsEmail',
     'dnspython',
     'WTForms>=2.0',
     'Flask>=0.10.0',
