@@ -808,6 +808,7 @@ webmail_domains = set([
     'live.co.uk',
     'live.com',
     'live.eu',
+    'live.in',
     'live.net',
     'live.org',
     'livetolove.net',
