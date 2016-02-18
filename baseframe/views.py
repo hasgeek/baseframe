@@ -71,7 +71,7 @@ def ext_assets(assets):
     if current_app.config.get('ASSET_SERVER'):
         try:
             r = requests.get(urljoin(current_app.config['ASSET_SERVER'], 'asset'),
-                params={'asset': assets},
+                params={'a': assets},
                 allow_redirects=False)
             if r.status_code in (301, 302, 303, 307):
                 url = r.headers['location']
