@@ -157,3 +157,11 @@ def firstline(html):
     result = text_blocks(html)
     if result:
         return result[0]
+
+
+@baseframe.app_template_filter('cdata')
+def cdata(text):
+    """
+    Convert text to a CDATA sequence
+    """
+    return Markup('<![CDATA[' + text.replace(']]>', ']]]]><![CDATA[>') + ']]>')
