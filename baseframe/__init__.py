@@ -205,6 +205,8 @@ def get_timezone():
 
 @baseframe.after_app_request
 def process_response(response):
+    if response is None:
+        return response  # This can happen in a 404 Not Found
     if request.endpoint in ('static', 'baseframe.static'):
         if 'Access-Control-Allow-Origin' not in response.headers:
             # This is required for webfont resources
