@@ -78,7 +78,7 @@ function radioHighlight(radioName, highlightClass) {
   $(selector).click(handler);
 }
 
-function activate_geoname_autocomplete(selector, autocomplete_endpoint, getname_endpoint) {
+function activate_geoname_autocomplete(selector, autocomplete_endpoint, getname_endpoint, separator) {
   $(selector).select2({
     placeholder: "Search for a location",
     multiple: true,
@@ -106,7 +106,7 @@ function activate_geoname_autocomplete(selector, autocomplete_endpoint, getname_
     initSelection: function(element, callback) {
       var val = $(element).val();
       if (val !== '') {
-        var qs = '?name=' + val.replace(/,/g, '&name=');
+        var qs = '?name=' + val.replace(separator, '&name=');
         $.ajax(getname_endpoint + qs, {
           accepts: "application/json",
           dataType: "jsonp"
@@ -228,7 +228,7 @@ window.Baseframe.Forms = {
           if ('client_id' in options) {
             data = {client_id: options.client_id, session: options.session_id};
           };
-          $.ajax(options.getuser_endpoint + '?userid=' + val.replace(/,/g, '&userid='), {
+          $.ajax(options.getuser_endpoint + '?userid=' + val.replace(options.separator, '&userid='), {
             data: data,
             accepts: "application/json",
             dataType: "jsonp"
@@ -243,6 +243,43 @@ window.Baseframe.Forms = {
         }
       }
     });
+  },
+  textAutocomplete: function(options) {
+    $("#" + options.id).select2({
+      placeholder: "Type to select",
+      multiple: options.multiple,
+      minimumInputLength: 2,
+      ajax: {
+        url: options.autocomplete_endpoint,
+        dataType: "json",
+        data: function(term, page) {
+          return {
+            q: term,
+            page: page
+          };
+        },
+        results: function(data, page) {
+          return {
+            more: false,
+            results: data[options.key].map(function(item) {
+              return {id: item, text: item};
+            })
+          };
+        }
+      },
+      initSelection: function(element, callback) {
+        if (options.multiple) {
+          var data = [];
+          $(element.val().split(options.separator)).each(function () {
+              data.push({id: this, text: this});
+          });
+          callback(data);
+        } else {
+          var data = {id: element.val(), text: element.val()};
+          callback(data);
+        };
+      }
+    })
   }
 };
 

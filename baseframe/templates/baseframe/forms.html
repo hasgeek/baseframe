@@ -276,11 +276,20 @@
       {{ tinymce3_editor(field, script=false) }}
     {%- elif field.widget.input_type == 'tinymce4' -%}
       {{ tinymce4_editor(field, script=false) }}
+    {%- elif field.type in ['AutocompleteField', 'AutocompleteMultipleField'] %}
+      Baseframe.Forms.textAutocomplete({
+        id: {{ field.id|tojson }},
+        multiple: {{ field.multiple|tojson }},
+        separator: {{ field.separator|tojson }},
+        autocomplete_endpoint: {{ field.autocomplete_endpoint|tojson }},
+        key: {{ field.results_key|tojson }}
+      });
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
       {%- if config['LASTUSER_CLIENT_ID'] and 'lastuser_sessionid' in session %}
         Baseframe.Forms.lastuserAutocomplete({
           id: {{ field.id|tojson }},
           multiple: {{ field.multiple|tojson }},
+          separator: {{ field.separator|tojson }},
           autocomplete_endpoint: {{ field.autocomplete_endpoint|tojson }},
           getuser_endpoint: {{ field.getuser_endpoint|tojson }},
           client_id: {{ config['LASTUSER_CLIENT_ID']|tojson }},
@@ -290,12 +299,13 @@
         Baseframe.Forms.lastuserAutocomplete({
           id: {{ field.id|tojson }},
           multiple: {{ field.multiple|tojson }},
+          separator: {{ field.separator|tojson }},
           autocomplete_endpoint: {{ field.autocomplete_endpoint|tojson }},
           getuser_endpoint: {{ field.getuser_endpoint|tojson }}
         });
       {%- endif %}
     {%- elif field.type in ['GeonameSelectField', 'GeonameSelectMultiField'] %}
-      activate_geoname_autocomplete({{ ('#'+field.id)|tojson }}, {{ field.autocomplete_endpoint|tojson }}, {{ field.getname_endpoint|tojson }});
+      activate_geoname_autocomplete({{ ('#'+field.id)|tojson }}, {{ field.autocomplete_endpoint|tojson }}, {{ field.getname_endpoint|tojson }}, {{ field.separator|tojson }});
     {%- elif field.type == 'CoordinatesField' -%}
       {{ map_marker_script(field) }}
     {%- endif -%}

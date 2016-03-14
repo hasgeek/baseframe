@@ -6,7 +6,7 @@ from urlparse import urljoin
 from pytz import utc, timezone as pytz_timezone
 from flask import current_app
 import wtforms
-from wtforms.fields import SelectMultipleField, SubmitField, FileField
+from wtforms.fields import SelectField, SelectMultipleField, SubmitField, FileField
 from wtforms.compat import text_type
 from wtforms.utils import unset_value
 import bleach
@@ -18,9 +18,9 @@ __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'TextListField',
     'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
     'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
-    'CoordinatesField', 'RadioMatrixField',
+    'CoordinatesField', 'RadioMatrixField', 'AutocompleteField', 'AutocompleteMultipleField',
     # Imported from WTForms:
-    'SelectMultipleField', 'SubmitField', 'FileField']
+    'SelectField', 'SelectMultipleField', 'SubmitField', 'FileField']
 
 
 # Default tags and attributes to allow in HTML sanitization
@@ -386,6 +386,54 @@ class UserSelectMultiField(UserSelectFieldBase, StringField):
     """
     widget = HiddenInput()
     multiple = True
+
+
+class AutocompleteFieldBase(object):
+    """
+    Autocomplete a field.
+    """
+    def __init__(self, *args, **kwargs):
+        self.autocomplete_endpoint = kwargs.pop('autocomplete_endpoint')
+        self.results_key = kwargs.pop('results_key', 'results')
+        self.separator = kwargs.pop('separator', ',')
+        super(AutocompleteFieldBase, self).__init__(*args, **kwargs)
+        self.choices = ()  # Disregard server-side choices
+
+    def pre_validate(self, form):
+        """Do not validate data"""
+        return
+
+
+class AutocompleteField(AutocompleteFieldBase, StringField):
+    """
+    Select field that sources choices from a JSON API endpoint.
+    Does not validate choices server-side.
+    """
+    widget = HiddenInput()
+    multiple = False
+
+
+class AutocompleteMultipleField(AutocompleteFieldBase, StringField):
+    """
+    Multiple select field that sources choices from a JSON API endpoint.
+    Does not validate choices server-side.
+    """
+    widget = HiddenInput()
+    multiple = True
+
+    def _value(self):
+        if self.data:
+            return self.separator.join(self.data)
+        else:
+            return ''
+
+    def process_formdata(self, valuelist):
+        retval = super(AutocompleteMultipleField, self).process_formdata(valuelist)
+        if self.data:
+            self.data = self.data.split(self.separator)
+        else:
+            self.data = []  # Calling ''.split(',') will give us [''] which is an invalid userid
+        return retval
 
 
 class GeonameSelectFieldBase(object):
