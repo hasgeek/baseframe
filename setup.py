@@ -27,6 +27,7 @@ requires = [
     'Flask-Cache',
     'Flask-BabelEx',
     'flask-debugtoolbar',
+    'speaklater',
     'redis',
     'cssmin',
     'coaster',

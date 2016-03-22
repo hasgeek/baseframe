@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from speaklater import is_lazy_string
 import wtforms
 from wtforms.compat import iteritems
 from flask.ext.wtf import Form as BaseForm
@@ -88,7 +89,10 @@ class Form(BaseForm):
             form_validation_success.send(self)
 
     def errors_with_data(self):
-        return {name: {'data': f.data, 'errors': f.errors} for name, f in iteritems(self._fields) if f.errors}
+        # Convert lazy_gettext error strings into unicode so they don't cause problems downstream
+        # (like when pickling)
+        return {name: {'data': f.data, 'errors': [unicode(e) if is_lazy_string(e) else e for e in f.errors]}
+            for name, f in iteritems(self._fields) if f.errors}
 
 
 class FormGenerator(object):
