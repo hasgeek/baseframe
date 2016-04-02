@@ -77,7 +77,7 @@ def ext_assets(assets):
                 url = r.headers['location']
             else:  # XXX: What broke and failed to do a 3xx?
                 url = r.url
-            asset_cache.set('assets/' + key, url, timeout=60)
+            asset_cache.set('assets/' + key, url, timeout=current_app.config.get('ASSET_TIMEOUT', 60))
             return url
         except requests.exceptions.ConnectionError:
             return gen_assets_url(assets)
