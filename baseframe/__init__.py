@@ -8,7 +8,16 @@ from flask.ext.wtf import CsrfProtect
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
 from flask.ext.babelex import Babel, Domain
-from flask.ext.debugtoolbar import DebugToolbarExtension
+
+try:
+    from flask.ext.debugtoolbar import DebugToolbarExtension
+except ImportError:
+    DebugToolbarExtension = None
+try:
+    from flask_debugtoolbar_lineprofilerpanel.profile import line_profile
+except ImportError:
+    line_profile = None
+
 from ._version import *  # NOQA
 from .assets import assets, Version
 from . import translations
@@ -20,7 +29,10 @@ asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
 babel = Babel()
 csrf = CsrfProtect()
-toolbar = DebugToolbarExtension()
+if DebugToolbarExtension is not None:
+    toolbar = DebugToolbarExtension()
+else:
+    toolbar = None
 
 baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
 _ = baseframe_translations.gettext
@@ -133,7 +145,24 @@ class BaseframeBlueprint(Blueprint):
         asset_cache.init_app(app, config=acacheconfig)
         cache.init_app(app)
         babel.init_app(app)
-        toolbar.init_app(app)
+        if toolbar is not None:
+            if 'DEBUG_TB_PANELS' not in app.config:
+                app.config['DEBUG_TB_PANELS'] = [
+                    'flask_debugtoolbar.panels.versions.VersionDebugPanel',
+                    'flask_debugtoolbar.panels.timer.TimerDebugPanel',
+                    'flask_debugtoolbar.panels.headers.HeaderDebugPanel',
+                    'flask_debugtoolbar.panels.request_vars.RequestVarsDebugPanel',
+                    'flask_debugtoolbar.panels.config_vars.ConfigVarsDebugPanel',
+                    'flask_debugtoolbar.panels.template.TemplateDebugPanel',
+                    'flask_debugtoolbar.panels.sqlalchemy.SQLAlchemyDebugPanel',
+                    'flask_debugtoolbar.panels.logger.LoggingPanel',
+                    'flask_debugtoolbar.panels.route_list.RouteListDebugPanel',
+                    'flask_debugtoolbar.panels.profiler.ProfilerDebugPanel',
+                    ]
+                if line_profile is not None:
+                    app.config['DEBUG_TB_PANELS'].append(
+                        'flask_debugtoolbar_lineprofilerpanel.panels.LineProfilerPanel')
+            toolbar.init_app(app)
         if enable_csrf:
             csrf.init_app(app)
 

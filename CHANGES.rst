@@ -21,6 +21,7 @@
 * Added new networkbar for use in Hasjob and Funnel
 * Replace ``csrf_form`` in template context with ``csrf_token``, regardless of whether
   global CSRF is enabled
+* Optional support for Flask-DebugToolbar and LineProfiler extension
 
 0.3.0
 -----
