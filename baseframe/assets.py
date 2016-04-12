@@ -157,6 +157,12 @@ assets['nprogress.css'][Version('0.2.0')] = 'baseframe/css/nprogress.css'
 # Ractive
 assets['ractive.js'][Version('0.7.3')] = 'baseframe/js/ractive.js'
 
+# Ractive fly transition
+assets['ractive-transitions-fly.js'][Version('0.3.0')] = 'baseframe/js/ractive-transitions-fly.js'
+
+# Validate
+assets['validate.js'][Version('2.0.1')] = 'baseframe/js/validate.js'
+
 # Hammer
 assets['hammer.js'][Version('2.0.6')] = 'baseframe/js/hammer.min.js'
 
