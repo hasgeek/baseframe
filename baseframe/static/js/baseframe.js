@@ -106,10 +106,10 @@ function activate_geoname_autocomplete(selector, autocomplete_endpoint, getname_
     initSelection: function(element, callback) {
       var val = $(element).val();
       if (val !== '') {
-        var qs = '?name=' + val.replace(separator, '&name=');
+        var qs = '?name=' + val.replace(new RegExp(separator, 'g'), '&name=');
         $.ajax(getname_endpoint + qs, {
-          accepts: "application/json",
-          dataType: "jsonp"
+          accepts: 'application/json',
+          dataType: 'jsonp'
         }).done(function(data) {
           $(element).val('');  // Clear it in preparation for incoming data
           var rdata = [];
@@ -228,10 +228,10 @@ window.Baseframe.Forms = {
           if ('client_id' in options) {
             data = {client_id: options.client_id, session: options.session_id};
           };
-          $.ajax(options.getuser_endpoint + '?userid=' + val.replace(options.separator, '&userid='), {
+          $.ajax(options.getuser_endpoint + '?userid=' + val.replace(new RegExp(options.separator, 'g'), '&userid='), {
             data: data,
-            accepts: "application/json",
-            dataType: "jsonp"
+            accepts: 'application/json',
+            dataType: 'jsonp'
           }).done(function(data) {
             $(element).val('');  // Clear it in preparation for incoming data
             var results = [];
