@@ -144,7 +144,7 @@ assets['parsley.remote.js'][Version('2.0.7')] = {
     'provides': 'parsley.js',
     'bundle': 'baseframe/js/parsley.remote.js',
     }
-
+assets['fingerprint2.js'][Version('1.1.4')] = 'baseframe/js/fingerprint2.js'
 
 # FooTable
 assets['footable.js'][Version('2.0.3')] = ('jquery.js', 'baseframe/js/footable.js')
