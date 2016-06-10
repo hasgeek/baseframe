@@ -45,7 +45,8 @@ def _select_jinja_autoescape(filename):
     """
     if filename is None:
         return False
-    return filename.endswith(('.html', '.htm', '.xml', '.xhtml', '.html.jinja', '.html.jinja2'))
+    return filename.endswith(('.html', '.htm', '.xml', '.xhtml',
+        '.html.jinja', '.html.jinja2', '.xml.jinja', '.xml.jinja2', '.xhtml.jinja', '.xhtml.jinja2'))
 
 
 class BaseframeBlueprint(Blueprint):
