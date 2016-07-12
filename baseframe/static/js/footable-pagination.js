@@ -2,7 +2,7 @@
  * FooTable Pagination
  * Version : 2.0.3
  * http://fooplugins.com/plugins/footable-jquery/
- * https://github.com/fooplugins/FooTable
+ * https://github.com/fooplugins/FooTable/tree/V2
  *
  * Requires jQuery - http://jquery.com/
  *
