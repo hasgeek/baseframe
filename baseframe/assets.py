@@ -148,9 +148,10 @@ assets['fingerprint2.js'][Version('1.1.4')] = 'baseframe/js/fingerprint2.js'
 
 # FooTable
 assets['footable.js'][Version('2.0.3')] = ('jquery.js', 'baseframe/js/footable.js')
-assets['footable-pagination.js'][Version('2.0.3')] = ('jquery.js', 'footable.js', 'baseframe/js/footable-pagination.js')
-assets['footable-filtering.js'][Version('2.0.3')] = ('jquery.js', 'footable.js', 'baseframe/js/footable-filtering.js')
-assets['footable.css'][Version('2.0.3')] = 'baseframe/css/footable.css'
+assets['footable-paginate.js'][Version('2.0.3')] = ('jquery.js', 'footable.js', 'baseframe/js/footable-paginate.js')
+assets['footable-filter.js'][Version('2.0.3')] = ('jquery.js', 'footable.js', 'baseframe/js/footable-filter.js')
+assets['footable-sort.js'][Version('2.0.3')] = ('jquery.js', 'footable.js', 'baseframe/js/footable-sort.js')
+assets['footable.css'][Version('2.0.3')] = ('fontawesome.css', 'baseframe/css/footable.css')
 
 # NProgress
 assets['nprogress.js'][Version('0.2.0')] = 'baseframe/js/nprogress.js'
