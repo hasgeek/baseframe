@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import
-from pytz import timezone
+from pytz import timezone, UTC
 from flask import g, Blueprint, request
 from coaster.assets import split_namespec
 from flask.ext.wtf import CsrfProtect
@@ -230,7 +230,17 @@ def get_timezone():
             return user.tz
         elif hasattr(user, 'timezone'):
             return timezone(user.timezone)
-    return app.config.get('tz') or timezone('UTC')
+    return app.config.get('tz') or UTC
+
+
+def localize_timezone(datetime, tz=None):
+    if not datetime.tzinfo:
+        datetime = UTC.localize(datetime)
+    if not tz:
+        tz = get_timezone()
+    if isinstance(tz, basestring):
+        tz = timezone(tz)
+    return datetime.astimezone(tz)
 
 
 @baseframe.after_app_request
