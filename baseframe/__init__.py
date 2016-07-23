@@ -2,7 +2,7 @@
 
 from __future__ import absolute_import
 from pytz import timezone, UTC
-from flask import g, Blueprint, request
+from flask import g, Blueprint, request, current_app
 from coaster.assets import split_namespec
 from flask.ext.wtf import CsrfProtect
 from flask.ext.assets import Environment, Bundle
@@ -230,7 +230,7 @@ def get_timezone():
             return user.tz
         elif hasattr(user, 'timezone'):
             return timezone(user.timezone)
-    return app.config.get('tz') or UTC
+    return current_app.config.get('tz') or UTC
 
 
 def localize_timezone(datetime, tz=None):
