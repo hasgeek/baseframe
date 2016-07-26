@@ -152,7 +152,7 @@ assets['footable-paginate.js'][Version('2.0.3')] = ('jquery.js', 'footable.js', 
 assets['footable-filter.js'][Version('2.0.3')] = ('jquery.js', 'footable.js', 'baseframe/js/footable-filter.js')
 assets['footable-sort.js'][Version('2.0.3')] = ('jquery.js', 'footable.js', 'baseframe/js/footable-sort.js')
 assets['baseframe-footable.js'][Version('2.0.3')] = {
-    'requires': ['footable.js', 'footable-paginate.js', 'footable-filter.js', 'footable-sort.js']
+    'requires': ['footable.js', 'footable-filter.js', 'footable-sort.js']
     }
 assets['baseframe-footable.css'][Version('2.0.3')] = {
     'provides': 'footable.css',
