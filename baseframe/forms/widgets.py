@@ -2,12 +2,38 @@
 
 import wtforms
 from wtforms.compat import text_type
-from wtforms.widgets import RadioInput
+from wtforms.widgets import RadioInput, Select, HTMLString, html_params
 from flask import Markup
 from .. import b_ as _
 
 __all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'HiddenInput', 'CoordinatesInput',
-    'RadioMatrixInput', 'InlineListWidget', 'RadioInput']
+    'RadioMatrixInput', 'InlineListWidget', 'RadioInput', 'SelectWidget']
+
+
+# This class borrowed from https://github.com/industrydive/wtforms_extended_selectfield
+class SelectWidget(Select):
+    """
+    Add support of choices with ``optgroup`` to the ``Select`` widget.
+    """
+    def __call__(self, field, **kwargs):
+        kwargs.setdefault('id', field.id)
+        if self.multiple:
+            kwargs['multiple'] = True
+        html = ['<select %s>' % html_params(name=field.name, **kwargs)]
+        for item1, item2 in field.choices:
+            if isinstance(item2, (list, tuple)):
+                group_label = item1
+                group_items = item2
+                html.append('<optgroup %s>' % html_params(label=group_label))
+                for inner_val, inner_label in group_items:
+                    html.append(self.render_option(inner_val, inner_label, inner_val == field.data))
+                html.append('</optgroup>')
+            else:
+                val = item1
+                label = item2
+                html.append(self.render_option(val, label, val == field.data))
+        html.append('</select>')
+        return HTMLString(''.join(html))
 
 
 class TinyMce3(wtforms.widgets.TextArea):

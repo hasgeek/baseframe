@@ -6,26 +6,70 @@ from urlparse import urljoin
 from pytz import utc, timezone as pytz_timezone
 from flask import current_app
 import wtforms
-from wtforms.fields import SelectField, SelectMultipleField, SubmitField, FileField
+from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, SubmitField, FileField
 from wtforms.compat import text_type
 from wtforms.utils import unset_value
 import bleach
 
-from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput, CoordinatesInput, RadioMatrixInput
+from .. import _
+from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput, CoordinatesInput, RadioMatrixInput, SelectWidget
 from .parsleyjs import TextAreaField, StringField, URLField
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'TextListField',
     'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
     'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
-    'CoordinatesField', 'RadioMatrixField', 'AutocompleteField', 'AutocompleteMultipleField',
+    'CoordinatesField', 'RadioMatrixField', 'AutocompleteField', 'AutocompleteMultipleField', 'SelectField',
     # Imported from WTForms:
-    'SelectField', 'SelectMultipleField', 'SubmitField', 'FileField']
+    'SelectMultipleField', 'SubmitField', 'FileField']
 
 
 # Default tags and attributes to allow in HTML sanitization
-SANITIZE_TAGS = ['p', 'br', 'strong', 'em', 'sup', 'sub', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'blockquote', 'code']
+SANITIZE_TAGS = ['p', 'br', 'strong', 'em', 'sup', 'sub', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a',
+    'blockquote', 'code']
 SANITIZE_ATTRIBUTES = {'a': ['href', 'title', 'target']}
+
+
+# This class borrowed from https://github.com/industrydive/wtforms_extended_selectfield
+class SelectField(SelectFieldBase):
+    """
+    Add support of ``optgroup`` grouping to default WTForms's ``SelectField`` class.
+    Here is an example of how the data is laid out.
+        (
+            ("Fruits", (
+                ('apple', "Apple"),
+                ('peach', "Peach"),
+                ('pear', "Pear")
+            )),
+            ("Vegetables", (
+                ('cucumber', "Cucumber"),
+                ('potato', "Potato"),
+                ('tomato', "Tomato"),
+            )),
+            ('other', "None of the above")
+        )
+    It's a little strange that the tuples are (value, label) except for groups which are (Group Label, list of tuples)
+    but this is actually how Django does it too https://docs.djangoproject.com/en/dev/ref/models/fields/#choices
+    """
+    widget = SelectWidget()
+
+    def pre_validate(self, form):
+        """
+        Don't forget to also validate values from embedded lists.
+        """
+        for item1, item2 in self.choices:
+            if isinstance(item2, (list, tuple)):
+                # group_label = item1
+                group_items = item2
+                for val, label in group_items:
+                    if val == self.data:
+                        return
+            else:
+                val = item1
+                # label = item2
+                if val == self.data:
+                    return
+        raise ValueError(_("Not a valid choice!"))
 
 
 class TinyMce3Field(TextAreaField):
