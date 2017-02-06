@@ -23,7 +23,7 @@ requires = [
     'WTForms>=2.0',
     'Flask>=0.10.0',
     'Flask-Assets',
-    'Flask-WTF',
+    'Flask-WTF>=0.14',
     'Flask-Cache',
     'Flask-BabelEx',
     'speaklater',

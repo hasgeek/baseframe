@@ -4,7 +4,7 @@ from __future__ import absolute_import
 from pytz import timezone, UTC
 from flask import g, Blueprint, request, current_app
 from coaster.assets import split_namespec
-from flask.ext.wtf import CsrfProtect
+from flask.ext.wtf import CSRFProtect
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
 from flask.ext.babelex import Babel, Domain
@@ -28,7 +28,7 @@ networkbar_cache = Cache(with_jinja2_ext=False)
 asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
 babel = Babel()
-csrf = CsrfProtect()
+csrf = CSRFProtect()
 if DebugToolbarExtension is not None:
     toolbar = DebugToolbarExtension()
 else:
