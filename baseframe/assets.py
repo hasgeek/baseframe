@@ -87,6 +87,8 @@ assets['jquery.fullcalendar.gcal.js'][Version('1.6.4')] = ('jquery.fullcalendar.
 assets['jquery.locationpicker.js'][Version('0.1.12')] = ('jquery.js', 'baseframe/js/jquery.locationpicker.js')
 assets['jquery.appear.js'][Version('0.3.3')] = ('jquery.js', 'baseframe/js/jquery.appear.js')
 
+assets['select2.js'][Version('3.3.2')] = ('jquery.js>=1.4.6', 'baseframe/js/select2.js')
+assets['select2.css'][Version('3.3.2')] = 'baseframe/css/select2.css'
 assets['select2.js'][Version('4.0.3')] = ('jquery.js>=1.7.2', 'baseframe/js/select2.js')
 assets['select2.css'][Version('4.0.3')] = 'baseframe/css/select2.css'
 
