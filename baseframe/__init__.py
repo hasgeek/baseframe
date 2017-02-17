@@ -7,6 +7,7 @@ from coaster.assets import split_namespec
 from flask.ext.wtf import CSRFProtect
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
+from flask.ext.dogpile_cache import DogpileCache
 from flask.ext.babelex import Babel, Domain
 
 try:
@@ -27,6 +28,7 @@ __all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version', '_
 networkbar_cache = Cache(with_jinja2_ext=False)
 asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
+dogpile_cache = DogpileCache()
 babel = Babel()
 csrf = CSRFProtect()
 if DebugToolbarExtension is not None:

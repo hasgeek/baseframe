@@ -37,6 +37,8 @@ requires = [
     'pyOpenSSL',
     'ndg-httpsclient',
     'pyasn1',
+    'dogpile.cache',
+    'Flask-Dogpile-Cache'
     ]
 
 
