@@ -36,9 +36,12 @@ if DebugToolbarExtension is not None:
 else:
     toolbar = None
 
-DEFAULT_DOGPILE_BACKEND = 'dogpile.cache.redis'
-DEFAULT_DOGPILE_BACKEND_URL = 'http://127.0.0.1:6379'
-DEFAULT_DOGPILE_CACHE_REGION = [('hour', 3600)]
+
+DEFAULT_DOGPILE_CONFIG = {
+    'DOGPILE_CACHE_BACKEND': 'dogpile.cache.redis',
+    'DOGPILE_CACHE_URLS': 'http://127.0.0.1:6379',
+    'DOGPILE_CACHE_REGIONS': [('default', 3600)]
+}
 
 baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
 _ = baseframe_translations.gettext
@@ -152,18 +155,9 @@ class BaseframeBlueprint(Blueprint):
         asset_cache.init_app(app, config=acacheconfig)
         cache.init_app(app)
 
-        required_dogpile_attrs = ['DOGPILE_CACHE_BACKEND', 'DOGPILE_CACHE_URLS', 'DOGPILE_CACHE_REGIONS']
-        for dogpile_attr in required_dogpile_attrs:
-            if dogpile_attr not in app.config:
-                dogpile_config = {
-                    'DOGPILE_CACHE_BACKEND': DEFAULT_DOGPILE_BACKEND,
-                    'DOGPILE_CACHE_URLS': DEFAULT_DOGPILE_BACKEND_URL,
-                    'DOGPILE_CACHE_REGIONS': DEFAULT_DOGPILE_CACHE_REGION
-                }
-                dogpile.init_app(app, config=dogpile_config)
-                break
-        else:
-            dogpile.init_app(app)
+        for config_key, config_value in DEFAULT_DOGPILE_CONFIG.items():
+            app.config.setdefault(config_key, config_value)
+        dogpile.init_app(app)
 
         babel.init_app(app)
         if toolbar is not None:
