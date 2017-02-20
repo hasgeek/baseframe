@@ -39,7 +39,7 @@ else:
 
 DEFAULT_DOGPILE_CONFIG = {
     'DOGPILE_CACHE_BACKEND': 'dogpile.cache.redis',
-    'DOGPILE_CACHE_URLS': 'http://127.0.0.1:6379',
+    'DOGPILE_CACHE_URLS': '127.0.0.1:6379',
     'DOGPILE_CACHE_REGIONS': [('default', 3600)]
 }
 
