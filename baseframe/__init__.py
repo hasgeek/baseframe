@@ -7,6 +7,7 @@ from coaster.assets import split_namespec
 from flask.ext.wtf import CSRFProtect
 from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
+from flask.ext.dogpile_cache import DogpileCache
 from flask.ext.babelex import Babel, Domain
 
 try:
@@ -27,12 +28,20 @@ __all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version', '_
 networkbar_cache = Cache(with_jinja2_ext=False)
 asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
+dogpile = DogpileCache()
 babel = Babel()
 csrf = CSRFProtect()
 if DebugToolbarExtension is not None:
     toolbar = DebugToolbarExtension()
 else:
     toolbar = None
+
+
+DEFAULT_DOGPILE_CONFIG = {
+    'DOGPILE_CACHE_BACKEND': 'dogpile.cache.redis',
+    'DOGPILE_CACHE_URLS': '127.0.0.1:6379',
+    'DOGPILE_CACHE_REGIONS': [('default', 3600)]
+}
 
 baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
 _ = baseframe_translations.gettext
@@ -145,6 +154,11 @@ class BaseframeBlueprint(Blueprint):
         networkbar_cache.init_app(app, config=nwcacheconfig)
         asset_cache.init_app(app, config=acacheconfig)
         cache.init_app(app)
+
+        for config_key, config_value in DEFAULT_DOGPILE_CONFIG.items():
+            app.config.setdefault(config_key, config_value)
+        dogpile.init_app(app)
+
         babel.init_app(app)
         if toolbar is not None:
             if 'DEBUG_TB_PANELS' not in app.config:
