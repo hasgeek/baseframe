@@ -28,13 +28,17 @@ __all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version', '_
 networkbar_cache = Cache(with_jinja2_ext=False)
 asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
-dogpile_cache = DogpileCache()
+dogpile = DogpileCache()
 babel = Babel()
 csrf = CSRFProtect()
 if DebugToolbarExtension is not None:
     toolbar = DebugToolbarExtension()
 else:
     toolbar = None
+
+DEFAULT_DOGPILE_BACKEND = 'dogpile.cache.redis'
+DEFAULT_DOGPILE_BACKEND_URL = 'http://127.0.0.1:6379'
+DEFAULT_DOGPILE_CACHE_REGION = [('hour', 3600)]
 
 baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
 _ = baseframe_translations.gettext
@@ -147,6 +151,20 @@ class BaseframeBlueprint(Blueprint):
         networkbar_cache.init_app(app, config=nwcacheconfig)
         asset_cache.init_app(app, config=acacheconfig)
         cache.init_app(app)
+
+        required_dogpile_attrs = ['DOGPILE_CACHE_BACKEND', 'DOGPILE_CACHE_URLS', 'DOGPILE_CACHE_REGIONS']
+        for dogpile_attr in required_dogpile_attrs:
+            if dogpile_attr not in app.config:
+                dogpile_config = {
+                    'DOGPILE_CACHE_BACKEND': DEFAULT_DOGPILE_BACKEND,
+                    'DOGPILE_CACHE_URLS': DEFAULT_DOGPILE_BACKEND_URL,
+                    'DOGPILE_CACHE_REGIONS': DEFAULT_DOGPILE_CACHE_REGION
+                }
+                dogpile.init_app(app, config=dogpile_config)
+                break
+        else:
+            dogpile.init_app(app)
+
         babel.init_app(app)
         if toolbar is not None:
             if 'DEBUG_TB_PANELS' not in app.config:
