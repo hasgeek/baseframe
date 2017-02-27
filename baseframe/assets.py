@@ -89,6 +89,8 @@ assets['jquery.appear.js'][Version('0.3.3')] = ('jquery.js', 'baseframe/js/jquer
 
 assets['select2.js'][Version('3.3.2')] = ('jquery.js>=1.4.6', 'baseframe/js/select2.js')
 assets['select2.css'][Version('3.3.2')] = 'baseframe/css/select2.css'
+assets['select2.js'][Version('4.0.3')] = ('jquery.js>=1.7.2', 'baseframe/js/select2-4.0.3.js')
+assets['select2.css'][Version('4.0.3')] = 'baseframe/css/select2-4.0.3.css'
 
 assets['bootstrap-multiselect.css'][Version('0.9.13')] = 'baseframe/css/bootstrap-multiselect.css'
 assets['bootstrap-multiselect.js'][Version('0.9.13')] = 'baseframe/js/bootstrap-multiselect.js'
@@ -291,7 +293,7 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
     'jquery.form.js',
     # 'bootstrap-datepicker.js',
     'jquery.timepicker.js',
-    'select2.js',
+    'select2.js==3.3.2',
 ]}
 
 assets['baseframe.js'][Version(__version__)] = {'requires': [
@@ -323,7 +325,24 @@ assets['baseframe-bs3.js'][Version(__version__)] = {'requires': [
 
 assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
     'bootstrap.css>=3.0.0',
-    'select2.css',
+    'select2.css==3.3.2',
+    'jquery.timepicker.css',
+    'baseframe-base-bs3.css==' + __version__,
+    'baseframe-networkbar.css==' + __version__,
+]}
+
+assets['baseframe-bs3-select2.js'][Version(__version__)] = {'requires': [
+    'jquery.js>=1.9.0',
+    'bootstrap.js>=3.0.0',
+    'select2.js>=4.0.3',
+    'jquery.timepicker.js',
+    'baseframe-base.js==' + __version__,
+    'baseframe-networkbar.js==' + __version__,
+]}
+
+assets['baseframe-bs3-select2.css'][Version(__version__)] = {'requires': [
+    'bootstrap.css>=3.0.0',
+    'select2.css>=4.0.3',
     'jquery.timepicker.css',
     'baseframe-base-bs3.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,

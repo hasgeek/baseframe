@@ -300,7 +300,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
         self._timezone_converted = False
 
     def pre_validate(self, form):
-        if self._timezone_converted is False:
+        if self.data and self._timezone_converted is False:
             # Convert from user timezone back to UTC, then discard tzinfo
             self.data = self.tz.localize(self.data).astimezone(utc).replace(tzinfo=None)
             self._timezone_converted = True
