@@ -36,6 +36,23 @@ class SelectWidget(Select):
         return HTMLString(''.join(html))
 
 
+class Select2Widget(Select):
+    """
+    Add support of choices with ``optgroup`` to the ``Select`` widget.
+    """
+    def __call__(self, field, **kwargs):
+        kwargs.setdefault('id', field.id)
+        kwargs.pop('type', field.type)
+        if self.multiple:
+            kwargs['multiple'] = True
+        html = ['<select %s>' % html_params(name=field.name, **kwargs)]
+        if field.iter_choices():
+            for val, label, selected in field.iter_choices():
+                html.append(self.render_option(val, label, selected))
+        html.append('</select>')
+        return HTMLString(''.join(html))
+
+
 class TinyMce3(wtforms.widgets.TextArea):
     """
     Rich text widget with Tiny MCE 3.

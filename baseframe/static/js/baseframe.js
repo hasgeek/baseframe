@@ -86,12 +86,12 @@ function activate_geoname_autocomplete(selector, autocomplete_endpoint, getname_
     ajax: {
       url: autocomplete_endpoint,
       dataType: "jsonp",
-      data: function(term, page) {
+      data: function(params, page) {
         return {
-          q: term
+          q: params.term
         };
       },
-      results: function(data, page) {
+      processResults: function(data, page) {
         var rdata = [];
         if (data.status == 'ok') {
           for (var i=0; i < data.result.length; i++) {
@@ -101,27 +101,6 @@ function activate_geoname_autocomplete(selector, autocomplete_endpoint, getname_
           }
         }
         return {more: false, results: rdata};
-      }
-    },
-    initSelection: function(element, callback) {
-      var val = $(element).val();
-      if (val !== '') {
-        var qs = '?name=' + val.replace(new RegExp(separator, 'g'), '&name=');
-        $.ajax(getname_endpoint + qs, {
-          accepts: 'application/json',
-          dataType: 'jsonp'
-        }).done(function(data) {
-          $(element).val('');  // Clear it in preparation for incoming data
-          var rdata = [];
-          if (data.status == 'ok') {
-            for (var i=0; i < data.result.length; i++) {
-              rdata.push({
-                id: data.result[i].geonameid, text: data.result[i].picker_title
-              });
-            }
-          }
-          callback(rdata);
-        });
       }
     }
   });
@@ -200,46 +179,25 @@ window.Baseframe.Forms = {
       ajax: {
         url: options.autocomplete_endpoint,
         dataType: "jsonp",
-        data: function(term, page) {
+        data: function(params, page) {
           if ('client_id' in options) {
             return {
-              q: term,
+              q: params.term,
               client_id: options.client_id,
               session: options.session_id
             };
           } else {
             return {
-              q: term
+              q: params.term
             };
           };
         },
-        results: function(data, page) {
+        processResults: function(data, page) {
           var users = [];
           if (data.status == 'ok') {
             users = assembleUsers(data.users);
           }
           return {more: false, results: users};
-        }
-      },
-      initSelection: function(element, callback) {
-        var val = $(element).val();
-        var data = {};
-        if (val !== '') {
-          if ('client_id' in options) {
-            data = {client_id: options.client_id, session: options.session_id};
-          };
-          $.ajax(options.getuser_endpoint + '?userid=' + val.replace(new RegExp(options.separator, 'g'), '&userid='), {
-            data: data,
-            accepts: 'application/json',
-            dataType: 'jsonp'
-          }).done(function(data) {
-            $(element).val('');  // Clear it in preparation for incoming data
-            var results = [];
-            if (data.status == 'ok') {
-              results = assembleUsers(data.results);
-            }
-            callback(results);
-          });
         }
       }
     });
@@ -252,13 +210,13 @@ window.Baseframe.Forms = {
       ajax: {
         url: options.autocomplete_endpoint,
         dataType: "json",
-        data: function(term, page) {
+        data: function(params, page) {
           return {
-            q: term,
+            q: params.term,
             page: page
           };
         },
-        results: function(data, page) {
+        processResults: function(data, page) {
           return {
             more: false,
             results: data[options.key].map(function(item) {
@@ -266,18 +224,6 @@ window.Baseframe.Forms = {
             })
           };
         }
-      },
-      initSelection: function(element, callback) {
-        if (options.multiple) {
-          var data = [];
-          $(element.val().split(options.separator)).each(function () {
-              data.push({id: this, text: this});
-          });
-          callback(data);
-        } else {
-          var data = {id: element.val(), text: element.val()};
-          callback(data);
-        };
       }
     })
   }

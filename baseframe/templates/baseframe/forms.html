@@ -62,7 +62,7 @@
             </div>
           {%- elif field.type == 'CoordinatesField' %}
             {{ map_marker_widget(field) }}
-          {%- elif field.widget.input_type in ['text', 'password', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month', 'number', 'search', 'tel', 'time', 'url', 'week'] or (field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextAreaField', 'TextListField', 'MarkdownField'] and field.widget.html_tag not in ['ul', 'ol']) %}
+          {%- elif field.widget.input_type in ['text', 'password', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month', 'number', 'search', 'tel', 'time', 'url', 'week'] or (field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextAreaField', 'TextListField', 'MarkdownField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol']) %}
             {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
           {%- else %}
             {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}

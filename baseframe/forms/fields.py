@@ -12,7 +12,7 @@ from wtforms.utils import unset_value
 import bleach
 
 from .. import _
-from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput, CoordinatesInput, RadioMatrixInput, SelectWidget
+from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput, CoordinatesInput, RadioMatrixInput, SelectWidget, Select2Widget
 from .parsleyjs import TextAreaField, StringField, URLField
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
@@ -367,18 +367,13 @@ class UserSelectFieldBase(object):
             self.getuser_endpoint = kwargs.pop('getuser_endpoint')()
         super(UserSelectFieldBase, self).__init__(*args, **kwargs)
 
-    def _value(self):
+    def iter_choices(self):
         if self.data:
-            return self.separator.join([u.userid for u in self.data])
-        else:
-            return ''
+            return [(u.userid, u.pickername, True) for u in self.data]
 
     def process_formdata(self, valuelist):
         retval = super(UserSelectFieldBase, self).process_formdata(valuelist)
-        if self.data:
-            userids = self.data.split(self.separator)
-        else:
-            userids = []  # Calling ''.split(',') will give us [''] which is an invalid userid
+        userids = valuelist
         # Convert strings in userids into User objects
         users = []
         if userids:
@@ -397,7 +392,6 @@ class UserSelectFieldBase(object):
                         users.append(user)
             else:
                 users = self.usermodel.all(userids=userids)
-
         self.data = users
         return retval
 
@@ -406,29 +400,15 @@ class UserSelectField(UserSelectFieldBase, StringField):
     """
     Render a user select field that allows one user to be selected.
     """
-    widget = HiddenInput()
+    widget = Select2Widget()
     multiple = False
-
-    def _value(self):
-        if self.data:
-            return self.data.userid
-        else:
-            return ''
-
-    def process_formdata(self, valuelist):
-        retval = super(UserSelectField, self).process_formdata(valuelist)
-        if self.data:
-            self.data = self.data[0]
-        else:
-            self.data = None
-        return retval
 
 
 class UserSelectMultiField(UserSelectFieldBase, StringField):
     """
     Render a user select field that allows multiple users to be selected.
     """
-    widget = HiddenInput()
+    widget = Select2Widget()
     multiple = True
 
 
@@ -443,6 +423,16 @@ class AutocompleteFieldBase(object):
         super(AutocompleteFieldBase, self).__init__(*args, **kwargs)
         self.choices = ()  # Disregard server-side choices
 
+    def iter_choices(self):
+        if self.data:
+            return [(unicode(u), u.title, True) for u in self.data]
+
+    def process_formdata(self, valuelist):
+        retval = super(AutocompleteFieldBase, self).process_formdata(valuelist)
+        # Convert strings into Tag objects
+        self.data = valuelist
+        return retval
+
     def pre_validate(self, form):
         """Do not validate data"""
         return
@@ -453,7 +443,7 @@ class AutocompleteField(AutocompleteFieldBase, StringField):
     Select field that sources choices from a JSON API endpoint.
     Does not validate choices server-side.
     """
-    widget = HiddenInput()
+    widget = Select2Widget()
     multiple = False
 
 
@@ -462,22 +452,8 @@ class AutocompleteMultipleField(AutocompleteFieldBase, StringField):
     Multiple select field that sources choices from a JSON API endpoint.
     Does not validate choices server-side.
     """
-    widget = HiddenInput()
+    widget = Select2Widget()
     multiple = True
-
-    def _value(self):
-        if self.data:
-            return self.separator.join(self.data)
-        else:
-            return ''
-
-    def process_formdata(self, valuelist):
-        retval = super(AutocompleteMultipleField, self).process_formdata(valuelist)
-        if self.data:
-            self.data = self.data.split(self.separator)
-        else:
-            self.data = []  # Calling ''.split(',') will give us [''] which is an invalid userid
-        return retval
 
 
 class GeonameSelectFieldBase(object):
@@ -485,6 +461,7 @@ class GeonameSelectFieldBase(object):
     Select a geoname location
     """
     def __init__(self, *args, **kwargs):
+        self.usermodel = kwargs.pop('usermodel')
         self.separator = kwargs.pop('separator', ',')
         server = current_app.config.get('HASCORE_SERVER', 'https://api.hasgeek.com/')
         self.autocomplete_endpoint = urljoin(server, '/1/geo/autocomplete')
@@ -492,19 +469,14 @@ class GeonameSelectFieldBase(object):
 
         super(GeonameSelectFieldBase, self).__init__(*args, **kwargs)
 
-    def _value(self):
+    def iter_choices(self):
         if self.data:
-            return self.separator.join([unicode(l) for l in self.data])
-        else:
-            return ''
+            return [(unicode(u), unicode(u), True) for u in self.data]
 
     def process_formdata(self, valuelist):
         retval = super(GeonameSelectFieldBase, self).process_formdata(valuelist)
-        if self.data:
-            geonameids = self.data.split(self.separator)
-        else:
-            geonameids = []  # Calling ''.split(',') will give us [''] which is an invalid geonameid
-        self.data = geonameids
+        # Convert strings into GeoName objects
+        self.data = valuelist
         return retval
 
 
@@ -512,28 +484,16 @@ class GeonameSelectField(GeonameSelectFieldBase, StringField):
     """
     Render a geoname select field that allows one geoname to be selected.
     """
-    widget = HiddenInput()
-
-    def _value(self):
-        if self.data:
-            return self.data.geonameid
-        else:
-            return None
-
-    def process_formdata(self, valuelist):
-        retval = super(GeonameSelectField, self).process_formdata(valuelist)
-        if self.data:
-            self.data = self.data[0]
-        else:
-            self.data = None
-        return retval
+    widget = Select2Widget()
+    multiple = False
 
 
 class GeonameSelectMultiField(GeonameSelectFieldBase, StringField):
     """
     Render a geoname select field that allows multiple geonames to be selected.
     """
-    widget = HiddenInput()
+    widget = Select2Widget()
+    multiple = True
 
 
 class NullTextField(StringField):
