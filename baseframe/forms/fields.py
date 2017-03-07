@@ -12,11 +12,11 @@ from wtforms.utils import unset_value
 import bleach
 
 from .. import _
-from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput, CoordinatesInput, RadioMatrixInput, SelectWidget, Select2Widget
+from .widgets import TinyMce3, TinyMce4, DateTimeInput, CoordinatesInput, RadioMatrixInput, SelectWidget, Select2Widget
 from .parsleyjs import TextAreaField, StringField, URLField
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
-    'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'TextListField',
+    'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'TextListField',
     'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
     'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
     'CoordinatesField', 'RadioMatrixField', 'AutocompleteField', 'AutocompleteMultipleField', 'SelectField',
@@ -306,33 +306,6 @@ class DateTimeField(wtforms.fields.DateTimeField):
             self._timezone_converted = True
 
 
-class HiddenMultiField(wtforms.fields.StringField):
-    """
-    A hidden field that stores multiple comma-separated values, meant to be
-    used as an Ajax widget target. The optional ``separator`` parameter
-    can be used to specify an alternate separator character (default ``','``).
-    """
-    widget = HiddenInput()
-
-    def __init__(self, *args, **kwargs):
-        self.separator = kwargs.pop('separator', ',')
-        super(HiddenMultiField, self).__init__(*args, **kwargs)
-
-    def _value(self):
-        if self.data:
-            return self.separator.join(self.data)
-        else:
-            return ''
-
-    def process_formdata(self, valuelist):
-        retval = super(HiddenMultiField, self).process_formdata(valuelist)
-        if not self.data:
-            self.data = []  # Calling ''.split(',') will give us [''] which is not "falsy"
-        else:
-            self.data = self.data.split(self.separator)
-        return retval
-
-
 class TextListField(wtforms.fields.TextAreaField):
     """
     A list field that renders as a textarea with one line per list item.
@@ -401,15 +374,14 @@ class UserSelectField(UserSelectFieldBase, StringField):
     Render a user select field that allows one user to be selected.
     """
     widget = Select2Widget()
-    multiple = False
 
 
 class UserSelectMultiField(UserSelectFieldBase, StringField):
     """
     Render a user select field that allows multiple users to be selected.
     """
-    widget = Select2Widget()
     multiple = True
+    widget = Select2Widget()
 
 
 class AutocompleteFieldBase(object):
@@ -444,7 +416,6 @@ class AutocompleteField(AutocompleteFieldBase, StringField):
     Does not validate choices server-side.
     """
     widget = Select2Widget()
-    multiple = False
 
 
 class AutocompleteMultipleField(AutocompleteFieldBase, StringField):
@@ -452,8 +423,8 @@ class AutocompleteMultipleField(AutocompleteFieldBase, StringField):
     Multiple select field that sources choices from a JSON API endpoint.
     Does not validate choices server-side.
     """
-    widget = Select2Widget()
     multiple = True
+    widget = Select2Widget()
 
 
 class GeonameSelectFieldBase(object):
@@ -484,15 +455,14 @@ class GeonameSelectField(GeonameSelectFieldBase, StringField):
     Render a geoname select field that allows one geoname to be selected.
     """
     widget = Select2Widget()
-    multiple = False
 
 
 class GeonameSelectMultiField(GeonameSelectFieldBase, StringField):
     """
     Render a geoname select field that allows multiple geonames to be selected.
     """
-    widget = Select2Widget()
     multiple = True
+    widget = Select2Widget()
 
 
 class NullTextField(StringField):

@@ -104,6 +104,30 @@ function activate_geoname_autocomplete(selector, autocomplete_endpoint, getname_
       }
     }
   });
+
+  //Setting label for Geoname ids
+  var val = $(selector).val();
+  if (val) {
+    val = val.map(function(id){
+      return 'name='+id;
+    });
+    var qs = val.join('&');
+    $.ajax(getname_endpoint + "?" + qs, {
+      accepts: 'application/json',
+      dataType: 'jsonp'
+    }).done(function(data) {
+      $(selector).empty();
+      var rdata = [];
+      if (data.status == 'ok') {
+        for (var i=0; i < data.result.length; i++) {
+          $(selector).append('<option value="' + data.result[i].geonameid + '" selected>' + data.result[i].picker_title + '</option>');
+          rdata.push(data.result[i].geonameid);
+        }
+        $(selector).val(rdata).trigger('change');
+      }
+    });
+  }
+
 }
 
 $(function() {

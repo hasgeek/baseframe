@@ -6,8 +6,8 @@ from wtforms.widgets import RadioInput, Select, HTMLString, html_params
 from flask import Markup
 from .. import b_ as _
 
-__all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'HiddenInput', 'CoordinatesInput',
-    'RadioMatrixInput', 'InlineListWidget', 'RadioInput', 'SelectWidget']
+__all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'CoordinatesInput',
+    'RadioMatrixInput', 'InlineListWidget', 'RadioInput', 'SelectWidget', 'Select2Widget']
 
 
 # This class borrowed from https://github.com/industrydive/wtforms_extended_selectfield
@@ -43,8 +43,8 @@ class Select2Widget(Select):
     def __call__(self, field, **kwargs):
         kwargs.setdefault('id', field.id)
         kwargs.pop('type', field.type)
-        if self.multiple:
-            kwargs['multiple'] = True
+        if field.multiple:
+            kwargs['multiple'] = 'multiple'
         html = ['<select %s>' % html_params(name=field.name, **kwargs)]
         if field.iter_choices():
             for val, label, selected in field.iter_choices():
@@ -121,13 +121,6 @@ class DateTimeInput(wtforms.widgets.Input):
             wtforms.widgets.html_params(name=field.name, id=field_id + '-time', value=time_value, **kwargs),
             field.tzname,
             ))
-
-
-class HiddenInput(wtforms.widgets.core.Input):
-    """
-    Render a hidden input. This widget exists solely to escape processing by form.hidden_tag()
-    """
-    input_type = 'hidden'
 
 
 class CoordinatesInput(wtforms.widgets.core.Input):
