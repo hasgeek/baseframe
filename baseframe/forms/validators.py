@@ -6,7 +6,6 @@ from urlparse import urljoin
 import dns.resolver
 from pyisemail import is_email
 from flask import request
-import wtforms
 from wtforms.validators import (DataRequired, InputRequired, Optional, Length, EqualTo, URL, NumberRange,
     ValidationError, StopValidation)
 import requests
@@ -72,7 +71,7 @@ class ValidEmail(object):
         if diagnosis.code == 0:
             return
         else:
-            raise wtforms.validators.StopValidation(self.message or _(diagnosis.message))
+            raise StopValidation(self.message or _(diagnosis.message))
 
 
 # Legacy name
@@ -145,7 +144,7 @@ class ValidUrl(object):
     def call_inner(self, field, current_url, invalid_urls):
         error = self.check_url(invalid_urls, urljoin(current_url, field.data))
         if error:
-            raise wtforms.validators.StopValidation(error)
+            raise StopValidation(error)
 
     def __call__(self, form, field):
         if field.data:
@@ -173,7 +172,7 @@ class AllUrlsValid(ValidUrl):
             if error:
                 field.errors.append(error)
         if field.errors:
-            raise wtforms.validators.StopValidation()
+            raise StopValidation()
 
 
 class NoObfuscatedEmail(object):
@@ -191,7 +190,7 @@ class NoObfuscatedEmail(object):
             try:
                 diagnosis = is_email(email, check_dns=True, diagnose=True)
                 if diagnosis.code == 0:
-                    raise wtforms.validators.StopValidation(self.message)
+                    raise StopValidation(self.message)
             except (dns.resolver.Timeout, dns.resolver.NoNameservers):
                 pass
 
@@ -217,7 +216,7 @@ class ValidName(object):
 
     def __call__(self, form, field):
         if make_name(field.data) != field.data:
-            raise wtforms.validators.StopValidation(self.message)
+            raise StopValidation(self.message)
 
 
 class ValidCoordinates(object):
@@ -228,8 +227,8 @@ class ValidCoordinates(object):
 
     def __call__(self, form, field):
         if len(field.data) != 2:
-            raise wtforms.validators.StopValidation(self.message)
+            raise StopValidation(self.message)
         if not -90 <= field.data[0] <= 90:
-            raise wtforms.validators.StopValidation(self.message_latitude)
+            raise StopValidation(self.message_latitude)
         if not -180 <= field.data[1] <= 180:
-            raise wtforms.validators.StopValidation(self.message_longitude)
+            raise StopValidation(self.message_longitude)
