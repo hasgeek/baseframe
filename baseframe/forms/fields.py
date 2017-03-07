@@ -425,7 +425,7 @@ class AutocompleteFieldBase(object):
 
     def iter_choices(self):
         if self.data:
-            return [(unicode(u), u.title, True) for u in self.data]
+            return [(unicode(u), unicode(u), True) for u in self.data]
 
     def process_formdata(self, valuelist):
         retval = super(AutocompleteFieldBase, self).process_formdata(valuelist)
@@ -461,7 +461,6 @@ class GeonameSelectFieldBase(object):
     Select a geoname location
     """
     def __init__(self, *args, **kwargs):
-        self.usermodel = kwargs.pop('usermodel')
         self.separator = kwargs.pop('separator', ',')
         server = current_app.config.get('HASCORE_SERVER', 'https://api.hasgeek.com/')
         self.autocomplete_endpoint = urljoin(server, '/1/geo/autocomplete')
