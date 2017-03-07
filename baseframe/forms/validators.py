@@ -35,7 +35,7 @@ class OptionalIf(object):
 
     def __call__(self, form, field):
         if not field.data:
-            if getattr(form, self.fieldname).data:
+            if form[self.fieldname].data:
                 raise StopValidation()
             else:
                 raise StopValidation(self.message)
@@ -47,10 +47,118 @@ class OptionalIfNot(OptionalIf):
     """
     def __call__(self, form, field):
         if not field.data:
-            if not getattr(form, self.fieldname).data:
+            if form[self.fieldname].data:
                 raise StopValidation()
             else:
                 raise StopValidation(self.message)
+
+
+class _Comparison(object):
+    """
+    Base class for validators that compare this field's value with another field
+    """
+    default_message = __("Comparison failed")
+
+    def __init__(self, fieldname, message=None):
+        self.fieldname = fieldname
+        self.message = message or self.default_message
+
+    def __call__(self, form, field):
+        other = form[self.fieldname]
+        if not self.compare(field.data, other.data):
+            d = {
+                'other_label': hasattr(other, 'label') and other.label.text or self.fieldname,
+                'other_name': self.fieldname
+            }
+            raise ValidationError(self.message.format(**d))
+
+    def compare(self, value, other):
+        raise NotImplementedError(_("Subclasses must define ``compare``"))
+
+
+class GreaterThan(_Comparison):
+    """
+    Validate field.data > otherfield.data
+
+    :param fieldname:
+        The name of the other field to compare to.
+    :param message:
+        Error message to raise in case of a validation error. Can be
+        interpolated with `{other_label}` and `{other_name}` to provide a
+        more helpful error.
+    """
+    default_message = __("This must be greater than {other_label}")
+
+    def compare(self, value, other):
+        return value > other
+
+
+class GreaterThanEqualTo(_Comparison):
+    """
+    Validate field.data >= otherfield.data
+
+    :param fieldname:
+        The name of the other field to compare to.
+    :param message:
+        Error message to raise in case of a validation error. Can be
+        interpolated with `{other_label}` and `{other_name}` to provide a
+        more helpful error.
+    """
+    default_message = __("This must be greater than or equal to {other_label}")
+
+    def compare(self, value, other):
+        return value >= other
+
+
+class LesserThan(_Comparison):
+    """
+    Validate field.data < otherfield.data
+
+    :param fieldname:
+        The name of the other field to compare to.
+    :param message:
+        Error message to raise in case of a validation error. Can be
+        interpolated with `{other_label}` and `{other_name}` to provide a
+        more helpful error.
+    """
+    default_message = __("This must be lesser than {other_label}")
+
+    def compare(self, value, other):
+        return value < other
+
+
+class LesserThanEqualTo(_Comparison):
+    """
+    Validate field.data <= otherfield.data
+
+    :param fieldname:
+        The name of the other field to compare to.
+    :param message:
+        Error message to raise in case of a validation error. Can be
+        interpolated with `{other_label}` and `{other_name}` to provide a
+        more helpful error.
+    """
+    default_message = __("This must be lesser than or equal to {other_label}")
+
+    def compare(self, value, other):
+        return value <= other
+
+
+class NotEqualTo(_Comparison):
+    """
+    Validate field.data != otherfield.data
+
+    :param fieldname:
+        The name of the other field to compare to.
+    :param message:
+        Error message to raise in case of a validation error. Can be
+        interpolated with `{other_label}` and `{other_name}` to provide a
+        more helpful error.
+    """
+    default_message = __("This must not be the same as {other_label}")
+
+    def compare(self, value, other):
+        return value != other
 
 
 class ValidEmail(object):

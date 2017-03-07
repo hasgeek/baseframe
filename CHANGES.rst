@@ -23,6 +23,7 @@
   global CSRF is enabled
 * Optional support for Flask-DebugToolbar and LineProfiler extension
 * SelectField now supports optgroup grouping
+* Comparison validators to complement ``EqualTo`` with ``>``, ``>=``, ``<``, ``<=``, ``!=``
 
 0.3.0
 -----
