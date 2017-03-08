@@ -11,7 +11,7 @@ from wtforms.compat import text_type
 from wtforms.utils import unset_value
 import bleach
 
-from .. import _
+from .. import _, get_timezone
 from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput, CoordinatesInput, RadioMatrixInput, SelectWidget
 from .parsleyjs import TextAreaField, StringField, URLField
 
@@ -273,36 +273,41 @@ class DateTimeField(wtforms.fields.DateTimeField):
 
     @timezone.setter
     def timezone(self, value):
-        self._timezone = value
-        if value:
+        if value is None:
+            value = get_timezone()
+        if isinstance(value, basestring):
             self.tz = pytz_timezone(value)
-            self.tzname = utc.localize(datetime.utcnow()).astimezone(self.tz).tzname()
+            self._timezone = value
         else:
-            self.tz = utc
-            self.tzname = 'UTC'
+            self.tz = value
+            self._timezone = self.tz.zone
+        now = utc.localize(datetime.utcnow()).astimezone(self.tz)
+        self.tzname = now.tzname()
+        self.is_dst = bool(now.dst())
 
     def _value(self):
         if self.data:
-            if self.timezone:
-                if self.data.tzinfo is None:
-                    data = self.tz.normalize(utc.localize(self.data).astimezone(self.tz))
-                else:
-                    data = self.tz.normalize(self.data.astimezone(self.tz))
+            if self.data.tzinfo is None:
+                # We got a naive datetime from the calling app. Assume UTC
+                data = self.tz.normalize(utc.localize(self.data).astimezone(self.tz))
             else:
-                data = self.data
+                # We got a tz-aware datetime. Cast into the required timezone
+                data = self.tz.normalize(self.data.astimezone(self.tz))
             value = data.strftime(self.format)
         else:
             value = ''
         return value
 
     def process_formdata(self, valuelist):
+        # We received a naive timestamp from the browser. Save it
         super(DateTimeField, self).process_formdata(valuelist)
+        # The received timestamp hasn't been localized to the expected timezone yet
         self._timezone_converted = False
 
     def pre_validate(self, form):
         if self._timezone_converted is False:
             # Convert from user timezone back to UTC, then discard tzinfo
-            self.data = self.tz.localize(self.data).astimezone(utc).replace(tzinfo=None)
+            self.data = self.tz.localize(self.data, is_dst=self.is_dst).astimezone(utc).replace(tzinfo=None)
             self._timezone_converted = True
 
 
