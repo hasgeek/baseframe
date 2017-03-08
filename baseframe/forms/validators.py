@@ -6,7 +6,6 @@ from urlparse import urljoin
 import dns.resolver
 from pyisemail import is_email
 from flask import request
-import wtforms
 from wtforms.validators import (DataRequired, InputRequired, Optional, Length, EqualTo, URL, NumberRange,
     ValidationError, StopValidation)
 import requests
@@ -36,7 +35,7 @@ class OptionalIf(object):
 
     def __call__(self, form, field):
         if not field.data:
-            if getattr(form, self.fieldname).data:
+            if form[self.fieldname].data:
                 raise StopValidation()
             else:
                 raise StopValidation(self.message)
@@ -48,10 +47,118 @@ class OptionalIfNot(OptionalIf):
     """
     def __call__(self, form, field):
         if not field.data:
-            if not getattr(form, self.fieldname).data:
+            if form[self.fieldname].data:
                 raise StopValidation()
             else:
                 raise StopValidation(self.message)
+
+
+class _Comparison(object):
+    """
+    Base class for validators that compare this field's value with another field
+    """
+    default_message = __("Comparison failed")
+
+    def __init__(self, fieldname, message=None):
+        self.fieldname = fieldname
+        self.message = message or self.default_message
+
+    def __call__(self, form, field):
+        other = form[self.fieldname]
+        if not self.compare(field.data, other.data):
+            d = {
+                'other_label': hasattr(other, 'label') and other.label.text or self.fieldname,
+                'other_name': self.fieldname
+            }
+            raise ValidationError(self.message.format(**d))
+
+    def compare(self, value, other):
+        raise NotImplementedError(_("Subclasses must define ``compare``"))
+
+
+class GreaterThan(_Comparison):
+    """
+    Validate field.data > otherfield.data
+
+    :param fieldname:
+        The name of the other field to compare to.
+    :param message:
+        Error message to raise in case of a validation error. Can be
+        interpolated with `{other_label}` and `{other_name}` to provide a
+        more helpful error.
+    """
+    default_message = __("This must be greater than {other_label}")
+
+    def compare(self, value, other):
+        return value > other
+
+
+class GreaterThanEqualTo(_Comparison):
+    """
+    Validate field.data >= otherfield.data
+
+    :param fieldname:
+        The name of the other field to compare to.
+    :param message:
+        Error message to raise in case of a validation error. Can be
+        interpolated with `{other_label}` and `{other_name}` to provide a
+        more helpful error.
+    """
+    default_message = __("This must be greater than or equal to {other_label}")
+
+    def compare(self, value, other):
+        return value >= other
+
+
+class LesserThan(_Comparison):
+    """
+    Validate field.data < otherfield.data
+
+    :param fieldname:
+        The name of the other field to compare to.
+    :param message:
+        Error message to raise in case of a validation error. Can be
+        interpolated with `{other_label}` and `{other_name}` to provide a
+        more helpful error.
+    """
+    default_message = __("This must be lesser than {other_label}")
+
+    def compare(self, value, other):
+        return value < other
+
+
+class LesserThanEqualTo(_Comparison):
+    """
+    Validate field.data <= otherfield.data
+
+    :param fieldname:
+        The name of the other field to compare to.
+    :param message:
+        Error message to raise in case of a validation error. Can be
+        interpolated with `{other_label}` and `{other_name}` to provide a
+        more helpful error.
+    """
+    default_message = __("This must be lesser than or equal to {other_label}")
+
+    def compare(self, value, other):
+        return value <= other
+
+
+class NotEqualTo(_Comparison):
+    """
+    Validate field.data != otherfield.data
+
+    :param fieldname:
+        The name of the other field to compare to.
+    :param message:
+        Error message to raise in case of a validation error. Can be
+        interpolated with `{other_label}` and `{other_name}` to provide a
+        more helpful error.
+    """
+    default_message = __("This must not be the same as {other_label}")
+
+    def compare(self, value, other):
+        return value != other
 
 
 class ValidEmail(object):
@@ -72,7 +179,7 @@ class ValidEmail(object):
         if diagnosis.code == 0:
             return
         else:
-            raise wtforms.validators.StopValidation(self.message or _(diagnosis.message))
+            raise StopValidation(self.message or _(diagnosis.message))
 
 
 # Legacy name
@@ -145,7 +252,7 @@ class ValidUrl(object):
     def call_inner(self, field, current_url, invalid_urls):
         error = self.check_url(invalid_urls, urljoin(current_url, field.data))
         if error:
-            raise wtforms.validators.StopValidation(error)
+            raise StopValidation(error)
 
     def __call__(self, form, field):
         if field.data:
@@ -173,7 +280,7 @@ class AllUrlsValid(ValidUrl):
             if error:
                 field.errors.append(error)
         if field.errors:
-            raise wtforms.validators.StopValidation()
+            raise StopValidation()
 
 
 class NoObfuscatedEmail(object):
@@ -191,7 +298,7 @@ class NoObfuscatedEmail(object):
             try:
                 diagnosis = is_email(email, check_dns=True, diagnose=True)
                 if diagnosis.code == 0:
-                    raise wtforms.validators.StopValidation(self.message)
+                    raise StopValidation(self.message)
             except (dns.resolver.Timeout, dns.resolver.NoNameservers):
                 pass
 
@@ -217,7 +324,7 @@ class ValidName(object):
 
     def __call__(self, form, field):
         if make_name(field.data) != field.data:
-            raise wtforms.validators.StopValidation(self.message)
+            raise StopValidation(self.message)
 
 
 class ValidCoordinates(object):
@@ -228,8 +335,8 @@ class ValidCoordinates(object):
 
     def __call__(self, form, field):
         if len(field.data) != 2:
-            raise wtforms.validators.StopValidation(self.message)
+            raise StopValidation(self.message)
         if not -90 <= field.data[0] <= 90:
-            raise wtforms.validators.StopValidation(self.message_latitude)
+            raise StopValidation(self.message_latitude)
         if not -180 <= field.data[1] <= 180:
-            raise wtforms.validators.StopValidation(self.message_longitude)
+            raise StopValidation(self.message_longitude)
