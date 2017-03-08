@@ -16,7 +16,7 @@ from ..signals import exception_catchall
 
 
 __all__ = ['OptionalIf', 'OptionalIfNot', 'ValidEmail', 'ValidEmailDomain', 'ValidUrl', 'AllUrlsValid',
-    'StripWhitespace', 'ValidName', 'NoObfuscatedEmail', 'ValidCoordinates',
+    'ValidName', 'NoObfuscatedEmail', 'ValidCoordinates',
     # WTForms validators
     'DataRequired', 'InputRequired', 'Optional', 'Length', 'EqualTo', 'URL', 'NumberRange',
     'ValidationError', 'StopValidation']
@@ -301,18 +301,6 @@ class NoObfuscatedEmail(object):
                     raise StopValidation(self.message)
             except (dns.resolver.Timeout, dns.resolver.NoNameservers):
                 pass
-
-
-class StripWhitespace(object):
-    def __init__(self, left=True, right=True):
-        self.left = left
-        self.right = right
-
-    def __call__(self, form, field):
-        if self.left and field.data:
-            field.data = field.data.lstrip()
-        if self.right and field.data:
-            field.data = field.data.rstrip()
 
 
 class ValidName(object):
