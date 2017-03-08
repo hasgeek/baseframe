@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import warnings
 from datetime import datetime
 from decimal import Decimal, InvalidOperation as DecimalError
 from urlparse import urljoin
@@ -543,6 +544,8 @@ class NullTextField(StringField):
     def __init__(self, *args, **kwargs):
         kwargs['filters'] = tuple(kwargs.get('filters', ())) + (lambda d: d or None,)
         super(NullTextField, self).__init__(*args, **kwargs)
+        # This warning will only be shown when the form is instantiated due to the way WTForms works
+        warnings.warn('%s is deprecated. Use filters.null instead' % self.__class__.__name__)
 
 
 class AnnotatedTextField(StringField):

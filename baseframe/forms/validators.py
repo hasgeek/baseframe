@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import warnings
 import re
 from urllib import quote as urlquote
 from urlparse import urljoin
@@ -307,6 +308,7 @@ class StripWhitespace(object):
     def __init__(self, left=True, right=True):
         self.left = left
         self.right = right
+        warnings.warn('StripWhitespace is deprecated. Use filters.strip instead', stacklevel=2)
 
     def __call__(self, form, field):
         if self.left and field.data:

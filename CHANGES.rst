@@ -24,6 +24,7 @@
 * Optional support for Flask-DebugToolbar and LineProfiler extension
 * SelectField now supports optgroup grouping
 * Comparison validators to complement ``EqualTo`` with ``>``, ``>=``, ``<``, ``<=``, ``!=``
+* New form filters to replace the (overloaded) use of validators to filter
 
 0.3.0
 -----
