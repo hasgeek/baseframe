@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import warnings
 from datetime import datetime
 from decimal import Decimal, InvalidOperation as DecimalError
 from urlparse import urljoin
@@ -18,7 +17,7 @@ from .parsleyjs import TextAreaField, StringField, URLField
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'TextListField',
-    'NullTextField', 'AnnotatedTextField', 'AnnotatedNullTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
+    'AnnotatedTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
     'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
     'CoordinatesField', 'RadioMatrixField', 'AutocompleteField', 'AutocompleteMultipleField', 'SelectField',
     # Imported from WTForms:
@@ -537,17 +536,6 @@ class GeonameSelectMultiField(GeonameSelectFieldBase, StringField):
     widget = HiddenInput()
 
 
-class NullTextField(StringField):
-    """
-    Text field that returns None on empty strings.
-    """
-    def __init__(self, *args, **kwargs):
-        kwargs['filters'] = tuple(kwargs.get('filters', ())) + (lambda d: d or None,)
-        super(NullTextField, self).__init__(*args, **kwargs)
-        # This warning will only be shown when the form is instantiated due to the way WTForms works
-        warnings.warn('%s is deprecated. Use filters.nullblank instead' % self.__class__.__name__)
-
-
 class AnnotatedTextField(StringField):
     """
     Text field with prefix and suffix annotations.
@@ -556,13 +544,6 @@ class AnnotatedTextField(StringField):
         self.prefix = kwargs.pop('prefix', None)
         self.suffix = kwargs.pop('suffix', None)
         super(AnnotatedTextField, self).__init__(*args, **kwargs)
-
-
-class AnnotatedNullTextField(AnnotatedTextField, NullTextField):
-    """
-    Combination of AnnotatedTextField and NullTextField
-    """
-    pass
 
 
 class MarkdownField(TextAreaField):
