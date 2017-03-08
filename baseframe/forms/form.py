@@ -54,15 +54,12 @@ validator_registry = {
     }
 
 filter_registry = {
-    'join': (bfilters.join, 'sep'),
     'lower': (bfilters.lower,),
     'upper': (bfilters.upper,),
     'strip': (bfilters.strip, 'chars'),
     'lstrip': (bfilters.lstrip, 'chars'),
     'rstrip': (bfilters.rstrip, 'chars'),
-    'split': (bfilters.split, 'sep', 'maxsplit'),
-    'splitlines': (bfilters.splitlines, 'keepends'),
-    'nullblank': (bfilters.nullblank),
+    'none_if_empty': (bfilters.none_if_empty),
 }
 
 
