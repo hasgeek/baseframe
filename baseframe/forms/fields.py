@@ -470,15 +470,6 @@ class GeonameSelectMultiField(GeonameSelectFieldBase, StringField):
     widget = Select2Widget()
 
 
-class NullTextField(StringField):
-    """
-    Text field that returns None on empty strings.
-    """
-    def __init__(self, *args, **kwargs):
-        kwargs['filters'] = tuple(kwargs.get('filters', ())) + (lambda d: d or None,)
-        super(NullTextField, self).__init__(*args, **kwargs)
-
-
 class AnnotatedTextField(StringField):
     """
     Text field with prefix and suffix annotations.
@@ -487,13 +478,6 @@ class AnnotatedTextField(StringField):
         self.prefix = kwargs.pop('prefix', None)
         self.suffix = kwargs.pop('suffix', None)
         super(AnnotatedTextField, self).__init__(*args, **kwargs)
-
-
-class AnnotatedNullTextField(AnnotatedTextField, NullTextField):
-    """
-    Combination of AnnotatedTextField and NullTextField
-    """
-    pass
 
 
 class MarkdownField(TextAreaField):
