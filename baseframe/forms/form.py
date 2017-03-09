@@ -6,7 +6,7 @@ from wtforms.compat import iteritems
 from flask.ext.wtf import Form as BaseForm
 
 from ..signals import form_validation_error, form_validation_success
-from . import fields as bfields, validators as bvalidators, parsleyjs as bparsleyjs
+from . import fields as bfields, validators as bvalidators, parsleyjs as bparsleyjs, filters as bfilters
 
 __all__ = ['field_registry', 'widget_registry', 'validator_registry', 'Form', 'FormGenerator']
 
@@ -53,6 +53,15 @@ validator_registry = {
     'AllUrlsValid': bvalidators.AllUrlsValid,
     }
 
+filter_registry = {
+    'lower': (bfilters.lower,),
+    'upper': (bfilters.upper,),
+    'strip': (bfilters.strip, 'chars'),
+    'lstrip': (bfilters.lstrip, 'chars'),
+    'rstrip': (bfilters.rstrip, 'chars'),
+    'none_if_empty': (bfilters.none_if_empty),
+}
+
 
 class Form(BaseForm):
     """
@@ -98,14 +107,15 @@ class Form(BaseForm):
 class FormGenerator(object):
     """
     Creates forms from a JSON-compatible dictionary structure
-    based on the allowed set of fields, widgets and validators.
+    based on the allowed set of fields, widgets, validators and filters.
     """
-    def __init__(self, fields=None, widgets=None, validators=None, default_field='StringField'):
+    def __init__(self, fields=None, widgets=None, validators=None, filters=None, default_field='StringField'):
         # If using global defaults, make a copy in this class so that
         # they can be customised post-init without clobbering the globals
         self.fields = fields or dict(field_registry)
         self.widgets = widgets or dict(widget_registry)
         self.validators = validators or dict(validator_registry)
+        self.filters = filters or dict(filter_registry)
 
         self.default_field = default_field
 
@@ -122,7 +132,7 @@ class FormGenerator(object):
             type_ = fielddata.pop('type', None)
             if not name:
                 continue  # Skip unnamed fields
-            if not type_:
+            if (not type_) or type_ not in field_registry:
                 type_ = self.default_field  # Default to string input
 
             # TODO: Process widget requests
@@ -130,18 +140,33 @@ class FormGenerator(object):
             # Make a list of validators
             validators = []
             validators_data = fielddata.pop('validators', [])
-            for v in validators_data:
-                if isinstance(v, basestring) and v in validator_registry:
-                    validators.append(validator_registry[v][0]())
+            for item in validators_data:
+                if isinstance(item, basestring) and item in validator_registry:
+                    validators.append(validator_registry[item][0]())
                 else:
-                    valname = v.pop('type', None)
-                    valparams = {}
-                    if valname:
-                        for paramname in v:
-                            if paramname in validator_registry[valname][1:]:
-                                valparams[paramname] = v[paramname]
-                        validators.append(validator_registry[valname][0](**valparams))
+                    itemname = item.pop('type', None)
+                    itemparams = {}
+                    if itemname:
+                        for paramname in item:
+                            if paramname in validator_registry[itemname][1:]:
+                                itemparams[paramname] = item[paramname]
+                        validators.append(validator_registry[itemname][0](**itemparams))
+
+            # Make a list of filters
+            filters = []
+            filters_data = fielddata.pop('filters', [])
+            for item in filters_data:
+                if isinstance(item, basestring) and item in filter_registry:
+                    filters.append(filter_registry[item][0]())
+                else:
+                    itemname = item.pop('type', None)
+                    itemparams = {}
+                    if itemname:
+                        for paramname in item:
+                            if paramname in filter_registry[itemname][1:]:
+                                itemparams[paramname] = item[paramname]
+                        filters.append(filter_registry[itemname][0](**itemparams))
 
             # TODO: Also validate the parameters in fielddata, like with validators above
-            setattr(DynamicForm, name, field_registry[type_](validators=validators, **fielddata))
+            setattr(DynamicForm, name, field_registry[type_](validators=validators, filters=filters, **fielddata))
         return DynamicForm

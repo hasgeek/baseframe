@@ -10,6 +10,7 @@ from .parsleyjs import *
 from .fields import *
 from .widgets import *
 from .validators import *
+from .filters import *
 from .form import *
 from .auto import *
 
