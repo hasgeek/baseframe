@@ -9,6 +9,9 @@ from flask.ext.assets import Environment, Bundle
 from flask.ext.cache import Cache
 from flask.ext.dogpile_cache import DogpileCache
 from flask.ext.babelex import Babel, Domain
+from flask.json import JSONEncoder as BaseEncoder
+from speaklater import is_lazy_string
+
 
 try:
     from flask.ext.debugtoolbar import DebugToolbarExtension
@@ -46,6 +49,17 @@ DEFAULT_DOGPILE_CONFIG = {
 baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
 _ = baseframe_translations.gettext
 __ = baseframe_translations.lazy_gettext
+
+
+class JSONEncoder(BaseEncoder):
+    """
+    Custom JSON encoder that adds support to types that are not supported
+    by Flask's JSON encoder. Eg: lazy_gettext
+    """
+    def default(self, obj):
+        if is_lazy_string(obj):
+            return unicode(obj)
+        return super(JSONEncoder, self).default(obj)
 
 
 def _select_jinja_autoescape(filename):
@@ -181,6 +195,7 @@ class BaseframeBlueprint(Blueprint):
         if enable_csrf:
             csrf.init_app(app)
 
+        app.json_encoder = JSONEncoder
         # If this app has a Lastuser extension registered, give it a cache
         lastuser = getattr(app, 'extensions', {}).get('lastuser')
         if lastuser and hasattr(lastuser, 'init_cache'):
