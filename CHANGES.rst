@@ -1,7 +1,7 @@
 0.3.2
 -----
 
-* Custom JSONEncoder to encode lazy_gettext
+* Added a custom JSON encoder for lazy_gettext objects
 
 0.3.1
 -----

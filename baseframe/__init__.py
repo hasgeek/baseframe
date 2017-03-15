@@ -12,7 +12,6 @@ from flask.ext.babelex import Babel, Domain
 from flask.json import JSONEncoder as BaseEncoder
 from speaklater import is_lazy_string
 
-
 try:
     from flask.ext.debugtoolbar import DebugToolbarExtension
 except ImportError:
