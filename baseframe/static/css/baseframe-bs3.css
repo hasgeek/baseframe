@@ -1532,23 +1532,3 @@ header {
     margin-right: 1em;
   }
 }
-.select2-container.form-control {
-  border: 0;
-  padding: 0;
-  height: auto;
-  -moz-box-shadow: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-.select2-container .select2-choice {
-  height: 38px;
-  line-height: 36px;
-}
-.select2-container .select2-choice div b {
-  background-position: 0 5px;
-}
-
-.select2-dropdown-open .select2-choice div b {
-  background-position: -17px 5px;
-}

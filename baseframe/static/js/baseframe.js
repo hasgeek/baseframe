@@ -3,7 +3,7 @@
 function activate_widgets() {
   // Activate select2.js for non-mobile browsers
   if (!navigator.userAgent.match(/(iPod|iPad|iPhone|Android)/)) {
-    $('select:not(.notselect)').select2({allowClear: true});
+    $('select:not(.notselect)').select2({allowClear: true, theme: "bootstrap"});
   }
 
   var cm_markdown_config = { mode: 'gfm',
@@ -83,6 +83,7 @@ function activate_geoname_autocomplete(selector, autocomplete_endpoint, getname_
     placeholder: "Search for a location",
     multiple: true,
     minimumInputLength: 2,
+    theme: "classic",
     ajax: {
       url: autocomplete_endpoint,
       dataType: "jsonp",
@@ -200,6 +201,7 @@ window.Baseframe.Forms = {
       placeholder: "Search for a user",
       multiple: options.multiple,
       minimumInputLength: 2,
+      theme: "bootstrap",
       ajax: {
         url: options.autocomplete_endpoint,
         dataType: "jsonp",
@@ -231,6 +233,7 @@ window.Baseframe.Forms = {
       placeholder: "Type to select",
       multiple: options.multiple,
       minimumInputLength: 2,
+      theme: "bootstrap",
       ajax: {
         url: options.autocomplete_endpoint,
         dataType: "json",

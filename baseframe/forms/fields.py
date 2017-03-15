@@ -378,6 +378,7 @@ class UserSelectField(UserSelectFieldBase, StringField):
     """
     Render a user select field that allows one user to be selected.
     """
+    multiple = False
     widget = Select2Widget()
 
 
@@ -420,6 +421,7 @@ class AutocompleteField(AutocompleteFieldBase, StringField):
     Select field that sources choices from a JSON API endpoint.
     Does not validate choices server-side.
     """
+    multiple = False
     widget = Select2Widget()
 
 
@@ -459,6 +461,7 @@ class GeonameSelectField(GeonameSelectFieldBase, StringField):
     """
     Render a geoname select field that allows one geoname to be selected.
     """
+    multiple = False
     widget = Select2Widget()
 
 
