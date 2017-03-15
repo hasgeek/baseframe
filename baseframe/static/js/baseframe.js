@@ -83,7 +83,7 @@ function activate_geoname_autocomplete(selector, autocomplete_endpoint, getname_
     placeholder: "Search for a location",
     multiple: true,
     minimumInputLength: 2,
-    theme: "classic",
+    theme: "bootstrap",
     ajax: {
       url: autocomplete_endpoint,
       dataType: "jsonp",
