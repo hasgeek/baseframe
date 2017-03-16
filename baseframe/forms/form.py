@@ -84,6 +84,7 @@ class Form(BaseForm):
                 self.edit_parent = self.edit_obj.parent
         else:
             self.edit_id = None
+        self.set_queries()
 
     def validate(self, send_signals=True):
         result = super(Form, self).validate()
@@ -102,6 +103,9 @@ class Form(BaseForm):
         # (like when pickling)
         return {name: {'data': f.data, 'errors': [unicode(e) if is_lazy_string(e) else e for e in f.errors]}
             for name, f in iteritems(self._fields) if f.errors}
+
+    def set_queries(self):
+        pass
 
 
 class FormGenerator(object):
