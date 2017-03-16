@@ -105,6 +105,10 @@ class Form(BaseForm):
             for name, f in iteritems(self._fields) if f.errors}
 
     def set_queries(self):
+        """
+        Override this method in the sub-class to set queries that might
+        be required for form fields such as QuerySelectField or QuerySelectMultipleField
+        """
         pass
 
 
