@@ -45,6 +45,11 @@ class Select2Widget(Select):
         kwargs.pop('type', field.type)
         if field.multiple:
             kwargs['multiple'] = 'multiple'
+        c = kwargs.pop('class', '') or kwargs.pop('class_', '')
+        if c:
+            kwargs['class'] = u'%s %s' % ('select2', c)
+        else:
+            kwargs['class'] = 'select2'
         html = ['<select %s>' % html_params(name=field.name, **kwargs)]
         if field.iter_choices():
             for val, label, selected in field.iter_choices():

@@ -89,13 +89,9 @@ assets['jquery.appear.js'][Version('0.3.3')] = ('jquery.js', 'baseframe/js/jquer
 
 assets['select2.js'][Version('4.0.3')] = ('jquery.js>=1.7.2', 'baseframe/js/select2.js')
 assets['select2.css'][Version('4.0.3')] = 'baseframe/css/select2.css'
-assets['bootstrap-select2.css'][Version('0.1.0')] = 'baseframe/css/bootstrap-select2.css'
-assets['select2-baseframe.css'][Version('4.0.3')] = 'baseframe/css/select2-baseframe.css'
-assets['baseframe-select2.css'][Version('4.0.3')] = {'requires': [
-    'select2.css',
-    'bootstrap-select2.css',
-    'select2-baseframe.css'
-]}
+assets['select2-bootstrap.css'][Version('0.1.0')] = ('select2.css', 'baseframe/css/bootstrap-select2.css')
+assets['select2-baseframe.css'][Version('4.0.3')] = ('select2-bootstrap.css', 'baseframe/css/select2-baseframe.css')
+assets['select2-baseframe.js'][Version('4.0.3')] = {'requires': ['select2.js==4.0.3']}
 
 assets['bootstrap-multiselect.css'][Version('0.9.13')] = 'baseframe/css/bootstrap-multiselect.css'
 assets['bootstrap-multiselect.js'][Version('0.9.13')] = 'baseframe/js/bootstrap-multiselect.js'
@@ -299,7 +295,7 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
     'jquery.autosize.js',
     # 'bootstrap-datepicker.js',
     'jquery.timepicker.js',
-    'select2.js',
+    'select2-baseframe.js',
 ]}
 
 assets['baseframe.js'][Version(__version__)] = {'requires': [
@@ -314,7 +310,7 @@ assets['baseframe.js'][Version(__version__)] = {'requires': [
 assets['baseframe.css'][Version(__version__)] = {'requires': [
     'bootstrap.css==2.0.1',
     'bootstrap-responsive.css==2.0.1',
-    'baseframe-select2.css',
+    'select2-baseframe.css',
     'jquery.timepicker.css',
     'fontawesome.css==3.1.0',
     'baseframe-base.css==' + __version__,
@@ -331,7 +327,7 @@ assets['baseframe-bs3.js'][Version(__version__)] = {'requires': [
 
 assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
     'bootstrap.css>=3.0.0',
-    'baseframe-select2.css',
+    'select2-baseframe.css',
     'jquery.timepicker.css',
     'baseframe-base-bs3.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
