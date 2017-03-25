@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
   {%- block titletags %}
-    <title>{% block title %}{{ title }}{% endblock %}{% if config['SITE_TITLE'] %} — {{ config['SITE_TITLE'] }}{% endif %}</title>
+    <title>{% block title %}{{ title }}{% endblock %}{% if config['SITE_TITLE'] %} {% if title %}— {% endif %}{{ config['SITE_TITLE'] }}{% endif %}</title>
     <meta name="DC.title" content="{{ self.title()|e }}" />
     <meta property="og:title" content="{{ self.title()|e }}" />
   {%- endblock %}
