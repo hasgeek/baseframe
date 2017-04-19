@@ -3,7 +3,7 @@
 function activate_widgets() {
   // Activate select2.js for non-mobile browsers
   if (!navigator.userAgent.match(/(iPod|iPad|iPhone|Android)/)) {
-    $('select:not(.notselect)').select2({allowClear: true, theme: "bootstrap"});
+    $('select:not(.notselect)').select2({theme: "bootstrap"});
   }
 
   var cm_markdown_config = { mode: 'gfm',
