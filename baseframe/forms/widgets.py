@@ -6,8 +6,8 @@ from wtforms.widgets import RadioInput, Select, HTMLString, html_params
 from flask import Markup
 from .. import b_ as _
 
-__all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'HiddenInput', 'CoordinatesInput',
-    'RadioMatrixInput', 'InlineListWidget', 'RadioInput', 'SelectWidget']
+__all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'CoordinatesInput',
+    'RadioMatrixInput', 'InlineListWidget', 'RadioInput', 'SelectWidget', 'Select2Widget']
 
 
 # This class borrowed from https://github.com/industrydive/wtforms_extended_selectfield
@@ -32,6 +32,28 @@ class SelectWidget(Select):
                 val = item1
                 label = item2
                 html.append(self.render_option(val, label, val == field.data))
+        html.append('</select>')
+        return HTMLString(''.join(html))
+
+
+class Select2Widget(Select):
+    """
+    Add support of choices with ``optgroup`` to the ``Select`` widget.
+    """
+    def __call__(self, field, **kwargs):
+        kwargs.setdefault('id', field.id)
+        kwargs.pop('type', field.type)
+        if field.multiple:
+            kwargs['multiple'] = 'multiple'
+        c = kwargs.pop('class', '') or kwargs.pop('class_', '')
+        if c:
+            kwargs['class'] = u'%s %s' % ('select2', c)
+        else:
+            kwargs['class'] = 'select2'
+        html = ['<select %s>' % html_params(name=field.name, **kwargs)]
+        if field.iter_choices():
+            for val, label, selected in field.iter_choices():
+                html.append(self.render_option(val, label, selected))
         html.append('</select>')
         return HTMLString(''.join(html))
 
@@ -104,13 +126,6 @@ class DateTimeInput(wtforms.widgets.Input):
             wtforms.widgets.html_params(name=field.name, id=field_id + '-time', value=time_value, **kwargs),
             field.tzname,
             ))
-
-
-class HiddenInput(wtforms.widgets.core.Input):
-    """
-    Render a hidden input. This widget exists solely to escape processing by form.hidden_tag()
-    """
-    input_type = 'hidden'
 
 
 class CoordinatesInput(wtforms.widgets.core.Input):

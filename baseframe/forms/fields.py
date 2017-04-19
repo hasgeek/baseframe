@@ -12,11 +12,11 @@ from wtforms.utils import unset_value
 import bleach
 
 from .. import _, get_timezone
-from .widgets import TinyMce3, TinyMce4, DateTimeInput, HiddenInput, CoordinatesInput, RadioMatrixInput, SelectWidget
+from .widgets import TinyMce3, TinyMce4, DateTimeInput, CoordinatesInput, RadioMatrixInput, SelectWidget, Select2Widget
 from .parsleyjs import TextAreaField, StringField, URLField
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
-    'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'HiddenMultiField', 'TextListField',
+    'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'TextListField',
     'AnnotatedTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
     'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
     'CoordinatesField', 'RadioMatrixField', 'AutocompleteField', 'AutocompleteMultipleField', 'SelectField',
@@ -305,37 +305,10 @@ class DateTimeField(wtforms.fields.DateTimeField):
         self._timezone_converted = False
 
     def pre_validate(self, form):
-        if self._timezone_converted is False:
+        if self.data and self._timezone_converted is False:
             # Convert from user timezone back to UTC, then discard tzinfo
             self.data = self.tz.localize(self.data, is_dst=self.is_dst).astimezone(utc).replace(tzinfo=None)
             self._timezone_converted = True
-
-
-class HiddenMultiField(wtforms.fields.StringField):
-    """
-    A hidden field that stores multiple comma-separated values, meant to be
-    used as an Ajax widget target. The optional ``separator`` parameter
-    can be used to specify an alternate separator character (default ``','``).
-    """
-    widget = HiddenInput()
-
-    def __init__(self, *args, **kwargs):
-        self.separator = kwargs.pop('separator', ',')
-        super(HiddenMultiField, self).__init__(*args, **kwargs)
-
-    def _value(self):
-        if self.data:
-            return self.separator.join(self.data)
-        else:
-            return ''
-
-    def process_formdata(self, valuelist):
-        retval = super(HiddenMultiField, self).process_formdata(valuelist)
-        if not self.data:
-            self.data = []  # Calling ''.split(',') will give us [''] which is not "falsy"
-        else:
-            self.data = self.data.split(self.separator)
-        return retval
 
 
 class TextListField(wtforms.fields.TextAreaField):
@@ -372,18 +345,13 @@ class UserSelectFieldBase(object):
             self.getuser_endpoint = kwargs.pop('getuser_endpoint')()
         super(UserSelectFieldBase, self).__init__(*args, **kwargs)
 
-    def _value(self):
+    def iter_choices(self):
         if self.data:
-            return self.separator.join([u.userid for u in self.data])
-        else:
-            return ''
+            return [(u.userid, u.pickername, True) for u in self.data]
 
     def process_formdata(self, valuelist):
         retval = super(UserSelectFieldBase, self).process_formdata(valuelist)
-        if self.data:
-            userids = self.data.split(self.separator)
-        else:
-            userids = []  # Calling ''.split(',') will give us [''] which is an invalid userid
+        userids = valuelist
         # Convert strings in userids into User objects
         users = []
         if userids:
@@ -402,7 +370,6 @@ class UserSelectFieldBase(object):
                         users.append(user)
             else:
                 users = self.usermodel.all(userids=userids)
-
         self.data = users
         return retval
 
@@ -411,30 +378,16 @@ class UserSelectField(UserSelectFieldBase, StringField):
     """
     Render a user select field that allows one user to be selected.
     """
-    widget = HiddenInput()
     multiple = False
-
-    def _value(self):
-        if self.data:
-            return self.data.userid
-        else:
-            return ''
-
-    def process_formdata(self, valuelist):
-        retval = super(UserSelectField, self).process_formdata(valuelist)
-        if self.data:
-            self.data = self.data[0]
-        else:
-            self.data = None
-        return retval
+    widget = Select2Widget()
 
 
 class UserSelectMultiField(UserSelectFieldBase, StringField):
     """
     Render a user select field that allows multiple users to be selected.
     """
-    widget = HiddenInput()
     multiple = True
+    widget = Select2Widget()
 
 
 class AutocompleteFieldBase(object):
@@ -448,6 +401,16 @@ class AutocompleteFieldBase(object):
         super(AutocompleteFieldBase, self).__init__(*args, **kwargs)
         self.choices = ()  # Disregard server-side choices
 
+    def iter_choices(self):
+        if self.data:
+            return [(unicode(u), unicode(u), True) for u in self.data]
+
+    def process_formdata(self, valuelist):
+        retval = super(AutocompleteFieldBase, self).process_formdata(valuelist)
+        # Convert strings into Tag objects
+        self.data = valuelist
+        return retval
+
     def pre_validate(self, form):
         """Do not validate data"""
         return
@@ -458,8 +421,8 @@ class AutocompleteField(AutocompleteFieldBase, StringField):
     Select field that sources choices from a JSON API endpoint.
     Does not validate choices server-side.
     """
-    widget = HiddenInput()
     multiple = False
+    widget = Select2Widget()
 
 
 class AutocompleteMultipleField(AutocompleteFieldBase, StringField):
@@ -467,22 +430,8 @@ class AutocompleteMultipleField(AutocompleteFieldBase, StringField):
     Multiple select field that sources choices from a JSON API endpoint.
     Does not validate choices server-side.
     """
-    widget = HiddenInput()
     multiple = True
-
-    def _value(self):
-        if self.data:
-            return self.separator.join(self.data)
-        else:
-            return ''
-
-    def process_formdata(self, valuelist):
-        retval = super(AutocompleteMultipleField, self).process_formdata(valuelist)
-        if self.data:
-            self.data = self.data.split(self.separator)
-        else:
-            self.data = []  # Calling ''.split(',') will give us [''] which is an invalid userid
-        return retval
+    widget = Select2Widget()
 
 
 class GeonameSelectFieldBase(object):
@@ -497,19 +446,14 @@ class GeonameSelectFieldBase(object):
 
         super(GeonameSelectFieldBase, self).__init__(*args, **kwargs)
 
-    def _value(self):
+    def iter_choices(self):
         if self.data:
-            return self.separator.join([unicode(l) for l in self.data])
-        else:
-            return ''
+            return [(unicode(u), unicode(u), True) for u in self.data]
 
     def process_formdata(self, valuelist):
         retval = super(GeonameSelectFieldBase, self).process_formdata(valuelist)
-        if self.data:
-            geonameids = self.data.split(self.separator)
-        else:
-            geonameids = []  # Calling ''.split(',') will give us [''] which is an invalid geonameid
-        self.data = geonameids
+        # Convert strings into GeoName objects
+        self.data = valuelist
         return retval
 
 
@@ -517,28 +461,16 @@ class GeonameSelectField(GeonameSelectFieldBase, StringField):
     """
     Render a geoname select field that allows one geoname to be selected.
     """
-    widget = HiddenInput()
-
-    def _value(self):
-        if self.data:
-            return self.data.geonameid
-        else:
-            return None
-
-    def process_formdata(self, valuelist):
-        retval = super(GeonameSelectField, self).process_formdata(valuelist)
-        if self.data:
-            self.data = self.data[0]
-        else:
-            self.data = None
-        return retval
+    multiple = False
+    widget = Select2Widget()
 
 
 class GeonameSelectMultiField(GeonameSelectFieldBase, StringField):
     """
     Render a geoname select field that allows multiple geonames to be selected.
     """
-    widget = HiddenInput()
+    multiple = True
+    widget = Select2Widget()
 
 
 class AnnotatedTextField(StringField):

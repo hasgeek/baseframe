@@ -71,7 +71,7 @@ footer {
 footer .footer-inner {
   margin-top: 10px;
   min-height: 57px;
-  background: whiteSmoke url('/_baseframe/img/shadow.png?1457696304') no-repeat top center;
+  background: whiteSmoke url('/_baseframe/img/shadow.png?1460092674') no-repeat top center;
 }
 
 footer .container {
@@ -89,7 +89,7 @@ footer .container p {
   overflow: hidden;
   text-align: left;
   text-transform: capitalize;
-  background-image: url('/_baseframe/img/logo.png?1457696111');
+  background-image: url('/_baseframe/img/logo.png?1460092674');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   width: 75px;
@@ -110,7 +110,7 @@ footer .container p {
   overflow: hidden;
   text-align: left;
   text-transform: capitalize;
-  background-image: url('/_baseframe/img/hasgeek-presents.png?1457696107');
+  background-image: url('/_baseframe/img/hasgeek-presents.png?1460092674');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   width: 100px;
@@ -688,7 +688,7 @@ ul.grid > li.header {
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   #logo {
-    background-image: url('/_baseframe/img/logo@2x.png?1457696127');
+    background-image: url('/_baseframe/img/logo@2x.png?1460092674');
     -webkit-background-size: auto 75px;
   }
 }
@@ -1531,24 +1531,4 @@ header {
     display: inline-block;
     margin-right: 1em;
   }
-}
-.select2-container.form-control {
-  border: 0;
-  padding: 0;
-  height: auto;
-  -moz-box-shadow: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-.select2-container .select2-choice {
-  height: 38px;
-  line-height: 36px;
-}
-.select2-container .select2-choice div b {
-  background-position: 0 5px;
-}
-
-.select2-dropdown-open .select2-choice div b {
-  background-position: -17px 5px;
 }
