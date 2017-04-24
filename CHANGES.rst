@@ -1,3 +1,8 @@
+0.3.3
+-----
+
+* New AvailableAttr to check if a value can be assigned to a model's attribute
+
 0.3.2
 -----
 
