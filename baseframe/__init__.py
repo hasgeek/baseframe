@@ -4,7 +4,6 @@ from __future__ import absolute_import
 from pytz import timezone, UTC
 from flask import g, Blueprint, request, current_app
 from coaster.assets import split_namespec
-from flask_wtf import CSRFProtect
 from flask_assets import Environment, Bundle
 from flask_caching import Cache
 from flask_dogpile_cache import DogpileCache
@@ -32,7 +31,6 @@ asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
 dogpile = DogpileCache()
 babel = Babel()
-csrf = CSRFProtect()
 if DebugToolbarExtension is not None:
     toolbar = DebugToolbarExtension()
 else:
@@ -72,8 +70,7 @@ def _select_jinja_autoescape(filename):
 
 
 class BaseframeBlueprint(Blueprint):
-    def init_app(self, app, requires=[], ext_requires=[], bundle_js=None, bundle_css=None, assetenv=None,
-            enable_csrf=False):
+    def init_app(self, app, requires=[], ext_requires=[], bundle_js=None, bundle_css=None, assetenv=None):
         """
         Initialize an app and load necessary assets.
 
@@ -90,7 +87,6 @@ class BaseframeBlueprint(Blueprint):
         :param bundle_js: Bundle of additional JavaScript
         :param bundle_css: Bundle of additional CSS
         :param assetenv: Environment for assets (in case your app needs a custom environment)
-        :param bool enable_csrf: Enable global CSRF for all requests in your app
         """
         app.jinja_env.add_extension('jinja2.ext.do')
         app.jinja_env.autoescape = _select_jinja_autoescape
@@ -191,8 +187,6 @@ class BaseframeBlueprint(Blueprint):
                     app.config['DEBUG_TB_PANELS'].append(
                         'flask_debugtoolbar_lineprofilerpanel.panels.LineProfilerPanel')
             toolbar.init_app(app)
-        if enable_csrf:
-            csrf.init_app(app)
 
         app.json_encoder = JSONEncoder
         # If this app has a Lastuser extension registered, give it a cache
