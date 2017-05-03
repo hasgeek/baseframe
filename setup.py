@@ -24,7 +24,7 @@ requires = [
     'Flask>=0.10.0',
     'Flask-Assets',
     'Flask-WTF>=0.14',
-    'Flask-Cache',
+    'Flask-Caching',
     'Flask-BabelEx',
     'speaklater',
     'redis',
