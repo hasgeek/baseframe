@@ -1,12 +1,9 @@
-0.3.3
------
-
-* New AvailableAttr to check if a value can be assigned to a model's attribute
-
 0.3.2
 -----
 
 * Added a custom JSON encoder for lazy_gettext objects
+* New AvailableAttr to check if a value can be assigned to a model's attribute
+* Removed CsrfProtect support as it was user hostile and had been discoutinued in all apps
 
 0.3.1
 -----
