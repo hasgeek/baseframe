@@ -4,16 +4,16 @@ from __future__ import absolute_import
 from pytz import timezone, UTC
 from flask import g, Blueprint, request, current_app
 from coaster.assets import split_namespec
-from flask.ext.wtf import CSRFProtect
-from flask.ext.assets import Environment, Bundle
-from flask.ext.cache import Cache
-from flask.ext.dogpile_cache import DogpileCache
-from flask.ext.babelex import Babel, Domain
+from flask_wtf import CSRFProtect
+from flask_assets import Environment, Bundle
+from flask_caching import Cache
+from flask_dogpile_cache import DogpileCache
+from flask_babelex import Babel, Domain
 from flask.json import JSONEncoder as BaseEncoder
 from speaklater import is_lazy_string
 
 try:
-    from flask.ext.debugtoolbar import DebugToolbarExtension
+    from flask_debugtoolbar import DebugToolbarExtension
 except ImportError:
     DebugToolbarExtension = None
 try:
@@ -310,7 +310,7 @@ def process_response(response):
 # Replace gettext handlers for imports
 b_ = _
 b__ = __
-from flask.ext.babelex import gettext as _, lazy_gettext as __
+from flask_babelex import gettext as _, lazy_gettext as __
 
 from .views import *    # NOQA
 from .errors import *   # NOQA

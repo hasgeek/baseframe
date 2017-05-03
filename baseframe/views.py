@@ -5,8 +5,8 @@ import requests
 from datetime import datetime, timedelta
 from urlparse import urlparse, urljoin
 from flask import current_app, send_from_directory, render_template, abort, request
-from flask.ext.assets import Bundle
-from flask.ext.wtf.csrf import generate_csrf
+from flask_assets import Bundle
+from flask_wtf.csrf import generate_csrf
 from coaster.utils import make_name
 from coaster.assets import split_namespec
 from coaster.views import render_with
