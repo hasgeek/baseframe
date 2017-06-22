@@ -238,7 +238,7 @@ def get_locale():
     # example. The best match wins.
 
     # FIXME: Do this properly. Don't use a random selection of languages
-    return request.accept_languages.best_match(['de', 'fr', 'es', 'hi', 'te', 'ta', 'kn', 'ml', 'en'])
+    return request.accept_languages.best_match(['de', 'fr', 'es', 'hi', 'te', 'ta', 'kn', 'ml', 'en']) or 'en'
 
 
 @babel.timezoneselector
