@@ -381,6 +381,20 @@ class UserSelectField(UserSelectFieldBase, StringField):
     multiple = False
     widget = Select2Widget()
 
+    def _value(self):
+        if self.data:
+            return self.data.userid
+        else:
+            return ''
+
+    def process_formdata(self, valuelist):
+        retval = super(UserSelectField, self).process_formdata(valuelist)
+        if self.data:
+            self.data = self.data[0]
+        else:
+            self.data = None
+        return retval
+
 
 class UserSelectMultiField(UserSelectFieldBase, StringField):
     """
@@ -424,6 +438,20 @@ class AutocompleteField(AutocompleteFieldBase, StringField):
     multiple = False
     widget = Select2Widget()
 
+    def _value(self):
+        if self.data:
+            return self.data
+        else:
+            return None
+
+    def process_formdata(self, valuelist):
+        retval = super(AutocompleteField, self).process_formdata(valuelist)
+        if self.data:
+            self.data = self.data[0]
+        else:
+            self.data = None
+        return retval
+
 
 class AutocompleteMultipleField(AutocompleteFieldBase, StringField):
     """
@@ -463,6 +491,20 @@ class GeonameSelectField(GeonameSelectFieldBase, StringField):
     """
     multiple = False
     widget = Select2Widget()
+
+    def _value(self):
+        if self.data:
+            return self.data.geonameid
+        else:
+            return None
+
+    def process_formdata(self, valuelist):
+        retval = super(GeonameSelectField, self).process_formdata(valuelist)
+        if self.data:
+            self.data = self.data[0]
+        else:
+            self.data = None
+        return retval
 
 
 class GeonameSelectMultiField(GeonameSelectFieldBase, StringField):
