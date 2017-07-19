@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+from coaster.utils import md5sum
 from baseframe import filters
 from .fixtures import BaseframeTestCase, TestUser
 
@@ -73,3 +74,9 @@ class FilterTestCase(BaseframeTestCase):
         self.test_user.set_avatar(self.test_avatar_url)
         avatar_url = filters.avatar_url(self.test_user, self.test_avatar_size)
         self.assertEqual(avatar_url, self.test_avatar_url + '?size=' + u'x'.join(self.test_avatar_size))
+
+        self.test_user.set_avatar(None)
+        self.test_user.set_email('foobar@foo.com')
+        avatar_url = filters.avatar_url(self.test_user, self.test_avatar_size)
+        hash = md5sum(self.test_user.email)
+        self.assertEqual(avatar_url, u'//www.gravatar.com/avatar/' + hash + u'?d=mm&s=' + u'x'.join(self.test_avatar_size))

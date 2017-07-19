@@ -18,7 +18,7 @@ class TestUser:
         self.email = self.set_email(email)
 
     def set_avatar(self, avatar):
-        self.avatar = u'//www.gravatar.com/avatar/test'
+        self.avatar = avatar
 
     def set_email(self, email):
         self.email = email
