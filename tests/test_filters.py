@@ -23,6 +23,10 @@ class FilterTestCase(BaseframeTestCase):
         age = filters.age(nine_seconds)
         self.assertEqual(age, u'seconds ago')
 
+        thirty_minutes = self.now - timedelta(minutes=30)
+        age = filters.age(thirty_minutes)
+        self.assertEqual(age, u'30 minutes ago')
+
         one_half_hour = self.now - timedelta(hours=1.5)
         age = filters.age(one_half_hour)
         self.assertEqual(age, u'an hour ago')
@@ -45,9 +49,22 @@ class FilterTestCase(BaseframeTestCase):
             ssled = filters.usessl('http://hasgeek.com')
             self.assertEqual(ssled, 'https://hasgeek.com')
 
+            ssled = filters.usessl('hasgeek.com')
+            self.assertEqual(ssled, 'hasgeek.com')
+
+            ssled = filters.usessl('/static/test')
+            self.assertEqual(ssled, 'https://localhost/static/test')
+
     def test_nossl(self):
-        nossled = filters.nossl('https://hasgeek.com')
-        self.assertEqual(nossled, 'http://hasgeek.com')
+        with self.app.test_request_context('/'):
+            nossled = filters.nossl('https://hasgeek.com')
+            self.assertEqual(nossled, 'http://hasgeek.com')
+
+            nossled = filters.nossl('hasgeek.com')
+            self.assertEqual(nossled, 'hasgeek.com')
+
+            nossled = filters.nossl('//hasgeek.com')
+            self.assertEqual(nossled, 'http://hasgeek.com')
 
     def test_avatar_url(self):
         avatar_url = filters.avatar_url(self.test_user)
