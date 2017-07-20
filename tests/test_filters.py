@@ -11,10 +11,7 @@ class FilterTestCase(BaseframeTestCase):
         self.now = datetime.utcnow()
         self.test_user = TestUser()
         self.test_avatar_size = ('100', '100')
-        self.test_avatar_url = u'//www.gravatar.com/avatar/test'
-
-    def tearDown(self):
-        super(FilterTestCase, self).tearDown()
+        self.test_avatar_url = u'//images.hasgeek.com/embed/test'
 
     def test_age(self):
         age = filters.age(self.now)
@@ -68,13 +65,16 @@ class FilterTestCase(BaseframeTestCase):
             self.assertEqual(nossled, 'http://hasgeek.com')
 
     def test_avatar_url(self):
+        # test_user object doesn't have an email or an avatar by default
         avatar_url = filters.avatar_url(self.test_user)
         self.assertEqual(avatar_url, u'//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm')
 
+        # testing what if the user has an avatar already
         self.test_user.set_avatar(self.test_avatar_url)
         avatar_url = filters.avatar_url(self.test_user, self.test_avatar_size)
         self.assertEqual(avatar_url, self.test_avatar_url + '?size=' + u'x'.join(self.test_avatar_size))
 
+        # what if the user doesn't have an avatar but has an email
         self.test_user.set_avatar(None)
         self.test_user.set_email('foobar@foo.com')
         avatar_url = filters.avatar_url(self.test_user, self.test_avatar_size)

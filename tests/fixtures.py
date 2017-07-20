@@ -8,11 +8,8 @@ class BaseframeTestCase(unittest.TestCase):
         self.app = Flask(__name__)
         baseframe.init_app(self.app, requires=['baseframe'])
 
-    def tearDown(self):
-        pass
 
-
-class TestUser:
+class TestUser(object):
     def __init__(self, avatar=None, email=None):
         self.avatar = self.set_avatar(avatar)
         self.email = self.set_email(email)
