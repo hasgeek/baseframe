@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 
 from coaster.utils import md5sum
-from baseframe import filters
-from .fixtures import BaseframeTestCase, TestUser
+from baseframe import filters, forms
+from .fixtures import BaseframeTestCase, TestUser, TestForm
 
 
 class FilterTestCase(BaseframeTestCase):
@@ -80,3 +80,25 @@ class FilterTestCase(BaseframeTestCase):
         avatar_url = filters.avatar_url(self.test_user, self.test_avatar_size)
         hash = md5sum(self.test_user.email)
         self.assertEqual(avatar_url, u'//www.gravatar.com/avatar/' + hash + u'?d=mm&s=' + u'x'.join(self.test_avatar_size))
+
+    def test_render_field_options(self):
+        test_attrs = dict(attrone='test', attrtwo=False, attrthree=None, attrfour='')
+        modified_field = filters.render_field_options(forms.RichTextField, **test_attrs)
+        assert 'attrone' in modified_field.kwargs and modified_field.kwargs['attrone'] == 'test'
+        assert not hasattr(modified_field.kwargs, 'attrtwo')
+        assert not hasattr(modified_field.kwargs, 'attrthree')
+        assert 'attrfour' in modified_field.kwargs and modified_field.kwargs['attrfour'] == ''
+
+    def test_firstline(self):
+        html = "<div>this is the first line</div><div>and second line</div>"
+        firstline = filters.firstline(html)
+        self.assertEqual(firstline, "this is the first line")
+
+    def test_cdata(self):
+        text = "foo bar"
+        result = filters.cdata(text)
+        self.assertEqual(result, "<![CDATA[foo bar]]>")
+
+        text = "<![CDATA[foo bar]]>"
+        result = filters.cdata(text)
+        self.assertEqual(result, "<![CDATA[<![CDATA[foo bar]]]]><![CDATA[>]]>")

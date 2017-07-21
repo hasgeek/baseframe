@@ -1,6 +1,6 @@
 import unittest
 from flask import Flask
-from baseframe import baseframe
+from baseframe import baseframe, forms
 
 
 class BaseframeTestCase(unittest.TestCase):
@@ -19,3 +19,7 @@ class TestUser(object):
 
     def set_email(self, email):
         self.email = email
+
+
+class TestForm(forms.Form):
+    test_field = forms.IntegerField("Test label", default=1)
