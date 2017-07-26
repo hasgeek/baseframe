@@ -84,10 +84,10 @@ class FilterTestCase(BaseframeTestCase):
     def test_render_field_options(self):
         test_attrs = dict(attrone='test', attrtwo=False, attrthree=None, attrfour='')
         modified_field = filters.render_field_options(forms.RichTextField, **test_attrs)
-        assert 'attrone' in modified_field.kwargs and modified_field.kwargs['attrone'] == 'test'
-        assert not hasattr(modified_field.kwargs, 'attrtwo')
-        assert not hasattr(modified_field.kwargs, 'attrthree')
-        assert 'attrfour' in modified_field.kwargs and modified_field.kwargs['attrfour'] == ''
+        self.assertIn('attrone', modified_field.kwargs) and self.assertEqual(modified_field.kwargs['attrone'], 'test')
+        self.assertEqual(hasattr(modified_field.kwargs, 'attrtwo'), False)
+        self.assertEqual(hasattr(modified_field.kwargs, 'attrthree'), False)
+        self.assertIn('attrfour', modified_field.kwargs) and self.assertEqual(modified_field.kwargs['attrfour'], '')
 
     def test_firstline(self):
         html = "<div>this is the first line</div><div>and second line</div>"
