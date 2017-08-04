@@ -1,6 +1,9 @@
+import re
 import unittest
 from flask import Flask
 from baseframe import baseframe
+from baseframe import _, __
+import baseframe.forms as forms
 
 
 class BaseframeTestCase(unittest.TestCase):
@@ -19,3 +22,24 @@ class TestUser(object):
 
     def set_email(self, email):
         self.email = email
+
+
+class TestDocument(object):
+    def __init__(self, url=None, content=None):
+        self.url = url
+        self.content = content
+
+
+reject_list = [
+    (['example.com', re.compile(r'example.in')], u'This URL is not allowed')
+]
+
+class TestUrlForm(forms.Form):
+    url = forms.URLField(__("URL"),
+        validators=[forms.validators.DataRequired(), forms.validators.Length(max=255),
+        forms.validators.ValidUrl(invalid_urls=reject_list)],
+        filters=[forms.filters.strip()])
+
+class TestAllUrlsForm(forms.Form):
+    content_with_urls = forms.TextAreaField(__("Content"),
+        validators=[forms.validators.DataRequired(), forms.validators.AllUrlsValid()])
