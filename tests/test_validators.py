@@ -32,12 +32,14 @@ class ValidatorTestCase(BaseframeTestCase):
             self.form.process(url=url)
             self.assertEqual(self.form.validate(), False)
 
-    # def test_blacklisted_url(self):
-    #     with self.app.test_request_context('/'):
-    #         url = 'https://example.com/'
-    #         self.form.process(url=url)
-    #         import IPython; IPython.embed()
-    #         self.assertEqual(self.form.validate(), False)
+    def test_disallowed_url(self):
+        with self.app.test_request_context('/'):
+            url = 'https://example.com/'
+            self.form.process(url=url)
+            self.assertEqual(self.form.validate(), False)
+            url = 'https://example.in/'
+            self.form.process(url=url)
+            self.assertEqual(self.form.validate(), False)
 
     def test_html_snippet_valid_urls(self):
         url1 = 'https://hasgeek.com/'

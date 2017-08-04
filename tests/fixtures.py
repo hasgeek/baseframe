@@ -1,3 +1,4 @@
+import re
 import unittest
 from flask import Flask
 from baseframe import baseframe
@@ -29,9 +30,14 @@ class TestDocument(object):
         self.content = content
 
 
+reject_list = [
+    (['example.com', re.compile(r'example.in')], u'This URL is not allowed')
+]
+
 class TestUrlForm(forms.Form):
     url = forms.URLField(__("URL"),
-        validators=[forms.validators.DataRequired(), forms.validators.Length(max=255), forms.validators.ValidUrl()],
+        validators=[forms.validators.DataRequired(), forms.validators.Length(max=255),
+        forms.validators.ValidUrl(invalid_urls=reject_list)],
         filters=[forms.filters.strip()])
 
 class TestAllUrlsForm(forms.Form):

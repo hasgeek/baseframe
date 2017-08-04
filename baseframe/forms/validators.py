@@ -238,8 +238,9 @@ class ValidUrl(object):
                     # For text patterns, do a substring search. For regex patterns (assumed so if not text),
                     # do a regex search. Test with the final URL from the response, after redirects,
                     # but report errors using the URL the user provided
-                    if (isinstance(pattern, basestring) and pattern in rurl) or (pattern.search(rurl) is not None):
-                        return message.format(url=url, text=text)
+                    if (isinstance(pattern, basestring) and pattern in rurl) or (
+                        isinstance(pattern, re._pattern_type) and pattern.search(rurl) is not None):
+                            return message.format(url=url, text=text)
             # All good. The URL works and isn't invalid, so save to cache and return without an error message
             asset_cache.set(cache_key, {'url': rurl, 'code': code}, timeout=86400)
             return
