@@ -47,7 +47,7 @@ class OptionalIfNot(OptionalIf):
     """
     def __call__(self, form, field):
         if not field.data:
-            if form[self.fieldname].data:
+            if not form[self.fieldname].data:
                 raise StopValidation()
             else:
                 raise StopValidation(self.message)

@@ -43,3 +43,11 @@ class TestUrlForm(forms.Form):
 class TestAllUrlsForm(forms.Form):
     content_with_urls = forms.TextAreaField(__("Content"),
         validators=[forms.validators.DataRequired(), forms.validators.AllUrlsValid()])
+
+class TestOptionalIfForm(forms.Form):
+    title = forms.StringField(__("Title"), validators=[forms.validators.OptionalIf('headline')])
+    headline = forms.StringField(__("Headline"))
+
+class TestOptionalIfNotForm(forms.Form):
+    blurb = forms.TextAreaField(__("Blurb"), validators=[forms.validators.OptionalIfNot('content')])
+    content = forms.TextAreaField(__("Content"))
