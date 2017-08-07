@@ -102,3 +102,41 @@ class FilterTestCase(BaseframeTestCase):
         text = "<![CDATA[foo bar]]>"
         result = filters.cdata(text)
         self.assertEqual(result, "<![CDATA[<![CDATA[foo bar]]]]><![CDATA[>]]>")
+
+    def test_lower(self):
+        lower_func = forms.lower()
+        self.assertEqual('test', lower_func('TEST'))
+        self.assertEqual('test', lower_func('Test'))
+        self.assertEqual('', lower_func(''))
+
+    def test_upper(self):
+        upper_func = forms.upper()
+        self.assertEqual('TEST', upper_func('Test'))
+        self.assertEqual('TEST', upper_func('test'))
+        self.assertEqual('', upper_func(''))
+
+    def test_strip(self):
+        strip_func = forms.strip()
+        self.assertEqual('Test', strip_func(' Test '))
+        self.assertEqual('a       test', strip_func('a       test   '))
+        self.assertEqual('', strip_func('      '))
+
+    def test_lstrip(self):
+        lstrip_func = forms.lstrip()
+        self.assertEqual('Test ', lstrip_func(' Test '))
+        self.assertEqual('a       test   ', lstrip_func('a       test   '))
+        self.assertEqual('', lstrip_func('      '))
+
+    def test_rstrip(self):
+        rstrip_func = forms.rstrip()
+        self.assertEqual(' Test', rstrip_func(' Test '))
+        self.assertEqual('a       test', rstrip_func('a       test   '))
+        self.assertEqual('', rstrip_func('      '))
+
+    def test_none_if_empty(self):
+        none_if_empty_func = forms.none_if_empty()
+        self.assertEqual('Test', none_if_empty_func('Test'))
+        self.assertEqual(None, none_if_empty_func(''))
+        self.assertEqual(None, none_if_empty_func([]))
+        self.assertEqual(None, none_if_empty_func(False))
+        self.assertEqual(None, none_if_empty_func(0))
