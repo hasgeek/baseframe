@@ -5,6 +5,13 @@ from baseframe import baseframe
 from baseframe import _, __
 import baseframe.forms as forms
 
+app1 = Flask(__name__)
+app1.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
+app1.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app2 = Flask(__name__)
+app2.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///baseframe_test'
+app2.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 class BaseframeTestCase(unittest.TestCase):
     def setUp(self):
