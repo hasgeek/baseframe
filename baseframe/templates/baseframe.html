@@ -133,6 +133,9 @@
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
       ga('create', {{ config['GA_CODE']|tojson }}, 'auto');
+      // Track Device Pixel Ratio
+      var pixelRatio = window.getDevicePixelRatio();
+      ga('set', 'metric1', pixelRatio);
       ga('send', 'pageview');
     </script>
   {%- endif -%}
