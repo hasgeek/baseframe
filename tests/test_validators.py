@@ -5,10 +5,10 @@ class ValidatorTestCase(BaseframeTestCase):
     def setUp(self):
         super(ValidatorTestCase, self).setUp()
         with self.app.test_request_context('/'):
-            self.form = TestUrlForm(csrf_enabled=False)
-            self.all_urls_form = TestAllUrlsForm(csrf_enabled=False)
-            self.optional_if_form = TestOptionalIfForm(csrf_enabled=False)
-            self.optional_if_not_form = TestOptionalIfNotForm(csrf_enabled=False)
+            self.form = TestUrlForm(meta={'csrf': False})
+            self.all_urls_form = TestAllUrlsForm(meta={'csrf': False})
+            self.optional_if_form = TestOptionalIfForm(meta={'csrf': False})
+            self.optional_if_not_form = TestOptionalIfNotForm(meta={'csrf': False})
 
     def test_valid_url(self):
         with self.app.test_request_context('/'):
