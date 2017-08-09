@@ -1,3 +1,4 @@
+import unittest
 from coaster.sqlalchemy import BaseMixin
 from coaster.db import db
 from sqlalchemy import Column, Unicode
@@ -21,12 +22,13 @@ class ContainerForm(forms.Form):
     content = forms.TextAreaField(__("Content"))
 
 
-class FormSQLAlchemyTestCase(BaseframeTestCase):
+class FormSQLAlchemyTestCase(unittest.TestCase):
+    app = app1
+
     def setUp(self):
-        super(FormSQLAlchemyTestCase, self).setUp()
-        baseframe.init_app(app1, requires=['baseframe'])
-        db.init_app(app1)
-        self.ctx = app1.test_request_context()
+        baseframe.init_app(self.app, requires=['baseframe'])
+        db.init_app(self.app)
+        self.ctx = self.app.test_request_context()
         self.ctx.push()
         db.create_all()
         self.session = db.session
@@ -60,3 +62,6 @@ class FormSQLAlchemyTestCase(BaseframeTestCase):
         self.form.process(name=u'c3', title=u't3')
         self.form.populate_obj(c3)
         db.session.add(c3)
+
+class FormSQLAlchemyTestCasePG(FormSQLAlchemyTestCase):
+    app = app2
