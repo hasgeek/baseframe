@@ -6,6 +6,8 @@ install:
   - pip install -r test_requirements.txt
   - python setup.py install
 # command to run tests
+before_script:
+  - psql -c 'create database baseframe_test;' -U postgres
 script: ./runtests.sh
 after_success:
   - coveralls
