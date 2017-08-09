@@ -25,6 +25,8 @@ class AvailableAttr(object):
 
     def __call__(self, form, field):
         model = self.model or form.edit_model
+        if not model:
+            raise TypeError(u"Either the validator or the form MUST be linked to a model")
         if hasattr(model, 'parent'):
             scoped = True
         else:
