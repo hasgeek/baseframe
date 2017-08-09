@@ -249,6 +249,8 @@ assets['firamono.css'][Version('4.2.0')] = {'requires': [
 
 assets['baseframe-firasans.css'][Version('1.0.0')] = 'baseframe/css/baseframe-firasans.css'
 
+assets['getdevicepixelratio.js'][Version('1.0.0')] = 'baseframe/js/getdevicepixelratio.js'
+
 # Asset packages
 assets['bootstrap.js'][Version('2.0.1')] = {'requires': [
     'bootstrap-alert.js==2.0.1',
@@ -296,6 +298,7 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
     # 'bootstrap-datepicker.js',
     'jquery.timepicker.js',
     'select2-baseframe.js',
+    'getdevicepixelratio.js'
 ]}
 
 assets['baseframe.js'][Version(__version__)] = {'requires': [
