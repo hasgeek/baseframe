@@ -105,38 +105,38 @@ class FilterTestCase(BaseframeTestCase):
 
     def test_lower(self):
         lower_func = forms.lower()
-        self.assertEqual('test', lower_func('TEST'))
-        self.assertEqual('test', lower_func('Test'))
-        self.assertEqual('', lower_func(''))
+        self.assertEqual(lower_func('TEST'), 'test')
+        self.assertEqual(lower_func('Test'), 'test')
+        self.assertEqual(lower_func(''), '')
 
     def test_upper(self):
         upper_func = forms.upper()
-        self.assertEqual('TEST', upper_func('Test'))
-        self.assertEqual('TEST', upper_func('test'))
-        self.assertEqual('', upper_func(''))
+        self.assertEqual(upper_func('Test'), 'TEST')
+        self.assertEqual(upper_func('test'), 'TEST')
+        self.assertEqual(upper_func(''), '')
 
     def test_strip(self):
         strip_func = forms.strip()
-        self.assertEqual('Test', strip_func(' Test '))
-        self.assertEqual('a       test', strip_func('a       test   '))
-        self.assertEqual('', strip_func('      '))
+        self.assertEqual(strip_func(' Test '), 'Test')
+        self.assertEqual(strip_func('a       test   '), 'a       test')
+        self.assertEqual(strip_func('      '), '')
 
     def test_lstrip(self):
         lstrip_func = forms.lstrip()
-        self.assertEqual('Test ', lstrip_func(' Test '))
-        self.assertEqual('a       test   ', lstrip_func('a       test   '))
-        self.assertEqual('', lstrip_func('      '))
+        self.assertEqual(lstrip_func(' Test '), 'Test ')
+        self.assertEqual(lstrip_func('a       test   '), 'a       test   ')
+        self.assertEqual(lstrip_func('      '), '')
 
     def test_rstrip(self):
         rstrip_func = forms.rstrip()
-        self.assertEqual(' Test', rstrip_func(' Test '))
-        self.assertEqual('a       test', rstrip_func('a       test   '))
-        self.assertEqual('', rstrip_func('      '))
+        self.assertEqual(rstrip_func(' Test '), ' Test')
+        self.assertEqual(rstrip_func('a       test   '), 'a       test')
+        self.assertEqual(rstrip_func('      '), '')
 
     def test_none_if_empty(self):
         none_if_empty_func = forms.none_if_empty()
-        self.assertEqual('Test', none_if_empty_func('Test'))
-        self.assertEqual(None, none_if_empty_func(''))
-        self.assertEqual(None, none_if_empty_func([]))
-        self.assertEqual(None, none_if_empty_func(False))
-        self.assertEqual(None, none_if_empty_func(0))
+        self.assertEqual(none_if_empty_func('Test'), 'Test')
+        self.assertEqual(none_if_empty_func(''), None)
+        self.assertEqual(none_if_empty_func([]), None)
+        self.assertEqual(none_if_empty_func(False), None)
+        self.assertEqual(none_if_empty_func(0), None)
