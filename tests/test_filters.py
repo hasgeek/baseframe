@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 
 from coaster.utils import md5sum
-from baseframe import filters
-from .fixtures import BaseframeTestCase, TestUser
+from baseframe import filters, forms
+from .fixtures import BaseframeTestCase, TestUser, TestForm
 
 
 class FilterTestCase(BaseframeTestCase):
@@ -80,3 +80,63 @@ class FilterTestCase(BaseframeTestCase):
         avatar_url = filters.avatar_url(self.test_user, self.test_avatar_size)
         hash = md5sum(self.test_user.email)
         self.assertEqual(avatar_url, u'//www.gravatar.com/avatar/' + hash + u'?d=mm&s=' + u'x'.join(self.test_avatar_size))
+
+    def test_render_field_options(self):
+        test_attrs = dict(attrone='test', attrtwo=False, attrthree=None, attrfour='')
+        modified_field = filters.render_field_options(forms.RichTextField, **test_attrs)
+        self.assertIn('attrone', modified_field.kwargs) and self.assertEqual(modified_field.kwargs['attrone'], 'test')
+        self.assertEqual(hasattr(modified_field.kwargs, 'attrtwo'), False)
+        self.assertEqual(hasattr(modified_field.kwargs, 'attrthree'), False)
+        self.assertIn('attrfour', modified_field.kwargs) and self.assertEqual(modified_field.kwargs['attrfour'], '')
+
+    def test_firstline(self):
+        html = "<div>this is the first line</div><div>and second line</div>"
+        firstline = filters.firstline(html)
+        self.assertEqual(firstline, "this is the first line")
+
+    def test_cdata(self):
+        text = "foo bar"
+        result = filters.cdata(text)
+        self.assertEqual(result, "<![CDATA[foo bar]]>")
+
+        text = "<![CDATA[foo bar]]>"
+        result = filters.cdata(text)
+        self.assertEqual(result, "<![CDATA[<![CDATA[foo bar]]]]><![CDATA[>]]>")
+
+    def test_lower(self):
+        lower_func = forms.lower()
+        self.assertEqual(lower_func('TEST'), 'test')
+        self.assertEqual(lower_func('Test'), 'test')
+        self.assertEqual(lower_func(''), '')
+
+    def test_upper(self):
+        upper_func = forms.upper()
+        self.assertEqual(upper_func('Test'), 'TEST')
+        self.assertEqual(upper_func('test'), 'TEST')
+        self.assertEqual(upper_func(''), '')
+
+    def test_strip(self):
+        strip_func = forms.strip()
+        self.assertEqual(strip_func(' Test '), 'Test')
+        self.assertEqual(strip_func('a       test   '), 'a       test')
+        self.assertEqual(strip_func('      '), '')
+
+    def test_lstrip(self):
+        lstrip_func = forms.lstrip()
+        self.assertEqual(lstrip_func(' Test '), 'Test ')
+        self.assertEqual(lstrip_func('a       test   '), 'a       test   ')
+        self.assertEqual(lstrip_func('      '), '')
+
+    def test_rstrip(self):
+        rstrip_func = forms.rstrip()
+        self.assertEqual(rstrip_func(' Test '), ' Test')
+        self.assertEqual(rstrip_func('a       test   '), 'a       test')
+        self.assertEqual(rstrip_func('      '), '')
+
+    def test_none_if_empty(self):
+        none_if_empty_func = forms.none_if_empty()
+        self.assertEqual(none_if_empty_func('Test'), 'Test')
+        self.assertEqual(none_if_empty_func(''), None)
+        self.assertEqual(none_if_empty_func([]), None)
+        self.assertEqual(none_if_empty_func(False), None)
+        self.assertEqual(none_if_empty_func(0), None)

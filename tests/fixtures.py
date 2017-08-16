@@ -1,9 +1,8 @@
 import re
 import unittest
 from flask import Flask
-from baseframe import baseframe
-from baseframe import _, __
-import baseframe.forms as forms
+from baseframe import baseframe, forms
+from baseframe import __
 
 app1 = Flask(__name__)
 app1.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
@@ -31,6 +30,10 @@ class TestUser(object):
         self.email = email
 
 
+class TestForm(forms.Form):
+    test_field = forms.IntegerField("Test label", default=1)
+
+
 class TestDocument(object):
     def __init__(self, url=None, content=None):
         self.url = url
@@ -41,19 +44,23 @@ reject_list = [
     (['example.com', re.compile(r'example.in')], u'This URL is not allowed')
 ]
 
+
 class TestUrlForm(forms.Form):
     url = forms.URLField(__("URL"),
         validators=[forms.validators.DataRequired(), forms.validators.Length(max=255),
         forms.validators.ValidUrl(invalid_urls=reject_list)],
         filters=[forms.filters.strip()])
 
+
 class TestAllUrlsForm(forms.Form):
     content_with_urls = forms.TextAreaField(__("Content"),
         validators=[forms.validators.DataRequired(), forms.validators.AllUrlsValid()])
 
+
 class TestOptionalIfForm(forms.Form):
     title = forms.StringField(__("Title"), validators=[forms.validators.OptionalIf('headline')])
     headline = forms.StringField(__("Headline"))
+
 
 class TestOptionalIfNotForm(forms.Form):
     blurb = forms.TextAreaField(__("Blurb"), validators=[forms.validators.OptionalIfNot('content')])
