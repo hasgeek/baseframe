@@ -3,11 +3,12 @@ python:
   - "2.7"
 # command to install dependencies
 install:
-  - 'if [[ "$TRAVIS_PYTHON_VERSION" == "pypy" ]]; then pip install http://lxml.de/files/lxml-3.3.1pre.tar.gz; fi'
+  - pip install -r test_requirements.txt
   - python setup.py install
-  - pip install nose coverage coveralls
 # command to run tests
-script: coverage run `which nosetests`
+before_script:
+  - psql -c 'create database baseframe_test;' -U postgres
+script: ./runtests.sh
 after_success:
   - coveralls
 notifications:
