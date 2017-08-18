@@ -1,0 +1,133 @@
+// ============================================================================
+// COLORS
+// ============================================================================
+
+$mui-primary-color:            #E05F26 !default;
+
+$mui-accent-color:             #856A91  !default;
+
+$mui-danger-color:             #C04B61 !default;
+$mui-success-color:            #7FC06F !default;
+$mui-warning-color:            #F0A40C !default;
+$mui-info-color:               #D9EDF7 !default;
+
+// ============================================================================
+// TEXT COLORS
+// ============================================================================
+
+$mui-text-dark:             #1F2D3D !default;
+$mui-text-accent:           #C0CCDA !default;
+$mui-text-light:            #8492A6 !default;
+$mui-text-danger:           $mui-danger-color !default;
+$mui-text-hyperlink:        #4A90E2 !default;
+
+// ============================================================================
+// GLOBAL VARIABLES
+// ============================================================================
+
+$mui-bg-color-primary:      #FFFFFF !default;
+$mui-bg-color-accent:       #F9FAFC !default;
+$mui-bg-color-light: 		#EFF2F7 !default;
+$mui-bg-color-dark:         #1F2D3D !default;
+$mui-body-bg-color:         $mui-bg-color-accent !default;
+
+$mui-base-font-color:            $mui-text-dark !default;
+$mui-base-font-family:           'Lato', sans-serif;
+$mui-base-font-size:             14px !default;
+$mui-base-font-weight:           400 !default;
+$mui-base-line-height:           1.429 !default;
+$mui-base-font-smoothing:        false !default;
+
+$mui-link-font-color:            $mui-text-hyperlink !default;
+$mui-link-text-decoration:       none !default;
+$mui-link-font-color-hover:      $mui-text-hyperlink !default;
+$mui-link-text-decoration-hover: underline !default;
+
+$mui-hr-color:                   rgba(132, 146, 166, 0.5) !default;
+
+// ============================================================================
+// FORMS
+// ============================================================================
+
+$mui-input-placeholder-color:     $mui-text-accent !default;
+
+$mui-input-border-color:          $mui-text-accent !default;
+$mui-input-border-color-focus:    $mui-text-hyperlink !default;
+
+// ============================================================================
+// DIVIDERS
+// ============================================================================
+
+$mui-divider-color:              rgba(132, 146, 166, 0.5) !default;
+
+// ============================================================================
+// APPBAR
+// ============================================================================
+
+$mui-appbar-bg-color:            #1F2D3D !default;
+
+
+// ============================================================================
+// Typography
+// ============================================================================
+
+.mui--text-display3 {
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 64px;
+}
+
+.mui--text-display2 {
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 58px;
+}
+
+.mui--text-display1, h1 {
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.mui--text-headline, h2 {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.mui--text-title, h3 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.mui--text-subhead, h4 {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.mui--text-body2, h5 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.mui--text-body1 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.mui--text-caption, h6 {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.mui--text-menu,
+.mui--text-button {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+}

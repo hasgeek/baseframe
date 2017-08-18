@@ -332,3 +332,18 @@ assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
     'baseframe-base-bs3.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
 ]}
+
+assets['mui.js'][Version('0.9.21')] = 'baseframe/js/mui.js'
+assets['baseframe-material.js'][Version('0.9.21')] = 'baseframe/js/baseframe-material.js'
+assets['baseframe-mui.js'][Version(__version__)] = {'requires': [
+    'mui.js',
+    'extra.js',
+    'baseframe-material.js'
+]}
+
+assets['mui.css'][Version('0.9.21')] = 'baseframe/css/mui.css'
+assets['baseframe-mui.css'][Version(__version__)] = {'requires': [
+    'mui.css',
+    'select2-baseframe.css',
+    'jquery.timepicker.css'
+]}

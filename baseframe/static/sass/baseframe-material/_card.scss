@@ -1,0 +1,45 @@
+
+.card {
+    @extend .mui--z1;
+    position: relative;
+    background: #fff;
+    
+    .card__image {
+			width: 100%;
+		}
+
+	  .card__title {
+	    padding: 0 $reflex-cell-spacing;
+	   }
+
+	  .card__header {
+    	@extend .mui--clearfix;
+    	padding: $reflex-cell-spacing;
+    	background: $mui-primary-color-light;
+    	display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+    }
+    
+    .card__header--title {
+    	width: 75%;
+    }
+
+    .card__header--logo-image {
+    	width: 65px;
+    }
+
+	  .card__body {
+		  @extend .mui--text-body2;
+		  padding: $reflex-cell-spacing;
+		}
+
+		.card__footer {
+	    padding: 0 $reflex-cell-spacing/2;
+		}
+
+		.mui-btn + .mui-btn {
+			margin-left: 0;
+		}
+}
