@@ -18,22 +18,46 @@
     	background: $mui-primary-color-light;
     	display: flex;
 			flex-direction: row;
-			justify-content: center;
-			align-items: center;
     }
     
-    .card__header--title {
-    	width: 75%;
+    .card__header__title {
+    	width: 100%;
     }
 
-    .card__header--logo-image {
+    .card__header__title__heading {
+      margin: $reflex-cell-spacing/2 auto;
+    }
+
+    .card__header__logo-image {
     	width: 65px;
+    }
+
+    .card__header__title__tag {
+      float: right;
     }
 
 	  .card__body {
 		  @extend .mui--text-body2;
 		  padding: $reflex-cell-spacing;
+      display: flex;
+      flex-direction: row;
 		}
+
+    .card__body__text {
+      width: 75%;
+    }
+
+    .card__body__text__heading {
+      margin: $reflex-cell-spacing/2 auto;
+    }
+
+    .card__body__logo {
+      width: 25%;
+    }
+
+    .card__body__logo--img {
+      width: 100%
+    }
 
 		.card__footer {
 	    padding: 0 $reflex-cell-spacing/2;

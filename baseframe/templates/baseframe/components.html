@@ -219,7 +219,7 @@
 
 {% macro hgtopnavmaterial(site_title="HasGeek", site_links=[], auth=true, network=true,loginbtntext="Login") %}
   <nav id="hgnav" role="navigation">
-    <a class="header__app-icon" id="js-sidebar-menu-button"><i class="material-icons">menu</i></a>
+    <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button"><i class="material-icons">menu</i></a>
     <h1 class="header__site-title">
       {{site_title}}
     </h1>
@@ -268,14 +268,26 @@
       </ul>
     </div>
   </nav>
-{%- endmacro %}
+{%- endmacro %}.
 
-{% macro hgsidenavmaterial(site_title="HasGeek", site_links=[], user_links=[]) %}
+{% macro hgsidenavmaterial(site_title, site_logo, site_links=[], user_links=[]) %}
   <ul class="mui-list--unstyled">
-    <h1 class="header__site-title header__site-title--sidenav">
-      {{site_title}}
-    </h1>
+    {% if site_logo %}
+      <div class="header__site-logo"><img src="{{site_logo}}"></div>
+    {%- endif %}
+    {% if site_title %}
+      <h1 class="header__site-title header__site-title--sidenav">
+        {{site_title}}
+      </h1>
+    {%- endif %}
     <ul class="mui-list--unstyled header__nav-list mui--text-center">
+    {%- for link in user_links %}
+      <li>
+        <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}">
+          {% if link.icon %}<i class="material-icons mui--align-middle">{{link.icon}}</i>{% endif %} {{ link.title }}
+        </a>
+      </li>
+    {%- endfor %}
     {%- for link in site_links %}
       <li>
         <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}">
@@ -289,7 +301,7 @@
 {% macro add_hasgeek_auth(links, loginbtntext) %}
   {% if g.user -%}
     <button type="button" data-toggle="dropdown" class="dropdown-toggle" id="hg-user-btn">
-      <i class="material-icons">perm_identity</i>
+      <i class="fa fa-user"></i>
     </button>
     <ul class="dropdown-menu pull-right">
       {%- for link in links %}

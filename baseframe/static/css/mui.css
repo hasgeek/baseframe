@@ -581,7 +581,8 @@ h4, h5, h6 {
 /**
  * MUI Appbar
  */
-.mui--appbar-height, .header__site-title--sidenav {
+.mui--appbar-height, .header__site-title--sidenav,
+.header__site-logo {
   height: 56px;
 }
 
@@ -598,7 +599,8 @@ h4, h5, h6 {
 }
 
 @media (orientation: landscape) and (max-height: 480px) {
-  .mui--appbar-height, .header__site-title--sidenav {
+  .mui--appbar-height, .header__site-title--sidenav,
+  .header__site-logo {
     height: 48px;
   }
 
@@ -615,7 +617,8 @@ h4, h5, h6 {
   }
 }
 @media (min-width: 480px) {
-  .mui--appbar-height, .header__site-title--sidenav {
+  .mui--appbar-height, .header__site-title--sidenav,
+  .header__site-logo {
     height: 64px;
   }
 
@@ -3316,19 +3319,6 @@ html, body {
   height: 100%;
 }
 
-body {
-  font-family: "Source Sans Pro","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Arial,sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  color: #333;
-  background-color: #fff;
-}
-
-a {
-  color: #337ab7;
-  text-decoration: none;
-}
-
 h1 {
   color: #df5e0e;
 }
@@ -3373,20 +3363,23 @@ h2 {
 }
 
 @media (min-width: 1200px) {
-  .header__site-title {
-    display: none;
-  }
-
-  .header__app-icon {
+  .header__app-icon--menu {
     display: none;
   }
 }
-.header__site-title--sidenav {
+.header__site-title--sidenav,
+.header__site-logo {
   display: block;
   line-height: inherit;
   text-align: center;
   margin: 0;
   border-bottom: 1px solid rgba(132, 146, 166, 0.5);
+}
+
+.header__site-logo img {
+  height: 80%;
+  position: relative;
+  top: 10%;
 }
 
 .header__right-nav li {
@@ -3656,7 +3649,7 @@ h2 {
 }
 
 .chip + .chip {
-  margin-left: mui-btn-spacing-horizontal;
+  margin-left: 8px;
 }
 
 .card {
@@ -3674,17 +3667,35 @@ h2 {
   background: #BBDEFB;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
 }
-.card .card__header--title {
-  width: 75%;
+.card .card__header__title {
+  width: 100%;
 }
-.card .card__header--logo-image {
+.card .card__header__title__heading {
+  margin: 0.5em auto;
+}
+.card .card__header__logo-image {
   width: 65px;
+}
+.card .card__header__title__tag {
+  float: right;
 }
 .card .card__body {
   padding: 1em;
+  display: flex;
+  flex-direction: row;
+}
+.card .card__body__text {
+  width: 75%;
+}
+.card .card__body__text__heading {
+  margin: 0.5em auto;
+}
+.card .card__body__logo {
+  width: 25%;
+}
+.card .card__body__logo--img {
+  width: 100%;
 }
 .card .card__footer {
   padding: 0 0.5em;

@@ -4,19 +4,6 @@ html, body {
     height: 100%;
 }
 
-body {
-	font-family: "Source Sans Pro","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Arial,sans-serif;
-	font-size: 16px;
-	line-height: 1.5;
-	color: #333;
-	background-color: #fff;
-}
-
-a {
-	color: #337ab7;
-	text-decoration: none;	
-}
-
 h1 {
     color: #df5e0e;
 }
@@ -63,21 +50,25 @@ h2 {
 }
 
 @media (min-width: 1200px) {
-  .header__site-title {
-   display: none;
-  }
-  .header__app-icon {
+  .header__app-icon--menu {
     display: none;
   }
 }
 
-.header__site-title--sidenav {
+.header__site-title--sidenav,
+.header__site-logo {
   @extend .mui--appbar-height;
   display: block;
   line-height: inherit;
   text-align: center;
   margin: 0;
   border-bottom: 1px solid $mui-divider-color;
+}
+
+.header__site-logo img {
+  height: 80%;
+  position: relative;
+  top: 10%;
 }
 
 .header__right-nav li {
