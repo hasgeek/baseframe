@@ -1,3 +1,5 @@
+@import url('https://rsms.me/interface/interface.css');
+
 // ============================================================================
 // COLORS
 // ============================================================================
@@ -7,9 +9,9 @@ $mui-primary-color:            #E05F26 !default;
 $mui-accent-color:             #856A91  !default;
 
 $mui-danger-color:             #C04B61 !default;
-$mui-success-color:            #7FC06F !default;
+$mui-success-color:            #53B783 !default;
 $mui-warning-color:            #F0A40C !default;
-$mui-info-color:               #D9EDF7 !default;
+$mui-info-color:               #4A90E2 !default;
 
 // ============================================================================
 // TEXT COLORS
@@ -32,7 +34,7 @@ $mui-bg-color-dark:         #1F2D3D !default;
 $mui-body-bg-color:         $mui-bg-color-accent !default;
 
 $mui-base-font-color:            $mui-text-dark !default;
-$mui-base-font-family:           'Lato', sans-serif;
+$mui-base-font-family:           Interface, sans-serif;
 $mui-base-font-size:             14px !default;
 $mui-base-font-weight:           400 !default;
 $mui-base-line-height:           1.429 !default;
@@ -43,7 +45,7 @@ $mui-link-text-decoration:       none !default;
 $mui-link-font-color-hover:      $mui-text-hyperlink !default;
 $mui-link-text-decoration-hover: underline !default;
 
-$mui-hr-color:                   rgba(132, 146, 166, 0.5) !default;
+$mui-hr-color:                   rgba(132, 146, 166, 0.2) !default;
 
 // ============================================================================
 // FORMS
@@ -58,7 +60,7 @@ $mui-input-border-color-focus:    $mui-text-hyperlink !default;
 // DIVIDERS
 // ============================================================================
 
-$mui-divider-color:              rgba(132, 146, 166, 0.5) !default;
+$mui-divider-color:              rgba(132, 146, 166, 0.3) !default;
 
 // ============================================================================
 // APPBAR
@@ -67,7 +69,13 @@ $mui-divider-color:              rgba(132, 146, 166, 0.5) !default;
 $mui-appbar-bg-color:            #1F2D3D !default;
 
 // ============================================================================
-// Typography
+// OVERLAY
+// ============================================================================
+
+$mui-overlay-bg-color:            rgba(31, 46, 61, 0.2) !default;
+
+// ============================================================================
+// TYPOGRAPHY
 // ============================================================================
 
 .mui--text-display3 {

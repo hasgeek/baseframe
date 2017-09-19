@@ -41,9 +41,9 @@
 }
 
 .alert--success {
-  background-color: transparentize($mui-success-color, 0.8);
-  border-color: #d6e9c6;
-  color: #3c763d;
+  background-color: transparentize($mui-success-color, 0.9);
+  border-color: transparentize($mui-success-color, 0.8);
+  color: $mui-success-color;
 }
 
 .alert--success .alert__hr {
@@ -51,9 +51,9 @@
 }
 
 .alert--info {
-  background-color: transparentize($mui-info-color, 0.8);
-  border-color: #bce8f1;
-  color: #31708f;
+  background-color: transparentize($mui-info-color, 0.9);
+  border-color: transparentize($mui-info-color, 0.8);;
+  color: $mui-info-color;
 }
 
 .alert--info .alert__hr {
@@ -61,10 +61,9 @@
 }
 
 .alert--warning {
-  background-color: transparentize($mui-warning-color, 0.8);
-  background-color: #fcf8e3;
-  border-color: #faebcc;
-  color: #8a6d3b;
+  background-color: transparentize($mui-warning-color, 0.9);
+  border-color: transparentize($mui-warning-color, 0.8);
+  color: $mui-warning-color;
 }
 
 .alert-warning .alert__hr {
@@ -72,9 +71,9 @@
 }
 
 .alert--danger {
-  background-color: transparentize($mui-danger-color, 0.8);
-  border-color: #ebccd1;
-  color: #a94442;
+  background-color: transparentize($mui-danger-color, 0.9);
+  border-color: transparentize($mui-danger-color, 0.8);
+  color: $mui-danger-color;
 }
 
 .alert--danger .alert__hr {

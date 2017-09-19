@@ -218,32 +218,32 @@
 {%- endmacro %}
 
 {% macro hgtopnavmaterial(site_title="HasGeek", site_links=[], auth=true, network=true,loginbtntext="Login") %}
-  <nav id="hgnav" role="navigation">
-    <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button"><i class="material-icons">menu</i></a>
-    <h1 class="header__site-title">
-      {{site_title}}
-    </h1>
-    <div class="mui--pull-right header__right-nav">
-      <ul class="mui-list--unstyled header__nav-list">
+  <nav id="hgnav" class="header__nav header__nav--custom" role="navigation">
+    <div class="header__site-title">
+      <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button"><i class="material-icons">menu</i></a>
+      <div class="header__site-title__title">{{site_title}}</div>
+    </div>
+    <div class="header__right-nav">
+      <ul class="header__nav-list">
         {%- for link in site_links %}
-          <li class="mui-dropdown pull-right">
+          <li class="mui-dropdown header__nav-list__item ">
             <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>
               {{ link.title }}
             </a>
           </li>
         {%- endfor %}
 
-        {% if auth %}
-        <li class="mui-dropdown mui--pull-right">
-          {{ add_hasgeek_auth_material(user_links, loginbtntext) }}
-        </li>
-        {%- endif %}
-
         {% if network %}
-        <li class="mui-dropdown mui--pull-right">
+        <li class="mui-dropdown header__nav-list__item ">
           {{ add_hasgeek_network_material() }}
         </li>
         {% endif %}
+
+        {% if auth %}
+        <li class="mui-dropdown header__nav-list__item ">
+          {{ add_hasgeek_auth_material(user_links, loginbtntext) }}
+        </li>
+        {%- endif %}
       </ul>
     </div>
   </nav>
@@ -254,48 +254,26 @@
   {%- endif %}
 {%- endmacro %}
 
-{% macro hgsubtopnavmaterial(site_sub_links=[]) %}
-  <nav id="hgnav-subnav" role="navigation">
-    <div class="hg-header-subnav">
-      <ul class="mui-list--unstyled mui-list--inline header__nav-list">
-        {%- for link in site_sub_links %}
-          <li>
-            <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links {%- if link.class %}{{ link.class }} {% endif %}">
-              {% if link.icon %}<i class="material-icons mui--align-middle">{{link.icon}}</i>{% endif %} {{ link.title }}
-            </a>
-          </li>
-        {%- endfor %}
-      </ul>
-    </div>
-  </nav>
-{%- endmacro %}.
-
-{% macro hgsidenavmaterial(site_title, site_logo, site_links=[], user_links=[]) %}
-  <ul class="mui-list--unstyled">
-    {% if site_logo %}
-      <div class="header__site-logo"><img src="{{site_logo}}"></div>
-    {%- endif %}
-    {% if site_title %}
-      <h1 class="header__site-title header__site-title--sidenav">
-        {{site_title}}
-      </h1>
-    {%- endif %}
-    <ul class="mui-list--unstyled header__nav-list mui--text-center">
+{% macro hgsidenavmaterial(site_title="HasGeek", site_links=[], user_links=[]) %}
+  <div class="header__site-title header__site-title--sidenav">
+    {{site_title}}
+  </div>
+  <ul class="header__side-nav-list">
     {%- for link in user_links %}
-      <li>
+      <li class="header__side-nav-list__item">
         <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}">
-          {% if link.icon %}<i class="material-icons mui--align-middle">{{link.icon}}</i>{% endif %} {{ link.title }}
+          {% if link.icon %}<i class="material-icons header__side-nav-list__item__icon">{{link.icon}}</i>{% endif %} {{ link.title }}
         </a>
       </li>
     {%- endfor %}
     {%- for link in site_links %}
-      <li>
+      <li class="header__side-nav-list__item">
         <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}">
-          {% if link.icon %}<i class="material-icons mui--align-middle">{{link.icon}}</i>{% endif %} {{ link.title }}
+          {% if link.icon %}<i class="material-icons header__side-nav-list__item__icon">{{link.icon}}</i>{% endif %} {{ link.title }}
         </a>
       </li>
     {%- endfor %}
-    </ul>
+  </ul>
 {%- endmacro %}
 
 {% macro add_hasgeek_auth(links, loginbtntext) %}
@@ -329,7 +307,7 @@
 {% macro add_hasgeek_auth_material(links, loginbtntext) %}
   {% if g.user -%}
     <a class="header__app-icon" data-mui-toggle="dropdown">
-      <i class="material-icons">perm_identity</i>
+      <i class="material-icons">account_circle</i>
     </a>
     <ul class="mui-dropdown__menu mui-dropdown__menu--right">
       {%- for link in links %}
@@ -394,7 +372,7 @@
       <li class="mui--text-center">
         <a href="{{link['url']}}">
           <img src="{{link['icon']}}" class="header__dropdown-app-img">
-          <h6 class="mui--text-body2">{{link['title']}}</h6>
+          <h6 class="header__dropdown-app-title">{{link['title']}}</h6>
         </a>
       </li>
       {%- endfor  %}

@@ -39,6 +39,8 @@
   <meta name="referrer" content="{% block metareferrer %}always{% endblock %}" />
 
   <!-- Included CSS Files -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
   {%- for asset in config.get('ext_css', []) %}
     <link rel="stylesheet" type="text/css" href="{{ asset|ext_asset_url }}" />
   {%- endfor %}
@@ -46,8 +48,6 @@
     <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
   {%- endassets %}
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet"> 
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
   <script src="{{ url_for('baseframe.static', filename='js/modernizr.min.js') }}"></script>
 
   {%- block typekit %}
@@ -76,14 +76,10 @@
       {%- endblock %}
 
       {% block headerbox -%}
-        <header class="header header--fixed header--with-sidebar mui--z1" id="js-header">
-          <div class="mui-appbar mui--appbar-line-height">
-            <div class="mui-container-fluid">
+        <header class="header header--fixed mui--z1" id="js-header">
+          <div class="mui-appbar mui-appbar--custom">
+            <div class="mui-container">
               {% block header -%}
-              {%- endblock %}
-            </div>
-            <div class="mui-container-fluid header__subnav">
-              {% block subheaderbox -%}
               {%- endblock %}
             </div>
           </div>
@@ -93,18 +89,21 @@
 
       {% block contentbox -%}
       <div class="content-wrapper">
-        <div class="mui--appbar-height mui--appbar-height--double"></div>
-        <div class="mui-container-fluid main-content main-content--with-sidebar">
-          {%- block messages %}{{ flash_messages() }}{% endblock %}
-          {%- block baseheadline %}{% endblock %}
-          {%- block basecontent %}{% endblock %}
+        <div class="mui--appbar-height mui-appbar--custom"></div>
+        <div class="main-content {% if self.sidedrawer() %} main-content--with-sidebar{% endif %}">
+          {% block contenthead %}{% endblock %}
+          <div class="mui-container">
+            {%- block messages %}{{ flash_messages() }}{% endblock %}
+            {%- block baseheadline %}{% endblock %}
+            {%- block basecontent %}{% endblock %}
+          </div>
         </div>
       </div>
       {%- endblock %}
 
       {% block basefooter -%}
-        <footer class="footer footer--with-sidebar">
-          <div class="mui-container-fluid footer__container">
+        <footer class="footer{% if self.sidedrawer() %} footer--with-sidebar{% endif %}">
+          <div class="footer__container">
             {% block footer -%}{%- endblock %}
           </div>
         </footer>

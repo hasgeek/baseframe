@@ -32,6 +32,13 @@
 	}
 }
 
+.mui-select {
+  margin-top: $mui-form-group-margin-bottom;
+  > label {
+    top: -$mui-form-group-margin-bottom/4;
+  }
+}
+
 .listwidget ul, .listwidget ol {
   list-style: none;
   padding-left: 0;

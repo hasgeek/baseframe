@@ -1,5 +1,11 @@
 @import "compass";
 
+//For flex grid
+@import "reflex/variables";
+@import "reflex/mixins";
+@import "reflex/grid";
+@import "reflex/helpers";
+
 @import "mui/custom";
 
 // Core variables and mixins
@@ -33,15 +39,9 @@
 "mui/overlay",
 "mui/ripple";
 
-//For flex grid
-@import "reflex/variables";
-@import "reflex/mixins";
-@import "reflex/grid";
-@import "reflex/helpers";
-
-
 @import "baseframe-material/layout";
 @import "baseframe-material/form";
 @import "baseframe-material/chip";
 @import "baseframe-material/card";
 @import "baseframe-material/alert";
+@import "baseframe-material/thumbnail";
