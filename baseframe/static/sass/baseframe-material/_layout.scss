@@ -27,7 +27,7 @@ h1, h2, h3 {
 
 .mui-appbar--custom {
   min-height: 40px;
-  height: 40px;
+  height: 56px;
 }
 
 .header--fixed {
@@ -47,6 +47,7 @@ h1, h2, h3 {
 .header__nav--custom {
   min-height: 40px;
   height: 40px;
+  margin-top: 5px;
 }
 
 .header__app-icon {
@@ -94,7 +95,7 @@ h1, h2, h3 {
   width: 100%;
   text-align: center;
   display: block;
-  border-bottom: 1px solid $mui-divider-color; 
+  border-bottom: 1px solid $mui-divider-color;
 }
 
 @media (min-width: 1200px) {
@@ -139,8 +140,6 @@ h1, h2, h3 {
 
 .header__button {
   margin: 0;
-  line-height: 24px;
-  height: 24px;
 }
 
 .header__nav-links {
@@ -338,5 +337,5 @@ h1, h2, h3 {
   right: 0;
   left: 0;
   background-color: $mui-overlay-bg-color;
-  z-index: 2; 
+  z-index: 2;
 }
