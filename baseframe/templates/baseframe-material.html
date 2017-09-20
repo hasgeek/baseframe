@@ -92,11 +92,13 @@
         <div class="mui--appbar-height mui-appbar--custom"></div>
         <div class="main-content {% if self.sidedrawer() %} main-content--with-sidebar{% endif %}">
           {% block contenthead %}{% endblock %}
-          <div class="mui-container">
-            {%- block messages %}{{ flash_messages() }}{% endblock %}
-            {%- block baseheadline %}{% endblock %}
-            {%- block basecontent %}{% endblock %}
-          </div>
+          {%- block basecontentbox %}
+            <div class="mui-container">
+              {%- block messages %}{{ flash_messages() }}{% endblock %}
+              {%- block baseheadline %}{% endblock %}
+              {%- block basecontent %}{% endblock %}
+            </div>
+          {% endblock %}
         </div>
       </div>
       {%- endblock %}

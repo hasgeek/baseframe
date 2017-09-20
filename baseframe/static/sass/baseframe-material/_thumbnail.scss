@@ -1,6 +1,8 @@
 .thumbnail {
 	position: relative;
-  display: inline-flex;
+  ddisplay: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
   margin-bottom: 5px;
   border: 1px solid $mui-bg-color-dark;
   @extend .mui--z1;
