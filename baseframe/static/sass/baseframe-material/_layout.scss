@@ -1,7 +1,5 @@
-$footer-height: 67px;
-
 html, body {
-    height: 100%;
+  height: 100%;
 }
 
 [class*="grid__col-"] {
@@ -72,6 +70,7 @@ h1, h2, h3 {
   color: inherit;
   line-height: 40px;
   width: 60%;
+  padding-left: $mui-grid-gutter-width / 2;
 }
 
 .header__site-title__item {
@@ -89,6 +88,7 @@ h1, h2, h3 {
 
 .header__right-nav {
   width: 40%;
+  padding-right: $mui-grid-gutter-width / 2;
 }
 
 .header__site-title--sidenav {
@@ -96,6 +96,7 @@ h1, h2, h3 {
   text-align: center;
   display: block;
   border-bottom: 1px solid $mui-divider-color;
+  padding-left: 0;
 }
 
 @media (min-width: 1200px) {
@@ -226,16 +227,38 @@ h1, h2, h3 {
   }
 }
 
+.mui-container > .mui-form {
+  margin-top: 3*$reflex-cell-spacing;
+  margin-bottom: 2*$reflex-cell-spacing;  
+}
+
+#root {
+  clear: both;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin-bottom: -65px;
+}
+
+#root_footer {
+  height: 65px;
+}
+
 .footer {
+  clear: both;
+  position: relative;
+  margin-top: 1em;
   background: whiteSmoke image-url('shadow.png') no-repeat top center;
 
   .footer__container {
+    min-height: 25px;
     text-align: center;
-    font-size: 90%;
-    padding-top: 1.5em;
+    @extend .mui--text-caption;
+    padding-top: 2em;
     padding-bottom: 1em;
     p {
       font-size: inherit;
+      margin: 0;
     }
   }
 }

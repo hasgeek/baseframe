@@ -1,4 +1,8 @@
-{% from "baseframe/forms.html" import renderform, ajaxform, widget_ext_scripts, widgetscripts %}
+{% if theme == "material" %}
+	{% from "baseframe/forms-material.html" import renderform, ajaxform, widget_ext_scripts, widgetscripts %}
+{%- else %}
+    {% from "baseframe/forms.html" import renderform, ajaxform, widget_ext_scripts, widgetscripts %}
+{%- endif %}
 {{ renderform(form=form, formid=formid, submit=submit, message=message, cancel_url=cancel_url, multipart=multipart) }}
 {{ ajaxform(formid=formid, request=request, force=true) }}
 

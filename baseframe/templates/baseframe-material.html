@@ -1,4 +1,4 @@
-{% from "baseframe/components.html" import flash_messages, networkbar with context -%}
+{% from "baseframe/components.html" import flash_messages_material, networkbar with context -%}
 {% block doctypehtml -%}
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
@@ -94,7 +94,7 @@
           {% block contenthead %}{% endblock %}
           {%- block basecontentbox %}
             <div class="mui-container">
-              {%- block messages %}{{ flash_messages() }}{% endblock %}
+              {%- block messages %}{{ flash_messages_material() }}{% endblock %}
               {%- block baseheadline %}{% endblock %}
               {%- block basecontent %}{% endblock %}
             </div>
@@ -102,15 +102,17 @@
         </div>
       </div>
       {%- endblock %}
-
-      {% block basefooter -%}
-        <footer class="footer{% if self.sidedrawer() %} footer--with-sidebar{% endif %}">
-          <div class="footer__container">
-            {% block footer -%}{%- endblock %}
-          </div>
-        </footer>
-      {%- endblock %}
+      
+      <div id="root_footer"></div>
     </div>
+  {%- endblock %}
+
+  {% block basefooter -%}
+    <footer class="footer{% if self.sidedrawer() %} footer--with-sidebar{% endif %}">
+      <div class="footer__container">
+        {% block footer -%}{%- endblock %}
+      </div>
+    </footer>
   {%- endblock %}
 
   <!-- Included JS Files -->

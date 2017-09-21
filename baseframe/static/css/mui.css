@@ -1277,7 +1277,7 @@
   line-height: 24px;
 }
 
-.mui--text-caption, .mui-form .mui-form--sidetext,
+.mui--text-caption, .footer .footer__container, .mui-form .mui-form--sidetext,
 .mui-form .mui-form--helptext, .mui-form .mui-form--error, .chip .chip__text, h6 {
   font-weight: 400;
   font-size: 12px;
@@ -3388,6 +3388,7 @@ h1, h2, h3 {
   color: inherit;
   line-height: 40px;
   width: 60%;
+  padding-left: 15px;
 }
 
 .header__site-title__item {
@@ -3404,6 +3405,7 @@ h1, h2, h3 {
 
 .header__right-nav {
   width: 40%;
+  padding-right: 15px;
 }
 
 .header__site-title--sidenav {
@@ -3411,6 +3413,7 @@ h1, h2, h3 {
   text-align: center;
   display: block;
   border-bottom: 1px solid rgba(132, 146, 166, 0.3);
+  padding-left: 0;
 }
 
 @media (min-width: 1200px) {
@@ -3529,17 +3532,38 @@ h1, h2, h3 {
     padding-right: 2em;
   }
 }
+.mui-container > .mui-form {
+  margin-top: 3em;
+  margin-bottom: 2em;
+}
+
+#root {
+  clear: both;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin-bottom: -65px;
+}
+
+#root_footer {
+  height: 65px;
+}
+
 .footer {
-  background: whiteSmoke url('/_baseframe/img/shadow.png?1503299935') no-repeat top center;
+  clear: both;
+  position: relative;
+  margin-top: 1em;
+  background: whiteSmoke url('/_baseframe/img/shadow.png?1460092674') no-repeat top center;
 }
 .footer .footer__container {
+  min-height: 25px;
   text-align: center;
-  font-size: 90%;
-  padding-top: 1.5em;
+  padding-top: 2em;
   padding-bottom: 1em;
 }
 .footer .footer__container p {
   font-size: inherit;
+  margin: 0;
 }
 
 @media (min-width: 1200px) {
@@ -3783,6 +3807,7 @@ h1, h2, h3 {
 
 .alert {
   padding: 15px;
+  margin-top: 20px;
   margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 2px;

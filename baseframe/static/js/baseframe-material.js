@@ -2,6 +2,9 @@
 
 function activate_widgets() {
   // Activate select2.js for non-mobile browsers
+  if (!navigator.userAgent.match(/(iPod|iPad|iPhone|Android)/)) {
+    $('select:not(.notselect)').select2();
+  }
 
   var cm_markdown_config = { mode: 'gfm',
     lineNumbers: false,
@@ -230,7 +233,6 @@ window.Baseframe.Forms = {
       placeholder: "Type to select",
       multiple: options.multiple,
       minimumInputLength: 2,
-      theme: "bootstrap",
       ajax: {
         url: options.autocomplete_endpoint,
         dataType: "json",
@@ -354,30 +356,30 @@ $(function() {
   //Request for new CSRF token and update the page every 15 mins
   setInterval(csrfRefresh, 900000);
 
-  var sidebar = document.getElementById('js-sidebar');
-  var menuButton = document.getElementById('js-sidebar-menu-button');
 
-
-  menuButton.addEventListener('click', function (e) {
-    sidebar.classList.toggle('open');
-    mui.overlay('on');
+  $('#js-sidebar-menu-button').on('click', function (e) {
     e.stopPropagation();
+    $('#js-sidebar').addClass('open');
+    mui.overlay('on');
   });
 
-  document.body.addEventListener('click', function (e) {
-    if (e.target !== menuButton && !sidebar.contains(e.target)) {
-      sidebar.classList.remove('open');
+  $('body').on('click', function (e) {
+    console.log("e.target", e.target);
+    console.log("menu", $(e.target).is('#js-sidebar-menu-button'));
+    console.log("sidebar", $.contains($("#js-sidebar")[0], e.target));
+    if(!$(e.target).is('#js-sidebar-menu-button') && !$.contains($("#js-sidebar")[0], e.target)) {
+      $("#js-sidebar").removeClass('open');
     }
   });
 
   var start = {}, end = {}
 
-  document.body.addEventListener('touchstart', function (e) {
+  $('body').on('touchstart', function (e) {
     start.x = e.changedTouches[0].clientX;
     start.y = e.changedTouches[0].clientY;
   })
 
-  document.body.addEventListener('touchend', function (e) {
+  $('body').on('touchend', function (e) {
     end.y = e.changedTouches[0].clientY;
     end.x = e.changedTouches[0].clientX;
 
@@ -386,17 +388,17 @@ $(function() {
 
     if (Math.abs(xDiff) > Math.abs(yDiff)) {
       if (xDiff > 0 && start.x <= 80) {
-        sidebar.classList.add('open');
+        $('#js-sidebar').addClass('open');
         mui.overlay('on');
       }
       else {
-        sidebar.classList.remove('open');
+        $('#js-sidebar').removeClass('open');
         mui.overlay('off');
       }
     }
   });
 
-  $('.alert__close').on("click", function () {
+  $('.alert__close').on('click', function () {
     $(this).parents('.alert').fadeOut();
   });
   

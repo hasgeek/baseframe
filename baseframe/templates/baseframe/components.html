@@ -11,6 +11,19 @@
   {% endwith %}
 {%- endmacro %}
 
+{% macro flash_messages_material() -%}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert--{{category}} alert--dismissable">
+          <a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a>
+          <p class="alert__text">{{ message }}</p>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+{%- endmacro %}
+
 {% macro networkbar_login_beacon(url) %}
   <iframe height="0" width="0" tabindex="-1" style="display: none; border: 0; height: 0; width: 0" aria-hidden="true" role="presentation" src="{{ url }}"></iframe>
 {% endmacro %}

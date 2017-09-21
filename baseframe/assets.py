@@ -92,6 +92,9 @@ assets['select2.css'][Version('4.0.3')] = 'baseframe/css/select2.css'
 assets['select2-bootstrap.css'][Version('0.1.0')] = ('select2.css', 'baseframe/css/bootstrap-select2.css')
 assets['select2-baseframe.css'][Version('4.0.3')] = ('select2-bootstrap.css', 'baseframe/css/select2-baseframe.css')
 assets['select2-baseframe.js'][Version('4.0.3')] = {'requires': ['select2.js==4.0.3']}
+assets['select2-material.css'][Version('4.0.3')] = ('select2.css', 'baseframe/css/select2-baseframe-material.css')
+assets['select2-material.js'][Version('4.0.3')] = {'requires': ['select2.js==4.0.3']}
+
 
 assets['bootstrap-multiselect.css'][Version('0.9.13')] = 'baseframe/css/bootstrap-multiselect.css'
 assets['bootstrap-multiselect.js'][Version('0.9.13')] = 'baseframe/js/bootstrap-multiselect.js'
@@ -340,13 +343,17 @@ assets['mui.js'][Version('0.9.21')] = 'baseframe/js/mui.js'
 assets['baseframe-material.js'][Version('0.9.21')] = 'baseframe/js/baseframe-material.js'
 assets['baseframe-mui.js'][Version(__version__)] = {'requires': [
     'mui.js',
-    'extra.js',
+    'jquery.form.js',
+    'jquery.autosize.js',
+    'jquery.timepicker.js',
+    'select2-material.js',
+    'getdevicepixelratio.js',
     'baseframe-material.js'
 ]}
 
 assets['mui.css'][Version('0.9.21')] = 'baseframe/css/mui.css'
 assets['baseframe-mui.css'][Version(__version__)] = {'requires': [
     'mui.css',
-    'select2-baseframe.css',
+    'select2-material.css',
     'jquery.timepicker.css'
 ]}

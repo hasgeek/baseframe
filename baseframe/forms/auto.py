@@ -16,7 +16,7 @@ class ConfirmDeleteForm(Form):
     cancel = SubmitField(__(u"Cancel"))
 
 
-def render_form(form, title, message='', formid='form', submit=__(u"Submit"), cancel_url=None, ajax=False):
+def render_form(form, title, message='', formid='form', submit=__(u"Submit"), cancel_url=None, ajax=False, theme=None):
     multipart = False
     for field in form:
         if isinstance(field.widget, wtforms.widgets.FileInput):
@@ -28,11 +28,11 @@ def render_form(form, title, message='', formid='form', submit=__(u"Submit"), ca
     if request.is_xhr and ajax:
         return make_response(render_template('baseframe/ajaxform.html', form=form, title=title,
             message=message, formid=formid, submit=submit,
-            cancel_url=cancel_url, multipart=multipart), code)
+            cancel_url=cancel_url, multipart=multipart, theme=theme), code)
     else:
         return make_response(render_template('baseframe/autoform.html', form=form, title=title,
             message=message, formid=formid, submit=submit,
-            cancel_url=cancel_url, ajax=ajax, multipart=multipart), code)
+            cancel_url=cancel_url, ajax=ajax, multipart=multipart, theme=theme), code)
 
 
 def render_message(title, message, code=200):
