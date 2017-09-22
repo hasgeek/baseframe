@@ -81,7 +81,7 @@
               {{ rendererrors(field) }}
             </div>
           {%- else %}
-            <div class="mui-textfield test">
+            <div class="mui-textfield">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               {%- if sidetext %}
                 <span class="mui-form--sidetext">{{sidetext}}</span>
@@ -140,7 +140,7 @@
 {%- endmacro %}
 
 {% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=false, style='horiz') %}
-<form data-parsley-validate id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form">
+<form data-parsley-validate id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins">
   {{ renderform_inner(form, formid or none, style=style) }}
   {{ rendersubmit([(none, submit or _("Submit"), 'mui-btn--primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>

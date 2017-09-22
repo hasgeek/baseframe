@@ -49,7 +49,7 @@ def render_redirect(url, code=302):
         return redirect(url, code=code)
 
 
-def render_delete_sqla(obj, db, title, message, success=u'', next=None, cancel_url=None):
+def render_delete_sqla(obj, db, title, message, success=u'', next=None, cancel_url=None, theme=None):
     if not obj:
         abort(404)
     form = ConfirmDeleteForm()
@@ -62,4 +62,7 @@ def render_delete_sqla(obj, db, title, message, success=u'', next=None, cancel_u
             return render_redirect(next or url_for('index'), code=303)
         else:
             return render_redirect(cancel_url or next or url_for('index'), code=303)
-    return make_response(render_template('baseframe/delete.html', form=form, title=title, message=message))
+    if theme == "material":
+        return make_response(render_template('baseframe/delete-material.html', form=form, title=title, message=message))
+    else:
+        return make_response(render_template('baseframe/delete.html', form=form, title=title, message=message))

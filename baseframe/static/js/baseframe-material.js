@@ -364,22 +364,19 @@ $(function() {
   });
 
   $('body').on('click', function (e) {
-    console.log("e.target", e.target);
-    console.log("menu", $(e.target).is('#js-sidebar-menu-button'));
-    console.log("sidebar", $.contains($("#js-sidebar")[0], e.target));
-    if(!$(e.target).is('#js-sidebar-menu-button') && !$.contains($("#js-sidebar")[0], e.target)) {
-      $("#js-sidebar").removeClass('open');
+    if($('#js-sidebar').hasClass('open') && !$(e.target).is('#js-sidebar-menu-button') && !$.contains($('#js-sidebar')[0], e.target)) {
+      $('#js-sidebar').removeClass('open');
     }
   });
 
   var start = {}, end = {}
 
-  $('body').on('touchstart', function (e) {
+  document.body.addEventListener('touchstart', function (e) {
     start.x = e.changedTouches[0].clientX;
     start.y = e.changedTouches[0].clientY;
   })
 
-  $('body').on('touchend', function (e) {
+  document.body.addEventListener('touchend', function (e) {
     end.y = e.changedTouches[0].clientY;
     end.x = e.changedTouches[0].clientX;
 
@@ -398,7 +395,7 @@ $(function() {
     }
   });
 
-  $('.alert__close').on('click', function () {
+  $('body').on('click', '.alert__close', function () {
     $(this).parents('.alert').fadeOut();
   });
   

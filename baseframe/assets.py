@@ -87,6 +87,9 @@ assets['jquery.fullcalendar.gcal.js'][Version('1.6.4')] = ('jquery.fullcalendar.
 assets['jquery.locationpicker.js'][Version('0.1.12')] = ('jquery.js', 'baseframe/js/jquery.locationpicker.js')
 assets['jquery.appear.js'][Version('0.3.3')] = ('jquery.js', 'baseframe/js/jquery.appear.js')
 
+assets['jquery-modal.js'][Version('0.8.2')] = ('jquery.js', 'baseframe/js/jquery-modal.js')
+assets['jquery-modal.css'][Version('0.8.2')] = 'baseframe/css/jquery-modal.css'
+
 assets['select2.js'][Version('4.0.3')] = ('jquery.js>=1.7.2', 'baseframe/js/select2.js')
 assets['select2.css'][Version('4.0.3')] = 'baseframe/css/select2.css'
 assets['select2-bootstrap.css'][Version('0.1.0')] = ('select2.css', 'baseframe/css/bootstrap-select2.css')
@@ -342,18 +345,21 @@ assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
 assets['mui.js'][Version('0.9.21')] = 'baseframe/js/mui.js'
 assets['baseframe-material.js'][Version('0.9.21')] = 'baseframe/js/baseframe-material.js'
 assets['baseframe-mui.js'][Version(__version__)] = {'requires': [
-    'mui.js',
+    'jquery-modal.js',
     'jquery.form.js',
     'jquery.autosize.js',
     'jquery.timepicker.js',
     'select2-material.js',
     'getdevicepixelratio.js',
+    'jquery.tinymce.js>=3.0.0,<4.0.0',
+    'mui.js',
     'baseframe-material.js'
 ]}
 
 assets['mui.css'][Version('0.9.21')] = 'baseframe/css/mui.css'
 assets['baseframe-mui.css'][Version(__version__)] = {'requires': [
-    'mui.css',
+    'jquery-modal.css',
     'select2-material.css',
-    'jquery.timepicker.css'
+    'jquery.timepicker.css',
+    'mui.css'
 ]}

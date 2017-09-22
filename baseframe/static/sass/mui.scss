@@ -39,9 +39,12 @@
 "mui/overlay",
 "mui/ripple";
 
+@import "baseframe-material/menu";
 @import "baseframe-material/layout";
+@import "baseframe-material/footer";
 @import "baseframe-material/form";
 @import "baseframe-material/chip";
 @import "baseframe-material/card";
 @import "baseframe-material/alert";
 @import "baseframe-material/thumbnail";
+@import "baseframe-material/modal";
