@@ -179,7 +179,7 @@
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
         // Location of TinyMCE script
         script_url: {{ url_for("baseframe.static", filename="js/tinymce3/tiny_mce.js")|tojson }},
-                                                                   
+
         {%- for k, v in field.tinymce_options.items() %}
         {{ k|tojson }}: {{ v|tojson }},
         {%- endfor %}
