@@ -306,6 +306,15 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
     'select2-baseframe.js',
     'getdevicepixelratio.js'
 ]}
+assets['extra-material.js'][Version('0.0.0')] = {'requires': [
+    'jquery-modal.js',
+    'jquery.form.js',
+    'jquery.autosize.js',
+    'jquery.timepicker.js',
+    'select2-material.js',
+    'jquery.tinymce.js>=3.0.0,<4.0.0',
+    'getdevicepixelratio.js'
+]}
 
 assets['baseframe.js'][Version(__version__)] = {'requires': [
     'jquery.js<1.9.0',
@@ -345,13 +354,7 @@ assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
 assets['mui.js'][Version('0.9.21')] = 'baseframe/js/mui.js'
 assets['baseframe-material.js'][Version('0.9.21')] = 'baseframe/js/baseframe-material.js'
 assets['baseframe-mui.js'][Version(__version__)] = {'requires': [
-    'jquery-modal.js',
-    'jquery.form.js',
-    'jquery.autosize.js',
-    'jquery.timepicker.js',
-    'select2-material.js',
-    'getdevicepixelratio.js',
-    'jquery.tinymce.js>=3.0.0,<4.0.0',
+    'extra-material.js',
     'mui.js',
     'baseframe-material.js'
 ]}
