@@ -642,7 +642,6 @@ $.fn.ajaxSubmit = function(options) {
  * the form itself.
  */
 $.fn.ajaxForm = function(options) {
-	console.log("options", options);
 	options = options || {};
 	options.delegation = options.delegation && $.isFunction($.fn.on);
 	
