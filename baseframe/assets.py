@@ -312,7 +312,6 @@ assets['extra-material.js'][Version('0.0.0')] = {'requires': [
     'jquery.autosize.js',
     'jquery.timepicker.js',
     'select2-material.js',
-    'jquery.tinymce.js>=3.0.0,<4.0.0',
     'getdevicepixelratio.js'
 ]}
 
@@ -356,6 +355,7 @@ assets['baseframe-material.js'][Version('0.9.21')] = 'baseframe/js/baseframe-mat
 assets['baseframe-mui.js'][Version(__version__)] = {'requires': [
     'extra-material.js',
     'mui.js',
+    'jquery.tinymce.js>=4.0.0',
     'baseframe-material.js'
 ]}
 

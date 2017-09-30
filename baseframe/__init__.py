@@ -70,7 +70,7 @@ def _select_jinja_autoescape(filename):
 
 
 class BaseframeBlueprint(Blueprint):
-    def init_app(self, app, requires=[], ext_requires=[], bundle_js=None, bundle_css=None, assetenv=None):
+    def init_app(self, app, requires=[], ext_requires=[], bundle_js=None, bundle_css=None, assetenv=None, theme='bootstrap3'):
         """
         Initialize an app and load necessary assets.
 
@@ -195,6 +195,8 @@ class BaseframeBlueprint(Blueprint):
             lastuser.init_cache(cache)
 
         app.config['tz'] = timezone(app.config.get('TIMEZONE', 'UTC'))
+
+        app.config['theme'] = theme
 
         if 'NETWORKBAR_DATA' not in app.config:
             app.config['NETWORKBAR_DATA'] = 'https://api.hasgeek.com/1/networkbar/networkbar.json'

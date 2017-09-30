@@ -1,4 +1,4 @@
-{% from "baseframe/components.html" import flash_messages_material, networkbar with context -%}
+{% from "baseframe/mui/components.html.jinja2" import flash_messages with context -%}
 {% block doctypehtml -%}
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
@@ -94,7 +94,7 @@
           {% block contenthead %}{% endblock %}
           {%- block basecontentbox %}
             <div class="mui-container">
-              {%- block messages %}{{ flash_messages_material() }}{% endblock %}
+              {%- block messages %}{{ flash_messages() }}{% endblock %}
               {%- block baseheadline %}{% endblock %}
               {%- block basecontent %}{% endblock %}
             </div>

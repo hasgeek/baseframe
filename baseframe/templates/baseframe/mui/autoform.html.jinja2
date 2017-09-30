@@ -1,9 +1,5 @@
-{% extends "formlayout.html" %}
-{% if theme == "material" %}
-  {% from "baseframe/forms-material.html" import renderform, ajaxform, widget_ext_scripts, widgetscripts %}
-{%- else %}
-  {% from "baseframe/forms.html" import renderform, ajaxform, widget_ext_scripts, widgetscripts %}
-{%- endif %}
+{% extends "baseframe/mui/formlayout.html.jinja2" %}
+{% from "baseframe/mui/forms.html.jinja2" import renderform, ajaxform, widget_ext_scripts, widgetscripts %}
 
 {% block content %}
   {%- if message %}

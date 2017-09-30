@@ -1,2 +1,2 @@
-{% from "baseframe/components.html" import networkbar with context %}
+{% from "baseframe/bootstrap3/components.html.jinja2" import networkbar with context %}
 {{ networkbar(siteid=config['SITE_ID'], login=config['LASTUSER_CLIENT_ID'] and True or False) }}

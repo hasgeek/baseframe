@@ -1,7 +1,7 @@
 {% macro rendererrors(field) -%}
     {%- if field.errors -%}
       {%- for error in field.errors %}
-        <div><p class="help-error">{{ error }}</p></div>
+        <div><p class="mui-form--error">{{ error }}</p></div>
       {%- endfor %}
     {%- endif %}
 {%- endmacro %}
@@ -23,37 +23,31 @@
       {%- endfor %}
     </fieldset>
   {%- else %}
-    <div class="form-group control-group {#- BS3: form-group, BS2: control-group -#}
-        {%- if field.errors %} error has-error {%- endif -%}
+    <div class="{%- if field.errors %} error has-error {%- endif -%}
         {%- if css_class %} {{ css_class }} {%- endif -%}
         {%- if listwidget %} listwidget {%- if style == 'horizlist' %} horizlist {%- endif %}{%- endif -%}
         " id="field-{{ field.id }}">
       {%- if field.type == 'RadioMatrixField' %}
-        <div class="col-xs-12">
+        <div>
           {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class) }}
           {%- if field.description %}
-            <p class="help-block">{{ field.description }}</p>
+             <p class="mui-form--helptext">{{ field.description }}</p>
           {%- endif %}
         </div>
       {%- elif field.type == 'BooleanField' %}
-        <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">
-          <div class="checkbox">
-            <label>{{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, rows=rows) }} {{ field.label.text }}</label>
+        <div>
+          <div class="mui-checkbox">
+            <label>
+              {{ rendererrors(field) }}
+              {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, rows=rows) }} {{ field.label.text }}
+            </label>
           </div>
-          {{ rendererrors(field) }}
           {%- if field.description %}
-            <p class="help-block">{{ field.description }}</p>
+            <p class="mui-form--helptext">{{ field.description }}</p>
           {%- endif %}
         </div>
       {%- else %}
-        {%- if not nolabel %}
-        <label class="{% if style == 'horiz' -%} col-xs-12 col-sm-3 col-md-2 {%- else %} col-xs-12 {%- endif %} control-label" for="{{ field.id }}">{{ field.label.text }}
-          {%- if field.flags.required -%}
-            <span class="help-required" title="Required">*</span>
-          {%- endif -%}
-        </label>
-        {%- endif %}
-        <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-9 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">
+        <div>
           {%- if field.type in ['AnnotatedTextField', 'AnnotatedNullTextField'] %}
             <div class="input-group">
               {% if field.prefix %}<span class="input-group-addon">{{ field.prefix }}</span>{% endif %}
@@ -62,17 +56,40 @@
             </div>
           {%- elif field.type == 'CoordinatesField' %}
             {{ map_marker_widget(field) }}
-          {%- elif field.widget.input_type in ['text', 'password', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month', 'number', 'search', 'tel', 'time', 'url', 'week'] or (field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextAreaField', 'TextListField', 'MarkdownField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol']) %}
-            {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+          {%- elif field.widget.input_type in ['text', 'password', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month', 'number', 'search', 'tel', 'time', 'url', 'week'] and field.widget.html_tag not in ['ul', 'ol'] %}
+            <div class="mui-textfield mui-textfield--float-label">
+              {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+              <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
+              {%- if sidetext %}
+                <span class="mui-form--sidetext">{{sidetext}}</span>
+              {%- endif %}
+              {%- if field.description %}
+                <p class="mui-form--helptext">{{ field.description }}</p>
+              {%- endif %}
+              {{ rendererrors(field) }}
+            </div>
+          {%- elif field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextAreaField', 'TextListField', 'MarkdownField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol'] %}
+            <div class="mui-select">
+              {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+              <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
+              {%- if sidetext %}
+                <span class="mui-form--sidetext">{{sidetext}}</span>
+              {%- endif %}
+              {%- if field.description %}
+                <p class="mui-form--helptext">{{ field.description }}</p>
+              {%- endif %}
+              {{ rendererrors(field) }}
+            </div>
           {%- else %}
-            {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
-          {%- endif %}
-          {%- if sidetext %}
-            <span class="help-inline">{{sidetext}}</span>
-          {%- endif %}
-          {{ rendererrors(field) }}
-          {%- if field.description %}
-            <p class="help-block">{{ field.description }}</p>
+            <div class="mui-textfield">
+              {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+              {%- if sidetext %}
+                <span class="mui-form--sidetext">{{sidetext}}</span>
+              {%- endif %}
+              {%- if field.description %}
+                <p class="mui-form--helptext">{{ field.description }}</p>
+              {%- endif %}
+            </div>
           {%- endif %}
         </div>
       {%- endif %}
@@ -81,16 +98,16 @@
 {%- endmacro %}
 
 {% macro rendersubmit(buttons=[], css_class="", tabindex='', cancel_url='', style='horiz', csrf_error=false) -%}
-<div class="form-group form-actions clearfix{% if css_class %} {{ css_class}}{% endif %}">
-  <div {%- if style == 'horiz' %} class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10"{% else %} class="col-xs-12"{% endif %}>
+<div class="mui-form form-actions clearfix{% if css_class %} {{ css_class}}{% endif %}">
+  <div>
     {% for name, value, widget_class in buttons -%}
       <button type="submit"
         {%- if name %} name="{{ name|e }}"{% else %} {% endif -%}
-        {% if widget_class %} class="btn {{ widget_class|e }}" {% else %} class="btn"{% endif -%}
+        {% if widget_class %} class="mui-btn mui-btn--raised {{ widget_class|e }}" {% else %} class="mui-btn mui-btn--raised mui-btn--primary"{% endif -%}
         {%- if tabindex %} tabindex="{{ tabindex }}" {% endif -%}
         >{{ value|e }}</button>
     {% endfor %}
-    {% if cancel_url %}<a href="{{ cancel_url }}" class="btn btn-default">{% trans %}Cancel{% endtrans %}</a>{% endif %}
+    {% if cancel_url %}<a href="{{ cancel_url }}" class="mui-btn mui-btn--raised mui-btn--primary">{% trans %}Cancel{% endtrans %}</a>{% endif %}
     <span class="loading hidden">&nbsp;</span>
     {% if csrf_error -%}
       <div><p class="help-error">{% trans -%}
@@ -103,9 +120,9 @@
 
 {% macro renderform_inner(form, formid, style='horiz') -%}
   {%- if form.errors %}
-    <div class="alert alert-error alert-danger">
-      <a class="close" data-dismiss="alert">×</a>
-      {% trans %}Please review the indicated issues{% endtrans %}
+    <div class="alert alert--danger alert--dismissable">
+      <a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a>
+      <p class="alert__text"><i class="material-icons alert__icon">error</i> {% trans %}Please review the indicated issues{% endtrans %}</p>
     </div>
   {%- endif %}
   {% if message %}<p>{{ message }}</p>{% endif %}
@@ -123,9 +140,9 @@
 {%- endmacro %}
 
 {% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=false, style='horiz') %}
-<form data-parsley-validate id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" {%- if style == 'horiz' %} class="form-horizontal"{% endif %}>
+<form data-parsley-validate id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins">
   {{ renderform_inner(form, formid or none, style=style) }}
-  {{ rendersubmit([(none, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
+  {{ rendersubmit([(none, submit or _("Submit"), 'mui-btn--primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>
 {% endmacro %}
 
@@ -147,7 +164,7 @@
             form.find('input[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('button[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('.loading').addClass('hidden');
-            form.append('<div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert">&times;</a> An error occured when submitting the form</div>');
+            form.append('<div class="alert alert--danger"><a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a><p class="alert__text"><i class="material-icons alert__icon">error</i> An error occured when submitting the form</p></div>');
           } // No comma or semicolon here
         });
       });
@@ -210,6 +227,7 @@
     $(function() {
   {%- endif %}
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
+        script_url: {{ url_for("baseframe.static", filename="js/tinymce4/tinymce.min.js")|tojson }},
         {%- for k, v in field.tinymce_options.items() %}
         {{ k|tojson }}: {{ v|tojson }},
         {%- endfor %}
