@@ -63,10 +63,10 @@
               {%- if sidetext %}
                 <span class="mui-form--sidetext">{{sidetext}}</span>
               {%- endif %}
+              {{ rendererrors(field) }}
               {%- if field.description %}
                 <p class="mui-form--helptext">{{ field.description }}</p>
               {%- endif %}
-              {{ rendererrors(field) }}
             </div>
           {%- elif field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextAreaField', 'TextListField', 'MarkdownField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-select">
@@ -75,10 +75,10 @@
               {%- if sidetext %}
                 <span class="mui-form--sidetext">{{sidetext}}</span>
               {%- endif %}
+              {{ rendererrors(field) }}
               {%- if field.description %}
                 <p class="mui-form--helptext">{{ field.description }}</p>
               {%- endif %}
-              {{ rendererrors(field) }}
             </div>
           {%- else %}
             <div class="mui-textfield">
@@ -120,7 +120,7 @@
 
 {% macro renderform_inner(form, formid, style='horiz') -%}
   {%- if form.errors %}
-    <div class="alert alert--danger alert--dismissable">
+    <div class="alert alert--error alert--dismissable">
       <a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a>
       <p class="alert__text"><i class="material-icons alert__icon">error</i> {% trans %}Please review the indicated issues{% endtrans %}</p>
     </div>
@@ -164,7 +164,7 @@
             form.find('input[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('button[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('.loading').addClass('hidden');
-            form.append('<div class="alert alert--danger"><a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a><p class="alert__text"><i class="material-icons alert__icon">error</i> An error occured when submitting the form</p></div>');
+            form.append('<div class="alert alert--error"><a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a><p class="alert__text"><i class="material-icons alert__icon">error</i> An error occured when submitting the form</p></div>');
           } // No comma or semicolon here
         });
       });

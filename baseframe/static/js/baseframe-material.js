@@ -64,7 +64,6 @@ function activate_widgets() {
     });
   });
 
-  $('input.datetime-time').timepicker({ 'scrollDefaultNow': true, 'timeFormat': 'H:i' });
 }
 
 function radioHighlight(radioName, highlightClass) {

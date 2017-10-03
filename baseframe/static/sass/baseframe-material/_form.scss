@@ -15,13 +15,13 @@
     .mui-form--sidetext,
     .mui-form--helptext {
 		color: $mui-text-light;
-		margin-bottom: $mui-form-group-margin-bottom/2;
+		margin: 8px 0 0;
 		@extend .mui--text-caption;
 	}
 
 	.mui-form--error {
 		color: $mui-text-danger;
-		margin: 0;
+		margin: 8px 0 0;
 		padding: 0;
 		@extend .mui--text-caption;
 
@@ -30,6 +30,14 @@
 			margin-top: $mui-form-group-margin-bottom/2;
 		}
 	}
+
+  .has-error .mui-textfield > input,
+  .has-error .mui-textfield > textarea {
+    border-bottom: 1px solid $mui-text-danger;
+  }
+  .has-error .mui-textfield.mui-textfield--float-label > label {
+    color: $mui-text-danger;
+  }
 }
 
 .mui-select {

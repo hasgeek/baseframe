@@ -110,7 +110,10 @@
   {% block basefooter -%}
     <footer class="footer{% if self.sidedrawer() %} footer--with-sidebar{% endif %}">
       <div class="footer__container">
-        {% block footer -%}{%- endblock %}
+        {% block footer -%}
+          <span class="no-print">{% if 'FOOTER_MESSAGE' in config %}{{ config['FOOTER_MESSAGE'] }}{% else %}{% trans %}Copyright &copy; 2010-15 HasGeek{% endtrans %}{% endif %}</span>
+          {% block footerinner -%}{%- endblock %}
+        {%- endblock %}
       </div>
     </footer>
   {%- endblock %}

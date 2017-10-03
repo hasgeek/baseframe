@@ -90,6 +90,8 @@ assets['jquery.appear.js'][Version('0.3.3')] = ('jquery.js', 'baseframe/js/jquer
 assets['jquery-modal.js'][Version('0.8.2')] = ('jquery.js', 'baseframe/js/jquery-modal.js')
 assets['jquery-modal.css'][Version('0.8.2')] = 'baseframe/css/jquery-modal.css'
 
+assets['jquery-easytabs.js'][Version('3.2.0')] = ('jquery.js', 'baseframe/js/jquery-easytabs.js')
+
 assets['select2.js'][Version('4.0.3')] = ('jquery.js>=1.7.2', 'baseframe/js/select2.js')
 assets['select2.css'][Version('4.0.3')] = 'baseframe/css/select2.css'
 assets['select2-bootstrap.css'][Version('0.1.0')] = ('select2.css', 'baseframe/css/bootstrap-select2.css')
@@ -309,8 +311,6 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
 assets['extra-material.js'][Version('0.0.0')] = {'requires': [
     'jquery-modal.js',
     'jquery.form.js',
-    'jquery.autosize.js',
-    'jquery.timepicker.js',
     'select2-material.js',
     'getdevicepixelratio.js'
 ]}

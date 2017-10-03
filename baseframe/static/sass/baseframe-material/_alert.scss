@@ -71,12 +71,12 @@
   border-top-color: #f7e1b5;
 }
 
-.alert--danger {
+.alert--error {
   background-color: transparentize($mui-danger-color, 0.9);
   border-color: transparentize($mui-danger-color, 0.8);
   color: $mui-danger-color;
 }
 
-.alert--danger .alert__hr {
+.alert--error .alert__hr {
   border-top-color: #e4b9c0;
 }

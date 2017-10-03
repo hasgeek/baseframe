@@ -8,13 +8,13 @@
 	white-space: nowrap;
 
 	.chip__text {
-	  @extend .mui--text-caption;
-	  line-height: 1;
-	  vertical-align: middle;
-	  display: inline-block;
+	    @extend .mui--text-caption;
+	  	line-height: 1;
+	  	vertical-align: middle;
+	  	display: inline-block;
 	}
 }
 
 .chip + .chip {
-  margin-left: $mui-btn-spacing-horizontal;
+  	margin-left: $mui-btn-spacing-horizontal;
 }

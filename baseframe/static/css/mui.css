@@ -3602,16 +3602,23 @@ h1, h2, h3 {
 .mui-form .mui-form--sidetext,
 .mui-form .mui-form--helptext {
   color: #8492A6;
-  margin-bottom: 10px;
+  margin: 8px 0 0;
 }
 .mui-form .mui-form--error {
   color: #C04B61;
-  margin: 0;
+  margin: 8px 0 0;
   padding: 0;
 }
 .mui-form .mui-form--error > li {
   list-style: none;
   margin-top: 10px;
+}
+.mui-form .has-error .mui-textfield > input,
+.mui-form .has-error .mui-textfield > textarea {
+  border-bottom: 1px solid #C04B61;
+}
+.mui-form .has-error .mui-textfield.mui-textfield--float-label > label {
+  color: #C04B61;
 }
 
 .mui-select {
@@ -3795,13 +3802,13 @@ h1, h2, h3 {
   border-top-color: #f7e1b5;
 }
 
-.alert--danger {
+.alert--error {
   background-color: rgba(192, 75, 97, 0.1);
   border-color: rgba(192, 75, 97, 0.2);
   color: #C04B61;
 }
 
-.alert--danger .alert__hr {
+.alert--error .alert__hr {
   border-top-color: #e4b9c0;
 }
 
@@ -3856,4 +3863,35 @@ h1, h2, h3 {
   top: 8px;
   right: 8px;
   display: block;
+}
+
+.tab-container {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.tab-container .tab-container__tab {
+  min-width: 20px;
+  flex: 1 0 0;
+  padding: 8px;
+  opacity: 0.4;
+  text-align: center;
+  border-bottom: 2px solid transparent;
+}
+.tab-container .tab-container__tab.active {
+  opacity: 1;
+  border-bottom: 2px solid #4A90E2;
+  color: #4A90E2;
+}
+.tab-container .tab-container__tab a {
+  color: inherit;
+  display: inline-block;
+  width: 100%;
+}
+.tab-container .tab-container__tab a:focus,
+.tab-container .tab-container__tab a:active,
+.tab-container .tab-container__tab a:hover {
+  text-decoration: none;
+  outline: none;
 }

@@ -2,7 +2,7 @@
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category, message in messages %}
-        <div class="alert alert--{{category}} alert--dismissable">
+        <div class="alert alert--{{category}} test alert--dismissable">
           <a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a>
           <p class="alert__text">{{ message }}</p>
         </div>
