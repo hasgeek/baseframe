@@ -203,7 +203,9 @@ class TinyMce4Field(TextAreaField):
         tinymce_options.setdefault('plugins', "autolink autoresize link lists paste searchreplace")
         tinymce_options.setdefault('toolbar', "bold italic | bullist numlist | link unlink | searchreplace undo redo")
         tinymce_options.setdefault('width', "100%")
-        tinymce_options.setdefault('height', "400")
+        tinymce_options.setdefault('height', "200")
+        tinymce_options.setdefault('autoresize_min_height', "159")
+        tinymce_options.setdefault('autoresize_max_height', "200")
         tinymce_options.setdefault('valid_elements',
             "p,br,strong/b,em/i,sup,sub,h3,h4,h5,h6,ul,ol,li,a[!href|title|target],blockquote,code")
         tinymce_options.setdefault('statusbar', False)
