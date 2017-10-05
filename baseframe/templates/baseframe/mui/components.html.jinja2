@@ -11,6 +11,10 @@
   {% endwith %}
 {%- endmacro %}
 
+{%- macro networkbar_login_beacon(url) %}
+  <iframe height="0" width="0" tabindex="-1" style="display: none; border: 0; height: 0; width: 0" aria-hidden="true" role="presentation" src="{{ url }}"></iframe>
+{% endmacro %}
+
 {%- macro hgtopnav(site_title="HasGeek", side_menu_button=none, site_links=[], auth=true, network=true, loginbtntext="Login") %}
   <nav id="hgnav" class="header__nav header__nav--custom" role="navigation">
     <div class="header__site-title">

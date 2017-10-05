@@ -3426,10 +3426,6 @@ h4, h5, h6 {
   height: 100%;
 }
 
-.header__nav-list__item {
-  height: 24px;
-}
-
 .header__button {
   margin: 0;
 }
