@@ -88,9 +88,12 @@ class BaseframeBlueprint(Blueprint):
         :param bundle_css: Bundle of additional CSS
         :param assetenv: Environment for assets (in case your app needs a custom environment)
         """
-        # Since Flask 0.11, templates are no longer auto reloaded
-        app.jinja_env.auto_reload = True
-        app.config['TEMPLATES_AUTO_RELOAD'] = True
+        # Since Flask 0.11, templates are no longer auto reloaded.
+        # Setting the config alone doesn't seem to work, so we explicitly
+        # set the jinja environment here.
+        if app.config.get('TEMPLATES_AUTO_RELOAD') or (
+                app.config.get('TEMPLATES_AUTO_RELOAD') is None and app.config.get('DEBUG')):
+            app.jinja_env.auto_reload = True
         app.jinja_env.add_extension('jinja2.ext.do')
         app.jinja_env.autoescape = _select_jinja_autoescape
         if app.config.get('SERVER_NAME'):
