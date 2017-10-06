@@ -3850,7 +3850,7 @@ h1, h2, h3 {
 .modal {
   padding: 1em;
 }
-.modal .close-modal {
+.modal a.close-modal {
   display: none;
 }
 .modal .modal__close {
