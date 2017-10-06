@@ -87,11 +87,19 @@ assets['jquery.fullcalendar.gcal.js'][Version('1.6.4')] = ('jquery.fullcalendar.
 assets['jquery.locationpicker.js'][Version('0.1.12')] = ('jquery.js', 'baseframe/js/jquery.locationpicker.js')
 assets['jquery.appear.js'][Version('0.3.3')] = ('jquery.js', 'baseframe/js/jquery.appear.js')
 
+assets['jquery-modal.js'][Version('0.8.2')] = ('jquery.js', 'baseframe/js/jquery-modal.js')
+assets['jquery-modal.css'][Version('0.8.2')] = 'baseframe/css/jquery-modal.css'
+
+assets['jquery-easytabs.js'][Version('3.2.0')] = ('jquery.js', 'baseframe/js/jquery-easytabs.js')
+
 assets['select2.js'][Version('4.0.3')] = ('jquery.js>=1.7.2', 'baseframe/js/select2.js')
 assets['select2.css'][Version('4.0.3')] = 'baseframe/css/select2.css'
 assets['select2-bootstrap.css'][Version('0.1.0')] = ('select2.css', 'baseframe/css/bootstrap-select2.css')
 assets['select2-baseframe.css'][Version('4.0.3')] = ('select2-bootstrap.css', 'baseframe/css/select2-baseframe.css')
 assets['select2-baseframe.js'][Version('4.0.3')] = {'requires': ['select2.js==4.0.3']}
+assets['select2-material.css'][Version('4.0.3')] = ('select2.css', 'baseframe/css/select2-baseframe-material.css')
+assets['select2-material.js'][Version('4.0.3')] = {'requires': ['select2.js==4.0.3']}
+
 
 assets['bootstrap-multiselect.css'][Version('0.9.13')] = 'baseframe/css/bootstrap-multiselect.css'
 assets['bootstrap-multiselect.js'][Version('0.9.13')] = 'baseframe/js/bootstrap-multiselect.js'
@@ -300,6 +308,12 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
     'select2-baseframe.js',
     'getdevicepixelratio.js'
 ]}
+assets['extra-material.js'][Version('0.0.0')] = {'requires': [
+    'jquery-modal.js',
+    'jquery.form.js',
+    'select2-material.js',
+    'getdevicepixelratio.js'
+]}
 
 assets['baseframe.js'][Version(__version__)] = {'requires': [
     'jquery.js<1.9.0',
@@ -334,4 +348,21 @@ assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
     'jquery.timepicker.css',
     'baseframe-base-bs3.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
+]}
+
+assets['mui.js'][Version('0.9.21')] = 'baseframe/js/mui.js'
+assets['baseframe-material.js'][Version('0.9.21')] = 'baseframe/js/baseframe-material.js'
+assets['baseframe-mui.js'][Version(__version__)] = {'requires': [
+    'extra-material.js',
+    'mui.js',
+    'jquery.tinymce.js>=4.0.0',
+    'baseframe-material.js'
+]}
+
+assets['mui.css'][Version('0.9.21')] = 'baseframe/css/mui.css'
+assets['baseframe-mui.css'][Version(__version__)] = {'requires': [
+    'jquery-modal.css',
+    'select2-material.css',
+    'jquery.timepicker.css',
+    'mui.css'
 ]}

@@ -1,0 +1,22 @@
+.modal {
+    padding: 1em;
+    @extend .mui--z1;
+
+    //Use material design icon for close
+    .close-modal {
+        display: none;
+    }
+
+    .modal__close {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        display: block;
+    }
+    .modal__header {
+        @extend .mui--text-title;
+    }
+    .modal__body {
+        @extend .mui--text-body2;
+    }
+}

@@ -1,0 +1,129 @@
+{%- macro flash_messages() -%}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert--{{category}} test alert--dismissable">
+          <a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a>
+          <p class="alert__text">{{ message }}</p>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+{%- endmacro %}
+
+{%- macro networkbar_login_beacon(url) %}
+  <iframe height="0" width="0" tabindex="-1" style="display: none; border: 0; height: 0; width: 0" aria-hidden="true" role="presentation" src="{{ url }}"></iframe>
+{% endmacro %}
+
+{%- macro hgtopnav(site_title="HasGeek", side_menu_button=none, site_links=[], auth=true, network=true, loginbtntext="Login") %}
+  <nav id="hgnav" class="header__nav header__nav--custom" role="navigation">
+    <div class="header__site-title">
+      {% if side_menu_button %}
+        <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button"><i class="material-icons">menu</i></a>
+      {% endif %}
+      <div class="header__site-title__title">{{site_title}}</div>
+    </div>
+    <div class="header__right-nav">
+      <ul class="header__nav-list">
+        {%- for link in site_links %}
+          <li class="mui-dropdown header__nav-list__item ">
+            <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>
+              {{ link.title }}
+            </a>
+          </li>
+        {%- endfor %}
+
+        {% if network %}
+        <li class="mui-dropdown header__nav-list__item ">
+          {{ add_hasgeek_network() }}
+        </li>
+        {% endif %}
+
+        {% if auth %}
+        <li class="mui-dropdown header__nav-list__item ">
+          {{ add_hasgeek_auth(user_links, loginbtntext) }}
+        </li>
+        {%- endif %}
+      </ul>
+    </div>
+  </nav>
+  {%- if not g.user %}
+    {%- if g.lastuser %}
+      {{ networkbar_login_beacon(g.lastuser.endpoint_url(g.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
+    {%- endif %}
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro hgsidenav(site_title="HasGeek", site_links=[], user_links=[]) %}
+  <div class="header__site-title header__site-title--sidenav">
+    {{site_title}}
+  </div>
+  <ul class="header__side-nav-list">
+    {%- for link in user_links %}
+      <li class="header__side-nav-list__item">
+        <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}">
+          {% if link.icon %}<i class="material-icons header__side-nav-list__item__icon">{{link.icon}}</i>{% endif %} {{ link.title }}
+        </a>
+      </li>
+    {%- endfor %}
+    {%- for link in site_links %}
+      <li class="header__side-nav-list__item">
+        <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}">
+          {% if link.icon %}<i class="material-icons header__side-nav-list__item__icon">{{link.icon}}</i>{% endif %} {{ link.title }}
+        </a>
+      </li>
+    {%- endfor %}
+  </ul>
+{%- endmacro %}
+
+{%- macro add_hasgeek_auth(links, loginbtntext) %}
+  {% if g.user -%}
+    <a class="header__app-icon" data-mui-toggle="dropdown">
+      <i class="material-icons">account_circle</i>
+    </a>
+    <ul class="mui-dropdown__menu mui-dropdown__menu--right">
+      {%- for link in links %}
+        <li><a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>{{ link.title }}</a></li>
+      {%- endfor %}
+      <li {% if links %} class="separator-authlinks" {%- endif %}>
+        {%- with orgs = g.user.organization_links() %}
+        {% if orgs %}
+          <a href="/profile">My profile</a></li>
+          {%- for org in orgs %}
+          <li><a href="{{ org.link }}">{{ org.title }}</a></li>
+          {%- endfor %}             
+        {%- else %}
+        <a href="{{ g.user.profile_url }}" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
+        {% endif %}
+        {%- endwith %}
+      </li>
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+  {%- else %}
+    <a href="{{ url_for('login') }}" class='mui-btn mui-btn--primary mui-btn--small mui-btn--raised header__button' id="hg-login-btn">{{ loginbtntext }}</a>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro add_hasgeek_network() %}
+  {% with %}
+    {% set network_links=[
+    {'title': 'HasGeek', 'url': 'http://hasgeek.com', 'icon': 'https://hasgeek.com/static/img/hg-banner.png'},
+    {'title': 'Talkfunnel', 'url': 'https://talkfunnel.com/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_funnel.png'},
+    {'title': 'Hasjob', 'url': 'https://hasjob.co/', 'icon': 'https://static.hasjob.co/static/img/logo-star.png'},
+    {'title': 'HGTV', 'url': 'https://hasgeek.tv/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_hgtv.png'},
+    ]%}
+    <a class="header__app-icon" data-mui-toggle="dropdown">
+      <i class="material-icons">apps</i>
+    </a>
+    <ul class="mui-dropdown__menu mui-dropdown__menu--right" role="menu">
+      {%- for link in network_links %}
+      <li class="mui--text-center">
+        <a href="{{link['url']}}">
+          <img src="{{link['icon']}}" class="header__dropdown-app-img">
+          <h6 class="header__dropdown-app-title">{{link['title']}}</h6>
+        </a>
+      </li>
+      {%- endfor  %}
+    </ul>
+  {% endwith %}
+{%- endmacro %}

@@ -1,0 +1,67 @@
+
+.mui-textfield--float-label {
+  > label {
+    // Layout
+    position: absolute;
+    transform: translate(0px, $xFormLabelLineHeight);
+    -webkit-transition: all .15s ease-out;
+    -moz-transition: all .15s ease-out;
+    -o-transition: all .15s ease-out;
+    transition: all .15s ease-out;
+   }
+}
+
+.mui-form {
+    .mui-form--sidetext,
+    .mui-form--helptext {
+		color: $mui-text-light;
+		margin: 8px 0 0;
+		@extend .mui--text-caption;
+	}
+
+	.mui-form--error {
+		color: $mui-text-danger;
+		margin: 8px 0 0;
+		padding: 0;
+		@extend .mui--text-caption;
+
+		> li {
+			list-style: none;
+			margin-top: $mui-form-group-margin-bottom/2;
+		}
+	}
+
+  .has-error .mui-textfield > input,
+  .has-error .mui-textfield > textarea {
+    border-bottom: 1px solid $mui-text-danger;
+  }
+  .has-error .mui-textfield.mui-textfield--float-label > label {
+    color: $mui-text-danger;
+  }
+}
+
+.mui-select {
+  margin-top: $mui-form-group-margin-bottom;
+  > label {
+    top: -$mui-form-group-margin-bottom/4;
+  }
+}
+
+.listwidget ul, .listwidget ol {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+.listwidget ul li, .listwidget ol li {
+  position: relative;
+  margin-left: 1.25em;
+}
+.listwidget ul input, .listwidget ol input {
+  position: absolute;
+  left: -1.25em;
+  top: 0.45em;
+}
+.listwidget ul label, .listwidget ol label {
+  display: inline-block;
+}

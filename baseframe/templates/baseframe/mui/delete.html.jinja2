@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="grid">
+   <div class="grid__col-xs-12">
+		<p class="mui--text-title">{{ message }}</p>
+		<form id="delete" method="POST" class="mui-form">
+		  <input type="hidden" name="form.id" value="delete"/>
+		  {{ form.hidden_tag() }}
+		  {% if form.csrf_token.errors %}
+		    {% for error in form.csrf_token.errors %}<div class="mui-form--error">{{ error }}</div>{% endfor %}
+		  {% endif %}
+		  <input class="mui-btn mui-btn--raised mui-btn--danger" type="submit" name="delete" value="{% trans %}Delete{% endtrans %}"/>
+		  <input class="mui-btn mui-btn--raised mui-btn--primary" type="submit" name="cancel" value="{% trans %}Cancel{% endtrans %}"/>
+		</form>
+	</div>
+</div>
+{% endblock %}

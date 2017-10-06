@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import wtforms
-from flask import render_template, request, Markup, abort, flash, redirect, escape, url_for, make_response
+from flask import render_template, request, Markup, abort, flash, redirect, escape, url_for, make_response, current_app
 from .. import b__ as __
+from .. import THEME_FILES
 from .form import Form
 from .fields import SubmitField
 
@@ -26,25 +27,29 @@ def render_form(form, title, message='', formid='form', submit=__(u"Submit"), ca
     else:
         code = 200
     if request.is_xhr and ajax:
-        return make_response(render_template('baseframe/ajaxform.html', form=form, title=title,
+        template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
+        return make_response(render_template(template, form=form, title=title,
             message=message, formid=formid, submit=submit,
             cancel_url=cancel_url, multipart=multipart), code)
     else:
-        return make_response(render_template('baseframe/autoform.html', form=form, title=title,
+        template = THEME_FILES[current_app.config['theme']]['autoform.html.jinja2']
+        return make_response(render_template(template, form=form, title=title,
             message=message, formid=formid, submit=submit,
             cancel_url=cancel_url, ajax=ajax, multipart=multipart), code)
 
 
 def render_message(title, message, code=200):
+    template = THEME_FILES[current_app.config['theme']]['message.html.jinja2']
     if request.is_xhr:
         return make_response(Markup("<p>%s</p>" % escape(message)), code)
     else:
-        return make_response(render_template('baseframe/message.html', title=title, message=message), code)
+        return make_response(render_template(template, title=title, message=message), code)
 
 
 def render_redirect(url, code=302):
+    template = THEME_FILES[current_app.config['theme']]['redirect.html.jinja2']
     if request.is_xhr:
-        return make_response(render_template('baseframe/redirect.html', url=url))
+        return make_response(render_template(template, url=url))
     else:
         return redirect(url, code=code)
 
@@ -62,4 +67,5 @@ def render_delete_sqla(obj, db, title, message, success=u'', next=None, cancel_u
             return render_redirect(next or url_for('index'), code=303)
         else:
             return render_redirect(cancel_url or next or url_for('index'), code=303)
-    return make_response(render_template('baseframe/delete.html', form=form, title=title, message=message))
+    template = THEME_FILES[current_app.config['theme']]['delete.html.jinja2']
+    return make_response(render_template(template, form=form, title=title, message=message))

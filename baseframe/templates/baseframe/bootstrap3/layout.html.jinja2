@@ -1,0 +1,13 @@
+{% extends "baseframe/bootstrap3/baseframe.html.jinja2" -%}
+
+{% block baseheadline -%}
+  {% block headline -%}
+    <div class="page-header">
+      <h1>{{ self.title()|e }}</h1>
+    </div>
+  {%- endblock %}
+{%- endblock %}
+
+{% block basecontent -%}
+  {% block content %}{% endblock %}
+{%- endblock %}

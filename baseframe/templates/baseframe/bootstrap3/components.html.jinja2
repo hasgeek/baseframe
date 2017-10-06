@@ -1,0 +1,270 @@
+{%- macro flash_messages() -%}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{category}} fade in">
+          <a href="#" class="close" data-dismiss="alert">&times;</a>
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+{%- endmacro %}
+
+{%- macro networkbar_login_beacon(url) %}
+  <iframe height="0" width="0" tabindex="-1" style="display: none; border: 0; height: 0; width: 0" aria-hidden="true" role="presentation" src="{{ url }}"></iframe>
+{% endmacro %}
+
+{%- macro networkbar_inner(siteid, links, toplevel=false, appurl='#') %}
+  {%- for link in links %}
+    <li id="hg-networkbar-{{ link.name }}" {%- if siteid == link.name %} class="{% if toplevel and loop.first %}strong {% endif %}selected"{% elif link.sep %} class="hg-menu-section"{% elif toplevel and loop.first %} class="strong"{% endif %}>
+      {%- if link.children -%}
+        <a href="{{ link.url or '#' }}" class="hg-submenu">{{ link.title }}</a>
+        <ul>
+          {{ networkbar_inner(siteid, link.children) }}
+        </ul>
+      {%- else -%}
+        {%- if link.sep -%}
+          {{ link.title }}
+        {%- else -%}
+          <a href="{{ link.url or (toplevel and appurl or '#') }}">{{ link.title }}</a>
+        {%- endif -%}
+      {%- endif -%}
+    </li>
+  {%- endfor %}
+{% endmacro %}
+
+{%- macro networkbar(siteid=none, login=false, baseclass=none, containerclass="container", beacon=true) -%}
+  <div id="hg-bar" class="no-print {%- if baseclass %} {{ baseclass }}{% endif %}">
+    <div class="{{ containerclass }}">
+      {%- with links = networkbar_links() %}{% if links %}
+        {%- cache 60, 'networkbar-links-html', siteid or '' %}
+          <ul id="hg-barlinks">
+            {{ networkbar_inner(siteid, links, toplevel=true, appurl=request.url_root) }}
+          </ul>
+        {%- endcache %}
+      {%- endif %}{% endwith %}
+      {%- if login %}
+        <ul id="hg-usertools">
+          {% if g.user -%}
+            <li class="profile">
+              {%- with orgs = g.user.organization_links() %}{% if orgs %}
+                <a href="#" title="{{ g.user.pickername }}" class="hg-submenu">{{ g.user.fullname }}</a>
+                <ul>
+                  <li><a href="{{ g.user.profile_url }}">My profile</a></li>
+                  {%- for org in orgs %}
+                    <li><a href="{{ org.link }}">{{ org.title }}</a></li>
+                  {%- endfor %}
+                </ul>
+              {%- else %}
+                <a href="{{ g.user.profile_url }}" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
+              {% endif %}{%- endwith %}
+            </li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          {%- else %}
+            <li><a href="{{ url_for('login') }}">Login or sign up</a></li>
+          {%- endif %}      
+        </ul>
+        {%- if login and beacon and not g.user %}
+          {%- if g.lastuser %}
+            {{ networkbar_login_beacon(g.lastuser.endpoint_url(g.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
+          {%- endif %}
+        {%- endif %}
+      {%- endif %}
+    </div>
+  </div>
+{%- endmacro %}
+
+{%- macro responsive_networkbar_inner(siteid, links, toplevel=false, appurl='#') %}
+  {%- for link in links %}
+    <li id="hg-networkbar-{{ link.name }}" {%- if siteid == link.name %} class="{% if toplevel and loop.first %}strong {% endif %}{% if link.children %}dropdown {% endif %}selected"{% elif link.sep %} class="hg-menu-section"{% elif toplevel and loop.first %} class="strong {%- if link.children %} dropdown{% endif %}"{% elif link.children %} class="dropdown"{% endif %}>
+      {%- if link.children -%}
+        <a href="{{ link.url or '#' }}" class="dropdown-toggle" data-toggle="dropdown">{{ link.title }}</a>
+        <ul class="dropdown-menu">
+          {{ networkbar_inner(siteid, link.children) }}
+        </ul>
+      {%- else -%}
+        {%- if link.sep -%}
+          {{ link.title }}
+        {%- else -%}
+          <a href="{{ link.url or (toplevel and appurl or '#') }}">{{ link.title }}</a>
+        {%- endif -%}
+      {%- endif -%}
+    </li>
+  {%- endfor %}
+{% endmacro %}
+
+{%- macro responsive_networkbar(siteid=none, login=false, baseclass=none, containerclass="container", beacon=true, links=[]) -%}
+  <nav class="navbar navbar-default navbar-fixed-top" id="hg-networkbar" role="navigation">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" id="navbar-toggle-1" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <i class="icon-reorder fa fa-fw fa-bars"></i>
+        </button>
+        {%- if login %}
+          <button type="button" id="navbar-toggle-2" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex2-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <i class="icon-user fa fa-fw fa-user"></i>
+          </button>
+        {% endif -%}
+        {% block navbar_brand %}
+          <a class="navbar-brand" href="{{ request.script_root or '/' }}" title="Home">HasGeek</a>
+        {% endblock %}
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        {%- with links = networkbar_links() %}
+          {% if links %}
+            {%- cache 60, 'networkbar-links-html', siteid or '' %}
+              <ul class="nav navbar-nav">
+                {{ responsive_networkbar_inner(siteid, links, toplevel=true, appurl=request.url_root) }}          
+              </ul>
+            {%- endcache %}
+          {%- endif %}
+        {% endwith %}
+      </div>
+      {%- if login %}
+      <div class="collapse navbar-collapse navbar-ex2-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          {%- for link in links %}
+            <li><a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>{{ link.title }}</a></li>
+          {%- endfor %}
+          {% if g.user -%}
+          <li class="profile dropdown">
+            {%- with orgs = g.user.organization_links() %}
+              {% if orgs %}
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
+                <ul class="dropdown-menu">
+                  <li><a href="/profile">My profile</a></li>
+                  {%- for org in orgs %}
+                    <li><a href="{{ org.link }}">{{ org.title }}</a></li>
+                  {%- endfor %}             
+                </ul>
+              {%- else %}
+                <a href="{{ g.user.profile_url }}" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
+              {% endif %}
+            {%- endwith %}
+          </li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          {%- else %}
+            <li><a href="{{ url_for('login') }}">Login or sign up</a></li>
+          {%- endif %}
+        </ul>
+      </div><!-- /.navbar-collapse -->
+      {%- endif %}
+      {%- if login and beacon and not g.user %}
+        {%- if g.lastuser %}
+          {{ networkbar_login_beacon(g.lastuser.endpoint_url(g.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
+        {%- endif %}
+      {%- endif %}
+    </div>
+  </nav>
+{%- endmacro %}
+
+{%- macro hgnav(site_title="HasGeek", site_nav_button=none, site_nav=none, auth=true, network=true, site_links=[], user_links=[], loginbtntext="Login") %}
+  <nav class="navbar navbar-default navbar-fixed-top" id="hgnav" role="navigation">
+    <div class="container">
+      <div class="navbar-header pull-left hg-header-app-nav">
+        {{site_title}}
+      </div>
+      <div class="navbar-header pull-right hg-header-nav">
+        <ul class="nav pull-right">
+          {%- for link in site_links %}
+            <li class="dropdown pull-left">
+              <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>
+                {{ link.title }}
+              </a>
+            </li>
+          {%- endfor %}
+          <li class="dropdown pull-left">
+            {% if auth %}
+              {{add_hasgeek_auth(user_links, loginbtntext)}}
+            {%- endif %}
+          </li>
+          {% if site_nav_button %}
+          <li class="dropdown pull-left">
+            {{site_nav_button}}
+          </li>
+          {% elif site_nav %}
+          <li class="dropdown pull-left">
+              <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="menu-toggle hg-site-nav-toggle">
+                <i class="fa fa-bars"></i>
+              </button>
+          </li>
+          {% endif %}
+          <li class="dropdown pull-right hg-nw-bar">
+            {% if network %}
+              {{add_hasgeek_network()}}
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+      {% if site_nav_button %}
+        {{site_nav}}
+      {% elif site_nav %}
+      <div class="nav collapse navbar-collapse navbar-right hg-site-nav" id="hg-sitenav">
+        {{site_nav}}
+      </div>
+      {% endif %}
+    </div>
+  </nav>
+  {%- if not g.user %}
+    {%- if g.lastuser %}
+      {{ networkbar_login_beacon(g.lastuser.endpoint_url(g.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
+    {%- endif %}
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro add_hasgeek_auth(links, loginbtntext) %}
+  {% if g.user -%}
+    <button type="button" data-toggle="dropdown" class="dropdown-toggle" id="hg-user-btn">
+      <i class="fa fa-user"></i>
+    </button>
+    <ul class="dropdown-menu pull-right">
+      {%- for link in links %}
+        <li><a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>{{ link.title }}</a></li>
+      {%- endfor %}
+      <li {% if links %} class="separator-authlinks" {%- endif %}>
+        {%- with orgs = g.user.organization_links() %}
+        {% if orgs %}
+          <a href="/profile">My profile</a></li>
+          {%- for org in orgs %}
+          <li><a href="{{ org.link }}">{{ org.title }}</a></li>
+          {%- endfor %}             
+        {%- else %}
+        <a href="{{ g.user.profile_url }}" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
+        {% endif %}
+        {%- endwith %}
+      </li>
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+  {%- else %}
+    <a href="{{ url_for('login') }}" class='btn btn-primary btn-sm' id="hg-login-btn">{{ loginbtntext }}</a>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro add_hasgeek_network() %}
+  {% with %}
+    {% set network_links=[
+    {'title': 'HasGeek', 'url': 'http://hasgeek.com', 'icon': 'https://hasgeek.com/static/img/hg-banner.png'},
+    {'title': 'Talkfunnel', 'url': 'https://talkfunnel.com/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_funnel.png'},
+    {'title': 'Hasjob', 'url': 'https://hasjob.co/', 'icon': 'https://static.hasjob.co/static/img/logo-star.png'},
+    {'title': 'HGTV', 'url': 'https://hasgeek.tv/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_hgtv.png'},
+    ]%}
+    <button type="button" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="hg-app-drawer">
+      <i class="fa fa-th"></i>
+    </button>
+    <ul class="dropdown-menu block-dropdown" role="menu">
+      {%- for link in network_links %}
+      <li>
+        <a href="{{link['url']}}">
+          <img src="{{link['icon']}}" alt="...">
+          <h6>{{link['title']}}</h6>
+        </a>
+      </li>
+      {%- endfor  %}
+    </ul>
+  {% endwith %}
+{%- endmacro %}

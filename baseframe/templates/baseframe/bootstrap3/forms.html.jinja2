@@ -1,0 +1,317 @@
+{%- macro rendererrors(field) -%}
+    {%- if field.errors -%}
+      {%- for error in field.errors %}
+        <div><p class="help-error">{{ error }}</p></div>
+      {%- endfor %}
+    {%- endif %}
+{%- endmacro %}
+
+{%- macro renderfield(field, css_class="", widget_css_class="", sidetext=none, tabindex=none, autofocus=false, nolabel=false, style='horiz', rows=none) -%}
+
+  {%- if field.widget.html_tag in ['ul', 'ol'] %}
+    {%- set listwidget = true %}
+  {%- elif field.widget.input_type == 'checkbox' %}
+    {%- set listwidget = false %}
+  {%- else %}
+    {%- set listwidget = false %}
+  {%- endif -%}
+  {%- if field.type == 'FormField' %}
+    <fieldset>
+      <legend>{{ field.label.text }}</legend>
+      {%- for subfield in field.form %}
+        {{ renderfield(field=subfield, css_class=css_class, widget_css_class=widget_css_class, sidetext=sidetext, tabindex=tabindex, autofocus=false, nolabel=nolabel, style=style, rows=rows) }}
+      {%- endfor %}
+    </fieldset>
+  {%- else %}
+    <div class="form-group control-group {#- BS3: form-group, BS2: control-group -#}
+        {%- if field.errors %} error has-error {%- endif -%}
+        {%- if css_class %} {{ css_class }} {%- endif -%}
+        {%- if listwidget %} listwidget {%- if style == 'horizlist' %} horizlist {%- endif %}{%- endif -%}
+        " id="field-{{ field.id }}">
+      {%- if field.type == 'RadioMatrixField' %}
+        <div class="col-xs-12">
+          {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class) }}
+          {%- if field.description %}
+            <p class="help-block">{{ field.description }}</p>
+          {%- endif %}
+        </div>
+      {%- elif field.type == 'BooleanField' %}
+        <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">
+          <div class="checkbox">
+            <label>{{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, rows=rows) }} {{ field.label.text }}</label>
+          </div>
+          {{ rendererrors(field) }}
+          {%- if field.description %}
+            <p class="help-block">{{ field.description }}</p>
+          {%- endif %}
+        </div>
+      {%- else %}
+        {%- if not nolabel %}
+        <label class="{% if style == 'horiz' -%} col-xs-12 col-sm-3 col-md-2 {%- else %} col-xs-12 {%- endif %} control-label" for="{{ field.id }}">{{ field.label.text }}
+          {%- if field.flags.required -%}
+            <span class="help-required" title="Required">*</span>
+          {%- endif -%}
+        </label>
+        {%- endif %}
+        <div class="{% if style == 'horiz' -%} col-xs-12 col-sm-9 col-md-10 {%- else %} col-xs-12 {%- endif %} controls">
+          {%- if field.type in ['AnnotatedTextField', 'AnnotatedNullTextField'] %}
+            <div class="input-group">
+              {% if field.prefix %}<span class="input-group-addon">{{ field.prefix }}</span>{% endif %}
+              {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+              {% if field.suffix %}<span class="input-group-addon">{{ field.suffix }}</span>{% endif %}
+            </div>
+          {%- elif field.type == 'CoordinatesField' %}
+            {{ map_marker_widget(field) }}
+          {%- elif field.widget.input_type in ['text', 'password', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month', 'number', 'search', 'tel', 'time', 'url', 'week'] or (field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextAreaField', 'TextListField', 'MarkdownField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol']) %}
+            {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+          {%- else %}
+            {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+          {%- endif %}
+          {%- if sidetext %}
+            <span class="help-inline">{{sidetext}}</span>
+          {%- endif %}
+          {{ rendererrors(field) }}
+          {%- if field.description %}
+            <p class="help-block">{{ field.description }}</p>
+          {%- endif %}
+        </div>
+      {%- endif %}
+    </div>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro rendersubmit(buttons=[], css_class="", tabindex='', cancel_url='', style='horiz', csrf_error=false) -%}
+<div class="form-group form-actions clearfix{% if css_class %} {{ css_class}}{% endif %}">
+  <div {%- if style == 'horiz' %} class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10"{% else %} class="col-xs-12"{% endif %}>
+    {% for name, value, widget_class in buttons -%}
+      <button type="submit"
+        {%- if name %} name="{{ name|e }}"{% else %} {% endif -%}
+        {% if widget_class %} class="btn {{ widget_class|e }}" {% else %} class="btn"{% endif -%}
+        {%- if tabindex %} tabindex="{{ tabindex }}" {% endif -%}
+        >{{ value|e }}</button>
+    {% endfor %}
+    {% if cancel_url %}<a href="{{ cancel_url }}" class="btn btn-default">{% trans %}Cancel{% endtrans %}</a>{% endif %}
+    <span class="loading hidden">&nbsp;</span>
+    {% if csrf_error -%}
+      <div><p class="help-error">{% trans -%}
+        This form has timed out. Please submit again to confirm
+      {%- endtrans %}</p></div>
+    {%- endif %}
+  </div>
+</div>
+{%- endmacro %}
+
+{%- macro renderform_inner(form, formid, style='horiz') -%}
+  {%- if form.errors %}
+    <div class="alert alert-error alert-danger">
+      <a class="close" data-dismiss="alert">×</a>
+      {% trans %}Please review the indicated issues{% endtrans %}
+    </div>
+  {%- endif %}
+  {% if message %}<p>{{ message }}</p>{% endif %}
+  <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
+  {{ form.hidden_tag() }}
+  {%- set autofocus = true %}
+  {% for field in form -%}
+    {%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
+      {# Don't show hidden #}
+    {%- else -%}
+      {{ renderfield(field, autofocus=autofocus, style=style) }}
+      {%- if autofocus %}{% set autofocus = false %}{% endif %}
+    {%- endif %}
+  {% endfor %}
+{%- endmacro %}
+
+{%- macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=false, style='horiz') %}
+<form data-parsley-validate id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" {%- if style == 'horiz' %} class="form-horizontal"{% endif %}>
+  {{ renderform_inner(form, formid or none, style=style) }}
+  {{ rendersubmit([(none, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
+</form>
+{% endmacro %}
+
+{%- macro ajaxform(formid, request, force=false) %}
+  {%- if force or request.is_xhr %}
+    <script type="text/javascript">
+      $(function() {
+        $("#{{ formid }}").ajaxForm({
+          target: '#{{ formid }}',
+          replaceTarget: true,
+          beforeSubmit: function(formdata, form, options) {
+            form.find('input[type="submit"]').prop('disabled', true).addClass('submit-disabled');
+            form.find('button[type="submit"]').prop('disabled', true).addClass('submit-disabled');
+            form.find('.loading').removeClass('hidden');
+            return true;
+          },
+          error: function(context, xhr, status, errMsg) {
+            var form = $("#{{ formid }}");
+            form.find('input[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
+            form.find('button[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
+            form.find('.loading').addClass('hidden');
+            form.append('<div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert">&times;</a> An error occured when submitting the form</div>');
+          } // No comma or semicolon here
+        });
+      });
+    </script>
+  {%- else %}
+    <script type="text/javascript">
+      $(function() {
+        // Disable submit button when clicked. Prevent double click.
+        $('#{{ formid }} input[type="submit"]').click(function() {
+          $(this).addClass('submit-disabled').prop('disabled', true);
+          $('#{{ formid }}').find(".loading").removeClass('hidden');
+          this.form.submit();
+        });
+        $('#{{ formid }} button[type="submit"]').click(function() {
+          $(this).addClass('submit-disabled').prop('disabled', true);
+          $('#{{ formid }}').find(".loading").removeClass('hidden');
+          this.form.submit();
+        });
+      });
+    </script>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro tinymce3_editor(field, script=true) -%}
+  {%- if script %}
+  <script type="text/javascript">
+    $(function() {
+  {%- endif %}
+      $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
+        // Location of TinyMCE script
+        script_url: {{ url_for("baseframe.static", filename="js/tinymce3/tiny_mce.js")|tojson }},
+
+        {%- for k, v in field.tinymce_options.items() %}
+        {{ k|tojson }}: {{ v|tojson }},
+        {%- endfor %}
+        // Content CSS
+        content_css: {{ (field.content_css or url_for('baseframe.editorcss'))|tojson }},
+        // Focus/blur indicators
+        setup: function(ed) {
+          ed.onInit.add(function(ed) {
+            var container = $('#'+ed.id+'_tbl');
+            tinymce.dom.Event.add(ed.getWin(), "blur", function() {
+              container.removeClass('focus');
+            });
+            tinymce.dom.Event.add(ed.getWin(), "focus", function() {
+              container.addClass('focus');
+            });
+          });
+        } // No comma or semicolon here
+      });
+  {%- if script %}
+    });
+  </script>
+  {%- endif %}
+{% endmacro %}
+
+{%- macro tinymce4_editor(field, script=true) -%}
+  {%- if script %}
+  <script type="text/javascript">
+    $(function() {
+  {%- endif %}
+      $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
+        {%- for k, v in field.tinymce_options.items() %}
+        {{ k|tojson }}: {{ v|tojson }},
+        {%- endfor %}
+        // Content CSS
+        content_css: {{ (field.content_css or url_for('baseframe.editorcss'))|tojson }},
+        // Focus/blur indicators
+        setup: function(ed) {
+          ed.on('focus', function(e) {
+            $(ed.editorContainer).addClass('active');
+          });
+          ed.on('blur', function(e) {
+            $(ed.editorContainer).removeClass('active');
+          });
+        } // End of setup keyval
+      });
+  {%- if script %}
+    });
+  </script>
+  {%- endif %}
+{% endmacro %}
+
+{%- macro map_marker_widget(field) %}
+  <div class="input-group no-jshidden">
+    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+    <input type="text" class="form-control" id="{{ field.id }}_search" placeholder="Enter a location">
+  </div>
+  <div id="{{ field.id }}_map" class="no-jshidden map-marker"></div>
+  <div class="jshidden">{{ field(class="field-" + field.id + " form-control") }}</div>
+{% endmacro %}
+
+{%- macro map_marker_script(field) %}
+  new window.Baseframe.MapMarker({
+    location_id: "{{ field.id}}_search",
+    map_id: "{{ field.id }}_map",
+    latitude_id: "{{ field.id }}_latitude",
+    longitude_id: "{{ field.id}}_longitude"
+  });
+{% endmacro %}
+
+{%- macro widget_ext_scripts(form) %}
+  {%- with scripts = {} %}
+    {%- for field in form %}
+      {%- if field.type == 'CoordinatesField' %}
+        {#- We're using setdefault instead of a simple = because the do extension doesn't support assignment #}
+        {%- do scripts.setdefault('gmap', '//maps.google.com/maps/api/js?sensor=false&libraries=places') %}
+        {%- do scripts.setdefault('locationpicker', 'jquery.locationpicker.js'|ext_asset_url) %}
+      {%- endif %}
+    {%- endfor %}
+    {%- for key in scripts %}
+      <script type="text/javascript" src="{{ scripts[key] }}"></script>
+    {%- endfor %}
+  {%- endwith %}
+{% endmacro %}
+
+{%- macro widgetscripts(form, script=true) -%}
+  {%- if script %}
+  <script type="text/javascript">
+    $(function() {
+  {%- endif %}
+  {%- for field in form -%}
+    {%- if field.type == 'FormField' %}
+      {{ widgetscripts(field.form, script=false) }}
+    {%- elif field.widget.input_type == 'tinymce3' -%}
+      {{ tinymce3_editor(field, script=false) }}
+    {%- elif field.widget.input_type == 'tinymce4' -%}
+      {{ tinymce4_editor(field, script=false) }}
+    {%- elif field.type in ['AutocompleteField', 'AutocompleteMultipleField'] %}
+      Baseframe.Forms.textAutocomplete({
+        id: {{ field.id|tojson }},
+        multiple: {{ field.multiple|tojson }},
+        separator: {{ field.separator|tojson }},
+        autocomplete_endpoint: {{ field.autocomplete_endpoint|tojson }},
+        key: {{ field.results_key|tojson }}
+      });
+    {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
+      {%- if config['LASTUSER_CLIENT_ID'] and g.lastuser_cookie and 'sessionid' in g.lastuser_cookie %}
+        Baseframe.Forms.lastuserAutocomplete({
+          id: {{ field.id|tojson }},
+          multiple: {{ field.multiple|tojson }},
+          separator: {{ field.separator|tojson }},
+          autocomplete_endpoint: {{ field.autocomplete_endpoint|tojson }},
+          getuser_endpoint: {{ field.getuser_endpoint|tojson }},
+          client_id: {{ config['LASTUSER_CLIENT_ID']|tojson }},
+          session_id: {{ g.lastuser_cookie['sessionid']|tojson }}
+        });
+      {%- else %}
+        Baseframe.Forms.lastuserAutocomplete({
+          id: {{ field.id|tojson }},
+          multiple: {{ field.multiple|tojson }},
+          separator: {{ field.separator|tojson }},
+          autocomplete_endpoint: {{ field.autocomplete_endpoint|tojson }},
+          getuser_endpoint: {{ field.getuser_endpoint|tojson }}
+        });
+      {%- endif %}
+    {%- elif field.type in ['GeonameSelectField', 'GeonameSelectMultiField'] %}
+      activate_geoname_autocomplete({{ ('#'+field.id)|tojson }}, {{ field.autocomplete_endpoint|tojson }}, {{ field.getname_endpoint|tojson }}, {{ field.separator|tojson }});
+    {%- elif field.type == 'CoordinatesField' -%}
+      {{ map_marker_script(field) }}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if script %}
+    });
+  </script>
+  {%- endif -%}
+{% endmacro %}

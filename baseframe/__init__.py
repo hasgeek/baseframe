@@ -43,6 +43,23 @@ DEFAULT_DOGPILE_CONFIG = {
     'DOGPILE_CACHE_REGIONS': [('default', 3600)]
 }
 
+THEME_FILES = {
+    'bootstrap3': {
+        'ajaxform.html.jinja2': 'baseframe/bootstrap3/ajaxform.html.jinja2',
+        'autoform.html.jinja2': 'baseframe/bootstrap3/autoform.html.jinja2',
+        'delete.html.jinja2': 'baseframe/bootstrap3/delete.html.jinja2',
+        'message.html.jinja2': 'baseframe/bootstrap3/message.html.jinja2',
+        'redirect.html.jinja2': 'baseframe/bootstrap3/redirect.html.jinja2'
+        },
+    'mui': {
+        'ajaxform.html.jinja2': 'baseframe/mui/ajaxform.html.jinja2',
+        'autoform.html.jinja2': 'baseframe/mui/autoform.html.jinja2',
+        'delete.html.jinja2': 'baseframe/mui/delete.html.jinja2',
+        'message.html.jinja2': 'baseframe/mui/message.html.jinja2',
+        'redirect.html.jinja2': 'baseframe/mui/redirect.html.jinja2'
+        }
+    }
+
 baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
 _ = baseframe_translations.gettext
 __ = baseframe_translations.lazy_gettext
@@ -70,7 +87,7 @@ def _select_jinja_autoescape(filename):
 
 
 class BaseframeBlueprint(Blueprint):
-    def init_app(self, app, requires=[], ext_requires=[], bundle_js=None, bundle_css=None, assetenv=None):
+    def init_app(self, app, requires=[], ext_requires=[], bundle_js=None, bundle_css=None, assetenv=None, theme='bootstrap3'):
         """
         Initialize an app and load necessary assets.
 
@@ -201,6 +218,10 @@ class BaseframeBlueprint(Blueprint):
             lastuser.init_cache(cache)
 
         app.config['tz'] = timezone(app.config.get('TIMEZONE', 'UTC'))
+
+        if theme not in THEME_FILES:
+            raise ValueError("Unrecognised theme: %s" % theme)
+        app.config['theme'] = theme
 
         if 'NETWORKBAR_DATA' not in app.config:
             app.config['NETWORKBAR_DATA'] = 'https://api.hasgeek.com/1/networkbar/networkbar.json'

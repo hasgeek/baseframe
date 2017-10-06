@@ -1,0 +1,26 @@
+{{! mustache equivalent of renderfield macro from forms.html }}
+{{! example usage: mustache('baseframe/renderfield.mustache', partials={'rendererrors':'baseframe/rendererrors.mustache'}, field=formfield|to_json) }}
+
+{{#field}}
+<div class="mui-form {{#errors}}error{{/errors}} {{css_class}}" {{#is_listwidget}} listwidget {{/is_listwidget}} id="field-{{id}}">
+
+    {{#is_checkbox}}
+    <div class="mui-checkbox"> {{label}}{{render_html}}
+    {{/is_checkbox}}
+
+    {{^is_checkbox}}
+    <div class="mui-textfield mui-textfield--float-label">
+        {{ render_html }}
+        <label for="{{id}}">{{label}}{{#is_required}} <span class="help-required" title="Required">*</span>{{/is_required}}</label>
+    {{/is_checkbox}}
+
+        {{# sidetext }}
+            <span class="mui-form--sidetext">{{ sidetext }}</span>
+        {{/ sidetext}}
+        {{ > rendererrors }}
+        {{# description}}
+            <p class="mui-form--helptext">{{ description }}</p>
+        {{/ description}}
+    </div>
+</div>
+{{/field}}
