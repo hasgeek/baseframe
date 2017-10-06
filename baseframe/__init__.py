@@ -44,13 +44,21 @@ DEFAULT_DOGPILE_CONFIG = {
 }
 
 THEME_FILES = {
-    'bootstrap3': {'ajaxform.html.jinja2': 'baseframe/bootstrap3/ajaxform.html.jinja2', 'autoform.html.jinja2': 'baseframe/bootstrap3/autoform.html.jinja2',
-        'delete.html.jinja2': 'baseframe/bootstrap3/delete.html.jinja2', 'message.html.jinja2': 'baseframe/bootstrap3/message.html.jinja2',
-        'redirect.html.jinja2': 'baseframe/bootstrap3/redirect.html.jinja2'},
-    'mui': {'ajaxform.html.jinja2': 'baseframe/mui/ajaxform.html.jinja2', 'autoform.html.jinja2': 'baseframe/mui/autoform.html.jinja2',
-        'delete.html.jinja2': 'baseframe/mui/delete.html.jinja2', 'message.html.jinja2': 'baseframe/mui/message.html.jinja2',
-        'redirect.html.jinja2': 'baseframe/mui/redirect.html.jinja2'}
-}
+    'bootstrap3': {
+        'ajaxform.html.jinja2': 'baseframe/bootstrap3/ajaxform.html.jinja2',
+        'autoform.html.jinja2': 'baseframe/bootstrap3/autoform.html.jinja2',
+        'delete.html.jinja2': 'baseframe/bootstrap3/delete.html.jinja2',
+        'message.html.jinja2': 'baseframe/bootstrap3/message.html.jinja2',
+        'redirect.html.jinja2': 'baseframe/bootstrap3/redirect.html.jinja2'
+        },
+    'mui': {
+        'ajaxform.html.jinja2': 'baseframe/mui/ajaxform.html.jinja2',
+        'autoform.html.jinja2': 'baseframe/mui/autoform.html.jinja2',
+        'delete.html.jinja2': 'baseframe/mui/delete.html.jinja2',
+        'message.html.jinja2': 'baseframe/mui/message.html.jinja2',
+        'redirect.html.jinja2': 'baseframe/mui/redirect.html.jinja2'
+        }
+    }
 
 baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
 _ = baseframe_translations.gettext
