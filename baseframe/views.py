@@ -129,13 +129,13 @@ def robots(subdomain=None):
 @baseframe.route('/api/baseframe/1/toastr_messages.js', subdomain='<subdomain>')
 @baseframe.route('/api/baseframe/1/toastr_messages.js', defaults={'subdomain': None})
 def toastr_messages_js(subdomain=None):
-    return current_app.response_class(render_template('toastr_messages.js'), mimetype='application/javascript')
+    return current_app.response_class(render_template('toastr_messages.js.jinja2'), mimetype='application/javascript')
 
 
 @baseframe.route('/api/baseframe/1/editor.css', subdomain='<subdomain>')
 @baseframe.route('/api/baseframe/1/editor.css', defaults={'subdomain': None})
 def editorcss(subdomain=None):
-    response = current_app.response_class(render_template('editor.css'),
+    response = current_app.response_class(render_template('editor.css.jinja2'),
         mimetype='text/css',
         headers={'Expires': (datetime.utcnow() + timedelta(minutes=60)).strftime('%a, %d %b %Y %H:%M:%S GMT')})
     return response

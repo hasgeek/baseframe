@@ -1,0 +1,5 @@
+{%- if config['theme'] == 'mui' %}
+  {%- extends 'baseframe/mui/forms.html.jinja2' %}
+{%- else %}
+  {% extends 'baseframe/bootstrap3/forms.html.jinja2' %}
+{%- endif %}
