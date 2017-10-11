@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-12 01:24+0530\n"
+"POT-Creation-Date: 2017-10-12 01:37+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,11 +83,15 @@ msgstr ""
 
 #: baseframe/forms/auto.py:17
 #: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:12
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:93
 #: baseframe/templates/baseframe/mui/delete.html.jinja2:14
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:110
 msgid "Cancel"
 msgstr ""
 
 #: baseframe/forms/auto.py:20
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:128
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:145
 msgid "Submit"
 msgstr ""
 
@@ -199,6 +203,16 @@ msgstr ""
 msgid ""
 "Something broke inside. A report has been sent to the server’s "
 "administrator. Our apologies for the inconvenience."
+msgstr ""
+
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:96
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:113
+msgid "This form has timed out. Please submit again to confirm"
+msgstr ""
+
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:108
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:125
+msgid "Please review the indicated issues"
 msgstr ""
 
 #: baseframe/templates/baseframe/bootstrap3/redirect.html.jinja2:1
