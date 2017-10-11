@@ -1,153 +1,232 @@
 # Translations template for PROJECT.
-# Copyright (C) 2014 ORGANIZATION
+# Copyright (C) 2017 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-18 23:36+0530\n"
+"POT-Creation-Date: 2017-10-12 01:24+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 1.3\n"
-
-#: baseframe/filters.py:16
-msgid "seconds ago"
-msgstr ""
-
-#: baseframe/filters.py:18
-#, python-format
-msgid "%(num)s seconds ago"
-msgstr ""
-
-#: baseframe/filters.py:20
-msgid "a minute ago"
-msgstr ""
+"Generated-By: Babel 2.5.1\n"
 
 #: baseframe/filters.py:22
-#, python-format
-msgid "%(num)s minutes ago"
+msgid "now"
 msgstr ""
 
 #: baseframe/filters.py:24
-msgid "an hour ago"
+msgid "seconds ago"
 msgstr ""
 
 #: baseframe/filters.py:26
 #, python-format
-msgid "%(num)s hours ago"
+msgid "%(num)s seconds ago"
 msgstr ""
 
 #: baseframe/filters.py:28
-msgid "a day ago"
+msgid "a minute ago"
 msgstr ""
 
 #: baseframe/filters.py:30
 #, python-format
-msgid "%(num)s days ago"
+msgid "%(num)s minutes ago"
 msgstr ""
 
 #: baseframe/filters.py:32
-msgid "a month ago"
+msgid "an hour ago"
 msgstr ""
 
 #: baseframe/filters.py:34
 #, python-format
-msgid "%(num)s months ago"
+msgid "%(num)s hours ago"
 msgstr ""
 
 #: baseframe/filters.py:36
-msgid "a year ago"
+msgid "a day ago"
 msgstr ""
 
 #: baseframe/filters.py:38
 #, python-format
+msgid "%(num)s days ago"
+msgstr ""
+
+#: baseframe/filters.py:40
+msgid "a month ago"
+msgstr ""
+
+#: baseframe/filters.py:42
+#, python-format
+msgid "%(num)s months ago"
+msgstr ""
+
+#: baseframe/filters.py:44
+msgid "a year ago"
+msgstr ""
+
+#: baseframe/filters.py:46
+#, python-format
 msgid "%(num)s years ago"
 msgstr ""
 
-#: baseframe/forms/__init__.py:55 baseframe/templates/baseframe/delete.html:11
+#: baseframe/forms/auto.py:16
+#: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:11
+#: baseframe/templates/baseframe/mui/delete.html.jinja2:13
 msgid "Delete"
 msgstr ""
 
-#: baseframe/forms/__init__.py:56 baseframe/templates/baseframe/delete.html:12
-#: baseframe/templates/baseframe/forms.html:74
+#: baseframe/forms/auto.py:17
+#: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:12
+#: baseframe/templates/baseframe/mui/delete.html.jinja2:14
 msgid "Cancel"
 msgstr ""
 
-#: baseframe/forms/__init__.py:59 baseframe/templates/baseframe/forms.html:110
+#: baseframe/forms/auto.py:20
 msgid "Submit"
 msgstr ""
 
-#: baseframe/forms/sqlalchemy.py:21
-msgid "That URL name is already in use"
+#: baseframe/forms/fields.py:72
+msgid "Not a valid choice!"
 msgstr ""
 
-#: baseframe/forms/validators.py:28
-msgid "That is not a valid email address"
+#: baseframe/forms/sqlalchemy.py:23
+msgid "This {attr} is already in use"
 msgstr ""
 
-#: baseframe/forms/validators.py:29
-msgid "That domain does not exist"
+#: baseframe/forms/sqlalchemy.py:51
+msgid "This URL name is already in use"
 msgstr ""
 
-#: baseframe/forms/validators.py:30
-msgid "That email address does not exist"
+#: baseframe/forms/validators.py:34
+msgid "This is required"
 msgstr ""
 
-#: baseframe/forms/validators.py:86
-msgid "The URL “{url}” is not valid"
+#: baseframe/forms/validators.py:60
+msgid "Comparison failed"
 msgstr ""
 
-#: baseframe/forms/validators.py:88
-msgid "The URL “{url}” linked from “{text}” is not valid"
+#: baseframe/forms/validators.py:76
+msgid "Subclasses must define ``compare``"
 msgstr ""
 
-#: baseframe/forms/validators.py:106
-msgid "Name contains unsupported characters"
+#: baseframe/forms/validators.py:90
+msgid "This must be greater than {other_label}"
 msgstr ""
 
-#: baseframe/templates/403.html:2
-msgid "Forbidden"
+#: baseframe/forms/validators.py:107
+msgid "This must be greater than or equal to {other_label}"
 msgstr ""
 
-#: baseframe/templates/403.html:5
+#: baseframe/forms/validators.py:124
+msgid "This must be lesser than {other_label}"
+msgstr ""
+
+#: baseframe/forms/validators.py:141
+msgid "This must be lesser than or equal to {other_label}"
+msgstr ""
+
+#: baseframe/forms/validators.py:158
+msgid "This must not be the same as {other_label}"
+msgstr ""
+
+#: baseframe/forms/validators.py:202
+msgid "The URL “{url}” is not valid or is currently inaccessible"
+msgstr ""
+
+#: baseframe/forms/validators.py:204
+msgid ""
+"The URL “{url}” linked from “{text}” is not valid or is currently "
+"inaccessible"
+msgstr ""
+
+#: baseframe/forms/validators.py:292
+msgid "Email address identified"
+msgstr ""
+
+#: baseframe/forms/validators.py:309
+msgid ""
+"This name contains unsupported characters. It should have letters, "
+"numbers and non-terminal hyphens only"
+msgstr ""
+
+#: baseframe/forms/validators.py:320
+msgid "Valid latitude and longitude expected"
+msgstr ""
+
+#: baseframe/forms/validators.py:321
+msgid "Latitude must be within ± 90 degrees"
+msgstr ""
+
+#: baseframe/forms/validators.py:322
+msgid "Longitude must be within ± 180 degrees"
+msgstr ""
+
+#: baseframe/forms/widgets.py:153
+msgid "Latitude"
+msgstr ""
+
+#: baseframe/forms/widgets.py:155
+msgid "Longitude"
+msgstr ""
+
+#: baseframe/templates/403.html.jinja2:2
+msgid "Access denied"
+msgstr ""
+
+#: baseframe/templates/403.html.jinja2:5
 msgid "You do not have access to that page."
 msgstr ""
 
-#: baseframe/templates/404.html:2
+#: baseframe/templates/404.html.jinja2:2
 msgid "Not Found"
 msgstr ""
 
-#: baseframe/templates/404.html:5
+#: baseframe/templates/404.html.jinja2:5
 msgid "The page you were looking for does not exist."
 msgstr ""
 
-#: baseframe/templates/500.html:2
+#: baseframe/templates/500.html.jinja2:2
 msgid "Internal Server Error"
 msgstr ""
 
-#: baseframe/templates/500.html:5
+#: baseframe/templates/500.html.jinja2:5
 msgid ""
 "Something broke inside. A report has been sent to the server’s "
 "administrator. Our apologies for the inconvenience."
 msgstr ""
 
-#: baseframe/templates/baseframe/forms.html:91
-msgid ""
-"\n"
-"      This form timed out because it’s been a while since the page "
-"loaded.\n"
-"      Please submit again to confirm.\n"
-"    "
+#: baseframe/templates/baseframe/bootstrap3/redirect.html.jinja2:1
+#: baseframe/templates/baseframe/mui/redirect.html.jinja2:1
+msgid "Loading..."
 msgstr ""
 
-#: baseframe/templates/baseframe/redirect.html:1
-msgid "Loading..."
+#: tests/fixtures.py:49
+msgid "URL"
+msgstr ""
+
+#: tests/fixtures.py:56 tests/fixtures.py:67 tests/test_sqlalchemy.py:22
+msgid "Content"
+msgstr ""
+
+#: tests/fixtures.py:61 tests/test_sqlalchemy.py:21
+msgid "Title"
+msgstr ""
+
+#: tests/fixtures.py:62
+msgid "Headline"
+msgstr ""
+
+#: tests/fixtures.py:66
+msgid "Blurb"
+msgstr ""
+
+#: tests/test_sqlalchemy.py:20
+msgid "Name"
 msgstr ""
 
