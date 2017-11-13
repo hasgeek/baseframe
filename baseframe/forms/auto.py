@@ -17,7 +17,7 @@ class ConfirmDeleteForm(Form):
     cancel = SubmitField(__(u"Cancel"))
 
 
-def render_form(form, title, message='', formid='form', submit=__(u"Submit"), cancel_url=None, ajax=False):
+def render_form(form, title, message='', formid='form', submit=__(u"Submit"), cancel_url=None, ajax=False, with_response=True):
     multipart = False
     for field in form:
         if isinstance(field.widget, wtforms.widgets.FileInput):
@@ -32,10 +32,16 @@ def render_form(form, title, message='', formid='form', submit=__(u"Submit"), ca
             message=message, formid=formid, submit=submit,
             cancel_url=cancel_url, multipart=multipart), code)
     else:
-        template = THEME_FILES[current_app.config['theme']]['autoform.html.jinja2']
-        return make_response(render_template(template, form=form, title=title,
+        if with_response:
+            template = THEME_FILES[current_app.config['theme']]['autoform.html.jinja2']
+            return make_response(render_template(template, form=form, title=title,
             message=message, formid=formid, submit=submit,
             cancel_url=cancel_url, ajax=ajax, multipart=multipart), code)
+        template = THEME_FILES[current_app.config['theme']]['autoform_template.html.jinja2']
+        form_html = render_template(template, form=form, title=title,
+            message=message, formid=formid, submit=submit,
+            cancel_url=cancel_url, ajax=ajax, multipart=multipart)
+        return form_html
 
 
 def render_message(title, message, code=200):

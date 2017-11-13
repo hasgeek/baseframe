@@ -54,6 +54,7 @@ THEME_FILES = {
     'mui': {
         'ajaxform.html.jinja2': 'baseframe/mui/ajaxform.html.jinja2',
         'autoform.html.jinja2': 'baseframe/mui/autoform.html.jinja2',
+        'autoform_template.html.jinja2': 'baseframe/mui/autoform_template.html.jinja2',
         'delete.html.jinja2': 'baseframe/mui/delete.html.jinja2',
         'message.html.jinja2': 'baseframe/mui/message.html.jinja2',
         'redirect.html.jinja2': 'baseframe/mui/redirect.html.jinja2'
