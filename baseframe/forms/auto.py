@@ -17,31 +17,28 @@ class ConfirmDeleteForm(Form):
     cancel = SubmitField(__(u"Cancel"))
 
 
-def render_form(form, title, message='', formid='form', submit=__(u"Submit"), cancel_url=None, ajax=False, with_response=True):
+def render_form(form, title, message='', formid='form', submit=__(u"Submit"), cancel_url=None, ajax=False, raw=False):
     multipart = False
     for field in form:
         if isinstance(field.widget, wtforms.widgets.FileInput):
             multipart = True
     if form.errors:
+        # TODO: Why is this 200?
         code = 200  # 400
     else:
         code = 200
     if request.is_xhr and ajax:
         template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
-        return make_response(render_template(template, form=form, title=title,
-            message=message, formid=formid, submit=submit,
-            cancel_url=cancel_url, multipart=multipart), code)
+    elif raw:
+        template = THEME_FILES[current_app.config['theme']]['rawform.html.jinja2']
     else:
-        if with_response:
-            template = THEME_FILES[current_app.config['theme']]['autoform.html.jinja2']
-            return make_response(render_template(template, form=form, title=title,
-            message=message, formid=formid, submit=submit,
-            cancel_url=cancel_url, ajax=ajax, multipart=multipart), code)
-        template = THEME_FILES[current_app.config['theme']]['autoform_template.html.jinja2']
-        form_html = render_template(template, form=form, title=title,
-            message=message, formid=formid, submit=submit,
-            cancel_url=cancel_url, ajax=ajax, multipart=multipart)
+        template = THEME_FILES[current_app.config['theme']]['autoform.html.jinja2']
+    form_html = render_template(template, form=form, title=title,
+        message=message, formid=formid, submit=submit,
+        cancel_url=cancel_url, ajax=ajax, multipart=multipart)
+    if raw:
         return form_html
+    return make_response(form_html, code)
 
 
 def render_message(title, message, code=200):

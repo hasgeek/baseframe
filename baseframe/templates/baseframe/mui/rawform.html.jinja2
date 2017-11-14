@@ -1,0 +1,8 @@
+{% from "baseframe/mui/forms.html.jinja2" import renderform, widget_ext_scripts, widgetscripts %}
+{{ renderform(form=form, formid=formid, submit=submit, message=message, cancel_url=cancel_url, multipart=multipart) }}
+{{ widget_ext_scripts(form) }}
+
+<script type="text/javascript">
+  activate_widgets();
+  {{ widgetscripts(form, script=false) }}
+</script>
