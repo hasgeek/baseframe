@@ -2,11 +2,11 @@ import unittest
 from coaster.sqlalchemy import BaseMixin
 from coaster.db import db
 from sqlalchemy import Column, Unicode
-from baseframe import _, __
+from baseframe import __
 from baseframe import baseframe
 import baseframe.forms as forms
 import baseframe.forms.sqlalchemy as forms_sqlachemy
-from .fixtures import BaseframeTestCase, app1, app2
+from .fixtures import app1, app2
 
 
 class Container(BaseMixin, db.Model):
@@ -33,12 +33,12 @@ class FormSQLAlchemyTestCase(unittest.TestCase):
         db.create_all()
         self.session = db.session
         self.form = ContainerForm(model=Container, meta={'csrf': False})
-    
+
     def tearDown(self):
         self.session.rollback()
         db.drop_all()
         self.ctx.pop()
-    
+
     def test_available_attr(self):
         c1 = Container()
         self.form.process(name=u'c1', title=u't1')
@@ -62,6 +62,7 @@ class FormSQLAlchemyTestCase(unittest.TestCase):
         self.form.process(name=u'c3', title=u't3')
         self.form.populate_obj(c3)
         db.session.add(c3)
+
 
 class FormSQLAlchemyTestCasePG(FormSQLAlchemyTestCase):
     app = app2

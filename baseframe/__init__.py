@@ -10,6 +10,7 @@ from flask_dogpile_cache import DogpileCache
 from flask_babelex import Babel, Domain
 from flask.json import JSONEncoder as BaseEncoder
 from speaklater import is_lazy_string
+import six
 
 try:
     from flask_debugtoolbar import DebugToolbarExtension
@@ -72,7 +73,7 @@ class JSONEncoder(BaseEncoder):
     """
     def default(self, obj):
         if is_lazy_string(obj):
-            return unicode(obj)
+            return six.text_type(obj)
         return super(JSONEncoder, self).default(obj)
 
 
@@ -134,7 +135,7 @@ class BaseframeBlueprint(Blueprint):
                     name, spec = split_namespec(item)
                     for alist, ilist, ext in [(sub_js, ignore_js, '.js'), (sub_css, ignore_css, '.css')]:
                         if name + ext in assets:
-                            alist.append(name + ext + unicode(spec))
+                            alist.append(name + ext + six.text_type(spec))
                             ilist.append('!' + name + ext)
                 if sub_js:
                     ext_js.append(sub_js)
@@ -153,7 +154,7 @@ class BaseframeBlueprint(Blueprint):
             name, spec = split_namespec(item)
             for alist, ext in [(assets_js, '.js'), (assets_css, '.css')]:
                 if name + ext in assets:
-                    alist.append(name + ext + unicode(spec))
+                    alist.append(name + ext + six.text_type(spec))
         js_all = Bundle(assets.require(*(ignore_js + assets_js)),
             filters='uglipyjs', output='js/baseframe-packed.js')
         css_all = Bundle(assets.require(*(ignore_css + assets_css)),
@@ -287,7 +288,7 @@ def localize_timezone(datetime, tz=None):
         datetime = UTC.localize(datetime)
     if not tz:
         tz = get_timezone()
-    if isinstance(tz, basestring):
+    if isinstance(tz, six.string_types):
         tz = timezone(tz)
     return datetime.astimezone(tz)
 
