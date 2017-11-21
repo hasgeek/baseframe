@@ -67,8 +67,17 @@ class Form(BaseForm):
     """
     Form with additional methods.
     """
+    __expects__ = ()
+    __returns__ = ()
+
     def __init__(self, *args, **kwargs):
         super(Form, self).__init__(*args, **kwargs)
+
+        for attr in self.__expects__:
+            if attr not in kwargs:
+                raise TypeError("Expected parameter %s was not supplied" % attr)
+            setattr(self, attr, kwargs.pop(attr))
+
         # Make editing objects easier
         self.edit_obj = kwargs.get('obj')
         self.edit_model = kwargs.get('model')
@@ -88,6 +97,9 @@ class Form(BaseForm):
 
     def validate(self, send_signals=True):
         result = super(Form, self).validate()
+        for attr in self.__returns__:
+            if not hasattr(self, attr):
+                setattr(self, attr, None)
         if send_signals:
             self.send_signals()
         return result
