@@ -3,6 +3,7 @@
 import os
 from datetime import datetime
 from flask import Markup, request
+import six
 
 from coaster.utils import md5sum
 from coaster.gfm import markdown
@@ -84,20 +85,20 @@ def avatar_url(user, size=None):
         if size:
             # TODO: Use a URL parser
             if u'?' in user.avatar:
-                return user.avatar + u'&size=' + unicode(size)
+                return user.avatar + u'&size=' + six.text_type(size)
             else:
-                return user.avatar + u'?size=' + unicode(size)
+                return user.avatar + u'?size=' + six.text_type(size)
         else:
             return user.avatar
     email = user.email
     if email:
-        if isinstance(email, basestring):
+        if isinstance(email, six.string_types):
             hash = md5sum(user.email)  # Flask-Lastuser's User model has email as a string
         else:
             hash = email.md5sum   # Lastuser's User model has email as a UserEmail object
         gravatar = u'//www.gravatar.com/avatar/' + hash + u'?d=mm'
         if size:
-            gravatar += u'&s=' + unicode(size)
+            gravatar += u'&s=' + six.text_type(size)
         return gravatar
     # Return Gravatar's missing man image
     return u'//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm'
@@ -142,7 +143,7 @@ def ext_asset_url(asset):
     """
     This filter makes ext_assets available to templates.
     """
-    if isinstance(asset, basestring):
+    if isinstance(asset, six.string_types):
         return ext_assets([asset])
     else:
         return ext_assets(asset)

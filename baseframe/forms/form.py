@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import six
 from speaklater import is_lazy_string
 import wtforms
 from wtforms.compat import iteritems
@@ -113,7 +114,7 @@ class Form(BaseForm):
     def errors_with_data(self):
         # Convert lazy_gettext error strings into unicode so they don't cause problems downstream
         # (like when pickling)
-        return {name: {'data': f.data, 'errors': [unicode(e) if is_lazy_string(e) else e for e in f.errors]}
+        return {name: {'data': f.data, 'errors': [six.text_type(e) if is_lazy_string(e) else e for e in f.errors]}
             for name, f in iteritems(self._fields) if f.errors}
 
     def set_queries(self):
@@ -161,7 +162,7 @@ class FormGenerator(object):
             validators = []
             validators_data = fielddata.pop('validators', [])
             for item in validators_data:
-                if isinstance(item, basestring) and item in validator_registry:
+                if isinstance(item, six.string_types) and item in validator_registry:
                     validators.append(validator_registry[item][0]())
                 else:
                     itemname = item.pop('type', None)
@@ -176,7 +177,7 @@ class FormGenerator(object):
             filters = []
             filters_data = fielddata.pop('filters', [])
             for item in filters_data:
-                if isinstance(item, basestring) and item in filter_registry:
+                if isinstance(item, six.string_types) and item in filter_registry:
                     filters.append(filter_registry[item][0]())
                 else:
                     itemname = item.pop('type', None)
