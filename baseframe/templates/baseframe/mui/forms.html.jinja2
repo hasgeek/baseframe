@@ -193,6 +193,9 @@
   <script type="text/javascript">
     $(function() {
   {%- endif %}
+      if (typeof(tinyMCE) != 'undefined') {
+        tinymce.remove('textarea#{{ field.id }}');
+      }
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
         // Location of TinyMCE script
         script_url: {{ url_for("baseframe.static", filename="js/tinymce3/tiny_mce.js")|tojson }},
@@ -226,6 +229,9 @@
   <script type="text/javascript">
     $(function() {
   {%- endif %}
+      if (typeof(tinyMCE) != 'undefined') {
+        tinymce.remove('textarea#{{ field.id }}');
+      }
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
         script_url: {{ url_for("baseframe.static", filename="js/tinymce4/tinymce.min.js")|tojson }},
         {%- for k, v in field.tinymce_options.items() %}
