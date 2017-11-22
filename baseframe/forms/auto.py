@@ -24,14 +24,12 @@ def render_form(form, title, message='', formid='form', submit=__(u"Submit"), ca
         if isinstance(field.widget, wtforms.widgets.FileInput):
             multipart = True
     if form.errors:
+        # TODO: Why is this 200?
         code = 200  # 400
     else:
         code = 200
     if request.is_xhr and ajax:
         template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
-        return make_response(render_template(template, form=form, title=title,
-            message=message, formid=formid, submit=submit,
-            cancel_url=cancel_url, multipart=multipart), code)
     else:
         if with_chrome:
             template = THEME_FILES[current_app.config['theme']]['autoform.html.jinja2']
