@@ -92,6 +92,14 @@ def baseframe_context():
         'csrf_token': generate_csrf,
     }
 
+@baseframe.app_context_processor
+def javascript_tag_processor():
+    def javascript_tag(bundle_key):
+        return '{path}/{bundle}'.format(
+        path=current_app.config['ASSET_BASE_PATH'],
+        bundle=current_app.config['assets'][bundle_key])
+    return dict(javascript_tag=javascript_tag)
+
 
 @baseframe.route('/favicon.ico', subdomain='<subdomain>')
 @baseframe.route('/favicon.ico', defaults={'subdomain': None})
