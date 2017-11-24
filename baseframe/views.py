@@ -85,20 +85,19 @@ def ext_assets(assets):
         return gen_assets_url(assets)
 
 
+def asset_path(bundle_key):
+    return '{path}/{bundle}'.format(
+    path=current_app.config['ASSET_BASE_PATH'],
+    bundle=current_app.config['assets'][bundle_key])
+
+
 @baseframe.app_context_processor
 def baseframe_context():
     return {
         'networkbar_links': networkbar_links,
         'csrf_token': generate_csrf,
+        'asset_path': asset_path,
     }
-
-@baseframe.app_context_processor
-def javascript_tag_processor():
-    def javascript_tag(bundle_key):
-        return '{path}/{bundle}'.format(
-        path=current_app.config['ASSET_BASE_PATH'],
-        bundle=current_app.config['assets'][bundle_key])
-    return dict(javascript_tag=javascript_tag)
 
 
 @baseframe.route('/favicon.ico', subdomain='<subdomain>')
