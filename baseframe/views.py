@@ -86,9 +86,13 @@ def ext_assets(assets):
 
 
 def asset_path(bundle_key):
+    if not current_app.config.get('ASSET_BASE_PATH'):
+        raise LookupError("Missing base path for assets. Ensure `ASSET_BASE_PATH` is set to the path where the asset can be found. Eg: `/static/`")
+    if not current_app.config.get('assets').get(bundle_key):
+        raise LookupError("Missing asset file for {bundle}.".format(bundle=bundle_key))
     return '{path}/{bundle}'.format(
-    path=current_app.config['ASSET_BASE_PATH'],
-    bundle=current_app.config['ASSETS'][bundle_key])
+        path=current_app.config['ASSET_BASE_PATH'],
+        bundle=current_app.config['assets'][bundle_key])
 
 
 @baseframe.app_context_processor

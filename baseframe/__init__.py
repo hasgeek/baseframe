@@ -184,11 +184,11 @@ class BaseframeBlueprint(Blueprint):
             # Load assets into config from a manifest file
             with app.open_resource(app.config['ASSET_MANIFEST_PATH']) as f:
                 asset_bundles = json.loads(f.read())
-                if app.config.get('ASSETS'):
+                if app.config.get('assets'):
                     raise ValueError("Loading assets via a manifest file needs the `ASSETS` config key to be unused")
-                app.config['ASSETS'] = {}
+                app.config['assets'] = {}
                 for asset_key, asset_path in asset_bundles['assets'].items():
-                    app.config['ASSETS'][asset_key] = asset_path
+                    app.config['assets'][asset_key] = asset_path
 
         app.config.setdefault('CACHE_KEY_PREFIX', 'flask_cache_' + app.name + '/')
         nwcacheconfig = dict(app.config)
