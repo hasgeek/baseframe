@@ -88,7 +88,7 @@ def ext_assets(assets):
 def asset_path(bundle_key):
     return '{path}/{bundle}'.format(
     path=current_app.config['ASSET_BASE_PATH'],
-    bundle=current_app.config['assets'][bundle_key])
+    bundle=current_app.config['ASSETS'][bundle_key])
 
 
 @baseframe.app_context_processor
