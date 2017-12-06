@@ -137,6 +137,13 @@ def robots(subdomain=None):
         'robots.txt', mimetype='text/plain')
 
 
+@baseframe.route('/.well-known/<path:filename>', subdomain='<subdomain>')
+@baseframe.route('/.well-known/<path:filename>', defaults={'subdomain': None})
+def well_known(filename, subdomain=None):
+    well_known_path = os.path.join(current_app.static_folder, '.well-known')
+    return send_from_directory(well_known_path, filename)
+
+
 @baseframe.route('/api/baseframe/1/toastr_messages.js', subdomain='<subdomain>')
 @baseframe.route('/api/baseframe/1/toastr_messages.js', defaults={'subdomain': None})
 def toastr_messages_js(subdomain=None):
