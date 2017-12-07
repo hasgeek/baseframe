@@ -6,8 +6,7 @@
     {%- endif %}
 {%- endmacro %}
 
-{% macro renderfield(field, css_class="", widget_css_class="", sidetext=none, tabindex=none, autofocus=false, nolabel=false, style='horiz', rows=none) -%}
-
+{% macro renderfield(field, css_class="", widget_css_class="", sidetext=none, tabindex=none, autofocus=false, nolabel=false, style='horiz', rows=none, error_template=false) -%}
   {%- if field.widget.html_tag in ['ul', 'ol'] %}
     {%- set listwidget = true %}
   {%- elif field.widget.input_type == 'checkbox' %}
@@ -39,6 +38,7 @@
           <div class="mui-checkbox">
             <label>
               {{ rendererrors(field) }}
+              {%- if error_template %}<p class="mui-form--error" id="{{field.name}}-error"></p>{%- endif %}
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, rows=rows) }} {{ field.label.text }}
             </label>
           </div>
@@ -64,11 +64,12 @@
                 <span class="mui-form--sidetext">{{sidetext}}</span>
               {%- endif %}
               {{ rendererrors(field) }}
+              {%- if error_template %}<p class="mui-form--error" id="{{field.name}}-error"></p>{%- endif %}
               {%- if field.description %}
                 <p class="mui-form--helptext">{{ field.description }}</p>
               {%- endif %}
             </div>
-          {%- elif field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextAreaField', 'TextListField', 'MarkdownField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol'] %}
+          {%- elif field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextListField', 'MarkdownField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-select">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
@@ -76,6 +77,7 @@
                 <span class="mui-form--sidetext">{{sidetext}}</span>
               {%- endif %}
               {{ rendererrors(field) }}
+              {%- if error_template %}<p class="mui-form--error" id="{{field.name}}-error"></p>{%- endif %}
               {%- if field.description %}
                 <p class="mui-form--helptext">{{ field.description }}</p>
               {%- endif %}
@@ -86,6 +88,8 @@
               {%- if sidetext %}
                 <span class="mui-form--sidetext">{{sidetext}}</span>
               {%- endif %}
+              {{ rendererrors(field) }}
+              {%- if error_template %}<p class="mui-form--error" id="{{field.name}}-error"></p>{%- endif %}
               {%- if field.description %}
                 <p class="mui-form--helptext">{{ field.description }}</p>
               {%- endif %}
@@ -118,7 +122,7 @@
 </div>
 {%- endmacro %}
 
-{% macro renderform_inner(form, formid, style='horiz') -%}
+{% macro renderform_inner(form, formid, style='horiz', error_template=false) -%}
   {%- if form.errors %}
     <div class="alert alert--error alert--dismissable">
       <a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a>
@@ -133,15 +137,15 @@
     {%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
       {# Don't show hidden #}
     {%- else -%}
-      {{ renderfield(field, autofocus=autofocus, style=style) }}
+      {{ renderfield(field, autofocus=autofocus, style=style, error_template=error_template) }}
       {%- if autofocus %}{% set autofocus = false %}{% endif %}
     {%- endif %}
   {% endfor %}
 {%- endmacro %}
 
-{% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=false, style='horiz') %}
+{% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=false, style='horiz', error_template=false) %}
 <form data-parsley-validate id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins">
-  {{ renderform_inner(form, formid or none, style=style) }}
+  {{ renderform_inner(form, formid or none, style=style, error_template=error_template) }}
   {{ rendersubmit([(none, submit or _("Submit"), 'mui-btn--primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>
 {% endmacro %}
@@ -216,6 +220,9 @@
               container.addClass('focus');
             });
           });
+          ed.on('change', function(e) {
+            ed.save();
+          });
         } // No comma or semicolon here
       });
   {%- if script %}
@@ -246,6 +253,9 @@
           });
           ed.on('blur', function(e) {
             $(ed.editorContainer).removeClass('active');
+          });
+          ed.on('change', function(e) {
+            ed.save();
           });
         } // End of setup keyval
       });
