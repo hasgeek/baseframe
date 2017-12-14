@@ -37,9 +37,9 @@
         <div>
           <div class="mui-checkbox">
             <label>
+              {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, rows=rows) }} {{ field.label.text }}
               {{ rendererrors(field) }}
               {%- if error_template %}<p class="mui-form--error" id="{{field.name}}-error"></p>{%- endif %}
-              {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, rows=rows) }} {{ field.label.text }}
             </label>
           </div>
           {%- if field.description %}

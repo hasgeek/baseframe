@@ -28,18 +28,18 @@ def render_form(form, title, message='', formid='form', submit=__(u"Submit"), ca
         code = 200  # 400
     else:
         code = 200
-    if request.is_xhr and ajax:
-        template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
-    else:
-        if with_chrome:
-            template = THEME_FILES[current_app.config['theme']]['autoform.html.jinja2']
-            return make_response(render_template(template, form=form, title=title,
-            message=message, formid=formid, submit=submit,
-            cancel_url=cancel_url, ajax=ajax, multipart=multipart, error_template=error_template), code)
+    if not with_chrome:
         template = THEME_FILES[current_app.config['theme']]['autoform_xhr.html.jinja2']
         return render_template(template, form=form, title=title,
             message=message, formid=formid, submit=submit,
             cancel_url=cancel_url, ajax=ajax, multipart=multipart, error_template=error_template)
+    if request.is_xhr and ajax:
+        template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
+    else:
+        template = THEME_FILES[current_app.config['theme']]['autoform.html.jinja2']
+    return make_response(render_template(template, form=form, title=title,
+        message=message, formid=formid, submit=submit,
+        cancel_url=cancel_url, ajax=ajax, multipart=multipart, error_template=error_template), code)
 
 
 def render_message(title, message, code=200):
