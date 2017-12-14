@@ -47,8 +47,8 @@
   {% assets "css_all" -%}
     <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
   {%- endassets %}
-  <!-- <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400italic,600italic,400,600" /> -->
-  <!-- <script src="{{ url_for('baseframe.static', filename='js/modernizr.min.js') }}"></script> -->
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400italic,600italic,400,600" />
+  <script src="{{ url_for('baseframe.static', filename='js/modernizr.min.js') }}"></script>
 
   {%- block typekit %}
     {%- if config['TYPEKIT_CODE'] %}
