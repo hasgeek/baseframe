@@ -299,6 +299,10 @@
   <script type="text/javascript">
     $(function() {
   {%- endif %}
+  // Activate select2.js for non-mobile browsers
+  if (!navigator.userAgent.match(/(iPod|iPad|iPhone|Android)/)) {
+    $('select:not(.notselect)').select2();
+  }
   {%- for field in form -%}
     {%- if field.type == 'FormField' %}
       {{ widgetscripts(field.form, script=false) }}

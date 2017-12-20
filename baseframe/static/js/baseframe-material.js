@@ -249,6 +249,22 @@ window.Baseframe.Forms = {
         }
       }
     })
+  },
+  showValidationErrors: function(errors) {
+    Object.keys(errors).forEach(function(fieldName) {
+      if (Object.prototype.toString.call(errors[fieldName]) === '[object Array]') {
+        // Create p and add error as its content
+        var errorElem = document.createElement('p');
+        errorElem.classList.add('mui-form--error');
+        errorElem.innerText = errors[fieldName];
+        var field = document.getElementById(fieldName);
+        // Insert the p tag below the field
+        field.parentNode.insertBefore(errorElem, field.nextSibling);
+        var fieldWrapperId = "field-" + fieldName;
+        // Add error class to field wrapper
+        document.getElementById(fieldWrapperId).classList.add('has-error');
+      }
+    });
   }
 };
 
