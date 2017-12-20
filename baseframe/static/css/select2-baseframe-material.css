@@ -1,5 +1,5 @@
 .mui-select__menu {
-	display: none;
+	display: none!important;
 }
 
 .select2-container .select2-selection {
