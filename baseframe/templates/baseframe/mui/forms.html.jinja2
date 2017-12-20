@@ -6,7 +6,7 @@
     {%- endif %}
 {%- endmacro %}
 
-{% macro renderfield(field, css_class="", widget_css_class="", sidetext=none, tabindex=none, autofocus=false, nolabel=false, style='horiz', rows=none, error_template=false) -%}
+{% macro renderfield(field, css_class="", widget_css_class="", sidetext=none, tabindex=none, autofocus=false, nolabel=false, style='horiz', rows=none) -%}
   {%- if field.widget.html_tag in ['ul', 'ol'] %}
     {%- set listwidget = true %}
   {%- elif field.widget.input_type == 'checkbox' %}
@@ -39,7 +39,6 @@
             <label>
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, rows=rows) }} {{ field.label.text }}
               {{ rendererrors(field) }}
-              {%- if error_template %}<p class="mui-form--error" id="{{field.name}}-error"></p>{%- endif %}
             </label>
           </div>
           {%- if field.description %}
@@ -64,7 +63,6 @@
                 <span class="mui-form--sidetext">{{sidetext}}</span>
               {%- endif %}
               {{ rendererrors(field) }}
-              {%- if error_template %}<p class="mui-form--error" id="{{field.name}}-error"></p>{%- endif %}
               {%- if field.description %}
                 <p class="mui-form--helptext">{{ field.description }}</p>
               {%- endif %}
@@ -77,7 +75,6 @@
                 <span class="mui-form--sidetext">{{sidetext}}</span>
               {%- endif %}
               {{ rendererrors(field) }}
-              {%- if error_template %}<p class="mui-form--error" id="{{field.name}}-error"></p>{%- endif %}
               {%- if field.description %}
                 <p class="mui-form--helptext">{{ field.description }}</p>
               {%- endif %}
@@ -89,7 +86,6 @@
                 <span class="mui-form--sidetext">{{sidetext}}</span>
               {%- endif %}
               {{ rendererrors(field) }}
-              {%- if error_template %}<p class="mui-form--error" id="{{field.name}}-error"></p>{%- endif %}
               {%- if field.description %}
                 <p class="mui-form--helptext">{{ field.description }}</p>
               {%- endif %}
@@ -122,7 +118,7 @@
 </div>
 {%- endmacro %}
 
-{% macro renderform_inner(form, formid, style='horiz', error_template=false) -%}
+{% macro renderform_inner(form, formid, style='horiz') -%}
   {%- if form.errors %}
     <div class="alert alert--error alert--dismissable">
       <a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a>
@@ -137,15 +133,15 @@
     {%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
       {# Don't show hidden #}
     {%- else -%}
-      {{ renderfield(field, autofocus=autofocus, style=style, error_template=error_template) }}
+      {{ renderfield(field, autofocus=autofocus, style=style) }}
       {%- if autofocus %}{% set autofocus = false %}{% endif %}
     {%- endif %}
   {% endfor %}
 {%- endmacro %}
 
-{% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=false, style='horiz', error_template=false) %}
+{% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=false, style='horiz') %}
 <form data-parsley-validate id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins">
-  {{ renderform_inner(form, formid or none, style=style, error_template=error_template) }}
+  {{ renderform_inner(form, formid or none, style=style) }}
   {{ rendersubmit([(none, submit or _("Submit"), 'mui-btn--primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>
 {% endmacro %}
