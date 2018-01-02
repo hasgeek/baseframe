@@ -2,7 +2,7 @@
 
 function activate_widgets() {
   // Activate select2.js for non-mobile browsers
-  if (!navigator.userAgent.match(/(iPod|iPad|iPhone|Android)/)) {
+  if (!Modernizr.touch) {
     $('select:not(.notselect)').select2();
   }
 
@@ -250,19 +250,19 @@ window.Baseframe.Forms = {
       }
     })
   },
-  showValidationErrors: function(errors) {
+  showValidationErrors: function(formId, errors) {
     Object.keys(errors).forEach(function(fieldName) {
-      if (Object.prototype.toString.call(errors[fieldName]) === '[object Array]') {
+      if (Array.isArray(errors[fieldName])) {
         // Create p and add error as its content
         var errorElem = document.createElement('p');
         errorElem.classList.add('mui-form--error');
         errorElem.innerText = errors[fieldName];
-        var field = document.getElementById(fieldName);
+        var form = document.getElementById(formId);
+        var field = form.querySelector("#" + fieldName)
         // Insert the p tag below the field
         field.parentNode.insertBefore(errorElem, field.nextSibling);
-        var fieldWrapperId = "field-" + fieldName;
         // Add error class to field wrapper
-        document.getElementById(fieldWrapperId).classList.add('has-error');
+        form.querySelector("#field-" + fieldName).classList.add('has-error');
       }
     });
   }

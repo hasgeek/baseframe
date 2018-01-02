@@ -300,7 +300,7 @@
     $(function() {
   {%- endif %}
   // Activate select2.js for non-mobile browsers
-  if (!navigator.userAgent.match(/(iPod|iPad|iPhone|Android)/)) {
+  if (!Modernizr.touch) {
     $('select:not(.notselect)').select2();
   }
   {%- for field in form -%}
