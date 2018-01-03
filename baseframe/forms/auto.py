@@ -2,7 +2,6 @@
 
 import wtforms
 from flask import render_template, request, Markup, abort, flash, redirect, escape, url_for, make_response, current_app
-from coaster.utils import buid
 from .. import b__ as __
 from .. import THEME_FILES
 from .form import Form
@@ -21,7 +20,7 @@ class ConfirmDeleteForm(Form):
 def render_form(form, title, message='', formid='', submit=__(u"Submit"), cancel_url=None, ajax=False, with_chrome=True):
     multipart = False
     if not formid:
-        formid = 'form-' + buid()
+        formid = request.endpoint
     for field in form:
         if isinstance(field.widget, wtforms.widgets.FileInput):
             multipart = True
