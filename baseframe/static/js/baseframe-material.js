@@ -253,16 +253,20 @@ window.Baseframe.Forms = {
   showValidationErrors: function(formId, errors) {
     Object.keys(errors).forEach(function(fieldName) {
       if (Array.isArray(errors[fieldName])) {
-        // Create p and add error as its content
-        var errorElem = document.createElement('p');
-        errorElem.classList.add('mui-form--error');
-        errorElem.innerText = errors[fieldName];
         var form = document.getElementById(formId);
+        var fieldWrapper = form.querySelector("#field-" + fieldName);
+        var errorElem = fieldWrapper.querySelector('.mui-form--error');
+        // If error P tag doesn't exist, create it
+        if(!errorElem) {
+          errorElem = document.createElement('p');
+          errorElem.classList.add('mui-form--error');
+        }
+        errorElem.innerText = errors[fieldName];
         var field = form.querySelector("#" + fieldName)
         // Insert the p tag below the field
         field.parentNode.insertBefore(errorElem, field.nextSibling);
         // Add error class to field wrapper
-        form.querySelector("#field-" + fieldName).classList.add('has-error');
+        fieldWrapper.classList.add('has-error');
       }
     });
   }
