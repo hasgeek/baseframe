@@ -250,6 +250,23 @@ window.Baseframe.Forms = {
       }
     })
   },
+  /* Takes 'formId' and 'errors'
+     'formId' is the id attribute of the form for which errors needs to be displayed
+     'errors' is the wtf form validation errors expected in the following format
+      {
+        "title": [
+          "This field is required."
+        ]
+        "email": [
+          "Not a valid email."
+        ]
+      }
+    For each error, a 'p' tag is created if not present and
+    assigned the error value as its text content.
+    The field wrapper and field are queried in the DOM
+    using the unique form id. And the newly created 'p' tag
+    is inserted in the DOM below the field.
+  */
   showValidationErrors: function(formId, errors) {
     Object.keys(errors).forEach(function(fieldName) {
       if (Array.isArray(errors[fieldName])) {
@@ -261,7 +278,7 @@ window.Baseframe.Forms = {
           errorElem = document.createElement('p');
           errorElem.classList.add('mui-form--error');
         }
-        errorElem.innerText = errors[fieldName];
+        errorElem.innerText = errors[fieldName][0];
         var field = form.querySelector("#" + fieldName)
         // Insert the p tag below the field
         field.parentNode.insertBefore(errorElem, field.nextSibling);

@@ -1,3 +1,4 @@
+<div>
 {% from "baseframe/mui/forms.html.jinja2" import renderform, ajaxform, widget_ext_scripts, widgetscripts %}
 {{ renderform(form=form, formid=formid, submit=submit, message=message, cancel_url=cancel_url, multipart=multipart) }}
 {{ ajaxform(formid=formid, request=request, force=true) }}
@@ -8,3 +9,4 @@
   activate_widgets();
   {{ widgetscripts(form, script=false) }}
 </script>
+</div>
