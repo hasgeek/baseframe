@@ -2,6 +2,7 @@
 
 import wtforms
 from flask import render_template, request, Markup, abort, flash, redirect, escape, url_for, make_response, current_app
+from coaster.utils import buid
 from .. import b__ as __
 from .. import THEME_FILES
 from .form import Form
@@ -17,17 +18,16 @@ class ConfirmDeleteForm(Form):
     cancel = SubmitField(__(u"Cancel"))
 
 
-def render_form(form, title, message='', formid='', submit=__(u"Submit"), cancel_url=None, ajax=False, with_chrome=True):
+def render_form(form, title, message='', formid='form', submit=__(u"Submit"), cancel_url=None, ajax=False, with_chrome=True):
     multipart = False
-    if not formid:
-        formid = request.endpoint
+    dom_id = 'form-' + buid()
     for field in form:
         if isinstance(field.widget, wtforms.widgets.FileInput):
             multipart = True
     if not with_chrome:
         template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
         return render_template(template, form=form, title=title,
-            message=message, formid=formid, submit=submit,
+            message=message, formid=formid, dom_id=dom_id, submit=submit,
             cancel_url=cancel_url, ajax=ajax, multipart=multipart)
     if request.is_xhr and ajax:
         template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']

@@ -139,19 +139,19 @@
   {% endfor %}
 {%- endmacro %}
 
-{% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=false, style='horiz') %}
-<form data-parsley-validate id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins">
+{% macro renderform(form, formid, dom_id='form', submit, message='', action='', cancel_url='', multipart=false, style='horiz') %}
+<form data-parsley-validate id="{{ dom_id }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins hg-form">
   {{ renderform_inner(form, formid or none, style=style) }}
   {{ rendersubmit([(none, submit or _("Submit"), 'mui-btn--primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>
 {% endmacro %}
 
-{%- macro ajaxform(formid, request, force=false) %}
+{%- macro ajaxform(dom_id, request, force=false) %}
   {%- if force or request.is_xhr %}
     <script type="text/javascript">
       $(function() {
-        $("#{{ formid }}").ajaxForm({
-          target: '#{{ formid }}',
+        $("#{{ dom_id }}").ajaxForm({
+          target: '#{{ dom_id }}',
           replaceTarget: true,
           beforeSubmit: function(formdata, form, options) {
             form.find('input[type="submit"]').prop('disabled', true).addClass('submit-disabled');
@@ -160,7 +160,7 @@
             return true;
           },
           error: function(context, xhr, status, errMsg) {
-            var form = $("#{{ formid }}");
+            var form = $("#{{ dom_id }}");
             form.find('input[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('button[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('.loading').addClass('hidden');
@@ -173,14 +173,14 @@
     <script type="text/javascript">
       $(function() {
         // Disable submit button when clicked. Prevent double click.
-        $('#{{ formid }} input[type="submit"]').click(function() {
+        $('#{{ dom_id }} input[type="submit"]').click(function() {
           $(this).addClass('submit-disabled').prop('disabled', true);
-          $('#{{ formid }}').find(".loading").removeClass('hidden');
+          $('#{{ dom_id }}').find(".loading").removeClass('hidden');
           this.form.submit();
         });
-        $('#{{ formid }} button[type="submit"]').click(function() {
+        $('#{{ dom_id }} button[type="submit"]').click(function() {
           $(this).addClass('submit-disabled').prop('disabled', true);
-          $('#{{ formid }}').find(".loading").removeClass('hidden');
+          $('#{{ dom_id }}').find(".loading").removeClass('hidden');
           this.form.submit();
         });
       });
