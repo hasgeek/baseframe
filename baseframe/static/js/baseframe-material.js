@@ -268,22 +268,24 @@ window.Baseframe.Forms = {
     is inserted in the DOM below the field.
   */
   showValidationErrors: function(formId, errors) {
+    var form = document.getElementById(formId);
     Object.keys(errors).forEach(function(fieldName) {
       if (Array.isArray(errors[fieldName])) {
-        var form = document.getElementById(formId);
         var fieldWrapper = form.querySelector("#field-" + fieldName);
-        var errorElem = fieldWrapper.querySelector('.mui-form--error');
-        // If error P tag doesn't exist, create it
-        if(!errorElem) {
-          errorElem = document.createElement('p');
-          errorElem.classList.add('mui-form--error');
+        if(fieldWrapper) {
+          var errorElem = fieldWrapper.querySelector('.mui-form--error');
+          // If error P tag doesn't exist, create it
+          if(!errorElem) {
+            errorElem = document.createElement('p');
+            errorElem.classList.add('mui-form--error');
+          }
+          errorElem.innerText = errors[fieldName][0];
+          var field = form.querySelector("#" + fieldName)
+          // Insert the p tag below the field
+          field.parentNode.insertBefore(errorElem, field.nextSibling);
+          // Add error class to field wrapper
+          fieldWrapper.classList.add('has-error');
         }
-        errorElem.innerText = errors[fieldName][0];
-        var field = form.querySelector("#" + fieldName)
-        // Insert the p tag below the field
-        field.parentNode.insertBefore(errorElem, field.nextSibling);
-        // Add error class to field wrapper
-        fieldWrapper.classList.add('has-error');
       }
     });
   }

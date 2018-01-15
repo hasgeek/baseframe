@@ -139,19 +139,19 @@
   {% endfor %}
 {%- endmacro %}
 
-{% macro renderform(form, formid, dom_id='form', submit, message='', action='', cancel_url='', multipart=false, style='horiz') %}
-<form data-parsley-validate id="{{ dom_id }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins hg-form">
+{% macro renderform(form, formid, submit, ref_id='form', message='', action='', cancel_url='', multipart=false, style='horiz') %}
+<form data-parsley-validate id="{{ ref_id }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins hg-form">
   {{ renderform_inner(form, formid or none, style=style) }}
   {{ rendersubmit([(none, submit or _("Submit"), 'mui-btn--primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>
 {% endmacro %}
 
-{%- macro ajaxform(dom_id, request, force=false) %}
+{%- macro ajaxform(request, ref_id='form', force=false) %}
   {%- if force or request.is_xhr %}
     <script type="text/javascript">
       $(function() {
-        $("#{{ dom_id }}").ajaxForm({
-          target: '#{{ dom_id }}',
+        $("#{{ ref_id }}").ajaxForm({
+          target: '#{{ ref_id }}',
           replaceTarget: true,
           beforeSubmit: function(formdata, form, options) {
             form.find('input[type="submit"]').prop('disabled', true).addClass('submit-disabled');
@@ -160,7 +160,7 @@
             return true;
           },
           error: function(context, xhr, status, errMsg) {
-            var form = $("#{{ dom_id }}");
+            var form = $("#{{ ref_id }}");
             form.find('input[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('button[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('.loading').addClass('hidden');
@@ -173,14 +173,14 @@
     <script type="text/javascript">
       $(function() {
         // Disable submit button when clicked. Prevent double click.
-        $('#{{ dom_id }} input[type="submit"]').click(function() {
+        $('#{{ ref_id }} input[type="submit"]').click(function() {
           $(this).addClass('submit-disabled').prop('disabled', true);
-          $('#{{ dom_id }}').find(".loading").removeClass('hidden');
+          $('#{{ ref_id }}').find(".loading").removeClass('hidden');
           this.form.submit();
         });
-        $('#{{ dom_id }} button[type="submit"]').click(function() {
+        $('#{{ ref_id }} button[type="submit"]').click(function() {
           $(this).addClass('submit-disabled').prop('disabled', true);
-          $('#{{ dom_id }}').find(".loading").removeClass('hidden');
+          $('#{{ ref_id }}').find(".loading").removeClass('hidden');
           this.form.submit();
         });
       });
