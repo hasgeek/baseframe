@@ -256,7 +256,7 @@ window.Baseframe.Forms = {
   },
   /* Takes 'formId' and 'errors'
    'formId' is the id attribute of the form for which errors needs to be displayed
-   'errors' is the wtf form validation errors expected in the following format
+   'errors' is the WTForm validation errors expected in the following format
     {
       "title": [
         "This field is required."
@@ -276,10 +276,10 @@ window.Baseframe.Forms = {
     Object.keys(errors).forEach(function(fieldName) {
       if (Array.isArray(errors[fieldName])) {
         var fieldWrapper = form.querySelector("#field-" + fieldName);
-        if(fieldWrapper) {
+        if (fieldWrapper) {
           var errorElem = fieldWrapper.querySelector('.help-error');
           // If error P tag doesn't exist, create it
-          if(!errorElem) {
+          if (!errorElem) {
             errorElem = document.createElement('p');
             errorElem.classList.add('help-error');
           }
