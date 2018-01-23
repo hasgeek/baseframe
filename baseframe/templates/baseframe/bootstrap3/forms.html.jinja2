@@ -129,7 +129,7 @@
 </form>
 {% endmacro %}
 
-{%- macro ajaxform(request, ref_id='form', force=false) %}
+{%- macro ajaxform(request, ref_id, force=false) %}
   {%- if force or request.is_xhr %}
     <script type="text/javascript">
       $(function() {
@@ -157,11 +157,6 @@
       $(function() {
         // Disable submit button when clicked. Prevent double click.
         $('#{{ ref_id }} input[type="submit"]').click(function() {
-          $(this).addClass('submit-disabled').prop('disabled', true);
-          $('#{{ ref_id }}').find(".loading").removeClass('hidden');
-          this.form.submit();
-        });
-        $('#{{ ref_id }} button[type="submit"]').click(function() {
           $(this).addClass('submit-disabled').prop('disabled', true);
           $('#{{ ref_id }}').find(".loading").removeClass('hidden');
           this.form.submit();
@@ -219,6 +214,7 @@
         tinymce.remove('textarea#{{ field.id }}');
       }
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
+        script_url: {{ url_for("baseframe.static", filename="js/tinymce4/tinymce.min.js")|tojson }},
         {%- for k, v in field.tinymce_options.items() %}
         {{ k|tojson }}: {{ v|tojson }},
         {%- endfor %}

@@ -13,8 +13,6 @@
   <script type="text/javascript">
     $(function() {
       {{ widgetscripts(form, script=false) }}
-      // Reset disabled state if page was reloaded (TODO: does this really get called?)
-      $('#{{ ref_id }} .submit-disabled').prop('disabled', false);
     });
   </script>
   {{ ajaxform(ref_id=ref_id, request=request, force=ajax) }}
