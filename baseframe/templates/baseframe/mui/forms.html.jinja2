@@ -7,7 +7,6 @@
 {%- endmacro %}
 
 {% macro renderfield(field, css_class="", widget_css_class="", sidetext=none, tabindex=none, autofocus=false, nolabel=false, style='horiz', rows=none) -%}
-
   {%- if field.widget.html_tag in ['ul', 'ol'] %}
     {%- set listwidget = true %}
   {%- elif field.widget.input_type == 'checkbox' %}
@@ -38,8 +37,8 @@
         <div>
           <div class="mui-checkbox">
             <label>
-              {{ rendererrors(field) }}
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, rows=rows) }} {{ field.label.text }}
+              {{ rendererrors(field) }}
             </label>
           </div>
           {%- if field.description %}
@@ -68,7 +67,7 @@
                 <p class="mui-form--helptext">{{ field.description }}</p>
               {%- endif %}
             </div>
-          {%- elif field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextAreaField', 'TextListField', 'MarkdownField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol'] %}
+          {%- elif field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextListField', 'MarkdownField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-select">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
@@ -86,6 +85,7 @@
               {%- if sidetext %}
                 <span class="mui-form--sidetext">{{sidetext}}</span>
               {%- endif %}
+              {{ rendererrors(field) }}
               {%- if field.description %}
                 <p class="mui-form--helptext">{{ field.description }}</p>
               {%- endif %}
@@ -139,19 +139,19 @@
   {% endfor %}
 {%- endmacro %}
 
-{% macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=false, style='horiz') %}
-<form data-parsley-validate id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins">
+{% macro renderform(form, formid, submit, ref_id='form', message='', action='', cancel_url='', multipart=false, style='horiz') %}
+<form data-parsley-validate id="{{ ref_id }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins hg-form">
   {{ renderform_inner(form, formid or none, style=style) }}
   {{ rendersubmit([(none, submit or _("Submit"), 'mui-btn--primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>
 {% endmacro %}
 
-{%- macro ajaxform(formid, request, force=false) %}
+{%- macro ajaxform(request, ref_id, force=false) %}
   {%- if force or request.is_xhr %}
     <script type="text/javascript">
       $(function() {
-        $("#{{ formid }}").ajaxForm({
-          target: '#{{ formid }}',
+        $("#{{ ref_id }}").ajaxForm({
+          target: '#{{ ref_id }}',
           replaceTarget: true,
           beforeSubmit: function(formdata, form, options) {
             form.find('input[type="submit"]').prop('disabled', true).addClass('submit-disabled');
@@ -160,7 +160,7 @@
             return true;
           },
           error: function(context, xhr, status, errMsg) {
-            var form = $("#{{ formid }}");
+            var form = $("#{{ ref_id }}");
             form.find('input[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('button[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('.loading').addClass('hidden');
@@ -173,14 +173,9 @@
     <script type="text/javascript">
       $(function() {
         // Disable submit button when clicked. Prevent double click.
-        $('#{{ formid }} input[type="submit"]').click(function() {
+        $('#{{ ref_id }} input[type="submit"]').click(function() {
           $(this).addClass('submit-disabled').prop('disabled', true);
-          $('#{{ formid }}').find(".loading").removeClass('hidden');
-          this.form.submit();
-        });
-        $('#{{ formid }} button[type="submit"]').click(function() {
-          $(this).addClass('submit-disabled').prop('disabled', true);
-          $('#{{ formid }}').find(".loading").removeClass('hidden');
+          $('#{{ ref_id }}').find(".loading").removeClass('hidden');
           this.form.submit();
         });
       });
@@ -193,6 +188,9 @@
   <script type="text/javascript">
     $(function() {
   {%- endif %}
+      if (typeof(tinyMCE) != 'undefined') {
+        tinymce.remove('textarea#{{ field.id }}');
+      }
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
         // Location of TinyMCE script
         script_url: {{ url_for("baseframe.static", filename="js/tinymce3/tiny_mce.js")|tojson }},
@@ -213,6 +211,9 @@
               container.addClass('focus');
             });
           });
+          ed.on('change', function(e) {
+            ed.save();
+          });
         } // No comma or semicolon here
       });
   {%- if script %}
@@ -226,6 +227,9 @@
   <script type="text/javascript">
     $(function() {
   {%- endif %}
+      if (typeof(tinyMCE) != 'undefined') {
+        tinymce.remove('textarea#{{ field.id }}');
+      }
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
         script_url: {{ url_for("baseframe.static", filename="js/tinymce4/tinymce.min.js")|tojson }},
         {%- for k, v in field.tinymce_options.items() %}
@@ -240,6 +244,9 @@
           });
           ed.on('blur', function(e) {
             $(ed.editorContainer).removeClass('active');
+          });
+          ed.on('change', function(e) {
+            ed.save();
           });
         } // End of setup keyval
       });

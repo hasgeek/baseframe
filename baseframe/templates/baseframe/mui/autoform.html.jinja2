@@ -5,7 +5,7 @@
   {%- if message %}
     <p>{{ message }}</p>
   {%- endif %}
-  {{ renderform(form=form, formid=formid, submit=submit, message=message, cancel_url=cancel_url, multipart=multipart) }}
+  {{ renderform(form=form, formid=formid, ref_id=ref_id, submit=submit, message=message, cancel_url=cancel_url, multipart=multipart) }}
 {% endblock %}
 
 {% block footerscripts %}
@@ -13,10 +13,8 @@
   <script type="text/javascript">
     $(function() {
       {{ widgetscripts(form, script=false) }}
-      // Reset disabled state if page was reloaded (TODO: does this really get called?)
-      $('#{{ formid }} .submit-disabled').prop('disabled', false);
     });
   </script>
-  {{ ajaxform(formid=formid, request=request, force=ajax) }}
+  {{ ajaxform(ref_id=ref_id, request=request, force=ajax) }}
   <script src="{{ 'parsley.js'|ext_asset_url }}" type="text/javascript"></script>
 {% endblock %}

@@ -97,6 +97,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   @extend .mui--z1;
 
   // Positioning
+  display: block;
   position: absolute;
   z-index: 2;
 
