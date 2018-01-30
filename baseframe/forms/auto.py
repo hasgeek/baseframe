@@ -18,12 +18,9 @@ class ConfirmDeleteForm(Form):
     cancel = SubmitField(__(u"Cancel"))
 
 
-def render_form(form, title, message='', formid='', submit=__(u"Submit"), cancel_url=None, ajax=False, with_chrome=True):
+def render_form(form, title, message='', formid=None, submit=__(u"Submit"), cancel_url=None, ajax=False, with_chrome=True):
     multipart = False
-    if not formid:
-        ref_id = 'form-' + buid()
-    else:
-        ref_id = 'form-' + formid
+    ref_id = 'form-' + (formid or buid())
     for field in form:
         if isinstance(field.widget, wtforms.widgets.FileInput):
             multipart = True
