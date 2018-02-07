@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
+
 from datetime import datetime, timedelta
 
 from coaster.utils import md5sum
 from baseframe import filters, forms
-from .fixtures import BaseframeTestCase, TestUser, TestForm
+from .fixtures import BaseframeTestCase, TestUser
 
 
 class FilterTestCase(BaseframeTestCase):
@@ -29,11 +31,11 @@ class FilterTestCase(BaseframeTestCase):
         age = filters.age(one_half_hour)
         self.assertEqual(age, u'an hour ago')
 
-        ten_months = self.now - timedelta(days=10*30)
+        ten_months = self.now - timedelta(days=10 * 30)
         age = filters.age(ten_months)
         self.assertEqual(age, u'10 months ago')
 
-        three_years = self.now - timedelta(days=3*12*30)
+        three_years = self.now - timedelta(days=3 * 12 * 30)
         age = filters.age(three_years)
         self.assertEqual(age, u'2 years ago')
 
