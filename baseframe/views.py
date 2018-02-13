@@ -3,7 +3,7 @@
 import os
 import requests
 from datetime import datetime, timedelta
-from urlparse import urlparse, urljoin
+from six.moves.urllib.parse import urlparse, urljoin
 from flask import current_app, send_from_directory, render_template, abort, request
 from flask_assets import Bundle
 from flask_wtf.csrf import generate_csrf

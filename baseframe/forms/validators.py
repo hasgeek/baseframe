@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import re
-from urllib import quote as urlquote
-from urlparse import urljoin
 import six
+from six.moves.urllib.parse import urljoin, quote as urlquote
 import dns.resolver
 from pyisemail import is_email
 from flask import request
