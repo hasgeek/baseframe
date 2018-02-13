@@ -14,7 +14,7 @@ assets['jquery.js'][Version('1.9.1')] = 'baseframe/js/jquery-1.9.1.js'
 
 assets['baseframe-networkbar.js'][Version(__version__)] = 'baseframe/js/networkbar.js'
 assets['baseframe-networkbar.css'][Version(__version__)] = 'baseframe/css/networkbar.css'
-assets['baseframe-base.js'][Version(__version__)] = 'baseframe/js/baseframe.js'
+assets['baseframe-base.js'][Version(__version__)] = 'baseframe/js/baseframe-bootstrap.js'
 assets['baseframe-base.css'][Version(__version__)] = 'baseframe/css/baseframe.css'
 assets['baseframe-base-bs3.css'][Version(__version__)] = 'baseframe/css/baseframe-bs3.css'
 

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import unittest
 from coaster.sqlalchemy import BaseMixin
 from coaster.db import db

@@ -3,6 +3,7 @@
 from __future__ import absolute_import
 from pytz import timezone, UTC
 from flask import g, Blueprint, request, current_app
+import json
 from coaster.assets import split_namespec
 from flask_assets import Environment, Bundle
 from flask_caching import Cache
@@ -172,6 +173,23 @@ class BaseframeBlueprint(Blueprint):
         app.assets.register('js_all', js_all)
         app.assets.register('css_all', css_all)
         app.register_blueprint(self, static_subdomain=subdomain)
+
+        # Optional config for a client app to use a manifest file
+        # to load fingerprinted assets
+        # If used with webpack, the client app is expected to specify its own webpack.config.js
+        # Set `ASSETS_MANIFEST_PATH` in `app.config` to the path for `manifest.json`.
+        # Eg: "static/build/manifest.json"
+        # Set `ASSET_BASE_PATH` in `app.config` to the path in which the compiled assets are present.
+        # Eg: "static/build"
+        if app.config.get('ASSET_MANIFEST_PATH'):
+            # Load assets into config from a manifest file
+            with app.open_resource(app.config['ASSET_MANIFEST_PATH']) as f:
+                asset_bundles = json.loads(f.read())
+                if app.config.get('assets'):
+                    raise ValueError("Loading assets via a manifest file needs the `ASSETS` config key to be unused")
+                app.config['assets'] = {}
+                for asset_key, asset_path in asset_bundles['assets'].items():
+                    app.config['assets'][asset_key] = asset_path
 
         app.config.setdefault('CACHE_KEY_PREFIX', 'flask_cache_' + app.name + '/')
         nwcacheconfig = dict(app.config)

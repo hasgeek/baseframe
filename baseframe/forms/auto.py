@@ -2,6 +2,7 @@
 
 import wtforms
 from flask import render_template, request, Markup, abort, flash, redirect, escape, url_for, make_response, current_app
+from coaster.utils import buid
 from .. import b__ as __
 from .. import THEME_FILES
 from .form import Form
@@ -17,25 +18,24 @@ class ConfirmDeleteForm(Form):
     cancel = SubmitField(__(u"Cancel"))
 
 
-def render_form(form, title, message='', formid='form', submit=__(u"Submit"), cancel_url=None, ajax=False):
+def render_form(form, title, message='', formid=None, submit=__(u"Submit"), cancel_url=None, ajax=False, with_chrome=True):
     multipart = False
+    ref_id = 'form-' + (formid or buid())
     for field in form:
         if isinstance(field.widget, wtforms.widgets.FileInput):
             multipart = True
-    if form.errors:
-        code = 200  # 400
-    else:
-        code = 200
+    if not with_chrome:
+        template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
+        return render_template(template, form=form, title=title,
+            message=message, formid=formid, ref_id=ref_id, submit=submit,
+            cancel_url=cancel_url, ajax=ajax, multipart=multipart)
     if request.is_xhr and ajax:
         template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
-        return make_response(render_template(template, form=form, title=title,
-            message=message, formid=formid, submit=submit,
-            cancel_url=cancel_url, multipart=multipart), code)
     else:
         template = THEME_FILES[current_app.config['theme']]['autoform.html.jinja2']
-        return make_response(render_template(template, form=form, title=title,
-            message=message, formid=formid, submit=submit,
-            cancel_url=cancel_url, ajax=ajax, multipart=multipart), code)
+    return make_response(render_template(template, form=form, title=title,
+        message=message, formid=formid, ref_id=ref_id, submit=submit,
+        cancel_url=cancel_url, ajax=ajax, multipart=multipart), 200)
 
 
 def render_message(title, message, code=200):

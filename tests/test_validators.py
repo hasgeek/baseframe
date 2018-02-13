@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from .fixtures import BaseframeTestCase, TestUrlForm, TestAllUrlsForm, TestOptionalIfForm, TestOptionalIfNotForm
 
 

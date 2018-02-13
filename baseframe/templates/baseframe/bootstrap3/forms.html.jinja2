@@ -122,19 +122,19 @@
   {% endfor %}
 {%- endmacro %}
 
-{%- macro renderform(form, formid, submit, message='', action='', cancel_url='', multipart=false, style='horiz') %}
-<form data-parsley-validate id="{{ formid }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" {%- if style == 'horiz' %} class="form-horizontal"{% endif %}>
+{%- macro renderform(form, formid, submit, ref_id='form', message='', action='', cancel_url='', multipart=false, style='horiz') %}
+<form data-parsley-validate id="{{ ref_id }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" {%- if style == 'horiz' %} class="form-horizontal"{% endif %}>
   {{ renderform_inner(form, formid or none, style=style) }}
   {{ rendersubmit([(none, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>
 {% endmacro %}
 
-{%- macro ajaxform(formid, request, force=false) %}
+{%- macro ajaxform(ref_id, request, force=false) %}
   {%- if force or request.is_xhr %}
     <script type="text/javascript">
       $(function() {
-        $("#{{ formid }}").ajaxForm({
-          target: '#{{ formid }}',
+        $("#{{ ref_id }}").ajaxForm({
+          target: '#{{ ref_id }}',
           replaceTarget: true,
           beforeSubmit: function(formdata, form, options) {
             form.find('input[type="submit"]').prop('disabled', true).addClass('submit-disabled');
@@ -142,8 +142,8 @@
             form.find('.loading').removeClass('hidden');
             return true;
           },
-          error: function(context, xhr, status, errMsg) {
-            var form = $("#{{ formid }}");
+          error: function(ref_id, xhr, status, errMsg) {
+            var form = $("#{{ ref_id }}");
             form.find('input[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('button[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('.loading').addClass('hidden');
@@ -156,14 +156,9 @@
     <script type="text/javascript">
       $(function() {
         // Disable submit button when clicked. Prevent double click.
-        $('#{{ formid }} input[type="submit"]').click(function() {
+        $('#{{ ref_id }} input[type="submit"]').click(function() {
           $(this).addClass('submit-disabled').prop('disabled', true);
-          $('#{{ formid }}').find(".loading").removeClass('hidden');
-          this.form.submit();
-        });
-        $('#{{ formid }} button[type="submit"]').click(function() {
-          $(this).addClass('submit-disabled').prop('disabled', true);
-          $('#{{ formid }}').find(".loading").removeClass('hidden');
+          $('#{{ ref_id }}').find(".loading").removeClass('hidden');
           this.form.submit();
         });
       });
@@ -176,6 +171,9 @@
   <script type="text/javascript">
     $(function() {
   {%- endif %}
+      if (typeof(tinyMCE) != 'undefined') {
+        tinymce.remove('textarea#{{ field.id }}');
+      }
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
         // Location of TinyMCE script
         script_url: {{ url_for("baseframe.static", filename="js/tinymce3/tiny_mce.js")|tojson }},
@@ -196,6 +194,9 @@
               container.addClass('focus');
             });
           });
+          ed.on('change', function(e) {
+            ed.save();
+          });
         } // No comma or semicolon here
       });
   {%- if script %}
@@ -209,7 +210,11 @@
   <script type="text/javascript">
     $(function() {
   {%- endif %}
+      if (typeof(tinyMCE) != 'undefined') {
+        tinymce.remove('textarea#{{ field.id }}');
+      }
       $('textarea#{{ field.id }}').removeClass('richtext').tinymce({
+        script_url: {{ url_for("baseframe.static", filename="js/tinymce4/tinymce.min.js")|tojson }},
         {%- for k, v in field.tinymce_options.items() %}
         {{ k|tojson }}: {{ v|tojson }},
         {%- endfor %}
@@ -222,6 +227,9 @@
           });
           ed.on('blur', function(e) {
             $(ed.editorContainer).removeClass('active');
+          });
+          ed.on('change', function(e) {
+            ed.save();
           });
         } // End of setup keyval
       });
