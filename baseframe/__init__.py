@@ -7,7 +7,6 @@ import json
 from coaster.assets import split_namespec
 from flask_assets import Environment, Bundle
 from flask_caching import Cache
-from flask_dogpile_cache import DogpileCache
 from flask_babelex import Babel, Domain
 from flask.json import JSONEncoder as BaseEncoder
 from speaklater import is_lazy_string
@@ -31,19 +30,12 @@ __all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version', '_
 networkbar_cache = Cache(with_jinja2_ext=False)
 asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
-dogpile = DogpileCache()
 babel = Babel()
 if DebugToolbarExtension is not None:
     toolbar = DebugToolbarExtension()
 else:
     toolbar = None
 
-
-DEFAULT_DOGPILE_CONFIG = {
-    'DOGPILE_CACHE_BACKEND': 'dogpile.cache.redis',
-    'DOGPILE_CACHE_URLS': '127.0.0.1:6379',
-    'DOGPILE_CACHE_REGIONS': [('default', 3600)]
-}
 
 THEME_FILES = {
     'bootstrap3': {
@@ -205,10 +197,6 @@ class BaseframeBlueprint(Blueprint):
         networkbar_cache.init_app(app, config=nwcacheconfig)
         asset_cache.init_app(app, config=acacheconfig)
         cache.init_app(app)
-
-        for config_key, config_value in DEFAULT_DOGPILE_CONFIG.items():
-            app.config.setdefault(config_key, config_value)
-        dogpile.init_app(app)
 
         babel.init_app(app)
         if toolbar is not None:
