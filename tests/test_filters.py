@@ -4,14 +4,14 @@ from datetime import datetime, timedelta
 
 from coaster.utils import md5sum
 from baseframe import filters, forms
-from .fixtures import BaseframeTestCase, TestUser
+from .fixtures import TestCaseBaseframe, UserTest
 
 
-class FilterTestCase(BaseframeTestCase):
+class TestFilters(TestCaseBaseframe):
     def setUp(self):
-        super(FilterTestCase, self).setUp()
+        super(TestFilters, self).setUp()
         self.now = datetime.utcnow()
-        self.test_user = TestUser()
+        self.test_user = UserTest()
         self.test_avatar_size = ('100', '100')
         self.test_avatar_url = u'//images.hasgeek.com/embed/test'
 

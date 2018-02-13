@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 
-from .fixtures import BaseframeTestCase, TestUrlForm, TestAllUrlsForm, TestOptionalIfForm, TestOptionalIfNotForm
 import warnings
 import urllib3
+from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest
 
 
-class ValidatorTestCase(BaseframeTestCase):
+class TestValidators(TestCaseBaseframe):
     def setUp(self):
-        super(ValidatorTestCase, self).setUp()
+        super(TestValidators, self).setUp()
         with self.app.test_request_context('/'):
-            self.form = TestUrlForm(meta={'csrf': False})
-            self.all_urls_form = TestAllUrlsForm(meta={'csrf': False})
-            self.optional_if_form = TestOptionalIfForm(meta={'csrf': False})
-            self.optional_if_not_form = TestOptionalIfNotForm(meta={'csrf': False})
+            self.form = UrlFormTest(meta={'csrf': False})
+            self.all_urls_form = AllUrlsFormTest(meta={'csrf': False})
+            self.optional_if_form = OptionalIfFormTest(meta={'csrf': False})
+            self.optional_if_not_form = OptionalIfNotFormTest(meta={'csrf': False})
         urllib3.disable_warnings()
 
     def tearDown(self):
-        super(ValidatorTestCase, self).tearDown()
+        super(TestValidators, self).tearDown()
         warnings.resetwarnings()
 
     def test_valid_url(self):

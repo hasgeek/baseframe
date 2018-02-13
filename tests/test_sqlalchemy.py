@@ -24,7 +24,7 @@ class ContainerForm(forms.Form):
     content = forms.TextAreaField(__("Content"))
 
 
-class FormSQLAlchemyTestCase(unittest.TestCase):
+class TestFormSQLAlchemy(unittest.TestCase):
     app = app1
 
     def setUp(self):
@@ -66,5 +66,5 @@ class FormSQLAlchemyTestCase(unittest.TestCase):
         db.session.add(c3)
 
 
-class FormSQLAlchemyTestCasePG(FormSQLAlchemyTestCase):
+class TestFormSQLAlchemyPG(TestFormSQLAlchemy):
     app = app2
