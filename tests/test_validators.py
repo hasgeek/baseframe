@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from .fixtures import BaseframeTestCase, TestUrlForm, TestAllUrlsForm, TestOptionalIfForm, TestOptionalIfNotForm
+import warnings
+import urllib3
 
 
 class ValidatorTestCase(BaseframeTestCase):
@@ -11,6 +13,11 @@ class ValidatorTestCase(BaseframeTestCase):
             self.all_urls_form = TestAllUrlsForm(meta={'csrf': False})
             self.optional_if_form = TestOptionalIfForm(meta={'csrf': False})
             self.optional_if_not_form = TestOptionalIfNotForm(meta={'csrf': False})
+        urllib3.disable_warnings()
+
+    def tearDown(self):
+        super(ValidatorTestCase, self).tearDown()
+        warnings.resetwarnings()
 
     def test_valid_url(self):
         with self.app.test_request_context('/'):
