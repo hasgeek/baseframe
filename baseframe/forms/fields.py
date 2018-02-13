@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from decimal import Decimal, InvalidOperation as DecimalError
-from urlparse import urljoin
+from six.moves.urllib.parse import urljoin
 from pytz import utc, timezone as pytz_timezone
 from flask import current_app
 import wtforms
