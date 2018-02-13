@@ -32,14 +32,11 @@ requires = [
     'cssmin',
     'coaster',
     'lxml',
-    'fluent-logger',
     # For link validation with SNI SSL support
     'requests',
     'pyOpenSSL',
     'ndg-httpsclient',
     'pyasn1',
-    'dogpile.cache',
-    'Flask-Dogpile-Cache'
     ]
 
 
