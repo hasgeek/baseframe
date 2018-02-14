@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import six
 import wtforms
 from wtforms.compat import text_type
 from wtforms.widgets import RadioInput, Select, HTMLString, html_params
@@ -144,7 +145,7 @@ class CoordinatesInput(wtforms.widgets.core.Input):
             value = field._value()
         if not value:
             value = ['', '']
-        elif isinstance(value, basestring):
+        elif isinstance(value, six.string_types):
             value = value.split(',', 1)
         if len(value) < 2:
             value.append('')

@@ -2,7 +2,7 @@
 
 from datetime import datetime
 from decimal import Decimal, InvalidOperation as DecimalError
-from urlparse import urljoin
+from six.moves.urllib.parse import urljoin
 from pytz import utc, timezone as pytz_timezone
 from flask import current_app
 import wtforms
@@ -10,6 +10,7 @@ from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, 
 from wtforms.compat import text_type
 from wtforms.utils import unset_value
 import bleach
+import six
 
 from .. import _, get_timezone
 from .widgets import TinyMce3, TinyMce4, DateTimeInput, CoordinatesInput, RadioMatrixInput, SelectWidget, Select2Widget
@@ -277,7 +278,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
     def timezone(self, value):
         if value is None:
             value = get_timezone()
-        if isinstance(value, basestring):
+        if isinstance(value, six.string_types):
             self.tz = pytz_timezone(value)
             self._timezone = value
         else:
@@ -419,7 +420,7 @@ class AutocompleteFieldBase(object):
 
     def iter_choices(self):
         if self.data:
-            return [(unicode(u), unicode(u), True) for u in self.data]
+            return [(six.text_type(u), six.text_type(u), True) for u in self.data]
 
     def process_formdata(self, valuelist):
         retval = super(AutocompleteFieldBase, self).process_formdata(valuelist)
@@ -478,7 +479,7 @@ class GeonameSelectFieldBase(object):
 
     def iter_choices(self):
         if self.data:
-            return [(unicode(u), unicode(u), True) for u in self.data]
+            return [(six.text_type(u), six.text_type(u), True) for u in self.data]
 
     def process_formdata(self, valuelist):
         retval = super(GeonameSelectFieldBase, self).process_formdata(valuelist)

@@ -7,10 +7,10 @@ import json
 from coaster.assets import split_namespec
 from flask_assets import Environment, Bundle
 from flask_caching import Cache
-from flask_dogpile_cache import DogpileCache
 from flask_babelex import Babel, Domain
 from flask.json import JSONEncoder as BaseEncoder
 from speaklater import is_lazy_string
+import six
 
 try:
     from flask_debugtoolbar import DebugToolbarExtension
@@ -30,19 +30,12 @@ __all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version', '_
 networkbar_cache = Cache(with_jinja2_ext=False)
 asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
-dogpile = DogpileCache()
 babel = Babel()
 if DebugToolbarExtension is not None:
     toolbar = DebugToolbarExtension()
 else:
     toolbar = None
 
-
-DEFAULT_DOGPILE_CONFIG = {
-    'DOGPILE_CACHE_BACKEND': 'dogpile.cache.redis',
-    'DOGPILE_CACHE_URLS': '127.0.0.1:6379',
-    'DOGPILE_CACHE_REGIONS': [('default', 3600)]
-}
 
 THEME_FILES = {
     'bootstrap3': {
@@ -73,7 +66,7 @@ class JSONEncoder(BaseEncoder):
     """
     def default(self, obj):
         if is_lazy_string(obj):
-            return unicode(obj)
+            return six.text_type(obj)
         return super(JSONEncoder, self).default(obj)
 
 
@@ -135,7 +128,7 @@ class BaseframeBlueprint(Blueprint):
                     name, spec = split_namespec(item)
                     for alist, ilist, ext in [(sub_js, ignore_js, '.js'), (sub_css, ignore_css, '.css')]:
                         if name + ext in assets:
-                            alist.append(name + ext + unicode(spec))
+                            alist.append(name + ext + six.text_type(spec))
                             ilist.append('!' + name + ext)
                 if sub_js:
                     ext_js.append(sub_js)
@@ -154,7 +147,7 @@ class BaseframeBlueprint(Blueprint):
             name, spec = split_namespec(item)
             for alist, ext in [(assets_js, '.js'), (assets_css, '.css')]:
                 if name + ext in assets:
-                    alist.append(name + ext + unicode(spec))
+                    alist.append(name + ext + six.text_type(spec))
         js_all = Bundle(assets.require(*(ignore_js + assets_js)),
             filters='uglipyjs', output='js/baseframe-packed.js')
         css_all = Bundle(assets.require(*(ignore_css + assets_css)),
@@ -204,10 +197,6 @@ class BaseframeBlueprint(Blueprint):
         networkbar_cache.init_app(app, config=nwcacheconfig)
         asset_cache.init_app(app, config=acacheconfig)
         cache.init_app(app)
-
-        for config_key, config_value in DEFAULT_DOGPILE_CONFIG.items():
-            app.config.setdefault(config_key, config_value)
-        dogpile.init_app(app)
 
         babel.init_app(app)
         if toolbar is not None:
@@ -305,7 +294,7 @@ def localize_timezone(datetime, tz=None):
         datetime = UTC.localize(datetime)
     if not tz:
         tz = get_timezone()
-    if isinstance(tz, basestring):
+    if isinstance(tz, six.string_types):
         tz = timezone(tz)
     return datetime.astimezone(tz)
 

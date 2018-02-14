@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import re
-from urllib import quote as urlquote
-from urlparse import urljoin
+import six
+from six.moves.urllib.parse import urljoin, quote as urlquote
 import dns.resolver
 from pyisemail import is_email
 from flask import request
@@ -204,7 +204,10 @@ class ValidUrl(object):
         self.message_urltext = message_urltext or _(u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible')
 
     def check_url(self, invalid_urls, url, text=None):
-        cache_key = 'linkchecker/' + urlquote(url.encode('utf-8') if isinstance(url, unicode) else url, safe='')
+        if six.PY2:
+            cache_key = 'linkchecker/' + urlquote(url.encode('utf-8') if isinstance(url, six.text_type) else url, safe='')
+        else:
+            cache_key = 'linkchecker/' + urlquote(url, safe='')
         cache_check = asset_cache.get(cache_key)
         # Read from cache, but assume cache may be broken
         # since Flask-Cache stores data as a pickle,
@@ -238,7 +241,7 @@ class ValidUrl(object):
                     # For text patterns, do a substring search. For regex patterns (assumed so if not text),
                     # do a regex search. Test with the final URL from the response, after redirects,
                     # but report errors using the URL the user provided
-                    if (pattern in rurl if isinstance(pattern, basestring) else pattern.search(rurl) is not None):
+                    if (pattern in rurl if isinstance(pattern, six.string_types) else pattern.search(rurl) is not None):
                         return message.format(url=url, text=text)
             # All good. The URL works and isn't invalid, so save to cache and return without an error message
             asset_cache.set(cache_key, {'url': rurl, 'code': code}, timeout=86400)
