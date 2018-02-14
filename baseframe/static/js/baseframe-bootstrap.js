@@ -322,9 +322,9 @@ window.Baseframe.Forms = {
           if (config.beforeSend) config.beforeSend();
         }
       }).done(function (remoteData) {
-        onSuccess(config, remoteData);
+        onSuccess(remoteData);
       }).fail(function (response) {
-        onError(config, response);
+        onError(response);
       });
     });
   }
