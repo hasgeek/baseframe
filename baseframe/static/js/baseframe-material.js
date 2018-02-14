@@ -250,8 +250,8 @@ window.Baseframe.Forms = {
       }
     })
   },
-  /* Takes 'formId' and 'errors'
-     'formId' is the id attribute of the form for which errors needs to be displayed
+  /* Takes 'formSelector' and 'errors'
+     'formSelector' is the form for which errors needs to be displayed
      'errors' is the WTForm validation errors expected in the following format
       {
         "title": [
@@ -267,8 +267,8 @@ window.Baseframe.Forms = {
     using the unique form id. And the newly created 'p' tag
     is inserted in the DOM below the field.
   */
-  showValidationErrors: function(formId, errors) {
-    var form = document.getElementById(formId);
+  showValidationErrors: function(formSelector, errors) {
+    var form = document.querySelector(formId);
     Object.keys(errors).forEach(function(fieldName) {
       if (Array.isArray(errors[fieldName])) {
         var fieldWrapper = form.querySelector("#field-" + fieldName);
@@ -289,25 +289,39 @@ window.Baseframe.Forms = {
       }
     });
   },
-  handleAjaxPost: function(config) {
-    $(config.formSelector).find('button[type="submit"]').click(function(event) {
+  /* Takes formSelector, url, onSuccess, onError, config
+   'url' - The url to which the post request is sent
+   'formSelector' - Form selector to query the DOM for the form
+   'onSuccess' - A callback function that is executed if the request succeeds
+   'onError' - A callback function that is executed if the request fails
+   'config' -  An object that can contain data, contentType, dataType, 
+      beforeSend function or any other data required by the client 
+      during the execution of the onSuccess/OnError callback
+    submitForm handles form submit, serializes the form values,
+      disables the submit button to prevent double submit,
+      displays the loading indicator and submits the form via ajax.
+      On completing the ajax request, calls the onSuccess/onError callback function.
+  */
+  submitForm: function(url, formSelector, onSuccess, onError, config) {
+    $(formSelector).find('button[type="submit"]').click(function(event) {
       event.preventDefault();
       $.ajax({
-        url: config.url,
+        url: url,
         type: 'POST',
-        data: config.data ? config.data : $.param($(config.formSelector).serializeArray()),
+        data: config.data ? config.data : $(formSelector).serialize(),
         contentType : config.contentType ? config.contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
         dataType: config.dataType ? config.dataType : 'json',
         beforeSend: function() {
-          if (config.formSelector) {
-            $(config.formSelector).find('button[type="submit"]').prop('disabled', true);
-            $(config.formSelector).find(".loading").removeClass('hidden');
-          }
+          // Disable submit button to prevent double submit
+          $(formSelector).find('button[type="submit"]').prop('disabled', true);
+          // Baseframe form has a loading indication which is hidden by default. Show the loading indicator
+          $(formSelector).find(".loading").removeClass('hidden');
+          if (config.beforeSend) config.beforeSend();
         }
       }).done(function (remoteData) {
-        config.onSuccess(config, remoteData);
+        onSuccess(config, remoteData);
       }).fail(function (response) {
-        config.onError(config, response);
+        onError(config, response);
       });
     });
   }
