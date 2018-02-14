@@ -288,6 +288,28 @@ window.Baseframe.Forms = {
         }
       }
     });
+  },
+  handleAjaxPost: function(config) {
+    $(config.formSelector).find('button[type="submit"]').click(function(event) {
+      event.preventDefault();
+      $.ajax({
+        url: config.url,
+        type: 'POST',
+        data: config.data ? config.data : $.param($(config.formSelector).serializeArray()),
+        contentType : config.contentType ? config.contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+        dataType: config.dataType ? config.dataType : 'json',
+        beforeSend: function() {
+          if (config.formSelector) {
+            $(config.formSelector).find('button[type="submit"]').prop('disabled', true);
+            $(config.formSelector).find(".loading").removeClass('hidden');
+          }
+        }
+      }).done(function (remoteData) {
+        config.onSuccess(config, remoteData);
+      }).fail(function (response) {
+        config.onError(config, response);
+      });
+    });
   }
 };
 
