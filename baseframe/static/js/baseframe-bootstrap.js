@@ -299,8 +299,7 @@ window.Baseframe.Forms = {
    'onSuccess' - A callback function that is executed if the request succeeds
    'onError' - A callback function that is executed if the request fails
    'config' -  An object that can contain data, contentType, dataType, 
-      beforeSend function or any other data required by the client 
-      during the execution of the onSuccess/OnError callback
+      beforeSend function
     submitForm handles form submit, serializes the form values,
       disables the submit button to prevent double submit,
       displays the loading indicator and submits the form via ajax.
