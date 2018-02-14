@@ -312,8 +312,7 @@ window.Baseframe.Forms = {
       $.ajax({
         url: url,
         type: 'POST',
-        data: config.data ? config.data : $(formSelector).serialize(),
-        contentType : config.contentType ? config.contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: $(formSelector).serialize(),
         dataType: config.dataType ? config.dataType : 'json',
         beforeSend: function() {
           // Disable submit button to prevent double submit
