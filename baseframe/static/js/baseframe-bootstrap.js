@@ -298,14 +298,13 @@ window.Baseframe.Forms = {
    'formSelector' - Form selector to query the DOM for the form
    'onSuccess' - A callback function that is executed if the request succeeds
    'onError' - A callback function that is executed if the request fails
-   'config' -  An object that can contain data, contentType, dataType, 
-      beforeSend function
-    submitForm handles form submit, serializes the form values,
+   'config' -  An object that can contain data, contentType, dataType, beforeSend function
+    handleFormSubmit handles form submit, serializes the form values,
       disables the submit button to prevent double submit,
       displays the loading indicator and submits the form via ajax.
       On completing the ajax request, calls the onSuccess/onError callback function.
   */
-  submitForm: function(url, formSelector, onSuccess, onError, config) {
+  handleFormSubmit: function(url, formSelector, onSuccess, onError, config) {
     $(formSelector).find('button[type="submit"]').click(function(event) {
       event.preventDefault();
       $.ajax({
