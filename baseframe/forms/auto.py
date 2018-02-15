@@ -28,7 +28,7 @@ def render_form(form, title, message='', formid=None, submit=__(u"Submit"), canc
         template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
         return render_template(template, form=form, title=title,
             message=message, formid=formid, ref_id=ref_id, submit=submit,
-            cancel_url=cancel_url, ajax=ajax, multipart=multipart)
+            cancel_url=cancel_url, ajax=ajax, multipart=multipart, with_chrome=with_chrome)
     if request.is_xhr and ajax:
         template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
     else:
