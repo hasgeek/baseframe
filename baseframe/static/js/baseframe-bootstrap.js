@@ -292,6 +292,39 @@ window.Baseframe.Forms = {
         }
       }
     });
+  },
+  /* Takes formId, url, onSuccess, onError, config
+   'formId' - Form id selector to query the DOM for the form
+   'url' - The url to which the post request is sent
+   'onSuccess' - A callback function that is executed if the request succeeds
+   'onError' - A callback function that is executed if the request fails
+   'config' -  An object that can contain dataType, beforeSend function
+    handleFormSubmit handles form submit, serializes the form values,
+      disables the submit button to prevent double submit,
+      displays the loading indicator and submits the form via ajax.
+      On completing the ajax request, calls the onSuccess/onError callback function.
+  */
+  handleFormSubmit: function(formId, url, onSuccess, onError, config) {
+    $("#" + formId).find('button[type="submit"]').click(function(event) {
+      event.preventDefault();
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: $("#" + formId).serialize(),
+        dataType: config.dataType ? config.dataType : 'json',
+        beforeSend: function() {
+          // Disable submit button to prevent double submit
+          $("#" + formId).find('button[type="submit"]').prop('disabled', true);
+          // Baseframe form has a loading indication which is hidden by default. Show the loading indicator
+          $("#" + formId).find(".loading").removeClass('hidden');
+          if (config.beforeSend) config.beforeSend();
+        }
+      }).done(function (remoteData) {
+        onSuccess(remoteData);
+      }).fail(function (response) {
+        onError(response);
+      });
+    });
   }
 };
 
