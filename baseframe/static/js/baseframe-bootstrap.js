@@ -293,9 +293,9 @@ window.Baseframe.Forms = {
       }
     });
   },
-  /* Takes formSelector, url, onSuccess, onError, config
+  /* Takes formId, url, onSuccess, onError, config
+   'formId' - Form id selector to query the DOM for the form
    'url' - The url to which the post request is sent
-   'formSelector' - Form selector to query the DOM for the form
    'onSuccess' - A callback function that is executed if the request succeeds
    'onError' - A callback function that is executed if the request fails
    'config' -  An object that can contain dataType, beforeSend function
@@ -304,19 +304,19 @@ window.Baseframe.Forms = {
       displays the loading indicator and submits the form via ajax.
       On completing the ajax request, calls the onSuccess/onError callback function.
   */
-  handleFormSubmit: function(url, formSelector, onSuccess, onError, config) {
-    $(formSelector).find('button[type="submit"]').click(function(event) {
+  handleFormSubmit: function(formId, url, onSuccess, onError, config) {
+    $("#" + formId).find('button[type="submit"]').click(function(event) {
       event.preventDefault();
       $.ajax({
         url: url,
         type: 'POST',
-        data: $(formSelector).serialize(),
+        data: $("#" + formId).serialize(),
         dataType: config.dataType ? config.dataType : 'json',
         beforeSend: function() {
           // Disable submit button to prevent double submit
-          $(formSelector).find('button[type="submit"]').prop('disabled', true);
+          $("#" + formId).find('button[type="submit"]').prop('disabled', true);
           // Baseframe form has a loading indication which is hidden by default. Show the loading indicator
-          $(formSelector).find(".loading").removeClass('hidden');
+          $("#" + formId).find(".loading").removeClass('hidden');
           if (config.beforeSend) config.beforeSend();
         }
       }).done(function (remoteData) {
