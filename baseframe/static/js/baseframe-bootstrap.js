@@ -254,8 +254,8 @@ window.Baseframe.Forms = {
       }
     })
   },
-  /* Takes 'formSelector' and 'errors'
-   'formSelector' is the form for which errors needs to be displayed
+  /* Takes 'formId' and 'errors'
+   'formId' is the id attribute of the form for which errors needs to be displayed
    'errors' is the WTForm validation errors expected in the following format
     {
       "title": [
@@ -271,8 +271,8 @@ window.Baseframe.Forms = {
     using the unique form id. And the newly created 'p' tag
     is inserted in the DOM below the field.
   */
-  showValidationErrors: function(formSelector, errors) {
-    var form = document.querySelector(formSelector);
+  showValidationErrors: function(formId, errors) {
+    var form = document.getElementById(formId);
     Object.keys(errors).forEach(function(fieldName) {
       if (Array.isArray(errors[fieldName])) {
         var fieldWrapper = form.querySelector("#field-" + fieldName);
