@@ -31,9 +31,9 @@ networkbar_cache = Cache(with_jinja2_ext=False)
 asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
 babel = Babel()
-if DebugToolbarExtension is not None:
+if DebugToolbarExtension is not None:  # pragma: no cover
     toolbar = DebugToolbarExtension()
-else:
+else:  # pragma: no cover
     toolbar = None
 
 
