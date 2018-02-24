@@ -310,7 +310,7 @@
         key: {{ field.results_key|tojson }}
       });
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
-      {%- if config['LASTUSER_CLIENT_ID'] and g.lastuser_cookie and 'sessionid' in g.lastuser_cookie %}
+      {%- if config['LASTUSER_CLIENT_ID'] and current_auth.cookie and 'sessionid' in current_auth.cookie %}
         Baseframe.Forms.lastuserAutocomplete({
           id: {{ field.id|tojson }},
           multiple: {{ field.multiple|tojson }},
@@ -318,7 +318,7 @@
           autocomplete_endpoint: {{ field.autocomplete_endpoint|tojson }},
           getuser_endpoint: {{ field.getuser_endpoint|tojson }},
           client_id: {{ config['LASTUSER_CLIENT_ID']|tojson }},
-          session_id: {{ g.lastuser_cookie['sessionid']|tojson }}
+          session_id: {{ current_auth.cookie['sessionid']|tojson }}
         });
       {%- else %}
         Baseframe.Forms.lastuserAutocomplete({

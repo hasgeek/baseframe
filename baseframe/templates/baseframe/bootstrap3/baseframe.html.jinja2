@@ -4,7 +4,7 @@
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" class="no-js {%- if g.user %} userlogin {%- else %} no-userlogin {%- endif %}"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js {%- if not current_auth.is_anonymous %} userlogin {%- else %} no-userlogin {%- endif %}"> <!--<![endif]-->
 {%- endblock %}
 <head>
   <meta charset="utf-8" />

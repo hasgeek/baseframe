@@ -47,9 +47,9 @@
       </ul>
     </div>
   </nav>
-  {%- if not g.user %}
-    {%- if g.lastuser %}
-      {{ networkbar_login_beacon(g.lastuser.endpoint_url(g.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
+  {%- if current_auth.is_anonymous %}
+    {%- if current_auth.lastuser %}
+      {{ networkbar_login_beacon(current_auth.lastuser.endpoint_url(current_auth.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
     {%- endif %}
   {%- endif %}
 {%- endmacro %}
@@ -77,7 +77,7 @@
 {%- endmacro %}
 
 {%- macro add_hasgeek_auth(links, loginbtntext) %}
-  {% if g.user -%}
+  {% if not current_auth.is_anonymous -%}
     <a class="header__app-icon" data-mui-toggle="dropdown">
       <i class="material-icons">account_circle</i>
     </a>
@@ -86,14 +86,14 @@
         <li><a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>{{ link.title }}</a></li>
       {%- endfor %}
       <li {% if links %} class="separator-authlinks" {%- endif %}>
-        {%- with orgs = g.user.organization_links() %}
+        {%- with orgs = current_auth.user.organization_links() %}
         {% if orgs %}
           <a href="/profile">My profile</a></li>
           {%- for org in orgs %}
           <li><a href="{{ org.link }}">{{ org.title }}</a></li>
           {%- endfor %}             
         {%- else %}
-        <a href="{{ g.user.profile_url }}" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
+        <a href="{{ current_auth.user.profile_url }}" title="{{ current_auth.user.pickername }}">{{ current_auth.user.fullname }}</a>
         {% endif %}
         {%- endwith %}
       </li>
