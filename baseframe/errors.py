@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from . import baseframe, current_app, baseframe_translations
+from werkzeug.routing import NotFound, MethodNotAllowed, RequestRedirect
 from flask import request, redirect
 from coaster.views import render_with
-from coaster.db import db
-from werkzeug.routing import NotFound, MethodNotAllowed, RequestRedirect
+from . import baseframe, current_app, baseframe_translations
 
 
 @baseframe.app_errorhandler(404)
@@ -37,9 +36,8 @@ def error403(e):
 @baseframe.app_errorhandler(500)
 @render_with('500.html.jinja2', json=True)
 def error500(e):
-    # We're assuming this app uses coaster's db,
-    # which hopefully is harmless if incorrect.
-    db.session.rollback()
+    if current_app.extensions and 'sqlalchemy' in current_app.extensions:
+        current_app.extensions['sqlalchemy'].db.session.rollback()
 
     baseframe_translations.as_default()
     return {'error': "500 Internal Server Error"}, 500

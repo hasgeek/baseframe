@@ -2,9 +2,10 @@
 
 from __future__ import absolute_import
 from pytz import timezone, UTC
-from flask import g, Blueprint, request, current_app
+from flask import Blueprint, request, current_app
 import json
 from coaster.assets import split_namespec
+from coaster.auth import current_auth, request_has_auth
 from flask_assets import Environment, Bundle
 from flask_caching import Cache
 from flask_babelex import Babel, Domain
@@ -31,9 +32,9 @@ networkbar_cache = Cache(with_jinja2_ext=False)
 asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
 babel = Babel()
-if DebugToolbarExtension is not None:
+if DebugToolbarExtension is not None:  # pragma: no cover
     toolbar = DebugToolbarExtension()
-else:
+else:  # pragma: no cover
     toolbar = None
 
 
@@ -263,8 +264,8 @@ baseframe = BaseframeBlueprint('baseframe', __name__,
 
 @babel.localeselector
 def get_locale():
-    # If a user is logged in and the user object specifies a locale, use it
-    user = getattr(g, 'user', None)
+    # If this app and request have a user that specifies a locale, use it
+    user = current_auth.actor  # Use 'actor' instead of 'user' to support anon users
     if user is not None and hasattr(user, 'locale') and user.locale:
         return user.locale
     # Otherwise try to guess the language from the user accept
@@ -277,11 +278,10 @@ def get_locale():
 
 @babel.timezoneselector
 def get_timezone():
-    # If this app supports user logins (ie, g.user exists) and
-    # a user is logged in (ie, g.user is not None), return user's timezone
+    # If this app and request have a user, return user's timezone,
     # else return app default timezone
-    user = getattr(g, 'user', None)
-    if user is not None:
+    if current_auth.actor is not None:  # Use 'actor' instead of 'user' to support anon users
+        user = current_auth.actor
         if hasattr(user, 'tz'):
             return user.tz
         elif hasattr(user, 'timezone'):
@@ -323,9 +323,11 @@ def process_response(response):
     if 'X-Frame-Options' in response.headers:
         frameoptions = response.headers.get('X-Frame-Options')
         if not frameoptions or frameoptions == 'ALLOW':
+            # 'ALLOW' is an unofficial signal from the app to Baseframe.
+            # It signals us to remove the header and not set a default
             response.headers.pop('X-Frame-Options')
     else:
-        if hasattr(g, 'login_required') and g.login_required:
+        if request_has_auth() and getattr(current_auth, 'login_required', False):
             # Protect only login_required pages from appearing in frames
             response.headers['X-Frame-Options'] = 'SAMEORIGIN'
 

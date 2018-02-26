@@ -9,7 +9,7 @@
       {% endfor %}
     {% endif %}
   {% endwith %}
-{%- endmacro %}
+{%- endmacro -%}
 
 {%- macro networkbar_login_beacon(url) %}
   <iframe height="0" width="0" tabindex="-1" style="display: none; border: 0; height: 0; width: 0" aria-hidden="true" role="presentation" src="{{ url }}"></iframe>
@@ -32,7 +32,7 @@
       {%- endif -%}
     </li>
   {%- endfor %}
-{% endmacro %}
+{%- endmacro -%}
 
 {%- macro networkbar(siteid=none, login=false, baseclass=none, containerclass="container", beacon=true) -%}
   <div id="hg-bar" class="no-print {%- if baseclass %} {{ baseclass }}{% endif %}">
@@ -46,18 +46,18 @@
       {%- endif %}{% endwith %}
       {%- if login %}
         <ul id="hg-usertools">
-          {% if g.user -%}
+          {% if not current_auth.is_anonymous -%}
             <li class="profile">
-              {%- with orgs = g.user.organization_links() %}{% if orgs %}
-                <a href="#" title="{{ g.user.pickername }}" class="hg-submenu">{{ g.user.fullname }}</a>
+              {%- with orgs = current_auth.user.organization_links() %}{% if orgs %}
+                <a href="#" title="{{ current_auth.user.pickername }}" class="hg-submenu">{{ current_auth.user.fullname }}</a>
                 <ul>
-                  <li><a href="{{ g.user.profile_url }}">My profile</a></li>
+                  <li><a href="{{ current_auth.user.profile_url }}">My profile</a></li>
                   {%- for org in orgs %}
                     <li><a href="{{ org.link }}">{{ org.title }}</a></li>
                   {%- endfor %}
                 </ul>
               {%- else %}
-                <a href="{{ g.user.profile_url }}" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
+                <a href="{{ current_auth.user.profile_url }}" title="{{ current_auth.user.pickername }}">{{ current_auth.user.fullname }}</a>
               {% endif %}{%- endwith %}
             </li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
@@ -65,17 +65,17 @@
             <li><a href="{{ url_for('login') }}">Login or sign up</a></li>
           {%- endif %}      
         </ul>
-        {%- if login and beacon and not g.user %}
-          {%- if g.lastuser %}
-            {{ networkbar_login_beacon(g.lastuser.endpoint_url(g.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
+        {%- if login and beacon and current_auth.is_anonymous %}
+          {%- if current_auth.lastuser %}
+            {{ networkbar_login_beacon(current_auth.lastuser.endpoint_url(current_auth.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
           {%- endif %}
         {%- endif %}
       {%- endif %}
     </div>
   </div>
-{%- endmacro %}
+{%- endmacro -%}
 
-{%- macro responsive_networkbar_inner(siteid, links, toplevel=false, appurl='#') %}
+{%- macro responsive_networkbar_inner(siteid, links, toplevel=false, appurl='#') -%}
   {%- for link in links %}
     <li id="hg-networkbar-{{ link.name }}" {%- if siteid == link.name %} class="{% if toplevel and loop.first %}strong {% endif %}{% if link.children %}dropdown {% endif %}selected"{% elif link.sep %} class="hg-menu-section"{% elif toplevel and loop.first %} class="strong {%- if link.children %} dropdown{% endif %}"{% elif link.children %} class="dropdown"{% endif %}>
       {%- if link.children -%}
@@ -92,7 +92,7 @@
       {%- endif -%}
     </li>
   {%- endfor %}
-{% endmacro %}
+{%- endmacro -%}
 
 {%- macro responsive_networkbar(siteid=none, login=false, baseclass=none, containerclass="container", beacon=true, links=[]) -%}
   <nav class="navbar navbar-default navbar-fixed-top" id="hg-networkbar" role="navigation">
@@ -131,11 +131,11 @@
           {%- for link in links %}
             <li><a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>{{ link.title }}</a></li>
           {%- endfor %}
-          {% if g.user -%}
+          {% if not current_auth.is_anonymous -%}
           <li class="profile dropdown">
-            {%- with orgs = g.user.organization_links() %}
+            {%- with orgs = current_auth.user.organization_links() %}
               {% if orgs %}
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="{{ current_auth.user.pickername }}">{{ current_auth.user.fullname }}</a>
                 <ul class="dropdown-menu">
                   <li><a href="/profile">My profile</a></li>
                   {%- for org in orgs %}
@@ -143,7 +143,7 @@
                   {%- endfor %}             
                 </ul>
               {%- else %}
-                <a href="{{ g.user.profile_url }}" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
+                <a href="{{ current_auth.user.profile_url }}" title="{{ current_auth.user.pickername }}">{{ current_auth.user.fullname }}</a>
               {% endif %}
             {%- endwith %}
           </li>
@@ -154,16 +154,16 @@
         </ul>
       </div><!-- /.navbar-collapse -->
       {%- endif %}
-      {%- if login and beacon and not g.user %}
-        {%- if g.lastuser %}
-          {{ networkbar_login_beacon(g.lastuser.endpoint_url(g.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
+      {%- if login and beacon and current_auth.is_anonymous %}
+        {%- if current_auth.lastuser %}
+          {{ networkbar_login_beacon(current_auth.lastuser.endpoint_url(current_auth.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
         {%- endif %}
       {%- endif %}
     </div>
   </nav>
-{%- endmacro %}
+{%- endmacro -%}
 
-{%- macro hgnav(site_title="HasGeek", site_nav_button=none, site_nav=none, auth=true, network=true, site_links=[], user_links=[], loginbtntext="Login") %}
+{%- macro hgnav(site_title="HasGeek", site_nav_button=none, site_nav=none, auth=true, network=true, site_links=[], user_links=[], loginbtntext="Login") -%}
   <nav class="navbar navbar-default navbar-fixed-top" id="hgnav" role="navigation">
     <div class="container">
       <div class="navbar-header pull-left hg-header-app-nav">
@@ -210,15 +210,15 @@
       {% endif %}
     </div>
   </nav>
-  {%- if not g.user %}
-    {%- if g.lastuser %}
-      {{ networkbar_login_beacon(g.lastuser.endpoint_url(g.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
+  {%- if current_auth.is_anonymous %}
+    {%- if current_auth.lastuser %}
+      {{ networkbar_login_beacon(current_auth.lastuser.endpoint_url(current_auth.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
     {%- endif %}
   {%- endif %}
-{%- endmacro %}
+{%- endmacro -%}
 
-{%- macro add_hasgeek_auth(links, loginbtntext) %}
-  {% if g.user -%}
+{%- macro add_hasgeek_auth(links, loginbtntext) -%}
+  {% if not current_auth.is_anonymous -%}
     <button type="button" data-toggle="dropdown" class="dropdown-toggle" id="hg-user-btn">
       <i class="fa fa-user"></i>
     </button>
@@ -227,14 +227,14 @@
         <li><a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>{{ link.title }}</a></li>
       {%- endfor %}
       <li {% if links %} class="separator-authlinks" {%- endif %}>
-        {%- with orgs = g.user.organization_links() %}
+        {%- with orgs = current_auth.user.organization_links() %}
         {% if orgs %}
           <a href="/profile">My profile</a></li>
           {%- for org in orgs %}
           <li><a href="{{ org.link }}">{{ org.title }}</a></li>
           {%- endfor %}             
         {%- else %}
-        <a href="{{ g.user.profile_url }}" title="{{ g.user.pickername }}">{{ g.user.fullname }}</a>
+        <a href="{{ current_auth.user.profile_url }}" title="{{ current_auth.user.pickername }}">{{ current_auth.user.fullname }}</a>
         {% endif %}
         {%- endwith %}
       </li>
@@ -243,9 +243,9 @@
   {%- else %}
     <a href="{{ url_for('login') }}" class='btn btn-primary btn-sm' id="hg-login-btn">{{ loginbtntext }}</a>
   {%- endif %}
-{%- endmacro %}
+{%- endmacro -%}
 
-{%- macro add_hasgeek_network() %}
+{%- macro add_hasgeek_network() -%}
   {% with %}
     {% set network_links=[
     {'title': 'HasGeek', 'url': 'http://hasgeek.com', 'icon': 'https://hasgeek.com/static/img/hg-banner.png'},
@@ -267,4 +267,4 @@
       {%- endfor  %}
     </ul>
   {% endwith %}
-{%- endmacro %}
+{%- endmacro -%}
