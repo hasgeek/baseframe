@@ -300,7 +300,7 @@ footer {
 footer .footer-inner {
   margin-top: 10px;
   min-height: 55px;
-  background: whiteSmoke url('/_baseframe/img/shadow.png?1457696304') no-repeat top center;
+  background: whiteSmoke url('/_baseframe/img/shadow.png?1460092674') no-repeat top center;
 }
 
 footer .container {
@@ -318,7 +318,7 @@ footer .container p {
   overflow: hidden;
   text-align: left;
   text-transform: capitalize;
-  background-image: url('/_baseframe/img/logo.png?1457696111');
+  background-image: url('/_baseframe/img/logo.png?1460092674');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   width: 75px;
@@ -339,7 +339,7 @@ footer .container p {
   overflow: hidden;
   text-align: left;
   text-transform: capitalize;
-  background-image: url('/_baseframe/img/hasgeek-presents.png?1457696107');
+  background-image: url('/_baseframe/img/hasgeek-presents.png?1460092674');
   background-repeat: no-repeat;
   background-position: 50% 50%;
   width: 100px;
@@ -511,6 +511,7 @@ table.mceLayout.focus {
   background-image: none !important;
   border-color: #ccc !important;
   background-color: transparent !important;
+  overflow-y: auto;
 }
 
 .mce-panel.mce-first {
@@ -917,7 +918,7 @@ ul.grid > li.header {
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   #logo {
-    background-image: url('/_baseframe/img/logo@2x.png?1457696127');
+    background-image: url('/_baseframe/img/logo@2x.png?1460092674');
     -webkit-background-size: auto 75px;
   }
 }

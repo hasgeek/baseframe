@@ -282,6 +282,7 @@ table.mceLayout.focus {
   background-image: none !important;
   border-color: #ccc !important;
   background-color: transparent !important;
+  overflow-y: auto;
 }
 
 .mce-panel.mce-first {
