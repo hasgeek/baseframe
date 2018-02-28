@@ -38,6 +38,7 @@ field_registry = {
     'AnnotatedTextField': bfields.AnnotatedTextField,
     'MarkdownField': bfields.MarkdownField,
     'ImageField': bfields.ImgeeField,
+    'EnumField': bfields.EnumField,
     }
 
 widget_registry = {}

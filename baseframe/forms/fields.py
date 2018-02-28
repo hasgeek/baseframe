@@ -5,6 +5,7 @@ from decimal import Decimal, InvalidOperation as DecimalError
 from six.moves.urllib.parse import urljoin
 from pytz import utc, timezone as pytz_timezone
 from flask import current_app
+from coaster.utils import LabeledEnum
 import wtforms
 from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, SubmitField, FileField
 from wtforms.compat import text_type
@@ -18,7 +19,7 @@ from .parsleyjs import TextAreaField, StringField, URLField
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'TextListField',
-    'AnnotatedTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
+    'AnnotatedTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField', 'EnumField',
     'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
     'CoordinatesField', 'RadioMatrixField', 'AutocompleteField', 'AutocompleteMultipleField', 'SelectField',
     # Imported from WTForms:
@@ -673,3 +674,15 @@ class RadioMatrixField(wtforms.Field):
         for fname, ftitle in self.fields:
             if fname in self.data:
                 setattr(obj, fname, self.data[fname])
+
+
+class EnumField(SelectField):
+    def __init__(self, *args, **kwargs):
+        super(EnumField, self).__init__(*args, **kwargs)
+        self.lenum = self.choices
+        self.choices = self.choices.nametitles()
+
+    def post_validate(self, form, validation_stopped):
+        super(EnumField, self).post_validate(form, validation_stopped)
+        if self.data is not None:
+            self.data = self.lenum.value_for(self.data)
