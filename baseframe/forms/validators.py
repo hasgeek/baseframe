@@ -164,26 +164,26 @@ class NotEqualTo(_Comparison):
 
 class PublicEmailDomain(object):
     def __init__(self, message=None):
-        self.message = message or _(u'The domain "{url}" is not a public email domain.')
+        self.message = message or _(u'The domain "{domain}" is not a public email domain.')
 
     def __call__(self, form, field):
         sniffedmx = mxsniff(field.data)
         if len(sniffedmx['providers']) > 0:
             return
         else:
-            raise StopValidation(self.message)
+            raise StopValidation(self.message.format(domain=field.data))
 
 
 class NotPublicEmailDomain(object):
     def __init__(self, message=None):
-        self.message = message or _(u'The domain "{url}" is a public email domain.')
+        self.message = message or _(u'The domain "{domain}" is a public email domain.')
 
     def __call__(self, form, field):
         sniffedmx = mxsniff(field.data)
         if len(sniffedmx['providers']) == 0:
             return
         else:
-            raise StopValidation(self.message)
+            raise StopValidation(self.message.format(domain=field.data))
 
 
 class ValidEmail(object):
