@@ -19,7 +19,7 @@ class MY_LENUM(LabeledEnum):
 
 
 class MyForm(forms.Form):
-    position = forms.EnumField(__("Position"), choices=MY_LENUM, default=MY_LENUM.THIRD)
+    position = forms.EnumSelectField(__("Position"), lenum=MY_LENUM, default=MY_LENUM.THIRD)
 
 
 class TestFormSQLAlchemy(unittest.TestCase):
@@ -33,6 +33,7 @@ class TestFormSQLAlchemy(unittest.TestCase):
         self.ctx.pop()
 
     def test_enumfield(self):
+        self.assertEqual(self.form.position.data, 'third')  # because nor yet validated
         self.form.process(position=u'second')
         self.assertTrue(self.form.validate())
         self.assertEqual(self.form.position.data, 2)

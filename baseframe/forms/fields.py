@@ -19,7 +19,7 @@ from .parsleyjs import TextAreaField, StringField, URLField
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'TextListField',
-    'AnnotatedTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField', 'EnumField',
+    'AnnotatedTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField', 'EnumSelectField',
     'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
     'CoordinatesField', 'RadioMatrixField', 'AutocompleteField', 'AutocompleteMultipleField', 'SelectField',
     # Imported from WTForms:
@@ -676,13 +676,25 @@ class RadioMatrixField(wtforms.Field):
                 setattr(obj, fname, self.data[fname])
 
 
-class EnumField(SelectField):
+class EnumSelectField(SelectField):
+    """
+    Take a LabeledEnum and set choices based on that,
+    also doesn't reveal the actual value through the form
+
+    Takes a `lenum` argument instead of `choices`. E.g. -
+
+        position = forms.EnumSelectField(__("Position"), lenum=MY_LENUM, default=MY_LENUM.THIRD)
+
+    """
     def __init__(self, *args, **kwargs):
-        super(EnumField, self).__init__(*args, **kwargs)
-        self.lenum = self.choices
-        self.choices = self.choices.nametitles()
+        default = kwargs.pop('default')
+        self.lenum = kwargs.pop('lenum')
+        self.default = self.lenum[default].name
+
+        super(EnumSelectField, self).__init__(*args, **kwargs)
+        self.choices = self.lenum.nametitles()
 
     def post_validate(self, form, validation_stopped):
-        super(EnumField, self).post_validate(form, validation_stopped)
+        super(EnumSelectField, self).post_validate(form, validation_stopped)
         if self.data is not None:
             self.data = self.lenum.value_for(self.data)
