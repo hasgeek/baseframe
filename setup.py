@@ -32,6 +32,7 @@ requires = [
     'cssmin',
     'coaster',
     'lxml',
+    'mxsniff',
     # For link validation with SNI SSL support
     'requests',
     'pyOpenSSL',

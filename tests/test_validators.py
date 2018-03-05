@@ -2,8 +2,7 @@
 
 import warnings
 import urllib3
-from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest
-
+from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainTest
 
 class TestValidators(TestCaseBaseframe):
     def setUp(self):
@@ -13,6 +12,7 @@ class TestValidators(TestCaseBaseframe):
             self.all_urls_form = AllUrlsFormTest(meta={'csrf': False})
             self.optional_if_form = OptionalIfFormTest(meta={'csrf': False})
             self.optional_if_not_form = OptionalIfNotFormTest(meta={'csrf': False})
+            self.webmail_form = PublicEmailDomainTest(meta={'csrf': False})
         urllib3.disable_warnings()
 
     def tearDown(self):
@@ -30,6 +30,20 @@ class TestValidators(TestCaseBaseframe):
             url = 'https://hasgeek'
             self.form.process(url=url)
             self.assertEqual(self.form.validate(), False)
+
+    def test_public_email_domain(self):
+        with self.app.test_request_context('/'):
+            self.webmail_form.process(
+                webmail_domain='google.com',
+                not_webmail_domain='foobar.com'
+            )
+            self.assertTrue(self.webmail_form.validate())
+            self.webmail_form.process(
+                webmail_domain='foobar.com',
+                not_webmail_domain='google.com'
+            )
+            self.assertFalse(self.form.validate())
+
 
     def test_url_without_protocol(self):
         with self.app.test_request_context('/'):

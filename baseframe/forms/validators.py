@@ -11,12 +11,13 @@ from wtforms.validators import (DataRequired, InputRequired, Optional, Length, E
 import requests
 from lxml import html
 from coaster.utils import make_name, deobfuscate_email
+from mxsniff import mxsniff
 from .. import b_ as _, b__ as __, asset_cache
 from ..signals import exception_catchall
 
 
 __all__ = ['OptionalIf', 'OptionalIfNot', 'ValidEmail', 'ValidEmailDomain', 'ValidUrl', 'AllUrlsValid',
-    'ValidName', 'NoObfuscatedEmail', 'ValidCoordinates',
+    'ValidName', 'NoObfuscatedEmail', 'ValidCoordinates', 'PublicEmailDomain', 'NotPublicEmailDomain',
     # WTForms validators
     'DataRequired', 'InputRequired', 'Optional', 'Length', 'EqualTo', 'URL', 'NumberRange',
     'ValidationError', 'StopValidation']
@@ -159,6 +160,30 @@ class NotEqualTo(_Comparison):
 
     def compare(self, value, other):
         return value != other
+
+
+class PublicEmailDomain(object):
+    def __init__(self, message=None):
+        self.message = message or _(u'The domain "{url}" is not a public email domain.')
+
+    def __call__(self, form, field):
+        sniffedmx = mxsniff(field.data)
+        if len(sniffedmx['providers']) > 0:
+            return
+        else:
+            raise StopValidation(self.message)
+
+
+class NotPublicEmailDomain(object):
+    def __init__(self, message=None):
+        self.message = message or _(u'The domain "{url}" is a public email domain.')
+
+    def __call__(self, form, field):
+        sniffedmx = mxsniff(field.data)
+        if len(sniffedmx['providers']) == 0:
+            return
+        else:
+            raise StopValidation(self.message)
 
 
 class ValidEmail(object):
