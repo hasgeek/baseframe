@@ -34,13 +34,13 @@ class TestValidators(TestCaseBaseframe):
     def test_public_email_domain(self):
         with self.app.test_request_context('/'):
             self.webmail_form.process(
-                webmail_domain='google.com',
+                webmail_domain='gmail.com',
                 not_webmail_domain='foobar.com'
             )
             self.assertTrue(self.webmail_form.validate())
             self.webmail_form.process(
                 webmail_domain='foobar.com',
-                not_webmail_domain='google.com'
+                not_webmail_domain='gmail.com'
             )
             self.assertFalse(self.form.validate())
 

@@ -167,8 +167,8 @@ class PublicEmailDomain(object):
         self.message = message or _(u'The domain "{domain}" is not a public email domain.')
 
     def __call__(self, form, field):
-        sniffedmx = mxsniff(field.data)
-        if len(sniffedmx['providers']) > 0:
+        sniffedmx = mxsniff(field.data, cache=True)
+        if any([p['public'] for p in sniffedmx['providers']]):
             return
         else:
             raise StopValidation(self.message.format(domain=field.data))
@@ -179,8 +179,8 @@ class NotPublicEmailDomain(object):
         self.message = message or _(u'The domain "{domain}" is a public email domain.')
 
     def __call__(self, form, field):
-        sniffedmx = mxsniff(field.data)
-        if len(sniffedmx['providers']) == 0:
+        sniffedmx = mxsniff(field.data, cache=True)
+        if not any([p['public'] for p in sniffedmx['providers']]):
             return
         else:
             raise StopValidation(self.message.format(domain=field.data))
