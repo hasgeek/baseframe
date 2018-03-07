@@ -687,12 +687,13 @@ class EnumSelectField(SelectField):
 
     """
     def __init__(self, *args, **kwargs):
-        default = kwargs.pop('default')
+        default = kwargs.pop('default', None)
         self.lenum = kwargs.pop('lenum')
 
         super(EnumSelectField, self).__init__(*args, **kwargs)
         self.choices = self.lenum.nametitles()
-        self.default = self.lenum[default].name
+        if default is not None:
+            self.default = self.lenum[default].name
 
     def post_validate(self, form, validation_stopped):
         super(EnumSelectField, self).post_validate(form, validation_stopped)
