@@ -5,9 +5,9 @@ from decimal import Decimal, InvalidOperation as DecimalError
 from six.moves.urllib.parse import urljoin
 from pytz import utc, timezone as pytz_timezone
 from flask import current_app
-from coaster.utils import LabeledEnum
 import wtforms
 from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, SubmitField, FileField
+from wtforms.widgets import Select as OriginalSelectWidget
 from wtforms.compat import text_type
 from wtforms.utils import unset_value
 import bleach
@@ -676,26 +676,52 @@ class RadioMatrixField(wtforms.Field):
                 setattr(obj, fname, self.data[fname])
 
 
+_invalid_marker = object()
+
+
 class EnumSelectField(SelectField):
     """
-    Take a LabeledEnum and set choices based on that,
-    also doesn't reveal the actual value through the form
+    SelectField that populates choices from a LabeledEnum that uses
+    (value, name, title) tuples for all elements in the enum. Only name and
+    title are exposed to the form, keeping value private.
 
-    Takes a `lenum` argument instead of `choices`. E.g. -
+    Takes a ``lenum`` argument instead of ``choices``::
 
-        position = forms.EnumSelectField(__("Position"), lenum=MY_LENUM, default=MY_LENUM.THIRD)
+        class MyForm(forms.Form):
+            field = forms.EnumSelectField(__("My Field"), lenum=MY_ENUM, default=MY_ENUM.CHOICE)
 
     """
+    widget = OriginalSelectWidget()
+
     def __init__(self, *args, **kwargs):
-        default = kwargs.pop('default', None)
         self.lenum = kwargs.pop('lenum')
+        kwargs['choices'] = self.lenum.nametitles()
 
         super(EnumSelectField, self).__init__(*args, **kwargs)
-        self.choices = self.lenum.nametitles()
-        if default is not None:
-            self.default = self.lenum[default].name
 
-    def post_validate(self, form, validation_stopped):
-        super(EnumSelectField, self).post_validate(form, validation_stopped)
-        if self.data is not None:
-            self.data = self.lenum.value_for(self.data)
+    def iter_choices(self):
+        selected_name = self.lenum[self.data].name if self.data is not None else None
+        for name, title in self.choices:
+            yield (name, title, name == selected_name)
+
+    def process_data(self, value):
+        if value is None:
+            self.data = None
+        elif value in self.lenum:
+            self.data = value
+        else:
+            raise KeyError(_("Value not in LabeledEnum"))
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            try:
+                value = self.lenum.value_for(self.coerce(valuelist[0]))
+                if value is None:
+                    value = _invalid_marker
+                self.data = value
+            except ValueError:
+                raise ValueError(self.gettext('Invalid Choice: could not coerce'))
+
+    def pre_validate(self, form):
+        if self.data is _invalid_marker:
+            raise ValueError(self.gettext('Not a valid choice'))
