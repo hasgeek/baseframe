@@ -18,3 +18,5 @@ baseframe/static/js/tinymce3
 baseframe/static/js/tinymce4
 baseframe/static/js/codemirror
 docs/_build
+.cache
+.pytest_cache

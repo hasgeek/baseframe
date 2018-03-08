@@ -27,7 +27,7 @@ class SelectWidget(Select):
                 group_items = item2
                 html.append('<optgroup %s>' % html_params(label=group_label))
                 for inner_val, inner_label in group_items:
-                    html.append(self.render_option(inner_val, inner_label, inner_val == field.data))
+                    html.append(self.render_option(inner_val, inner_label, field.coerce(inner_val) == field.data))
                 html.append('</optgroup>')
             else:
                 val = item1
@@ -39,7 +39,7 @@ class SelectWidget(Select):
 
 class Select2Widget(Select):
     """
-    Add support of choices with ``optgroup`` to the ``Select`` widget.
+    Add a select2 class to the rendered select widget
     """
     def __call__(self, field, **kwargs):
         kwargs.setdefault('id', field.id)
