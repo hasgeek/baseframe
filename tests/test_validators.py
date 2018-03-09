@@ -33,16 +33,30 @@ class TestValidators(TestCaseBaseframe):
 
     def test_public_email_domain(self):
         with self.app.test_request_context('/'):
+            # both valid
             self.webmail_form.process(
                 webmail_domain='gmail.com',
                 not_webmail_domain='foobar.com'
             )
             self.assertTrue(self.webmail_form.validate())
+
+            # both invalid
             self.webmail_form.process(
                 webmail_domain='foobar.com',
-                not_webmail_domain='gmail.com'
+                not_webmail_domain='yahoo.com'
             )
-            self.assertFalse(self.form.validate())
+            self.assertFalse(self.webmail_form.validate())
+            self.assertIn('webmail_domain', self.webmail_form.errors)
+            self.assertIn('not_webmail_domain', self.webmail_form.errors)
+
+            # one valid, one invalid
+            self.webmail_form.process(
+                webmail_domain='gmail.com',
+                not_webmail_domain='yahoo.com'
+            )
+            self.assertFalse(self.webmail_form.validate())
+            self.assertNotIn('webmail_domain', self.webmail_form.errors)
+            self.assertIn('not_webmail_domain', self.webmail_form.errors)
 
 
     def test_url_without_protocol(self):
