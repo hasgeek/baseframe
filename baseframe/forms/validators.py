@@ -163,8 +163,11 @@ class NotEqualTo(_Comparison):
 
 
 class MxSniffCache(dict):
-    def __getitem__(self, email_or_domain):
-        cache_key = 'mxrecord/' + email_or_domain
+    def make_cache_key(self, email_or_domain):
+        return 'mxrecord/' + email_or_domain
+
+    def __getitem__(self, key):
+        cache_key = self.make_cache_key(key)
         mx_cache = asset_cache.get(cache_key)
         # from ValidURL below,
         # Read from cache, but assume cache may be broken
@@ -175,9 +178,9 @@ class MxSniffCache(dict):
         else:
             domain = None
 
-        if domain is None or domain != email_or_domain:
+        if domain is None or domain != key:
             # Something is wrong with the cache, fetch result again and set cache
-            sniffedmx = mxsniff(email_or_domain, cache=self)
+            sniffedmx = mxsniff(key, cache=self)
             self.__setitem__(cache_key, sniffedmx)
             return sniffedmx
         else:
@@ -185,7 +188,13 @@ class MxSniffCache(dict):
             return mx_cache
 
     def __setitem__(self, key, val):
-        asset_cache.set(key, val, timeout=86400)
+        cache_key = self.make_cache_key(key)
+        asset_cache.set(cache_key, val, timeout=86400)
+
+    def __contains__(self, key):
+        cache_key = self.make_cache_key(key)
+        mx_cache = asset_cache.get(cache_key)
+        return mx_cache is not None
 
 
 _mxsniff_cache = MxSniffCache()
