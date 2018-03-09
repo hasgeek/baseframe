@@ -3,6 +3,7 @@
 import re
 import six
 from six.moves.urllib.parse import urljoin, quote as urlquote
+from six.moves import UserDict
 import dns.resolver
 from pyisemail import is_email
 from flask import request
@@ -162,7 +163,7 @@ class NotEqualTo(_Comparison):
         return value != other
 
 
-class MxSniffCache(dict):
+class MxSniffCache(UserDict):
     def __getitem__(self, email_or_domain):
         cache_key = 'mxrecord/' + email_or_domain
         mx_cache = asset_cache.get(cache_key)
