@@ -7,6 +7,7 @@ from pytz import utc, timezone as pytz_timezone
 from flask import current_app
 import wtforms
 from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, SubmitField, FileField
+from wtforms.widgets import Select as OriginalSelectWidget
 from wtforms.compat import text_type
 from wtforms.utils import unset_value
 import bleach
@@ -18,7 +19,7 @@ from .parsleyjs import TextAreaField, StringField, URLField
 
 __all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'TextListField',
-    'AnnotatedTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField',
+    'AnnotatedTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField', 'EnumSelectField',
     'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
     'CoordinatesField', 'RadioMatrixField', 'AutocompleteField', 'AutocompleteMultipleField', 'SelectField',
     # Imported from WTForms:
@@ -673,3 +674,54 @@ class RadioMatrixField(wtforms.Field):
         for fname, ftitle in self.fields:
             if fname in self.data:
                 setattr(obj, fname, self.data[fname])
+
+
+_invalid_marker = object()
+
+
+class EnumSelectField(SelectField):
+    """
+    SelectField that populates choices from a LabeledEnum that uses
+    (value, name, title) tuples for all elements in the enum. Only name and
+    title are exposed to the form, keeping value private.
+
+    Takes a ``lenum`` argument instead of ``choices``::
+
+        class MyForm(forms.Form):
+            field = forms.EnumSelectField(__("My Field"), lenum=MY_ENUM, default=MY_ENUM.CHOICE)
+
+    """
+    widget = OriginalSelectWidget()
+
+    def __init__(self, *args, **kwargs):
+        self.lenum = kwargs.pop('lenum')
+        kwargs['choices'] = self.lenum.nametitles()
+
+        super(EnumSelectField, self).__init__(*args, **kwargs)
+
+    def iter_choices(self):
+        selected_name = self.lenum[self.data].name if self.data is not None else None
+        for name, title in self.choices:
+            yield (name, title, name == selected_name)
+
+    def process_data(self, value):
+        if value is None:
+            self.data = None
+        elif value in self.lenum:
+            self.data = value
+        else:
+            raise KeyError(_("Value not in LabeledEnum"))
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            try:
+                value = self.lenum.value_for(self.coerce(valuelist[0]))
+                if value is None:
+                    value = _invalid_marker
+                self.data = value
+            except ValueError:
+                raise ValueError(self.gettext('Invalid Choice: could not coerce'))
+
+    def pre_validate(self, form):
+        if self.data is _invalid_marker:
+            raise ValueError(self.gettext('Not a valid choice'))
