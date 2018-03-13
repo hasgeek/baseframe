@@ -163,61 +163,45 @@ class NotEqualTo(_Comparison):
         return value != other
 
 
-class MxSniffCache(UserDict):
+class IsPublicEmailDomain(object):
+    def __init__(self, message=None):
+        self.message = message or _(u'This domain is not a public email domain.')
+
     def make_cache_key(self, email_or_domain):
         return 'mxrecord/' + email_or_domain
 
-    def __getitem__(self, key):
-        cache_key = self.make_cache_key(key)
+    def get_mx(self, email_or_domain):
+        cache_key = self.make_cache_key(email_or_domain)
         mx_cache = asset_cache.get(cache_key)
-        # from ValidURL below,
-        # Read from cache, but assume cache may be broken
-        # since Flask-Cache stores data as a pickle,
-        # which is version-specific
+
         if mx_cache and isinstance(mx_cache, dict):
             domain = mx_cache.get('domain')
         else:
             domain = None
 
-        if domain is None or domain != key:
+        if domain is None:
             # Something is wrong with the cache, fetch result again and set cache
-            sniffedmx = mxsniff(key, cache=self)
-            self.__setitem__(cache_key, sniffedmx)
+            sniffedmx = mxsniff(email_or_domain)
+            asset_cache.set(cache_key, sniffedmx)
             return sniffedmx
         else:
             # cache is fine, return it
             return mx_cache
 
-    def __setitem__(self, key, val):
-        cache_key = self.make_cache_key(key)
-        asset_cache.set(cache_key, val, timeout=86400)
-
-    def __contains__(self, key):
-        cache_key = self.make_cache_key(key)
-        mx_cache = asset_cache.get(cache_key)
-        return mx_cache is not None
-
-
-_mxsniff_cache = MxSniffCache()
-
-class IsPublicEmailDomain(object):
-    def __init__(self, message=None):
-        self.message = message or _(u'The domain "{domain}" is not a public email domain.')
-
     def __call__(self, form, field):
-        sniffedmx = _mxsniff_cache[field.data]
+        sniffedmx = self.get_mx(field.data)
         if any([p['public'] for p in sniffedmx['providers']]):
             return
         else:
             raise ValidationError(self.message.format(domain=field.data))
 
 
-class IsNotPublicEmailDomain(object):
+class IsNotPublicEmailDomain(IsPublicEmailDomain):
     def __init__(self, message=None):
-        self.message = message or _(u'The domain "{domain}" is a public email domain.')
+        self.message = message or _(u'This domain is a public email domain.')
 
     def __call__(self, form, field):
-        sniffedmx = _mxsniff_cache[field.data]
+        sniffedmx = self.get_mx(field.data)
         if not any([p['public'] for p in sniffedmx['providers']]):
             return
         else:
