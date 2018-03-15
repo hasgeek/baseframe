@@ -3,7 +3,6 @@
 import re
 import six
 from six.moves.urllib.parse import urljoin, quote as urlquote
-from six.moves import UserDict
 import dns.resolver
 from pyisemail import is_email
 from flask import request
