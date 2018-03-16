@@ -20,3 +20,4 @@ baseframe/static/js/codemirror
 docs/_build
 .cache
 .pytest_cache
+.vscode

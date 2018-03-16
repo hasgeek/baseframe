@@ -4,6 +4,7 @@ import warnings
 import urllib3
 from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainTest
 
+
 class TestValidators(TestCaseBaseframe):
     def setUp(self):
         super(TestValidators, self).setUp()
@@ -40,6 +41,13 @@ class TestValidators(TestCaseBaseframe):
             )
             self.assertTrue(self.webmail_form.validate())
 
+            # Emoji domain, should not raise any exception
+            self.webmail_form.process(
+                webmail_domain='gmail.com',
+                not_webmail_domain='i❤.ws'
+            )
+            self.assertTrue(self.webmail_form.validate())
+
             # both invalid
             self.webmail_form.process(
                 webmail_domain='foobar.com',
@@ -58,6 +66,15 @@ class TestValidators(TestCaseBaseframe):
             self.assertNotIn('webmail_domain', self.webmail_form.errors)
             self.assertIn('not_webmail_domain', self.webmail_form.errors)
 
+            # these domain names don't exist, MX lookup will fail
+            # So, webmail_domain should fail, but not_webmail_domain should pass
+            self.webmail_form.process(
+                webmail_domain='9vGw1TMChQWH.com',
+                not_webmail_domain='9vGw1TMChQWH.com'
+            )
+            self.assertFalse(self.webmail_form.validate())
+            self.assertIn('webmail_domain', self.webmail_form.errors)
+            self.assertNotIn('not_webmail_domain', self.webmail_form.errors)
 
     def test_url_without_protocol(self):
         with self.app.test_request_context('/'):
