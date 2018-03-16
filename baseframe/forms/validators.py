@@ -165,7 +165,8 @@ class NotEqualTo(_Comparison):
 class IsPublicEmailDomain(object):
     """
     Validate that field.data belongs to a public webmail domain.
-    If the domain raises mxsniff's ``MXLookupException``, this validator will fail.
+    If the domain does not exist and raises mxsniff's ``MXLookupException``,
+    this validator will fail.
 
     :param message:
         Error message to raise in case of a validation error.
