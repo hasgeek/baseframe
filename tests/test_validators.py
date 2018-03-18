@@ -2,7 +2,7 @@
 
 import warnings
 import urllib3
-from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainTest
+from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainFormTest
 
 
 class TestValidators(TestCaseBaseframe):
@@ -13,7 +13,7 @@ class TestValidators(TestCaseBaseframe):
             self.all_urls_form = AllUrlsFormTest(meta={'csrf': False})
             self.optional_if_form = OptionalIfFormTest(meta={'csrf': False})
             self.optional_if_not_form = OptionalIfNotFormTest(meta={'csrf': False})
-            self.webmail_form = PublicEmailDomainTest(meta={'csrf': False})
+            self.webmail_form = PublicEmailDomainFormTest(meta={'csrf': False})
         urllib3.disable_warnings()
 
     def tearDown(self):

@@ -69,6 +69,6 @@ class OptionalIfNotFormTest(forms.Form):
     content = forms.TextAreaField(__("Content"))
 
 
-class PublicEmailDomainTest(forms.Form):
+class PublicEmailDomainFormTest(forms.Form):
     webmail_domain = forms.StringField(__("Webmail Domain"), validators=[forms.validators.IsPublicEmailDomain()])
     not_webmail_domain = forms.StringField(__("Not Webmail Domain"), validators=[forms.validators.IsNotPublicEmailDomain()])
