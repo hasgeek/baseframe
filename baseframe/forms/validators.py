@@ -175,16 +175,13 @@ class IsPublicEmailDomain(object):
         self.message = message or _(u'This domain is not a public email domain.')
 
     def get_mx(self, email_or_domain):
-        def make_cache_key(email_or_domain):
-            if six.PY2:
-                cache_key = 'mxrecord/' + urlquote(
-                    email_or_domain.encode('utf-8') if isinstance(email_or_domain, six.text_type) else email_or_domain,
-                    safe='')
-            else:
-                cache_key = 'mxrecord/' + urlquote(email_or_domain, safe='')
-            return cache_key
+        if six.PY2:
+            cache_key = 'mxrecord/' + urlquote(
+                email_or_domain.encode('utf-8') if isinstance(email_or_domain, six.text_type) else email_or_domain,
+                safe='')
+        else:
+            cache_key = 'mxrecord/' + urlquote(email_or_domain, safe='')
 
-        cache_key = make_cache_key(email_or_domain)
         mx_cache = asset_cache.get(cache_key)
 
         if mx_cache and isinstance(mx_cache, dict):
