@@ -210,7 +210,7 @@ class IsPublicEmailDomain(object):
         else:
             # sniffedmx is None only if the domain lookup fails.
             # This validator will fail in that case
-            raise ValidationError(self.message.format(domain=field.data))
+            raise ValidationError(self.message)
 
 
 class IsNotPublicEmailDomain(IsPublicEmailDomain):
@@ -235,7 +235,7 @@ class IsNotPublicEmailDomain(IsPublicEmailDomain):
             # that most domains are not public email domain.
             return
         else:
-            raise ValidationError(self.message.format(domain=field.data))
+            raise ValidationError(self.message)
 
 
 class ValidEmail(object):
