@@ -2,7 +2,7 @@
 
 import warnings
 import urllib3
-from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest
+from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainFormTest
 
 
 class TestValidators(TestCaseBaseframe):
@@ -13,6 +13,7 @@ class TestValidators(TestCaseBaseframe):
             self.all_urls_form = AllUrlsFormTest(meta={'csrf': False})
             self.optional_if_form = OptionalIfFormTest(meta={'csrf': False})
             self.optional_if_not_form = OptionalIfNotFormTest(meta={'csrf': False})
+            self.webmail_form = PublicEmailDomainFormTest(meta={'csrf': False})
         urllib3.disable_warnings()
 
     def tearDown(self):
@@ -30,6 +31,46 @@ class TestValidators(TestCaseBaseframe):
             url = 'https://hasgeek'
             self.form.process(url=url)
             self.assertEqual(self.form.validate(), False)
+
+    def test_public_email_domain(self):
+        with self.app.test_request_context('/'):
+            # both valid
+            self.webmail_form.process(
+                webmail_domain=u'gmail.com',
+                not_webmail_domain=u'i❤.ws'
+            )
+            self.assertTrue(self.webmail_form.validate())
+
+            # both invalid
+            self.webmail_form.process(
+                webmail_domain=u'i❤.ws',
+                not_webmail_domain=u'gmail.com'
+            )
+            self.assertFalse(self.webmail_form.validate())
+            self.assertIn('webmail_domain', self.webmail_form.errors)
+            self.assertIn('not_webmail_domain', self.webmail_form.errors)
+
+            # one valid, one invalid
+            self.webmail_form.process(
+                webmail_domain=u'gmail.com',
+                not_webmail_domain=u'gmail.com'
+            )
+            self.assertFalse(self.webmail_form.validate())
+            self.assertNotIn('webmail_domain', self.webmail_form.errors)
+            self.assertIn('not_webmail_domain', self.webmail_form.errors)
+
+            # these domain lookups will fail because of the DNS label length limit.
+            # (abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks is 64 characters,
+            # the maximum length of a DNS label is 63 characters)
+            # ``mxsniff`` will raise ``MXLookupException`` for these domains.
+            # So, webmail_domain should fail, and not_webmail_domain should pass.
+            self.webmail_form.process(
+                webmail_domain=u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com',
+                not_webmail_domain=u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com'
+            )
+            self.assertFalse(self.webmail_form.validate())
+            self.assertIn('webmail_domain', self.webmail_form.errors)
+            self.assertNotIn('not_webmail_domain', self.webmail_form.errors)
 
     def test_url_without_protocol(self):
         with self.app.test_request_context('/'):
