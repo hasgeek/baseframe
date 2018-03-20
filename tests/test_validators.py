@@ -2,6 +2,7 @@
 
 import warnings
 import urllib3
+from baseframe.forms.helper import is_public_email_domain
 from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainFormTest
 
 
@@ -71,6 +72,15 @@ class TestValidators(TestCaseBaseframe):
             self.assertFalse(self.webmail_form.validate())
             self.assertIn('webmail_domain', self.webmail_form.errors)
             self.assertNotIn('not_webmail_domain', self.webmail_form.errors)
+
+    def test_public_email_domain_helper(self):
+        with self.app.test_request_context('/'):
+            self.assertEqual(is_public_email_domain(u'gmail.com'), True)
+            self.assertEqual(is_public_email_domain(u'i❤.ws'), False)
+            # this domain lookup fails, so the helper should return False
+            self.assertEqual(
+                is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com'),
+                False)
 
     def test_url_without_protocol(self):
         with self.app.test_request_context('/'):
