@@ -175,7 +175,7 @@ class IsPublicEmailDomain(object):
         self.message = message or _(u'This domain is not a public email domain.')
         self.timeout = timeout
 
-    def get_mx(self, email_or_domain):
+    def get_mx(self, email_or_domain, timeout):
         if six.PY2:
             cache_key = 'mxrecord/' + urlquote(
                 email_or_domain.encode('utf-8') if isinstance(email_or_domain, six.text_type) else email_or_domain,
@@ -193,7 +193,7 @@ class IsPublicEmailDomain(object):
         if domain is None:
             # Cache entry missing or corrupted; fetch a new result and update cache
             try:
-                sniffedmx = mxsniff(email_or_domain, timeout=self.timeout)
+                sniffedmx = mxsniff(email_or_domain, timeout=timeout)
             except MXLookupException:
                 # Domain lookup failed
                 return
@@ -204,7 +204,7 @@ class IsPublicEmailDomain(object):
             return mx_cache
 
     def __call__(self, form, field):
-        sniffedmx = self.get_mx(field.data)
+        sniffedmx = self.get_mx(field.data, timeout=self.timeout)
         if sniffedmx is not None and any([p['public'] for p in sniffedmx['providers']]):
             return
         else:
@@ -228,7 +228,7 @@ class IsNotPublicEmailDomain(IsPublicEmailDomain):
         self.timeout = timeout
 
     def __call__(self, form, field):
-        sniffedmx = self.get_mx(field.data)
+        sniffedmx = self.get_mx(field.data, timeout=self.timeout)
         if sniffedmx is None or not any([p['public'] for p in sniffedmx['providers']]):
             # sniffedmx is None only if the domain lookup fails.
             # This validator will pass in that case because we assume
