@@ -165,14 +165,15 @@ class NotEqualTo(_Comparison):
 class IsPublicEmailDomain(object):
     """
     Validate that field.data belongs to a public webmail domain.
-    If the domain does not exist and raises mxsniff's ``MXLookupException``,
+    If the domain lookup fails and mxsniff raises ``MXLookupException``,
     this validator will fail.
 
     :param message:
         Error message to raise in case of a validation error.
     """
-    def __init__(self, message=None):
+    def __init__(self, message=None, timeout=30):
         self.message = message or _(u'This domain is not a public email domain.')
+        self.timeout = timeout
 
     def get_mx(self, email_or_domain):
         if six.PY2:
@@ -192,9 +193,9 @@ class IsPublicEmailDomain(object):
         if domain is None:
             # Cache entry missing or corrupted; fetch a new result and update cache
             try:
-                sniffedmx = mxsniff(email_or_domain)
+                sniffedmx = mxsniff(email_or_domain, timeout=self.timeout)
             except MXLookupException:
-                # Domain does not exist
+                # Domain lookup failed
                 return
             asset_cache.set(cache_key, sniffedmx, timeout=86400)
             return sniffedmx
@@ -207,25 +208,31 @@ class IsPublicEmailDomain(object):
         if sniffedmx is not None and any([p['public'] for p in sniffedmx['providers']]):
             return
         else:
+            # sniffedmx is None only if the domain lookup fails.
+            # This validator will fail in that case
             raise ValidationError(self.message.format(domain=field.data))
 
 
 class IsNotPublicEmailDomain(IsPublicEmailDomain):
     """
     Validate that field.data does not belong to a public webmail domain.
-    If the domain does not exist and raises mxsniff's ``MXLookupException``, this validator
+    If the domain lookup fails and mxsniff raises ``MXLookupException``, this validator
     will still pass, as we expect that most domains are not public email domains.
 
     :param message:
         Error message to raise in case of a validation error.
     """
 
-    def __init__(self, message=None):
+    def __init__(self, message=None, timeout=30):
         self.message = message or _(u'This domain is a public email domain.')
+        self.timeout = timeout
 
     def __call__(self, form, field):
         sniffedmx = self.get_mx(field.data)
         if sniffedmx is None or not any([p['public'] for p in sniffedmx['providers']]):
+            # sniffedmx is None only if the domain lookup fails.
+            # This validator will pass in that case because we assume
+            # that most domains are not public email domain.
             return
         else:
             raise ValidationError(self.message.format(domain=field.data))

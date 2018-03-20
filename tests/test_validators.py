@@ -2,7 +2,7 @@
 
 import warnings
 import urllib3
-from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainFormTest
+from .fixtures import forms, TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainFormTest
 
 
 class TestValidators(TestCaseBaseframe):
@@ -36,22 +36,15 @@ class TestValidators(TestCaseBaseframe):
         with self.app.test_request_context('/'):
             # both valid
             self.webmail_form.process(
-                webmail_domain='gmail.com',
-                not_webmail_domain='foobar.com'
-            )
-            self.assertTrue(self.webmail_form.validate())
-
-            # Emoji domain, should not raise any exception
-            self.webmail_form.process(
-                webmail_domain='gmail.com',
-                not_webmail_domain='i❤.ws'
+                webmail_domain=u'gmail.com',
+                not_webmail_domain=u'i❤.ws'
             )
             self.assertTrue(self.webmail_form.validate())
 
             # both invalid
             self.webmail_form.process(
-                webmail_domain='foobar.com',
-                not_webmail_domain='yahoo.com'
+                webmail_domain=u'i❤.ws',
+                not_webmail_domain=u'gmail.com'
             )
             self.assertFalse(self.webmail_form.validate())
             self.assertIn('webmail_domain', self.webmail_form.errors)
@@ -59,18 +52,20 @@ class TestValidators(TestCaseBaseframe):
 
             # one valid, one invalid
             self.webmail_form.process(
-                webmail_domain='gmail.com',
-                not_webmail_domain='yahoo.com'
+                webmail_domain=u'gmail.com',
+                not_webmail_domain=u'gmail.com'
             )
             self.assertFalse(self.webmail_form.validate())
             self.assertNotIn('webmail_domain', self.webmail_form.errors)
             self.assertIn('not_webmail_domain', self.webmail_form.errors)
 
-            # these domain names don't exist, MX lookup will fail
-            # So, webmail_domain should fail, but not_webmail_domain should pass
+            # these domain lookups will fail because of the low timeout,
+            # webmail_domain should fail, and not_webmail_domain should pass
+            self.webmail_form.webmail_domain.validators = [forms.validators.IsPublicEmailDomain(timeout=0.01)]
+            self.webmail_form.not_webmail_domain.validators = [forms.validators.IsNotPublicEmailDomain(timeout=0.01)]
             self.webmail_form.process(
-                webmail_domain='9vGw1TMChQWH.com',
-                not_webmail_domain='9vGw1TMChQWH.com'
+                webmail_domain=u'i❤.ws',
+                not_webmail_domain=u'i❤.ws'
             )
             self.assertFalse(self.webmail_form.validate())
             self.assertIn('webmail_domain', self.webmail_form.errors)
