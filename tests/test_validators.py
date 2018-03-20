@@ -2,7 +2,7 @@
 
 import warnings
 import urllib3
-from .fixtures import forms, TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainFormTest
+from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainFormTest
 
 
 class TestValidators(TestCaseBaseframe):
@@ -59,13 +59,14 @@ class TestValidators(TestCaseBaseframe):
             self.assertNotIn('webmail_domain', self.webmail_form.errors)
             self.assertIn('not_webmail_domain', self.webmail_form.errors)
 
-            # these domain lookups will fail because of the low timeout,
-            # webmail_domain should fail, and not_webmail_domain should pass
-            self.webmail_form.webmail_domain.validators = [forms.validators.IsPublicEmailDomain(timeout=0.01)]
-            self.webmail_form.not_webmail_domain.validators = [forms.validators.IsNotPublicEmailDomain(timeout=0.01)]
+            # these domain lookups will fail because of the DNS label length limit.
+            # (abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks is 64 characters,
+            # the maximum length of a DNS label is 63 characters)
+            # ``mxsniff`` will raise ``MXLookupException`` for these domains.
+            #  So, webmail_domain should fail, and not_webmail_domain should pass.
             self.webmail_form.process(
-                webmail_domain=u'i❤.ws',
-                not_webmail_domain=u'i❤.ws'
+                webmail_domain=u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com',
+                not_webmail_domain=u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com'
             )
             self.assertFalse(self.webmail_form.validate())
             self.assertIn('webmail_domain', self.webmail_form.errors)
