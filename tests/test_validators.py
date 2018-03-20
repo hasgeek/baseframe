@@ -63,7 +63,7 @@ class TestValidators(TestCaseBaseframe):
             # (abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks is 64 characters,
             # the maximum length of a DNS label is 63 characters)
             # ``mxsniff`` will raise ``MXLookupException`` for these domains.
-            #  So, webmail_domain should fail, and not_webmail_domain should pass.
+            # So, webmail_domain should fail, and not_webmail_domain should pass.
             self.webmail_form.process(
                 webmail_domain=u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com',
                 not_webmail_domain=u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com'

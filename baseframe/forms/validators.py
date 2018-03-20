@@ -164,7 +164,7 @@ class NotEqualTo(_Comparison):
 
 class IsPublicEmailDomain(object):
     """
-    Validate that field.data belongs to a public webmail domain.
+    Validate that field.data belongs to a public email domain.
     If the domain lookup fails and mxsniff raises ``MXLookupException``,
     this validator will fail.
 
@@ -215,7 +215,7 @@ class IsPublicEmailDomain(object):
 
 class IsNotPublicEmailDomain(IsPublicEmailDomain):
     """
-    Validate that field.data does not belong to a public webmail domain.
+    Validate that field.data does not belong to a public email domain.
     If the domain lookup fails and mxsniff raises ``MXLookupException``, this validator
     will still pass, as we expect that most domains are not public email domains.
 
@@ -232,7 +232,7 @@ class IsNotPublicEmailDomain(IsPublicEmailDomain):
         if sniffedmx is None or not any([p['public'] for p in sniffedmx['providers']]):
             # sniffedmx is None only if the domain lookup fails.
             # This validator will pass in that case because we assume
-            # that most domains are not public email domain.
+            # that most domains are not public email domains.
             return
         else:
             raise ValidationError(self.message)
