@@ -11,8 +11,8 @@ from wtforms.validators import (DataRequired, InputRequired, Optional, Length, E
 import requests
 from lxml import html
 from coaster.utils import make_name, deobfuscate_email
-from mxsniff import mxsniff, MXLookupException
 from .. import b_ as _, b__ as __, asset_cache
+from .helper import is_public_email_domain
 from ..signals import exception_catchall
 
 
@@ -175,45 +175,14 @@ class IsPublicEmailDomain(object):
         self.message = message or _(u'This domain is not a public email domain.')
         self.timeout = timeout
 
-    def get_mx(self, email_or_domain, timeout):
-        if six.PY2:
-            cache_key = 'mxrecord/' + urlquote(
-                email_or_domain.encode('utf-8') if isinstance(email_or_domain, six.text_type) else email_or_domain,
-                safe='')
-        else:
-            cache_key = 'mxrecord/' + urlquote(email_or_domain, safe='')
-
-        mx_cache = asset_cache.get(cache_key)
-
-        if mx_cache and isinstance(mx_cache, dict):
-            domain = mx_cache.get('domain')
-        else:
-            domain = None
-
-        if domain is None:
-            # Cache entry missing or corrupted; fetch a new result and update cache
-            try:
-                sniffedmx = mxsniff(email_or_domain, timeout=timeout)
-            except MXLookupException:
-                # Domain lookup failed
-                return
-            asset_cache.set(cache_key, sniffedmx, timeout=86400)
-            return sniffedmx
-        else:
-            # cache is fine, return it
-            return mx_cache
-
     def __call__(self, form, field):
-        sniffedmx = self.get_mx(field.data, timeout=self.timeout)
-        if sniffedmx is not None and any([p['public'] for p in sniffedmx['providers']]):
+        if is_public_email_domain(field.data, timeout=self.timeout):
             return
         else:
-            # sniffedmx is None only if the domain lookup fails.
-            # This validator will fail in that case
             raise ValidationError(self.message)
 
 
-class IsNotPublicEmailDomain(IsPublicEmailDomain):
+class IsNotPublicEmailDomain(object):
     """
     Validate that field.data does not belong to a public email domain.
     If the domain lookup fails and mxsniff raises ``MXLookupException``, this validator
@@ -228,11 +197,9 @@ class IsNotPublicEmailDomain(IsPublicEmailDomain):
         self.timeout = timeout
 
     def __call__(self, form, field):
-        sniffedmx = self.get_mx(field.data, timeout=self.timeout)
-        if sniffedmx is None or not any([p['public'] for p in sniffedmx['providers']]):
-            # sniffedmx is None only if the domain lookup fails.
-            # This validator will pass in that case because we assume
-            # that most domains are not public email domains.
+        if not is_public_email_domain(field.data, timeout=self.timeout):
+            # This validator will pass in case domain lookup fails,
+            # because we assume that most domains are not public email domains.
             return
         else:
             raise ValidationError(self.message)
