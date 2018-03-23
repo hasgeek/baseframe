@@ -2,7 +2,8 @@
 
 import warnings
 import urllib3
-from baseframe.forms.helper import is_public_email_domain
+from baseframe.utils import is_public_email_domain
+from mxsniff import MXLookupException
 from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainFormTest
 
 
@@ -75,12 +76,19 @@ class TestValidators(TestCaseBaseframe):
 
     def test_public_email_domain_helper(self):
         with self.app.test_request_context('/'):
-            self.assertEqual(is_public_email_domain(u'gmail.com'), True)
-            self.assertEqual(is_public_email_domain(u'i❤.ws'), False)
-            # this domain lookup fails, so the helper should return False
+            self.assertEqual(is_public_email_domain(u'gmail.com', default=False), True)
+            self.assertEqual(is_public_email_domain(u'google.com', default=False), False)
+            # this domain lookup fails, so the helper should return default value
             self.assertEqual(
-                is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com'),
+                is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com', default=False),
                 False)
+            self.assertEqual(
+                is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com', default=True),
+                True)
+            # as no default is provided and the domain will trigger MXLookupExceptiom
+            # the helper function will raise as expection
+            with self.assertRaises(MXLookupException):
+                is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com')
 
     def test_url_without_protocol(self):
         with self.app.test_request_context('/'):

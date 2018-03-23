@@ -12,7 +12,7 @@ import requests
 from lxml import html
 from coaster.utils import make_name, deobfuscate_email
 from .. import b_ as _, b__ as __, asset_cache
-from .helper import is_public_email_domain
+from ..utils import is_public_email_domain
 from ..signals import exception_catchall
 
 
@@ -176,7 +176,7 @@ class IsPublicEmailDomain(object):
         self.timeout = timeout
 
     def __call__(self, form, field):
-        if is_public_email_domain(field.data, timeout=self.timeout):
+        if is_public_email_domain(field.data, default=False, timeout=self.timeout):
             return
         else:
             raise ValidationError(self.message)
@@ -197,9 +197,7 @@ class IsNotPublicEmailDomain(object):
         self.timeout = timeout
 
     def __call__(self, form, field):
-        if not is_public_email_domain(field.data, timeout=self.timeout):
-            # This validator will pass in case domain lookup fails,
-            # because we assume that most domains are not public email domains.
+        if not is_public_email_domain(field.data, default=False, timeout=self.timeout):
             return
         else:
             raise ValidationError(self.message)
