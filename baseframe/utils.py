@@ -32,14 +32,16 @@ def is_public_email_domain(email_or_domain, default=None, timeout=30):
         # Cache entry missing or corrupted; fetch a new result and update cache
         try:
             sniffedmx = mxsniff(email_or_domain, timeout=timeout)
+            asset_cache.set(cache_key, sniffedmx, timeout=86400)
         except MXLookupException as e:
             # Domain lookup failed
             if default is None:
                 raise e
-        asset_cache.set(cache_key, sniffedmx, timeout=86400)
 
-    if sniffedmx is not None and any([p['public'] for p in sniffedmx['providers']]):
+    if sniffedmx is None:
+        # Domain lookup failed
+        return default
+    elif any([p['public'] for p in sniffedmx['providers']]):
         return True
     else:
-        # in that case return default
-        return default
+        return False
