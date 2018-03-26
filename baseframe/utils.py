@@ -38,7 +38,7 @@ def is_public_email_domain(email_or_domain, default=None, timeout=30):
                 raise e
         asset_cache.set(cache_key, sniffedmx, timeout=86400)
 
-    if any([p['public'] for p in sniffedmx['providers']]):
+    if sniffedmx is not None and any([p['public'] for p in sniffedmx['providers']]):
         return True
     else:
         # in that case return default
