@@ -76,7 +76,7 @@ class TestValidators(TestCaseBaseframe):
 
     def test_public_email_domain_helper(self):
         with self.app.test_request_context('/'):
-            # As no default is provided and the domain will trigger MXLookupExceptiom
+            # As no default is provided and the domain lookup will trigger MXLookupExceptiom
             # the helper function will raise as expection
             with self.assertRaises(MXLookupException):
                 is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com')
