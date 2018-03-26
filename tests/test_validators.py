@@ -76,6 +76,11 @@ class TestValidators(TestCaseBaseframe):
 
     def test_public_email_domain_helper(self):
         with self.app.test_request_context('/'):
+            # As no default is provided and the domain will trigger MXLookupExceptiom
+            # the helper function will raise as expection
+            with self.assertRaises(MXLookupException):
+                is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com')
+
             self.assertEqual(is_public_email_domain(u'gmail.com', default=False), True)
             self.assertEqual(is_public_email_domain(u'google.com', default=False), False)
             # this domain lookup fails, so the helper should return default value
@@ -85,10 +90,6 @@ class TestValidators(TestCaseBaseframe):
             self.assertEqual(
                 is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com', default=True),
                 True)
-            # as no default is provided and the domain will trigger MXLookupExceptiom
-            # the helper function will raise as expection
-            with self.assertRaises(MXLookupException):
-                is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com')
 
     def test_url_without_protocol(self):
         with self.app.test_request_context('/'):
