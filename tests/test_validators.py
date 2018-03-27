@@ -76,14 +76,15 @@ class TestValidators(TestCaseBaseframe):
 
     def test_public_email_domain_helper(self):
         with self.app.test_request_context('/'):
-            # As no default is provided and the domain lookup will trigger MXLookupExceptiom
-            # the helper function will raise as expection
+            self.assertEqual(is_public_email_domain(u'gmail.com', default=False), True)
+            self.assertEqual(is_public_email_domain(u'google.com', default=False), False)
+
+            # Intentionally trigger a DNS lookup failure using an invalid domain name.
+            # Since no default is provided, we will receive an exception.
             with self.assertRaises(MXLookupException):
                 is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com')
 
-            self.assertEqual(is_public_email_domain(u'gmail.com', default=False), True)
-            self.assertEqual(is_public_email_domain(u'google.com', default=False), False)
-            # this domain lookup fails, so the helper should return default value
+            # If default value is provided, it'll return default is case of DNS lookup failure.
             self.assertEqual(
                 is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com', default=False),
                 False)
