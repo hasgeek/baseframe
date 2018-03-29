@@ -2,6 +2,8 @@
 
 import warnings
 import urllib3
+from baseframe.utils import is_public_email_domain
+from mxsniff import MXLookupException
 from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainFormTest
 
 
@@ -71,6 +73,24 @@ class TestValidators(TestCaseBaseframe):
             self.assertFalse(self.webmail_form.validate())
             self.assertIn('webmail_domain', self.webmail_form.errors)
             self.assertNotIn('not_webmail_domain', self.webmail_form.errors)
+
+    def test_public_email_domain_helper(self):
+        with self.app.test_request_context('/'):
+            self.assertEqual(is_public_email_domain(u'gmail.com', default=False), True)
+            self.assertEqual(is_public_email_domain(u'google.com', default=False), False)
+
+            # Intentionally trigger a DNS lookup failure using an invalid domain name.
+            # Since no default is provided, we will receive an exception.
+            with self.assertRaises(MXLookupException):
+                is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com')
+
+            # If default value is provided, it'll return default is case of DNS lookup failure.
+            self.assertEqual(
+                is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com', default=False),
+                False)
+            self.assertEqual(
+                is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com', default=True),
+                True)
 
     def test_url_without_protocol(self):
         with self.app.test_request_context('/'):
