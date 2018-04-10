@@ -111,13 +111,15 @@
   {% if message %}<p>{{ message }}</p>{% endif %}
   <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
   {{ form.hidden_tag() }}
-  {%- set autofocus = true %}
   {% for field in form -%}
     {%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
       {# Don't show hidden #}
     {%- else -%}
-      {{ renderfield(field, autofocus=autofocus, style=style) }}
-      {%- if autofocus %}{% set autofocus = false %}{% endif %}
+      {% if loop.first %}
+        {{ renderfield(field, autofocus=true, style=style) }}
+      {%- else -%}
+        {{ renderfield(field, style=style) }}
+      {% endif %}
     {%- endif %}
   {% endfor %}
 {%- endmacro %}
