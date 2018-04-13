@@ -128,13 +128,34 @@
   {% if message %}<p>{{ message }}</p>{% endif %}
   <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
   {{ form.hidden_tag() }}
-  {%- set autofocus = true %}
+   <!--  In jinja, global scoped variables can't be modified inside a loop. https://github.com/pallets/jinja/issues/641. Hence using a dictionary to set autofocus and check if it is first field.
+  Autofocus is set true for the first field of the form provided it is not radio or checkbox.
+  In case of validation errors, autofocus is set true for the first field with an error.-->
+  {% set autofocus = {'set':false, 'first_field': false} %}
   {% for field in form -%}
     {%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
       {# Don't show hidden #}
     {%- else -%}
-      {{ renderfield(field, autofocus=autofocus, style=style) }}
-      {%- if autofocus %}{% set autofocus = false %}{% endif %}
+      {%- if form.errors %}
+        {% if not autofocus.first_field %}
+          {% if field.errors %}
+            {% if autofocus.update({'set': true}) %}{% endif %}
+            {% if autofocus.update({'first_field': true}) %}{% endif %}
+          {% endif %}
+        {%- else -%}
+          {% if autofocus.update({'set': false}) %}{% endif %}
+        {% endif %}
+      {%- else -%}
+        {% if not autofocus.first_field %}
+          {% if field.type != 'RadioField' and field.type != 'BooleanField' %}
+            {% if autofocus.update({'set': true}) %}{% endif %}
+            {% if autofocus.update({'first_field': true}) %}{% endif %}
+          {% endif %}
+        {%- else -%}
+          {% if autofocus.update({'set': false}) %}{% endif %}
+        {% endif %}
+      {% endif %}
+      {{ renderfield(field, autofocus=autofocus.set, style=style) }}
     {%- endif %}
   {% endfor %}
 {%- endmacro %}
