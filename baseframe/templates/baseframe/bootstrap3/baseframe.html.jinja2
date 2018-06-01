@@ -136,7 +136,7 @@
       // Track Device Pixel Ratio
       var pixelRatio = window.getDevicePixelRatio();
       ga('set', 'metric1', pixelRatio);
-      {% block customgasettings -%}{%- endblock %}
+      ga('set', 'dimension1', {{ request.endpoint|tojson }});
       ga('send', 'pageview');
     </script>
   {%- endif -%}
