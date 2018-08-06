@@ -110,7 +110,7 @@
     {% if cancel_url %}<a href="{{ cancel_url }}" class="mui-btn mui-btn--raised mui-btn--primary">{% trans %}Cancel{% endtrans %}</a>{% endif %}
     <span class="loading hidden">&nbsp;</span>
     {% if csrf_error -%}
-      <div><p class="help-error">{% trans -%}
+      <div><p class="mui-form--error">{% trans -%}
         This form has timed out. Please submit again to confirm
       {%- endtrans %}</p></div>
     {%- endif %}

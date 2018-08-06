@@ -1228,68 +1228,6 @@
   margin-top: auto;
 }
 
-.mui--text-display3 {
-  font-weight: 400;
-  font-size: 64px;
-  line-height: 64px;
-}
-
-.mui--text-display2 {
-  font-weight: 400;
-  font-size: 48px;
-  line-height: 58px;
-}
-
-.mui--text-display1, h1, h1 {
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 40px;
-}
-
-.mui--text-headline, h2, .header__site-title, .header__site-title__item, h2 {
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 32px;
-}
-
-.mui--text-title, h3, .header__side-nav-list .header__side-nav-list__item__icon, .modal .modal__header, h3 {
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 28px;
-}
-
-.mui--text-subhead, h4, .header__nav-links, .alert .alert__text, h4 {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-}
-
-.mui--text-body2, h5, .header__dropdown-app-title, .header__side-nav-list .header__side-nav-list__item, .card .card__body, .modal .modal__body, h5 {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
-}
-
-.mui--text-body1 {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
-}
-
-.mui--text-caption, .footer .footer__container, .mui-form .mui-form--sidetext,
-.mui-form .mui-form--helptext, .mui-form .mui-form--error, .chip .chip__text, h6 {
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
-}
-
-.mui--text-menu,
-.mui--text-button {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 18px;
-}
-
 /**
  * MUI Colors module
  */
@@ -1758,6 +1696,11 @@ body {
   background-color: #F9FAFC;
 }
 
+@media (min-width: 1200px) {
+  body {
+    font-size: 16px;
+  }
+}
 a {
   color: #4A90E2;
   text-decoration: none;
@@ -3317,6 +3260,100 @@ h4, h5, h6 {
   background-color: #a6a6a6;
 }
 
+.mui-list--aligned {
+  padding-left: 1em;
+}
+
+.mui--d-block {
+  display: block;
+}
+
+.mui--d-inlineblock {
+  display: inline-block;
+}
+
+.mui--d-inline {
+  display: inline;
+}
+
+.mui--bg-primary {
+  background-color: #FFFFFF;
+}
+
+.mui--bg-primary-dark {
+  background-color: #1F2D3D;
+}
+
+.mui--bg-primary-light {
+  background-color: #EFF2F7;
+}
+
+.mui--bg-accent {
+  background-color: #F9FAFC;
+}
+
+.mui--text-display3 {
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 64px;
+}
+
+.mui--text-display2 {
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 58px;
+}
+
+.mui--text-display1, h1, h1 {
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.mui--text-headline, h2, .header__site-title, .header__site-title__item, h2 {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.mui--text-title, h3, .header__side-nav-list .header__side-nav-list__item__icon, .form-message, .modal .modal__header, h3 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.mui--text-subhead, h4, .header__nav-links, .alert .alert__text, h4 {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.mui--text-body2, h5, .header__dropdown-app-title, .header__side-nav-list .header__side-nav-list__item, .card .card__body, .modal .modal__body, h5 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.mui--text-body1 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.mui--text-caption, .footer .footer__container, .mui-form .mui-form--sidetext,
+.mui-form .mui-form--helptext, .mui-form .mui-form--error, .chip .chip__text, h6 {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.mui--text-menu,
+.mui--text-button {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+}
+
 .mui-appbar--custom {
   min-height: 40px;
   height: 56px;
@@ -3454,7 +3491,6 @@ h4, h5, h6 {
 .content-wrapper {
   position: relative;
   z-index: 1;
-  overflow-x: hidden;
 }
 
 .sidebar {
@@ -3528,11 +3564,6 @@ h1, h2, h3 {
     padding-right: 2em;
   }
 }
-.mui-form--margins {
-  margin-top: 3em;
-  margin-bottom: 2em;
-}
-
 .table-wrapper {
   overflow-x: auto;
 }
@@ -3568,7 +3599,7 @@ h1, h2, h3 {
   clear: both;
   position: relative;
   margin-top: 1em;
-  background: whiteSmoke url('/_baseframe/img/shadow.png?1460092674') no-repeat top center;
+  background: whiteSmoke no-repeat top center;
 }
 .footer .footer__container {
   min-height: 25px;
@@ -3617,11 +3648,21 @@ h1, h2, h3 {
   color: #C04B61;
 }
 
+.mui-form--margins {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
 .mui-select {
   margin-top: 20px;
 }
 .mui-select > label {
   top: -5px;
+}
+
+.mui-form--inline {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .listwidget ul, .listwidget ol {
@@ -3639,7 +3680,7 @@ h1, h2, h3 {
 .listwidget ul input, .listwidget ol input {
   position: absolute;
   left: -1.25em;
-  top: 0.45em;
+  top: 0.25em;
 }
 
 .listwidget ul label, .listwidget ol label {
@@ -3682,11 +3723,6 @@ h1, h2, h3 {
 .card .card__header {
   padding: 1em;
   background: #EFF2F7;
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  flex-direction: row;
 }
 .card .card__header__title {
   width: 80%;
@@ -3703,11 +3739,6 @@ h1, h2, h3 {
 }
 .card .card__body {
   padding: 0.5em 1em;
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  flex-direction: row;
 }
 .card .card__body__text {
   width: 75%;
@@ -3848,7 +3879,12 @@ h1, h2, h3 {
   font-size: 34px;
 }
 
+.jquery-modal.blocker.current {
+  z-index: 1040;
+}
+
 .modal {
+  display: none;
   padding: 1em;
 }
 .modal a.close-modal {
@@ -3858,6 +3894,10 @@ h1, h2, h3 {
   position: absolute;
   top: 8px;
   right: 8px;
+  display: block;
+}
+
+.jquery-modal.blocker.current > .modal {
   display: block;
 }
 
@@ -3890,4 +3930,53 @@ h1, h2, h3 {
 .tab-container .tab-container__tab a:hover {
   text-decoration: none;
   outline: none;
+}
+
+.mui-table.mui-table--hover > tbody > tr > td:hover {
+  background-color: #BBDEFB;
+}
+
+@media (max-width: 767px) {
+  .mui-table.mui-table--responsive {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: block;
+    position: relative;
+  }
+  .mui-table.mui-table--responsive > thead {
+    border: 0;
+    border-right: 2px solid rgba(132, 146, 166, 0.3);
+    display: block;
+    float: left;
+  }
+  .mui-table.mui-table--responsive > thead > tr {
+    display: block;
+  }
+  .mui-table.mui-table--responsive > thead > tr > th {
+    display: block;
+    text-align: right;
+    border-bottom: none;
+    padding: 15px 10px;
+  }
+  .mui-table.mui-table--responsive > tbody {
+    display: block;
+    width: auto;
+    position: relative;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .mui-table.mui-table--responsive > tbody > tr {
+    display: inline-block;
+    vertical-align: top;
+    text-align: right;
+  }
+  .mui-table.mui-table--responsive > tbody > tr > td {
+    display: block;
+    text-align: left;
+    margin: 0;
+    vertical-align: top;
+    border-bottom: none;
+    padding: 15px 10px;
+  }
 }
