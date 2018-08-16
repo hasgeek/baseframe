@@ -110,8 +110,9 @@ class BaseframeBlueprint(Blueprint):
         app.jinja_env.autoescape = _select_jinja_autoescape
         if app.subdomain_matching:
             subdomain = app.config.get('STATIC_SUBDOMAIN', 'static')
-            app.add_url_rule('/static/<path:filename>', endpoint='static',
-                view_func=app.send_static_file, subdomain=subdomain)
+            for rule in app.url_map.iter_rules('static'):
+                rule.subdomain = subdomain
+                rule.refresh()
         else:
             subdomain = None
 
