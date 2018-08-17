@@ -109,9 +109,20 @@ class BaseframeBlueprint(Blueprint):
         app.jinja_env.add_extension('jinja2.ext.do')
         app.jinja_env.autoescape = _select_jinja_autoescape
         if app.subdomain_matching:
-            subdomain = app.config.get('STATIC_SUBDOMAIN', 'static')
-            app.add_url_rule('/static/<path:filename>', endpoint='static',
-                view_func=app.send_static_file, subdomain=subdomain)
+            # Does this app want a static subdomain? (Default: yes, 'static').
+            # Apps can disable this by setting STATIC_SUBDOMAIN = None.
+            # Since Werkzeug internally uses '' instead of None, but takes None
+            # as the default parameter, we remap '' to None in our config
+            subdomain = app.config.get('STATIC_SUBDOMAIN', 'static') or None
+            if subdomain:
+                for rule in app.url_map.iter_rules('static'):
+                    # For safety, seek out and update the static route added by Flask.
+                    # Do not touch additional static routes added by the app or other
+                    # blueprints
+                    if not rule.subdomain:  # Will be '' not None
+                        rule.subdomain = subdomain
+                        rule.refresh()
+                        break
         else:
             subdomain = None
 
