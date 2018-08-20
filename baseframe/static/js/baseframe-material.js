@@ -4,6 +4,11 @@ function activate_widgets() {
   // Activate select2.js for non-mobile browsers
   if (!Modernizr.touch) {
     $('select:not(.notselect)').select2();
+
+    //Remove the scroll lock class added by mui.js on opening select menu
+    $('select:not(.notselect)').on("select2:select", function(e) {
+      $('body').removeClass('mui-scroll-lock');
+    });
   }
 
   var cm_markdown_config = { mode: 'gfm',

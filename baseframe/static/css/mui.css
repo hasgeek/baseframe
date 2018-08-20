@@ -3341,7 +3341,7 @@ h4, h5, h6 {
 }
 
 .mui--text-caption, .footer .footer__container, .mui-form .mui-form--sidetext,
-.mui-form .mui-form--helptext, .mui-form .mui-form--error, .chip .chip__text, h6 {
+.mui-form .mui-form--helptext, .mui-form .mui-form--error, h6 {
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
@@ -3541,13 +3541,6 @@ h1, h2, h3 {
   margin-bottom: 8px;
 }
 
-.mui-btn .material-icons,
-.material-icons--small {
-  vertical-align: bottom;
-  font-size: 18px;
-  line-height: inherit;
-}
-
 .mui-divider {
   width: 100%;
 }
@@ -3647,6 +3640,9 @@ h1, h2, h3 {
 .mui-form .has-error .mui-textfield.mui-textfield--float-label > label {
   color: #C04B61;
 }
+.mui-form .mui-form--label {
+  font-weight: bold;
+}
 
 .mui-form--margins {
   margin-top: 1em;
@@ -3658,11 +3654,6 @@ h1, h2, h3 {
 }
 .mui-select > label {
   top: -5px;
-}
-
-.mui-form--inline {
-  display: inline-block;
-  vertical-align: middle;
 }
 
 .listwidget ul, .listwidget ol {
@@ -3688,7 +3679,7 @@ h1, h2, h3 {
 }
 
 .chip {
-  padding: 0 5px;
+  padding: 0 5px 5px;
   border: 0;
   border-radius: 2px;
   background-color: #F7e2c5;
@@ -3696,10 +3687,30 @@ h1, h2, h3 {
   color: #906B37;
   white-space: nowrap;
 }
-.chip .chip__text {
-  line-height: 1;
-  vertical-align: middle;
-  display: inline-block;
+
+.chip--bg-primary {
+  background-color: #FFFFFF;
+  color: #1F2D3D;
+}
+
+.chip--bg-accent {
+  background-color: #F9FAFC;
+  color: #1F2D3D;
+}
+
+.chip--bg-light {
+  background-color: #EFF2F7;
+  color: #1F2D3D;
+}
+
+.chip--bg-dark {
+  background-color: #1F2D3D;
+  color: #1F2D3D;
+}
+
+.chip--bg-danger {
+  background-color: #C04B61;
+  color: #FFF;
 }
 
 .chip + .chip {
@@ -3879,10 +3890,6 @@ h1, h2, h3 {
   font-size: 34px;
 }
 
-.jquery-modal.blocker.current {
-  z-index: 1040;
-}
-
 .modal {
   display: none;
   padding: 1em;
@@ -3898,7 +3905,7 @@ h1, h2, h3 {
 }
 
 .jquery-modal.blocker.current > .modal {
-  display: block;
+  display: inline-block;
 }
 
 .tab-container {
@@ -3908,7 +3915,6 @@ h1, h2, h3 {
   list-style: none;
 }
 .tab-container .tab-container__tab {
-  min-width: 20px;
   flex: 1 0 0;
   padding: 8px;
   opacity: 0.4;

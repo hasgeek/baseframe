@@ -1,7 +1,3 @@
-.jquery-modal.blocker.current {
-  z-index: 1040;
-}
-
 .modal {
   display: none;
   padding: 1em;
@@ -28,6 +24,6 @@
 
 .jquery-modal.blocker.current {
   > .modal {
-    display: block;
+    display: inline-block;
   }
 }

@@ -67,7 +67,7 @@
                 <p class="mui-form--helptext">{{ field.description }}</p>
               {%- endif %}
             </div>
-          {%- elif field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextListField', 'MarkdownField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol'] %}
+          {%- elif field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextListField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-select">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
@@ -80,6 +80,7 @@
               {%- endif %}
             </div>
           {%- else %}
+            {%- if not nolabel %}<label class="mui-form--label">{{ field.label.text }}</label>{%- endif %}
             <div class="mui-textfield">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               {%- if sidetext %}
@@ -125,7 +126,7 @@
       <p class="alert__text"><i class="material-icons alert__icon">error</i> {% trans %}Please review the indicated issues{% endtrans %}</p>
     </div>
   {%- endif %}
-  {% if message %}<p>{{ message }}</p>{% endif %}
+  {% if message %}<p{{ message }}</p>{% endif %}
   <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
   {{ form.hidden_tag() }}
   {%- set autofocus = true %}
@@ -139,8 +140,8 @@
   {% endfor %}
 {%- endmacro %}
 
-{% macro renderform(form, formid, submit, ref_id='form', message='', action='', cancel_url='', multipart=false, style='horiz') %}
-<form data-parsley-validate id="{{ ref_id }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins hg-form">
+{% macro renderform(form, formid, submit, ref_id='form', message='', action='', cancel_url='', multipart=false, style='') %}
+<form data-parsley-validate id="{{ ref_id }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins hg-form {%- if style == 'horiz' %} mui-form--inline{% endif %}">
   {{ renderform_inner(form, formid or none, style=style) }}
   {{ rendersubmit([(none, submit or _("Submit"), 'mui-btn--primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>

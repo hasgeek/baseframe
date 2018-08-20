@@ -1,18 +1,36 @@
 .chip {
-	padding: 0 5px;
+	padding: 0 5px 5px;
 	border: 0;
 	border-radius: $mui-border-radius-default;
 	background-color: #F7e2c5;
 	display: inline-block;
 	color: #906B37;
 	white-space: nowrap;
+}
 
-	.chip__text {
-	    @extend .mui--text-caption;
-	  	line-height: 1;
-	  	vertical-align: middle;
-	  	display: inline-block;
-	}
+.chip--bg-primary {
+	background-color: $mui-bg-color-primary;
+	color: $mui-text-dark;
+}
+
+.chip--bg-accent {
+	background-color: $mui-bg-color-accent;
+	color: $mui-text-dark;
+}
+
+.chip--bg-light {
+	background-color: $mui-bg-color-light;
+	color: $mui-text-dark;
+}
+
+.chip--bg-dark {
+	background-color: $mui-bg-color-dark;
+	color: $mui-text-dark;
+}
+
+.chip--bg-danger {
+	background-color: $mui-danger-color;
+	color: mui-color('white');
 }
 
 .chip + .chip {
