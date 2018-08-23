@@ -3602,7 +3602,6 @@ h1, h2, h3 {
 }
 .footer .footer__container p {
   font-size: inherit;
-  margin: 0;
 }
 
 @media (min-width: 1200px) {
