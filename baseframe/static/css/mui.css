@@ -3592,7 +3592,7 @@ h1, h2, h3 {
   clear: both;
   position: relative;
   margin-top: 1em;
-  background: whiteSmoke no-repeat top center;
+  background: whiteSmoke url('/_baseframe/img/shadow.png?1460092674') no-repeat top center;
 }
 .footer .footer__container {
   min-height: 25px;
