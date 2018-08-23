@@ -44,7 +44,14 @@
   }
 
   .mui-form--label {
-    font-weight: bold;
+    color: $mui-label-font-color;
+    font-size: $mui-label-font-size;
+    line-height: $xFormLabelLineHeight;
+  }
+
+  .mui-radio,
+  .mui-checkbox {
+    margin-bottom: 20px;
   }
 }
 

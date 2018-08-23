@@ -3640,7 +3640,13 @@ h1, h2, h3 {
   color: #C04B61;
 }
 .mui-form .mui-form--label {
-  font-weight: bold;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px;
+  line-height: 15px;
+}
+.mui-form .mui-radio,
+.mui-form .mui-checkbox {
+  margin-bottom: 20px;
 }
 
 .mui-form--margins {
