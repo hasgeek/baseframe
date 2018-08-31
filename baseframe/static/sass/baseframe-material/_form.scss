@@ -65,6 +65,9 @@
   > label {
     top: -$mui-form-group-margin-bottom/4;
   }
+  .select2 {
+    width: 100% !important;
+  }
 }
 
 .listwidget ul, .listwidget ol {

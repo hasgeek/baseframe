@@ -55,8 +55,20 @@
             </div>
           {%- elif field.type == 'CoordinatesField' %}
             {{ map_marker_widget(field) }}
-          {%- elif field.widget.input_type in ['text', 'password', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month', 'number', 'search', 'tel', 'time', 'url', 'week'] and field.widget.html_tag not in ['ul', 'ol'] %}
+          {%- elif field.widget.input_type in ['text', 'email', 'search', 'url', 'number', 'tel'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-textfield mui-textfield--float-label">
+              {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+              <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
+              {%- if sidetext %}
+                <span class="mui-form--sidetext">{{sidetext}}</span>
+              {%- endif %}
+              {{ rendererrors(field) }}
+              {%- if field.description %}
+                <p class="mui-form--helptext">{{ field.description }}</p>
+              {%- endif %}
+            </div>
+          {%- elif field.widget.input_type in ['password', 'color', 'date', 'datetime', 'datetime-local', 'month', 'time', 'week'] and field.widget.html_tag not in ['ul', 'ol'] %}
+            <div class="mui-textfield">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
               {%- if sidetext %}
@@ -258,12 +270,14 @@
 {% endmacro %}
 
 {% macro map_marker_widget(field) %}
-  <div class="input-group no-jshidden">
-    <span class="input-group-addon"><i class="fa fa-search"></i></span>
-    <input type="text" class="form-control" id="{{ field.id }}_search" placeholder="Enter a location">
+  <div class="map">
+    <div class="mui-textfield no-jshidden">
+      <i class="material-icons mui--align-middle map__search-icon">search</i>
+      <input type="text" class="map__search-field" id="{{ field.id }}_search" placeholder="Enter a location">
+    </div>
+    <div id="{{ field.id }}_map" class="no-jshidden map__marker"></div>
+    <div class="jshidden">{{ field(class="field-" + field.id + " form-control") }}</div>
   </div>
-  <div id="{{ field.id }}_map" class="no-jshidden map-marker"></div>
-  <div class="jshidden">{{ field(class="field-" + field.id + " form-control") }}</div>
 {% endmacro %}
 
 {% macro map_marker_script(field) %}

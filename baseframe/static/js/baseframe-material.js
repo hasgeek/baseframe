@@ -372,8 +372,8 @@ window.Baseframe.MapMarker.prototype.getDefaultLocation = function() {
 
 window.ParsleyConfig = {
   errorsWrapper: '<div></div>',
-  errorTemplate: '<p class="help-error"></p>',
-  errorClass: 'has-error',
+  errorTemplate: '<p class="mui-form--error"></p>',
+  errorClass: 'mui-form--error',
   classHandler: function(ParsleyField) {
     return ParsleyField.$element.closest('.form-group');
   },

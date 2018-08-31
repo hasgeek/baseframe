@@ -47,3 +47,59 @@ h1, h2, h3 {
   background-color: $mui-overlay-bg-color;
   z-index: 2;
 }
+
+.map {
+  .map__search-icon {
+    width: 26px;
+    display: inline-block;
+  }
+
+  .map__search-field {
+    width: calc(100% - 30px);
+    display: inline-block;
+  }
+
+  .map__marker {
+    margin-top: $mui-base-line-height / 2;
+    width: 100%;
+    height: 20em;
+    margin-bottom: 20px;
+  }
+}
+
+/* Cookies */
+.cookies-required-alert,
+.no-cookies .cookies-required {
+  display: none
+}
+
+.cookies-required,
+.no-cookies .cookies-required-alert {
+  display: block
+}
+
+.no-cookies .cookies-required-alert {
+  margin-top: 1em
+}
+
+.js .jshidden,
+.js .no-js-only {
+  display: none;
+  visibility: hidden;
+}
+
+.no-js .no-jshidden,
+.no-js .js-only {
+  display: none;
+  visibility: hidden;
+}
+
+.userlogin .no-userlogin-only {
+  display: none;
+  visibility: hidden;
+}
+
+.no-userlogin .userlogin-only {
+  display: none;
+  visibility: hidden;
+}
