@@ -234,7 +234,7 @@ class BaseframeBlueprint(Blueprint):
         # If this app has a Lastuser extension registered, give it a cache
         lastuser = getattr(app, 'extensions', {}).get('lastuser')
         if lastuser and hasattr(lastuser, 'init_cache'):
-            lastuser.init_cache(cache)
+            lastuser.init_cache(app=app, cache=cache)
 
         app.config['tz'] = timezone(app.config.get('TIMEZONE', 'UTC'))
 
