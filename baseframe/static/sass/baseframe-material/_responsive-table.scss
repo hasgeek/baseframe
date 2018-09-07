@@ -10,50 +10,50 @@
 
 @media (max-width: 767px) {
 	.mui-table.mui-table--responsive {
-	  width: 100%;
-	  border-collapse: collapse;
-	  border-spacing: 0;
-	  display: block;
-	  position: relative;
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        position: relative;
 
-	  > thead {
-	    border: 0;
-		  border-right: 2px solid $mui-table-border-color;
-		  display: block;
-		  float: left;
+        > thead {
+            border: 0;
+            border-right: 2px solid $mui-table-border-color;
+            display: block;
+            float: left;
 
-	  	> tr {
-	  		display: block;
+	  	    > tr {
+                display: block;
 
-	  		> th {
-			  	display: block;
-			  	text-align: right;
-			  	border-bottom: none;
-			  	padding: 15px 10px;
+                > th {
+    			  	display: block;
+    			  	text-align: right;
+    			  	border-bottom: none;
+    			  	padding: 15px 10px;
 				}
 			}
 		}
 
 		> tbody {
-			display: block;
-		  width: auto;
-		  position: relative;
-		  overflow-x: auto;
-		  white-space: nowrap;
+            display: block;
+            width: auto;
+            position: relative;
+            overflow-x: auto;
+            white-space: nowrap;
 
-		  > tr {
-			  display: inline-block;
-			  vertical-align: top;
-			  text-align: right;
+            > tr {
+                display: inline-block;
+                vertical-align: top;
+                text-align: right;
 
-			  > td {
-				  display: block;
-				  text-align: left;
-				  margin: 0;
-				  vertical-align: top;
-				  border-bottom: none;
-				  padding: 15px 10px;
-				}
+                > td {
+                    display: block;
+                    text-align: left;
+                    margin: 0;
+                    vertical-align: top;
+                    border-bottom: none;
+                    padding: 15px 10px;
+                }
 			}
 		}
 	}

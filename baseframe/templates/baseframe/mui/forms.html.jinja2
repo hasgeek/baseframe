@@ -138,7 +138,7 @@
       <p class="alert__text"><i class="material-icons alert__icon">error</i> {% trans %}Please review the indicated issues{% endtrans %}</p>
     </div>
   {%- endif %}
-  {% if message %}<p{{ message }}</p>{% endif %}
+  {% if message %}<p>{{ message }}</p>{% endif %}
   <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
   {{ form.hidden_tag() }}
   {%- set autofocus = true %}
