@@ -9,6 +9,19 @@
   @jackerhack
   Bangalore, india
 
+  Vidya Ramakrishnan
+  @vidya_ramki
+  Bangalore, India
+
+  Bibhas Debnath
+  @bibhasdn
+  Bangalore, India
+
+  Stephanie Browne
+  Bangalore, India
+
+/* ALUMNI */
+
   Shreyas Satish
   http://shreyas.io/
   @shreyas_satish
@@ -18,14 +31,11 @@
   http://www.karthikbalakrishnan.com/
   @karthikb351
   Bangalore, India
-  
-  Vidya Ramakrishnan
-  @vidya_ramki
+
+  Sindhu Sundar
+  @sindhu
   Bangalore, India
-
   
-/* ALUMNI */
-
   Mitesh B Ashar
   http://www.miteshashar.com/
   @iMBA
@@ -167,6 +177,6 @@
 /* SITE */
 
   Standards: HTML5, CSS3
-  Components: Coaster+Baseframe+Lastuser, SQLAlchemy, Flask, Twitter Bootstrap, Compass
-  Software: Python, Sublime Text, Mac OS X, Ubuntu, Vim, Gimp, Inkscape
+  Components: Coaster+Baseframe+Lastuser, SQLAlchemy, Flask, Twitter Bootstrap, Compass, MUI
+  Software: Python, Sublime Text, VS Code, Cloud 9, Mac OS X, Ubuntu, Vim, Gimp, Inkscape
   Source: https://github.com/hasgeek

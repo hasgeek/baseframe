@@ -108,10 +108,21 @@ class BaseframeBlueprint(Blueprint):
             app.jinja_env.auto_reload = True
         app.jinja_env.add_extension('jinja2.ext.do')
         app.jinja_env.autoescape = _select_jinja_autoescape
-        if app.config.get('SERVER_NAME'):
-            subdomain = app.config.get('STATIC_SUBDOMAIN', 'static')
-            app.add_url_rule('/static/<path:filename>', endpoint='static',
-                view_func=app.send_static_file, subdomain=subdomain)
+        if app.subdomain_matching:
+            # Does this app want a static subdomain? (Default: yes, 'static').
+            # Apps can disable this by setting STATIC_SUBDOMAIN = None.
+            # Since Werkzeug internally uses '' instead of None, but takes None
+            # as the default parameter, we remap '' to None in our config
+            subdomain = app.config.get('STATIC_SUBDOMAIN', 'static') or None
+            if subdomain:
+                for rule in app.url_map.iter_rules('static'):
+                    # For safety, seek out and update the static route added by Flask.
+                    # Do not touch additional static routes added by the app or other
+                    # blueprints
+                    if not rule.subdomain:  # Will be '' not None
+                        rule.subdomain = subdomain
+                        rule.refresh()
+                        break
         else:
             subdomain = None
 
@@ -223,7 +234,7 @@ class BaseframeBlueprint(Blueprint):
         # If this app has a Lastuser extension registered, give it a cache
         lastuser = getattr(app, 'extensions', {}).get('lastuser')
         if lastuser and hasattr(lastuser, 'init_cache'):
-            lastuser.init_cache(cache)
+            lastuser.init_cache(app=app, cache=cache)
 
         app.config['tz'] = timezone(app.config.get('TIMEZONE', 'UTC'))
 
@@ -239,18 +250,26 @@ class BaseframeBlueprint(Blueprint):
 
     def register(self, app, options, first_registration=False):
         """
-        Called by :meth:`Flask.register_blueprint` to register a blueprint
-        on the application.  This can be overridden to customize the register
-        behavior.  Keyword arguments from
-        :func:`~flask.Flask.register_blueprint` are directly forwarded to this
-        method in the `options` dictionary.
+        Called by :meth:`Flask.register_blueprint` to register all views
+        and callbacks registered on the blueprint with the application. Creates
+        a :class:`.BlueprintSetupState` and calls each :meth:`record` callback
+        with it.
+
+        :param app: The application this blueprint is being registered with.
+        :param options: Keyword arguments forwarded from
+            :meth:`~Flask.register_blueprint`.
+        :param first_registration: Whether this is the first time this
+            blueprint has been registered on the application.
         """
         self._got_registered_once = True
         state = self.make_setup_state(app, options, first_registration)
+
         if self.has_static_folder:
-            state.add_url_rule(self.static_url_path + '/<path:filename>',
-                               view_func=self.send_static_file,
-                               endpoint='static', subdomain=options.get('static_subdomain'))
+            state.add_url_rule(
+                self.static_url_path + '/<path:filename>',
+                view_func=self.send_static_file,
+                endpoint='static',
+                subdomain=options.get('static_subdomain'))
 
         for deferred in self.deferred_functions:
             deferred(state)
