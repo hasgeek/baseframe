@@ -20,6 +20,12 @@
     background-color: $mui-body-bg-color;
   }
 
+  @media (min-width: 1200px) {
+    body {
+      font-size: $mui-base-font-size-desktop;
+    }
+  }
+
   // Links
   a {
     color: $mui-link-font-color;

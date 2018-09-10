@@ -12,13 +12,6 @@ h1, h2, h3 {
     margin-bottom: 8px;
 }
 
-.mui-btn .material-icons,
-.material-icons--small {
-    vertical-align: bottom;
-    font-size: 18px;
-    line-height: inherit;
-}
-
 .mui-divider {
     width: 100%;
 }
@@ -29,16 +22,11 @@ h1, h2, h3 {
 }
 
 @media (min-width: 1200px) {
-  .main-content--with-sidebar {
-    margin-left: 160px;
-    padding-left: 2*$reflex-cell-spacing;
-    padding-right: 2*$reflex-cell-spacing;
-  }
-}
-
-.mui-form--margins {
-    margin-top: 3*$reflex-cell-spacing;
-    margin-bottom: 2*$reflex-cell-spacing;
+    .main-content--with-sidebar {
+        margin-left: 160px;
+        padding-left: 2*$reflex-cell-spacing;
+        padding-right: 2*$reflex-cell-spacing;
+    }
 }
 
 .table-wrapper {
@@ -58,4 +46,60 @@ h1, h2, h3 {
     left: 0;
     background-color: $mui-overlay-bg-color;
     z-index: 2;
+}
+
+.map {
+    .map__search-icon {
+        width: 26px;
+        display: inline-block;
+    }
+
+    .map__search-field {
+        width: calc(100% - 30px);
+        display: inline-block;
+    }
+
+    .map__marker {
+        margin-top: $mui-base-line-height / 2;
+        width: 100%;
+        height: 20em;
+        margin-bottom: 20px;
+    }
+}
+
+/* Cookies */
+.cookies-required-alert,
+.no-cookies .cookies-required {
+    display: none
+}
+
+.cookies-required,
+.no-cookies .cookies-required-alert {
+    display: block
+}
+
+.no-cookies .cookies-required-alert {
+    margin-top: 1em
+}
+
+.js .jshidden,
+.js .no-js-only {
+    display: none;
+    visibility: hidden;
+}
+
+.no-js .no-jshidden,
+.no-js .js-only {
+    display: none;
+    visibility: hidden;
+}
+
+.userlogin .no-userlogin-only {
+    display: none;
+    visibility: hidden;
+}
+
+.no-userlogin .userlogin-only {
+    display: none;
+    visibility: hidden;
 }

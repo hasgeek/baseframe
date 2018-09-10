@@ -39,6 +39,7 @@
 "mui/overlay",
 "mui/ripple";
 
+@import "baseframe-material/helper";
 @import "baseframe-material/menu";
 @import "baseframe-material/layout";
 @import "baseframe-material/footer";
@@ -49,3 +50,4 @@
 @import "baseframe-material/thumbnail";
 @import "baseframe-material/modal";
 @import "baseframe-material/tabs";
+@import "baseframe-material/responsive-table";

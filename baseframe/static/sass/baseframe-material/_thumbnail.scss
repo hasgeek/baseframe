@@ -1,5 +1,5 @@
 .thumbnail {
-	position: relative;
+    position: relative;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
@@ -8,8 +8,8 @@
     @extend .mui--z1;
     min-width: 150px;
 
-	.thumbnail__play-icon {
-		color: #fff;
+    .thumbnail__play-icon {
+        color: #fff;
         text-align: center;
         font-size: 32px;
         position: absolute;
@@ -17,7 +17,7 @@
         left: 0;
         right: 0;
         z-index: 3;
-	}
+    }
 }
 
 .control-icon {

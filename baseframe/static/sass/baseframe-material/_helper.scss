@@ -1,0 +1,104 @@
+// ============================================================================
+// LISTS
+// ============================================================================
+
+.mui-list--aligned {
+    padding-left: $reflex-cell-spacing;
+}
+
+// ============================================================================
+// DISPLAY
+// ============================================================================
+
+.mui--d-block { 
+	display: block; 
+}
+.mui--d-inlineblock { 
+	display: inline-block; 
+}
+.mui--d-inline { 
+	display: inline; 
+}
+
+// ============================================================================
+// BACKGROUND COLORS
+// ============================================================================
+
+.mui--bg-primary { 
+	background-color: $mui-bg-color-primary; 
+}
+.mui--bg-primary-dark { 
+	background-color: $mui-bg-color-dark; 
+}
+.mui--bg-primary-light { 
+	background-color: $mui-bg-color-light; 
+}
+
+.mui--bg-accent { 
+	background-color: $mui-bg-color-accent; 
+}
+
+// ============================================================================
+// TYPOGRAPHY
+// ============================================================================
+
+.mui--text-display3 {
+	font-weight: 400;
+	font-size: 64px;
+	line-height: 64px;
+}
+
+.mui--text-display2 {
+	font-weight: 400;
+	font-size: 48px;
+	line-height: 58px;
+}
+
+.mui--text-display1, h1 {
+	font-weight: 400;
+	font-size: 32px;
+	line-height: 40px;
+}
+
+.mui--text-headline, h2 {
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 32px;
+}
+
+.mui--text-title, h3 {
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 28px;
+}
+
+.mui--text-subhead, h4 {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.mui--text-body2, h5 {
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 24px;
+}
+
+.mui--text-body1 {
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 24px;
+}
+
+.mui--text-caption, h6 {
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 16px;
+}
+
+.mui--text-menu,
+.mui--text-button {
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 18px;
+}

@@ -55,7 +55,7 @@
             </div>
           {%- elif field.type == 'CoordinatesField' %}
             {{ map_marker_widget(field) }}
-          {%- elif field.widget.input_type in ['text', 'password', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month', 'number', 'search', 'tel', 'time', 'url', 'week'] and field.widget.html_tag not in ['ul', 'ol'] %}
+          {%- elif field.widget.input_type in ['text', 'email', 'search', 'url', 'number', 'tel'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-textfield mui-textfield--float-label">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
@@ -67,7 +67,19 @@
                 <p class="mui-form--helptext">{{ field.description }}</p>
               {%- endif %}
             </div>
-          {%- elif field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextListField', 'MarkdownField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol'] %}
+          {%- elif field.widget.input_type in ['password', 'color', 'date', 'datetime', 'datetime-local', 'month', 'time', 'week'] and field.widget.html_tag not in ['ul', 'ol'] %}
+            <div class="mui-textfield">
+              {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+              <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
+              {%- if sidetext %}
+                <span class="mui-form--sidetext">{{sidetext}}</span>
+              {%- endif %}
+              {{ rendererrors(field) }}
+              {%- if field.description %}
+                <p class="mui-form--helptext">{{ field.description }}</p>
+              {%- endif %}
+            </div>
+          {%- elif field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextListField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-select">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
@@ -80,6 +92,7 @@
               {%- endif %}
             </div>
           {%- else %}
+            {%- if not nolabel %}<label class="mui-form--label">{{ field.label.text }}</label>{%- endif %}
             <div class="mui-textfield">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               {%- if sidetext %}
@@ -110,7 +123,7 @@
     {% if cancel_url %}<a href="{{ cancel_url }}" class="mui-btn mui-btn--raised mui-btn--primary">{% trans %}Cancel{% endtrans %}</a>{% endif %}
     <span class="loading hidden">&nbsp;</span>
     {% if csrf_error -%}
-      <div><p class="help-error">{% trans -%}
+      <div><p class="mui-form--error">{% trans -%}
         This form has timed out. Please submit again to confirm
       {%- endtrans %}</p></div>
     {%- endif %}
@@ -139,8 +152,8 @@
   {% endfor %}
 {%- endmacro %}
 
-{% macro renderform(form, formid, submit, ref_id='form', message='', action='', cancel_url='', multipart=false, style='horiz') %}
-<form data-parsley-validate id="{{ ref_id }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins hg-form">
+{% macro renderform(form, formid, submit, ref_id='form', message='', action='', cancel_url='', multipart=false, style='') %}
+<form data-parsley-validate id="{{ ref_id }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins hg-form {%- if style == 'horiz' %} mui-form--inline{% endif %}">
   {{ renderform_inner(form, formid or none, style=style) }}
   {{ rendersubmit([(none, submit or _("Submit"), 'mui-btn--primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>
@@ -257,12 +270,14 @@
 {% endmacro %}
 
 {% macro map_marker_widget(field) %}
-  <div class="input-group no-jshidden">
-    <span class="input-group-addon"><i class="fa fa-search"></i></span>
-    <input type="text" class="form-control" id="{{ field.id }}_search" placeholder="Enter a location">
+  <div class="map">
+    <div class="mui-textfield no-jshidden">
+      <i class="material-icons mui--align-middle map__search-icon">search</i>
+      <input type="text" class="map__search-field" id="{{ field.id }}_search" placeholder="Enter a location">
+    </div>
+    <div id="{{ field.id }}_map" class="no-jshidden map__marker"></div>
+    <div class="jshidden">{{ field(class="field-" + field.id + " form-control") }}</div>
   </div>
-  <div id="{{ field.id }}_map" class="no-jshidden map-marker"></div>
-  <div class="jshidden">{{ field(class="field-" + field.id + " form-control") }}</div>
 {% endmacro %}
 
 {% macro map_marker_script(field) %}

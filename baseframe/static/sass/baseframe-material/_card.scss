@@ -11,7 +11,7 @@
 
 	.card__title {
 		padding: 0 $reflex-cell-spacing;
- }
+    }
 
 	.card__title__heading {
 		margin: $reflex-cell-spacing/4 auto
@@ -20,11 +20,6 @@
 	.card__header {
 		padding: $reflex-cell-spacing;
 		background: $mui-bg-color-light;
-		display: -webkit-box;
-		display: flex;
-		-webkit-box-orient: horizontal;
-		-webkit-box-direction: normal;
-		flex-direction: row;
 	}
 
 	.card__header__title {
@@ -46,11 +41,6 @@
 	.card__body {
 		@extend .mui--text-body2;
 		padding: $reflex-cell-spacing/2 $reflex-cell-spacing;
-		display: -webkit-box;
-		display: flex;
-		-webkit-box-orient: horizontal;
-		-webkit-box-direction: normal;
-		flex-direction: row;
 	}
 
 	.card__body__text {

@@ -1,4 +1,5 @@
 .modal {
+    display: none;
     padding: 1em;
     @extend .mui--z1;
 
@@ -18,5 +19,11 @@
     }
     .modal__body {
         @extend .mui--text-body2;
+    }
+}
+
+.jquery-modal.blocker.current {
+    > .modal {
+        display: inline-block;
     }
 }

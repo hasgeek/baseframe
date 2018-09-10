@@ -1,14 +1,17 @@
 
 .mui-textfield--float-label {
-  > label {
-    // Layout
-    position: absolute;
-    transform: translate(0px, $xFormLabelLineHeight);
-    -webkit-transition: all .15s ease-out;
-    -moz-transition: all .15s ease-out;
-    -o-transition: all .15s ease-out;
-    transition: all .15s ease-out;
-   }
+    > label {
+        position: absolute;
+        transform: translate(0px, $xFormLabelLineHeight);
+        -webkit-transition: all .15s ease-out;
+        -moz-transition: all .15s ease-out;
+        -o-transition: all .15s ease-out;
+        transition: all .15s ease-out;
+    }
+}
+
+.form-message {
+    @extend .mui--text-title;
 }
 
 .mui-form {
@@ -31,37 +34,59 @@
 		}
 	}
 
-  .has-error .mui-textfield > input,
-  .has-error .mui-textfield > textarea {
-    border-bottom: 1px solid $mui-text-danger;
-  }
-  .has-error .mui-textfield.mui-textfield--float-label > label {
-    color: $mui-text-danger;
-  }
+    .has-error .mui-textfield > input,
+    .has-error .mui-textfield > textarea {
+        border-bottom: 1px solid $mui-text-danger;
+    }
+    .has-error .mui-textfield.mui-textfield--float-label > label {
+        color: $mui-text-danger;
+    }
+
+    .mui-form--label {
+        color: $mui-label-font-color;
+        font-size: $mui-label-font-size;
+        line-height: $xFormLabelLineHeight;
+    }
+
+    .mui-radio,
+    .mui-checkbox {
+        margin-bottom: 20px;
+    }
+}
+
+.mui-form--margins {
+    margin-top: 1*$reflex-cell-spacing;
+    margin-bottom: 2*$reflex-cell-spacing;
 }
 
 .mui-select {
-  margin-top: $mui-form-group-margin-bottom;
-  > label {
-    top: -$mui-form-group-margin-bottom/4;
-  }
+    margin-top: $mui-form-group-margin-bottom;
+    > label {
+        top: -$mui-form-group-margin-bottom/4;
+    }
+    .select2 {
+        width: 100% !important;
+    }
 }
 
 .listwidget ul, .listwidget ol {
-  list-style: none;
-  padding-left: 0;
-  margin-left: 0;
-  margin-bottom: 0;
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+    margin-bottom: 0;
 }
+
 .listwidget ul li, .listwidget ol li {
-  position: relative;
-  margin-left: 1.25em;
+    position: relative;
+    margin-left: 1.25em;
 }
+
 .listwidget ul input, .listwidget ol input {
-  position: absolute;
-  left: -1.25em;
-  top: 0.45em;
+    position: absolute;
+    left: -1.25em;
+    top: 0.25em;
 }
+
 .listwidget ul label, .listwidget ol label {
-  display: inline-block;
+    display: inline-block;
 }
