@@ -32,6 +32,10 @@
     height: 24px;
 }
 
+.header__nav-list__item:last-child .header__app-icon {
+    margin-right: 0;
+}
+
 .header__app-icon:hover {
     color: inherit;
     text-decoration: none;
@@ -44,8 +48,8 @@
     @extend .mui--text-headline;
     color: inherit;
     line-height: 40px;
-    width: 60%;
-    padding-left: $mui-grid-gutter-width / 2;
+    width: calc(60% - #{$mui-grid-gutter-width/2});
+    padding-left: $mui-grid-gutter-width/2;
 }
 
 .header__site-title__item {
@@ -62,8 +66,17 @@
 }
 
 .header__right-nav {
-    width: 40%;
-    padding-right: $mui-grid-gutter-width / 2;
+    width: calc(40% - #{$mui-grid-gutter-width/2});
+    padding-right: $mui-grid-gutter-width/2;
+}
+
+@media (min-width: 480px) {
+    .header__site-title {
+        width: calc(70% - #{$mui-grid-gutter-width/2});
+    }
+    .header__right-nav {
+        width: calc(30% - #{$mui-grid-gutter-width/2});
+    }
 }
 
 .header__site-title--sidenav {
