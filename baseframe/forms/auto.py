@@ -54,7 +54,8 @@ def render_redirect(url, code=302):
         return redirect(url, code=code)
 
 
-def render_delete_sqla(obj, db, title, message, success=u'', next=None, cancel_url=None):
+def render_delete_sqla(obj, db, title, message, success=u'', next=None, cancel_url=None,
+        delete_text=None, cancel_text=None):
     if not obj:
         abort(404)
     form = ConfirmDeleteForm()
@@ -68,4 +69,5 @@ def render_delete_sqla(obj, db, title, message, success=u'', next=None, cancel_u
         else:
             return render_redirect(cancel_url or next or url_for('index'), code=303)
     template = THEME_FILES[current_app.config['theme']]['delete.html.jinja2']
-    return make_response(render_template(template, form=form, title=title, message=message))
+    return make_response(render_template(template, form=form, title=title, message=message,
+        delete_text=delete_text, cancel_text=cancel_text))
