@@ -202,7 +202,6 @@ assets['marked.js'][Version('0.3.0')] = 'baseframe/js/marked.js'
 
 # Font Awesome
 assets['fontawesome.css'][Version('3.1.0')] = 'baseframe/css/fontawesome-3.1.css'
-assets['fontawesome.css'][Version('4.4.0')] = 'baseframe/css/fontawesome-4.4.css'
 assets['fontawesome.css'][Version('4.7.0')] = 'baseframe/css/fontawesome-4.7.css'
 
 # Social icons
