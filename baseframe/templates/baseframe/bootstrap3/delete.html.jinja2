@@ -9,7 +9,7 @@
     {% for error in form.csrf_token.errors %}<div class="error">{{ error }}</div>{% endfor %}
   {% endif %}
   <input class="btn btn-danger" type="submit" name="delete" value="{% if delete_text %}{{ delete_text }}{% else %}{% trans %}Delete{% endtrans %}{% endif %}"/>
-  <input class="btn btn-default" type="submit" name="cancel" value="{% if cancel_text %}}{ cancel_text }}{% else %}{% trans %}Cancel{% endtrans %}{% endif %}"/>
+  <input class="btn btn-default" type="submit" name="cancel" value="{% if cancel_text %}}{{ cancel_text }}{% else %}{% trans %}Cancel{% endtrans %}{% endif %}"/>
 </form>
 
 {% endblock %}
