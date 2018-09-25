@@ -342,8 +342,8 @@ class UserSelectFieldBase(object):
         self.lastuser = kwargs.pop('lastuser')
         self.separator = kwargs.pop('separator', ',')
         if self.lastuser:
-            self.autocomplete_endpoint = self.lastuser.endpoint_url(self.lastuser.getuser_autocomplete_endpoint)
-            self.getuser_endpoint = self.lastuser.endpoint_url(self.lastuser.getuser_userids_endpoint)
+            self.autocomplete_endpoint = self.lastuser.endpoint_url(current_app.lastuser_config['getuser_autocomplete_endpoint'])
+            self.getuser_endpoint = self.lastuser.endpoint_url(current_app.lastuser_config['getuser_userids_endpoint'])
         else:
             self.autocomplete_endpoint = kwargs.pop('autocomplete_endpoint')()
             self.getuser_endpoint = kwargs.pop('getuser_endpoint')()
