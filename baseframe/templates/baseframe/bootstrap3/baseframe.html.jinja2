@@ -46,7 +46,6 @@
     <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
   {%- endassets %}
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400italic,600italic,400,600" />
-  <script src="{{ url_for('baseframe.static', filename='js/modernizr.min.js') }}"></script>
 
   {%- block typekit %}
     {%- if config['TYPEKIT_CODE'] %}
@@ -101,6 +100,7 @@
     {%- endblock %}
   {%- endblock %}
 
+  <script src="{{ url_for('baseframe.static', filename='js/modernizr.min.js') }}"></script>
   <!-- Included JS Files -->
   <!--[if lt IE 9]>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -121,6 +121,11 @@
   {%- for asset in config.get('ext_js', []) %}
     <script type="text/javascript" src="{{ asset|ext_asset_url }}"></script>
   {%- endfor %}
+
+  <!-- This block is to include JS assets of the app that are not required on all the pages but has to be included before baseframe bundle(assets "js_all").
+  For instance codemirror-markdown-js.js is only required in the formlayout pages. CodeMirror functions are called from baseframe.js, hence it has to be included before  baseframe.js -->
+  {% block appscripts %}{% endblock %}
+
   {% assets "js_all" -%}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {%- endassets -%}
