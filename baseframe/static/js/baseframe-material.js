@@ -375,10 +375,10 @@ window.ParsleyConfig = {
   errorTemplate: '<p class="mui-form--error"></p>',
   errorClass: 'mui-form--error',
   classHandler: function(ParsleyField) {
-    return ParsleyField.$element.closest('.form-group');
+    return ParsleyField.$element.closest('.mui-form__field');
   },
   errorsContainer: function(ParsleyField) {
-    return ParsleyField.$element.closest('.controls');
+    return ParsleyField.$element.closest('.mui-form__controls');
   },
   i18n: {
     en: {

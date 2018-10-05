@@ -1,22 +1,31 @@
-
-.mui-textfield--float-label {
-    > label {
-        position: absolute;
-        transform: translate(0px, $xFormLabelLineHeight);
-        -webkit-transition: all .15s ease-out;
-        -moz-transition: all .15s ease-out;
-        -o-transition: all .15s ease-out;
-        transition: all .15s ease-out;
-    }
-}
-
 .form-message {
     @extend .mui--text-title;
 }
 
 .mui-form {
-    .mui-form--sidetext,
-    .mui-form--helptext {
+    .mui-form__fields {
+        margin-bottom: $mui-form-group-margin-bottom;
+    }
+
+    .mui-textfield,
+    .mui-radio,
+    .mui-checkbox {
+        margin-bottom: 5px; 
+    }
+
+    .mui-textfield--float-label {
+        > label {
+            position: absolute;
+            transform: translate(0px, $xFormLabelLineHeight);
+            -webkit-transition: all .15s ease-out;
+            -moz-transition: all .15s ease-out;
+            -o-transition: all .15s ease-out;
+            transition: all .15s ease-out;
+        }
+    }
+
+    .mui-form__sidetext,
+    .mui-form__helptext {
 		color: $mui-text-light;
 		margin: 8px 0 0;
 		@extend .mui--text-caption;
@@ -45,27 +54,22 @@
     .mui-textfield--addon {
         display: flex;
 
-        > .mui-form--addon,
+        > .mui-form__addon,
         > input {
             display: inline-flex;
         }
 
-        > .mui-form--addon {
+        > .mui-form__addon {
             color: $mui-label-font-color;
             font-size: $mui-input-font-size;
             line-height: 2;
         }
     }
 
-    .mui-form--label {
+    .mui-form__label {
         color: $mui-label-font-color;
         font-size: $mui-label-font-size;
         line-height: $xFormLabelLineHeight;
-    }
-
-    .mui-radio,
-    .mui-checkbox {
-        margin-bottom: 20px;
     }
 }
 
