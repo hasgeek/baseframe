@@ -3704,6 +3704,18 @@ h1, h2, h3 {
 .mui-form .has-error .mui-textfield.mui-textfield--float-label > label {
   color: #C04B61;
 }
+.mui-form .mui-textfield--addon {
+  display: flex;
+}
+.mui-form .mui-textfield--addon > .mui-form--addon,
+.mui-form .mui-textfield--addon > input {
+  display: inline-flex;
+}
+.mui-form .mui-textfield--addon > .mui-form--addon {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 16px;
+  line-height: 2;
+}
 .mui-form .mui-form--label {
   color: rgba(0, 0, 0, 0.54);
   font-size: 12px;
@@ -4058,4 +4070,7 @@ h1, h2, h3 {
     border-bottom: none;
     padding: 15px 10px;
   }
+}
+.mui-table.mui-table--bordered > tbody > tr:last-child > td {
+  border: none;
 }

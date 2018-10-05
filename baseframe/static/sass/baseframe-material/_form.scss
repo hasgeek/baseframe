@@ -42,6 +42,21 @@
         color: $mui-text-danger;
     }
 
+    .mui-textfield--addon {
+        display: flex;
+
+        > .mui-form--addon,
+        > input {
+            display: inline-flex;
+        }
+
+        > .mui-form--addon {
+            color: $mui-label-font-color;
+            font-size: $mui-input-font-size;
+            line-height: 2;
+        }
+    }
+
     .mui-form--label {
         color: $mui-label-font-color;
         font-size: $mui-label-font-size;
