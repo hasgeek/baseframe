@@ -3695,6 +3695,25 @@ h1, h2, h3 {
   color: #8492A6;
   margin: 8px 0 0;
 }
+.mui-form .mui-textfield--addon {
+  display: flex;
+}
+.mui-form .mui-textfield--addon > .mui-form__addon,
+.mui-form .mui-textfield--addon > input {
+  display: inline-flex;
+}
+.mui-form .mui-textfield--addon > .mui-form__addon {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 16px;
+  line-height: 2;
+}
+.mui-form .mui-form__label {
+  position: static;
+  margin: 0 0 8px;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 16px;
+  line-height: 15px;
+}
 .mui-form .mui-form__error {
   color: #C04B61;
   margin: 8px 0 0;
@@ -3710,23 +3729,6 @@ h1, h2, h3 {
 }
 .mui-form .has-error .mui-textfield.mui-textfield--float-label > label {
   color: #C04B61;
-}
-.mui-form .mui-textfield--addon {
-  display: flex;
-}
-.mui-form .mui-textfield--addon > .mui-form__addon,
-.mui-form .mui-textfield--addon > input {
-  display: inline-flex;
-}
-.mui-form .mui-textfield--addon > .mui-form__addon {
-  color: rgba(0, 0, 0, 0.54);
-  font-size: 16px;
-  line-height: 2;
-}
-.mui-form .mui-form__label {
-  color: rgba(0, 0, 0, 0.54);
-  font-size: 12px;
-  line-height: 15px;
 }
 
 .mui-form--margins {
