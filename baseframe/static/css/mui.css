@@ -3341,7 +3341,7 @@ h4, h5, h6 {
 }
 
 .mui--text-caption, .footer .footer__container, .mui-form .mui-form__sidetext,
-.mui-form .mui-form__helptext, .mui-form .mui-form--error, h6 {
+.mui-form .mui-form__helptext, .mui-form .mui-form__error, h6 {
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
@@ -3695,12 +3695,12 @@ h1, h2, h3 {
   color: #8492A6;
   margin: 8px 0 0;
 }
-.mui-form .mui-form--error {
+.mui-form .mui-form__error {
   color: #C04B61;
   margin: 8px 0 0;
   padding: 0;
 }
-.mui-form .mui-form--error > li {
+.mui-form .mui-form__error > li {
   list-style: none;
   margin-top: 10px;
 }
