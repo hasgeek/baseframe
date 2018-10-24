@@ -278,11 +278,11 @@ window.Baseframe.Forms = {
       if (Array.isArray(errors[fieldName])) {
         var fieldWrapper = form.querySelector("#field-" + fieldName);
         if (fieldWrapper) {
-          var errorElem = fieldWrapper.querySelector('.mui-form--error');
+          var errorElem = fieldWrapper.querySelector('.mui-form__error');
           // If error P tag doesn't exist, create it
           if (!errorElem) {
             errorElem = document.createElement('p');
-            errorElem.classList.add('mui-form--error');
+            errorElem.classList.add('mui-form__error');
           }
           errorElem.innerText = errors[fieldName][0];
           var field = form.querySelector("#" + fieldName)
@@ -372,13 +372,13 @@ window.Baseframe.MapMarker.prototype.getDefaultLocation = function() {
 
 window.ParsleyConfig = {
   errorsWrapper: '<div></div>',
-  errorTemplate: '<p class="mui-form--error"></p>',
-  errorClass: 'mui-form--error',
+  errorTemplate: '<p class="mui-form__error"></p>',
+  errorClass: 'has-error',
   classHandler: function(ParsleyField) {
-    return ParsleyField.$element.closest('.form-group');
+    return ParsleyField.$element.closest('.mui-form__fields');
   },
   errorsContainer: function(ParsleyField) {
-    return ParsleyField.$element.closest('.controls');
+    return ParsleyField.$element.closest('.mui-form__controls');
   },
   i18n: {
     en: {

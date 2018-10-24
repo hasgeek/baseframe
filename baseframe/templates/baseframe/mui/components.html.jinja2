@@ -78,7 +78,7 @@
 
 {%- macro add_hasgeek_auth(links, loginbtntext) %}
   {% if not current_auth.is_anonymous -%}
-    <a class="header__app-icon" data-mui-toggle="dropdown">
+    <a class="header__app-icon" data-mui-toggle="dropdown" id="hg-user-btn">
       <i class="material-icons">account_circle</i>
     </a>
     <ul class="mui-dropdown__menu mui-dropdown__menu--right">

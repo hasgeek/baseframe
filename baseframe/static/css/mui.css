@@ -3340,8 +3340,8 @@ h4, h5, h6 {
   line-height: 24px;
 }
 
-.mui--text-caption, .footer .footer__container, .mui-form .mui-form--sidetext,
-.mui-form .mui-form--helptext, .mui-form .mui-form--error, h6 {
+.mui--text-caption, .footer .footer__container, .mui-form .mui-form__sidetext,
+.mui-form .mui-form__helptext, .mui-form .mui-form__error, h6 {
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
@@ -3674,7 +3674,15 @@ h1, h2, h3 {
     margin-left: 160px;
   }
 }
-.mui-textfield--float-label > label {
+.mui-form .mui-form__fields {
+  margin-bottom: 20px;
+}
+.mui-form .mui-textfield,
+.mui-form .mui-radio,
+.mui-form .mui-checkbox {
+  margin-bottom: 5px;
+}
+.mui-form .mui-textfield--float-label > label {
   position: absolute;
   transform: translate(0px, 15px);
   -webkit-transition: all .15s ease-out;
@@ -3682,18 +3690,36 @@ h1, h2, h3 {
   -o-transition: all .15s ease-out;
   transition: all .15s ease-out;
 }
-
-.mui-form .mui-form--sidetext,
-.mui-form .mui-form--helptext {
+.mui-form .mui-form__sidetext,
+.mui-form .mui-form__helptext {
   color: #8492A6;
   margin: 8px 0 0;
 }
-.mui-form .mui-form--error {
+.mui-form .mui-textfield--addon {
+  display: flex;
+}
+.mui-form .mui-textfield--addon > .mui-form__addon,
+.mui-form .mui-textfield--addon > input {
+  display: inline-flex;
+}
+.mui-form .mui-textfield--addon > .mui-form__addon {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 16px;
+  line-height: 2;
+}
+.mui-form .mui-form__label {
+  position: static;
+  margin: 0 0 8px;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 16px;
+  line-height: 15px;
+}
+.mui-form .mui-form__error {
   color: #C04B61;
   margin: 8px 0 0;
   padding: 0;
 }
-.mui-form .mui-form--error > li {
+.mui-form .mui-form__error > li {
   list-style: none;
   margin-top: 10px;
 }
@@ -3703,15 +3729,6 @@ h1, h2, h3 {
 }
 .mui-form .has-error .mui-textfield.mui-textfield--float-label > label {
   color: #C04B61;
-}
-.mui-form .mui-form--label {
-  color: rgba(0, 0, 0, 0.54);
-  font-size: 12px;
-  line-height: 15px;
-}
-.mui-form .mui-radio,
-.mui-form .mui-checkbox {
-  margin-bottom: 20px;
 }
 
 .mui-form--margins {
@@ -4058,4 +4075,7 @@ h1, h2, h3 {
     border-bottom: none;
     padding: 15px 10px;
   }
+}
+.mui-table.mui-table--bordered > tbody > tr:last-child > td {
+  border: none;
 }

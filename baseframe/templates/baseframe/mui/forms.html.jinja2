@@ -1,7 +1,7 @@
 {% macro rendererrors(field) -%}
     {%- if field.errors -%}
       {%- for error in field.errors %}
-        <div><p class="mui-form--error">{{ error }}</p></div>
+        <div><p class="mui-form__error">{{ error }}</p></div>
       {%- endfor %}
     {%- endif %}
 {%- endmacro %}
@@ -22,19 +22,19 @@
       {%- endfor %}
     </fieldset>
   {%- else %}
-    <div class="{%- if field.errors %} error has-error {%- endif -%}
+    <div class="mui-form__fields {%- if field.errors %} error has-error {%- endif -%}
         {%- if css_class %} {{ css_class }} {%- endif -%}
         {%- if listwidget %} listwidget {%- if style == 'horizlist' %} horizlist {%- endif %}{%- endif -%}
         " id="field-{{ field.id }}">
       {%- if field.type == 'RadioMatrixField' %}
-        <div>
+        <div class="mui-form__controls">
           {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class) }}
           {%- if field.description %}
-             <p class="mui-form--helptext">{{ field.description }}</p>
+             <p class="mui-form__helptext">{{ field.description }}</p>
           {%- endif %}
         </div>
       {%- elif field.type == 'BooleanField' %}
-        <div>
+        <div class="mui-form__controls">
           <div class="mui-checkbox">
             <label>
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, rows=rows) }} {{ field.label.text }}
@@ -42,67 +42,53 @@
             </label>
           </div>
           {%- if field.description %}
-            <p class="mui-form--helptext">{{ field.description }}</p>
+            <p class="mui-form__helptext">{{ field.description }}</p>
           {%- endif %}
         </div>
       {%- else %}
-        <div>
+        <div class="mui-form__controls">
           {%- if field.type in ['AnnotatedTextField', 'AnnotatedNullTextField'] %}
-            <div class="input-group">
-              {% if field.prefix %}<span class="input-group-addon">{{ field.prefix }}</span>{% endif %}
-              {{ field | render_field_options(class="form-control field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
-              {% if field.suffix %}<span class="input-group-addon">{{ field.suffix }}</span>{% endif %}
+            <div class="mui-textfield mui-textfield--addon">
+              {% if field.prefix %}<span class="mui-form__addon">{{ field.prefix }}</span>{% endif %}
+              {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+              {% if field.suffix %}<span class="mui-form__addon">{{ field.suffix }}</span>{% endif %}
+              {%- if not nolabel %}
+                <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
+              {%- endif %}
             </div>
           {%- elif field.type == 'CoordinatesField' %}
             {{ map_marker_widget(field) }}
-          {%- elif field.widget.input_type in ['text', 'email', 'search', 'url', 'number', 'tel'] and field.widget.html_tag not in ['ul', 'ol'] %}
+          {%- elif field.widget.input_type in ['text', 'email', 'search', 'url', 'number', 'tel', 'password'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-textfield mui-textfield--float-label">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
-              <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
-              {%- if sidetext %}
-                <span class="mui-form--sidetext">{{sidetext}}</span>
-              {%- endif %}
-              {{ rendererrors(field) }}
-              {%- if field.description %}
-                <p class="mui-form--helptext">{{ field.description }}</p>
+              {%- if not nolabel %}
+                <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
               {%- endif %}
             </div>
-          {%- elif field.widget.input_type in ['password', 'color', 'date', 'datetime', 'datetime-local', 'month', 'time', 'week'] and field.widget.html_tag not in ['ul', 'ol'] %}
+          {%- elif field.widget.input_type in ['color', 'date', 'datetime', 'datetime-local', 'month', 'time', 'week'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-textfield">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
-              <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
-              {%- if sidetext %}
-                <span class="mui-form--sidetext">{{sidetext}}</span>
-              {%- endif %}
-              {{ rendererrors(field) }}
-              {%- if field.description %}
-                <p class="mui-form--helptext">{{ field.description }}</p>
+              {%- if not nolabel %}
+                <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
               {%- endif %}
             </div>
           {%- elif field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextListField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-select">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
-              {%- if sidetext %}
-                <span class="mui-form--sidetext">{{sidetext}}</span>
-              {%- endif %}
-              {{ rendererrors(field) }}
-              {%- if field.description %}
-                <p class="mui-form--helptext">{{ field.description }}</p>
-              {%- endif %}
             </div>
           {%- else %}
-            {%- if not nolabel %}<label class="mui-form--label">{{ field.label.text }}</label>{%- endif %}
             <div class="mui-textfield">
+              {%- if not nolabel %}<label class="mui-form__label">{{ field.label.text }}</label>{%- endif %}
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
-              {%- if sidetext %}
-                <span class="mui-form--sidetext">{{sidetext}}</span>
-              {%- endif %}
-              {{ rendererrors(field) }}
-              {%- if field.description %}
-                <p class="mui-form--helptext">{{ field.description }}</p>
-              {%- endif %}
             </div>
+          {%- endif %}
+          {%- if sidetext %}
+            <span class="mui-form__sidetext">{{sidetext}}</span>
+          {%- endif %}
+          {{ rendererrors(field) }}
+          {%- if field.description %}
+            <p class="mui-form__helptext">{{ field.description }}</p>
           {%- endif %}
         </div>
       {%- endif %}
@@ -123,7 +109,7 @@
     {% if cancel_url %}<a href="{{ cancel_url }}" class="mui-btn mui-btn--raised mui-btn--primary">{% trans %}Cancel{% endtrans %}</a>{% endif %}
     <span class="loading hidden">&nbsp;</span>
     {% if csrf_error -%}
-      <div><p class="mui-form--error">{% trans -%}
+      <div><p class="mui-form__error">{% trans -%}
         This form has timed out. Please submit again to confirm
       {%- endtrans %}</p></div>
     {%- endif %}

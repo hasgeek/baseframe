@@ -58,3 +58,7 @@
 		}
 	}
 }
+
+.mui-table.mui-table--bordered>tbody>tr:last-child>td {
+	border: none;
+}
