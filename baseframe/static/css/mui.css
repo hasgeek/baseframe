@@ -3727,7 +3727,7 @@ h1, h2, h3 {
 .mui-form .has-error .mui-textfield > textarea {
   border-bottom: 1px solid #C04B61;
 }
-.mui-form .has-error .mui-textfield.mui-textfield--float-label > label {
+.mui-form .has-error .mui-textfield > label {
   color: #C04B61;
 }
 
@@ -3930,13 +3930,15 @@ h1, h2, h3 {
   border-top-color: #f7e1b5;
 }
 
-.alert--error {
+.alert--error,
+.alert--danger {
   background-color: rgba(192, 75, 97, 0.1);
   border-color: rgba(192, 75, 97, 0.2);
   color: #C04B61;
 }
 
-.alert--error .alert__hr {
+.alert--error .alert__hr,
+.alert--danger .alert__hr {
   border-top-color: #e4b9c0;
 }
 
