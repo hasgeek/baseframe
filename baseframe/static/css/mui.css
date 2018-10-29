@@ -3402,9 +3402,13 @@ h4, h5, h6 {
   display: flex;
   margin: 0;
   color: inherit;
-  line-height: 40px;
-  width: calc(60% - 15px);
+  line-height: 34px;
+  width: calc(70% - 15px);
   padding-left: 15px;
+}
+
+.header__site-title--smaller {
+  width: calc(35% - 15px);
 }
 
 .header__site-title__item {
@@ -3420,17 +3424,21 @@ h4, h5, h6 {
 }
 
 .header__right-nav {
-  width: calc(40% - 15px);
+  width: calc(30% - 15px);
   padding-right: 15px;
 }
 
-@media (min-width: 480px) {
-  .header__site-title {
-    width: calc(70% - 15px);
+.header__right-nav--larger {
+  width: calc(65% - 15px);
+}
+
+@media (min-width: 375px) {
+  .header__site-title--smaller {
+    width: calc(45% - 15px);
   }
 
-  .header__right-nav {
-    width: calc(30% - 15px);
+  .header__right-nav--larger {
+    width: calc(55% - 15px);
   }
 }
 .header__site-title--sidenav {
@@ -3477,7 +3485,7 @@ h4, h5, h6 {
 }
 
 .header__button {
-  margin: 0;
+  margin-top: 0;
 }
 
 .header__nav-links {

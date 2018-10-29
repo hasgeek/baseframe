@@ -17,16 +17,16 @@
 
 {%- macro hgtopnav(site_title="HasGeek", side_menu_button=none, site_links=[], auth=true, network=true, loginbtntext="Login") %}
   <nav id="hgnav" class="header__nav header__nav--custom" role="navigation">
-    <div class="header__site-title">
+    <div class="header__site-title {% if current_auth.is_anonymous -%}header__site-title--smaller{% endif %}">
       {% if side_menu_button %}
         <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button"><i class="material-icons">menu</i></a>
       {% endif %}
       <div class="header__site-title__title">{{site_title}}</div>
     </div>
-    <div class="header__right-nav">
+    <div class="header__right-nav {% if current_auth.is_anonymous -%}header__right-nav--larger{% endif %}">
       <ul class="header__nav-list">
         {%- for link in site_links %}
-          <li class="mui-dropdown header__nav-list__item ">
+          <li class="mui-dropdown header__nav-list__item">
             <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>
               {{ link.title }}
             </a>
@@ -34,13 +34,13 @@
         {%- endfor %}
 
         {% if network %}
-        <li class="mui-dropdown header__nav-list__item ">
+        <li class="mui-dropdown header__nav-list__item">
           {{ add_hasgeek_network() }}
         </li>
         {% endif %}
 
         {% if auth %}
-        <li class="mui-dropdown header__nav-list__item ">
+        <li class="mui-dropdown header__nav-list__item">
           {{ add_hasgeek_auth(user_links, loginbtntext) }}
         </li>
         {%- endif %}
