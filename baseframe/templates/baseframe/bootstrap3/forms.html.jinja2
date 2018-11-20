@@ -262,7 +262,8 @@
     {%- for field in form %}
       {%- if field.type == 'CoordinatesField' %}
         {#- We're using setdefault instead of a simple = because the do extension doesn't support assignment #}
-        {%- do scripts.setdefault('gmap', '//maps.google.com/maps/api/js?sensor=false&libraries=places') %}
+        {% set google_map_api = '//maps.google.com/maps/api/js?key=' + config["GOOGLE_MAPS_API_KEY"] + '&sensor=false&libraries=places' -%}
+        {%- do scripts.setdefault('gmap', google_map_api) %}
         {%- do scripts.setdefault('locationpicker', 'jquery.locationpicker.js'|ext_asset_url) %}
       {%- endif %}
     {%- endfor %}
