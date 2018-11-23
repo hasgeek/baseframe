@@ -3562,6 +3562,13 @@ h1, h2, h3 {
   margin-bottom: 8px;
 }
 
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin-bottom: 0;
+}
+
 .mui-divider {
   width: 100%;
 }
