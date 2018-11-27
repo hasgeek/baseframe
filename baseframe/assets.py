@@ -92,6 +92,9 @@ assets['jquery-modal.css'][Version('0.8.2')] = 'baseframe/css/jquery-modal.css'
 
 assets['jquery-easytabs.js'][Version('3.2.0')] = ('jquery.js', 'baseframe/js/jquery-easytabs.js')
 
+# jQuery plugin for truncating multiple lines of text
+assets['jquery.succinct.js'][Version('1.1.0')] = ('jquery.js', 'baseframe/js/jquery.succinct.js')
+
 assets['select2.js'][Version('4.0.3')] = ('jquery.js>=1.7.2', 'baseframe/js/select2.js')
 assets['select2.css'][Version('4.0.3')] = 'baseframe/css/select2.css'
 assets['select2-bootstrap.css'][Version('0.1.0')] = ('select2.css', 'baseframe/css/bootstrap-select2.css')
@@ -199,6 +202,9 @@ assets['mustache-hogan.js'][Version('2.0.0')] = 'baseframe/js/mustache-hogan/hog
 assets['mustache-loader.js'][Version('0.5.1')] = 'baseframe/js/mustache-hogan/mustache-loader.js'
 
 assets['marked.js'][Version('0.3.0')] = 'baseframe/js/marked.js'
+
+assets['leaflet.js'][Version('1.3.4')] = 'baseframe/js/leaflet.js'
+assets['leaflet.css'][Version('1.3.4')] = 'baseframe/css/leaflet.css'
 
 # Font Awesome
 assets['fontawesome.css'][Version('3.1.0')] = 'baseframe/css/fontawesome-3.1.css'
