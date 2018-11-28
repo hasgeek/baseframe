@@ -336,9 +336,8 @@ window.Baseframe.MapMarker = function(field){
 };
 
 window.Baseframe.MapMarker.prototype.updateCoordinates = function(lat, lng){
-  var self = this;
-  $("#" + self.field.latitude_id).val(lat);
-  $("#" + self.field.longitude_id).val(lng);
+  $("#" + this.field.latitude_id).val(lat);
+  $("#" + this.field.longitude_id).val(lng);
 };
 
 window.Baseframe.MapMarker.prototype.getDefaultLocation = function() {
@@ -354,7 +353,6 @@ window.Baseframe.MapMarker.prototype.getDefaultLocation = function() {
 };
 
 window.Baseframe.MapMarker.prototype.activate = function(){
-  var self = this;
   Baseframe.Forms.preventSubmitOnEnter(this.field.location_id);
   this.coordinates = this.getDefaultLocation();
 };
