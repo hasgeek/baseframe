@@ -332,7 +332,6 @@ window.Baseframe.Forms = {
 window.Baseframe.MapMarker = function(field){
   this.field = field;
   this.activate();
-  this.coordinates = this.getDefaultLocation();
   return this;
 };
 
@@ -357,6 +356,7 @@ window.Baseframe.MapMarker.prototype.getDefaultLocation = function() {
 window.Baseframe.MapMarker.prototype.activate = function(){
   var self = this;
   Baseframe.Forms.preventSubmitOnEnter(this.field.location_id);
+  this.coordinates = this.getDefaultLocation();
 };
 
 window.ParsleyConfig = {
