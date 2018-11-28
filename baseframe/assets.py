@@ -205,6 +205,8 @@ assets['marked.js'][Version('0.3.0')] = 'baseframe/js/marked.js'
 
 assets['leaflet.js'][Version('1.3.4')] = 'baseframe/js/leaflet.js'
 assets['leaflet.css'][Version('1.3.4')] = 'baseframe/css/leaflet.css'
+assets['leaflet-search.css'][Version('2.9.7')] = 'baseframe/css/leaflet-search.css'
+assets['leaflet-search.js'][Version('2.9.7')] = 'baseframe/js/leaflet-search.js'
 
 # Font Awesome
 assets['fontawesome.css'][Version('3.1.0')] = 'baseframe/css/fontawesome-3.1.css'

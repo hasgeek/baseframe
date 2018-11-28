@@ -332,30 +332,14 @@ window.Baseframe.Forms = {
 window.Baseframe.MapMarker = function(field){
   this.field = field;
   this.activate();
+  this.coordinates = this.getDefaultLocation();
   return this;
 };
 
-window.Baseframe.MapMarker.prototype.activate = function(){
+window.Baseframe.MapMarker.prototype.updateCoordinates = function(lat, lng){
   var self = this;
-  Baseframe.Forms.preventSubmitOnEnter(this.field.location_id);
-
-  // locationpicker.jquery.js
-  $("#" + this.field.map_id).locationpicker({
-    location: self.getDefaultLocation(),
-    radius: 0,
-    inputBinding: {
-      latitudeInput: $("#" + this.field.latitude_id),
-      longitudeInput: $("#" + this.field.longitude_id),
-      locationNameInput: $("#" + this.field.location_id)
-    },
-    enableAutocomplete: true,
-    onchanged: function(currentLocation, radius, isMarkerDropped) {
-    },
-    onlocationnotfound: function(locationName) {
-    },
-    oninitialized: function (component) {
-    }
-  });
+  $("#" + self.field.latitude_id).val(lat);
+  $("#" + self.field.longitude_id).val(lng);
 };
 
 window.Baseframe.MapMarker.prototype.getDefaultLocation = function() {
@@ -368,6 +352,11 @@ window.Baseframe.MapMarker.prototype.getDefaultLocation = function() {
     longitude = $("#" + this.field.longitude_id).val();
   }
   return {latitude: latitude, longitude: longitude};
+};
+
+window.Baseframe.MapMarker.prototype.activate = function(){
+  var self = this;
+  Baseframe.Forms.preventSubmitOnEnter(this.field.location_id);
 };
 
 window.ParsleyConfig = {
