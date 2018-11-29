@@ -70,7 +70,8 @@
     .has-error .mui-textfield > textarea {
         border-bottom: 1px solid $mui-text-danger;
     }
-    .has-error .mui-textfield > label {
+    .has-error .mui-textfield > label,
+    .has-error label {
         color: $mui-text-danger;
     }
 }

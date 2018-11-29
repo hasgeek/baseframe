@@ -57,6 +57,9 @@
               {%- endif %}
             </div>
           {%- elif field.type == 'CoordinatesField' %}
+            {%- if not nolabel %}
+              <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
+            {%- endif %}
             {{ map_marker_widget(field) }}
           {%- elif field.widget.input_type in ['text', 'email', 'search', 'url', 'number', 'tel', 'password'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-textfield mui-textfield--float-label">

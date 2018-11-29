@@ -56,21 +56,10 @@ ol ul {
 }
 
 .map {
-    .map__search-icon {
-        width: 26px;
-        display: inline-block;
-    }
-
-    .map__search-field {
-        width: calc(100% - 30px);
-        display: inline-block;
-    }
-
     .map__marker {
-        margin-top: $mui-base-line-height / 2;
+        margin-top: $mui-form-group-margin-bottom/2;
         width: 100%;
         height: 40em;
-        margin-bottom: 20px;
     }
 }
 
