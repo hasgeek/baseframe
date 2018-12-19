@@ -3354,6 +3354,22 @@ h4, h5, h6 {
   line-height: 18px;
 }
 
+.mui--text-uppercase {
+  text-transform: uppercase;
+}
+
+.mui--text-capitalize {
+  text-transform: capitalize;
+}
+
+.mui--text-bold {
+  font-weight: 600;
+}
+
+.mui--text-bold {
+  font-weight: 700;
+}
+
 .mui-appbar--custom {
   min-height: 40px;
   height: 56px;
@@ -4003,8 +4019,12 @@ ol ul {
   display: block;
 }
 
+.jquery-modal.blocker.current {
+  z-index: 1001;
+}
 .jquery-modal.blocker.current > .modal {
   display: inline-block;
+  overflow: hidden;
 }
 
 .tab-container {

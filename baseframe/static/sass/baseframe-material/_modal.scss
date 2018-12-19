@@ -23,7 +23,9 @@
 }
 
 .jquery-modal.blocker.current {
+    z-index: 1001;
     > .modal {
         display: inline-block;
+        overflow: hidden;
     }
 }
