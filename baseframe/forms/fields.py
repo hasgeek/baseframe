@@ -11,13 +11,14 @@ from wtforms.widgets import Select as OriginalSelectWidget
 from wtforms.compat import text_type
 from wtforms.utils import unset_value
 import bleach
+import json
 import six
 
 from .. import _, get_timezone
 from .widgets import TinyMce3, TinyMce4, DateTimeInput, CoordinatesInput, RadioMatrixInput, SelectWidget, Select2Widget
 from .parsleyjs import TextAreaField, StringField, URLField
 
-__all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
+__all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES', 'JSONField',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'TextListField',
     'AnnotatedTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField', 'EnumSelectField',
     'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
@@ -725,3 +726,24 @@ class EnumSelectField(SelectField):
     def pre_validate(self, form):
         if self.data is _invalid_marker:
             raise ValueError(self.gettext('Not a valid choice'))
+
+
+class JSONField(wtforms.TextAreaField):
+    def _value(self):
+        if self.raw_data:
+            return self.raw_data[0]
+        elif self.data:
+            return json.dumps(self.data, ensure_ascii=False)
+        else:
+            return json.dumps(self.default) if self.default else u"{}"
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            value = valuelist[0]
+            if not value:
+                self.data = self.default if self.default else None
+                return
+            try:
+                self.data = json.loads(value)
+            except ValueError:
+                raise ValueError(self.gettext('Invalid JSON'))
