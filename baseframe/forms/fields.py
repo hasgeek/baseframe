@@ -10,15 +10,16 @@ from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, 
 from wtforms.widgets import Select as OriginalSelectWidget
 from wtforms.compat import text_type
 from wtforms.utils import unset_value
+from wtforms.validators import StopValidation
 import bleach
-import json
+import simplejson as json
 import six
 
 from .. import _, get_timezone
 from .widgets import TinyMce3, TinyMce4, DateTimeInput, CoordinatesInput, RadioMatrixInput, SelectWidget, Select2Widget
 from .parsleyjs import TextAreaField, StringField, URLField
 
-__all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES', 'JSONField',
+__all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES', 'JsonField',
     'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'TextListField',
     'AnnotatedTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField', 'EnumSelectField',
     'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
@@ -728,14 +729,14 @@ class EnumSelectField(SelectField):
             raise ValueError(self.gettext('Not a valid choice'))
 
 
-class JSONField(wtforms.TextAreaField):
+class JsonField(wtforms.TextAreaField):
     def _value(self):
         if self.raw_data:
             return self.raw_data[0]
         elif self.data:
-            return json.dumps(self.data, ensure_ascii=False)
+            return json.dumps(self.data, use_decimal=True)
         else:
-            return json.dumps(self.default) if self.default else u"{}"
+            return json.dumps(self.default, use_decimal=True) if self.default else None
 
     def process_formdata(self, valuelist):
         if valuelist:
@@ -744,6 +745,16 @@ class JSONField(wtforms.TextAreaField):
                 self.data = self.default if self.default else None
                 return
             try:
-                self.data = json.loads(value)
-            except ValueError:
-                raise ValueError(self.gettext('Invalid JSON'))
+                self.data = json.loads(value, use_decimal=True)
+            except ValueError as e:
+                raise ValueError(self.gettext('Invalid JSON: {0!r}'.format(e)))
+
+    def pre_validate(self, form):
+        if self.data:
+            try:
+                if not isinstance(self.data, six.string_types):
+                    # In case field data is set manually to an invalid non-serializable python object
+                    json.dumps(self.data, use_decimal=True)
+            except TypeError as e:
+                raise StopValidation("Invalid value for JsonField: {0!r}".format(e))
+        super(JsonField, self).pre_validate(form)
