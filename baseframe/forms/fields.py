@@ -730,13 +730,33 @@ class EnumSelectField(SelectField):
 
 
 class JsonField(wtforms.TextAreaField):
+    """
+    JsonField takes JSON string as user input. If no user input is provided as formdata,
+    ``default`` value is used if available. If ``default`` is not provided, it's set to ``None``.
+
+    - If float value is provided in user input, it's converted to ``Decimal`` object.
+    - Comments in JSON string are not allowed. Validation will fail if JSON string contains comments.
+    - If non-serializable objects are set manually to ``fieldname.data``, validation will fail.
+    - If ``prettyprint`` is set to ``True``, the JSON string will be formatted before
+    populating the field widget.
+    """
+    prettyprint_args = {'sort_keys': True, 'indent': 2}
+
+    def __init__(self, label='', validators=None, prettyprint=False, **kwargs):
+        super(JsonField, self).__init__(label, validators, **kwargs)
+        self.prettyprint = prettyprint
+
     def _value(self):
+        """
+        Turns the provided python object(data from db) into string to show on form field
+        """
+        kwargs = self.prettyprint_args if self.prettyprint else {}
         if self.raw_data:
             return self.raw_data[0]
         elif self.data:
-            return json.dumps(self.data, use_decimal=True)
+            return json.dumps(self.data, use_decimal=True, **kwargs)
         else:
-            return json.dumps(self.default, use_decimal=True) if self.default else None
+            return json.dumps(self.default, use_decimal=True, **kwargs) if self.default else None
 
     def process_formdata(self, valuelist):
         if valuelist:

@@ -26,6 +26,7 @@ class TestForm(forms.Form):
     position_no_default = forms.EnumSelectField(__("Position Without Default"), lenum=MY_ENUM)
     jsondata = forms.JsonField(__("JSON Data"), default=DEFAULT_JSONDATA)
     jsondata_no_default = forms.JsonField(__("JSON Data"))
+    jsondata_prettyprint = forms.JsonField(__("JSON Data"), prettyprint=True, default=DEFAULT_JSONDATA)
 
 
 class BaseTestCase(unittest.TestCase):
@@ -107,6 +108,12 @@ class TestJSONField(BaseTestCase):
             """}))
         assert self.form.validate() is True
         assert self.form.jsondata.data == [{"key": u"val"}]
+
+    def test_prettyprint(self):
+        self.form.jsondata_prettyprint.data = {"key": "val"}
+        assert self.form.jsondata_prettyprint._value() == """{
+  "key": "val"
+}"""
 
     def test_non_serializable(self):
         self.form.jsondata.data = {"key": datetime.now()}
