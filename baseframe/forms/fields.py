@@ -731,14 +731,17 @@ class EnumSelectField(SelectField):
 
 class JsonField(wtforms.TextAreaField):
     """
-    JsonField takes JSON string as user input. If no user input is provided as formdata,
-    ``default`` value is used if available. If ``default`` is not provided, it's set to ``None``.
+    A TextArea field that stores JSON string as Python dict/list.
 
-    - If float value is provided in user input, it's converted to ``Decimal`` object.
-    - Comments in JSON string are not allowed. Validation will fail if JSON string contains comments.
-    - If non-serializable objects are set manually to ``fieldname.data``, validation will fail.
-    - If ``prettyprint`` is set to ``True``, the JSON string will be formatted before
-    populating the field widget.
+    - If float value is provided in JSON string, it's converted to ``Decimal`` object.
+    - Comments in JSON string are not allowed.
+    - Non-serializable objects are not allowed when setting data explicitly to ``form.fieldname.data``.
+
+    Takes a ``prettyprint`` argument that is ``False`` by default. If ``True``, the JSON string will be
+    indented before populating the textarea.
+
+        class MyForm(forms.Form):
+            field = forms.JsonField(__("My Field"), prettyprint=True, default=DEFAULT_VALUE)
     """
     prettyprint_args = {'sort_keys': True, 'indent': 2}
 
