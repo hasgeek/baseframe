@@ -21,9 +21,12 @@ class MY_ENUM(LabeledEnum):
 DEFAULT_JSONDATA = {'key': u"val"}
 
 
-class TestForm(forms.Form):
+class TestEnumForm(forms.Form):
     position = forms.EnumSelectField(__("Position"), lenum=MY_ENUM, default=MY_ENUM.THIRD)
     position_no_default = forms.EnumSelectField(__("Position Without Default"), lenum=MY_ENUM)
+
+
+class TestJsonForm(forms.Form):
     jsondata = forms.JsonField(__("JSON Data"), default=DEFAULT_JSONDATA)
     jsondata_no_default = forms.JsonField(__("JSON Data"))
     jsondata_prettyprint = forms.JsonField(__("JSON Data"), prettyprint=True, default=DEFAULT_JSONDATA)
@@ -33,13 +36,16 @@ class BaseTestCase(unittest.TestCase):
     def setUp(self):
         self.ctx = app.test_request_context()
         self.ctx.push()
-        self.form = TestForm(meta={'csrf': False})
 
     def tearDown(self):
         self.ctx.pop()
 
 
 class TestEnumField(BaseTestCase):
+    def setUp(self):
+        super(TestEnumField, self).setUp()
+        self.form = TestEnumForm(meta={'csrf': False})
+
     def test_default(self):
         assert self.form.position.data == 3
         assert self.form.position_no_default.data is None
@@ -60,7 +66,11 @@ class TestEnumField(BaseTestCase):
         assert self.form.position_no_default() == '<select id="position_no_default" name="position_no_default"><option value="first">First</option><option value="second">Second</option><option value="third">Third</option></select>'
 
 
-class TestJSONField(BaseTestCase):
+class TestJsonField(BaseTestCase):
+    def setUp(self):
+        super(TestJsonField, self).setUp()
+        self.form = TestJsonForm(meta={'csrf': False})
+
     def test_default(self):
         assert self.form.jsondata.data == DEFAULT_JSONDATA
         assert self.form.jsondata_no_default.data is None
@@ -72,6 +82,12 @@ class TestJSONField(BaseTestCase):
     def test_invalid(self):
         self.form.process(formdata=MultiDict({'jsondata': '{"key"; "val"}'}))  # invalid JSON
         assert self.form.validate() is False
+
+    def test_nondict(self):
+        self.form.process(formdata=MultiDict({'jsondata': '43'}))
+        assert self.form.validate() is True
+        self.form.process(formdata=MultiDict({'jsondata': 'true'}))
+        assert self.form.validate() is True
 
     def test_unicode(self):
         self.form.process(formdata=MultiDict({'jsondata': u'{"key": "val😡"}'}))
