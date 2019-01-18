@@ -3761,6 +3761,7 @@ ol ul {
 
 .mui-select {
   margin-top: 20px;
+  margin-bottom: 0;
 }
 .mui-select > label {
   top: -5px;

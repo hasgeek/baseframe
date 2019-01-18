@@ -110,7 +110,7 @@
         >{{ value|e }}</button>
     {% endfor %}
     {% if cancel_url %}<a href="{{ cancel_url }}" class="mui-btn mui-btn--raised mui-btn--primary">{% trans %}Cancel{% endtrans %}</a>{% endif %}
-    <span class="loading hidden">&nbsp;</span>
+    <span class="loading mui--hide"><i class="material-icons mui--align-middle mui--text-dark-secondary">refresh</i></span>
     {% if csrf_error -%}
       <div><p class="mui-form__error">{% trans -%}
         This form has timed out. Please submit again to confirm
@@ -158,14 +158,14 @@
           beforeSubmit: function(formdata, form, options) {
             form.find('input[type="submit"]').prop('disabled', true).addClass('submit-disabled');
             form.find('button[type="submit"]').prop('disabled', true).addClass('submit-disabled');
-            form.find('.loading').removeClass('hidden');
+            form.find('.loading').removeClass('mui--hide');
             return true;
           },
           error: function(context, xhr, status, errMsg) {
             var form = $("#{{ ref_id }}");
             form.find('input[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('button[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
-            form.find('.loading').addClass('hidden');
+            form.find('.loading').addClass('mui--hide');
             form.append('<div class="alert alert--error"><a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a><p class="alert__text"><i class="material-icons alert__icon">error</i> An error occured when submitting the form</p></div>');
           } // No comma or semicolon here
         });
@@ -177,7 +177,7 @@
         // Disable submit button when clicked. Prevent double click.
         $('#{{ ref_id }} input[type="submit"]').click(function() {
           $(this).addClass('submit-disabled').prop('disabled', true);
-          $('#{{ ref_id }}').find(".loading").removeClass('hidden');
+          $('#{{ ref_id }}').find(".loading").removeClass('mui--hide');
           this.form.submit();
         });
       });
