@@ -27,9 +27,10 @@ class TestEnumForm(forms.Form):
 
 
 class TestJsonForm(forms.Form):
-    jsondata = forms.JsonField(__("JSON Data"), default=DEFAULT_JSONDATA)
-    jsondata_no_default = forms.JsonField(__("JSON Data"))
-    jsondata_prettyprint = forms.JsonField(__("JSON Data"), prettyprint=True, default=DEFAULT_JSONDATA)
+    jsondata = forms.JsonField("JSON Data", default=DEFAULT_JSONDATA)
+    jsondata_no_default = forms.JsonField("JSON No Default")
+    jsondata_no_dict = forms.JsonField("JSON No Dict", require_dict=False)
+    jsondata_no_decimal = forms.JsonField("JSON No Decimal", use_decimal=False)
 
 
 class BaseTestCase(unittest.TestCase):
@@ -85,8 +86,13 @@ class TestJsonField(BaseTestCase):
 
     def test_nondict(self):
         self.form.process(formdata=MultiDict({'jsondata': '43'}))
-        assert self.form.validate() is True
+        assert self.form.validate() is False
         self.form.process(formdata=MultiDict({'jsondata': 'true'}))
+        assert self.form.validate() is False
+
+        self.form.process(formdata=MultiDict({'jsondata_no_dict': '43'}))
+        assert self.form.validate() is True
+        self.form.process(formdata=MultiDict({'jsondata_no_dict': 'true'}))
         assert self.form.validate() is True
 
     def test_unicode(self):
@@ -97,16 +103,27 @@ class TestJsonField(BaseTestCase):
     def test_decimal(self):
         self.form.jsondata.data = {"key": Decimal('1.2')}
         assert self.form.validate() is True
-        assert self.form.jsondata._value() == '{"key": 1.2}'
+        assert self.form.jsondata._value() == '{\n  "key": 1.2\n}'
 
         self.form.process(formdata=MultiDict({'jsondata': '{"key": 1.2}'}))
         assert self.form.validate() is True
         assert self.form.jsondata.data == {"key": Decimal('1.2')}
 
+        self.form.jsondata_no_decimal.data = {"key": Decimal('1.2')}
+        with self.assertRaises(TypeError):
+            self.form.jsondata_no_decimal._value()
+
+        self.form.process(formdata=MultiDict({'jsondata_no_decimal': '{"key": 1.2}'}))
+        assert self.form.validate() is True
+        assert self.form.jsondata_no_decimal.data == {"key": 1.2}
+
     def test_array(self):
         self.form.process(formdata=MultiDict({'jsondata': u'[{"key": "val"}, {"key2": "val2"}]'}))
+        assert self.form.validate() is False
+
+        self.form.process(formdata=MultiDict({'jsondata_no_dict': u'[{"key": "val"}, {"key2": "val2"}]'}))
         assert self.form.validate() is True
-        assert self.form.jsondata.data == [{"key": "val"}, {"key2": "val2"}]
+        assert self.form.jsondata_no_dict.data == [{"key": "val"}, {"key2": "val2"}]
 
     def test_comment(self):
         self.form.process(formdata=MultiDict({'jsondata': u"""
@@ -116,23 +133,7 @@ class TestJsonField(BaseTestCase):
             """}))
         assert self.form.validate() is False
 
-    def test_formatting(self):
-        self.form.process(formdata=MultiDict({'jsondata': u"""
-            [{
-                "key": "val"
-            }]
-            """}))
-        assert self.form.validate() is True
-        assert self.form.jsondata.data == [{"key": u"val"}]
-
-    def test_prettyprint(self):
-        self.form.jsondata_prettyprint.data = {"key": "val"}
-        assert self.form.jsondata_prettyprint._value() == """{
-  "key": "val"
-}"""
-
     def test_non_serializable(self):
         self.form.jsondata.data = {"key": datetime.now()}
-        assert self.form.validate() is False
         with self.assertRaises(TypeError):
             self.form.jsondata._value()
