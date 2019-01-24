@@ -102,7 +102,7 @@ class TestJsonField(BaseTestCase):
 
     def test_unicode_dumps(self):
         self.form.jsondata.data = {"key": u"val😡"}
-        assert type(self.form.jsondata._value()) == unicode
+        assert self.form.jsondata._value() == u'{\n  "key": "val😡"\n}'
 
     def test_decimal(self):
         self.form.jsondata.data = {"key": Decimal('1.2')}
