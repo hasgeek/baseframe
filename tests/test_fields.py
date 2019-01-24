@@ -100,6 +100,10 @@ class TestJsonField(BaseTestCase):
         assert self.form.validate() is True
         assert self.form.jsondata.data == {"key": u"val😡"}
 
+    def test_unicode_dumps(self):
+        self.form.jsondata.data = {"key": u"val😡"}
+        assert type(self.form.jsondata._value()) == unicode
+
     def test_decimal(self):
         self.form.jsondata.data = {"key": Decimal('1.2')}
         assert self.form.validate() is True

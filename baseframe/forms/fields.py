@@ -762,7 +762,7 @@ class JsonField(wtforms.TextAreaField):
             # invalid JSON to be presented back to the user for correction.
             return self.raw_data[0]
         elif self.data is not None:
-            return json.dumps(self.data, use_decimal=self.use_decimal, **self.prettyprint_args)
+            return json.dumps(self.data, use_decimal=self.use_decimal, ensure_ascii=False, **self.prettyprint_args)
         return u''
 
     def process_data(self, value):
