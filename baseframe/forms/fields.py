@@ -18,7 +18,9 @@ from .. import _, get_timezone
 from .widgets import TinyMce3, TinyMce4, DateTimeInput, CoordinatesInput, RadioMatrixInput, SelectWidget, Select2Widget
 from .parsleyjs import TextAreaField, StringField, URLField
 
-__imported = ['FileField', 'SelectMultipleField', 'SubmitField']  # Imported from WTForms
+__imported = [   # Imported from WTForms
+    'FileField', 'SelectMultipleField', 'SubmitField'
+    ]
 __local = ['AnnotatedTextField', 'AutocompleteField', 'AutocompleteMultipleField',
     'CoordinatesField', 'DateTimeField', 'EnumSelectField', 'FormField', 'GeonameSelectField',
     'GeonameSelectMultiField', 'ImgeeField', 'JsonField', 'MarkdownField', 'RadioMatrixField',
