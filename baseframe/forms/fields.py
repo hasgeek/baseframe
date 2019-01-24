@@ -11,19 +11,22 @@ from wtforms.widgets import Select as OriginalSelectWidget
 from wtforms.compat import text_type
 from wtforms.utils import unset_value
 import bleach
+import simplejson as json
 import six
 
 from .. import _, get_timezone
 from .widgets import TinyMce3, TinyMce4, DateTimeInput, CoordinatesInput, RadioMatrixInput, SelectWidget, Select2Widget
 from .parsleyjs import TextAreaField, StringField, URLField
 
-__all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES',
-    'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'TextListField',
-    'AnnotatedTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField', 'EnumSelectField',
-    'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
-    'CoordinatesField', 'RadioMatrixField', 'AutocompleteField', 'AutocompleteMultipleField', 'SelectField',
-    # Imported from WTForms:
-    'SelectMultipleField', 'SubmitField', 'FileField']
+__imported = [   # Imported from WTForms
+    'FileField', 'SelectMultipleField', 'SubmitField'
+    ]
+__local = ['AnnotatedTextField', 'AutocompleteField', 'AutocompleteMultipleField',
+    'CoordinatesField', 'DateTimeField', 'EnumSelectField', 'FormField', 'GeonameSelectField',
+    'GeonameSelectMultiField', 'ImgeeField', 'JsonField', 'MarkdownField', 'RadioMatrixField',
+    'RichTextField', 'SANITIZE_ATTRIBUTES', 'SANITIZE_TAGS', 'SelectField', 'StylesheetField',
+    'TextListField', 'TinyMce3Field', 'TinyMce4Field', 'UserSelectField', 'UserSelectMultiField']
+__all__ = __imported + __local
 
 
 # Default tags and attributes to allow in HTML sanitization
@@ -725,3 +728,66 @@ class EnumSelectField(SelectField):
     def pre_validate(self, form):
         if self.data is _invalid_marker:
             raise ValueError(self.gettext('Not a valid choice'))
+
+
+class JsonField(wtforms.TextAreaField):
+    """
+    A field to accept JSON input, stored internally as a Python-native type.
+    By default, requires the JSON root object to be a dictionary/hash.
+
+    ::
+
+        class MyForm(forms.Form):
+            field = forms.JsonField(__("My Field"), default={})
+
+    :param str label: Field label
+    :param list validators: List of field validators, passed on to WTForms
+    :param bool require_dict: Require a dictionary as the data value (default `True`)
+    :param book use_decimal: Use decimals instead of floats (default `True`)
+    :param kwargs: Additional field arguments, passed on to WTForms
+    """
+    prettyprint_args = {'sort_keys': True, 'indent': 2}
+
+    def __init__(self, label='', validators=None, require_dict=True, use_decimal=True, **kwargs):
+        self.require_dict = require_dict
+        self.use_decimal = use_decimal
+        super(JsonField, self).__init__(label, validators, **kwargs)
+
+    def _value(self):
+        """
+        Render the internal Python value as a JSON string.
+        Specialcase `None` to return an empty string instead of a JSON ``null``.
+        """
+        if self.raw_data:
+            # If we've received data from a form, render it as is. This allows
+            # invalid JSON to be presented back to the user for correction.
+            return self.raw_data[0]
+        elif self.data is not None:
+            return json.dumps(self.data, use_decimal=self.use_decimal, ensure_ascii=False, **self.prettyprint_args)
+        return u''
+
+    def process_data(self, value):
+        if value is not None and self.require_dict and not isinstance(value, dict):
+            raise ValueError(_("Field value must be a dictionary"))
+
+        # TODO: Confirm this value can be rendered as JSON.
+        # We're ignoring it for now because :meth:`_value` will trip on it
+        # when the form is rendered, and the likelihood of this field being
+        # used without being rendered is low.
+
+        self.data = value
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            value = valuelist[0]
+            if not value:
+                self.data = self.default
+                return
+            try:
+                data = json.loads(value, use_decimal=self.use_decimal)
+            except ValueError as e:
+                raise ValueError(_("Invalid JSON: {0!r}").format(e))
+            if self.require_dict:
+                if not isinstance(data, dict):
+                    raise ValueError(_("The JSON root must be a hash object"))
+            self.data = data
