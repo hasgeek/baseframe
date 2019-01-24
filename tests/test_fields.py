@@ -28,6 +28,7 @@ class TestEnumForm(forms.Form):
 
 class TestJsonForm(forms.Form):
     jsondata = forms.JsonField("JSON Data", default=DEFAULT_JSONDATA)
+    jsondata_empty_default = forms.JsonField("JSON Data", default={})
     jsondata_no_default = forms.JsonField("JSON No Default")
     jsondata_no_dict = forms.JsonField("JSON No Dict", require_dict=False)
     jsondata_no_decimal = forms.JsonField("JSON No Decimal", use_decimal=False)
@@ -74,6 +75,7 @@ class TestJsonField(BaseTestCase):
 
     def test_default(self):
         assert self.form.jsondata.data == DEFAULT_JSONDATA
+        assert self.form.jsondata_empty_default.data == {}
         assert self.form.jsondata_no_default.data is None
 
     def test_valid(self):
@@ -83,6 +85,12 @@ class TestJsonField(BaseTestCase):
     def test_invalid(self):
         self.form.process(formdata=MultiDict({'jsondata': '{"key"; "val"}'}))  # invalid JSON
         assert self.form.validate() is False
+
+    def test_empty_default(self):
+        self.form.process(formdata=MultiDict({'jsondata': '', 'jsondata_no_default': '', 'jsondata_empty_default': ''}))
+        assert self.form.jsondata.data == DEFAULT_JSONDATA
+        assert self.form.jsondata_empty_default.data == {}
+        assert self.form.jsondata_no_default.data is None
 
     def test_nondict(self):
         self.form.process(formdata=MultiDict({'jsondata': '43'}))

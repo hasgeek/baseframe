@@ -780,7 +780,7 @@ class JsonField(wtforms.TextAreaField):
         if valuelist:
             value = valuelist[0]
             if not value:
-                self.data = self.default if self.default else None
+                self.data = self.default
                 return
             try:
                 data = json.loads(value, use_decimal=self.use_decimal)
@@ -790,13 +790,3 @@ class JsonField(wtforms.TextAreaField):
                 if not isinstance(data, dict):
                     raise ValueError(_("The JSON root must be a hash object"))
             self.data = data
-
-    # def pre_validate(self, form):
-    #     if self.data:
-    #         try:
-    #             if not isinstance(self.data, six.string_types):
-    #                 # In case field data is set manually to an invalid non-serializable python object
-    #                 json.dumps(self.data, use_decimal=True)
-    #         except TypeError as e:
-    #             raise StopValidation("Invalid value for JsonField: {0!r}".format(e))
-    #     super(JsonField, self).pre_validate(form)
