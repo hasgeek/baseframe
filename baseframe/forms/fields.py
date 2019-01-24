@@ -10,7 +10,6 @@ from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, 
 from wtforms.widgets import Select as OriginalSelectWidget
 from wtforms.compat import text_type
 from wtforms.utils import unset_value
-from wtforms.validators import StopValidation
 import bleach
 import simplejson as json
 import six
@@ -19,13 +18,13 @@ from .. import _, get_timezone
 from .widgets import TinyMce3, TinyMce4, DateTimeInput, CoordinatesInput, RadioMatrixInput, SelectWidget, Select2Widget
 from .parsleyjs import TextAreaField, StringField, URLField
 
-__all__ = ['SANITIZE_TAGS', 'SANITIZE_ATTRIBUTES', 'JsonField',
-    'TinyMce3Field', 'TinyMce4Field', 'RichTextField', 'DateTimeField', 'TextListField',
-    'AnnotatedTextField', 'MarkdownField', 'StylesheetField', 'ImgeeField', 'EnumSelectField',
-    'FormField', 'UserSelectField', 'UserSelectMultiField', 'GeonameSelectField', 'GeonameSelectMultiField',
-    'CoordinatesField', 'RadioMatrixField', 'AutocompleteField', 'AutocompleteMultipleField', 'SelectField',
-    # Imported from WTForms:
-    'SelectMultipleField', 'SubmitField', 'FileField']
+__imported = ['FileField', 'SelectMultipleField', 'SubmitField']  # Imported from WTForms
+__local = ['AnnotatedTextField', 'AutocompleteField', 'AutocompleteMultipleField',
+    'CoordinatesField', 'DateTimeField', 'EnumSelectField', 'FormField', 'GeonameSelectField',
+    'GeonameSelectMultiField', 'ImgeeField', 'JsonField', 'MarkdownField', 'RadioMatrixField',
+    'RichTextField', 'SANITIZE_ATTRIBUTES', 'SANITIZE_TAGS', 'SelectField', 'StylesheetField',
+    'TextListField', 'TinyMce3Field', 'TinyMce4Field', 'UserSelectField', 'UserSelectMultiField']
+__all__ = __imported + __local
 
 
 # Default tags and attributes to allow in HTML sanitization
