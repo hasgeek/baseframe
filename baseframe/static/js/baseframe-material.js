@@ -443,14 +443,15 @@ $(function() {
 
     var xDiff = end.x - start.x;
     var yDiff = end.y - start.y;
+    var sideBarElem = document.getElementById('js-sidebar')
 
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    if (Math.abs(xDiff) > Math.abs(yDiff) && sideBarElem) {
       if (xDiff > 0 && start.x <= 80) {
-        $('#js-sidebar').addClass('open');
+        sideBarElem.classList.add('open');
         mui.overlay('on');
       }
       else {
-        $('#js-sidebar').removeClass('open');
+        sideBarElem.classList.remove('open');
         mui.overlay('off');
       }
     }
