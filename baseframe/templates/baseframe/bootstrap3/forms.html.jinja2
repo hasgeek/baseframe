@@ -125,7 +125,7 @@
   {% endfor %}
 {%- endmacro %}
 
-{%- macro renderform(form, formid, submit, ref_id='form', message='', action='', cancel_url='', multipart=false, style='horiz', autosave, last_revision_id) %}
+{%- macro renderform(form, formid, submit, ref_id='form', message='', action='', cancel_url='', multipart=false, style='horiz', autosave=False, last_revision_id=None) %}
 <form data-parsley-validate id="{{ ref_id }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" {%- if style == 'horiz' %} class="form-horizontal"{% endif %}>
   {{ renderform_inner(form, formid or none, style=style, autosave, last_revision_id) }}
   {{ rendersubmit([(none, submit or _("Submit"), 'btn-primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
