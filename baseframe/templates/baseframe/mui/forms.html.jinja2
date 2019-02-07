@@ -120,7 +120,7 @@
 </div>
 {%- endmacro %}
 
-{% macro renderform_inner(form, formid, style='horiz') -%}
+{% macro renderform_inner(form, formid, autosave, last_revision_id, style='horiz') -%}
   {%- if form.errors %}
     <div class="alert alert--error alert--dismissable">
       <a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a>
@@ -130,6 +130,10 @@
   {% if message %}<p>{{ message }}</p>{% endif %}
   <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
   {{ form.hidden_tag() }}
+  {%- if autosave %}
+    <input type="hidden" name="form.autosave" value="1" />
+    <input type="hidden" name="form.revision" value="{{ last_revision_id }}" />
+  {%- endif %}
   {%- set autofocus = true %}
   {% for field in form -%}
     {%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
@@ -141,9 +145,9 @@
   {% endfor %}
 {%- endmacro %}
 
-{% macro renderform(form, formid, submit, ref_id='form', message='', action='', cancel_url='', multipart=false, style='') %}
+{% macro renderform(form, formid, submit, autosave, last_revision_id, ref_id='form', message='', action='', cancel_url='', multipart=false, style='') %}
 <form data-parsley-validate id="{{ ref_id }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins hg-form {%- if style == 'horiz' %} mui-form--inline{% endif %}">
-  {{ renderform_inner(form, formid or none, style=style) }}
+  {{ renderform_inner(form, formid or none, autosave, last_revision_id, style=style) }}
   {{ rendersubmit([(none, submit or _("Submit"), 'mui-btn--primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>
 {% endmacro %}

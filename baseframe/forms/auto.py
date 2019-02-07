@@ -18,7 +18,7 @@ class ConfirmDeleteForm(Form):
     cancel = SubmitField(__(u"Cancel"))
 
 
-def render_form(form, title, message='', formid=None, submit=__(u"Submit"), cancel_url=None, ajax=False, with_chrome=True, autosave=False):
+def render_form(form, title, message='', formid=None, submit=__(u"Submit"), cancel_url=None, ajax=False, with_chrome=True, autosave=False, last_revision_id=None):
     multipart = False
     ref_id = 'form-' + (formid or buid())
     for field in form:
@@ -28,14 +28,16 @@ def render_form(form, title, message='', formid=None, submit=__(u"Submit"), canc
         template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
         return render_template(template, form=form, title=title,
             message=message, formid=formid, ref_id=ref_id, submit=submit,
-            cancel_url=cancel_url, ajax=ajax, multipart=multipart, with_chrome=with_chrome, autosave=autosave)
+            cancel_url=cancel_url, ajax=ajax, multipart=multipart, with_chrome=with_chrome,
+            autosave=autosave, last_revision_id=last_revision_id)
     if request.is_xhr and ajax:
         template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
     else:
         template = THEME_FILES[current_app.config['theme']]['autoform.html.jinja2']
     return make_response(render_template(template, form=form, title=title,
         message=message, formid=formid, ref_id=ref_id, submit=submit,
-        cancel_url=cancel_url, ajax=ajax, multipart=multipart, autosave=autosave), 200)
+        cancel_url=cancel_url, ajax=ajax, multipart=multipart, autosave=autosave,
+        last_revision_id=last_revision_id), 200)
 
 
 def render_message(title, message, code=200):
