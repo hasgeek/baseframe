@@ -131,7 +131,6 @@
   <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
   {{ form.hidden_tag() }}
   {%- if autosave %}
-    <input type="hidden" name="form.autosave" value="1" />
     <input type="hidden" name="form.revision" id="revision" value="{{ last_revision_id if last_revision_id is not none }}" />
   {%- endif %}
   {%- set autofocus = true %}
