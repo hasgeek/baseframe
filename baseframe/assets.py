@@ -62,6 +62,18 @@ assets['bootstrap-datepicker.js'][Version('1.3.0')] = ('jquery.js', 'baseframe/j
 
 assets['jquery.ui.js'][Version('1.10.3')] = ('jquery.js', 'baseframe/js/jquery-ui.js')
 assets['jquery.ui.css'][Version('1.10.3')] = 'baseframe/css/jquery-ui.css'
+assets['jquery.ui.js'][Version('1.12.1')] = ('jquery.js', 'baseframe/js/jquery-ui-1.12.1.js')
+assets['jquery.ui.css'][Version('1.12.1')] = 'baseframe/css/jquery-ui-1.12.1.css'
+assets['jquery.ui.sortable.js'][Version('1.12.1')] = ('jquery.js', 'baseframe/js/jquery-ui-sortable-1.12.1.js')
+assets['jquery.ui.sortable.css'][Version('1.12.1')] = 'baseframe/css/jquery-ui-sortable-1.12.1.css'
+assets['jquery.ui.touch-punch.js'][Version('0.2.3')] = ('jquery.js', 'baseframe/js/jquery.ui.touch-punch.js')
+assets['jquery.ui.sortable.touch.js'][Version('1.12.1')] = {'requires': [
+    'jquery.ui.sortable.js==1.12.1',
+    'jquery.ui.touch-punch.js==0.2.3'
+]}
+assets['jquery.ui.sortable.touch.css'][Version('1.12.1')] = {'requires': [
+    'jquery.ui.sortable.css==1.12.1',
+]}
 
 assets['jquery.liblink.js'][Version('0.0.0')] = ('jquery.js', 'baseframe/js/jquery.liblink.js')
 assets['jquery.wnumb.js'][Version('0.0.0')] = ('jquery.js', 'baseframe/js/jquery.wnumb.js')
