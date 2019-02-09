@@ -18,7 +18,7 @@ class ConfirmDeleteForm(Form):
     cancel = SubmitField(__(u"Cancel"))
 
 
-def render_form(form, title, message='', formid=None, submit=__(u"Submit"), cancel_url=None, ajax=False, with_chrome=True, action='', autosave=False, draft_revision=None):
+def render_form(form, title, message='', formid=None, submit=__(u"Submit"), cancel_url=None, ajax=False, with_chrome=True, action=None, autosave=False, draft_revision=None):
     multipart = False
     ref_id = 'form-' + (formid or buid())
     if not action:
