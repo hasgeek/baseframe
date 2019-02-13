@@ -175,9 +175,10 @@
     <script type="text/javascript">
       $(function() {
         // Disable submit button when clicked. Prevent double click.
-        $('#{{ ref_id }} input[type="submit"]').click(function() {
-          $(this).addClass('submit-disabled').prop('disabled', true);
-          $('#{{ ref_id }}').find(".loading").removeClass('mui--hide');
+        $('#{{ ref_id }}').submit(function() {
+          $(this).find('button[type="submit"]').prop('disabled', true);
+          $(this).find('input[type="submit"]').prop('disabled', true);
+          $(this).find(".loading").removeClass('mui--hide');
           this.form.submit();
         });
       });
