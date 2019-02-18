@@ -120,7 +120,7 @@
 </div>
 {%- endmacro %}
 
-{% macro renderform_inner(form, formid, style='horiz') -%}
+{% macro renderform_inner(form, formid, style='horiz', autosave=False, draft_revision=None) -%}
   {%- if form.errors %}
     <div class="alert alert--error alert--dismissable">
       <a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a>
@@ -130,6 +130,9 @@
   {% if message %}<p>{{ message }}</p>{% endif %}
   <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
   {{ form.hidden_tag() }}
+  {%- if autosave %}
+    <input type="hidden" name="form.revision" value="{{ draft_revision if draft_revision is not none }}" />
+  {%- endif %}
   {%- set autofocus = true %}
   {% for field in form -%}
     {%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
@@ -141,9 +144,9 @@
   {% endfor %}
 {%- endmacro %}
 
-{% macro renderform(form, formid, submit, ref_id='form', message='', action='', cancel_url='', multipart=false, style='') %}
+{%- macro renderform(form, formid, submit, ref_id='form', message='', action=None, cancel_url='', multipart=false, style='', autosave=False, draft_revision=None) %}
 <form data-parsley-validate id="{{ ref_id }}" method="POST" {%- if action %} action="{{ action }}" {%- endif %}{%- if multipart %} enctype="multipart/form-data" {%- endif %} accept-charset="UTF-8" class="mui-form mui-form--margins hg-form {%- if style == 'horiz' %} mui-form--inline{% endif %}">
-  {{ renderform_inner(form, formid or none, style=style) }}
+  {{ renderform_inner(form, formid or none, style=style, autosave=autosave, draft_revision=draft_revision) }}
   {{ rendersubmit([(none, submit or _("Submit"), 'mui-btn--primary')], cancel_url=cancel_url, style=style, csrf_error=form.csrf_token.errors) }}
 </form>
 {% endmacro %}
@@ -179,7 +182,6 @@
           $(this).find('button[type="submit"]').prop('disabled', true);
           $(this).find('input[type="submit"]').prop('disabled', true);
           $(this).find(".loading").removeClass('mui--hide');
-          $(this).submit();
         });
       });
     </script>

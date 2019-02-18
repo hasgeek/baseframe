@@ -18,24 +18,28 @@ class ConfirmDeleteForm(Form):
     cancel = SubmitField(__(u"Cancel"))
 
 
-def render_form(form, title, message='', formid=None, submit=__(u"Submit"), cancel_url=None, ajax=False, with_chrome=True):
+def render_form(form, title, message='', formid=None, submit=__(u"Submit"), cancel_url=None, ajax=False, with_chrome=True, action=None, autosave=False, draft_revision=None):
     multipart = False
     ref_id = 'form-' + (formid or buid())
+    if not action:
+        action = request.url
     for field in form:
         if isinstance(field.widget, wtforms.widgets.FileInput):
             multipart = True
     if not with_chrome:
         template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
         return render_template(template, form=form, title=title,
-            message=message, formid=formid, ref_id=ref_id, submit=submit,
-            cancel_url=cancel_url, ajax=ajax, multipart=multipart, with_chrome=with_chrome)
+            message=message, formid=formid, ref_id=ref_id, action=action, submit=submit,
+            cancel_url=cancel_url, ajax=ajax, multipart=multipart, with_chrome=with_chrome,
+            autosave=autosave, draft_revision=draft_revision)
     if request.is_xhr and ajax:
         template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
     else:
         template = THEME_FILES[current_app.config['theme']]['autoform.html.jinja2']
     return make_response(render_template(template, form=form, title=title,
-        message=message, formid=formid, ref_id=ref_id, submit=submit,
-        cancel_url=cancel_url, ajax=ajax, multipart=multipart), 200)
+        message=message, formid=formid, ref_id=ref_id, action=action, submit=submit,
+        cancel_url=cancel_url, ajax=ajax, multipart=multipart, autosave=autosave,
+        draft_revision=draft_revision), 200)
 
 
 def render_message(title, message, code=200):
