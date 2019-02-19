@@ -15,6 +15,17 @@
       {{ widgetscripts(form, script=false) }}
     });
   </script>
-  {{ ajaxform(ref_id=ref_id, request=request, force=ajax) }}
   <script src="{{ 'parsley.js'|ext_asset_url }}" type="text/javascript"></script>
+  <script type="text/javascript">
+    // In a separate script block in case the autosize plugin isn't present
+    $(function() {
+      $('#{{ ref_id }}').parsley().subscribe('parsley:field:validated', function(){
+        if ($('#{{ ref_id }}').parsley().isValid())
+          $('#{{ ref_id }}').addClass('parsley-valid').removeClass('parsley-invalid');
+        else
+          $('#{{ ref_id }}').addClass('parsley-invalid').removeClass('parsley-valid');
+      });
+    })
+  </script>
+  {{ ajaxform(ref_id=ref_id, request=request, force=ajax) }}
 {% endblock %}
