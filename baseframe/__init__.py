@@ -70,12 +70,12 @@ class JSONEncoder(JSONEncoderBase):
     Custom JSON encoder that adds support to types that are not supported
     by Flask's JSON encoder. Eg: lazy_gettext
     """
-    def default(self, obj):
-        if is_lazy_string(obj):
-            return six.text_type(obj)
+    def default(self, o):
+        if is_lazy_string(o):
+            return six.text_type(o)
         if isinstance(o, RoleAccessProxy):
             return dict(o)
-        return super(JSONEncoder, self).default(obj)
+        return super(JSONEncoder, self).default(o)
 
 
 def _select_jinja_autoescape(filename):
