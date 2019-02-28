@@ -1,17 +1,22 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import
-from pytz import timezone, UTC
-from flask import Blueprint, request, current_app
+
 import json
-from coaster.assets import split_namespec
-from coaster.auth import current_auth, request_has_auth
+
+from pytz import timezone, UTC
+from speaklater import is_lazy_string
+import six
+
+from flask import Blueprint, request, current_app
+from flask.json import JSONEncoder as JSONEncoderBase
 from flask_assets import Environment, Bundle
 from flask_caching import Cache
 from flask_babelex import Babel, Domain
-from flask.json import JSONEncoder as BaseEncoder
-from speaklater import is_lazy_string
-import six
+
+from coaster.assets import split_namespec
+from coaster.auth import current_auth, request_has_auth
+from coaster.sqlalchemy import RoleAccessProxy
 
 try:
     from flask_debugtoolbar import DebugToolbarExtension
@@ -60,7 +65,7 @@ _ = baseframe_translations.gettext
 __ = baseframe_translations.lazy_gettext
 
 
-class JSONEncoder(BaseEncoder):
+class JSONEncoder(JSONEncoderBase):
     """
     Custom JSON encoder that adds support to types that are not supported
     by Flask's JSON encoder. Eg: lazy_gettext
@@ -68,6 +73,8 @@ class JSONEncoder(BaseEncoder):
     def default(self, obj):
         if is_lazy_string(obj):
             return six.text_type(obj)
+        if isinstance(o, RoleAccessProxy):
+            return dict(o)
         return super(JSONEncoder, self).default(obj)
 
 
