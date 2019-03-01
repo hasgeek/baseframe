@@ -16,14 +16,31 @@ from ..utils import is_public_email_domain
 from ..signals import exception_catchall
 
 
-__all__ = ['OptionalIf', 'OptionalIfNot', 'ValidEmail', 'ValidEmailDomain', 'ValidUrl', 'AllUrlsValid',
-    'ValidName', 'NoObfuscatedEmail', 'ValidCoordinates', 'IsPublicEmailDomain', 'IsNotPublicEmailDomain',
-    # WTForms validators
-    'DataRequired', 'InputRequired', 'Optional', 'Length', 'EqualTo', 'URL', 'NumberRange',
-    'ValidationError', 'StopValidation']
+__local = ['AllUrlsValid', 'IsNotPublicEmailDomain', 'IsPublicEmailDomain', 'NoObfuscatedEmail',
+    'OptionalIf', 'OptionalIfNot', 'RequiredIf', 'ValidCoordinates', 'ValidEmail',
+    'ValidEmailDomain', 'ValidName', 'ValidUrl']
+__imported = [  # WTForms validators
+    'DataRequired', 'EqualTo', 'InputRequired', 'Length', 'NumberRange', 'Optional',
+    'StopValidation', 'URL', 'ValidationError']
+__all__ = __local + __imported
 
 
 EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b', re.I)
+
+
+class AllowedIf(object):
+    """
+    Validator that makes this field required if some other field is true.
+    """
+    def __init__(self, fieldname, message=None):
+        self.fieldname = fieldname
+        self.message = message or __("This field is not allowed if '{}' is not set".format(self.fieldname))
+
+    def __call__(self, form, field):
+        if field.data and not form[self.fieldname].data:
+            raise StopValidation(self.message)
+        elif not field.data and form[self.fieldname].data:
+            raise StopValidation(__("This is required"))
 
 
 class OptionalIf(object):
@@ -42,7 +59,7 @@ class OptionalIf(object):
                 raise StopValidation(self.message)
 
 
-class OptionalIfNot(OptionalIf):
+class RequiredIf(OptionalIf):
     """
     Validator that makes this field optional if the value of some other field is false.
     """
@@ -52,6 +69,9 @@ class OptionalIfNot(OptionalIf):
                 raise StopValidation()
             else:
                 raise StopValidation(self.message)
+
+
+OptionalIfNot = RequiredIf
 
 
 class _Comparison(object):
