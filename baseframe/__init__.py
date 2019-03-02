@@ -5,6 +5,7 @@ from __future__ import absolute_import
 import json
 
 from pytz import timezone, UTC
+from pytz.tzinfo import BaseTzInfo
 from speaklater import is_lazy_string
 import six
 
@@ -73,6 +74,8 @@ class JSONEncoder(JSONEncoderBase):
     def default(self, o):
         if is_lazy_string(o):
             return six.text_type(o)
+        if isinstance(o, BaseTzInfo):
+            return o.zone
         if isinstance(o, RoleAccessProxy):
             return dict(o)
         return super(JSONEncoder, self).default(o)
