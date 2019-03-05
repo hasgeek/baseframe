@@ -124,7 +124,7 @@ class DateTimeInput(wtforms.widgets.Input):
             class_,
             wtforms.widgets.html_params(name=field.name, id=field_id + '-date', value=date_value, **kwargs),
             class_,
-            wtforms.widgets.html_params(name=field.name, id=field_id + '-time', value=time_value, placeholder=_("--:--"), **kwargs),
+            wtforms.widgets.html_params(name=field.name, id=field_id + '-time', value=time_value, placeholder="--:--", **kwargs),
             field.tzname,
             ))
 
