@@ -46,6 +46,20 @@
         }
     }
 
+    input.datetime-date {
+      display: inline;
+      width: 10em;
+    }
+
+    input.datetime-time {
+      display: inline;
+      width: 5em;
+    }
+
+     textarea {
+      height: 10em;
+    }
+
     .mui-form__label {
         position: static;
         margin: 0 0 8px;

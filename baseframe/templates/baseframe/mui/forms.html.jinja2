@@ -110,7 +110,7 @@
         >{{ value|e }}</button>
     {% endfor %}
     {% if cancel_url %}<a href="{{ cancel_url }}" class="mui-btn mui-btn--raised mui-btn--primary">{% trans %}Cancel{% endtrans %}</a>{% endif %}
-    <span class="loading mui--hide"><i class="material-icons mui--align-middle mui--text-dark-secondary">refresh</i></span>
+    <span class="loading mui--hide">&nbsp;</span>
     {% if csrf_error -%}
       <div><p class="mui-form__error">{% trans -%}
         This form has timed out. Please submit again to confirm
