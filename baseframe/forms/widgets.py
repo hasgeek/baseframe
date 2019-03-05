@@ -122,7 +122,7 @@ class DateTimeInput(wtforms.widgets.Input):
         date_value, time_value = value.split(' ', 1)
         return Markup(u'<input type="date" class="datetime-date %s" %s /> <input type="time" class="datetime-time %s" %s /> %s' % (
             class_,
-            wtforms.widgets.html_params(name=field.name, id=field_id + '-date', value=date_value, **kwargs),
+            wtforms.widgets.html_params(name=field.name, id=field_id + '-date', value=date_value, placeholder="yyy-mm-dd", **kwargs),
             class_,
             wtforms.widgets.html_params(name=field.name, id=field_id + '-time', value=time_value, placeholder="--:--", **kwargs),
             field.tzname,
