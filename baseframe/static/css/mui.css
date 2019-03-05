@@ -3748,7 +3748,7 @@ li p + ol {
 }
 .mui-form input.datetime-time {
   display: inline;
-  width: 5em;
+  width: 6em;
 }
 .mui-form textarea {
   height: 10em;

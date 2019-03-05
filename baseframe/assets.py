@@ -324,7 +324,6 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
     'jquery.form.js',
     'jquery.autosize.js',
     # 'bootstrap-datepicker.js',
-    'jquery.timepicker.js',
     'select2-baseframe.js',
     'getdevicepixelratio.js'
 ]}
@@ -365,7 +364,6 @@ assets['baseframe-bs3.js'][Version(__version__)] = {'requires': [
 assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
     'bootstrap.css>=3.0.0',
     'select2-baseframe.css',
-    'jquery.timepicker.css',
     'baseframe-base-bs3.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
 ]}
@@ -383,6 +381,5 @@ assets['mui.css'][Version('0.9.21')] = 'baseframe/css/mui.css'
 assets['baseframe-mui.css'][Version(__version__)] = {'requires': [
     'jquery-modal.css',
     'select2-material.css',
-    'jquery.timepicker.css',
     'mui.css'
 ]}
