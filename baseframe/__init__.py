@@ -5,6 +5,7 @@ from __future__ import absolute_import
 import json
 
 from pytz import timezone, UTC
+from pytz.tzinfo import BaseTzInfo
 from speaklater import is_lazy_string
 import six
 
@@ -50,15 +51,15 @@ THEME_FILES = {
         'delete.html.jinja2': 'baseframe/bootstrap3/delete.html.jinja2',
         'message.html.jinja2': 'baseframe/bootstrap3/message.html.jinja2',
         'redirect.html.jinja2': 'baseframe/bootstrap3/redirect.html.jinja2'
-        },
+    },
     'mui': {
         'ajaxform.html.jinja2': 'baseframe/mui/ajaxform.html.jinja2',
         'autoform.html.jinja2': 'baseframe/mui/autoform.html.jinja2',
         'delete.html.jinja2': 'baseframe/mui/delete.html.jinja2',
         'message.html.jinja2': 'baseframe/mui/message.html.jinja2',
         'redirect.html.jinja2': 'baseframe/mui/redirect.html.jinja2'
-        }
     }
+}
 
 baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
 _ = baseframe_translations.gettext
@@ -73,6 +74,8 @@ class JSONEncoder(JSONEncoderBase):
     def default(self, o):
         if is_lazy_string(o):
             return six.text_type(o)
+        if isinstance(o, BaseTzInfo):
+            return o.zone
         if isinstance(o, RoleAccessProxy):
             return dict(o)
         return super(JSONEncoder, self).default(o)
@@ -231,7 +234,7 @@ class BaseframeBlueprint(Blueprint):
                     'flask_debugtoolbar.panels.logger.LoggingPanel',
                     'flask_debugtoolbar.panels.route_list.RouteListDebugPanel',
                     'flask_debugtoolbar.panels.profiler.ProfilerDebugPanel',
-                    ]
+                ]
                 if line_profile is not None:
                     app.config['DEBUG_TB_PANELS'].append(
                         'flask_debugtoolbar_lineprofilerpanel.panels.LineProfilerPanel')

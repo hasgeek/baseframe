@@ -2846,7 +2846,7 @@ h4, h5, h6 {
 }
 
 .mui--text-light {
-  color: #8492A6;
+  color: #79818B;
 }
 
 .mui--text-light-secondary {
@@ -3585,6 +3585,11 @@ ol ul {
   margin-bottom: 0;
 }
 
+li p + ul,
+li p + ol {
+  margin-bottom: 8px;
+}
+
 .mui-divider {
   width: 100%;
 }
@@ -3663,6 +3668,14 @@ ol ul {
   visibility: hidden;
 }
 
+.loading {
+  background: url('data:image/svg+xml;utf8,<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%25" height="100%25" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve"><path opacity="0.5" fill="%23000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"/></path></svg>') center no-repeat;
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 #root {
   clear: both;
   min-height: 100%;
@@ -3714,7 +3727,7 @@ ol ul {
 }
 .mui-form .mui-form__sidetext,
 .mui-form .mui-form__helptext {
-  color: #8492A6;
+  color: #79818B;
   margin: 8px 0 0;
 }
 .mui-form .mui-textfield--addon {
@@ -3728,6 +3741,17 @@ ol ul {
   color: rgba(0, 0, 0, 0.54);
   font-size: 16px;
   line-height: 2;
+}
+.mui-form input.datetime-date {
+  display: inline;
+  width: 10em;
+}
+.mui-form input.datetime-time {
+  display: inline;
+  width: 6em;
+}
+.mui-form textarea {
+  height: 10em;
 }
 .mui-form .mui-form__label {
   position: static;
