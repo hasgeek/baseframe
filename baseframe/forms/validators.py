@@ -30,17 +30,15 @@ EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b', re.I)
 
 class AllowedIf(object):
     """
-    Validator that makes this field required if some other field is true.
+    Validator that allows a value only if some other field has a value.
     """
     def __init__(self, fieldname, message=None):
         self.fieldname = fieldname
-        self.message = message or __("This field is not allowed if '{}' is not set".format(self.fieldname))
+        self.message = message or __("This field is not allowed")
 
     def __call__(self, form, field):
         if field.data and not form[self.fieldname].data:
             raise StopValidation(self.message)
-        elif not field.data and form[self.fieldname].data:
-            raise StopValidation(__("This is required"))
 
 
 class OptionalIf(object):
@@ -49,7 +47,7 @@ class OptionalIf(object):
     """
     def __init__(self, fieldname, message=None):
         self.fieldname = fieldname
-        self.message = message or __("This is required")
+        self.message = message or __("This field is required")
 
     def __call__(self, form, field):
         if not field.data:
@@ -59,7 +57,7 @@ class OptionalIf(object):
                 raise StopValidation(self.message)
 
 
-class RequiredIf(OptionalIf):
+class OptionalIfNot(OptionalIf):
     """
     Validator that makes this field optional if the value of some other field is false.
     """
@@ -71,7 +69,17 @@ class RequiredIf(OptionalIf):
                 raise StopValidation(self.message)
 
 
-OptionalIfNot = RequiredIf
+class RequiredIf(object):
+    """
+    Validator that makes this field required if the value of some other field is true.
+    """
+    def __init__(self, fieldname, message=None):
+        self.fieldname = fieldname
+        self.message = message or __("This field is required")
+
+    def __call__(self, form, field):
+        if not field.data and form[self.fieldname].data:
+            raise StopValidation(self.message)
 
 
 class _Comparison(object):

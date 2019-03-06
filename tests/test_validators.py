@@ -4,7 +4,9 @@ import warnings
 import urllib3
 from baseframe.utils import is_public_email_domain
 from mxsniff import MXLookupException
-from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainFormTest
+from .fixtures import (TestCaseBaseframe, UrlFormTest, AllUrlsFormTest,
+    OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainFormTest,
+    RequiredIfFormTest, AllowedIfFormTest)
 
 
 class TestValidators(TestCaseBaseframe):
@@ -13,6 +15,8 @@ class TestValidators(TestCaseBaseframe):
         with self.app.test_request_context('/'):
             self.form = UrlFormTest(meta={'csrf': False})
             self.all_urls_form = AllUrlsFormTest(meta={'csrf': False})
+            self.required_if_form = RequiredIfFormTest(meta={'csrf': False})
+            self.allowed_if_form = AllowedIfFormTest(meta={'csrf': False})
             self.optional_if_form = OptionalIfFormTest(meta={'csrf': False})
             self.optional_if_not_form = OptionalIfNotFormTest(meta={'csrf': False})
             self.webmail_form = PublicEmailDomainFormTest(meta={'csrf': False})
@@ -128,6 +132,26 @@ class TestValidators(TestCaseBaseframe):
             snippet = '<ul><li><a href="{url1}">url1</a></li><li><a href="{url2}">url2</a></li></ul>'.format(url1=url1, url2=url2)
             self.all_urls_form.process(content_with_urls=snippet)
             self.assertEqual(self.all_urls_form.validate(), False)
+
+    def test_required_if(self):
+        self.required_if_form.process(content=u"Content", blurb=u"Blurb")
+        self.assertTrue(self.required_if_form.validate())
+
+        self.required_if_form.process()
+        self.assertTrue(self.required_if_form.validate())
+
+        self.required_if_form.process(content=u"Content")
+        self.assertFalse(self.required_if_form.validate())
+
+    def test_allowed_if(self):
+        self.allowed_if_form.process(content=u"Content", blurb=u"Blurb")
+        self.assertTrue(self.allowed_if_form.validate())
+
+        self.allowed_if_form.process(blurb=u"Blurb")
+        self.assertFalse(self.allowed_if_form.validate())
+
+        self.allowed_if_form.process()
+        self.assertTrue(self.allowed_if_form.validate())
 
     def test_optional_if(self):
         self.optional_if_form.process(headline=u'Headline')
