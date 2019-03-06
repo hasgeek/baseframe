@@ -344,7 +344,6 @@ assets['baseframe.css'][Version(__version__)] = {'requires': [
     'bootstrap.css==2.0.1',
     'bootstrap-responsive.css==2.0.1',
     'select2-baseframe.css',
-    'jquery.timepicker.css',
     'fontawesome.css==3.1.0',
     'baseframe-base.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
