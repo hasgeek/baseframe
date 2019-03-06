@@ -89,9 +89,6 @@ assets['jquery.autosize.js'][Version('1.18.17')] = ('jquery.js', 'baseframe/js/j
 assets['jquery.oembed.js'][Version('1.0.1')] = ('jquery.js', 'baseframe/js/jquery.oembed.js')
 assets['jquery.oembed.css'][Version('1.0.1')] = ('baseframe/css/jquery.oembed.css')
 
-assets['jquery.timepicker.js'][Version('1.6.0')] = ('jquery.js>=1.7.0', 'baseframe/js/jquery.timepicker.js')
-assets['jquery.timepicker.css'][Version('1.6.0')] = 'baseframe/css/jquery.timepicker.css'
-
 assets['jquery.fullcalendar.js'][Version('1.6.4')] = ('jquery.js', 'jquery.ui.js', 'baseframe/js/fullcalendar/fullcalendar.js')
 assets['jquery.fullcalendar.css'][Version('1.6.4')] = ('jquery.ui.css', 'baseframe/js/fullcalendar/fullcalendar.css')
 assets['jquery.fullcalendar.gcal.js'][Version('1.6.4')] = ('jquery.fullcalendar.js', 'baseframe/js/fullcalendar/gcal.js')
@@ -324,7 +321,6 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
     'jquery.form.js',
     'jquery.autosize.js',
     # 'bootstrap-datepicker.js',
-    'jquery.timepicker.js',
     'select2-baseframe.js',
     'getdevicepixelratio.js'
 ]}
@@ -348,7 +344,6 @@ assets['baseframe.css'][Version(__version__)] = {'requires': [
     'bootstrap.css==2.0.1',
     'bootstrap-responsive.css==2.0.1',
     'select2-baseframe.css',
-    'jquery.timepicker.css',
     'fontawesome.css==3.1.0',
     'baseframe-base.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
@@ -365,7 +360,6 @@ assets['baseframe-bs3.js'][Version(__version__)] = {'requires': [
 assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
     'bootstrap.css>=3.0.0',
     'select2-baseframe.css',
-    'jquery.timepicker.css',
     'baseframe-base-bs3.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
 ]}
@@ -383,6 +377,5 @@ assets['mui.css'][Version('0.9.21')] = 'baseframe/css/mui.css'
 assets['baseframe-mui.css'][Version(__version__)] = {'requires': [
     'jquery-modal.css',
     'select2-material.css',
-    'jquery.timepicker.css',
     'mui.css'
 ]}
