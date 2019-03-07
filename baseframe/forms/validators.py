@@ -34,11 +34,15 @@ class AllowedIf(object):
     """
     def __init__(self, fieldname, message=None):
         self.fieldname = fieldname
-        self.message = message or __("This field is not allowed")
+        self.message = message
 
     def __call__(self, form, field):
-        if field.data and not form[self.fieldname].data:
-            raise StopValidation(self.message)
+        if field.data:
+            if not form[self.fieldname].data:
+                message = self.message or __("This is now allwed if '{}' is not provided".format(form[self.fieldname].label.text))
+                raise StopValidation(message)
+            else:
+                raise StopValidation()
 
 
 class OptionalIf(object):
@@ -47,7 +51,7 @@ class OptionalIf(object):
     """
     def __init__(self, fieldname, message=None):
         self.fieldname = fieldname
-        self.message = message or __("This field is required")
+        self.message = message or __("This is required")
 
     def __call__(self, form, field):
         if not field.data:
@@ -75,11 +79,16 @@ class RequiredIf(object):
     """
     def __init__(self, fieldname, message=None):
         self.fieldname = fieldname
-        self.message = message or __("This field is required")
+        self.message = message or __("This is required")
 
     def __call__(self, form, field):
-        if not field.data and form[self.fieldname].data:
-            raise StopValidation(self.message)
+        if not field.data:
+            if form[self.fieldname].data:
+                raise StopValidation(self.message)
+            else:
+                # Remove the error introduced by DateTimeField as `None` is invalid datetime
+                field.errors[:] = []
+                raise StopValidation()
 
 
 class _Comparison(object):

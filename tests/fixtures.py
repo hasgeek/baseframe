@@ -60,23 +60,23 @@ class AllUrlsFormTest(forms.Form):
 
 
 class OptionalIfFormTest(forms.Form):
-    title = forms.StringField(__("Title"), validators=[forms.validators.OptionalIf('headline')])
     headline = forms.StringField(__("Headline"))
+    title = forms.StringField(__("Title"), validators=[forms.validators.OptionalIf('headline')])
 
 
 class OptionalIfNotFormTest(forms.Form):
-    blurb = forms.TextAreaField(__("Blurb"), validators=[forms.validators.OptionalIfNot('content')])
     content = forms.TextAreaField(__("Content"))
+    blurb = forms.TextAreaField(__("Blurb"), validators=[forms.validators.OptionalIfNot('content')])
 
 
 class RequiredIfFormTest(forms.Form):
-    blurb = forms.TextAreaField(__("Blurb"), validators=[forms.validators.RequiredIf('content')])
     content = forms.TextAreaField(__("Content"))
+    blurb = forms.TextAreaField(__("Blurb"), validators=[forms.validators.RequiredIf('content')])
 
 
 class AllowedIfFormTest(forms.Form):
-    blurb = forms.TextAreaField(__("Blurb"), validators=[forms.validators.AllowedIf('content')])
     content = forms.TextAreaField(__("Content"))
+    blurb = forms.TextAreaField(__("Blurb"), validators=[forms.validators.AllowedIf('content')])
 
 
 class PublicEmailDomainFormTest(forms.Form):

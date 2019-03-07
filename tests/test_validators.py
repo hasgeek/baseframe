@@ -135,34 +135,34 @@ class TestValidators(TestCaseBaseframe):
 
     def test_required_if(self):
         self.required_if_form.process(content=u"Content", blurb=u"Blurb")
-        self.assertTrue(self.required_if_form.validate())
+        assert self.required_if_form.validate()
 
         self.required_if_form.process()
-        self.assertTrue(self.required_if_form.validate())
+        assert self.required_if_form.validate()
 
         self.required_if_form.process(content=u"Content")
-        self.assertFalse(self.required_if_form.validate())
+        assert not self.required_if_form.validate()
 
     def test_allowed_if(self):
         self.allowed_if_form.process(content=u"Content", blurb=u"Blurb")
-        self.assertTrue(self.allowed_if_form.validate())
+        assert self.allowed_if_form.validate()
 
         self.allowed_if_form.process(blurb=u"Blurb")
-        self.assertFalse(self.allowed_if_form.validate())
+        assert not self.allowed_if_form.validate()
 
         self.allowed_if_form.process()
-        self.assertTrue(self.allowed_if_form.validate())
+        assert self.allowed_if_form.validate()
 
     def test_optional_if(self):
         self.optional_if_form.process(headline=u'Headline')
-        self.assertTrue(self.optional_if_form.validate())
+        assert self.optional_if_form.validate()
 
         self.optional_if_form.process()
-        self.assertFalse(self.optional_if_form.validate())
+        assert not self.optional_if_form.validate()
 
     def test_optional_if_not(self):
         self.optional_if_not_form.process()
-        self.assertTrue(self.optional_if_not_form.validate())
+        assert self.optional_if_not_form.validate()
 
         self.optional_if_not_form.process(content=u'Content')
-        self.assertFalse(self.optional_if_not_form.validate())
+        assert not self.optional_if_not_form.validate()
