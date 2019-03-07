@@ -87,6 +87,7 @@ class RequiredIf(object):
                 raise StopValidation(self.message)
             else:
                 # Remove the error introduced by DateTimeField as `None` is invalid datetime
+                # ref: https://github.com/wtforms/wtforms/blob/283b2803206825158834f1828bbf749c129b7c47/src/wtforms/validators.py#L239
                 field.errors[:] = []
                 raise StopValidation()
 
