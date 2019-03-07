@@ -39,7 +39,7 @@ class AllowedIf(object):
     def __call__(self, form, field):
         if field.data:
             if not form[self.fieldname].data:
-                message = self.message or __("This is now allwed if '{}' is not provided".format(form[self.fieldname].label.text))
+                message = self.message or __("This is now allowed if '{}' is not provided".format(form[self.fieldname].label.text))
                 raise StopValidation(message)
             else:
                 raise StopValidation()
@@ -73,11 +73,14 @@ class OptionalIfNot(OptionalIf):
                 raise StopValidation(self.message)
 
 
-class RequiredIf(object):
+class RequiredIf(Optional):
     """
     Validator that makes this field required if the value of some other field is true.
     """
+    field_flags = set()
+
     def __init__(self, fieldname, message=None):
+        super(RequiredIf, self).__init__()
         self.fieldname = fieldname
         self.message = message or __("This is required")
 
@@ -88,7 +91,7 @@ class RequiredIf(object):
             else:
                 # Remove the error introduced by DateTimeField as `None` is invalid datetime
                 # ref: https://github.com/wtforms/wtforms/blob/283b2803206825158834f1828bbf749c129b7c47/src/wtforms/validators.py#L239
-                field.errors[:] = []
+                super(RequiredIf, self).__call__(form, field)
                 raise StopValidation()
 
 
