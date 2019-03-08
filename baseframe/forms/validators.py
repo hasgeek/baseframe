@@ -39,7 +39,7 @@ class AllowedIf(object):
     def __call__(self, form, field):
         if field.data:
             if not form[self.fieldname].data:
-                message = self.message or __("This is now allowed if '{}' is not provided".format(form[self.fieldname].label.text))
+                message = self.message or __("This is now allowed if '{}' is not provided").format(form[self.fieldname].label.text)
                 raise StopValidation(message)
             else:
                 raise StopValidation()
