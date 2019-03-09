@@ -59,26 +59,6 @@ class AllUrlsFormTest(forms.Form):
         validators=[forms.validators.DataRequired(), forms.validators.AllUrlsValid()])
 
 
-class OptionalIfFormTest(forms.Form):
-    headline = forms.StringField(__("Headline"))
-    title = forms.StringField(__("Title"), validators=[forms.validators.OptionalIf('headline')])
-
-
-class OptionalIfNotFormTest(forms.Form):
-    content = forms.TextAreaField(__("Content"))
-    blurb = forms.TextAreaField(__("Blurb"), validators=[forms.validators.OptionalIfNot('content')])
-
-
-class RequiredIfFormTest(forms.Form):
-    content = forms.TextAreaField(__("Content"))
-    blurb = forms.TextAreaField(__("Blurb"), validators=[forms.validators.RequiredIf('content')])
-
-
-class AllowedIfFormTest(forms.Form):
-    content = forms.TextAreaField(__("Content"))
-    blurb = forms.TextAreaField(__("Blurb"), validators=[forms.validators.AllowedIf('content')])
-
-
 class PublicEmailDomainFormTest(forms.Form):
     webmail_domain = forms.StringField(__("Webmail Domain"), validators=[forms.validators.IsPublicEmailDomain()])
     not_webmail_domain = forms.StringField(__("Not Webmail Domain"), validators=[forms.validators.IsNotPublicEmailDomain()])

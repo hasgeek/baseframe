@@ -6,7 +6,8 @@ from six.moves.urllib.parse import urljoin, quote as urlquote
 import dns.resolver
 from pyisemail import is_email
 from flask import request
-from wtforms.validators import (DataRequired, InputRequired, Optional, Length, EqualTo, URL, NumberRange,
+from wtforms.validators import (  # NOQA
+    DataRequired, InputRequired, Optional, Length, EqualTo, URL, NumberRange,
     ValidationError, StopValidation)
 import requests
 from lxml import html
@@ -17,7 +18,7 @@ from ..signals import exception_catchall
 
 
 __local = ['AllUrlsValid', 'IsNotPublicEmailDomain', 'IsPublicEmailDomain', 'NoObfuscatedEmail',
-    'OptionalIf', 'OptionalIfNot', 'RequiredIf', 'ValidCoordinates', 'ValidEmail',
+    'AllowedIf', 'OptionalIf', 'RequiredIf', 'ValidCoordinates', 'ValidEmail',
     'ValidEmailDomain', 'ValidName', 'ValidUrl']
 __imported = [  # WTForms validators
     'DataRequired', 'EqualTo', 'InputRequired', 'Length', 'NumberRange', 'Optional',
@@ -30,69 +31,65 @@ EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b', re.I)
 
 class AllowedIf(object):
     """
-    Validator that allows a value only if some other field has a value.
+    Validator that allows a value only if another field also has a value.
+
+    :param str fieldname: Name of the other field
+    :param str message: Validation error message. Will be formatted with an optional ``{field}}`` label
     """
     def __init__(self, fieldname, message=None):
         self.fieldname = fieldname
-        self.message = message
+        self.message = message or __(u"This requires {field} to be specified")
 
     def __call__(self, form, field):
         if field.data:
-            if not form[self.fieldname].data:
-                message = self.message or __("This is now allowed if '{}' is not provided").format(form[self.fieldname].label.text)
-                raise StopValidation(message)
-            else:
-                raise StopValidation()
+            if form[self.fieldname].data in (None, ''):
+                raise StopValidation(self.message.format(field=form[self.fieldname].label.text))
 
 
-class OptionalIf(object):
+class OptionalIf(Optional):
     """
-    Validator that makes this field optional if the value of some other field is true.
+    Validator that makes this field optional if another field has data. If this
+    field is required when the other field is empty, chain it with
+    :class:`DataRequired`::
+
+        field = forms.StringField("Field",
+            validators=[forms.validators.OptionalIf('other'), forms.validators.DataRequired()])
+
+    :param str fieldname: Name of the other field
+    :param str message: Validation error message
     """
     def __init__(self, fieldname, message=None):
+        super(OptionalIf, self).__init__()
         self.fieldname = fieldname
         self.message = message or __("This is required")
 
     def __call__(self, form, field):
-        if not field.data:
-            if form[self.fieldname].data:
-                raise StopValidation()
-            else:
-                raise StopValidation(self.message)
+        if form[self.fieldname].data not in (None, ''):
+            return super(OptionalIf, self).__call__(form, field)
 
 
-class OptionalIfNot(OptionalIf):
+class RequiredIf(DataRequired):
     """
-    Validator that makes this field optional if the value of some other field is false.
-    """
-    def __call__(self, form, field):
-        if not field.data:
-            if not form[self.fieldname].data:
-                raise StopValidation()
-            else:
-                raise StopValidation(self.message)
+    Validator that makes this field required if another field has data. If this
+    field is also optional when the other field is empty, chain it with
+    :class:`Optional`::
 
+        field = forms.StringField("Field",
+            validators=[forms.validators.RequiredIf('other'), forms.validators.Optional()])
 
-class RequiredIf(Optional):
-    """
-    Validator that makes this field required if the value of some other field is true.
+    :param str fieldname: Name of the other field
+    :param str message: Validation error message
     """
     field_flags = set()
 
     def __init__(self, fieldname, message=None):
-        super(RequiredIf, self).__init__()
+        message = message or __("This is required")
+        super(RequiredIf, self).__init__(message=message)
         self.fieldname = fieldname
-        self.message = message or __("This is required")
 
     def __call__(self, form, field):
-        if not field.data:
-            if form[self.fieldname].data:
-                raise StopValidation(self.message)
-            else:
-                # Remove the error introduced by DateTimeField as `None` is invalid datetime
-                # ref: https://github.com/wtforms/wtforms/blob/283b2803206825158834f1828bbf749c129b7c47/src/wtforms/validators.py#L239
-                super(RequiredIf, self).__call__(form, field)
-                raise StopValidation()
+        if form[self.fieldname].data not in [None, '']:
+            super(RequiredIf, self).__call__(form, field)
 
 
 class _Comparison(object):
