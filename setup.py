@@ -22,6 +22,7 @@ requires = [
     'pyIsEmail',
     'dnspython',
     'WTForms>=2.0',
+    'WTForms-SQLAlchemy',
     'Flask>=1.0',
     'Flask-Assets',
     'Flask-WTF>=0.14',

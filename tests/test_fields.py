@@ -21,12 +21,12 @@ class MY_ENUM(LabeledEnum):
 DEFAULT_JSONDATA = {'key': u"val"}
 
 
-class TestEnumForm(forms.Form):
+class EnumForm(forms.Form):
     position = forms.EnumSelectField(__("Position"), lenum=MY_ENUM, default=MY_ENUM.THIRD)
     position_no_default = forms.EnumSelectField(__("Position Without Default"), lenum=MY_ENUM)
 
 
-class TestJsonForm(forms.Form):
+class JsonForm(forms.Form):
     jsondata = forms.JsonField("JSON Data", default=DEFAULT_JSONDATA)
     jsondata_empty_default = forms.JsonField("JSON Data", default={})
     jsondata_no_default = forms.JsonField("JSON No Default")
@@ -46,7 +46,7 @@ class BaseTestCase(unittest.TestCase):
 class TestEnumField(BaseTestCase):
     def setUp(self):
         super(TestEnumField, self).setUp()
-        self.form = TestEnumForm(meta={'csrf': False})
+        self.form = EnumForm(meta={'csrf': False})
 
     def test_default(self):
         assert self.form.position.data == 3
@@ -71,7 +71,7 @@ class TestEnumField(BaseTestCase):
 class TestJsonField(BaseTestCase):
     def setUp(self):
         super(TestJsonField, self).setUp()
-        self.form = TestJsonForm(meta={'csrf': False})
+        self.form = JsonForm(meta={'csrf': False})
 
     def test_default(self):
         assert self.form.jsondata.data == DEFAULT_JSONDATA
