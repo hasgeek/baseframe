@@ -21,7 +21,7 @@ requires = [
     'pytz',
     'pyIsEmail',
     'dnspython',
-    'WTForms>=2.0',
+    'WTForms>=2.2',
     'WTForms-SQLAlchemy',
     'Flask>=1.0',
     'Flask-Assets',
