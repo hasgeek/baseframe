@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from decimal import Decimal
+from fractions import Fraction
 import re
 import six
 from six.moves.urllib.parse import urljoin, quote as urlquote
@@ -29,6 +31,27 @@ __all__ = __local + __imported
 EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b', re.I)
 
 
+_zero_values = (0, 0.0, Decimal('0'), 0j, Fraction(0, 1))
+
+
+def is_empty(value):
+    """
+    Returns True if the value is falsy but not a numeric zero::
+
+        >>> is_empty(0)
+        False
+        >>> is_empty('0')
+        False
+        >>> is_empty('')
+        True
+        >>> is_empty(())
+        True
+        >>> is_empty(None)
+        True
+    """
+    return value not in _zero_values and not value
+
+
 class AllowedIf(object):
     """
     Validator that allows a value only if another field also has a value.
@@ -42,7 +65,7 @@ class AllowedIf(object):
 
     def __call__(self, form, field):
         if field.data:
-            if form[self.fieldname].data in (None, ''):
+            if is_empty(form[self.fieldname].data):
                 raise StopValidation(self.message.format(field=form[self.fieldname].label.text))
 
 
@@ -64,7 +87,7 @@ class OptionalIf(Optional):
         self.message = message or __("This is required")
 
     def __call__(self, form, field):
-        if form[self.fieldname].data not in (None, ''):
+        if not is_empty(form[self.fieldname].data):
             return super(OptionalIf, self).__call__(form, field)
 
 
@@ -88,7 +111,7 @@ class RequiredIf(DataRequired):
         self.fieldname = fieldname
 
     def __call__(self, form, field):
-        if form[self.fieldname].data not in [None, '']:
+        if not is_empty(form[self.fieldname].data):
             super(RequiredIf, self).__call__(form, field)
 
 
