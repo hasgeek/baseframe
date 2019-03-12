@@ -3,8 +3,9 @@
 import warnings
 import urllib3
 from baseframe.utils import is_public_email_domain
+from baseframe import forms
 from mxsniff import MXLookupException
-from .fixtures import TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, OptionalIfFormTest, OptionalIfNotFormTest, PublicEmailDomainFormTest
+from .fixtures import (TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, PublicEmailDomainFormTest)
 
 
 class TestValidators(TestCaseBaseframe):
@@ -13,8 +14,6 @@ class TestValidators(TestCaseBaseframe):
         with self.app.test_request_context('/'):
             self.form = UrlFormTest(meta={'csrf': False})
             self.all_urls_form = AllUrlsFormTest(meta={'csrf': False})
-            self.optional_if_form = OptionalIfFormTest(meta={'csrf': False})
-            self.optional_if_not_form = OptionalIfNotFormTest(meta={'csrf': False})
             self.webmail_form = PublicEmailDomainFormTest(meta={'csrf': False})
         urllib3.disable_warnings()
 
@@ -129,16 +128,133 @@ class TestValidators(TestCaseBaseframe):
             self.all_urls_form.process(content_with_urls=snippet)
             self.assertEqual(self.all_urls_form.validate(), False)
 
-    def test_optional_if(self):
-        self.optional_if_form.process(headline=u'Headline')
-        self.assertTrue(self.optional_if_form.validate())
 
-        self.optional_if_form.process()
-        self.assertFalse(self.optional_if_form.validate())
+class TestFormBase(TestCaseBaseframe):
+    # Subclasses must define a `Form`
 
-    def test_optional_if_not(self):
-        self.optional_if_not_form.process()
-        self.assertTrue(self.optional_if_not_form.validate())
+    def setUp(self):
+        super(TestFormBase, self).setUp()
+        self.ctx = self.app.test_request_context()
+        self.ctx.push()
+        self.form = self.Form(meta={'csrf': False})
 
-        self.optional_if_not_form.process(content=u'Content')
-        self.assertFalse(self.optional_if_not_form.validate())
+    def tearDown(self):
+        self.ctx.pop()
+
+
+class TestAllowedIf(TestFormBase):
+    class Form(forms.Form):
+        other = forms.StringField("Other")
+        field = forms.StringField("Field",
+            validators=[forms.validators.AllowedIf('other')])
+
+    other_not_empty = "Not empty"
+
+    def test_is_allowed(self):
+        self.form.process(other=self.other_not_empty, field="Also not empty")
+        assert self.form.validate() is True
+
+    def test_is_untested_when_empty(self):
+        self.form.process(other=self.other_not_empty)
+        assert self.form.validate() is True
+
+    def test_is_untested_when_all_empty(self):
+        self.form.process()
+        assert self.form.validate() is True
+
+    def test_not_allowed(self):
+        self.form.process(field="Not empty")
+        assert self.form.validate() is False
+
+    def test_not_allowed2(self):
+        self.form.process(other="", field="Not empty")
+        assert self.form.validate() is False
+
+
+class TestAllowedIfInteger(TestAllowedIf):
+    class Form(forms.Form):
+        other = forms.IntegerField("Other")
+        field = forms.StringField("Field",
+            validators=[forms.validators.AllowedIf('other')])
+
+    other_not_empty = 0
+
+
+class TestOptionalIf(TestFormBase):
+    class Form(forms.Form):
+        other = forms.StringField("Other")
+        field = forms.StringField("Field",
+            validators=[forms.validators.OptionalIf('other'), forms.validators.DataRequired()])
+
+    other_not_empty = "Not empty"
+
+    def test_is_optional(self):
+        self.form.process(other=self.other_not_empty)
+        assert self.form.validate() is True
+
+    def test_is_required_with_none(self):
+        self.form.process(other=None)
+        assert self.form.validate() is False
+
+    def test_is_required_with_empty(self):
+        self.form.process(other='')
+        assert self.form.validate() is False
+
+    def test_is_optional_but_value_accepted(self):
+        self.form.process(other=self.other_not_empty, field="Not empty")
+        assert self.form.validate() is True
+
+    def test_is_required_with_none_and_accepted(self):
+        self.form.process(other=None, field="Not empty")
+        assert self.form.validate() is True
+
+    def test_is_required_with_empty_and_accepted(self):
+        self.form.process(other='', field="Not empty")
+        assert self.form.validate() is True
+
+
+class TestOptionalIfInteger(TestOptionalIf):
+    class Form(forms.Form):
+        other = forms.IntegerField("Other")
+        field = forms.StringField("Field",
+            validators=[forms.validators.OptionalIf('other'), forms.validators.DataRequired()])
+
+    other_not_empty = 0
+
+
+class TestRequiredIf(TestFormBase):
+    class Form(forms.Form):
+        other = forms.StringField("Other")
+        field = forms.StringField("Field",
+            validators=[forms.validators.RequiredIf('other'), forms.validators.Optional()])
+
+    other_not_empty = "Not empty"
+
+    def test_is_required(self):
+        self.form.process(other=self.other_not_empty)
+        assert self.form.validate() is False
+
+    def test_is_required2(self):
+        self.form.process(other=self.other_not_empty, field="")
+        assert self.form.validate() is False
+
+    def test_is_required_and_valid(self):
+        self.form.process(other=self.other_not_empty, field="Also not empty")
+        assert self.form.validate() is True
+
+    def test_is_not_required(self):
+        self.form.process()
+        assert self.form.validate() is True
+
+    def test_is_not_required2(self):
+        self.form.process(other="")
+        assert self.form.validate() is True
+
+
+class TestRequiredIfInteger(TestRequiredIf):
+    class Form(forms.Form):
+        other = forms.IntegerField("Other")
+        field = forms.StringField("Field",
+            validators=[forms.validators.RequiredIf('other'), forms.validators.Optional()])
+
+    other_not_empty = 0

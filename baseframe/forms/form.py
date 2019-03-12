@@ -4,7 +4,7 @@ import six
 from speaklater import is_lazy_string
 import wtforms
 from wtforms.compat import iteritems
-from flask_wtf import Form as BaseForm
+from flask_wtf import FlaskForm as BaseForm
 
 from ..signals import form_validation_error, form_validation_success
 from . import fields as bfields, validators as bvalidators, parsleyjs as bparsleyjs, filters as bfilters

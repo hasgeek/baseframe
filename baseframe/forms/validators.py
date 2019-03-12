@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 
+from decimal import Decimal
+from fractions import Fraction
+import datetime
 import re
 import six
 from six.moves.urllib.parse import urljoin, quote as urlquote
 import dns.resolver
 from pyisemail import is_email
 from flask import request
-from wtforms.validators import (DataRequired, InputRequired, Optional, Length, EqualTo, URL, NumberRange,
+from wtforms.validators import (  # NOQA
+    DataRequired, InputRequired, Optional, Length, EqualTo, URL, NumberRange,
     ValidationError, StopValidation)
 import requests
 from lxml import html
@@ -16,42 +20,100 @@ from ..utils import is_public_email_domain
 from ..signals import exception_catchall
 
 
-__all__ = ['OptionalIf', 'OptionalIfNot', 'ValidEmail', 'ValidEmailDomain', 'ValidUrl', 'AllUrlsValid',
-    'ValidName', 'NoObfuscatedEmail', 'ValidCoordinates', 'IsPublicEmailDomain', 'IsNotPublicEmailDomain',
-    # WTForms validators
-    'DataRequired', 'InputRequired', 'Optional', 'Length', 'EqualTo', 'URL', 'NumberRange',
-    'ValidationError', 'StopValidation']
+__local = ['AllUrlsValid', 'IsNotPublicEmailDomain', 'IsPublicEmailDomain', 'NoObfuscatedEmail',
+    'AllowedIf', 'OptionalIf', 'RequiredIf', 'ValidCoordinates', 'ValidEmail',
+    'ValidEmailDomain', 'ValidName', 'ValidUrl']
+__imported = [  # WTForms validators
+    'DataRequired', 'EqualTo', 'InputRequired', 'Length', 'NumberRange', 'Optional',
+    'StopValidation', 'URL', 'ValidationError']
+__all__ = __local + __imported
 
 
 EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b', re.I)
 
 
-class OptionalIf(object):
+_zero_values = (0, 0.0, Decimal('0'), 0j, Fraction(0, 1), datetime.time(0, 0, 0))
+
+
+def is_empty(value):
     """
-    Validator that makes this field optional if the value of some other field is true.
+    Returns True if the value is falsy but not a numeric zero::
+
+        >>> is_empty(0)
+        False
+        >>> is_empty('0')
+        False
+        >>> is_empty('')
+        True
+        >>> is_empty(())
+        True
+        >>> is_empty(None)
+        True
+    """
+    return value not in _zero_values and not value
+
+
+class AllowedIf(object):
+    """
+    Validator that allows a value only if another field also has a value.
+
+    :param str fieldname: Name of the other field
+    :param str message: Validation error message. Will be formatted with an optional ``{field}}`` label
     """
     def __init__(self, fieldname, message=None):
+        self.fieldname = fieldname
+        self.message = message or __(u"This requires ‘{field}’ to be specified")
+
+    def __call__(self, form, field):
+        if field.data:
+            if is_empty(form[self.fieldname].data):
+                raise StopValidation(self.message.format(field=form[self.fieldname].label.text))
+
+
+class OptionalIf(Optional):
+    """
+    Validator that makes this field optional if another field has data. If this
+    field is required when the other field is empty, chain it with
+    :class:`DataRequired`::
+
+        field = forms.StringField("Field",
+            validators=[forms.validators.OptionalIf('other'), forms.validators.DataRequired()])
+
+    :param str fieldname: Name of the other field
+    :param str message: Validation error message
+    """
+    def __init__(self, fieldname, message=None):
+        super(OptionalIf, self).__init__()
         self.fieldname = fieldname
         self.message = message or __("This is required")
 
     def __call__(self, form, field):
-        if not field.data:
-            if form[self.fieldname].data:
-                raise StopValidation()
-            else:
-                raise StopValidation(self.message)
+        if not is_empty(form[self.fieldname].data):
+            return super(OptionalIf, self).__call__(form, field)
 
 
-class OptionalIfNot(OptionalIf):
+class RequiredIf(DataRequired):
     """
-    Validator that makes this field optional if the value of some other field is false.
+    Validator that makes this field required if another field has data. If this
+    field is also optional when the other field is empty, chain it with
+    :class:`Optional`::
+
+        field = forms.StringField("Field",
+            validators=[forms.validators.RequiredIf('other'), forms.validators.Optional()])
+
+    :param str fieldname: Name of the other field
+    :param str message: Validation error message
     """
+    field_flags = set()
+
+    def __init__(self, fieldname, message=None):
+        message = message or __("This is required")
+        super(RequiredIf, self).__init__(message=message)
+        self.fieldname = fieldname
+
     def __call__(self, form, field):
-        if not field.data:
-            if not form[self.fieldname].data:
-                raise StopValidation()
-            else:
-                raise StopValidation(self.message)
+        if not is_empty(form[self.fieldname].data):
+            super(RequiredIf, self).__call__(form, field)
 
 
 class _Comparison(object):
