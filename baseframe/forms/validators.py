@@ -2,6 +2,7 @@
 
 from decimal import Decimal
 from fractions import Fraction
+import datetime
 import re
 import six
 from six.moves.urllib.parse import urljoin, quote as urlquote
@@ -31,7 +32,7 @@ __all__ = __local + __imported
 EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b', re.I)
 
 
-_zero_values = (0, 0.0, Decimal('0'), 0j, Fraction(0, 1))
+_zero_values = (0, 0.0, Decimal('0'), 0j, Fraction(0, 1), datetime.time(0, 0, 0))
 
 
 def is_empty(value):
