@@ -148,12 +148,14 @@ class TestAllowedIf(TestFormBase):
         field = forms.StringField("Field",
             validators=[forms.validators.AllowedIf('other')])
 
+    other_not_empty = "Not empty"
+
     def test_is_allowed(self):
-        self.form.process(other="Not empty", field="Also not empty")
+        self.form.process(other=self.other_not_empty, field="Also not empty")
         assert self.form.validate() is True
 
     def test_is_untested_when_empty(self):
-        self.form.process(other="Not empty")
+        self.form.process(other=self.other_not_empty)
         assert self.form.validate() is True
 
     def test_is_untested_when_all_empty(self):
@@ -169,14 +171,25 @@ class TestAllowedIf(TestFormBase):
         assert self.form.validate() is False
 
 
+class TestAllowedIfInteger(TestAllowedIf):
+    class Form(forms.Form):
+        other = forms.IntegerField("Other")
+        field = forms.StringField("Field",
+            validators=[forms.validators.AllowedIf('other')])
+
+    other_not_empty = 0
+
+
 class TestOptionalIf(TestFormBase):
     class Form(forms.Form):
         other = forms.StringField("Other")
         field = forms.StringField("Field",
             validators=[forms.validators.OptionalIf('other'), forms.validators.DataRequired()])
 
+    other_not_empty = "Not empty"
+
     def test_is_optional(self):
-        self.form.process(other="Not empty")
+        self.form.process(other=self.other_not_empty)
         assert self.form.validate() is True
 
     def test_is_required_with_none(self):
@@ -188,7 +201,7 @@ class TestOptionalIf(TestFormBase):
         assert self.form.validate() is False
 
     def test_is_optional_but_value_accepted(self):
-        self.form.process(other="Not empty", field="Not empty")
+        self.form.process(other=self.other_not_empty, field="Not empty")
         assert self.form.validate() is True
 
     def test_is_required_with_none_and_accepted(self):
@@ -200,22 +213,33 @@ class TestOptionalIf(TestFormBase):
         assert self.form.validate() is True
 
 
+class TestOptionalIfInteger(TestOptionalIf):
+    class Form(forms.Form):
+        other = forms.IntegerField("Other")
+        field = forms.StringField("Field",
+            validators=[forms.validators.OptionalIf('other'), forms.validators.DataRequired()])
+
+    other_not_empty = 0
+
+
 class TestRequiredIf(TestFormBase):
     class Form(forms.Form):
         other = forms.StringField("Other")
         field = forms.StringField("Field",
             validators=[forms.validators.RequiredIf('other'), forms.validators.Optional()])
 
+    other_not_empty = "Not empty"
+
     def test_is_required(self):
-        self.form.process(other="Not empty")
+        self.form.process(other=self.other_not_empty)
         assert self.form.validate() is False
-    
+
     def test_is_required2(self):
-        self.form.process(other="Not empty", field="")
+        self.form.process(other=self.other_not_empty, field="")
         assert self.form.validate() is False
 
     def test_is_required_and_valid(self):
-        self.form.process(other="Not empty", field="Also not empty")
+        self.form.process(other=self.other_not_empty, field="Also not empty")
         assert self.form.validate() is True
 
     def test_is_not_required(self):
@@ -225,3 +249,12 @@ class TestRequiredIf(TestFormBase):
     def test_is_not_required2(self):
         self.form.process(other="")
         assert self.form.validate() is True
+
+
+class TestRequiredIfInteger(TestRequiredIf):
+    class Form(forms.Form):
+        other = forms.IntegerField("Other")
+        field = forms.StringField("Field",
+            validators=[forms.validators.RequiredIf('other'), forms.validators.Optional()])
+
+    other_not_empty = 0

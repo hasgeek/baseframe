@@ -61,7 +61,7 @@ class AllowedIf(object):
     """
     def __init__(self, fieldname, message=None):
         self.fieldname = fieldname
-        self.message = message or __(u"This requires {field} to be specified")
+        self.message = message or __(u"This requires ‘{field}’ to be specified")
 
     def __call__(self, form, field):
         if field.data:
