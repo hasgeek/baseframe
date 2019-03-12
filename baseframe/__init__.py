@@ -8,6 +8,7 @@ from pytz import timezone, UTC
 from pytz.tzinfo import BaseTzInfo
 from speaklater import is_lazy_string
 import six
+from furl import furl
 
 from flask import Blueprint, request, current_app
 from flask.json import JSONEncoder as JSONEncoderBase
@@ -32,7 +33,7 @@ from ._version import *  # NOQA
 from .assets import assets, Version
 from . import translations
 
-__all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version', '_', '__']
+__all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version', '_', '__']  # NOQA
 
 networkbar_cache = Cache(with_jinja2_ext=False)
 asset_cache = Cache(with_jinja2_ext=False)
@@ -78,6 +79,8 @@ class JSONEncoder(JSONEncoderBase):
             return o.zone
         if isinstance(o, RoleAccessProxy):
             return dict(o)
+        if isinstance(o, furl):
+            return o.url
         return super(JSONEncoder, self).default(o)
 
 

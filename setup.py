@@ -34,12 +34,13 @@ requires = [
     'coaster',
     'lxml',
     'mxsniff',
+    'furl',
     # For link validation with SNI SSL support
     'requests',
     'pyOpenSSL',
     'ndg-httpsclient',
     'pyasn1',
-    ]
+]
 
 
 class BaseframeBuildPy(build_py):
