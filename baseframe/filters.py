@@ -178,7 +178,7 @@ def shortdate(date):
     else:
         # The string replace hack is to deal with inconsistencies in the underlying
         # implementation of strftime. See https://bugs.python.org/issue8304
-        return unicode(dt.strftime('%e %B %Y')).replace(u"'", u"’")
+        return six.text_type(dt.strftime('%e %B %Y')).replace(u"'", u"’")
 
 
 @baseframe.app_template_filter('longdate')
