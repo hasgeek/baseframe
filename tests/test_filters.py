@@ -142,3 +142,37 @@ class TestFilters(TestCaseBaseframe):
         self.assertEqual(none_if_empty_func([]), None)
         self.assertEqual(none_if_empty_func(False), None)
         self.assertEqual(none_if_empty_func(0), None)
+
+    def test_shortdate_date_with_threshold(self):
+        self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 10
+        testdate = self.now.date() - timedelta(days=5)
+        with self.app.test_request_context('/'):
+            assert filters.shortdate(testdate) == testdate.strftime('%e %b')
+
+    def test_shortdate_date_without_threshold(self):
+        self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 0
+        testdate = self.now.date() - timedelta(days=5)
+        with self.app.test_request_context('/'):
+            assert filters.shortdate(testdate) == testdate.strftime('%e %B %Y')
+
+    def test_shortdate_datetime_with_threshold(self):
+        self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 10
+        testdate = self.now - timedelta(days=5)
+        with self.app.test_request_context('/'):
+            assert filters.shortdate(testdate) == testdate.strftime('%e %b')
+
+    def test_shortdate_datetime_without_threshold(self):
+        self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 0
+        testdate = self.now - timedelta(days=5)
+        with self.app.test_request_context('/'):
+            assert filters.shortdate(testdate) == testdate.strftime('%e %B %Y')
+
+    def test_longdate_date(self):
+        testdate = self.now.date()
+        with self.app.test_request_context('/'):
+            assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
+
+    def test_longdate_datetime(self):
+        testdate = self.now
+        with self.app.test_request_context('/'):
+            assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')

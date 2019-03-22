@@ -172,8 +172,8 @@ def cdata(text):
 @baseframe.app_template_filter('shortdate')
 def shortdate(date):
     dt = utc.localize(date).astimezone(get_timezone()) if isinstance(date, datetime) else date
-    utc_now = datetime.utcnow() if isinstance(date, datetime) else datetime.utcnow().date()
-    if dt > (utc_now - timedelta(days=int(current_app.config.get('SHORTDATE_THREASHOLD_DAYS', 0)))):
+    utc_now = datetime.now(utc) if isinstance(date, datetime) else datetime.utcnow().date()
+    if dt > (utc_now - timedelta(days=int(current_app.config.get('SHORTDATE_THRESHOLD_DAYS', 0)))):
         return dt.strftime('%e %b')
     else:
         # The string replace hack is to deal with inconsistencies in the underlying
