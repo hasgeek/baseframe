@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import Markup, request
+from pytz import utc
 import six
 
 from coaster.utils import md5sum
@@ -10,7 +11,7 @@ from coaster.gfm import markdown
 from coaster.utils import text_blocks
 
 from . import b_ as _, cache
-from . import baseframe, current_app
+from . import baseframe, current_app, get_timezone
 from .views import ext_assets
 
 
@@ -166,3 +167,21 @@ def cdata(text):
     Convert text to a CDATA sequence
     """
     return Markup('<![CDATA[' + text.replace(']]>', ']]]]><![CDATA[>') + ']]>')
+
+
+@baseframe.app_template_filter('shortdate')
+def shortdate(date):
+    dt = utc.localize(date).astimezone(get_timezone()) if isinstance(date, datetime) else date
+    utc_now = datetime.utcnow() if isinstance(date, datetime) else datetime.utcnow().date()
+    if dt > (utc_now - timedelta(days=30)):
+        return dt.strftime('%e %b')
+    else:
+        # The string replace hack is to deal with inconsistencies in the underlying
+        # implementation of strftime. See https://bugs.python.org/issue8304
+        return unicode(dt.strftime('%e %B %Y')).replace(u"'", u"’")
+
+
+@baseframe.app_template_filter('longdate')
+def longdate(date):
+    dt = utc.localize(date).astimezone(get_timezone()) if isinstance(date, datetime) else date
+    return dt.strftime('%e %B %Y')
