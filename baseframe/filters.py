@@ -12,12 +12,13 @@ from coaster.utils import text_blocks
 
 from . import b_ as _, cache
 from . import baseframe, current_app, get_timezone
+from .utils import request_timestamp
 from .views import ext_assets
 
 
 @baseframe.app_template_filter('age')
 def age(dt):
-    delta = datetime.utcnow() - dt
+    delta = request_timestamp() - dt
     if delta.days == 0:
         # < 1 day
         if delta.seconds < 1:
@@ -176,13 +177,13 @@ def shortdate(value):
         utc_now = datetime.now(utc)
     else:
         dt = value
-        utc_now = datetime.utcnow().date()
+        utc_now = request_timestamp().date()
     if dt > (utc_now - timedelta(days=int(current_app.config.get('SHORTDATE_THRESHOLD_DAYS', 0)))):
         return dt.strftime('%e %b')
     else:
         # The string replace hack is to deal with inconsistencies in the underlying
         # implementation of strftime. See https://bugs.python.org/issue8304
-        return six.text_type(dt.strftime('%e %B %Y'))
+        return six.text_type(dt.strftime("%e %b '%y")).replace(u"'", u"’")
 
 
 @baseframe.app_template_filter('longdate')

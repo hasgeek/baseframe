@@ -153,7 +153,7 @@ class TestFilters(TestCaseBaseframe):
         self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 0
         testdate = self.now.date() - timedelta(days=5)
         with self.app.test_request_context('/'):
-            assert filters.shortdate(testdate) == testdate.strftime('%e %B %Y')
+            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime("%e %b '%y")
 
     def test_shortdate_datetime_with_threshold(self):
         self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 10
@@ -165,7 +165,7 @@ class TestFilters(TestCaseBaseframe):
         self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 0
         testdate = self.now - timedelta(days=5)
         with self.app.test_request_context('/'):
-            assert filters.shortdate(testdate) == testdate.strftime('%e %B %Y')
+            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime("%e %b '%y")
 
     def test_longdate_date(self):
         testdate = self.now.date()
