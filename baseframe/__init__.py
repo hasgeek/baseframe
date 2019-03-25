@@ -3,12 +3,14 @@
 from __future__ import absolute_import
 
 import json
+import gettext
 
 from pytz import timezone, UTC
 from pytz.tzinfo import BaseTzInfo
 from speaklater import is_lazy_string
 import six
 from furl import furl
+import pycountry
 
 from flask import Blueprint, request, current_app
 from flask.json import JSONEncoder as JSONEncoderBase
@@ -319,6 +321,20 @@ def get_timezone():
         elif hasattr(user, 'timezone'):
             return timezone(user.timezone)
     return current_app.config.get('tz') or UTC
+
+
+def get_countries_list():
+    # returns a localized list of country names and the ISO3166-2 code
+    cache.delete_memoized(get_localized_countries)
+    return get_localized_countries(get_locale())
+
+
+@cache.memoize(timeout=86400)
+def get_localized_countries(locale):
+    pycountry_locale = gettext.translation('iso3166-2', pycountry.LOCALES_DIR, languages=[locale])
+    countries = [(country.alpha_2, pycountry_locale.gettext(country.name)) for country in pycountry.countries]
+    countries.sort()
+    return countries
 
 
 def localize_timezone(datetime, tz=None):
