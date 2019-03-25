@@ -324,8 +324,7 @@ def get_timezone():
 
 
 def get_countries_list():
-    # returns a localized list of country names and the ISO3166-2 code
-    cache.delete_memoized(get_localized_countries)
+    # Returns a localized list of country names and the ISO3166-2 code
     return get_localized_countries(get_locale())
 
 
