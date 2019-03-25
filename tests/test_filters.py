@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime, timedelta
+from pytz import utc
 
 from coaster.utils import md5sum
 from baseframe import filters, forms
@@ -162,8 +163,12 @@ class TestFilters(TestCaseBaseframe):
             assert filters.shortdate(testdate) == testdate.strftime('%e %b')
 
     def test_shortdate_datetime_without_threshold(self):
-        self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 0
         testdate = self.now - timedelta(days=5)
+        with self.app.test_request_context('/'):
+            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime("%e %b '%y")
+
+    def test_shortdate_datetime_with_tz(self):
+        testdate = utc.localize(self.now)
         with self.app.test_request_context('/'):
             assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime("%e %b '%y")
 
@@ -174,5 +179,10 @@ class TestFilters(TestCaseBaseframe):
 
     def test_longdate_datetime(self):
         testdate = self.now
+        with self.app.test_request_context('/'):
+            assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
+
+    def test_longdate_datetime_with_tz(self):
+        testdate = utc.localize(self.now)
         with self.app.test_request_context('/'):
             assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')

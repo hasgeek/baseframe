@@ -173,8 +173,12 @@ def cdata(text):
 @baseframe.app_template_filter('shortdate')
 def shortdate(value):
     if isinstance(value, datetime):
-        dt = utc.localize(value).astimezone(get_timezone())
-        utc_now = datetime.now(utc)
+        tz = get_timezone()
+        if value.tzinfo is None:
+            dt = utc.localize(value).astimezone(tz)
+        else:
+            dt = value.astimezone(tz)
+        utc_now = utc.localize(request_timestamp()).astimezone(tz)
     else:
         dt = value
         utc_now = request_timestamp().date()
@@ -187,6 +191,12 @@ def shortdate(value):
 
 
 @baseframe.app_template_filter('longdate')
-def longdate(date):
-    dt = utc.localize(date).astimezone(get_timezone()) if isinstance(date, datetime) else date
+def longdate(value):
+    if isinstance(value, datetime):
+        if value.tzinfo is None:
+            dt = utc.localize(value).astimezone(get_timezone())
+        else:
+            dt = value.astimezone(get_timezone())
+    else:
+        dt = value
     return dt.strftime('%e %B %Y')
