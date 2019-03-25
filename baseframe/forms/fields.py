@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 from decimal import Decimal, InvalidOperation as DecimalError
 from six.moves.urllib.parse import urljoin
 from pytz import utc, timezone as pytz_timezone
 from flask import current_app
 import wtforms
-from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, SubmitField, FileField
+from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, SubmitField, FileField  # NOQA
 from wtforms.widgets import Select as OriginalSelectWidget
 from wtforms.compat import text_type
 from wtforms.utils import unset_value
@@ -15,6 +14,7 @@ import simplejson as json
 import six
 
 from .. import _, get_timezone
+from ..utils import request_timestamp
 from .widgets import TinyMce3, TinyMce4, DateTimeInput, CoordinatesInput, RadioMatrixInput, SelectWidget, Select2Widget
 from .parsleyjs import TextAreaField, StringField, URLField
 
@@ -288,7 +288,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
         else:
             self.tz = value
             self._timezone = self.tz.zone
-        now = utc.localize(datetime.utcnow()).astimezone(self.tz)
+        now = utc.localize(request_timestamp()).astimezone(self.tz)
         self.tzname = now.tzname()
         self.is_dst = bool(now.dst())
 

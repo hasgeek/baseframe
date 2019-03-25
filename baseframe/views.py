@@ -2,7 +2,7 @@
 
 import os
 import requests
-from datetime import datetime, timedelta
+from datetime import timedelta
 from six.moves.urllib.parse import urlparse, urljoin
 from flask import current_app, send_from_directory, render_template, abort, request
 from flask_assets import Bundle
@@ -11,6 +11,7 @@ from coaster.utils import make_name
 from coaster.assets import split_namespec
 from coaster.views import render_with
 from . import baseframe, networkbar_cache, asset_cache, assets as assets_repo
+from .utils import request_timestamp
 
 
 @networkbar_cache.cached(key_prefix='networkbar_links')
@@ -18,7 +19,7 @@ def networkbar_links_fetcher():
     try:
         r = requests.get(current_app.config['NETWORKBAR_DATA'])
         return (r.json() if callable(r.json) else r.json).get('links', [])
-    except:  # Catch all exceptions
+    except:  # Catch all exceptions  # NOQA
         return []
 
 
@@ -155,7 +156,7 @@ def toastr_messages_js(subdomain=None):
 def editorcss(subdomain=None):
     response = current_app.response_class(render_template('editor.css.jinja2'),
         mimetype='text/css',
-        headers={'Expires': (datetime.utcnow() + timedelta(minutes=60)).strftime('%a, %d %b %Y %H:%M:%S GMT')})
+        headers={'Expires': (request_timestamp() + timedelta(minutes=60)).strftime('%a, %d %b %Y %H:%M:%S GMT')})
     return response
 
 
@@ -163,7 +164,7 @@ def editorcss(subdomain=None):
 @baseframe.route('/api/baseframe/1/csrf/refresh', defaults={'subdomain': None})
 @render_with({
     'text/plain': lambda r: r['csrf_token'],
-    }, json=True, jsonp=False)
+}, json=True, jsonp=False)
 def csrf_refresh(subdomain=None):
     parsed_host = urlparse(request.url_root)
     origin = parsed_host.scheme + u'://' + parsed_host.netloc
@@ -176,5 +177,5 @@ def csrf_refresh(subdomain=None):
     return {'csrf_token': generate_csrf()}, 200, {
         'Access-Control-Allow-Origin': origin,
         'Vary': 'Origin',
-        'Expires': (datetime.utcnow() + timedelta(minutes=10)).strftime('%a, %d %b %Y %H:%M:%S GMT')
-        }
+        'Expires': (request_timestamp() + timedelta(minutes=10)).strftime('%a, %d %b %Y %H:%M:%S GMT')
+    }
