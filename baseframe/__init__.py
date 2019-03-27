@@ -323,17 +323,17 @@ def get_timezone():
     return current_app.config.get('tz') or UTC
 
 
-def get_countries_list():
-    # Returns a localized list of country names and the ISO3166-2 code
-    return get_localized_countries(get_locale())
+def localized_country_list():
+    # Returns a localized list of country names and the ISO3166 code
+    return _localized_country_list_inner(get_locale())
 
 
 @cache.memoize(timeout=86400)
-def get_localized_countries(locale):
+def _localized_country_list_inner(locale):
     pycountry_locale = gettext.translation('iso3166-2', pycountry.LOCALES_DIR, languages=[locale])
-    countries = [(country.alpha_2, pycountry_locale.gettext(country.name)) for country in pycountry.countries]
+    countries = [(pycountry_locale.gettext(country.name), country.alpha_2) for country in pycountry.countries]
     countries.sort()
-    return countries
+    return [(code, name) for (name, code) in countries]
 
 
 def localize_timezone(datetime, tz=None):
