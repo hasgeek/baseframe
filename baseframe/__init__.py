@@ -389,6 +389,7 @@ b_ = _
 b__ = __
 from flask_babelex import gettext as _, lazy_gettext as __
 
+from .utils import *    # NOQA
 from .views import *    # NOQA
 from .errors import *   # NOQA
 from .filters import *  # NOQA

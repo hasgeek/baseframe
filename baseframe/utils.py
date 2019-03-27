@@ -1,13 +1,31 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
+
+from datetime import datetime
+
 import six
 from six.moves.urllib.parse import quote as urlquote
+
+from flask import g
 
 from mxsniff import mxsniff, MXLookupException
 
 from . import asset_cache
 
-__all__ = ['is_public_email_domain']
+__all__ = ['request_timestamp', 'is_public_email_domain']
+
+
+def request_timestamp():
+    """
+    Return a UTC timestamp for the request
+    """
+    if not g:
+        return datetime.utcnow()
+    ts = getattr(g, 'request_timestamp', None)
+    if ts is None:
+        ts = datetime.utcnow()
+        g.request_timestamp = ts
+    return ts
 
 
 def is_public_email_domain(email_or_domain, default=None, timeout=30):
