@@ -334,7 +334,7 @@ def _localized_country_list_inner(locale):
         countries = [(country.name, country.alpha_2) for country in pycountry.countries]
     else:
         pycountry_locale = gettext.translation('iso3166-1', pycountry.LOCALES_DIR, languages=[locale])
-        countries = [(pycountry_locale.gettext(country.name), country.alpha_2) for country in pycountry.countries]
+        countries = [(pycountry_locale.gettext(country.name).decode('utf-8'), country.alpha_2) for country in pycountry.countries]
     countries.sort()
     return [(code, name) for (name, code) in countries]
 
