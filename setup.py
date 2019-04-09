@@ -34,6 +34,7 @@ requires = [
     'lxml',
     'mxsniff',
     'furl',
+    'pycountry',
     # For link validation with SNI SSL support
     'requests',
     'pyOpenSSL',

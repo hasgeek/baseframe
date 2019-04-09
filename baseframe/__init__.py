@@ -3,12 +3,14 @@
 from __future__ import absolute_import
 
 import json
+import gettext
 
 from pytz import timezone, UTC
 from pytz.tzinfo import BaseTzInfo
 from speaklater import is_lazy_string
 import six
 from furl import furl
+import pycountry
 
 from flask import Blueprint, request, current_app
 from flask.json import JSONEncoder as JSONEncoderBase
@@ -319,6 +321,34 @@ def get_timezone():
         elif hasattr(user, 'timezone'):
             return timezone(user.timezone)
     return current_app.config.get('tz') or UTC
+
+
+def localized_country_list():
+    """
+    Returns a localized list of country names and their ISO3166-1 alpha-2 code inside a request context.
+
+    The locale depends on the `Accept-Language` header of the request for now.
+    The best matched locale is picked in `get_locale()` function and then used
+    to localize the country names.
+
+    The list is ordered by the localized country name and not the alpha-2 code.
+    The list is also memoized with the locale code as the key for a day.
+    """
+    return _localized_country_list_inner(get_locale())
+
+
+@cache.memoize(timeout=86400)
+def _localized_country_list_inner(locale):
+    if locale == 'en':
+        countries = [(country.name, country.alpha_2) for country in pycountry.countries]
+    else:
+        pycountry_locale = gettext.translation('iso3166-1', pycountry.LOCALES_DIR, languages=[locale])
+        if six.PY2:
+            countries = [(pycountry_locale.gettext(country.name).decode('utf-8'), country.alpha_2) for country in pycountry.countries]
+        else:
+            countries = [(pycountry_locale.gettext(country.name), country.alpha_2) for country in pycountry.countries]
+    countries.sort()
+    return [(code, name) for (name, code) in countries]
 
 
 def localize_timezone(datetime, tz=None):
