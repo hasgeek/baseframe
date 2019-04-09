@@ -24,15 +24,15 @@ class TestUtils(TestCaseBaseframe):
     def test_localized_country_inrequest(self):
         with app.test_client() as c:
             rv = c.get('/', headers={'Accept-Language': 'en;q=0.8, *;q=0.5'})
-            assert rv.data.decode('utf-8') == u"Germany"
+            assert rv.data == u"Germany"
 
         with app.test_client() as c:
             rv = c.get('/', headers={'Accept-Language': 'de;q=0.9, en;q=0.8, *;q=0.5'})
-            assert rv.data.decode('utf-8') == u"Deutschland"
+            assert rv.data == u"Deutschland"
 
         with app.test_client() as c:
             rv = c.get('/', headers={'Accept-Language': 'es;q=0.9, en;q=0.8, *;q=0.5'})
-            assert rv.data.decode('utf-8') == u"Alemania"
+            assert rv.data == u"Alemania"
 
         with app.test_client() as c:
             rv = c.get('/', headers={'Accept-Language': 'hi;q=0.9, en;q=0.8, *;q=0.5'})
