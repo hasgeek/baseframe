@@ -324,7 +324,16 @@ def get_timezone():
 
 
 def localized_country_list():
-    # Returns a localized list of country names and the ISO3166 code
+    """
+    Returns a localized list of country names and their ISO3166-1 alpha-2 code inside a request context.
+
+    The locale depends on the `Accept-Language` header of the request for now.
+    The best matched locale is picked in `get_locale()` function and then used
+    to localize the country names.
+
+    The list is ordered by the localized country name and not the alpha-2 code.
+    The list is also memoized with the locale code as the key for a day.
+    """
     return _localized_country_list_inner(get_locale())
 
 
@@ -334,12 +343,10 @@ def _localized_country_list_inner(locale):
         countries = [(country.name, country.alpha_2) for country in pycountry.countries]
     else:
         pycountry_locale = gettext.translation('iso3166-1', pycountry.LOCALES_DIR, languages=[locale])
-        countries = []
-        for country in pycountry.countries:
-            name = pycountry_locale.gettext(country.name)
-            if six.PY2:
-                name = name.decode('utf-8')
-            countries.append((name, country.alpha_2))
+        if six.PY2:
+            countries = [(pycountry_locale.gettext(country.name).decode('utf-8'), country.alpha_2) for country in pycountry.countries]
+        else:
+            countries = [(pycountry_locale.gettext(country.name), country.alpha_2) for country in pycountry.countries]
     countries.sort()
     return [(code, name) for (name, code) in countries]
 
