@@ -4,8 +4,8 @@ from baseframe import _localized_country_list_inner, localized_country_list
 from .fixtures import app1 as app, TestCaseBaseframe
 
 
-@app.route('/')
-def hello_world():
+@app.route('/localetest')
+def locale_testview():
     country_list = localized_country_list()
     return dict(country_list)['DE']
 
@@ -23,19 +23,19 @@ class TestUtils(TestCaseBaseframe):
 
     def test_localized_country_inrequest(self):
         with app.test_client() as c:
-            rv = c.get('/', headers={'Accept-Language': 'en;q=0.8, *;q=0.5'})
+            rv = c.get('/localetest', headers={'Accept-Language': 'en;q=0.8, *;q=0.5'})
             assert rv.data.decode('utf-8') == u"Germany"
 
         with app.test_client() as c:
-            rv = c.get('/', headers={'Accept-Language': 'de;q=0.9, en;q=0.8, *;q=0.5'})
+            rv = c.get('/localetest', headers={'Accept-Language': 'de;q=0.9, en;q=0.8, *;q=0.5'})
             assert rv.data.decode('utf-8') == u"Deutschland"
 
         with app.test_client() as c:
-            rv = c.get('/', headers={'Accept-Language': 'es;q=0.9, en;q=0.8, *;q=0.5'})
+            rv = c.get('/localetest', headers={'Accept-Language': 'es;q=0.9, en;q=0.8, *;q=0.5'})
             assert rv.data.decode('utf-8') == u"Alemania"
 
         with app.test_client() as c:
-            rv = c.get('/', headers={'Accept-Language': 'hi;q=0.9, en;q=0.8, *;q=0.5'})
+            rv = c.get('/localetest', headers={'Accept-Language': 'hi;q=0.9, en;q=0.8, *;q=0.5'})
             assert rv.data.decode('utf-8') == u"जर्मनी"
 
     def test_localized_country_order(self):
