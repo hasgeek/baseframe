@@ -325,20 +325,19 @@ def get_timezone():
 
 def localized_country_list():
     """
-    Returns a localized list of country names and their ISO3166-1 alpha-2 code inside a request context.
+    Returns a list of country codes (ISO3166-1 alpha-2) and country names,
+    localized to the user's locale as determined by :func:`get_locale`.
 
-    The locale depends on the `Accept-Language` header of the request for now.
-    The best matched locale is picked in `get_locale()` function and then used
-    to localize the country names.
-
-    The list is ordered by the localized country name and not the alpha-2 code.
-    The list is also memoized with the locale code as the key for a day.
+    The localized list is cached for 24 hours.
     """
     return _localized_country_list_inner(get_locale())
 
 
 @cache.memoize(timeout=86400)
 def _localized_country_list_inner(locale):
+    """
+    Inner function supporting :func:`localized_country_list`.
+    """
     if locale == 'en':
         countries = [(country.name, country.alpha_2) for country in pycountry.countries]
     else:
@@ -352,6 +351,10 @@ def _localized_country_list_inner(locale):
 
 
 def localize_timezone(datetime, tz=None):
+    """
+    Convert a datetime into the user's timezone, or into the specified
+    timezone. Naive datetimes are assumed to be in UTC.
+    """
     if not datetime.tzinfo:
         datetime = UTC.localize(datetime)
     if not tz:
