@@ -8,55 +8,45 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1200px) {
 	.mui-table.mui-table--responsive {
-		width: 100%;
-		border-collapse: collapse;
-		border-spacing: 0;
-		display: block;
-		position: relative;
+	  	min-width: 300px;
 
-		> thead {
-			border: 0;
-			border-right: 2px solid $mui-table-border-color;
-			display: block;
-			float: left;
-
-			> tr {
-				display: block;
-
-				> th {
-					display: block;
-					text-align: right;
-					border-bottom: none;
-					padding: 15px 10px;
-				}
-			}
+	  	th {
+			display: none;   
 		}
 
 		> tbody {
-			display: block;
-			width: auto;
-			position: relative;
-			overflow-x: auto;
-			white-space: nowrap;
 
-			> tr {
-				display: inline-block;
-				vertical-align: top;
-				text-align: right;
+			>tr {
+				border-top: 1px solid rgba(132,146,166,0.3);
+				border-bottom: 1px solid rgba(132,146,166,0.3);
+				display: block;
 
-				> td {
-					display: block;
-					text-align: left;
-					margin: 0;
-					vertical-align: top;
-					border-bottom: none;
-					padding: 15px 10px;
-				}
+			    >td {
+		    		display: block;
+		    		border: none;
+			    
+			    	&:first-child {
+			      		padding-top: .5em;
+			    	}
+
+			    	&:last-child {
+			      		padding-bottom: .5em;
+			    	}
+
+				    &:before {
+				      	content: attr(data-th)": ";
+				      	font-weight: bold;
+				      	font-size: inherit;
+				      	width: 100%;
+				      	display: inline-block;
+				    }
+		  		}
 			}
+
 		}
-	}
+  	}
 }
 
 .mui-table.mui-table--bordered>tbody>tr:last-child>td {
