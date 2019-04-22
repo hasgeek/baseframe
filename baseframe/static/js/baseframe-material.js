@@ -46,7 +46,7 @@ function activate_widgets() {
 };
 
   // Activate codemirror on all textareas with class='markdown'
-  $('textarea.markdown:not([style*="display: none"])').each(function(){
+  $('textarea.markdown').each(function(){
     var editor = CodeMirror.fromTextArea(this, cm_markdown_config);
     var delay;
     editor.on('change', function(instance){
@@ -58,7 +58,7 @@ function activate_widgets() {
   });
 
   // Activate codemirror on all textareas with class='stylesheet'
-  $('textarea.stylesheet:not([style*="display: none"])').each(function() {
+  $('textarea.stylesheet').each(function() {
     var editor = CodeMirror.fromTextArea(this, cm_css_config);
     var delay;
     editor.on('change', function(instance){
