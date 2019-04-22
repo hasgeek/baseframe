@@ -3366,8 +3366,11 @@ h4, h5, h6 {
   font-weight: 600;
 }
 
-.mui--text-bold {
-  font-weight: 700;
+.mui-btn--nostyle {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  cursor: pointer;
 }
 
 .mui-appbar--custom {
