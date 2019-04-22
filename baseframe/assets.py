@@ -106,7 +106,9 @@ assets['jquery.succinct.js'][Version('1.1.0')] = ('jquery.js', 'baseframe/js/jqu
 
 # jQuery emoji picker
 assets['emojionearea.css'][Version('3.4.1')] = 'baseframe/css/emojionearea.css'
+assets['emojionearea-material.css'][Version('3.4.1')] = ('emojionearea.css', 'baseframe/css/emojionearea-material.css')
 assets['emojionearea.js'][Version('3.4.1')] = ('jquery.js', 'baseframe/js/emojionearea.js')
+assets['emojionearea-material.js'][Version('3.4.1')] = {'requires': ['emojionearea.js==3.4.1']}
 
 assets['select2.js'][Version('4.0.3')] = ('jquery.js>=1.7.2', 'baseframe/js/select2.js')
 assets['select2.css'][Version('4.0.3')] = 'baseframe/css/select2.css'
