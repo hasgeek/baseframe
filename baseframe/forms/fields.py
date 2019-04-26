@@ -587,7 +587,8 @@ class FormField(wtforms.FormField):
     """
     def process(self, *args, **kwargs):
         retval = super(FormField, self).process(*args, **kwargs)
-        del self.form.csrf_token
+        if hasattr(self.form, 'csrf_token'):
+            del self.form.csrf_token
         return retval
 
 
