@@ -3760,8 +3760,9 @@ li p + ol {
   position: static;
   margin: 0 0 8px;
   color: rgba(0, 0, 0, 0.54);
+  font-weight: 400;
   font-size: 16px;
-  line-height: 15px;
+  line-height: 24px;
 }
 .mui-form .mui-form__error {
   color: #C04B61;
