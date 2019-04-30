@@ -84,7 +84,7 @@
             </div>
           {%- else %}
             <div class="mui-textfield">
-              {%- if not nolabel %}<label class="mui-form__label">{{ field.label.text }}</label>{%- endif %}
+              {%- if not nolabel %}<label class="mui-form__label">{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>{%- endif %}
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
             </div>
           {%- endif %}
