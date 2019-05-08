@@ -2,7 +2,7 @@
 
 from decimal import Decimal, InvalidOperation as DecimalError
 from six.moves.urllib.parse import urljoin
-from pytz import utc, timezone as pytz_timezone
+from pytz import UTC, timezone as pytz_timezone
 from flask import current_app
 import wtforms
 from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, SubmitField, FileField  # NOQA
@@ -288,7 +288,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
         else:
             self.tz = value
             self._timezone = self.tz.zone
-        now = utc.localize(request_timestamp()).astimezone(self.tz)
+        now = request_timestamp().astimezone(self.tz)
         self.tzname = now.tzname()
         self.is_dst = bool(now.dst())
 
@@ -296,7 +296,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
         if self.data:
             if self.data.tzinfo is None:
                 # We got a naive datetime from the calling app. Assume UTC
-                data = self.tz.normalize(utc.localize(self.data).astimezone(self.tz))
+                data = self.tz.normalize(UTC.localize(self.data).astimezone(self.tz))
             else:
                 # We got a tz-aware datetime. Cast into the required timezone
                 data = self.tz.normalize(self.data.astimezone(self.tz))
@@ -313,8 +313,8 @@ class DateTimeField(wtforms.fields.DateTimeField):
 
     def pre_validate(self, form):
         if self.data and self._timezone_converted is False:
-            # Convert from user timezone back to UTC, then discard tzinfo
-            self.data = self.tz.localize(self.data, is_dst=self.is_dst).astimezone(utc).replace(tzinfo=None)
+            # Convert from user timezone back to UTC
+            self.data = self.tz.localize(self.data, is_dst=self.is_dst).astimezone(UTC)
             self._timezone_converted = True
 
 

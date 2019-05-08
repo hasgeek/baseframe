@@ -3,7 +3,7 @@
 import os
 from datetime import datetime, timedelta
 from flask import Markup, request
-from pytz import utc
+from pytz import UTC
 import six
 
 from coaster.utils import md5sum
@@ -18,6 +18,8 @@ from .views import ext_assets
 
 @baseframe.app_template_filter('age')
 def age(dt):
+    if dt.tzinfo is None:
+        dt = UTC.localize(dt)
     delta = request_timestamp() - dt
     if delta.days == 0:
         # < 1 day
@@ -175,10 +177,10 @@ def shortdate(value):
     if isinstance(value, datetime):
         tz = get_timezone()
         if value.tzinfo is None:
-            dt = utc.localize(value).astimezone(tz)
+            dt = UTC.localize(value).astimezone(tz)
         else:
             dt = value.astimezone(tz)
-        utc_now = utc.localize(request_timestamp()).astimezone(tz)
+        utc_now = request_timestamp().astimezone(tz)
     else:
         dt = value
         utc_now = request_timestamp().date()
@@ -194,7 +196,7 @@ def shortdate(value):
 def longdate(value):
     if isinstance(value, datetime):
         if value.tzinfo is None:
-            dt = utc.localize(value).astimezone(get_timezone())
+            dt = UTC.localize(value).astimezone(get_timezone())
         else:
             dt = value.astimezone(get_timezone())
     else:

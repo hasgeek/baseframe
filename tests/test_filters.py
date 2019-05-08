@@ -1,20 +1,16 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime, timedelta
-from pytz import utc
 
-from coaster.utils import md5sum
+from coaster.utils import md5sum, utcnow
 from baseframe import filters, forms
 from .fixtures import TestCaseBaseframe, UserTest
 
 
-class TestFilters(TestCaseBaseframe):
+class TestDatetimeFilters(TestCaseBaseframe):
     def setUp(self):
-        super(TestFilters, self).setUp()
-        self.now = datetime.utcnow()
-        self.test_user = UserTest()
-        self.test_avatar_size = ('100', '100')
-        self.test_avatar_url = u'//images.hasgeek.com/embed/test'
+        super(TestDatetimeFilters, self).setUp()
+        self.now = utcnow()
 
     def test_age(self):
         age = filters.age(self.now)
@@ -39,6 +35,66 @@ class TestFilters(TestCaseBaseframe):
         three_years = self.now - timedelta(days=3 * 12 * 30)
         age = filters.age(three_years)
         self.assertEqual(age, u'2 years ago')
+
+    def test_shortdate_date_with_threshold(self):
+        self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 10
+        testdate = self.now.date() - timedelta(days=5)
+        with self.app.test_request_context('/'):
+            assert filters.shortdate(testdate) == testdate.strftime('%e %b')
+
+    def test_shortdate_date_without_threshold(self):
+        self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 0
+        testdate = self.now.date() - timedelta(days=5)
+        with self.app.test_request_context('/'):
+            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime("%e %b '%y")
+
+    def test_shortdate_datetime_with_threshold(self):
+        self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 10
+        testdate = self.now - timedelta(days=5)
+        with self.app.test_request_context('/'):
+            assert filters.shortdate(testdate) == testdate.strftime('%e %b')
+
+    def test_shortdate_datetime_without_threshold(self):
+        testdate = self.now - timedelta(days=5)
+        with self.app.test_request_context('/'):
+            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime("%e %b '%y")
+
+    def test_shortdate_datetime_with_tz(self):
+        testdate = self.now
+        with self.app.test_request_context('/'):
+            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime("%e %b '%y")
+
+    def test_longdate_date(self):
+        testdate = self.now.date()
+        with self.app.test_request_context('/'):
+            assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
+
+    def test_longdate_datetime(self):
+        testdate = self.now
+        with self.app.test_request_context('/'):
+            assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
+
+    def test_longdate_datetime_with_tz(self):
+        testdate = self.now
+        with self.app.test_request_context('/'):
+            assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
+
+
+class TestNaiveDatetimeFilters(TestDatetimeFilters):
+    def setUp(self):
+        super(TestNaiveDatetimeFilters, self).setUp()
+        self.now = datetime.utcnow()
+
+    def test_now_is_naive(self):
+        assert self.now.tzinfo is None
+
+
+class TestFilters(TestCaseBaseframe):
+    def setUp(self):
+        super(TestFilters, self).setUp()
+        self.test_user = UserTest()
+        self.test_avatar_size = ('100', '100')
+        self.test_avatar_url = u'//images.hasgeek.com/embed/test'
 
     def test_usessl(self):
         with self.app.test_request_context('/'):
@@ -143,46 +199,3 @@ class TestFilters(TestCaseBaseframe):
         self.assertEqual(none_if_empty_func([]), None)
         self.assertEqual(none_if_empty_func(False), None)
         self.assertEqual(none_if_empty_func(0), None)
-
-    def test_shortdate_date_with_threshold(self):
-        self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 10
-        testdate = self.now.date() - timedelta(days=5)
-        with self.app.test_request_context('/'):
-            assert filters.shortdate(testdate) == testdate.strftime('%e %b')
-
-    def test_shortdate_date_without_threshold(self):
-        self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 0
-        testdate = self.now.date() - timedelta(days=5)
-        with self.app.test_request_context('/'):
-            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime("%e %b '%y")
-
-    def test_shortdate_datetime_with_threshold(self):
-        self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 10
-        testdate = self.now - timedelta(days=5)
-        with self.app.test_request_context('/'):
-            assert filters.shortdate(testdate) == testdate.strftime('%e %b')
-
-    def test_shortdate_datetime_without_threshold(self):
-        testdate = self.now - timedelta(days=5)
-        with self.app.test_request_context('/'):
-            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime("%e %b '%y")
-
-    def test_shortdate_datetime_with_tz(self):
-        testdate = utc.localize(self.now)
-        with self.app.test_request_context('/'):
-            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime("%e %b '%y")
-
-    def test_longdate_date(self):
-        testdate = self.now.date()
-        with self.app.test_request_context('/'):
-            assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
-
-    def test_longdate_datetime(self):
-        testdate = self.now
-        with self.app.test_request_context('/'):
-            assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
-
-    def test_longdate_datetime_with_tz(self):
-        testdate = utc.localize(self.now)
-        with self.app.test_request_context('/'):
-            assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
