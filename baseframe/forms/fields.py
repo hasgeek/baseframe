@@ -2,7 +2,7 @@
 
 from decimal import Decimal, InvalidOperation as DecimalError
 from six.moves.urllib.parse import urljoin
-from pytz import utc, timezone as pytz_timezone
+from pytz import UTC, timezone as pytz_timezone
 from flask import current_app
 import wtforms
 from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, SubmitField, FileField  # NOQA
@@ -20,7 +20,7 @@ from .parsleyjs import TextAreaField, StringField, URLField
 
 __imported = [   # Imported from WTForms
     'FileField', 'SelectMultipleField', 'SubmitField'
-    ]
+]
 __local = ['AnnotatedTextField', 'AutocompleteField', 'AutocompleteMultipleField',
     'CoordinatesField', 'DateTimeField', 'EnumSelectField', 'FormField', 'GeonameSelectField',
     'GeonameSelectMultiField', 'ImgeeField', 'JsonField', 'MarkdownField', 'RadioMatrixField',
@@ -264,14 +264,21 @@ RichTextField = TinyMce3Field
 class DateTimeField(wtforms.fields.DateTimeField):
     """
     A text field which stores a `datetime.datetime` matching a format.
+
+    :param str label: Label to display against the field
+    :param list validators: List of validators
+    :param str format: Datetime format string
+    :param str timezone: Timezone used for user input
+    :param bool naive: If `True` (default), timezone info is stripped from the return data
     """
     widget = DateTimeInput()
 
     def __init__(self, label=None, validators=None,
-            format='%Y-%m-%d %H:%M', timezone=None, **kwargs):
+            format='%Y-%m-%d %H:%M', timezone=None, naive=True, **kwargs):
         super(DateTimeField, self).__init__(label, validators, **kwargs)
         self.format = format
         self.timezone = timezone() if callable(timezone) else timezone
+        self.naive = naive
         self._timezone_converted = None
 
     @property
@@ -288,7 +295,31 @@ class DateTimeField(wtforms.fields.DateTimeField):
         else:
             self.tz = value
             self._timezone = self.tz.zone
-        now = utc.localize(request_timestamp()).astimezone(self.tz)
+
+        # A note on DST:
+
+        # During a DST transition, the clock is set back by an hour. A naive timestamp
+        # within this hour will be ambiguous about whether it is referring to the time
+        # pre-transition or post-transition. pytz expects us to clarify using the is_dst
+        # flag. Ideally, we should ask the user, but this is tricky: the question only
+        # applies for time within that hour, so the front-end should detect it and then
+        # prompt the user. Transitions happen late at night and it is very unlikely in
+        # our use cases that a user will want to select a time during that period.
+
+        # Therefore, we simply assume that whatever is the current zone when the widget
+        # is rendered is also the zone in which ambiguous time is specified.
+
+        # Related: now.tzname() will return 'IST' all year for timezone 'Asia/Kolkata',
+        # while for 'America/New_York' it will be 'EST' or 'EDT'. We will be showing the
+        # user the current name even though they may be inputting a future date that is
+        # in the other zone. OTOH, Indian users will recognise 'IST' but not
+        # 'Asia/Kolkata', since India does not have multiple timezones and a user may be
+        # left wondering why they are specifying time in a distant city.
+
+        # Using 'tzname' instead of 'zone' optimises for Indian users, but we will have
+        # to revisit this as we expand to a global footprint.
+
+        now = request_timestamp().astimezone(self.tz)
         self.tzname = now.tzname()
         self.is_dst = bool(now.dst())
 
@@ -296,10 +327,10 @@ class DateTimeField(wtforms.fields.DateTimeField):
         if self.data:
             if self.data.tzinfo is None:
                 # We got a naive datetime from the calling app. Assume UTC
-                data = self.tz.normalize(utc.localize(self.data).astimezone(self.tz))
+                data = UTC.localize(self.data).astimezone(self.tz)
             else:
                 # We got a tz-aware datetime. Cast into the required timezone
-                data = self.tz.normalize(self.data.astimezone(self.tz))
+                data = self.data.astimezone(self.tz)
             value = data.strftime(self.format)
         else:
             value = ''
@@ -313,8 +344,11 @@ class DateTimeField(wtforms.fields.DateTimeField):
 
     def pre_validate(self, form):
         if self.data and self._timezone_converted is False:
-            # Convert from user timezone back to UTC, then discard tzinfo
-            self.data = self.tz.localize(self.data, is_dst=self.is_dst).astimezone(utc).replace(tzinfo=None)
+            # Convert from user timezone back to UTC
+            self.data = self.tz.localize(self.data, is_dst=self.is_dst).astimezone(UTC)
+            # If the app wanted a naive datetime, strip the timezone info
+            if self.naive:
+                self.data = self.data.replace(tzinfo=None)
             self._timezone_converted = True
 
 
