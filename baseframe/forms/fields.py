@@ -327,10 +327,10 @@ class DateTimeField(wtforms.fields.DateTimeField):
         if self.data:
             if self.data.tzinfo is None:
                 # We got a naive datetime from the calling app. Assume UTC
-                data = self.tz.normalize(UTC.localize(self.data).astimezone(self.tz))
+                data = UTC.localize(self.data).astimezone(self.tz)
             else:
                 # We got a tz-aware datetime. Cast into the required timezone
-                data = self.tz.normalize(self.data.astimezone(self.tz))
+                data = self.data.astimezone(self.tz)
             value = data.strftime(self.format)
         else:
             value = ''
