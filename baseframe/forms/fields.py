@@ -264,14 +264,21 @@ RichTextField = TinyMce3Field
 class DateTimeField(wtforms.fields.DateTimeField):
     """
     A text field which stores a `datetime.datetime` matching a format.
+
+    :param str label: Label to display against the field
+    :param list validators: List of validators
+    :param str format: Datetime format string
+    :param str timezone: Timezone used for user input
+    :param bool naive: If `True` (default), timezone info is stripped from the return data
     """
     widget = DateTimeInput()
 
     def __init__(self, label=None, validators=None,
-            format='%Y-%m-%d %H:%M', timezone=None, **kwargs):
+            format='%Y-%m-%d %H:%M', timezone=None, naive=True, **kwargs):
         super(DateTimeField, self).__init__(label, validators, **kwargs)
         self.format = format
         self.timezone = timezone() if callable(timezone) else timezone
+        self.naive = naive
         self._timezone_converted = None
 
     @property
@@ -315,6 +322,9 @@ class DateTimeField(wtforms.fields.DateTimeField):
         if self.data and self._timezone_converted is False:
             # Convert from user timezone back to UTC
             self.data = self.tz.localize(self.data, is_dst=self.is_dst).astimezone(UTC)
+            # If the app wanted a naive datetime, strip the timezone info
+            if self.naive:
+                self.data = self.data.replace(tzinfo=None)
             self._timezone_converted = True
 
 
