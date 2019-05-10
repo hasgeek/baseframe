@@ -55,36 +55,36 @@
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               {% if field.suffix %}<span class="mui-form__addon">{{ field.suffix }}</span>{% endif %}
               {%- if not nolabel %}
-                <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
+                <label>{{ field.label.text }}</label>
               {%- endif %}
             </div>
           {%- elif field.type == 'CoordinatesField' %}
             {%- if not nolabel %}
-              <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
+              <label>{{ field.label.text }}</label>
             {%- endif %}
             {{ map_marker_widget(field) }}
           {%- elif field.widget.input_type in ['text', 'email', 'search', 'url', 'number', 'tel', 'password'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-textfield mui-textfield--float-label">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               {%- if not nolabel %}
-                <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
+                <label>{{ field.label.text }}</label>
               {%- endif %}
             </div>
           {%- elif field.widget.input_type in ['color', 'date', 'datetime', 'datetime-local', 'month', 'time', 'week'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-textfield">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               {%- if not nolabel %}
-                <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
+                <label>{{ field.label.text }}</label>
               {%- endif %}
             </div>
           {%- elif field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField', 'TextListField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-select">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
-              <label>{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>
+              <label>{{ field.label.text }}</label>
             </div>
           {%- else %}
             <div class="mui-textfield">
-              {%- if not nolabel %}<label class="mui-form__label">{{ field.label.text }} {%- if field.flags.required -%}*{%- endif -%}</label>{%- endif %}
+              {%- if not nolabel %}<label class="mui-form__label">{{ field.label.text }}</label>{%- endif %}
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
             </div>
           {%- endif %}
