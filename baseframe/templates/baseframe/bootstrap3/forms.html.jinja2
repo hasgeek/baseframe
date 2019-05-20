@@ -19,7 +19,9 @@
     <fieldset>
       <legend>{{ field.label.text }}</legend>
       {%- for subfield in field.form %}
-        {{ renderfield(field=subfield, css_class=css_class, widget_css_class=widget_css_class, sidetext=sidetext, tabindex=tabindex, autofocus=false, nolabel=nolabel, style=style, rows=rows) }}
+        {%- if not subfield.type in ['CSRFTokenField', 'HiddenField'] -%}
+          {{ renderfield(field=subfield, css_class=css_class, widget_css_class=widget_css_class, sidetext=sidetext, tabindex=tabindex, autofocus=false, nolabel=nolabel, style=style, rows=rows) }}
+        {%- endif %}
       {%- endfor %}
     </fieldset>
   {%- else %}

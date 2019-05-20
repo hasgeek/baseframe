@@ -34,6 +34,7 @@ requires = [
     'lxml',
     'mxsniff',
     'furl',
+    'pycountry',
     # For link validation with SNI SSL support
     'requests',
     'pyOpenSSL',
@@ -60,6 +61,8 @@ setup(name='baseframe',
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Intended Audience :: Developers",

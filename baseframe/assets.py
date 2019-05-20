@@ -104,6 +104,12 @@ assets['jquery-easytabs.js'][Version('3.2.0')] = ('jquery.js', 'baseframe/js/jqu
 # jQuery plugin for truncating multiple lines of text
 assets['jquery.succinct.js'][Version('1.1.0')] = ('jquery.js', 'baseframe/js/jquery.succinct.js')
 
+# jQuery emoji picker
+assets['emojionearea.css'][Version('3.4.1')] = 'baseframe/css/emojionearea.css'
+assets['emojionearea-material.css'][Version('3.4.1')] = ('emojionearea.css', 'baseframe/css/emojionearea-material.css')
+assets['emojionearea.js'][Version('3.4.1')] = ('jquery.js', 'baseframe/js/emojionearea.js')
+assets['emojionearea-material.js'][Version('3.4.1')] = {'requires': ['emojionearea.js==3.4.1']}
+
 assets['select2.js'][Version('4.0.3')] = ('jquery.js>=1.7.2', 'baseframe/js/select2.js')
 assets['select2.css'][Version('4.0.3')] = 'baseframe/css/select2.css'
 assets['select2-bootstrap.css'][Version('0.1.0')] = ('select2.css', 'baseframe/css/bootstrap-select2.css')

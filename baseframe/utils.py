@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 
-from datetime import datetime
-
 import six
 from six.moves.urllib.parse import quote as urlquote
 
 from flask import g
 
 from mxsniff import mxsniff, MXLookupException
+
+from coaster.utils import utcnow
 
 from . import asset_cache
 
@@ -20,10 +20,10 @@ def request_timestamp():
     Return a UTC timestamp for the request
     """
     if not g:
-        return datetime.utcnow()
+        return utcnow()
     ts = getattr(g, 'request_timestamp', None)
     if ts is None:
-        ts = datetime.utcnow()
+        ts = utcnow()
         g.request_timestamp = ts
     return ts
 

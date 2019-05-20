@@ -3,12 +3,14 @@
 from __future__ import absolute_import
 
 import json
+import gettext
 
 from pytz import timezone, UTC
 from pytz.tzinfo import BaseTzInfo
 from speaklater import is_lazy_string
 import six
 from furl import furl
+import pycountry
 
 from flask import Blueprint, request, current_app
 from flask.json import JSONEncoder as JSONEncoderBase
@@ -321,7 +323,38 @@ def get_timezone():
     return current_app.config.get('tz') or UTC
 
 
+def localized_country_list():
+    """
+    Returns a list of country codes (ISO3166-1 alpha-2) and country names,
+    localized to the user's locale as determined by :func:`get_locale`.
+
+    The localized list is cached for 24 hours.
+    """
+    return _localized_country_list_inner(get_locale())
+
+
+@cache.memoize(timeout=86400)
+def _localized_country_list_inner(locale):
+    """
+    Inner function supporting :func:`localized_country_list`.
+    """
+    if locale == 'en':
+        countries = [(country.name, country.alpha_2) for country in pycountry.countries]
+    else:
+        pycountry_locale = gettext.translation('iso3166-1', pycountry.LOCALES_DIR, languages=[locale])
+        if six.PY2:
+            countries = [(pycountry_locale.gettext(country.name).decode('utf-8'), country.alpha_2) for country in pycountry.countries]
+        else:
+            countries = [(pycountry_locale.gettext(country.name), country.alpha_2) for country in pycountry.countries]
+    countries.sort()
+    return [(code, name) for (name, code) in countries]
+
+
 def localize_timezone(datetime, tz=None):
+    """
+    Convert a datetime into the user's timezone, or into the specified
+    timezone. Naive datetimes are assumed to be in UTC.
+    """
     if not datetime.tzinfo:
         datetime = UTC.localize(datetime)
     if not tz:

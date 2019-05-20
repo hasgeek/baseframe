@@ -64,8 +64,7 @@
         position: static;
         margin: 0 0 8px;
         color: $mui-label-font-color;
-        font-size: $mui-input-font-size;
-        line-height: $xFormLabelLineHeight;
+        @include mui-text("subhead");
     }
 
     .mui-form__error {
