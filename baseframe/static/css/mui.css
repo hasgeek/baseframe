@@ -4113,7 +4113,7 @@ li p + ol {
     padding-bottom: .5em;
   }
   .mui-table.mui-table--responsive > tbody > tr > td:before {
-    content: attr(data-th) ": ";
+    content: attr(data-th);
     font-weight: bold;
     font-size: inherit;
     width: 100%;

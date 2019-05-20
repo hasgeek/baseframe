@@ -36,7 +36,7 @@
 			    	}
 
 				    &:before {
-				      	content: attr(data-th)": ";
+				      	content: attr(data-th);
 				      	font-weight: bold;
 				      	font-size: inherit;
 				      	width: 100%;
