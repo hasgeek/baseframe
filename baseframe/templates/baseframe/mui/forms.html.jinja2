@@ -106,7 +106,7 @@
 <script>
 function onInvisibleRecaptchaSubmit() {
   event.preventDefault();
-  if (!grecaptcha.getResponse()) {
+  if (grecaptcha.getResponse() === '') {
     grecaptcha.execute();
   } else {
     document.getElementById("{{ ref_id }}").submit();
