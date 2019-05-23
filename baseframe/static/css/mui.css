@@ -3322,7 +3322,7 @@ h4, h5, h6 {
   line-height: 28px;
 }
 
-.mui--text-subhead, h4, .header__nav-links, .alert .alert__text, h4 {
+.mui--text-subhead, h4, .alert .alert__text, h4 {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
@@ -3347,7 +3347,7 @@ h4, h5, h6 {
   line-height: 16px;
 }
 
-.mui--text-menu,
+.mui--text-menu, .header__nav-links,
 .mui--text-button {
   font-weight: 400;
   font-size: 14px;
@@ -3378,18 +3378,34 @@ h4, h5, h6 {
   height: 56px;
 }
 
+.mui-appbar--fill {
+  min-height: 0;
+  height: 0;
+}
+
+@media (min-width: 1200px) {
+  .mui-appbar--fill {
+    min-height: 40px;
+    height: 56px;
+  }
+}
 .header--fixed {
   position: fixed;
   left: 0;
   right: 0;
   z-index: 1000;
+  bottom: 0;
 }
 
+@media (min-width: 1200px) {
+  .header--fixed {
+    bottom: unset;
+    top: 0;
+  }
+}
 .header__nav {
   display: -webkit-box;
   display: flex;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
 }
 
 .header__nav--custom {
@@ -3422,12 +3438,8 @@ h4, h5, h6 {
   margin: 0;
   color: inherit;
   line-height: 34px;
-  width: calc(70% - 15px);
+  width: calc(20% - 15px);
   padding-left: 15px;
-}
-
-.header__site-title--smaller {
-  width: calc(35% - 15px);
 }
 
 .header__site-title__item {
@@ -3443,23 +3455,13 @@ h4, h5, h6 {
 }
 
 .header__right-nav {
-  width: calc(30% - 15px);
+  width: calc(80% - 15px);
   padding-right: 15px;
+  display: -webkit-box;
+  display: flex;
+  justify-content: flex-end;
 }
 
-.header__right-nav--larger {
-  width: calc(65% - 15px);
-}
-
-@media (min-width: 375px) {
-  .header__site-title--smaller {
-    width: calc(45% - 15px);
-  }
-
-  .header__right-nav--larger {
-    width: calc(55% - 15px);
-  }
-}
 .header__site-title--sidenav {
   width: 100%;
   text-align: center;
@@ -3491,15 +3493,12 @@ h4, h5, h6 {
 }
 
 .header__nav-list {
+  width: 100%;
   display: -webkit-box;
   display: flex;
-  -webkit-box-pack: end;
-  justify-content: flex-end;
-  -webkit-box-align: center;
+  justify-content: space-between;
   align-items: center;
   list-style: none;
-  margin: 0;
-  padding: 0;
   height: 100%;
 }
 
@@ -3508,10 +3507,14 @@ h4, h5, h6 {
 }
 
 .header__nav-links {
-  color: #1F2D3D;
+  color: #79818B;
   display: inline-block;
   text-decoration: none;
+  text-align: center;
   cursor: pointer;
+}
+.header__nav-links .material-icons {
+  line-height: 1;
 }
 
 .header__nav-links:hover {

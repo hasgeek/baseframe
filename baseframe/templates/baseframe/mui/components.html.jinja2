@@ -17,17 +17,17 @@
 
 {%- macro hgtopnav(site_title="HasGeek", side_menu_button=none, site_links=[], auth=true, network=true, loginbtntext="Login") %}
   <nav id="hgnav" class="header__nav header__nav--custom" role="navigation">
-    <div class="header__site-title {% if current_auth.is_anonymous -%}header__site-title--smaller{% endif %}">
+    <div class="header__site-title">
       {% if side_menu_button %}
         <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button"><i class="material-icons">menu</i></a>
       {% endif %}
       <div class="header__site-title__title">{{site_title}}</div>
     </div>
-    <div class="header__right-nav {% if current_auth.is_anonymous -%}header__right-nav--larger{% endif %}">
+    <div class="header__right-nav">
       <ul class="header__nav-list">
         {%- for link in site_links %}
-          <li class="mui-dropdown header__nav-list__item">
-            <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} {%- if link.class %} class="{{ link.class }}"{% endif %}>
+          <li class="header__nav-list__item">
+            <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="{%- if link.class -%} {{ link.class }} {% endif %}header__nav-links">
               {{ link.title }}
             </a>
           </li>
