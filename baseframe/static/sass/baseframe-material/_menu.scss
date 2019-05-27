@@ -1,18 +1,5 @@
-.mui-appbar--custom {
-    min-height: 40px;
-    height: 56px;
-}
-
-.mui-appbar--fill {
-    min-height: 0;
-    height: 0;
-}
-
-@media (min-width: 1200px) {
-    .mui-appbar--fill {
-        min-height: 40px;
-        height: 56px;
-    }
+.header {
+    background: #fff;
 }
 
 .header--fixed {
@@ -33,12 +20,15 @@
 .header__nav {
     display: -webkit-box;
     display: flex;
+    min-height: 50px;
 }
 
-.header__nav--custom {
-    min-height: 40px;
-    height: 40px;
-    margin-top: 10px;
+@media only screen
+and (max-device-width: 1200px)
+and (orientation: landscape) {
+    .header__nav {
+        min-height: 35px;
+    }
 }
 
 .header__app-icon {
@@ -62,33 +52,35 @@
 .header__site-title {
     display: -webkit-box;
     display: flex;
+    align-items: center;
     margin: 0;
     @extend .mui--text-headline;
     color: inherit;
-    line-height: 34px;
-    width: calc(20% - #{$mui-grid-gutter-width/2});
+    width: calc(30% - #{$mui-grid-gutter-width/2});
     padding-left: $mui-grid-gutter-width/2;
+    color: $mui-text-light;
 }
 
 .header__site-title__item {
     margin: 0;
     @extend .mui--text-headline;
     color: inherit;
-    line-height: 40px;
 }
 
 .header__site-title__title {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    width: 100%;
 }
 
 .header__right-nav {
-    width: calc(80% - #{$mui-grid-gutter-width/2});
+    width: calc(70% - #{$mui-grid-gutter-width/2});
     padding-right: $mui-grid-gutter-width/2;
     display: -webkit-box;
     display: flex;
     justify-content: flex-end;
+    color: $mui-text-light;
 }
 
 .header__site-title--sidenav {
@@ -118,6 +110,7 @@
 
 .header__dropdown-app-title {
     @extend .mui--text-body2;
+    color: $mui-text-light;
     margin: 0 0 8px;
 }
 
@@ -129,10 +122,12 @@
     align-items: center;
     list-style: none;
     height: 100%;
+    margin-bottom: 0;
 }
 
 .header__nav-list__item {
     @extend .mui--align-middle;
+    color: $mui-text-light;
 }
 
 .header__button {
@@ -146,14 +141,10 @@
     text-decoration: none;
     text-align: center;
     cursor: pointer;
-
-    .material-icons {
-        line-height: 1;
-    }
 }
 
 .header__nav-links:hover {
-    color: inherit;
+    color: $mui-text-light;
     text-decoration: none;
 }
 
@@ -178,6 +169,13 @@
     position: relative;
     z-index: 1;
 }
+
+@media (min-width: 1200px) {
+    .content-wrapper {
+        padding-top: 50px;
+    }
+}
+
 
 .sidebar {
     position: fixed;

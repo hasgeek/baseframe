@@ -3373,22 +3373,10 @@ h4, h5, h6 {
   cursor: pointer;
 }
 
-.mui-appbar--custom {
-  min-height: 40px;
-  height: 56px;
+.header {
+  background: #fff;
 }
 
-.mui-appbar--fill {
-  min-height: 0;
-  height: 0;
-}
-
-@media (min-width: 1200px) {
-  .mui-appbar--fill {
-    min-height: 40px;
-    height: 56px;
-  }
-}
 .header--fixed {
   position: fixed;
   left: 0;
@@ -3406,14 +3394,14 @@ h4, h5, h6 {
 .header__nav {
   display: -webkit-box;
   display: flex;
+  min-height: 50px;
 }
 
-.header__nav--custom {
-  min-height: 40px;
-  height: 40px;
-  margin-top: 10px;
+@media only screen and (max-device-width: 1200px) and (orientation: landscape) {
+  .header__nav {
+    min-height: 35px;
+  }
 }
-
 .header__app-icon {
   color: inherit;
   display: inline-block;
@@ -3435,31 +3423,33 @@ h4, h5, h6 {
 .header__site-title {
   display: -webkit-box;
   display: flex;
+  align-items: center;
   margin: 0;
   color: inherit;
-  line-height: 34px;
-  width: calc(20% - 15px);
+  width: calc(30% - 15px);
   padding-left: 15px;
+  color: #79818B;
 }
 
 .header__site-title__item {
   margin: 0;
   color: inherit;
-  line-height: 40px;
 }
 
 .header__site-title__title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 100%;
 }
 
 .header__right-nav {
-  width: calc(80% - 15px);
+  width: calc(70% - 15px);
   padding-right: 15px;
   display: -webkit-box;
   display: flex;
   justify-content: flex-end;
+  color: #79818B;
 }
 
 .header__site-title--sidenav {
@@ -3489,6 +3479,7 @@ h4, h5, h6 {
 }
 
 .header__dropdown-app-title {
+  color: #79818B;
   margin: 0 0 8px;
 }
 
@@ -3500,6 +3491,11 @@ h4, h5, h6 {
   align-items: center;
   list-style: none;
   height: 100%;
+  margin-bottom: 0;
+}
+
+.header__nav-list__item {
+  color: #79818B;
 }
 
 .header__button {
@@ -3513,12 +3509,9 @@ h4, h5, h6 {
   text-align: center;
   cursor: pointer;
 }
-.header__nav-links .material-icons {
-  line-height: 1;
-}
 
 .header__nav-links:hover {
-  color: inherit;
+  color: #79818B;
   text-decoration: none;
 }
 
@@ -3536,6 +3529,11 @@ h4, h5, h6 {
   z-index: 1;
 }
 
+@media (min-width: 1200px) {
+  .content-wrapper {
+    padding-top: 50px;
+  }
+}
 .sidebar {
   position: fixed;
   z-index: 999999999;

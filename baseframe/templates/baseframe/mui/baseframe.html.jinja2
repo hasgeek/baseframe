@@ -76,11 +76,9 @@
 
       {% block headerbox -%}
         <header class="header header--fixed mui--z1" id="js-header">
-          <div class="mui-appbar mui-appbar--custom">
-            <div class="mui-container">
-              {% block header -%}
-              {%- endblock %}
-            </div>
+          <div class="mui-container">
+            {% block header -%}
+            {%- endblock %}
           </div>
         </header>
       {%- endblock %}
@@ -88,7 +86,6 @@
 
       {% block contentbox -%}
       <div class="content-wrapper">
-        <div class="mui--appbar-height mui-appbar--custom mui-appbar--fill"></div>
         <div class="main-content {% if self.sidedrawer() %} main-content--with-sidebar{% endif %}">
           {% block contenthead %}{% endblock %}
           {%- block basecontentbox %}
