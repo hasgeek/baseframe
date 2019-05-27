@@ -4093,48 +4093,34 @@ li p + ol {
   background-color: #BBDEFB;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1200px) {
   .mui-table.mui-table--responsive {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    display: block;
-    position: relative;
+    min-width: 300px;
   }
-  .mui-table.mui-table--responsive > thead {
-    border: 0;
-    border-right: 2px solid rgba(132, 146, 166, 0.3);
-    display: block;
-    float: left;
-  }
-  .mui-table.mui-table--responsive > thead > tr {
-    display: block;
-  }
-  .mui-table.mui-table--responsive > thead > tr > th {
-    display: block;
-    text-align: right;
-    border-bottom: none;
-    padding: 15px 10px;
-  }
-  .mui-table.mui-table--responsive > tbody {
-    display: block;
-    width: auto;
-    position: relative;
-    overflow-x: auto;
-    white-space: nowrap;
+  .mui-table.mui-table--responsive th {
+    display: none;
   }
   .mui-table.mui-table--responsive > tbody > tr {
-    display: inline-block;
-    vertical-align: top;
-    text-align: right;
+    border-top: 1px solid rgba(132, 146, 166, 0.3);
+    border-bottom: 1px solid rgba(132, 146, 166, 0.3);
+    display: block;
   }
   .mui-table.mui-table--responsive > tbody > tr > td {
     display: block;
-    text-align: left;
-    margin: 0;
-    vertical-align: top;
-    border-bottom: none;
-    padding: 15px 10px;
+    border: none;
+  }
+  .mui-table.mui-table--responsive > tbody > tr > td:first-child {
+    padding-top: .5em;
+  }
+  .mui-table.mui-table--responsive > tbody > tr > td:last-child {
+    padding-bottom: .5em;
+  }
+  .mui-table.mui-table--responsive > tbody > tr > td:before {
+    content: attr(data-th);
+    font-weight: bold;
+    font-size: inherit;
+    width: 100%;
+    display: inline-block;
   }
 }
 .mui-table.mui-table--bordered > tbody > tr:last-child > td {

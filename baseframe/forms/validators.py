@@ -300,7 +300,7 @@ class ValidUrl(object):
         where ``patterns`` is a list of strings or regular expressions. If ``invalid_urls`` is
         a callable, it will be called to retrieve the list.
     """
-    user_agent = 'HasGeek/linkchecker'
+    user_agent = "Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 HasGeek/linkchecker"
 
     def __init__(self, message=None, message_urltext=None, invalid_urls=[]):
         self.message = message or _(u'The URL “{url}” is not valid or is currently inaccessible')
