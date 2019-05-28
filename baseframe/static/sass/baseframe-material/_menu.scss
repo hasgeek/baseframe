@@ -56,7 +56,7 @@ and (orientation: landscape) {
     margin: 0;
     @extend .mui--text-headline;
     color: inherit;
-    width: calc(30% - #{$mui-grid-gutter-width/2});
+    width: calc(25% - #{$mui-grid-gutter-width/2});
     padding-left: $mui-grid-gutter-width/2;
     color: $mui-text-light;
 }
@@ -75,7 +75,7 @@ and (orientation: landscape) {
 }
 
 .header__right-nav {
-    width: calc(70% - #{$mui-grid-gutter-width/2});
+    width: calc(75% - #{$mui-grid-gutter-width/2});
     padding-right: $mui-grid-gutter-width/2;
     display: -webkit-box;
     display: flex;
@@ -123,6 +123,7 @@ and (orientation: landscape) {
     list-style: none;
     height: 100%;
     margin-bottom: 0;
+    padding-left: 0;
 }
 
 .header__nav-list__item {

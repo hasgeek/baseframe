@@ -3426,7 +3426,7 @@ h4, h5, h6 {
   align-items: center;
   margin: 0;
   color: inherit;
-  width: calc(30% - 15px);
+  width: calc(25% - 15px);
   padding-left: 15px;
   color: #79818B;
 }
@@ -3444,7 +3444,7 @@ h4, h5, h6 {
 }
 
 .header__right-nav {
-  width: calc(70% - 15px);
+  width: calc(75% - 15px);
   padding-right: 15px;
   display: -webkit-box;
   display: flex;
@@ -3492,6 +3492,7 @@ h4, h5, h6 {
   list-style: none;
   height: 100%;
   margin-bottom: 0;
+  padding-left: 0;
 }
 
 .header__nav-list__item {
