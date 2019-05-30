@@ -343,10 +343,10 @@
         key: {{ field.results_key|tojson }}
       });
     {%- elif field.type == 'RecaptchaField' and form_ref_id != '' %}
-      function onInvisibleRecaptchaSubmit(recaptcha_response) {
+      window.onInvisibleRecaptchaSubmit = function (recaptcha_response) {
         console.log(recaptcha_response);
-        // document.getElementById("{{ form_ref_id }}").submit();
-      }
+        document.getElementById("{{ form_ref_id }}").submit();
+      };
       $('#{{ form_ref_id }}').submit(function (event) {
         event.preventDefault();
         if (typeof grecaptcha !== "undefiend" && grecaptcha.getResponse() === '') {
