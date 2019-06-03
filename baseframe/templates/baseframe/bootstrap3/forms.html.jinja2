@@ -279,7 +279,7 @@
   {%- endwith %}
 {% endmacro %}
 
-{%- macro widgetscripts(form, script=true, form_ref_id='') -%}
+{%- macro widgetscripts(form, script=true, ref_id='') -%}
   {%- if script %}
   <script type="text/javascript">
     $(function() {
@@ -299,16 +299,16 @@
         autocomplete_endpoint: {{ field.autocomplete_endpoint|tojson }},
         key: {{ field.results_key|tojson }}
       });
-    {%- elif field.type == 'RecaptchaField' and form_ref_id != '' %}
+    {%- elif field.type == 'RecaptchaField' and ref_id != '' %}
       window.onInvisibleRecaptchaSubmit = function (recaptcha_response) {
-        document.getElementById("{{ form_ref_id }}").submit();
+        document.getElementById("{{ ref_id }}").submit();
       };
-      $('#{{ form_ref_id }}').submit(function (event) {
+      $('#{{ ref_id }}').submit(function (event) {
         event.preventDefault();
         if (typeof grecaptcha !== "undefiend" && grecaptcha.getResponse() === '') {
           grecaptcha.execute();
         } else {
-          document.getElementById("{{ form_ref_id }}").submit();
+          document.getElementById("{{ ref_id }}").submit();
         }
       })
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
