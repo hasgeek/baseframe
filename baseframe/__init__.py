@@ -263,6 +263,13 @@ class BaseframeBlueprint(Blueprint):
         if isinstance(app.config.get('NETWORKBAR_DATA'), (list, tuple)):
             app.config['NETWORKBAR_LINKS'] = app.config['NETWORKBAR_DATA']
 
+        if app.config('RECAPTCHA_PUBLIC_KEY') and app.config('RECAPTCHA_PRIVATE_KEY'):
+            default_invisible_config = {'callback': "onInvisibleRecaptchaSubmit", 'size': "invisible"}
+            if app.config.get('RECAPTCHA_DATA_ATTRS'):
+                app.config['RECAPTCHA_DATA_ATTRS'].update(default_invisible_config)
+            else:
+                app.config['RECAPTCHA_DATA_ATTRS'] = default_invisible_config
+
     def register(self, app, options, first_registration=False):
         """
         Called by :meth:`Flask.register_blueprint` to register all views
