@@ -263,12 +263,9 @@ class BaseframeBlueprint(Blueprint):
         if isinstance(app.config.get('NETWORKBAR_DATA'), (list, tuple)):
             app.config['NETWORKBAR_LINKS'] = app.config['NETWORKBAR_DATA']
 
-        if app.config.get('RECAPTCHA_PUBLIC_KEY') and app.config.get('RECAPTCHA_PRIVATE_KEY'):
-            default_invisible_config = {'callback': "onInvisibleRecaptchaSubmit", 'size': "invisible"}
-            if app.config.get('RECAPTCHA_DATA_ATTRS'):
-                app.config['RECAPTCHA_DATA_ATTRS'].update(default_invisible_config)
-            else:
-                app.config['RECAPTCHA_DATA_ATTRS'] = default_invisible_config
+        app.config.setdefault('RECAPTCHA_DATA_ATTRS', {})
+        app.config['RECAPTCHA_DATA_ATTRS'].setdefault('callback', 'onInvisibleRecaptchaSubmit')
+        app.config['RECAPTCHA_DATA_ATTRS'].setdefault('size', 'invisible')
 
     def register(self, app, options, first_registration=False):
         """
