@@ -71,6 +71,17 @@ class Form(BaseForm):
     __expects__ = ()
     __returns__ = ()
 
+    def __init_subclass__(cls, **kwargs):
+        """
+        Validate :attr:`__expects__` and :attr:`__returns__` in sub-classes
+        """
+        super().__init_subclass__(**kwargs)
+        if {'edit_obj', 'edit_model', 'edit_parent', 'edit_id'} & set(cls.__expects__):
+            raise TypeError("This form has __expects__ parameters that are reserved by the base form")
+
+        if set(cls.__dict__.keys()) & set(cls.__expects__):
+            raise TypeError("This form has __expects__ parameters that clash with field names")
+
     def __init__(self, *args, **kwargs):
         super(Form, self).__init__(*args, **kwargs)
 
