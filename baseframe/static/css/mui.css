@@ -3520,6 +3520,10 @@ h4, h5, h6 {
   display: block;
 }
 
+.header__nav-links-active .header__nav-links__icon {
+  color: #E05F26;
+}
+
 @media (min-width: 1200px) {
   .header__nav-links {
     font-size: 16px;
