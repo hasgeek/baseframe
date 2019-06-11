@@ -3347,7 +3347,7 @@ h4, h5, h6 {
   line-height: 16px;
 }
 
-.mui--text-menu, .header__nav-links,
+.mui--text-menu,
 .mui--text-button {
   font-weight: 400;
   font-size: 14px;
@@ -3505,13 +3505,33 @@ h4, h5, h6 {
 }
 
 .header__nav-links {
+  font-size: 14px;
+  line-height: 1;
   color: #79818B;
   display: inline-block;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
 }
+.header__nav-links .header__nav-links__icon {
+  font-size: 20px;
+}
+.header__nav-links .header__nav-links__text {
+  display: block;
+}
 
+@media (min-width: 1200px) {
+  .header__nav-links {
+    font-size: 16px;
+  }
+  .header__nav-links .header__nav-links__icon {
+    font-size: 24px;
+  }
+  .header__nav-links .header__nav-links__text {
+    display: inline-block;
+    margin-left: 8px;
+  }
+}
 .header__nav-links:hover {
   color: #79818B;
   text-decoration: none;
@@ -3891,6 +3911,7 @@ li p + ol {
 }
 .card .card__body {
   padding: 0.5em 1em;
+  word-break: break-word;
 }
 .card .card__body__text {
   width: 75%;
