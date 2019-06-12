@@ -15,7 +15,7 @@
   <iframe height="0" width="0" tabindex="-1" style="display: none; border: 0; height: 0; width: 0" aria-hidden="true" role="presentation" src="{{ url }}"></iframe>
 {% endmacro %}
 
-{%- macro hgtopnav(site_title="HasGeek", side_menu_button=none, site_links=[], auth=true, network=true, loginbtntext="Login") %}
+{%- macro hgtopnav(site_title="HasGeek", side_menu_button=none, site_links=[], auth=true, network=true, loginbtntext="Login", user_links=[]) %}
   <nav id="hgnav" class="header__nav" role="navigation">
     <div class="header__site-title {% if current_auth.is_anonymous -%}header__site-title--smaller{% endif %}">
       {% if side_menu_button %}
