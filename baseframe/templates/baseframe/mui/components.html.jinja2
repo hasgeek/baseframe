@@ -27,7 +27,7 @@
       <ul class="header__nav-list">
         {%- for link in site_links %}
           <li class="header__nav-list__item">
-            <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links {%- if link.class %}{{ link.class }} {% endif %} {% if request.path == link.url %}header__nav-links-active{%- endif %}">{% if link.icon %}<i class="material-icons mui--align-middle header__nav-links__icon">{{link.icon}}</i>{% endif %}<span class="header__nav-links__text">{{ link.title }}</span>
+            <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links {%- if link.class %}{{ link.class }} {% endif %} {% if  current_view.current_section == link.name %}header__nav-links-active{%- endif %}">{% if link.icon %}<i class="material-icons mui--align-middle header__nav-links__icon">{{link.icon}}</i>{% endif %}<span class="header__nav-links__text">{{ link.title }}</span>
             </a>
           </li>
         {%- endfor %}
