@@ -18,6 +18,8 @@ of these have a "value.operation if value else value" construct. The original
 value is returned if it's falsy.
 """
 
+from coaster.utils import unicode_whitespace
+
 
 def lower():
     """
@@ -37,7 +39,7 @@ def upper():
     return upper_inner
 
 
-def strip(chars=None):
+def strip(chars=unicode_whitespace):
     """
     Strip whitespace from both ends
 
@@ -48,7 +50,7 @@ def strip(chars=None):
     return strip_inner
 
 
-def lstrip(chars=None):
+def lstrip(chars=unicode_whitespace):
     """
     Strip whitespace from beginning of data
 
@@ -59,7 +61,7 @@ def lstrip(chars=None):
     return lstrip_inner
 
 
-def rstrip(chars=None):
+def rstrip(chars=unicode_whitespace):
     """
     Strip whitespace from end of data
 
