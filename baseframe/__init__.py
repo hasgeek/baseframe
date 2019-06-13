@@ -2,6 +2,7 @@
 
 from __future__ import absolute_import
 
+import types
 import json
 import gettext
 
@@ -83,6 +84,8 @@ class JSONEncoder(JSONEncoderBase):
             return dict(o)
         if isinstance(o, furl):
             return o.url
+        if isinstance(o, types.GeneratorType):
+            return list(o)
         return super(JSONEncoder, self).default(o)
 
 
