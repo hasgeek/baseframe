@@ -3524,6 +3524,12 @@ h4, h5, h6 {
   color: #E05F26;
 }
 
+@media only screen and (max-device-width: 1200px) and (orientation: landscape) {
+  .header__nav-links .header__nav-links__text {
+    display: inline-block;
+    margin-left: 8px;
+  }
+}
 @media (min-width: 1200px) {
   .header__nav-links {
     font-size: 16px;
