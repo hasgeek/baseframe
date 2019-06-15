@@ -21,7 +21,7 @@ from flask_babelex import Babel, Domain
 
 from coaster.assets import split_namespec
 from coaster.auth import current_auth, request_has_auth
-from coaster.sqlalchemy import RoleAccessProxy
+from coaster.sqlalchemy import RoleAccessProxy, MarkdownComposite
 
 try:
     from flask_debugtoolbar import DebugToolbarExtension
@@ -86,6 +86,8 @@ class JSONEncoder(JSONEncoderBase):
             return o.url
         if isinstance(o, types.GeneratorType):
             return list(o)
+        if isinstance(o, MarkdownComposite):
+            return {'text': o.text, 'html': o.html}
         return super(JSONEncoder, self).default(o)
 
 
