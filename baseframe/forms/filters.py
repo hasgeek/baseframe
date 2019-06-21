@@ -20,6 +20,8 @@ value is returned if it's falsy.
 
 from coaster.utils import unicode_extended_whitespace
 
+__all__ = ['lower', 'upper', 'strip', 'lstrip', 'rstrip', 'strip_each', 'none_if_empty']
+
 
 def lower():
     """
@@ -70,6 +72,20 @@ def rstrip(chars=unicode_extended_whitespace):
     def rstrip_inner(value):
         return value.rstrip(chars) if value else value
     return rstrip_inner
+
+
+def strip_each(chars=unicode_extended_whitespace):
+    """
+    Strip whitespace and remove blank elements from each element in an iterable.
+    Falsy values are returned unprocessed
+
+    :param chars: If specified, strip these characters instead of whitespace
+    """
+    def strip_each_inner(value):
+        if value:
+            return [sline for sline in [line.strip(chars) for line in value] if sline]
+        return value
+    return strip_each_inner
 
 
 def none_if_empty():

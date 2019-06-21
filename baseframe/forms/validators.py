@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from collections import namedtuple
 from decimal import Decimal
 from fractions import Fraction
 import datetime
@@ -22,7 +23,7 @@ from ..signals import exception_catchall
 
 __local = ['AllUrlsValid', 'IsNotPublicEmailDomain', 'IsPublicEmailDomain', 'NoObfuscatedEmail',
     'AllowedIf', 'OptionalIf', 'RequiredIf', 'ValidCoordinates', 'ValidEmail',
-    'ValidEmailDomain', 'ValidName', 'ValidUrl']
+    'ValidEmailDomain', 'ValidName', 'ValidUrl', 'ForEach']
 __imported = [  # WTForms validators
     'DataRequired', 'EqualTo', 'InputRequired', 'Length', 'NumberRange', 'Optional',
     'StopValidation', 'URL', 'ValidationError']
@@ -30,7 +31,6 @@ __all__ = __local + __imported
 
 
 EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b', re.I)
-
 
 _zero_values = (0, 0.0, Decimal('0'), 0j, Fraction(0, 1), datetime.time(0, 0, 0))
 
@@ -51,6 +51,31 @@ def is_empty(value):
         True
     """
     return value not in _zero_values and not value
+
+
+FakeField = namedtuple('FakeField', ['data', 'raw_data', 'errors', 'gettext', 'ngettext'])
+
+
+class ForEach(object):
+    """
+    Runs specified validators on each element of an iterable value. If a validator
+    raises :exc:`StopValidation`, it stops other validators within the chain given
+    to :class:`ForEach`, but not validators specified alongside.
+    """
+    def __init__(self, validators):
+        self.validators = validators
+
+    def __call__(self, form, field):
+        for element in field.data:
+            fake_field = FakeField(element, element, [], field.gettext, field.ngettext)
+            for validator in self.validators:
+                try:
+                    validator(form, fake_field)
+                except StopValidation as e:
+                    if six.text_type(e):
+                        raise
+                    else:
+                        break
 
 
 class AllowedIf(object):
