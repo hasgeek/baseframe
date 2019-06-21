@@ -72,7 +72,7 @@ class ForEach(object):
                 try:
                     validator(form, fake_field)
                 except StopValidation as e:
-                    if e.message:
+                    if six.text_type(e):
                         raise
                     else:
                         break
