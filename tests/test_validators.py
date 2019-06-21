@@ -2,9 +2,10 @@
 
 import warnings
 import urllib3
+from werkzeug.datastructures import MultiDict
+from mxsniff import MXLookupException
 from baseframe.utils import is_public_email_domain
 from baseframe import forms
-from mxsniff import MXLookupException
 from .fixtures import (TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, PublicEmailDomainFormTest)
 
 
@@ -140,6 +141,53 @@ class TestFormBase(TestCaseBaseframe):
 
     def tearDown(self):
         self.ctx.pop()
+
+
+class TestForEach(TestFormBase):
+    class Form(forms.Form):
+        textlist = forms.TextListField(
+            validators=[forms.ForEach([forms.URL()])]
+            )
+
+    def test_passes_single(self):
+        self.form.process(formdata=MultiDict({'textlist': "http://www.example.com/"}))
+        assert self.form.validate() is True
+
+    def test_passes_list(self):
+        self.form.process(formdata=MultiDict({'textlist': "http://www.example.com\r\nhttp://www.example.org/"}))
+        assert self.form.validate() is True
+
+    def test_fails_single(self):
+        self.form.process(formdata=MultiDict({'textlist': "example"}))
+        assert self.form.validate() is False
+
+    def test_fails_list(self):
+        self.form.process(formdata=MultiDict({'textlist': "www.example.com\r\nwww.example.org"}))
+        assert self.form.validate() is False
+
+    def test_fails_mixed1(self):
+        self.form.process(formdata=MultiDict({'textlist': "http://www.example.com/\r\nwww.example.org"}))
+        assert self.form.validate() is False
+
+    def test_fails_mixed2(self):
+        self.form.process(formdata=MultiDict({'textlist': "www.example.com\r\nhttp://www.example.org/"}))
+        assert self.form.validate() is False
+
+    def test_fails_blanklines(self):
+        self.form.process(formdata=MultiDict({'textlist': "http://www.example.com\r\n"}))
+        assert self.form.validate() is False
+
+
+class TestForEachFiltered(TestFormBase):
+    class Form(forms.Form):
+        textlist = forms.TextListField(
+            validators=[forms.ForEach([forms.URL()])],
+            filters=[forms.strip_each()]
+            )
+
+    def test_passes_blanklines(self):
+        self.form.process(formdata=MultiDict({'textlist': "http://www.example.com\r\n"}))
+        assert self.form.validate() is True
 
 
 class TestAllowedIf(TestFormBase):

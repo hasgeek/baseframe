@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from collections import namedtuple
 from decimal import Decimal
 from fractions import Fraction
 import datetime
@@ -22,7 +23,7 @@ from ..signals import exception_catchall
 
 __local = ['AllUrlsValid', 'IsNotPublicEmailDomain', 'IsPublicEmailDomain', 'NoObfuscatedEmail',
     'AllowedIf', 'OptionalIf', 'RequiredIf', 'ValidCoordinates', 'ValidEmail',
-    'ValidEmailDomain', 'ValidName', 'ValidUrl']
+    'ValidEmailDomain', 'ValidName', 'ValidUrl', 'ForEach']
 __imported = [  # WTForms validators
     'DataRequired', 'EqualTo', 'InputRequired', 'Length', 'NumberRange', 'Optional',
     'StopValidation', 'URL', 'ValidationError']
@@ -30,7 +31,6 @@ __all__ = __local + __imported
 
 
 EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b', re.I)
-
 
 _zero_values = (0, 0.0, Decimal('0'), 0j, Fraction(0, 1), datetime.time(0, 0, 0))
 
@@ -51,6 +51,22 @@ def is_empty(value):
         True
     """
     return value not in _zero_values and not value
+
+
+FakeField = namedtuple('FakeField', ['data', 'gettext', 'ngettext'])
+
+
+class ForEach(object):
+    """
+    Runs specified validators on each element of an iterable value
+    """
+    def __init__(self, validators):
+        self.validators = validators
+
+    def __call__(self, form, field):
+        for v in self.validators:
+            for element in field.data:
+                v(form, FakeField(element, field.gettext, field.ngettext))
 
 
 class AllowedIf(object):
