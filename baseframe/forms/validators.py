@@ -53,20 +53,29 @@ def is_empty(value):
     return value not in _zero_values and not value
 
 
-FakeField = namedtuple('FakeField', ['data', 'gettext', 'ngettext'])
+FakeField = namedtuple('FakeField', ['data', 'raw_data', 'errors', 'gettext', 'ngettext'])
 
 
 class ForEach(object):
     """
-    Runs specified validators on each element of an iterable value
+    Runs specified validators on each element of an iterable value. If a validator
+    raises :exc:`StopValidation`, it stops other validators within the chain given
+    to :class:`ForEach`, but not validators specified alongside.
     """
     def __init__(self, validators):
         self.validators = validators
 
     def __call__(self, form, field):
-        for v in self.validators:
-            for element in field.data:
-                v(form, FakeField(element, field.gettext, field.ngettext))
+        for element in field.data:
+            fake_field = FakeField(element, element, [], field.gettext, field.ngettext)
+            for validator in self.validators:
+                try:
+                    validator(form, fake_field)
+                except StopValidation as e:
+                    if e.message:
+                        raise
+                    else:
+                        break
 
 
 class AllowedIf(object):

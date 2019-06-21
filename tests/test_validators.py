@@ -178,6 +178,21 @@ class TestForEach(TestFormBase):
         assert self.form.validate() is False
 
 
+class TestForEachChained(TestFormBase):
+    class Form(forms.Form):
+        textlist = forms.TextListField(
+            validators=[forms.ForEach([forms.Optional(), forms.URL()])]
+            )
+
+    def test_skips_blanklines_and_fails(self):
+        self.form.process(formdata=MultiDict({'textlist': "\r\nwww.example.com"}))
+        assert self.form.validate() is False
+
+    def test_skips_blanklines_and_passes(self):
+        self.form.process(formdata=MultiDict({'textlist': "\r\nhttp://www.example.com/"}))
+        assert self.form.validate() is True
+
+
 class TestForEachFiltered(TestFormBase):
     class Form(forms.Form):
         textlist = forms.TextListField(
