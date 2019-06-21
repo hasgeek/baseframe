@@ -20,7 +20,7 @@ from .parsleyjs import TextAreaField, StringField, URLField
 
 __imported = [   # Imported from WTForms
     'FileField', 'SelectMultipleField', 'SubmitField'
-]
+    ]
 __local = ['AnnotatedTextField', 'AutocompleteField', 'AutocompleteMultipleField',
     'CoordinatesField', 'DateTimeField', 'EnumSelectField', 'FormField', 'GeonameSelectField',
     'GeonameSelectMultiField', 'ImgeeField', 'JsonField', 'MarkdownField', 'RadioMatrixField',

@@ -61,7 +61,7 @@ filter_registry = {
     'lstrip': (bfilters.lstrip, 'chars'),
     'rstrip': (bfilters.rstrip, 'chars'),
     'none_if_empty': (bfilters.none_if_empty),
-}
+    }
 
 
 class Form(BaseForm):

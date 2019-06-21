@@ -204,7 +204,8 @@ class TestFilters(TestCaseBaseframe):
                 '',
                 'No strip',
                 ''
-            ]), [
+                ]),
+            [
                 'Left strip',
                 'Right strip',
                 'Full strip',

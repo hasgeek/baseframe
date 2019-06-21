@@ -157,7 +157,7 @@ class _Comparison(object):
             d = {
                 'other_label': hasattr(other, 'label') and other.label.text or self.fieldname,
                 'other_name': self.fieldname
-            }
+                }
             raise ValidationError(self.message.format(**d))
 
     def compare(self, value, other):

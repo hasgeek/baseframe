@@ -55,15 +55,15 @@ THEME_FILES = {
         'delete.html.jinja2': 'baseframe/bootstrap3/delete.html.jinja2',
         'message.html.jinja2': 'baseframe/bootstrap3/message.html.jinja2',
         'redirect.html.jinja2': 'baseframe/bootstrap3/redirect.html.jinja2'
-    },
+        },
     'mui': {
         'ajaxform.html.jinja2': 'baseframe/mui/ajaxform.html.jinja2',
         'autoform.html.jinja2': 'baseframe/mui/autoform.html.jinja2',
         'delete.html.jinja2': 'baseframe/mui/delete.html.jinja2',
         'message.html.jinja2': 'baseframe/mui/message.html.jinja2',
         'redirect.html.jinja2': 'baseframe/mui/redirect.html.jinja2'
+        }
     }
-}
 
 baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
 _ = baseframe_translations.gettext
@@ -244,7 +244,7 @@ class BaseframeBlueprint(Blueprint):
                     'flask_debugtoolbar.panels.logger.LoggingPanel',
                     'flask_debugtoolbar.panels.route_list.RouteListDebugPanel',
                     'flask_debugtoolbar.panels.profiler.ProfilerDebugPanel',
-                ]
+                    ]
                 if line_profile is not None:
                     app.config['DEBUG_TB_PANELS'].append(
                         'flask_debugtoolbar_lineprofilerpanel.panels.LineProfilerPanel')

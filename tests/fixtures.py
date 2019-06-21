@@ -44,7 +44,7 @@ class DocumentTest(object):
 
 reject_list = [
     (['example.com', re.compile(r'example.in')], u'This URL is not allowed')
-]
+    ]
 
 
 class UrlFormTest(forms.Form):

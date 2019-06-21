@@ -40,14 +40,14 @@ class TestValidators(TestCaseBaseframe):
             self.webmail_form.process(
                 webmail_domain=u'gmail.com',
                 not_webmail_domain=u'i❤.ws'
-            )
+                )
             self.assertTrue(self.webmail_form.validate())
 
             # both invalid
             self.webmail_form.process(
                 webmail_domain=u'i❤.ws',
                 not_webmail_domain=u'gmail.com'
-            )
+                )
             self.assertFalse(self.webmail_form.validate())
             self.assertIn('webmail_domain', self.webmail_form.errors)
             self.assertIn('not_webmail_domain', self.webmail_form.errors)
@@ -56,7 +56,7 @@ class TestValidators(TestCaseBaseframe):
             self.webmail_form.process(
                 webmail_domain=u'gmail.com',
                 not_webmail_domain=u'gmail.com'
-            )
+                )
             self.assertFalse(self.webmail_form.validate())
             self.assertNotIn('webmail_domain', self.webmail_form.errors)
             self.assertIn('not_webmail_domain', self.webmail_form.errors)
@@ -69,7 +69,7 @@ class TestValidators(TestCaseBaseframe):
             self.webmail_form.process(
                 webmail_domain=u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com',
                 not_webmail_domain=u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com'
-            )
+                )
             self.assertFalse(self.webmail_form.validate())
             self.assertIn('webmail_domain', self.webmail_form.errors)
             self.assertNotIn('not_webmail_domain', self.webmail_form.errors)
