@@ -375,8 +375,8 @@ class UserSelectFieldBase(object):
     Select a user
     """
     def __init__(self, *args, **kwargs):
-        self.usermodel = kwargs.pop('usermodel')
-        self.lastuser = kwargs.pop('lastuser')
+        self.lastuser = kwargs.pop('lastuser', current_app.login_manager)
+        self.usermodel = kwargs.pop('usermodel', self.lastuser.usermanager.usermodel if self.lastuser else None)
         self.separator = kwargs.pop('separator', ',')
         if self.lastuser:
             self.autocomplete_endpoint = self.lastuser.endpoint_url(current_app.lastuser_config['getuser_autocomplete_endpoint'])
@@ -391,7 +391,6 @@ class UserSelectFieldBase(object):
             return [(u.userid, u.pickername, True) for u in self.data]
 
     def process_formdata(self, valuelist):
-        retval = super(UserSelectFieldBase, self).process_formdata(valuelist)
         userids = valuelist
         # Convert strings in userids into User objects
         users = []
@@ -412,7 +411,6 @@ class UserSelectFieldBase(object):
             else:
                 users = self.usermodel.all(userids=userids)
         self.data = users
-        return retval
 
 
 class UserSelectField(UserSelectFieldBase, StringField):
