@@ -1,32 +1,35 @@
 # -*- coding: utf-8 -*-
 
 from decimal import Decimal, InvalidOperation as DecimalError
+
+import six
 from six.moves.urllib.parse import urljoin
 from pytz import UTC, timezone as pytz_timezone
 from flask import current_app
 import wtforms
-from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, SubmitField, FileField  # NOQA
+from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, SubmitField, FileField
 from wtforms.widgets import Select as OriginalSelectWidget
 from wtforms.compat import text_type
 from wtforms.utils import unset_value
+from flask_wtf import RecaptchaField
 import bleach
 import simplejson as json
-import six
 
 from .. import _, get_timezone
 from ..utils import request_timestamp
 from .widgets import TinyMce3, TinyMce4, DateTimeInput, CoordinatesInput, RadioMatrixInput, SelectWidget, Select2Widget
 from .parsleyjs import TextAreaField, StringField, URLField
 
-__imported = [   # Imported from WTForms
-    'FileField', 'SelectMultipleField', 'SubmitField'
-    ]
-__local = ['AnnotatedTextField', 'AutocompleteField', 'AutocompleteMultipleField',
+__all__ = [
+    # Imported from WTForms
+    'FileField', 'SelectMultipleField', 'SubmitField', 'RecaptchaField',
+    # Baseframe fields (many of these are extensions of WTForms fields)
+    'AnnotatedTextField', 'AutocompleteField', 'AutocompleteMultipleField',
     'CoordinatesField', 'DateTimeField', 'EnumSelectField', 'FormField', 'GeonameSelectField',
     'GeonameSelectMultiField', 'ImgeeField', 'JsonField', 'MarkdownField', 'RadioMatrixField',
     'RichTextField', 'SANITIZE_ATTRIBUTES', 'SANITIZE_TAGS', 'SelectField', 'StylesheetField',
-    'TextListField', 'TinyMce3Field', 'TinyMce4Field', 'UserSelectField', 'UserSelectMultiField']
-__all__ = __imported + __local
+    'TextListField', 'TinyMce3Field', 'TinyMce4Field', 'UserSelectField', 'UserSelectMultiField'
+    ]
 
 
 # Default tags and attributes to allow in HTML sanitization
