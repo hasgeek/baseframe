@@ -391,6 +391,7 @@ class UserSelectFieldBase(object):
             return [(u.userid, u.pickername, True) for u in self.data]
 
     def process_formdata(self, valuelist):
+        retval = super(UserSelectFieldBase, self).process_formdata(valuelist)
         userids = valuelist
         # Convert strings in userids into User objects
         users = []
@@ -411,6 +412,7 @@ class UserSelectFieldBase(object):
             else:
                 users = self.usermodel.all(userids=userids)
         self.data = users
+        return retval
 
 
 class UserSelectField(UserSelectFieldBase, StringField):
