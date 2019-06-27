@@ -9,6 +9,7 @@ from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, 
 from wtforms.widgets import Select as OriginalSelectWidget
 from wtforms.compat import text_type
 from wtforms.utils import unset_value
+from flask_wtf import RecaptchaField
 import bleach
 import simplejson as json
 import six
@@ -19,7 +20,7 @@ from .widgets import TinyMce3, TinyMce4, DateTimeInput, CoordinatesInput, RadioM
 from .parsleyjs import TextAreaField, StringField, URLField
 
 __imported = [   # Imported from WTForms
-    'FileField', 'SelectMultipleField', 'SubmitField'
+    'FileField', 'SelectMultipleField', 'SubmitField', 'RecaptchaField'
     ]
 __local = ['AnnotatedTextField', 'AutocompleteField', 'AutocompleteMultipleField',
     'CoordinatesField', 'DateTimeField', 'EnumSelectField', 'FormField', 'GeonameSelectField',

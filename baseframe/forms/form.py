@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
 import six
-from speaklater import is_lazy_string
 import wtforms
+from flask import current_app
+from speaklater import is_lazy_string
 from wtforms.compat import iteritems
 from flask_wtf import FlaskForm as BaseForm
 
 from ..signals import form_validation_error, form_validation_success
 from . import fields as bfields, validators as bvalidators, parsleyjs as bparsleyjs, filters as bfilters
 
-__all__ = ['field_registry', 'widget_registry', 'validator_registry', 'Form', 'FormGenerator']
+__all__ = ['field_registry', 'widget_registry', 'validator_registry',
+    'Form', 'FormGenerator', 'RecaptchaForm']
 
 # Use a hardcoded list to control what is available to user-facing apps
 field_registry = {
@@ -202,3 +204,12 @@ class FormGenerator(object):
             # TODO: Also validate the parameters in fielddata, like with validators above
             setattr(DynamicForm, name, field_registry[type_](validators=validators, filters=filters, **fielddata))
         return DynamicForm
+
+
+class RecaptchaForm(Form):
+    recaptcha = bfields.RecaptchaField()
+
+    def __init__(self, *args, **kwargs):
+        if not (current_app.config.get('RECAPTCHA_PUBLIC_KEY') and current_app.config.get('RECAPTCHA_PRIVATE_KEY')):
+            del self.recaptcha
+        return super(RecaptchaForm, self).__init__(*args, **kwargs)
