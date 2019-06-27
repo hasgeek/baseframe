@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import six
-import wtforms
-from flask import current_app
 from speaklater import is_lazy_string
+from flask import current_app
+import wtforms
 from wtforms.compat import iteritems
 from flask_wtf import FlaskForm as BaseForm
 
@@ -210,6 +210,7 @@ class RecaptchaForm(Form):
     recaptcha = bfields.RecaptchaField()
 
     def __init__(self, *args, **kwargs):
-        if not (current_app.config.get('RECAPTCHA_PUBLIC_KEY') and current_app.config.get('RECAPTCHA_PRIVATE_KEY')):
+        super(RecaptchaForm, self).__init__(*args, **kwargs)
+        if not (current_app.config.get('RECAPTCHA_PUBLIC_KEY'
+                ) and current_app.config.get('RECAPTCHA_PRIVATE_KEY')):
             del self.recaptcha
-        return super(RecaptchaForm, self).__init__(*args, **kwargs)
