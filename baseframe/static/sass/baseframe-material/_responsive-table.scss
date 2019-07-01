@@ -28,11 +28,11 @@
 		    		border: none;
 			    
 			    	&:first-child {
-			      		padding-top: .5em;
+			      		padding-top: $reflex-cell-spacing/2;
 			    	}
 
 			    	&:last-child {
-			      		padding-bottom: .5em;
+			      		padding-bottom: $reflex-cell-spacing/2;
 			    	}
 
 				    &:before {

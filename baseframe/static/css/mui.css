@@ -57,7 +57,7 @@
   position: relative;
   width: 100%;
   vertical-align: top;
-  padding: 1em 1em;
+  padding: 15px;
 }
 
 .grid__cell {
@@ -1179,11 +1179,11 @@
 }
 
 .grid__col--bleed-x {
-  padding: 1em 0;
+  padding: 15px 0;
 }
 
 .grid__col--bleed-y {
-  padding: 0 1em;
+  padding: 0 15px;
 }
 
 .grid__col--bg {
@@ -1194,15 +1194,15 @@
 }
 
 .grid__cell--padding-sm {
-  padding: 0.5em;
+  padding: 7.5px;
 }
 
 .grid__cell--padding-md {
-  padding: 1em;
+  padding: 15px;
 }
 
 .grid__cell--padding-lg {
-  padding: 2em;
+  padding: 30px;
 }
 
 .grid__cell-img {
@@ -3261,7 +3261,7 @@ h4, h5, h6 {
 }
 
 .mui-list--aligned {
-  padding-left: 1em;
+  padding-left: 15px;
 }
 
 .mui--d-block {
@@ -3619,9 +3619,18 @@ ol ul {
 
 li p + ul,
 li p + ol {
-  margin-bottom: 8px;
+  margin-bottom: 7.5px;
 }
 
+.mui-container {
+  padding: 0;
+}
+
+@media (min-width: 544px) and (max-width: 767px) {
+  .mui-container {
+    max-width: 100%;
+  }
+}
 .mui-divider {
   width: 100%;
 }
@@ -3634,8 +3643,8 @@ li p + ol {
 @media (min-width: 1200px) {
   .main-content--with-sidebar {
     margin-left: 160px;
-    padding-left: 2em;
-    padding-right: 2em;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }
 .table-wrapper {
@@ -3675,7 +3684,7 @@ li p + ol {
 }
 
 .no-cookies .cookies-required-alert {
-  margin-top: 1em;
+  margin-top: 15px;
 }
 
 .js .jshidden,
@@ -3723,14 +3732,14 @@ li p + ol {
 .footer {
   clear: both;
   position: relative;
-  margin-top: 1em;
+  margin-top: 15px;
   background: whiteSmoke url('/_baseframe/img/shadow.png?1460092674') no-repeat top center;
 }
 .footer .footer__container {
   min-height: 25px;
   text-align: center;
-  padding-top: 2em;
-  padding-bottom: 1em;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 .footer .footer__container p {
   font-size: inherit;
@@ -3812,8 +3821,8 @@ li p + ol {
 }
 
 .mui-form--margins {
-  margin-top: 1em;
-  margin-bottom: 2em;
+  margin-top: 15px;
+  margin-bottom: 30px;
 }
 
 .mui-select {
@@ -3891,19 +3900,19 @@ li p + ol {
 .card {
   position: relative;
   background: #fff;
-  margin-bottom: 2em;
+  margin-bottom: 30px;
 }
 .card .card__image {
   width: 100%;
 }
 .card .card__title {
-  padding: 0 1em;
+  padding: 0 15px;
 }
 .card .card__title__heading {
-  margin: 0.25em auto;
+  margin: 3.75px auto;
 }
 .card .card__header {
-  padding: 1em;
+  padding: 15px;
   background: #EFF2F7;
 }
 .card .card__header__title {
@@ -3920,14 +3929,14 @@ li p + ol {
   width: 20%;
 }
 .card .card__body {
-  padding: 0.5em 1em;
+  padding: 7.5px 15px;
   word-break: break-word;
 }
 .card .card__body__text {
   width: 75%;
 }
 .card .card__body__text__heading {
-  margin: 0.25em auto;
+  margin: 3.75px auto;
 }
 .card .card__body__logo {
   width: 25%;
@@ -3937,7 +3946,7 @@ li p + ol {
   align-self: center;
 }
 .card .card__footer {
-  padding: 0 0.5em;
+  padding: 0 7.5px;
 }
 .card .card__footer__floatbtn {
   float: right;
@@ -4066,15 +4075,15 @@ li p + ol {
 
 .modal {
   display: none;
-  padding: 1em;
+  padding: 15px;
 }
 .modal a.close-modal {
   display: none;
 }
 .modal .modal__close {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 7.5px;
+  right: 7.5px;
   display: block;
 }
 
@@ -4094,7 +4103,7 @@ li p + ol {
 }
 .tab-container .tab-container__tab {
   flex: 1 0 0;
-  padding: 8px;
+  padding: 7.5px;
   opacity: 0.4;
   text-align: center;
   border-bottom: 2px solid transparent;
@@ -4137,10 +4146,10 @@ li p + ol {
     border: none;
   }
   .mui-table.mui-table--responsive > tbody > tr > td:first-child {
-    padding-top: .5em;
+    padding-top: 7.5px;
   }
   .mui-table.mui-table--responsive > tbody > tr > td:last-child {
-    padding-bottom: .5em;
+    padding-bottom: 7.5px;
   }
   .mui-table.mui-table--responsive > tbody > tr > td:before {
     content: attr(data-th);
