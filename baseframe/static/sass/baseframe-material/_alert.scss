@@ -4,6 +4,9 @@
 	margin-bottom: $mui-base-line-height-computed;
 	border: 1px solid transparent;
 	border-radius: $mui-border-radius-default ;
+	background-color: transparentize($mui-info-color, 0.9);
+	border-color: transparentize($mui-info-color, 0.8);
+	color: $mui-info-color;
 
   	.alert__heading {
 		margin-top: 0;
@@ -48,12 +51,6 @@
 
 .alert--success .alert__hr {
   	border-top-color: #c9e2b3;
-}
-
-.alert--info {
-	background-color: transparentize($mui-info-color, 0.9);
-	border-color: transparentize($mui-info-color, 0.8);;
-	color: $mui-info-color;
 }
 
 .alert--info .alert__hr {
