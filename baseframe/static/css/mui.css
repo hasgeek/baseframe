@@ -3948,8 +3948,6 @@ li p + ol {
 
 .alert {
   padding: 15px;
-  margin-top: 20px;
-  margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 2px;
   background-color: rgba(74, 144, 226, 0.1);
@@ -4021,6 +4019,12 @@ li p + ol {
   border-top-color: #e4b9c0;
 }
 
+@media (min-width: 768px) {
+  .alert {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+}
 .thumbnail {
   position: relative;
   display: -ms-flexbox;

@@ -1,7 +1,5 @@
 .alert {
 	padding: $mui-panel-padding;
-	margin-top: $mui-base-line-height-computed;
-	margin-bottom: $mui-base-line-height-computed;
 	border: 1px solid transparent;
 	border-radius: $mui-border-radius-default ;
 	background-color: transparentize($mui-info-color, 0.9);
@@ -77,4 +75,11 @@
 .alert--error .alert__hr,
 .alert--danger .alert__hr {
   	border-top-color: #e4b9c0;
+}
+
+@media(min-width: 768px) {
+    .alert {
+		margin-top: $reflex-cell-spacing;
+		margin-bottom: $reflex-cell-spacing;
+	}
 }
