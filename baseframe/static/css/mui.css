@@ -3948,10 +3948,11 @@ li p + ol {
 
 .alert {
   padding: 15px;
-  margin-top: 20px;
-  margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 2px;
+  background-color: rgba(74, 144, 226, 0.1);
+  border-color: rgba(74, 144, 226, 0.2);
+  color: #4A90E2;
 }
 .alert .alert__heading {
   margin-top: 0;
@@ -3992,12 +3993,6 @@ li p + ol {
   border-top-color: #c9e2b3;
 }
 
-.alert--info {
-  background-color: rgba(74, 144, 226, 0.1);
-  border-color: rgba(74, 144, 226, 0.2);
-  color: #4A90E2;
-}
-
 .alert--info .alert__hr {
   border-top-color: #a6e1ec;
 }
@@ -4024,6 +4019,12 @@ li p + ol {
   border-top-color: #e4b9c0;
 }
 
+@media (min-width: 768px) {
+  .alert {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+}
 .thumbnail {
   position: relative;
   display: -ms-flexbox;
