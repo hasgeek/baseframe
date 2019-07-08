@@ -1,6 +1,6 @@
 .modal {
     display: none;
-    padding: 1em;
+    padding: $reflex-cell-spacing;
     @extend .mui--z1;
 
     //Use material design icon for close
@@ -10,8 +10,8 @@
 
     .modal__close {
         position: absolute;
-        top: 8px;
-        right: 8px;
+        top: $reflex-cell-spacing/2;
+        right: $reflex-cell-spacing/2;
         display: block;
     }
     .modal__header {
