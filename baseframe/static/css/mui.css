@@ -4129,7 +4129,7 @@ li p + ol {
   background-color: #BBDEFB;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 767px) {
   .mui-table.mui-table--responsive {
     min-width: 300px;
   }
@@ -4144,6 +4144,7 @@ li p + ol {
   .mui-table.mui-table--responsive > tbody > tr > td {
     display: block;
     border: none;
+    padding: 10px 0;
   }
   .mui-table.mui-table--responsive > tbody > tr > td:first-child {
     padding-top: 7.5px;
@@ -4157,6 +4158,12 @@ li p + ol {
     font-size: inherit;
     width: 100%;
     display: inline-block;
+  }
+}
+@media (min-width: 768px) {
+  .mui-table--responsive-wrapper {
+    overflow: auto;
+    width: 100%;
   }
 }
 .mui-table.mui-table--bordered > tbody > tr:last-child > td {

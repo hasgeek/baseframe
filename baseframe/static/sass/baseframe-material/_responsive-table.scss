@@ -8,7 +8,7 @@
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 767px) {
 	.mui-table.mui-table--responsive {
 	  	min-width: 300px;
 
@@ -26,6 +26,7 @@
 			    >td {
 		    		display: block;
 		    		border: none;
+		    		padding: 10px 0;
 			    
 			    	&:first-child {
 			      		padding-top: $reflex-cell-spacing/2;
@@ -47,6 +48,13 @@
 
 		}
   	}
+}
+
+@media (min-width: 768px) {
+	.mui-table--responsive-wrapper {
+	    overflow: auto;
+	    width: 100%;
+    }
 }
 
 .mui-table.mui-table--bordered>tbody>tr:last-child>td {
