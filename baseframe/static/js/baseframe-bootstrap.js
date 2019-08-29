@@ -282,9 +282,9 @@ window.Baseframe.Forms = {
             errorElem.classList.add('help-error');
           }
           errorElem.innerText = errors[fieldName][0];
-          var field = form.querySelector("#" + fieldName)
+          var field = form.querySelector("#" + fieldName);
           // Insert the p tag below the field
-          field.parentNode.insertBefore(errorElem, field.nextSibling);
+          field.parentNode.appendChild(errorElem);
           // Add error class to field wrapper
           fieldWrapper.classList.add('has-error');
         }
