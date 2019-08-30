@@ -285,9 +285,9 @@ window.Baseframe.Forms = {
             errorElem.classList.add('mui-form__error');
           }
           errorElem.innerText = errors[fieldName][0];
-          var field = form.querySelector("#" + fieldName)
+          var field = form.querySelector("#" + fieldName);
           // Insert the p tag below the field
-          field.parentNode.insertBefore(errorElem, field.nextSibling);
+          field.parentNode.appendChild(errorElem);
           // Add error class to field wrapper
           fieldWrapper.classList.add('has-error');
         }
@@ -306,6 +306,7 @@ window.Baseframe.Forms = {
       On completing the ajax request, calls the onSuccess/onError callback function.
   */
   handleFormSubmit: function(formId, url, onSuccess, onError, config) {
+    console.log('handleFormSubmit', $("#" + formId).find('button'));
     $("#" + formId).find('button[type="submit"]').click(function(event) {
       event.preventDefault();
       $.ajax({
