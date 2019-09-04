@@ -218,6 +218,10 @@ assets['mustache-loader.js'][Version('0.5.1')] = 'baseframe/js/mustache-hogan/mu
 
 assets['marked.js'][Version('0.3.0')] = 'baseframe/js/marked.js'
 
+assets['moment.js'][Version('2.24.0')] = 'baseframe/js/moment.js'
+# To use moment timezone in the browser, zone data needs to be loaded.
+assets['moment-timezone-data.js'][Version('0.5.25')] = 'baseframe/js/moment-timezone-with-data-10-year-range.js'
+
 assets['leaflet.js'][Version('1.3.4')] = 'baseframe/js/leaflet.js'
 assets['leaflet.css'][Version('1.3.4')] = 'baseframe/css/leaflet.css'
 assets['leaflet-search.css'][Version('2.9.7')] = 'baseframe/css/leaflet-search.css'
