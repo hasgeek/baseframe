@@ -3372,6 +3372,23 @@ h4, h5, h6 {
   margin: 0;
   cursor: pointer;
   background: none;
+  box-shadow: none;
+  height: auto;
+}
+
+.mui-btn--nostyle:hover,
+.mui-btn--nostyle:active,
+.mui-btn--nostyle:focus
+.mui-btn.mui-btn--nostyle:active:hover {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: none;
+  box-shadow: none;
+}
+
+.mui-btn--nostyle + .mui-btn--nostyle {
+  margin-left: 8px;
 }
 
 .header {
@@ -4031,8 +4048,8 @@ li p + ol {
 
 @media (min-width: 768px) {
   .alert {
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 15px;
+    margin-bottom: 15px;
   }
 }
 .thumbnail {
