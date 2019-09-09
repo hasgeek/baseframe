@@ -3366,7 +3366,7 @@ h4, h5, h6 {
   font-weight: 600;
 }
 
-.mui-btn--nostyle {
+.mui-btn.mui-btn--nostyle {
   padding: 0;
   border: 0;
   margin: 0;
@@ -3376,9 +3376,9 @@ h4, h5, h6 {
   height: auto;
 }
 
-.mui-btn--nostyle:hover,
-.mui-btn--nostyle:active,
-.mui-btn--nostyle:focus
+.mui-btn.mui-btn--nostyle:hover,
+.mui-btn.mui-btn--nostyle:active,
+.mui-btn.mui-btn--nostyle:focus
 .mui-btn.mui-btn--nostyle:active:hover {
   padding: 0;
   border: 0;
