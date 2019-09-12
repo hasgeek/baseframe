@@ -19,7 +19,7 @@
   <nav id="hgnav" class="header__nav" role="navigation">
     <div class="header__site-title {% if current_auth.is_anonymous -%}header__site-title--smaller{% endif %}">
       {% if side_menu_button %}
-        <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button"><i class="material-icons">menu</i></a>
+        <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button" aria-label="menu"><i class="material-icons">menu</i></a>
       {% endif %}
       <div class="header__site-title__title">{{site_title}}</div>
     </div>
@@ -27,7 +27,7 @@
       <ul class="header__nav-list">
         {%- for link in site_links %}
           <li class="header__nav-list__item">
-            <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links {% if link.class %}{{ link.class }}{% endif %} {% if  current_view.current_section == link.name %}header__nav-links-active{% endif %}">{% if link.icon %}<i class="material-icons mui--align-middle header__nav-links__icon">{{link.icon}}</i>{% endif %}<span class="header__nav-links__text">{{ link.title }}</span>
+            <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links {% if link.class %}{{ link.class }}{% endif %} {% if  current_view.current_section == link.name %}header__nav-links-active{% endif %}" aria-label="{{ link.title }}">{% if link.icon %}<i class="material-icons mui--align-middle header__nav-links__icon">{{link.icon}}</i>{% endif %}<span class="header__nav-links__text">{{ link.title }}</span>
             </a>
           </li>
         {%- endfor %}
@@ -60,14 +60,14 @@
   <ul class="header__side-nav-list">
     {%- for link in user_links %}
       <li class="header__side-nav-list__item">
-        <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}">
+        <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}" aria-label="{{ link.title }}">
           {% if link.icon %}<i class="material-icons header__side-nav-list__item__icon">{{link.icon}}</i>{% endif %} {{ link.title }}
         </a>
       </li>
     {%- endfor %}
     {%- for link in site_links %}
       <li class="header__side-nav-list__item">
-        <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}">
+        <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}" aria-label="{{ link.title }}">
           {% if link.icon %}<i class="material-icons header__side-nav-list__item__icon">{{link.icon}}</i>{% endif %} {{ link.title }}
         </a>
       </li>
@@ -87,10 +87,10 @@
       <li {% if links %} class="separator-authlinks" {%- endif %}>
         {%- with orgs = current_auth.user.organization_links() %}
         {% if orgs %}
-          <a href="/profile">My profile</a></li>
+          <a href="/profile" aria-label="my profile">My profile</a></li>
           {%- for org in orgs %}
-          <li><a href="{{ org.link }}">{{ org.title }}</a></li>
-          {%- endfor %}             
+          <li><a href="{{ org.link }}" aria-label="{{ org.title }}">{{ org.title }}</a></li>
+          {%- endfor %}
         {%- else %}
         <a href="{{ current_auth.user.profile_url }}" title="{{ current_auth.user.pickername }}">{{ current_auth.user.fullname }}</a>
         {% endif %}
@@ -116,7 +116,7 @@
     <ul class="mui-dropdown__menu mui-dropdown__menu--right" role="menu">
       {%- for link in network_links %}
       <li class="mui--text-center">
-        <a href="{{link['url']}}">
+        <a href="{{link['url']}}" aria-label="{{ link['title'] }}">
           <img src="{{link['icon']}}" class="header__dropdown-app-img">
           <h6 class="header__dropdown-app-title">{{link['title']}}</h6>
         </a>
