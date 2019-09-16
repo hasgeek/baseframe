@@ -39,10 +39,8 @@
   <meta name="referrer" content="{% block metareferrer %}always{% endblock %}" />
 
   <!-- Included CSS Files -->
-  {%- block icon_fonts %}
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-  {%- endblock %}
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
   {%- for asset in config.get('ext_css', []) %}
     <link rel="stylesheet" type="text/css" href="{{ asset|ext_asset_url }}" />
   {%- endfor %}
