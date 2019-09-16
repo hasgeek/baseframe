@@ -10,32 +10,32 @@
 // DISPLAY
 // ============================================================================
 
-.mui--d-block { 
-	display: block; 
+.mui--d-block {
+	display: block;
 }
-.mui--d-inlineblock { 
-	display: inline-block; 
+.mui--d-inlineblock {
+	display: inline-block;
 }
-.mui--d-inline { 
-	display: inline; 
+.mui--d-inline {
+	display: inline;
 }
 
 // ============================================================================
 // BACKGROUND COLORS
 // ============================================================================
 
-.mui--bg-primary { 
-	background-color: $mui-bg-color-primary; 
+.mui--bg-primary {
+	background-color: $mui-bg-color-primary;
 }
-.mui--bg-primary-dark { 
-	background-color: $mui-bg-color-dark; 
+.mui--bg-primary-dark {
+	background-color: $mui-bg-color-dark;
 }
-.mui--bg-primary-light { 
-	background-color: $mui-bg-color-light; 
+.mui--bg-primary-light {
+	background-color: $mui-bg-color-light;
 }
 
-.mui--bg-accent { 
-	background-color: $mui-bg-color-accent; 
+.mui--bg-accent {
+	background-color: $mui-bg-color-accent;
 }
 
 // ============================================================================
@@ -113,6 +113,14 @@
 
 .mui--text-capitalize {
 	text-transform: capitalize;
+}
+
+// ============================================================================
+// Text decoration
+// ============================================================================
+
+.mui--text-underline {
+	text-decoration: underline;
 }
 
 // ============================================================================
