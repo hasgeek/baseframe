@@ -3,7 +3,7 @@
     {% if messages %}
       {% for category, message in messages %}
         <div class="alert alert--{{category}} alert--dismissable">
-          <a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a>
+          <a class="alert__close" href="javascript:void(0);" aria-label="{% trans %}Close{% endtrans %}"><i class="material-icons">clear</i></a>
           <p class="alert__text">{{ message }}</p>
         </div>
       {% endfor %}
@@ -19,7 +19,7 @@
   <nav id="hgnav" class="header__nav" role="navigation">
     <div class="header__site-title {% if current_auth.is_anonymous -%}header__site-title--smaller{% endif %}">
       {% if side_menu_button %}
-        <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button"><i class="material-icons">menu</i></a>
+        <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button" aria-label="{% trans %}Toggle menu{% endtrans %}" aria-expanded="false"><i class="material-icons" aria-hidden="true">menu</i></a>
       {% endif %}
       <div class="header__site-title__title">{{site_title}}</div>
     </div>
@@ -27,7 +27,7 @@
       <ul class="header__nav-list">
         {%- for link in site_links %}
           <li class="header__nav-list__item">
-            <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links {% if link.class %}{{ link.class }}{% endif %} {% if  current_view.current_section == link.name %}header__nav-links-active{% endif %}">{% if link.icon %}<i class="material-icons mui--align-middle header__nav-links__icon">{{link.icon}}</i>{% endif %}<span class="header__nav-links__text">{{ link.title }}</span>
+            <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links {% if link.class %}{{ link.class }}{% endif %} {% if  current_view.current_section == link.name %}header__nav-links-active{% endif %}" aria-label="{{ link.title }}">{% if link.icon %}<i class="material-icons mui--align-middle header__nav-links__icon" aria-hidden="true">{{link.icon}}</i>{% endif %}<span class="header__nav-links__text">{{ link.title }}</span>
             </a>
           </li>
         {%- endfor %}
@@ -60,15 +60,15 @@
   <ul class="header__side-nav-list">
     {%- for link in user_links %}
       <li class="header__side-nav-list__item">
-        <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}">
-          {% if link.icon %}<i class="material-icons header__side-nav-list__item__icon">{{link.icon}}</i>{% endif %} {{ link.title }}
+        <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}" aria-label="{{ link.title }}">
+          {% if link.icon %}<i class="material-icons header__side-nav-list__item__icon" aria-hidden="true">{{link.icon}}</i>{% endif %} {{ link.title }}
         </a>
       </li>
     {%- endfor %}
     {%- for link in site_links %}
       <li class="header__side-nav-list__item">
-        <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}">
-          {% if link.icon %}<i class="material-icons header__side-nav-list__item__icon">{{link.icon}}</i>{% endif %} {{ link.title }}
+        <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}" aria-label="{{ link.title }}">
+          {% if link.icon %}<i class="material-icons header__side-nav-list__item__icon" aria-hidden="true">{{link.icon}}</i>{% endif %} {{ link.title }}
         </a>
       </li>
     {%- endfor %}
@@ -77,8 +77,8 @@
 
 {%- macro add_hasgeek_auth(links, loginbtntext) %}
   {% if not current_auth.is_anonymous -%}
-    <a class="header__app-icon" data-mui-toggle="dropdown" id="hg-user-btn">
-      <i class="material-icons">account_circle</i>
+    <a class="header__app-icon" data-mui-toggle="dropdown" id="hg-user-btn" role="button" aria-expanded="false" aria-label="{% trans %}My account{% endtrans %}">
+      <i class="material-icons" aria-hidden="true">account_circle</i>
     </a>
     <ul class="mui-dropdown__menu mui-dropdown__menu--right">
       {%- for link in links %}
@@ -87,10 +87,10 @@
       <li {% if links %} class="separator-authlinks" {%- endif %}>
         {%- with orgs = current_auth.user.organization_links() %}
         {% if orgs %}
-          <a href="/profile">My profile</a></li>
+          <a href="/profile" aria-label="{% trans %}My profile{% endtrans %}">{% trans %}My profile{% endtrans %}</a></li>
           {%- for org in orgs %}
-          <li><a href="{{ org.link }}">{{ org.title }}</a></li>
-          {%- endfor %}             
+          <li><a href="{{ org.link }}" aria-label="{{ org.title }}">{{ org.title }}</a></li>
+          {%- endfor %}
         {%- else %}
         <a href="{{ current_auth.user.profile_url }}" title="{{ current_auth.user.pickername }}">{{ current_auth.user.fullname }}</a>
         {% endif %}
@@ -110,13 +110,13 @@
     {'title': 'Hasjob', 'url': 'https://hasjob.co/', 'icon': 'https://static.hasjob.co/static/img/hasjob-logo-200x200.png'},
     {'title': 'HGTV', 'url': 'https://hasgeek.tv/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_hgtv.png'},
     ]%}
-    <a class="header__app-icon" data-mui-toggle="dropdown">
-      <i class="material-icons">apps</i>
+    <a class="header__app-icon" data-mui-toggle="dropdown" role="button" aria-expanded="false" aria-label="{% trans %}Apps{% endtrans %}">
+      <i class="material-icons" aria-hidden="true">apps</i>
     </a>
     <ul class="mui-dropdown__menu mui-dropdown__menu--right" role="menu">
       {%- for link in network_links %}
       <li class="mui--text-center">
-        <a href="{{link['url']}}">
+        <a href="{{link['url']}}" aria-label="{{ link['title'] }}">
           <img src="{{link['icon']}}" class="header__dropdown-app-img">
           <h6 class="header__dropdown-app-title">{{link['title']}}</h6>
         </a>
