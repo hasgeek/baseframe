@@ -3,7 +3,7 @@
     {% if messages %}
       {% for category, message in messages %}
         <div class="alert alert--{{category}} alert--dismissable">
-          <a class="alert__close" href="javascript:void(0);" aria-label="{% trans %}close{% endtrans %}"><i class="material-icons">clear</i></a>
+          <a class="alert__close" href="javascript:void(0);" aria-label="{% trans %}Close{% endtrans %}"><i class="material-icons">clear</i></a>
           <p class="alert__text">{{ message }}</p>
         </div>
       {% endfor %}
@@ -87,7 +87,7 @@
       <li {% if links %} class="separator-authlinks" {%- endif %}>
         {%- with orgs = current_auth.user.organization_links() %}
         {% if orgs %}
-          <a href="/profile" aria-label="{% trans %}my profile{% endtrans %}">{% trans %}My profile{% endtrans %}</a></li>
+          <a href="/profile" aria-label="{% trans %}My profile{% endtrans %}">{% trans %}My profile{% endtrans %}</a></li>
           {%- for org in orgs %}
           <li><a href="{{ org.link }}" aria-label="{{ org.title }}">{{ org.title }}</a></li>
           {%- endfor %}
