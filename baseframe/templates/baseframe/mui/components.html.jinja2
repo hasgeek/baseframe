@@ -19,7 +19,7 @@
   <nav id="hgnav" class="header__nav" role="navigation">
     <div class="header__site-title {% if current_auth.is_anonymous -%}header__site-title--smaller{% endif %}">
       {% if side_menu_button %}
-        <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button" aria-label="{% trans %}menu{% endtrans %}"><i class="material-icons" aria-hidden="true">menu</i></a>
+        <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button" aria-label="{% trans %}Toggle menu{% endtrans %}" aria-expanded="false"><i class="material-icons" aria-hidden="true">menu</i></a>
       {% endif %}
       <div class="header__site-title__title">{{site_title}}</div>
     </div>
@@ -77,7 +77,7 @@
 
 {%- macro add_hasgeek_auth(links, loginbtntext) %}
   {% if not current_auth.is_anonymous -%}
-    <a class="header__app-icon" data-mui-toggle="dropdown" id="hg-user-btn" aria-label="{% trans %}My account{% endtrans %}">
+    <a class="header__app-icon" data-mui-toggle="dropdown" id="hg-user-btn" role="button" aria-expanded="false" aria-label="{% trans %}My account{% endtrans %}">
       <i class="material-icons" aria-hidden="true">account_circle</i>
     </a>
     <ul class="mui-dropdown__menu mui-dropdown__menu--right">
@@ -110,7 +110,7 @@
     {'title': 'Hasjob', 'url': 'https://hasjob.co/', 'icon': 'https://static.hasjob.co/static/img/hasjob-logo-200x200.png'},
     {'title': 'HGTV', 'url': 'https://hasgeek.tv/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_hgtv.png'},
     ]%}
-    <a class="header__app-icon" data-mui-toggle="dropdown" aria-label="{% trans %}Apps{% endtrans %}">
+    <a class="header__app-icon" data-mui-toggle="dropdown" role="button" aria-expanded="false" aria-label="{% trans %}Apps{% endtrans %}">
       <i class="material-icons" aria-hidden="true">apps</i>
     </a>
     <ul class="mui-dropdown__menu mui-dropdown__menu--right" role="menu">

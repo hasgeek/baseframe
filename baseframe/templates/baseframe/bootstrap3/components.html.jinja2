@@ -79,7 +79,7 @@
   {%- for link in links %}
     <li id="hg-networkbar-{{ link.name }}" {%- if siteid == link.name %} class="{% if toplevel and loop.first %}strong {% endif %}{% if link.children %}dropdown {% endif %}selected"{% elif link.sep %} class="hg-menu-section"{% elif toplevel and loop.first %} class="strong {%- if link.children %} dropdown{% endif %}"{% elif link.children %} class="dropdown"{% endif %}>
       {%- if link.children -%}
-        <a href="{{ link.url or '#' }}" class="dropdown-toggle" data-toggle="dropdown">{{ link.title }}</a>
+        <a href="{{ link.url or '#' }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ link.title }}</a>
         <ul class="dropdown-menu">
           {{ networkbar_inner(siteid, link.children) }}
         </ul>
@@ -99,12 +99,12 @@
     <div class="container">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <button type="button" id="navbar-toggle-1" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <button type="button" id="navbar-toggle-1" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse" aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
           <i class="icon-reorder fa fa-fw fa-bars"></i>
         </button>
         {%- if login %}
-          <button type="button" id="navbar-toggle-2" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex2-collapse">
+          <button type="button" id="navbar-toggle-2" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex2-collapse" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <i class="icon-user fa fa-fw fa-user"></i>
           </button>
@@ -135,7 +135,7 @@
           <li class="profile dropdown">
             {%- with orgs = current_auth.user.organization_links() %}
               {% if orgs %}
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="{{ current_auth.user.pickername }}">{{ current_auth.user.fullname }}</a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="{{ current_auth.user.pickername }}" aria-expanded="false" role="button">{{ current_auth.user.fullname }}</a>
                 <ul class="dropdown-menu">
                   <li><a href="/profile">My profile</a></li>
                   {%- for org in orgs %}
