@@ -118,7 +118,6 @@ assets['select2-baseframe.js'][Version('4.0.3')] = {'requires': ['select2.js==4.
 assets['select2-material.css'][Version('4.0.3')] = ('select2.css', 'baseframe/css/select2-baseframe-material.css')
 assets['select2-material.js'][Version('4.0.3')] = {'requires': ['select2.js==4.0.3']}
 
-
 assets['bootstrap-multiselect.css'][Version('0.9.13')] = 'baseframe/css/bootstrap-multiselect.css'
 assets['bootstrap-multiselect.js'][Version('0.9.13')] = 'baseframe/js/bootstrap-multiselect.js'
 
@@ -334,12 +333,18 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
     'select2-baseframe.js',
     'getdevicepixelratio.js'
     ]}
-assets['extra-material.js'][Version('0.0.0')] = {'requires': [
+assets['extra-material.js'][Version('0.1.0')] = {'requires': [
     'jquery-modal.js',
     'jquery.form.js',
     'select2-material.js',
     'getdevicepixelratio.js'
     ]}
+assets['extra-material.js'][Version('0.2.0')] = {'requires': [
+    'jquery-modal.js',
+    'jquery.form.js',
+    'getdevicepixelratio.js'
+    ]}
+
 
 assets['baseframe.js'][Version(__version__)] = {'requires': [
     'jquery.js<1.9.0',
@@ -376,16 +381,26 @@ assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
 
 assets['mui.js'][Version('0.9.21')] = 'baseframe/js/mui.js'
 assets['baseframe-material.js'][Version('0.9.21')] = 'baseframe/js/baseframe-material.js'
-assets['baseframe-mui.js'][Version(__version__)] = {'requires': [
-    'extra-material.js',
+assets['baseframe-mui.js'][Version('0.1.0')] = {'requires': [
+    'extra-material.js==0.1.0',
+    'mui.js',
+    'jquery.tinymce.js>=4.0.0',
+    'baseframe-material.js'
+    ]}
+assets['baseframe-mui.js'][Version('0.2.0')] = {'requires': [
+    'extra-material.js==0.2.0',
     'mui.js',
     'jquery.tinymce.js>=4.0.0',
     'baseframe-material.js'
     ]}
 
 assets['mui.css'][Version('0.9.21')] = 'baseframe/css/mui.css'
-assets['baseframe-mui.css'][Version(__version__)] = {'requires': [
+assets['baseframe-mui.css'][Version('0.1.0')] = {'requires': [
     'jquery-modal.css',
     'select2-material.css',
+    'mui.css'
+    ]}
+assets['baseframe-mui.css'][Version('0.2.0')] = {'requires': [
+    'jquery-modal.css',
     'mui.css'
     ]}
