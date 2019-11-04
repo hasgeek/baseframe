@@ -3,7 +3,7 @@
 function activate_widgets() {
 
   //Remove the scroll lock class added by mui.js on opening select dropdown
-  $('select:not(.notselect)').on("select2:select", function(e) {
+  $('select').on("select2:select", function(e) {
     $('body').removeClass('mui-scroll-lock');
   });
 
