@@ -10,7 +10,7 @@
     .mui-textfield,
     .mui-radio,
     .mui-checkbox {
-        margin-bottom: 5px; 
+        margin-bottom: 5px;
     }
 
     .mui-textfield--float-label {
@@ -97,11 +97,17 @@
 .mui-select {
     margin-top: $mui-form-group-margin-bottom;
     margin-bottom: 0;
-    > label {
-        top: -$mui-form-group-margin-bottom/4;
-    }
     .select2 {
         width: 100% !important;
+    }
+    .mui-select__menu {
+        z-index: 1001; //Higher than the fixed header
+    }
+}
+
+.mui-select.select2 {
+    .mui-select__menu {
+        display: none;
     }
 }
 
