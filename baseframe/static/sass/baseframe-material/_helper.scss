@@ -10,32 +10,32 @@
 // DISPLAY
 // ============================================================================
 
-.mui--d-block { 
-	display: block; 
+.mui--d-block {
+	display: block;
 }
-.mui--d-inlineblock { 
-	display: inline-block; 
+.mui--d-inlineblock {
+	display: inline-block;
 }
-.mui--d-inline { 
-	display: inline; 
+.mui--d-inline {
+	display: inline;
 }
 
 // ============================================================================
 // BACKGROUND COLORS
 // ============================================================================
 
-.mui--bg-primary { 
-	background-color: $mui-bg-color-primary; 
+.mui--bg-primary {
+	background-color: $mui-bg-color-primary;
 }
-.mui--bg-primary-dark { 
-	background-color: $mui-bg-color-dark; 
+.mui--bg-primary-dark {
+	background-color: $mui-bg-color-dark;
 }
-.mui--bg-primary-light { 
-	background-color: $mui-bg-color-light; 
+.mui--bg-primary-light {
+	background-color: $mui-bg-color-light;
 }
 
-.mui--bg-accent { 
-	background-color: $mui-bg-color-accent; 
+.mui--bg-accent {
+	background-color: $mui-bg-color-accent;
 }
 
 // ============================================================================
@@ -45,43 +45,43 @@
 .mui--text-display3 {
 	font-weight: 400;
 	font-size: 64px;
-	line-height: 64px;
+	line-height: 1.2;
 }
 
 .mui--text-display2 {
 	font-weight: 400;
 	font-size: 48px;
-	line-height: 58px;
+	line-height: 1.2;
 }
 
 .mui--text-display1, h1 {
 	font-weight: 400;
 	font-size: 32px;
-	line-height: 40px;
+	line-height: 1.2;
 }
 
 .mui--text-headline, h2 {
 	font-weight: 400;
 	font-size: 24px;
-	line-height: 32px;
+	line-height: 1.2;
 }
 
 .mui--text-title, h3 {
 	font-weight: 400;
 	font-size: 18px;
-	line-height: 28px;
+	line-height: 1.5;
 }
 
 .mui--text-subhead, h4 {
   font-weight: 400;
   font-size: 16px;
-  line-height: 24px;
+  line-height: 1.5;
 }
 
 .mui--text-body2, h5 {
 	font-weight: 400;
 	font-size: 14px;
-	line-height: 24px;
+	line-height: 1.5;
 }
 
 .mui--text-body1 {
@@ -93,14 +93,14 @@
 .mui--text-caption, h6 {
 	font-weight: 400;
 	font-size: 12px;
-	line-height: 16px;
+	line-height: 1.5;
 }
 
 .mui--text-menu,
 .mui--text-button {
 	font-weight: 400;
 	font-size: 14px;
-	line-height: 18px;
+	line-height: 1.5;
 }
 
 // ============================================================================
