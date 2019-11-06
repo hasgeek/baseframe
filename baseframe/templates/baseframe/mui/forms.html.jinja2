@@ -77,12 +77,17 @@
                 <label>{{ field.label.text }}</label>
               {%- endif %}
             </div>
-          {%- elif field.type in ['SelectField', 'QuerySelectField', 'SelectMultipleField', 'QuerySelectMultipleField'] and field.widget.html_tag not in ['ul', 'ol'] %}
+          {%- elif field.type in ['SelectField', 'QuerySelectField', 'QuerySelectMultipleField'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-select">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               <label>{{ field.label.text }}</label>
             </div>
-          {%- elif field.type in ['UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol'] %}
+          {%- elif field.type in ['SelectMultipleField'] and field.widget.html_tag not in ['ul', 'ol'] %}
+            <div class="mui-select mui-select2 select2">
+              {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
+              <label>{{ field.label.text }}</label>
+            </div>
+          {%- elif field.type in ['SelectMultipleField', 'UserSelectField', 'UserSelectMultiField', 'AutocompleteField', 'AutocompleteMultipleField', 'GeonameSelectField', 'GeonameSelectMultiField'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-select select2">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
               <label>{{ field.label.text }}</label>
@@ -359,6 +364,8 @@
           document.getElementById("{{ ref_id }}").submit();
         }
       })
+    {%- elif field.type in ['SelectMultipleField'] %}
+      Baseframe.Forms.enableSelect2();
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
       {%- if config['LASTUSER_CLIENT_ID'] and current_auth.cookie and 'sessionid' in current_auth.cookie %}
         Baseframe.Forms.lastuserAutocomplete({

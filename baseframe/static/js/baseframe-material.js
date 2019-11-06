@@ -189,6 +189,9 @@ window.Baseframe.Forms = {
       }
     });
   },
+  enableSelect2: function() {
+    $('.mui-select2 select').select2();
+  },
   lastuserAutocomplete: function(options) {
     var assembleUsers = function(users) {
       return users.map(function(user){
