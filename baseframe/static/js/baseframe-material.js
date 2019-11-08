@@ -317,7 +317,7 @@ window.Baseframe.Forms = {
           // Disable submit button to prevent double submit
           $("#" + formId).find('button[type="submit"]').prop('disabled', true);
           // Baseframe form has a loading indication which is hidden by default. Show the loading indicator
-          $("#" + formId).find(".loading").removeClass('hidden');
+          $("#" + formId).find(".loading").removeClass('mui--hide');
           if (config.beforeSend) config.beforeSend();
         }
       }).done(function (remoteData) {
@@ -430,32 +430,35 @@ $(function() {
     }
   });
 
-  var start = {}, end = {}
+  if(document.getElementById('js-sidebar')) {
+    var start = {}, end = {}
 
-  document.body.addEventListener('touchstart', function (e) {
-    start.x = e.changedTouches[0].clientX;
-    start.y = e.changedTouches[0].clientY;
-  })
+    document.body.addEventListener('touchstart', function (e) {
+      start.x = e.changedTouches[0].clientX;
+      start.y = e.changedTouches[0].clientY;
+    }, {passive: true})
 
-  document.body.addEventListener('touchend', function (e) {
-    end.y = e.changedTouches[0].clientY;
-    end.x = e.changedTouches[0].clientX;
+    document.body.addEventListener('touchend', function (e) {
+      end.y = e.changedTouches[0].clientY;
+      end.x = e.changedTouches[0].clientX;
 
-    var xDiff = end.x - start.x;
-    var yDiff = end.y - start.y;
-    var sideBarElem = document.getElementById('js-sidebar')
+      var xDiff = end.x - start.x;
+      var yDiff = end.y - start.y;
+      var sideBarElem = document.getElementById('js-sidebar')
 
-    if (Math.abs(xDiff) > Math.abs(yDiff) && sideBarElem) {
-      if (xDiff > 0 && start.x <= 80) {
-        sideBarElem.classList.add('open');
-        mui.overlay('on');
+      if (Math.abs(xDiff) > Math.abs(yDiff) && sideBarElem) {
+        if (xDiff > 0 && start.x <= 80) {
+          sideBarElem.classList.add('open');
+          mui.overlay('on');
+        }
+        else {
+          sideBarElem.classList.remove('open');
+          mui.overlay('off');
+        }
       }
-      else {
-        sideBarElem.classList.remove('open');
-        mui.overlay('off');
-      }
-    }
-  });
+    }, {passive: true});
+  }
+
 
   $('body').on('click', '.alert__close', function () {
     $(this).parents('.alert').fadeOut();

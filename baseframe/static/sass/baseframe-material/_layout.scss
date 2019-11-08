@@ -21,7 +21,17 @@ ol ul {
 
 li p + ul,
 li p + ol {
-    margin-bottom: 8px;
+    margin-bottom: $reflex-cell-spacing/2;
+}
+
+.mui-container {
+    padding: 0;
+}
+
+@media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-md-min - 1) {
+    .mui-container {
+        max-width: 100%;
+    }
 }
 
 .mui-divider {
@@ -36,8 +46,8 @@ li p + ol {
 @media (min-width: 1200px) {
     .main-content--with-sidebar {
         margin-left: 160px;
-        padding-left: 2*$reflex-cell-spacing;
-        padding-right: 2*$reflex-cell-spacing;
+        padding-left: $reflex-cell-spacing;
+        padding-right: $reflex-cell-spacing;
     }
 }
 
@@ -71,16 +81,16 @@ li p + ol {
 /* Cookies */
 .cookies-required-alert,
 .no-cookies .cookies-required {
-    display: none
+    display: none;
 }
 
 .cookies-required,
 .no-cookies .cookies-required-alert {
-    display: block
+    display: block;
 }
 
 .no-cookies .cookies-required-alert {
-    margin-top: 1em
+    margin-top: $reflex-cell-spacing;
 }
 
 .js .jshidden,

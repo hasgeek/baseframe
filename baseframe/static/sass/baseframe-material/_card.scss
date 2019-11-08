@@ -41,6 +41,7 @@
 	.card__body {
 		@extend .mui--text-body2;
 		padding: $reflex-cell-spacing/2 $reflex-cell-spacing;
+		word-break: break-word;
 	}
 
 	.card__body__text {

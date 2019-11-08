@@ -40,7 +40,7 @@ requires = [
     'pyOpenSSL',
     'ndg-httpsclient',
     'pyasn1',
-]
+    ]
 
 
 class BaseframeBuildPy(build_py):

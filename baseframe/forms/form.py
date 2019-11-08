@@ -2,6 +2,7 @@
 
 import six
 from speaklater import is_lazy_string
+from flask import current_app
 import wtforms
 from wtforms.compat import iteritems
 from flask_wtf import FlaskForm as BaseForm
@@ -9,7 +10,8 @@ from flask_wtf import FlaskForm as BaseForm
 from ..signals import form_validation_error, form_validation_success
 from . import fields as bfields, validators as bvalidators, parsleyjs as bparsleyjs, filters as bfilters
 
-__all__ = ['field_registry', 'widget_registry', 'validator_registry', 'Form', 'FormGenerator']
+__all__ = ['field_registry', 'widget_registry', 'validator_registry',
+    'Form', 'FormGenerator', 'RecaptchaForm']
 
 # Use a hardcoded list to control what is available to user-facing apps
 field_registry = {
@@ -61,7 +63,7 @@ filter_registry = {
     'lstrip': (bfilters.lstrip, 'chars'),
     'rstrip': (bfilters.rstrip, 'chars'),
     'none_if_empty': (bfilters.none_if_empty),
-}
+    }
 
 
 class Form(BaseForm):
@@ -70,6 +72,17 @@ class Form(BaseForm):
     """
     __expects__ = ()
     __returns__ = ()
+
+    def __init_subclass__(cls, **kwargs):
+        """
+        Validate :attr:`__expects__` and :attr:`__returns__` in sub-classes
+        """
+        super().__init_subclass__(**kwargs)
+        if {'edit_obj', 'edit_model', 'edit_parent', 'edit_id'} & set(cls.__expects__):
+            raise TypeError("This form has __expects__ parameters that are reserved by the base form")
+
+        if set(cls.__dict__.keys()) & set(cls.__expects__):
+            raise TypeError("This form has __expects__ parameters that clash with field names")
 
     def __init__(self, *args, **kwargs):
         super(Form, self).__init__(*args, **kwargs)
@@ -191,3 +204,13 @@ class FormGenerator(object):
             # TODO: Also validate the parameters in fielddata, like with validators above
             setattr(DynamicForm, name, field_registry[type_](validators=validators, filters=filters, **fielddata))
         return DynamicForm
+
+
+class RecaptchaForm(Form):
+    recaptcha = bfields.RecaptchaField()
+
+    def __init__(self, *args, **kwargs):
+        super(RecaptchaForm, self).__init__(*args, **kwargs)
+        if not (current_app.config.get('RECAPTCHA_PUBLIC_KEY'
+                ) and current_app.config.get('RECAPTCHA_PRIVATE_KEY')):
+            del self.recaptcha

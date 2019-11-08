@@ -70,10 +70,10 @@ assets['jquery.ui.touch-punch.js'][Version('0.2.3')] = ('jquery.js', 'baseframe/
 assets['jquery.ui.sortable.touch.js'][Version('1.12.1')] = {'requires': [
     'jquery.ui.sortable.js==1.12.1',
     'jquery.ui.touch-punch.js==0.2.3'
-]}
+    ]}
 assets['jquery.ui.sortable.touch.css'][Version('1.12.1')] = {'requires': [
     'jquery.ui.sortable.css==1.12.1',
-]}
+    ]}
 
 assets['jquery.liblink.js'][Version('0.0.0')] = ('jquery.js', 'baseframe/js/jquery.liblink.js')
 assets['jquery.wnumb.js'][Version('0.0.0')] = ('jquery.js', 'baseframe/js/jquery.wnumb.js')
@@ -144,7 +144,7 @@ assets['codemirror-markdown.js'][Version('4.11.0')] = {'requires': [
     'codemirror.addon.mode.overlay.js==4.11.0',
     'codemirror.addon.edit.continuelist.js==4.11.0',
     'codemirror.addon.edit.closebrackets.js==4.11.0',
-]}
+    ]}
 assets['codemirror-markdown.css'][Version('4.11.0')] = ('codemirror.css==4.11.0', 'baseframe/css/codemirror.css')
 assets['codemirror-css.js'][Version('4.11.0')] = {'requires': [
     'codemirror.js==4.11.0',
@@ -152,7 +152,7 @@ assets['codemirror-css.js'][Version('4.11.0')] = {'requires': [
     'codemirror.addon.hint.css-hint.js==4.11.0',
     'codemirror.addon.lint.css-lint.js==4.11.0',
     'codemirror.addon.edit.closebrackets.js==4.11.0',
-]}
+    ]}
 
 assets['pygments-default.css'][Version('1.5.0')] = 'baseframe/css/pygments-default.css'
 assets['pygments-zenburn.css'][Version('1.5.0')] = 'baseframe/css/pygments-zenburn.css'
@@ -217,6 +217,10 @@ assets['mustache-hogan.js'][Version('2.0.0')] = 'baseframe/js/mustache-hogan/hog
 assets['mustache-loader.js'][Version('0.5.1')] = 'baseframe/js/mustache-hogan/mustache-loader.js'
 
 assets['marked.js'][Version('0.3.0')] = 'baseframe/js/marked.js'
+
+assets['moment.js'][Version('2.24.0')] = 'baseframe/js/moment.js'
+# To use moment timezone in the browser, zone data needs to be loaded.
+assets['moment-timezone-data.js'][Version('0.5.25')] = 'baseframe/js/moment-timezone-with-data-10-year-range.js'
 
 assets['leaflet.js'][Version('1.3.4')] = 'baseframe/js/leaflet.js'
 assets['leaflet.css'][Version('1.3.4')] = 'baseframe/css/leaflet.css'
@@ -296,7 +300,7 @@ assets['bootstrap.js'][Version('2.0.1')] = {'requires': [
     'bootstrap-tab.js==2.0.1',
     'bootstrap-transition.js==2.0.1',
     # 'bootstrap-typeahead.js==2.0.1',
-]}
+    ]}
 
 assets['bootstrap.js'][Version('3.3.1')] = {'requires': [
     'bootstrap-transition.js==3.3.1',
@@ -311,7 +315,7 @@ assets['bootstrap.js'][Version('3.3.1')] = {'requires': [
     'bootstrap-scrollspy.js==3.3.1',
     'bootstrap-tab.js==3.3.1',
     'bootstrap-affix.js==3.3.1',
-]}
+    ]}
 
 assets['bootstrap3-editable.js'][Version('1.5.1')] = ('bootstrap.js>=3.0.0',
     'baseframe/js/bootstrap3-editable/js/bootstrap-editable.js')
@@ -321,7 +325,7 @@ assets['bootstrap3-editable.css'][Version('1.5.1')] = ('bootstrap.css>=3.0.0',
 assets['mustache.js'][Version('2.0.0')] = {'requires': [
     'mustache-loader.js==0.5.1',
     'mustache-hogan.js==2.0.0',
-]}
+    ]}
 
 assets['extra.js'][Version('0.0.0')] = {'requires': [
     'jquery.form.js',
@@ -329,13 +333,13 @@ assets['extra.js'][Version('0.0.0')] = {'requires': [
     # 'bootstrap-datepicker.js',
     'select2-baseframe.js',
     'getdevicepixelratio.js'
-]}
+    ]}
 assets['extra-material.js'][Version('0.0.0')] = {'requires': [
     'jquery-modal.js',
     'jquery.form.js',
     'select2-material.js',
     'getdevicepixelratio.js'
-]}
+    ]}
 
 assets['baseframe.js'][Version(__version__)] = {'requires': [
     'jquery.js<1.9.0',
@@ -344,7 +348,7 @@ assets['baseframe.js'][Version(__version__)] = {'requires': [
     'jquery.tinymce.js>=3.0.0,<4.0.0',
     'baseframe-base.js==' + __version__,
     'baseframe-networkbar.js==' + __version__,
-]}
+    ]}
 
 assets['baseframe.css'][Version(__version__)] = {'requires': [
     'bootstrap.css==2.0.1',
@@ -353,7 +357,7 @@ assets['baseframe.css'][Version(__version__)] = {'requires': [
     'fontawesome.css==3.1.0',
     'baseframe-base.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
-]}
+    ]}
 
 assets['baseframe-bs3.js'][Version(__version__)] = {'requires': [
     'jquery.js>=1.9.0',
@@ -361,14 +365,14 @@ assets['baseframe-bs3.js'][Version(__version__)] = {'requires': [
     'extra.js',
     'baseframe-base.js==' + __version__,
     'baseframe-networkbar.js==' + __version__,
-]}
+    ]}
 
 assets['baseframe-bs3.css'][Version(__version__)] = {'requires': [
     'bootstrap.css>=3.0.0',
     'select2-baseframe.css',
     'baseframe-base-bs3.css==' + __version__,
     'baseframe-networkbar.css==' + __version__,
-]}
+    ]}
 
 assets['mui.js'][Version('0.9.21')] = 'baseframe/js/mui.js'
 assets['baseframe-material.js'][Version('0.9.21')] = 'baseframe/js/baseframe-material.js'
@@ -377,11 +381,11 @@ assets['baseframe-mui.js'][Version(__version__)] = {'requires': [
     'mui.js',
     'jquery.tinymce.js>=4.0.0',
     'baseframe-material.js'
-]}
+    ]}
 
 assets['mui.css'][Version('0.9.21')] = 'baseframe/css/mui.css'
 assets['baseframe-mui.css'][Version(__version__)] = {'requires': [
     'jquery-modal.css',
     'select2-material.css',
     'mui.css'
-]}
+    ]}

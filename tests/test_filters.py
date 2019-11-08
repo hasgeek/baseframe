@@ -192,6 +192,26 @@ class TestFilters(TestCaseBaseframe):
         self.assertEqual(rstrip_func('a       test   '), 'a       test')
         self.assertEqual(rstrip_func('      '), '')
 
+    def test_strip_each(self):
+        strip_each_func = forms.strip_each()
+        self.assertEqual(strip_each_func(None), None)
+        self.assertEqual(strip_each_func([]), [])
+        self.assertEqual(strip_each_func(
+            [
+                ' Left strip',
+                'Right strip ',
+                ' Full strip ',
+                '',
+                'No strip',
+                ''
+                ]),
+            [
+                'Left strip',
+                'Right strip',
+                'Full strip',
+                'No strip',
+            ])
+
     def test_none_if_empty(self):
         none_if_empty_func = forms.none_if_empty()
         self.assertEqual(none_if_empty_func('Test'), 'Test')

@@ -18,6 +18,10 @@ of these have a "value.operation if value else value" construct. The original
 value is returned if it's falsy.
 """
 
+from coaster.utils import unicode_extended_whitespace
+
+__all__ = ['lower', 'upper', 'strip', 'lstrip', 'rstrip', 'strip_each', 'none_if_empty']
+
 
 def lower():
     """
@@ -37,7 +41,7 @@ def upper():
     return upper_inner
 
 
-def strip(chars=None):
+def strip(chars=unicode_extended_whitespace):
     """
     Strip whitespace from both ends
 
@@ -48,7 +52,7 @@ def strip(chars=None):
     return strip_inner
 
 
-def lstrip(chars=None):
+def lstrip(chars=unicode_extended_whitespace):
     """
     Strip whitespace from beginning of data
 
@@ -59,7 +63,7 @@ def lstrip(chars=None):
     return lstrip_inner
 
 
-def rstrip(chars=None):
+def rstrip(chars=unicode_extended_whitespace):
     """
     Strip whitespace from end of data
 
@@ -68,6 +72,20 @@ def rstrip(chars=None):
     def rstrip_inner(value):
         return value.rstrip(chars) if value else value
     return rstrip_inner
+
+
+def strip_each(chars=unicode_extended_whitespace):
+    """
+    Strip whitespace and remove blank elements from each element in an iterable.
+    Falsy values are returned unprocessed
+
+    :param chars: If specified, strip these characters instead of whitespace
+    """
+    def strip_each_inner(value):
+        if value:
+            return [sline for sline in [line.strip(chars) for line in value] if sline]
+        return value
+    return strip_each_inner
 
 
 def none_if_empty():

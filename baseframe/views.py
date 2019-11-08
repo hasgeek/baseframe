@@ -102,7 +102,7 @@ def baseframe_context():
         'networkbar_links': networkbar_links,
         'csrf_token': generate_csrf,
         'asset_path': asset_path,
-    }
+        }
 
 
 @baseframe.route('/favicon.ico', subdomain='<subdomain>')
@@ -164,7 +164,7 @@ def editorcss(subdomain=None):
 @baseframe.route('/api/baseframe/1/csrf/refresh', defaults={'subdomain': None})
 @render_with({
     'text/plain': lambda r: r['csrf_token'],
-}, json=True, jsonp=False)
+    }, json=True, jsonp=False)
 def csrf_refresh(subdomain=None):
     parsed_host = urlparse(request.url_root)
     origin = parsed_host.scheme + u'://' + parsed_host.netloc
@@ -178,4 +178,4 @@ def csrf_refresh(subdomain=None):
         'Access-Control-Allow-Origin': origin,
         'Vary': 'Origin',
         'Expires': (request_timestamp() + timedelta(minutes=10)).strftime('%a, %d %b %Y %H:%M:%S GMT')
-    }
+        }

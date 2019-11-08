@@ -2,6 +2,7 @@
 
 from __future__ import absolute_import
 
+import types
 import json
 import gettext
 
@@ -20,7 +21,7 @@ from flask_babelex import Babel, Domain
 
 from coaster.assets import split_namespec
 from coaster.auth import current_auth, request_has_auth
-from coaster.sqlalchemy import RoleAccessProxy
+from coaster.sqlalchemy import RoleAccessProxy, MarkdownComposite
 
 try:
     from flask_debugtoolbar import DebugToolbarExtension
@@ -54,15 +55,15 @@ THEME_FILES = {
         'delete.html.jinja2': 'baseframe/bootstrap3/delete.html.jinja2',
         'message.html.jinja2': 'baseframe/bootstrap3/message.html.jinja2',
         'redirect.html.jinja2': 'baseframe/bootstrap3/redirect.html.jinja2'
-    },
+        },
     'mui': {
         'ajaxform.html.jinja2': 'baseframe/mui/ajaxform.html.jinja2',
         'autoform.html.jinja2': 'baseframe/mui/autoform.html.jinja2',
         'delete.html.jinja2': 'baseframe/mui/delete.html.jinja2',
         'message.html.jinja2': 'baseframe/mui/message.html.jinja2',
         'redirect.html.jinja2': 'baseframe/mui/redirect.html.jinja2'
+        }
     }
-}
 
 baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
 _ = baseframe_translations.gettext
@@ -83,6 +84,10 @@ class JSONEncoder(JSONEncoderBase):
             return dict(o)
         if isinstance(o, furl):
             return o.url
+        if isinstance(o, types.GeneratorType):
+            return list(o)
+        if isinstance(o, MarkdownComposite):
+            return {'text': o.text, 'html': o.html}
         return super(JSONEncoder, self).default(o)
 
 
@@ -239,7 +244,7 @@ class BaseframeBlueprint(Blueprint):
                     'flask_debugtoolbar.panels.logger.LoggingPanel',
                     'flask_debugtoolbar.panels.route_list.RouteListDebugPanel',
                     'flask_debugtoolbar.panels.profiler.ProfilerDebugPanel',
-                ]
+                    ]
                 if line_profile is not None:
                     app.config['DEBUG_TB_PANELS'].append(
                         'flask_debugtoolbar_lineprofilerpanel.panels.LineProfilerPanel')
@@ -262,6 +267,10 @@ class BaseframeBlueprint(Blueprint):
 
         if isinstance(app.config.get('NETWORKBAR_DATA'), (list, tuple)):
             app.config['NETWORKBAR_LINKS'] = app.config['NETWORKBAR_DATA']
+
+        app.config.setdefault('RECAPTCHA_DATA_ATTRS', {})
+        app.config['RECAPTCHA_DATA_ATTRS'].setdefault('callback', 'onInvisibleRecaptchaSubmit')
+        app.config['RECAPTCHA_DATA_ATTRS'].setdefault('size', 'invisible')
 
     def register(self, app, options, first_registration=False):
         """
