@@ -2,7 +2,6 @@
 
 from flask.signals import Namespace
 
-
 baseframe_signals = Namespace()
 
 form_validation_error = baseframe_signals.signal('form-validation-error')

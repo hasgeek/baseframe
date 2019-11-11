@@ -1,12 +1,21 @@
 # -*- coding: utf-8 -*-
 
 import warnings
-import urllib3
+
 from werkzeug.datastructures import MultiDict
+
 from mxsniff import MXLookupException
-from baseframe.utils import is_public_email_domain
+import urllib3
+
 from baseframe import forms
-from .fixtures import (TestCaseBaseframe, UrlFormTest, AllUrlsFormTest, PublicEmailDomainFormTest)
+from baseframe.utils import is_public_email_domain
+
+from .fixtures import (
+    AllUrlsFormTest,
+    PublicEmailDomainFormTest,
+    TestCaseBaseframe,
+    UrlFormTest,
+)
 
 
 class TestValidators(TestCaseBaseframe):
@@ -26,37 +35,34 @@ class TestValidators(TestCaseBaseframe):
         with self.app.test_request_context('/'):
             url = 'https://hasgeek.com/'
             self.form.process(url=url)
-            self.assertEqual(self.form.validate(), True)
+            assert self.form.validate()
 
     def test_invalid_url(self):
         with self.app.test_request_context('/'):
             url = 'https://hasgeek'
             self.form.process(url=url)
-            self.assertEqual(self.form.validate(), False)
+            assert not self.form.validate()
 
     def test_public_email_domain(self):
         with self.app.test_request_context('/'):
             # both valid
             self.webmail_form.process(
-                webmail_domain=u'gmail.com',
-                not_webmail_domain=u'i❤.ws'
-                )
+                webmail_domain=u'gmail.com', not_webmail_domain=u'i❤.ws'
+            )
             self.assertTrue(self.webmail_form.validate())
 
             # both invalid
             self.webmail_form.process(
-                webmail_domain=u'i❤.ws',
-                not_webmail_domain=u'gmail.com'
-                )
+                webmail_domain=u'i❤.ws', not_webmail_domain=u'gmail.com'
+            )
             self.assertFalse(self.webmail_form.validate())
             self.assertIn('webmail_domain', self.webmail_form.errors)
             self.assertIn('not_webmail_domain', self.webmail_form.errors)
 
             # one valid, one invalid
             self.webmail_form.process(
-                webmail_domain=u'gmail.com',
-                not_webmail_domain=u'gmail.com'
-                )
+                webmail_domain=u'gmail.com', not_webmail_domain=u'gmail.com'
+            )
             self.assertFalse(self.webmail_form.validate())
             self.assertNotIn('webmail_domain', self.webmail_form.errors)
             self.assertIn('not_webmail_domain', self.webmail_form.errors)
@@ -68,66 +74,74 @@ class TestValidators(TestCaseBaseframe):
             # So, webmail_domain should fail, and not_webmail_domain should pass.
             self.webmail_form.process(
                 webmail_domain=u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com',
-                not_webmail_domain=u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com'
-                )
+                not_webmail_domain=u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com',
+            )
             self.assertFalse(self.webmail_form.validate())
             self.assertIn('webmail_domain', self.webmail_form.errors)
             self.assertNotIn('not_webmail_domain', self.webmail_form.errors)
 
     def test_public_email_domain_helper(self):
         with self.app.test_request_context('/'):
-            self.assertEqual(is_public_email_domain(u'gmail.com', default=False), True)
-            self.assertEqual(is_public_email_domain(u'google.com', default=False), False)
+            assert is_public_email_domain(u'gmail.com', default=False)
+            assert not is_public_email_domain(u'google.com', default=False)
 
             # Intentionally trigger a DNS lookup failure using an invalid domain name.
             # Since no default is provided, we will receive an exception.
             with self.assertRaises(MXLookupException):
-                is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com')
+                is_public_email_domain(
+                    u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com'
+                )
 
             # If default value is provided, it'll return default is case of DNS lookup failure.
-            self.assertEqual(
-                is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com', default=False),
-                False)
-            self.assertEqual(
-                is_public_email_domain(u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com', default=True),
-                True)
+            assert not is_public_email_domain(
+                u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com',
+                default=False,
+            )
+            assert is_public_email_domain(
+                u'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com',
+                default=True,
+            )
 
     def test_url_without_protocol(self):
         with self.app.test_request_context('/'):
             url = 'hasgeek.com'
             self.form.process(url=url)
-            self.assertEqual(self.form.validate(), False)
+            assert not self.form.validate()
 
     def test_inaccessible_url(self):
         with self.app.test_request_context('/'):
             url = 'http://4dc1f6f0e7bc44f2b5b44f00abea4eae.com/'
             self.form.process(url=url)
-            self.assertEqual(self.form.validate(), False)
+            assert not self.form.validate()
 
     def test_disallowed_url(self):
         with self.app.test_request_context('/'):
             url = 'https://example.com/'
             self.form.process(url=url)
-            self.assertEqual(self.form.validate(), False)
+            assert not self.form.validate()
             url = 'https://example.in/'
             self.form.process(url=url)
-            self.assertEqual(self.form.validate(), False)
+            assert not self.form.validate()
 
     def test_html_snippet_valid_urls(self):
         url1 = 'https://hasgeek.com/'
         url2 = 'https://hasjob.co/'
         with self.app.test_request_context('/'):
-            snippet = '<ul><li><a href="{url1}">url1</a></li><li><a href="{url2}">url2</a></li></ul>'.format(url1=url1, url2=url2)
+            snippet = '<ul><li><a href="{url1}">url1</a></li><li><a href="{url2}">url2</a></li></ul>'.format(
+                url1=url1, url2=url2
+            )
             self.all_urls_form.process(content_with_urls=snippet)
-            self.assertEqual(self.all_urls_form.validate(), True)
+            assert self.all_urls_form.validate()
 
     def test_html_snippet_invalid_urls(self):
         url1 = 'https://hasgeek.com/'
         url2 = 'https://hasjob'
         with self.app.test_request_context('/'):
-            snippet = '<ul><li><a href="{url1}">url1</a></li><li><a href="{url2}">url2</a></li></ul>'.format(url1=url1, url2=url2)
+            snippet = '<ul><li><a href="{url1}">url1</a></li><li><a href="{url2}">url2</a></li></ul>'.format(
+                url1=url1, url2=url2
+            )
             self.all_urls_form.process(content_with_urls=snippet)
-            self.assertEqual(self.all_urls_form.validate(), False)
+            assert not self.all_urls_form.validate()
 
 
 class TestFormBase(TestCaseBaseframe):
@@ -145,16 +159,18 @@ class TestFormBase(TestCaseBaseframe):
 
 class TestForEach(TestFormBase):
     class Form(forms.Form):
-        textlist = forms.TextListField(
-            validators=[forms.ForEach([forms.URL()])]
-            )
+        textlist = forms.TextListField(validators=[forms.ForEach([forms.URL()])])
 
     def test_passes_single(self):
         self.form.process(formdata=MultiDict({'textlist': "http://www.example.com/"}))
         assert self.form.validate() is True
 
     def test_passes_list(self):
-        self.form.process(formdata=MultiDict({'textlist': "http://www.example.com\r\nhttp://www.example.org/"}))
+        self.form.process(
+            formdata=MultiDict(
+                {'textlist': "http://www.example.com\r\nhttp://www.example.org/"}
+            )
+        )
         assert self.form.validate() is True
 
     def test_fails_single(self):
@@ -162,19 +178,31 @@ class TestForEach(TestFormBase):
         assert self.form.validate() is False
 
     def test_fails_list(self):
-        self.form.process(formdata=MultiDict({'textlist': "www.example.com\r\nwww.example.org"}))
+        self.form.process(
+            formdata=MultiDict({'textlist': "www.example.com\r\nwww.example.org"})
+        )
         assert self.form.validate() is False
 
     def test_fails_mixed1(self):
-        self.form.process(formdata=MultiDict({'textlist': "http://www.example.com/\r\nwww.example.org"}))
+        self.form.process(
+            formdata=MultiDict(
+                {'textlist': "http://www.example.com/\r\nwww.example.org"}
+            )
+        )
         assert self.form.validate() is False
 
     def test_fails_mixed2(self):
-        self.form.process(formdata=MultiDict({'textlist': "www.example.com\r\nhttp://www.example.org/"}))
+        self.form.process(
+            formdata=MultiDict(
+                {'textlist': "www.example.com\r\nhttp://www.example.org/"}
+            )
+        )
         assert self.form.validate() is False
 
     def test_fails_blanklines(self):
-        self.form.process(formdata=MultiDict({'textlist': "http://www.example.com\r\n"}))
+        self.form.process(
+            formdata=MultiDict({'textlist': "http://www.example.com\r\n"})
+        )
         assert self.form.validate() is False
 
 
@@ -182,34 +210,38 @@ class TestForEachChained(TestFormBase):
     class Form(forms.Form):
         textlist = forms.TextListField(
             validators=[forms.ForEach([forms.Optional(), forms.URL()])]
-            )
+        )
 
     def test_skips_blanklines_and_fails(self):
         self.form.process(formdata=MultiDict({'textlist': "\r\nwww.example.com"}))
         assert self.form.validate() is False
 
     def test_skips_blanklines_and_passes(self):
-        self.form.process(formdata=MultiDict({'textlist': "\r\nhttp://www.example.com/"}))
+        self.form.process(
+            formdata=MultiDict({'textlist': "\r\nhttp://www.example.com/"})
+        )
         assert self.form.validate() is True
 
 
 class TestForEachFiltered(TestFormBase):
     class Form(forms.Form):
         textlist = forms.TextListField(
-            validators=[forms.ForEach([forms.URL()])],
-            filters=[forms.strip_each()]
-            )
+            validators=[forms.ForEach([forms.URL()])], filters=[forms.strip_each()]
+        )
 
     def test_passes_blanklines(self):
-        self.form.process(formdata=MultiDict({'textlist': "http://www.example.com\r\n"}))
+        self.form.process(
+            formdata=MultiDict({'textlist': "http://www.example.com\r\n"})
+        )
         assert self.form.validate() is True
 
 
 class TestAllowedIf(TestFormBase):
     class Form(forms.Form):
         other = forms.StringField("Other")
-        field = forms.StringField("Field",
-            validators=[forms.validators.AllowedIf('other')])
+        field = forms.StringField(
+            "Field", validators=[forms.validators.AllowedIf('other')]
+        )
 
     other_not_empty = "Not empty"
 
@@ -237,8 +269,9 @@ class TestAllowedIf(TestFormBase):
 class TestAllowedIfInteger(TestAllowedIf):
     class Form(forms.Form):
         other = forms.IntegerField("Other")
-        field = forms.StringField("Field",
-            validators=[forms.validators.AllowedIf('other')])
+        field = forms.StringField(
+            "Field", validators=[forms.validators.AllowedIf('other')]
+        )
 
     other_not_empty = 0
 
@@ -246,8 +279,13 @@ class TestAllowedIfInteger(TestAllowedIf):
 class TestOptionalIf(TestFormBase):
     class Form(forms.Form):
         other = forms.StringField("Other")
-        field = forms.StringField("Field",
-            validators=[forms.validators.OptionalIf('other'), forms.validators.DataRequired()])
+        field = forms.StringField(
+            "Field",
+            validators=[
+                forms.validators.OptionalIf('other'),
+                forms.validators.DataRequired(),
+            ],
+        )
 
     other_not_empty = "Not empty"
 
@@ -279,8 +317,13 @@ class TestOptionalIf(TestFormBase):
 class TestOptionalIfInteger(TestOptionalIf):
     class Form(forms.Form):
         other = forms.IntegerField("Other")
-        field = forms.StringField("Field",
-            validators=[forms.validators.OptionalIf('other'), forms.validators.DataRequired()])
+        field = forms.StringField(
+            "Field",
+            validators=[
+                forms.validators.OptionalIf('other'),
+                forms.validators.DataRequired(),
+            ],
+        )
 
     other_not_empty = 0
 
@@ -288,8 +331,13 @@ class TestOptionalIfInteger(TestOptionalIf):
 class TestRequiredIf(TestFormBase):
     class Form(forms.Form):
         other = forms.StringField("Other")
-        field = forms.StringField("Field",
-            validators=[forms.validators.RequiredIf('other'), forms.validators.Optional()])
+        field = forms.StringField(
+            "Field",
+            validators=[
+                forms.validators.RequiredIf('other'),
+                forms.validators.Optional(),
+            ],
+        )
 
     other_not_empty = "Not empty"
 
@@ -317,7 +365,12 @@ class TestRequiredIf(TestFormBase):
 class TestRequiredIfInteger(TestRequiredIf):
     class Form(forms.Form):
         other = forms.IntegerField("Other")
-        field = forms.StringField("Field",
-            validators=[forms.validators.RequiredIf('other'), forms.validators.Optional()])
+        field = forms.StringField(
+            "Field",
+            validators=[
+                forms.validators.RequiredIf('other'),
+                forms.validators.Optional(),
+            ],
+        )
 
     other_not_empty = 0
