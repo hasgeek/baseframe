@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 import os
 import re
+
 from setuptools import setup
 from setuptools.command.build_py import build_py
 
@@ -40,7 +42,7 @@ requires = [
     'pyOpenSSL',
     'ndg-httpsclient',
     'pyasn1',
-    ]
+]
 
 
 class BaseframeBuildPy(build_py):
@@ -54,7 +56,8 @@ class BaseframeBuildPy(build_py):
         return result
 
 
-setup(name='baseframe',
+setup(
+    name='baseframe',
     version=version,
     description='Baseframe for HasGeek projects',
     long_description=README,
@@ -68,7 +71,7 @@ setup(name='baseframe',
         "Intended Audience :: Developers",
         "Development Status :: 3 - Alpha",
         "Topic :: Software Development :: Libraries",
-        ],
+    ],
     author='Kiran Jonnalagadda',
     author_email='kiran@hasgeek.com',
     url='https://github.com/hasgeek/baseframe',
@@ -83,5 +86,5 @@ setup(name='baseframe',
     dependency_links=[
         "https://github.com/hasgeek/coaster/archive/master.zip#egg=coaster-dev",
         "https://github.com/mrjoes/flask-babelex/archive/master.zip#egg=Flask-BabelEx-0.8.2",
-        ]
-    )
+    ],
+)

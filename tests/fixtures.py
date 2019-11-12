@@ -2,9 +2,10 @@
 
 import re
 import unittest
+
 from flask import Flask
-from baseframe import baseframe, forms
-from baseframe import __
+
+from baseframe import __, baseframe, forms
 
 app1 = Flask(__name__)
 app1.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
@@ -42,23 +43,32 @@ class DocumentTest(object):
         self.content = content
 
 
-reject_list = [
-    (['example.com', re.compile(r'example.in')], u'This URL is not allowed')
-    ]
+reject_list = [(['example.com', re.compile(r'example.in')], u'This URL is not allowed')]
 
 
 class UrlFormTest(forms.Form):
-    url = forms.URLField(__("URL"),
-        validators=[forms.validators.DataRequired(), forms.validators.Length(max=255),
-        forms.validators.ValidUrl(invalid_urls=reject_list)],
-        filters=[forms.filters.strip()])
+    url = forms.URLField(
+        __("URL"),
+        validators=[
+            forms.validators.DataRequired(),
+            forms.validators.Length(max=255),
+            forms.validators.ValidUrl(invalid_urls=reject_list),
+        ],
+        filters=[forms.filters.strip()],
+    )
 
 
 class AllUrlsFormTest(forms.Form):
-    content_with_urls = forms.TextAreaField(__("Content"),
-        validators=[forms.validators.DataRequired(), forms.validators.AllUrlsValid()])
+    content_with_urls = forms.TextAreaField(
+        __("Content"),
+        validators=[forms.validators.DataRequired(), forms.validators.AllUrlsValid()],
+    )
 
 
 class PublicEmailDomainFormTest(forms.Form):
-    webmail_domain = forms.StringField(__("Webmail Domain"), validators=[forms.validators.IsPublicEmailDomain()])
-    not_webmail_domain = forms.StringField(__("Not Webmail Domain"), validators=[forms.validators.IsNotPublicEmailDomain()])
+    webmail_domain = forms.StringField(
+        __("Webmail Domain"), validators=[forms.validators.IsPublicEmailDomain()]
+    )
+    not_webmail_domain = forms.StringField(
+        __("Not Webmail Domain"), validators=[forms.validators.IsNotPublicEmailDomain()]
+    )

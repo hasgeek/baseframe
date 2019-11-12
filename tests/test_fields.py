@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 
-import unittest
-from decimal import Decimal
 from datetime import datetime
+from decimal import Decimal
+import unittest
+
 from werkzeug.datastructures import MultiDict
-from coaster.utils import LabeledEnum
+
 from baseframe import __
+from coaster.utils import LabeledEnum
 import baseframe.forms as forms
+
 from .fixtures import app1 as app
 
 
-class MY_ENUM(LabeledEnum):
+class MY_ENUM(LabeledEnum):  # NOQA: N801
     FIRST = (1, 'first', __("First"))
     SECOND = (2, 'second', __("Second"))
     THIRD = (3, 'third', __("Third"))
@@ -22,8 +25,12 @@ DEFAULT_JSONDATA = {'key': u"val"}
 
 
 class EnumForm(forms.Form):
-    position = forms.EnumSelectField(__("Position"), lenum=MY_ENUM, default=MY_ENUM.THIRD)
-    position_no_default = forms.EnumSelectField(__("Position Without Default"), lenum=MY_ENUM)
+    position = forms.EnumSelectField(
+        __("Position"), lenum=MY_ENUM, default=MY_ENUM.THIRD
+    )
+    position_no_default = forms.EnumSelectField(
+        __("Position Without Default"), lenum=MY_ENUM
+    )
 
 
 class JsonForm(forms.Form):
@@ -53,7 +60,9 @@ class TestEnumField(BaseTestCase):
         assert self.form.position_no_default.data is None
 
     def test_process_valid(self):
-        self.form.process(formdata=MultiDict({'position': 'second', 'position_no_default': 'third'}))
+        self.form.process(
+            formdata=MultiDict({'position': 'second', 'position_no_default': 'third'})
+        )
         assert self.form.validate() is True
 
         assert self.form.position.data == 2
@@ -64,8 +73,14 @@ class TestEnumField(BaseTestCase):
         assert self.form.validate() is False
 
     def test_render(self):
-        assert self.form.position() == '<select id="position" name="position"><option value="first">First</option><option value="second">Second</option><option selected value="third">Third</option></select>'
-        assert self.form.position_no_default() == '<select id="position_no_default" name="position_no_default"><option value="first">First</option><option value="second">Second</option><option value="third">Third</option></select>'
+        assert (
+            self.form.position()
+            == '<select id="position" name="position"><option value="first">First</option><option value="second">Second</option><option selected value="third">Third</option></select>'
+        )
+        assert (
+            self.form.position_no_default()
+            == '<select id="position_no_default" name="position_no_default"><option value="first">First</option><option value="second">Second</option><option value="third">Third</option></select>'
+        )
 
 
 class TestJsonField(BaseTestCase):
@@ -83,11 +98,21 @@ class TestJsonField(BaseTestCase):
         assert self.form.validate() is True
 
     def test_invalid(self):
-        self.form.process(formdata=MultiDict({'jsondata': '{"key"; "val"}'}))  # invalid JSON
+        self.form.process(
+            formdata=MultiDict({'jsondata': '{"key"; "val"}'})
+        )  # invalid JSON
         assert self.form.validate() is False
 
     def test_empty_default(self):
-        self.form.process(formdata=MultiDict({'jsondata': '', 'jsondata_no_default': '', 'jsondata_empty_default': ''}))
+        self.form.process(
+            formdata=MultiDict(
+                {
+                    'jsondata': '',
+                    'jsondata_no_default': '',
+                    'jsondata_empty_default': '',
+                }
+            )
+        )
         assert self.form.jsondata.data == DEFAULT_JSONDATA
         assert self.form.jsondata_empty_default.data == {}
         assert self.form.jsondata_no_default.data is None
@@ -130,19 +155,31 @@ class TestJsonField(BaseTestCase):
         assert self.form.jsondata_no_decimal.data == {"key": 1.2}
 
     def test_array(self):
-        self.form.process(formdata=MultiDict({'jsondata': u'[{"key": "val"}, {"key2": "val2"}]'}))
+        self.form.process(
+            formdata=MultiDict({'jsondata': u'[{"key": "val"}, {"key2": "val2"}]'})
+        )
         assert self.form.validate() is False
 
-        self.form.process(formdata=MultiDict({'jsondata_no_dict': u'[{"key": "val"}, {"key2": "val2"}]'}))
+        self.form.process(
+            formdata=MultiDict(
+                {'jsondata_no_dict': u'[{"key": "val"}, {"key2": "val2"}]'}
+            )
+        )
         assert self.form.validate() is True
         assert self.form.jsondata_no_dict.data == [{"key": "val"}, {"key2": "val2"}]
 
     def test_comment(self):
-        self.form.process(formdata=MultiDict({'jsondata': u"""
+        self.form.process(
+            formdata=MultiDict(
+                {
+                    'jsondata': u"""
             {
                 "key": "val" # test comment
             }
-            """}))
+            """
+                }
+            )
+        )
         assert self.form.validate() is False
 
     def test_non_serializable(self):
