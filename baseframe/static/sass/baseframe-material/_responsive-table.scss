@@ -1,62 +1,60 @@
 .mui-table.mui-table--hover {
-	> tbody {
-		> tr {
-			> td:hover {
-				background-color: $mui-primary-color-light;
-			}
-		}
+  > tbody {
+    > tr {
+      > td:hover {
+        background-color: $mui-primary-color-light;
+      }
+    }
   }
 }
 
 @media (max-width: 767px) {
-	.mui-table.mui-table--responsive {
-	  	min-width: 300px;
+  .mui-table.mui-table--responsive {
+    min-width: 300px;
 
-	  	th {
-			display: none;   
-		}
+    th {
+      display: none;
+    }
 
-		> tbody {
+    > tbody {
+      > tr {
+        border-top: 1px solid rgba(132, 146, 166, 0.3);
+        border-bottom: 1px solid rgba(132, 146, 166, 0.3);
+        display: block;
 
-			>tr {
-				border-top: 1px solid rgba(132,146,166,0.3);
-				border-bottom: 1px solid rgba(132,146,166,0.3);
-				display: block;
+        > td {
+          display: block;
+          border: none;
+          padding: 10px 0;
 
-			    >td {
-		    		display: block;
-		    		border: none;
-		    		padding: 10px 0;
-			    
-			    	&:first-child {
-			      		padding-top: $reflex-cell-spacing/2;
-			    	}
+          &:first-child {
+            padding-top: $reflex-cell-spacing/2;
+          }
 
-			    	&:last-child {
-			      		padding-bottom: $reflex-cell-spacing/2;
-			    	}
+          &:last-child {
+            padding-bottom: $reflex-cell-spacing/2;
+          }
 
-				    &:before {
-				      	content: attr(data-th);
-				      	font-weight: bold;
-				      	font-size: inherit;
-				      	width: 100%;
-				      	display: inline-block;
-				    }
-		  		}
-			}
-
-		}
-  	}
+          &:before {
+            content: attr(data-th);
+            font-weight: bold;
+            font-size: inherit;
+            width: 100%;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: 768px) {
-	.mui-table--responsive-wrapper {
-	    overflow: auto;
-	    width: 100%;
-    }
+  .mui-table--responsive-wrapper {
+    overflow: auto;
+    width: 100%;
+  }
 }
 
-.mui-table.mui-table--bordered>tbody>tr:last-child>td {
-	border: none;
+.mui-table.mui-table--bordered > tbody > tr:last-child > td {
+  border: none;
 }

@@ -1,76 +1,75 @@
-
 .card {
-	@extend .mui--z1;
-	position: relative;
-	background: #fff;
-	margin-bottom: 2*$reflex-cell-spacing;
-	
-	.card__image {
-		width: 100%;
-	}
+  @extend .mui--z1;
+  position: relative;
+  background: #fff;
+  margin-bottom: 2 * $reflex-cell-spacing;
 
-	.card__title {
-		padding: 0 $reflex-cell-spacing;
-    }
+  .card__image {
+    width: 100%;
+  }
 
-	.card__title__heading {
-		margin: $reflex-cell-spacing/4 auto
-	}
+  .card__title {
+    padding: 0 $reflex-cell-spacing;
+  }
 
-	.card__header {
-		padding: $reflex-cell-spacing;
-		background: $mui-bg-color-light;
-	}
+  .card__title__heading {
+    margin: $reflex-cell-spacing/4 auto;
+  }
 
-	.card__header__title {
-		width: 80%;
-	}
+  .card__header {
+    padding: $reflex-cell-spacing;
+    background: $mui-bg-color-light;
+  }
 
-	.card__header__logo-image {
-		width: 65px;
-		align-self: center;
-	}
+  .card__header__title {
+    width: 80%;
+  }
 
-	.card__header__title__tag {
-		float: right;
-		color: $mui-success-color;
-		text-align: right;
-		width: 20%;
-	}
+  .card__header__logo-image {
+    width: 65px;
+    align-self: center;
+  }
 
-	.card__body {
-		@extend .mui--text-body2;
-		padding: $reflex-cell-spacing/2 $reflex-cell-spacing;
-		word-break: break-word;
-	}
+  .card__header__title__tag {
+    float: right;
+    color: $mui-success-color;
+    text-align: right;
+    width: 20%;
+  }
 
-	.card__body__text {
-		width: 75%;
-	}
+  .card__body {
+    @extend .mui--text-body2;
+    padding: $reflex-cell-spacing/2 $reflex-cell-spacing;
+    word-break: break-word;
+  }
 
-	.card__body__text__heading {
-		margin: $reflex-cell-spacing/4 auto;
-	}
+  .card__body__text {
+    width: 75%;
+  }
 
-	.card__body__logo {
-		width: 25%;
-	}
+  .card__body__text__heading {
+    margin: $reflex-cell-spacing/4 auto;
+  }
 
-	.card__body__logo--img {
-		width: 100%;
-		align-self: center;
-	}
+  .card__body__logo {
+    width: 25%;
+  }
 
-	.card__footer {
-		@extend .mui--clearfix;
-		padding: 0 $reflex-cell-spacing/2;
-	}
+  .card__body__logo--img {
+    width: 100%;
+    align-self: center;
+  }
 
-	.card__footer__floatbtn {
-		float: right;
-	}
+  .card__footer {
+    @extend .mui--clearfix;
+    padding: 0 $reflex-cell-spacing/2;
+  }
 
-	.mui-btn + .mui-btn {
-		margin-left: 0;
-	}
+  .card__footer__floatbtn {
+    float: right;
+  }
+
+  .mui-btn + .mui-btn {
+    margin-left: 0;
+  }
 }
