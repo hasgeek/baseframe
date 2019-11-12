@@ -3,7 +3,7 @@
 // ============================================================================
 
 .mui-list--aligned {
-    padding-left: $reflex-cell-spacing;
+	padding-left: $reflex-cell-spacing;
 }
 
 // ============================================================================
@@ -54,31 +54,36 @@
 	line-height: 1.2;
 }
 
-.mui--text-display1, h1 {
+.mui--text-display1,
+h1 {
 	font-weight: 400;
 	font-size: 32px;
 	line-height: 1.2;
 }
 
-.mui--text-headline, h2 {
+.mui--text-headline,
+h2 {
 	font-weight: 400;
 	font-size: 24px;
-	line-height: 1.2;
+	line-height: 1.4;
 }
 
-.mui--text-title, h3 {
+.mui--text-title,
+h3 {
 	font-weight: 400;
 	font-size: 18px;
 	line-height: 1.5;
 }
 
-.mui--text-subhead, h4 {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.5;
+.mui--text-subhead,
+h4 {
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 1.5;
 }
 
-.mui--text-body2, h5 {
+.mui--text-body2,
+h5 {
 	font-weight: 400;
 	font-size: 14px;
 	line-height: 1.5;
@@ -90,7 +95,8 @@
 	line-height: 24px;
 }
 
-.mui--text-caption, h6 {
+.mui--text-caption,
+h6 {
 	font-weight: 400;
 	font-size: 12px;
 	line-height: 1.5;
@@ -128,9 +134,9 @@
 // ============================================================================
 
 .mui-btn--nostyle {
-    padding: 0;
-    border: 0;
-    margin: 0;
-    cursor: pointer;
-    background: none;
+	padding: 0;
+	border: 0;
+	margin: 0;
+	cursor: pointer;
+	background: none;
 }

@@ -3304,31 +3304,36 @@ h4, h5, h6 {
   line-height: 1.2;
 }
 
-.mui--text-display1, h1, h1 {
+.mui--text-display1, h1,
+h1 {
   font-weight: 400;
   font-size: 32px;
   line-height: 1.2;
 }
 
-.mui--text-headline, h2, .header__site-title, .header__site-title__item, h2 {
+.mui--text-headline, h2, .header__site-title, .header__site-title__item,
+h2 {
   font-weight: 400;
   font-size: 24px;
-  line-height: 1.2;
+  line-height: 1.4;
 }
 
-.mui--text-title, h3, .header__side-nav-list .header__side-nav-list__item__icon, .form-message, .modal .modal__header, h3 {
+.mui--text-title, h3, .header__side-nav-list .header__side-nav-list__item__icon, .form-message, .modal .modal__header,
+h3 {
   font-weight: 400;
   font-size: 18px;
   line-height: 1.5;
 }
 
-.mui--text-subhead, h4, .alert .alert__text, h4 {
+.mui--text-subhead, h4, .alert .alert__text,
+h4 {
   font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
 }
 
-.mui--text-body2, h5, .header__dropdown-app-title, .header__side-nav-list .header__side-nav-list__item, .card .card__body, .modal .modal__body, h5 {
+.mui--text-body2, h5, .header__dropdown-app-title, .header__side-nav-list .header__side-nav-list__item, .card .card__body, .modal .modal__body,
+h5 {
   font-weight: 400;
   font-size: 14px;
   line-height: 1.5;
@@ -3341,7 +3346,8 @@ h4, h5, h6 {
 }
 
 .mui--text-caption, .footer .footer__container, .mui-form .mui-form__sidetext,
-.mui-form .mui-form__helptext, .mui-form .mui-form__error, h6 {
+.mui-form .mui-form__helptext, .mui-form .mui-form__error,
+h6 {
   font-weight: 400;
   font-size: 12px;
   line-height: 1.5;
