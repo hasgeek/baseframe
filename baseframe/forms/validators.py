@@ -124,6 +124,8 @@ class AllowedIf(object):
     :param str message: Validation error message. Will be formatted with an optional ``{field}}`` label
     """
 
+    field_flags = ('not_solo',)
+
     def __init__(self, fieldname, message=None):
         self.fieldname = fieldname
         self.message = message or __(u"This requires ‘{field}’ to be specified")
@@ -149,6 +151,8 @@ class OptionalIf(Optional):
     :param str message: Validation error message
     """
 
+    field_flags = ('not_solo',)
+
     def __init__(self, fieldname, message=None):
         super(OptionalIf, self).__init__()
         self.fieldname = fieldname
@@ -172,7 +176,7 @@ class RequiredIf(DataRequired):
     :param str message: Validation error message
     """
 
-    field_flags = set()
+    field_flags = ('not_solo',)
 
     def __init__(self, fieldname, message=None):
         message = message or __("This is required")
@@ -189,6 +193,7 @@ class _Comparison(object):
     Base class for validators that compare this field's value with another field
     """
 
+    field_flags = ('not_solo',)
     default_message = __("Comparison failed")
 
     def __init__(self, fieldname, message=None):
