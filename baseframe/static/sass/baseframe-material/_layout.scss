@@ -1,122 +1,126 @@
-html, body {
-    height: 100%;
+html,
+body {
+  height: 100%;
 }
 
-[class*="grid__col-"] {
-    padding-top: 0;
-    padding-bottom: 0;
+[class*='grid__col-'] {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
-h1, h2, h3 {
-    margin-top: 8px;
-    margin-bottom: 8px;
+h1,
+h2,
+h3 {
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 ul ul,
 ul ol,
 ol ol,
 ol ul {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 li p + ul,
 li p + ol {
-    margin-bottom: $reflex-cell-spacing/2;
+  margin-bottom: $reflex-cell-spacing/2;
 }
 
 .mui-container {
-    padding: 0;
+  padding: 0;
 }
 
 @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-md-min - 1) {
-    .mui-container {
-        max-width: 100%;
-    }
+  .mui-container {
+    max-width: 100%;
+  }
 }
 
 .mui-divider {
-    width: 100%;
+  width: 100%;
 }
 
 .main-content {
-    position: relative;
-    margin: 0 auto;
+  position: relative;
+  margin: 0 auto;
 }
 
 @media (min-width: 1200px) {
-    .main-content--with-sidebar {
-        margin-left: 160px;
-        padding-left: $reflex-cell-spacing;
-        padding-right: $reflex-cell-spacing;
-    }
+  .main-content--with-sidebar {
+    margin-left: 160px;
+    padding-left: $reflex-cell-spacing;
+    padding-right: $reflex-cell-spacing;
+  }
 }
 
 .table-wrapper {
-    overflow-x: auto;
+  overflow-x: auto;
 }
 
 .img-responsive {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background-color: $mui-overlay-bg-color;
-    z-index: 2;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: $mui-overlay-bg-color;
+  z-index: 2;
 }
 
 .map {
-    .map__marker {
-        margin-top: $mui-form-group-margin-bottom/2;
-        width: 100%;
-        height: 40em;
-    }
+  .map__marker {
+    margin-top: $mui-form-group-margin-bottom/2;
+    width: 100%;
+    height: 40em;
+  }
 }
 
 /* Cookies */
 .cookies-required-alert,
 .no-cookies .cookies-required {
-    display: none;
+  display: none;
 }
 
 .cookies-required,
 .no-cookies .cookies-required-alert {
-    display: block;
+  display: block;
 }
 
 .no-cookies .cookies-required-alert {
-    margin-top: $reflex-cell-spacing;
+  margin-top: $reflex-cell-spacing;
 }
 
 .js .jshidden,
 .js .no-js-only {
-    display: none;
-    visibility: hidden;
+  display: none;
+  visibility: hidden;
 }
 
 .no-js .no-jshidden,
 .no-js .js-only {
-    display: none;
-    visibility: hidden;
+  display: none;
+  visibility: hidden;
 }
 
 .userlogin .no-userlogin-only {
-    display: none;
-    visibility: hidden;
+  display: none;
+  visibility: hidden;
 }
 
 .no-userlogin .userlogin-only {
-    display: none;
-    visibility: hidden;
+  display: none;
+  visibility: hidden;
 }
 
 .loading {
-  background: url('data:image/svg+xml;utf8,<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%25" height="100%25" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve"><path opacity="0.5" fill="%23000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"/></path></svg>') center no-repeat;
+  background: url('data:image/svg+xml;utf8,<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100%25" height="100%25" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve"><path opacity="0.5" fill="%23000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"/></path></svg>')
+    center no-repeat;
   width: 24px;
   height: 24px;
   display: inline-block;
