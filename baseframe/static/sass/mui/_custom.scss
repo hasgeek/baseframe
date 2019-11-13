@@ -2,75 +2,77 @@
 // COLORS
 // ============================================================================
 
-$mui-primary-color:            #E05F26 !default;
+$mui-primary-color: #e05f26 !default;
 
-$mui-accent-color:             #856A91  !default;
+$mui-accent-color: #856a91 !default;
 
-$mui-danger-color:             #C04B61 !default;
-$mui-success-color:            #53B783 !default;
-$mui-warning-color:            #F0A40C !default;
-$mui-info-color:               #4A90E2 !default;
+$mui-danger-color: #c04b61 !default;
+$mui-success-color: #53b783 !default;
+$mui-warning-color: #f0a40c !default;
+$mui-info-color: #4a90e2 !default;
 
 // ============================================================================
 // TEXT COLORS
 // ============================================================================
 
-$mui-text-dark:             #1F2D3D !default;
-$mui-text-accent:           #C0CCDA !default;
-$mui-text-light:            #79818B !default;
-$mui-text-danger:           $mui-danger-color !default;
-$mui-text-hyperlink:        #4A90E2 !default;
+$mui-text-dark: #1f2d3d !default;
+$mui-text-accent: #c0ccda !default;
+$mui-text-light: #79818b !default;
+$mui-text-danger: $mui-danger-color !default;
+$mui-text-hyperlink: #4a90e2 !default;
 
 // ============================================================================
 // GLOBAL VARIABLES
 // ============================================================================
 
-$mui-bg-color-primary:      #FFFFFF !default;
-$mui-bg-color-accent:       #F9FAFC !default;
-$mui-bg-color-light: 		#EFF2F7 !default;
-$mui-bg-color-dark:         #1F2D3D !default;
-$mui-body-bg-color:         $mui-bg-color-accent !default;
+$mui-bg-color-primary: #ffffff !default;
+$mui-bg-color-accent: #f9fafc !default;
+$mui-bg-color-light: #eff2f7 !default;
+$mui-bg-color-dark: #1f2d3d !default;
+$mui-body-bg-color: $mui-bg-color-accent !default;
 
-$mui-base-font-color:            $mui-text-dark !default;
-$mui-base-font-family:           "Source Sans Pro", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-$mui-base-font-size:             14px !default;
-$mui-base-font-size-desktop:     16px !default;
-$mui-base-font-weight:           400 !default;
-$mui-base-line-height:           1.429 !default;
-$mui-base-font-smoothing:        false !default;
+$mui-base-font-color: $mui-text-dark !default;
+$mui-base-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif,
+  'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+$mui-base-font-size: 14px !default;
+$mui-base-font-size-desktop: 16px !default;
+$mui-base-font-weight: 400 !default;
+$mui-base-line-height: 1.429 !default;
+$mui-base-font-smoothing: false !default;
 
-$mui-link-font-color:            $mui-text-hyperlink !default;
-$mui-link-text-decoration:       none !default;
-$mui-link-font-color-hover:      $mui-text-hyperlink !default;
+$mui-link-font-color: $mui-text-hyperlink !default;
+$mui-link-text-decoration: none !default;
+$mui-link-font-color-hover: $mui-text-hyperlink !default;
 $mui-link-text-decoration-hover: underline !default;
 
-$mui-hr-color:                   rgba(132, 146, 166, 0.2) !default;
+$mui-hr-color: rgba(132, 146, 166, 0.2) !default;
 
 // ============================================================================
 // FORMS
 // ============================================================================
 
-$mui-input-placeholder-color:     $mui-text-accent !default;
+$mui-input-placeholder-color: $mui-text-accent !default;
 
-$mui-input-border-color:          $mui-text-accent !default;
-$mui-input-border-color-focus:    $mui-text-hyperlink !default;
+$mui-input-border-color: $mui-text-accent !default;
+$mui-input-border-color-focus: $mui-text-hyperlink !default;
 
 // ============================================================================
 // DIVIDERS
 // ============================================================================
 
-$mui-divider-color:              rgba(132, 146, 166, 0.3) !default;
+$mui-divider-color: rgba(132, 146, 166, 0.3) !default;
 
 // ============================================================================
 // APPBAR
 // ============================================================================
 
-$mui-appbar-bg-color:            #FFFFFF !default;
+$mui-appbar-bg-color: #ffffff !default;
 
-$mui-appbar-font-color:          #8492A6 !default;
+$mui-appbar-font-color: #8492a6 !default;
 
 // ============================================================================
 // OVERLAY
 // ============================================================================
 
-$mui-overlay-bg-color:            rgba(31, 46, 61, 0.2) !default;
+$mui-overlay-bg-color: rgba(31, 46, 61, 0.2) !default;

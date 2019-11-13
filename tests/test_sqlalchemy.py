@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from coaster.sqlalchemy import BaseMixin
-from coaster.db import SQLAlchemy
+
 from sqlalchemy import Column, Unicode
-from baseframe import __
-from baseframe import baseframe
+
+from baseframe import __, baseframe
+from coaster.db import SQLAlchemy
+from coaster.sqlalchemy import BaseMixin
 import baseframe.forms as forms
 import baseframe.forms.sqlalchemy as forms_sqlachemy
-from .fixtures import app1, app2
 
+from .fixtures import app1, app2
 
 db = SQLAlchemy()
 
@@ -23,7 +24,9 @@ class Container(BaseMixin, db.Model):
 
 class ContainerForm(forms.Form):
     name = forms.StringField(__("Name"), validators=[forms_sqlachemy.AvailableName()])
-    title = forms.StringField(__("Title"), validators=[forms_sqlachemy.AvailableAttr('title')])
+    title = forms.StringField(
+        __("Title"), validators=[forms_sqlachemy.AvailableAttr('title')]
+    )
     content = forms.TextAreaField(__("Content"))
 
 

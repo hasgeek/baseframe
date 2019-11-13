@@ -1,134 +1,138 @@
 .form-message {
-    @extend .mui--text-title;
+  @extend .mui--text-title;
 }
 
 .mui-form {
-    .mui-form__fields {
-        margin-bottom: $mui-form-group-margin-bottom;
+  .mui-form__fields {
+    margin-bottom: $mui-form-group-margin-bottom;
+  }
+
+  .mui-textfield,
+  .mui-radio,
+  .mui-checkbox {
+    margin-bottom: 5px;
+  }
+
+  .mui-textfield--float-label {
+    > label {
+      position: absolute;
+      transform: translate(0px, $xFormLabelLineHeight);
+      -webkit-transition: all 0.15s ease-out;
+      -moz-transition: all 0.15s ease-out;
+      -o-transition: all 0.15s ease-out;
+      transition: all 0.15s ease-out;
+    }
+  }
+
+  .mui-form__sidetext,
+  .mui-form__helptext {
+    color: $mui-text-light;
+    margin: 8px 0 0;
+    @extend .mui--text-caption;
+  }
+
+  .mui-textfield--addon {
+    display: flex;
+
+    > .mui-form__addon,
+    > input {
+      display: inline-flex;
     }
 
-    .mui-textfield,
-    .mui-radio,
-    .mui-checkbox {
-        margin-bottom: 5px;
+    > .mui-form__addon {
+      color: $mui-label-font-color;
+      font-size: $mui-input-font-size;
+      line-height: 2;
     }
+  }
 
-    .mui-textfield--float-label {
-        > label {
-            position: absolute;
-            transform: translate(0px, $xFormLabelLineHeight);
-            -webkit-transition: all .15s ease-out;
-            -moz-transition: all .15s ease-out;
-            -o-transition: all .15s ease-out;
-            transition: all .15s ease-out;
-        }
+  input.datetime-date {
+    display: inline;
+    width: 10em;
+  }
+
+  input.datetime-time {
+    display: inline;
+    width: 6em;
+  }
+
+  textarea {
+    height: 10em;
+  }
+
+  .mui-form__label {
+    position: static;
+    margin: 0 0 8px;
+    color: $mui-label-font-color;
+    @include mui-text('subhead');
+  }
+
+  .mui-form__error {
+    color: $mui-text-danger;
+    margin: 8px 0 0;
+    padding: 0;
+    @extend .mui--text-caption;
+
+    > li {
+      list-style: none;
+      margin-top: $mui-form-group-margin-bottom/2;
     }
+  }
 
-    .mui-form__sidetext,
-    .mui-form__helptext {
-		color: $mui-text-light;
-		margin: 8px 0 0;
-		@extend .mui--text-caption;
-	}
-
-    .mui-textfield--addon {
-        display: flex;
-
-        > .mui-form__addon,
-        > input {
-            display: inline-flex;
-        }
-
-        > .mui-form__addon {
-            color: $mui-label-font-color;
-            font-size: $mui-input-font-size;
-            line-height: 2;
-        }
-    }
-
-    input.datetime-date {
-      display: inline;
-      width: 10em;
-    }
-
-    input.datetime-time {
-      display: inline;
-      width: 6em;
-    }
-
-     textarea {
-      height: 10em;
-    }
-
-    .mui-form__label {
-        position: static;
-        margin: 0 0 8px;
-        color: $mui-label-font-color;
-        @include mui-text("subhead");
-    }
-
-    .mui-form__error {
-		color: $mui-text-danger;
-		margin: 8px 0 0;
-		padding: 0;
-		@extend .mui--text-caption;
-
-		> li {
-			list-style: none;
-			margin-top: $mui-form-group-margin-bottom/2;
-		}
-	}
-
-    .has-error .mui-textfield > input,
-    .has-error .mui-textfield > textarea {
-        border-bottom: 1px solid $mui-text-danger;
-    }
-    .has-error .mui-textfield > label,
-    .has-error label {
-        color: $mui-text-danger;
-    }
+  .has-error .mui-textfield > input,
+  .has-error .mui-textfield > textarea {
+    border-bottom: 1px solid $mui-text-danger;
+  }
+  .has-error .mui-textfield > label,
+  .has-error label {
+    color: $mui-text-danger;
+  }
 }
 
 .mui-form--margins {
-    margin-top: 1*$reflex-cell-spacing;
-    margin-bottom: 2*$reflex-cell-spacing;
+  margin-top: 1 * $reflex-cell-spacing;
+  margin-bottom: 2 * $reflex-cell-spacing;
 }
 
 .mui-select {
-    margin-top: $mui-form-group-margin-bottom;
-    margin-bottom: 0;
-    .select2 {
-        width: 100% !important;
-    }
-    .mui-select__menu {
-        z-index: 1001; //Higher than the fixed header
-    }
+  margin-top: $mui-form-group-margin-bottom;
+  margin-bottom: 0;
+  .select2 {
+    width: 100% !important;
+  }
+  .mui-select__menu {
+    z-index: 1001; //Higher than the fixed header
+  }
 }
 
 .mui-select.select2 {
-    .mui-select__menu {
-        display: none !important;
-    }
+  .mui-select__menu {
+    display: none !important;
+  }
 }
 
-.listwidget ul, .listwidget ol {
-    list-style: none;
-    padding-left: 0;
-    margin-left: 0;
-    margin-bottom: 0;
+.listwidget ul,
+.listwidget ol {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+  margin-bottom: 0;
 }
 
-.listwidget ul li, .listwidget ol li {
-    position: relative;
-    margin-left: 1.25em;
+.listwidget ul li,
+.listwidget ol li {
+  position: relative;
+  margin-left: 1.25em;
 }
 
-.listwidget ul input, .listwidget ol input {
-    position: absolute;
-    left: -1.25em;
-    top: 0.25em;
+.listwidget ul input,
+.listwidget ol input {
+  position: absolute;
+  left: -1.25em;
+  top: 0.25em;
 }
 
-.listwidget ul label, .listwidget ol label {
-    display: inline-block;
+.listwidget ul label,
+.listwidget ol label {
+  display: inline-block;
 }

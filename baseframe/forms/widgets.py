@@ -1,14 +1,26 @@
 # -*- coding: utf-8 -*-
 
 import six
-import wtforms
-from wtforms.compat import text_type
-from wtforms.widgets import RadioInput, Select, HTMLString, html_params
+
 from flask import Markup
+from wtforms.compat import text_type
+from wtforms.widgets import HTMLString, RadioInput, Select, html_params
+import wtforms
+
 from .. import b_ as _
 
-__all__ = ['TinyMce3', 'TinyMce4', 'SubmitInput', 'DateTimeInput', 'CoordinatesInput',
-    'RadioMatrixInput', 'InlineListWidget', 'RadioInput', 'SelectWidget', 'Select2Widget']
+__all__ = [
+    'TinyMce3',
+    'TinyMce4',
+    'SubmitInput',
+    'DateTimeInput',
+    'CoordinatesInput',
+    'RadioMatrixInput',
+    'InlineListWidget',
+    'RadioInput',
+    'SelectWidget',
+    'Select2Widget',
+]
 
 
 # This class borrowed from https://github.com/industrydive/wtforms_extended_selectfield
@@ -16,6 +28,7 @@ class SelectWidget(Select):
     """
     Add support of choices with ``optgroup`` to the ``Select`` widget.
     """
+
     def __call__(self, field, **kwargs):
         kwargs.setdefault('id', field.id)
         if self.multiple:
@@ -27,7 +40,13 @@ class SelectWidget(Select):
                 group_items = item2
                 html.append('<optgroup %s>' % html_params(label=group_label))
                 for inner_val, inner_label in group_items:
-                    html.append(self.render_option(inner_val, inner_label, field.coerce(inner_val) == field.data))
+                    html.append(
+                        self.render_option(
+                            inner_val,
+                            inner_label,
+                            field.coerce(inner_val) == field.data,
+                        )
+                    )
                 html.append('</optgroup>')
             else:
                 val = item1
@@ -41,6 +60,7 @@ class Select2Widget(Select):
     """
     Add a select2 class to the rendered select widget
     """
+
     def __call__(self, field, **kwargs):
         kwargs.setdefault('id', field.id)
         kwargs.pop('type', field.type)
@@ -63,6 +83,7 @@ class TinyMce3(wtforms.widgets.TextArea):
     """
     Rich text widget with Tiny MCE 3.
     """
+
     input_type = "tinymce3"
 
     def __call__(self, field, **kwargs):
@@ -78,6 +99,7 @@ class TinyMce4(wtforms.widgets.TextArea):
     """
     Rich text widget with Tiny MCE 4.
     """
+
     input_type = "tinymce4"
 
     def __call__(self, field, **kwargs):
@@ -93,6 +115,7 @@ class SubmitInput(wtforms.widgets.SubmitInput):
     """
     Submit input with pre-defined classes.
     """
+
     def __init__(self, *args, **kwargs):
         self.css_class = kwargs.pop('class', '') or kwargs.pop('class_', '')
         super(SubmitInput, self).__init__(*args, **kwargs)
@@ -107,6 +130,7 @@ class DateTimeInput(wtforms.widgets.Input):
     """
     Render date and time inputs.
     """
+
     input_type = 'datetime'
 
     def __call__(self, field, **kwargs):
@@ -120,26 +144,44 @@ class DateTimeInput(wtforms.widgets.Input):
             value = ' '
         class_ = kwargs.pop('class', kwargs.pop('class_', ''))
         date_value, time_value = value.split(' ', 1)
-        return Markup(u'<input type="date" class="datetime-date %s" %s /> <input type="time" class="datetime-time %s" %s /> %s' % (
-            class_,
-            wtforms.widgets.html_params(name=field.name, id=field_id + '-date', value=date_value, placeholder="yyy-mm-dd", **kwargs),
-            class_,
-            wtforms.widgets.html_params(name=field.name, id=field_id + '-time', value=time_value, placeholder="--:--", **kwargs),
-            field.tzname,
-            ))
+        return Markup(
+            u'<input type="date" class="datetime-date %s" %s /> <input type="time" class="datetime-time %s" %s /> %s'
+            % (
+                class_,
+                wtforms.widgets.html_params(
+                    name=field.name,
+                    id=field_id + '-date',
+                    value=date_value,
+                    placeholder="yyy-mm-dd",
+                    **kwargs
+                ),
+                class_,
+                wtforms.widgets.html_params(
+                    name=field.name,
+                    id=field_id + '-time',
+                    value=time_value,
+                    placeholder="--:--",
+                    **kwargs
+                ),
+                field.tzname,
+            )
+        )
 
 
 class CoordinatesInput(wtforms.widgets.core.Input):
     """
     Render latitude and longitude coordinates
     """
+
     input_type = 'text'
 
     def __call__(self, field, **kwargs):
         id_ = kwargs.pop('id', field.id)
         kwargs.setdefault('type', self.input_type)
         kwargs.setdefault('size', 10)  # 9 digits precision and +/- sign
-        kwargs.pop('placeholder', None)  # Discard placeholder, use custom values for each input below
+        kwargs.pop(
+            'placeholder', None
+        )  # Discard placeholder, use custom values for each input below
         value = kwargs.pop('value', None)
         if not value:
             value = field._value()
@@ -150,11 +192,25 @@ class CoordinatesInput(wtforms.widgets.core.Input):
         if len(value) < 2:
             value.append('')
 
-        return Markup('<input %s> <input %s>' % (
-            self.html_params(id=id_ + '_latitude', name=field.name, placeholder=_("Latitude"),
-                value=value[0], **kwargs),
-            self.html_params(id=id_ + '_longitude', name=field.name, placeholder=_("Longitude"),
-                value=value[1], **kwargs)))
+        return Markup(
+            '<input %s> <input %s>'
+            % (
+                self.html_params(
+                    id=id_ + '_latitude',
+                    name=field.name,
+                    placeholder=_("Latitude"),
+                    value=value[0],
+                    **kwargs
+                ),
+                self.html_params(
+                    id=id_ + '_longitude',
+                    name=field.name,
+                    placeholder=_("Longitude"),
+                    value=value[1],
+                    **kwargs
+                ),
+            )
+        )
 
 
 class RadioMatrixInput(object):
@@ -182,7 +238,9 @@ class RadioMatrixInput(object):
                 params = {'type': 'radio', 'name': name, 'value': value}
                 if text_type(selected) == text_type(value):
                     params['checked'] = True
-                rendered.append('<td><input %s/></td>' % wtforms.widgets.html_params(**params))
+                rendered.append(
+                    '<td><input %s/></td>' % wtforms.widgets.html_params(**params)
+                )
             rendered.append('</tr>')
         rendered.append('</tbody>')
         rendered.append('</table>')
@@ -202,6 +260,7 @@ class InlineListWidget(object):
     otherwise afterwards. The latter is useful for iterating radios or
     checkboxes.
     """
+
     def __init__(self, html_tag='div', class_='', class_prefix=''):
         self.html_tag = html_tag
         self.class_ = ''
@@ -209,10 +268,20 @@ class InlineListWidget(object):
 
     def __call__(self, field, **kwargs):
         kwargs.setdefault('id', field.id)
-        kwargs['class_'] = (kwargs.pop('class_', kwargs.pop('class', '')).strip() + ' ' + self.class_).strip()
+        kwargs['class_'] = (
+            kwargs.pop('class_', kwargs.pop('class', '')).strip() + ' ' + self.class_
+        ).strip()
         html = ['<%s %s>' % (self.html_tag, wtforms.widgets.html_params(**kwargs))]
         for subfield in field:
-            html.append('<label for="%s" class="%s%s">%s %s</label>' % (
-                subfield.id, self.class_prefix, subfield.data, subfield(), subfield.label.text))
+            html.append(
+                '<label for="%s" class="%s%s">%s %s</label>'
+                % (
+                    subfield.id,
+                    self.class_prefix,
+                    subfield.data,
+                    subfield(),
+                    subfield.label.text,
+                )
+            )
         html.append('</%s>' % self.html_tag)
         return Markup('\n'.join(html))

@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
-
-import six
 from six.moves.urllib.parse import quote as urlquote
+import six
 
 from flask import g
 
-from mxsniff import mxsniff, MXLookupException
+from mxsniff import MXLookupException, mxsniff
 
 from coaster.utils import utcnow
 
@@ -42,8 +41,10 @@ def is_public_email_domain(email_or_domain, default=None, timeout=30):
     if six.PY2:
         cache_key = 'mxrecord/' + urlquote(
             email_or_domain.encode('utf-8')
-            if isinstance(email_or_domain, six.text_type) else email_or_domain,
-            safe='')
+            if isinstance(email_or_domain, six.text_type)
+            else email_or_domain,
+            safe='',
+        )
     else:
         cache_key = 'mxrecord/' + urlquote(email_or_domain, safe='')
 
@@ -61,7 +62,7 @@ def is_public_email_domain(email_or_domain, default=None, timeout=30):
             else:
                 return default
 
-    if any([p['public'] for p in sniffedmx['providers']]):
+    if any(p['public'] for p in sniffedmx['providers']):
         return True
     else:
         return False
