@@ -248,6 +248,12 @@ class BaseframeBlueprint(Blueprint):
         app.assets.register('css_all', css_all)
         app.register_blueprint(self, static_subdomain=subdomain)
 
+        try:
+            module = __import__('baseframe-assets')
+            app.register_blueprint(module.blueprint)
+        except ImportError:
+            pass
+
         # Optional config for a client app to use a manifest file
         # to load fingerprinted assets
         # If used with webpack, the client app is expected to specify its own webpack.config.js
