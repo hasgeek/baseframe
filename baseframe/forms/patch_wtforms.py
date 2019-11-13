@@ -12,11 +12,15 @@ __all__ = []
 
 
 def _patch_wtforms_add_flags():
+    """Patch WTForms validators as required (currently just one type of patch)"""
+
     def add_flags(validator, flags):
+        """Add more flags to existing WTForms validators"""
         validator.field_flags = tuple(flags) + tuple(
             getattr(validator, 'field_flags', ())
         )
 
+    # Patch the `EqualTo` validator to add a 'not_solo' flag on any field it is used on
     add_flags(wtforms.validators.EqualTo, ('not_solo',))
 
 
@@ -70,3 +74,36 @@ def _patch_wtforms_field_init():
 
 _patch_wtforms_field_init()
 del _patch_wtforms_field_init
+
+
+def render_script(self, tag=True):
+    """
+    Render the JavaScript necessary (including script tag) for this field.
+
+    This delegates rendering to
+    :meth:`meta.render_field_script`
+    whose default behavior is to call the field's widget, passing any
+    keyword arguments from this call along to the widget.
+
+    :param bool tag: If False, don't include a ``<script>`` tag
+    """
+    return self.meta.render_field_script(self, tag)
+
+
+def meta_render_script(self, field, tag):
+    """
+    render_script allows customization of how widget rendering is done.
+
+    The default implementation calls ``field.widget.render_js(field, **render_kw)``
+    """
+    if hasattr(field.widget, 'render_script'):
+        return field.widget.render_script(field, tag)
+
+
+def _patch_wtforms_field_render():
+    wtforms.Field.render_script = render_script
+    wtforms.meta.DefaultMeta.render_field_script = meta_render_script
+
+
+_patch_wtforms_field_render()
+del _patch_wtforms_field_render
