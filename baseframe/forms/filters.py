@@ -27,8 +27,10 @@ def lower():
     """
     Convert data to lower case.
     """
+
     def lower_inner(value):
         return value.lower() if value else value
+
     return lower_inner
 
 
@@ -36,8 +38,10 @@ def upper():
     """
     Convert data to upper case.
     """
+
     def upper_inner(value):
         return value.upper() if value else value
+
     return upper_inner
 
 
@@ -47,8 +51,10 @@ def strip(chars=unicode_extended_whitespace):
 
     :param chars: If specified, strip these characters instead of whitespace
     """
+
     def strip_inner(value):
         return value.strip(chars) if value else value
+
     return strip_inner
 
 
@@ -58,8 +64,10 @@ def lstrip(chars=unicode_extended_whitespace):
 
     :param chars: If specified, strip these characters instead of whitespace
     """
+
     def lstrip_inner(value):
         return value.lstrip(chars) if value else value
+
     return lstrip_inner
 
 
@@ -69,8 +77,10 @@ def rstrip(chars=unicode_extended_whitespace):
 
     :param chars: If specified, strip these characters instead of whitespace
     """
+
     def rstrip_inner(value):
         return value.rstrip(chars) if value else value
+
     return rstrip_inner
 
 
@@ -81,10 +91,12 @@ def strip_each(chars=unicode_extended_whitespace):
 
     :param chars: If specified, strip these characters instead of whitespace
     """
+
     def strip_each_inner(value):
         if value:
             return [sline for sline in [line.strip(chars) for line in value] if sline]
         return value
+
     return strip_each_inner
 
 
@@ -92,6 +104,8 @@ def none_if_empty():
     """
     If data is empty or evalues to boolean false, replace with None
     """
+
     def none_if_empty_inner(value):
         return value if value else None
+
     return none_if_empty_inner

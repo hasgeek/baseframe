@@ -1,16 +1,23 @@
 # -*- coding: utf-8 -*-
 
-import os
-import requests
+from six.moves.urllib.parse import urljoin, urlparse
+
 from datetime import timedelta
-from six.moves.urllib.parse import urlparse, urljoin
-from flask import current_app, send_from_directory, render_template, abort, request
+import os
+
+from flask import abort, current_app, render_template, request, send_from_directory
 from flask_assets import Bundle
 from flask_wtf.csrf import generate_csrf
-from coaster.utils import make_name
+
+import requests
+
 from coaster.assets import split_namespec
+from coaster.utils import make_name
 from coaster.views import render_with
-from . import baseframe, networkbar_cache, asset_cache, assets as assets_repo
+
+from . import asset_cache
+from . import assets as assets_repo
+from . import baseframe, networkbar_cache
 from .utils import request_timestamp
 
 
@@ -32,9 +39,15 @@ def networkbar_links():
 
 
 def asset_key(assets):
-    return make_name('-'.join(assets).replace(
-        '==', '-eq-').replace('>=', '-gte-').replace('<=', '-lte-').replace('>', '-gt-').replace('<', '-lt-'),
-        maxlength=250)
+    return make_name(
+        '-'.join(assets)
+        .replace('==', '-eq-')
+        .replace('>=', '-gte-')
+        .replace('<=', '-lte-')
+        .replace('>', '-gt-')
+        .replace('<', '-lt-'),
+        maxlength=250,
+    )
 
 
 def gen_assets_url(assets):
@@ -52,11 +65,17 @@ def gen_assets_url(assets):
     # The file extensions here are for upstream servers to serve the correct content type:
     if is_js:
         # TODO: Move this !jquery.js to somewhere more relevant
-        bundle = Bundle(assets_repo.require(*(['!jquery.js'] + assets)),
-            output='gen/' + output_name + '.js', filters='uglipyjs')
+        bundle = Bundle(
+            assets_repo.require(*(['!jquery.js'] + assets)),
+            output='gen/' + output_name + '.js',
+            filters='uglipyjs',
+        )
     elif is_css:
-        bundle = Bundle(assets_repo.require(*assets),
-            output='gen/' + output_name + '.css', filters=['cssrewrite', 'cssmin'])
+        bundle = Bundle(
+            assets_repo.require(*assets),
+            output='gen/' + output_name + '.css',
+            filters=['cssrewrite', 'cssmin'],
+        )
     else:
         abort(400)
 
@@ -71,14 +90,20 @@ def ext_assets(assets):
         return url
     if current_app.config.get('ASSET_SERVER'):
         try:
-            r = requests.get(urljoin(current_app.config['ASSET_SERVER'], 'asset'),
+            r = requests.get(
+                urljoin(current_app.config['ASSET_SERVER'], 'asset'),
                 params={'a': assets},
-                allow_redirects=False)
+                allow_redirects=False,
+            )
             if r.status_code in (301, 302, 303, 307):
                 url = r.headers['location']
             else:  # XXX: What broke and failed to do a 3xx?
                 url = r.url
-            asset_cache.set('assets/' + key, url, timeout=current_app.config.get('ASSET_TIMEOUT', 60))
+            asset_cache.set(
+                'assets/' + key,
+                url,
+                timeout=current_app.config.get('ASSET_TIMEOUT', 60),
+            )
             return url
         except requests.exceptions.ConnectionError:
             return gen_assets_url(assets)
@@ -88,12 +113,15 @@ def ext_assets(assets):
 
 def asset_path(bundle_key):
     if not current_app.config.get('ASSET_BASE_PATH'):
-        raise LookupError("Missing base path for assets. Ensure `ASSET_BASE_PATH` is set to the path where the asset can be found. Eg: `/static/`")
+        raise LookupError(
+            "Missing base path for assets. Ensure `ASSET_BASE_PATH` is set to the path where the asset can be found. Eg: `/static/`"
+        )
     if not current_app.config.get('assets').get(bundle_key):
         raise LookupError("Missing asset file for {bundle}.".format(bundle=bundle_key))
     return '{path}/{bundle}'.format(
         path=current_app.config['ASSET_BASE_PATH'],
-        bundle=current_app.config['assets'][bundle_key])
+        bundle=current_app.config['assets'][bundle_key],
+    )
 
 
 @baseframe.app_context_processor
@@ -102,7 +130,7 @@ def baseframe_context():
         'networkbar_links': networkbar_links,
         'csrf_token': generate_csrf,
         'asset_path': asset_path,
-        }
+    }
 
 
 @baseframe.route('/favicon.ico', subdomain='<subdomain>')
@@ -116,26 +144,33 @@ def favicon(subdomain=None):
         if not os.path.exists(os.path.join(app_icon_path, 'favicon.ico')):
             # Still nope? Serve default favicon from baseframe
             app_icon_path = os.path.join(baseframe.static_folder, 'img')
-    return send_from_directory(app_icon_path,
-      'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    return send_from_directory(
+        app_icon_path, 'favicon.ico', mimetype='image/vnd.microsoft.icon'
+    )
 
 
 @baseframe.route('/humans.txt', subdomain='<subdomain>')
 @baseframe.route('/humans.txt', defaults={'subdomain': None})
 def humans(subdomain=None):
     return send_from_directory(
-        current_app.static_folder if os.path.exists(
-            os.path.join(current_app.static_folder, 'humans.txt')) else baseframe.static_folder,
-        'humans.txt', mimetype='text/plain')
+        current_app.static_folder
+        if os.path.exists(os.path.join(current_app.static_folder, 'humans.txt'))
+        else baseframe.static_folder,
+        'humans.txt',
+        mimetype='text/plain',
+    )
 
 
 @baseframe.route('/robots.txt', subdomain='<subdomain>')
 @baseframe.route('/robots.txt', defaults={'subdomain': None})
 def robots(subdomain=None):
     return send_from_directory(
-        current_app.static_folder if os.path.exists(
-            os.path.join(current_app.static_folder, 'robots.txt')) else baseframe.static_folder,
-        'robots.txt', mimetype='text/plain')
+        current_app.static_folder
+        if os.path.exists(os.path.join(current_app.static_folder, 'robots.txt'))
+        else baseframe.static_folder,
+        'robots.txt',
+        mimetype='text/plain',
+    )
 
 
 @baseframe.route('/.well-known/<path:filename>', subdomain='<subdomain>')
@@ -148,23 +183,29 @@ def well_known(filename, subdomain=None):
 @baseframe.route('/api/baseframe/1/toastr_messages.js', subdomain='<subdomain>')
 @baseframe.route('/api/baseframe/1/toastr_messages.js', defaults={'subdomain': None})
 def toastr_messages_js(subdomain=None):
-    return current_app.response_class(render_template('toastr_messages.js.jinja2'), mimetype='application/javascript')
+    return current_app.response_class(
+        render_template('toastr_messages.js.jinja2'), mimetype='application/javascript'
+    )
 
 
 @baseframe.route('/api/baseframe/1/editor.css', subdomain='<subdomain>')
 @baseframe.route('/api/baseframe/1/editor.css', defaults={'subdomain': None})
 def editorcss(subdomain=None):
-    response = current_app.response_class(render_template('editor.css.jinja2'),
+    response = current_app.response_class(
+        render_template('editor.css.jinja2'),
         mimetype='text/css',
-        headers={'Expires': (request_timestamp() + timedelta(minutes=60)).strftime('%a, %d %b %Y %H:%M:%S GMT')})
+        headers={
+            'Expires': (request_timestamp() + timedelta(minutes=60)).strftime(
+                '%a, %d %b %Y %H:%M:%S GMT'
+            )
+        },
+    )
     return response
 
 
 @baseframe.route('/api/baseframe/1/csrf/refresh', subdomain='<subdomain>')
 @baseframe.route('/api/baseframe/1/csrf/refresh', defaults={'subdomain': None})
-@render_with({
-    'text/plain': lambda r: r['csrf_token'],
-    }, json=True, jsonp=False)
+@render_with({'text/plain': lambda r: r['csrf_token']}, json=True, jsonp=False)
 def csrf_refresh(subdomain=None):
     parsed_host = urlparse(request.url_root)
     origin = parsed_host.scheme + u'://' + parsed_host.netloc
@@ -174,8 +215,14 @@ def csrf_refresh(subdomain=None):
         if request.headers['Origin'] != origin:
             abort(403)
 
-    return {'csrf_token': generate_csrf()}, 200, {
-        'Access-Control-Allow-Origin': origin,
-        'Vary': 'Origin',
-        'Expires': (request_timestamp() + timedelta(minutes=10)).strftime('%a, %d %b %Y %H:%M:%S GMT')
-        }
+    return (
+        {'csrf_token': generate_csrf()},
+        200,
+        {
+            'Access-Control-Allow-Origin': origin,
+            'Vary': 'Origin',
+            'Expires': (request_timestamp() + timedelta(minutes=10)).strftime(
+                '%a, %d %b %Y %H:%M:%S GMT'
+            ),
+        },
+    )

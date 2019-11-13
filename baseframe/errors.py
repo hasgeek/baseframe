@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from werkzeug.routing import NotFound, MethodNotAllowed, RequestRedirect
-from flask import request, redirect
+from flask import redirect, request
+from werkzeug.routing import MethodNotAllowed, NotFound, RequestRedirect
+
 from coaster.views import render_with
-from . import baseframe, current_app, baseframe_translations
+
+from . import baseframe, baseframe_translations, current_app
 
 
 @baseframe.app_errorhandler(404)

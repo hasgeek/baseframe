@@ -1,32 +1,67 @@
 # -*- coding: utf-8 -*-
 
+from six.moves.urllib.parse import quote as urlquote
+from six.moves.urllib.parse import urljoin
+import six
+
 from collections import namedtuple
 from decimal import Decimal
 from fractions import Fraction
 import datetime
 import re
-import six
-from six.moves.urllib.parse import urljoin, quote as urlquote
-import dns.resolver
-from pyisemail import is_email
+
 from flask import request
 from wtforms.validators import (  # NOQA
-    DataRequired, InputRequired, Optional, Length, EqualTo, URL, NumberRange,
-    ValidationError, StopValidation)
-import requests
+    URL,
+    DataRequired,
+    EqualTo,
+    InputRequired,
+    Length,
+    NumberRange,
+    Optional,
+    StopValidation,
+    ValidationError,
+)
+
 from lxml import html
-from coaster.utils import make_name, deobfuscate_email
-from .. import b_ as _, b__ as __, asset_cache
-from ..utils import is_public_email_domain
+from pyisemail import is_email
+import dns.resolver
+import requests
+
+from coaster.utils import deobfuscate_email, make_name
+
+from .. import asset_cache
+from .. import b_ as _
+from .. import b__ as __
 from ..signals import exception_catchall
+from ..utils import is_public_email_domain
 
-
-__local = ['AllUrlsValid', 'IsNotPublicEmailDomain', 'IsPublicEmailDomain', 'NoObfuscatedEmail',
-    'AllowedIf', 'OptionalIf', 'RequiredIf', 'ValidCoordinates', 'ValidEmail',
-    'ValidEmailDomain', 'ValidName', 'ValidUrl', 'ForEach']
+__local = [
+    'AllUrlsValid',
+    'IsNotPublicEmailDomain',
+    'IsPublicEmailDomain',
+    'NoObfuscatedEmail',
+    'AllowedIf',
+    'OptionalIf',
+    'RequiredIf',
+    'ValidCoordinates',
+    'ValidEmail',
+    'ValidEmailDomain',
+    'ValidName',
+    'ValidUrl',
+    'ForEach',
+]
 __imported = [  # WTForms validators
-    'DataRequired', 'EqualTo', 'InputRequired', 'Length', 'NumberRange', 'Optional',
-    'StopValidation', 'URL', 'ValidationError']
+    'DataRequired',
+    'EqualTo',
+    'InputRequired',
+    'Length',
+    'NumberRange',
+    'Optional',
+    'StopValidation',
+    'URL',
+    'ValidationError',
+]
 __all__ = __local + __imported
 
 
@@ -53,7 +88,9 @@ def is_empty(value):
     return value not in _zero_values and not value
 
 
-FakeField = namedtuple('FakeField', ['data', 'raw_data', 'errors', 'gettext', 'ngettext'])
+FakeField = namedtuple(
+    'FakeField', ['data', 'raw_data', 'errors', 'gettext', 'ngettext']
+)
 
 
 class ForEach(object):
@@ -62,6 +99,7 @@ class ForEach(object):
     raises :exc:`StopValidation`, it stops other validators within the chain given
     to :class:`ForEach`, but not validators specified alongside.
     """
+
     def __init__(self, validators):
         self.validators = validators
 
@@ -85,6 +123,7 @@ class AllowedIf(object):
     :param str fieldname: Name of the other field
     :param str message: Validation error message. Will be formatted with an optional ``{field}}`` label
     """
+
     def __init__(self, fieldname, message=None):
         self.fieldname = fieldname
         self.message = message or __(u"This requires ‘{field}’ to be specified")
@@ -92,7 +131,9 @@ class AllowedIf(object):
     def __call__(self, form, field):
         if field.data:
             if is_empty(form[self.fieldname].data):
-                raise StopValidation(self.message.format(field=form[self.fieldname].label.text))
+                raise StopValidation(
+                    self.message.format(field=form[self.fieldname].label.text)
+                )
 
 
 class OptionalIf(Optional):
@@ -107,6 +148,7 @@ class OptionalIf(Optional):
     :param str fieldname: Name of the other field
     :param str message: Validation error message
     """
+
     def __init__(self, fieldname, message=None):
         super(OptionalIf, self).__init__()
         self.fieldname = fieldname
@@ -129,6 +171,7 @@ class RequiredIf(DataRequired):
     :param str fieldname: Name of the other field
     :param str message: Validation error message
     """
+
     field_flags = set()
 
     def __init__(self, fieldname, message=None):
@@ -145,6 +188,7 @@ class _Comparison(object):
     """
     Base class for validators that compare this field's value with another field
     """
+
     default_message = __("Comparison failed")
 
     def __init__(self, fieldname, message=None):
@@ -155,9 +199,11 @@ class _Comparison(object):
         other = form[self.fieldname]
         if not self.compare(field.data, other.data):
             d = {
-                'other_label': hasattr(other, 'label') and other.label.text or self.fieldname,
-                'other_name': self.fieldname
-                }
+                'other_label': hasattr(other, 'label')
+                and other.label.text
+                or self.fieldname,
+                'other_name': self.fieldname,
+            }
             raise ValidationError(self.message.format(**d))
 
     def compare(self, value, other):
@@ -175,6 +221,7 @@ class GreaterThan(_Comparison):
         interpolated with `{other_label}` and `{other_name}` to provide a
         more helpful error.
     """
+
     default_message = __("This must be greater than {other_label}")
 
     def compare(self, value, other):
@@ -192,6 +239,7 @@ class GreaterThanEqualTo(_Comparison):
         interpolated with `{other_label}` and `{other_name}` to provide a
         more helpful error.
     """
+
     default_message = __("This must be greater than or equal to {other_label}")
 
     def compare(self, value, other):
@@ -209,6 +257,7 @@ class LesserThan(_Comparison):
         interpolated with `{other_label}` and `{other_name}` to provide a
         more helpful error.
     """
+
     default_message = __("This must be lesser than {other_label}")
 
     def compare(self, value, other):
@@ -226,6 +275,7 @@ class LesserThanEqualTo(_Comparison):
         interpolated with `{other_label}` and `{other_name}` to provide a
         more helpful error.
     """
+
     default_message = __("This must be lesser than or equal to {other_label}")
 
     def compare(self, value, other):
@@ -243,6 +293,7 @@ class NotEqualTo(_Comparison):
         interpolated with `{other_label}` and `{other_name}` to provide a
         more helpful error.
     """
+
     default_message = __("This must not be the same as {other_label}")
 
     def compare(self, value, other):
@@ -258,6 +309,7 @@ class IsPublicEmailDomain(object):
     :param message:
         Error message to raise in case of a validation error.
     """
+
     def __init__(self, message=None, timeout=30):
         self.message = message or _(u'This domain is not a public email domain.')
         self.timeout = timeout
@@ -297,6 +349,7 @@ class ValidEmail(object):
 
     :param str message: Optional validation error message.
     """
+
     def __init__(self, message=None):
         self.message = message
 
@@ -325,16 +378,25 @@ class ValidUrl(object):
         where ``patterns`` is a list of strings or regular expressions. If ``invalid_urls`` is
         a callable, it will be called to retrieve the list.
     """
-    user_agent = "Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 HasGeek/linkchecker"
+
+    user_agent = (
+        "Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 HasGeek/linkchecker"
+    )
 
     def __init__(self, message=None, message_urltext=None, invalid_urls=[]):
-        self.message = message or _(u'The URL “{url}” is not valid or is currently inaccessible')
+        self.message = message or _(
+            u'The URL “{url}” is not valid or is currently inaccessible'
+        )
         self.invalid_urls = invalid_urls
-        self.message_urltext = message_urltext or _(u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible')
+        self.message_urltext = message_urltext or _(
+            u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible'
+        )
 
     def check_url(self, invalid_urls, url, text=None):
         if six.PY2:
-            cache_key = 'linkchecker/' + urlquote(url.encode('utf-8') if isinstance(url, six.text_type) else url, safe='')
+            cache_key = 'linkchecker/' + urlquote(
+                url.encode('utf-8') if isinstance(url, six.text_type) else url, safe=''
+            )
         else:
             cache_key = 'linkchecker/' + urlquote(url, safe='')
         cache_check = asset_cache.get(cache_key)
@@ -349,18 +411,38 @@ class ValidUrl(object):
 
         if not rurl or not code:
             try:
-                r = requests.get(url, timeout=30, allow_redirects=True, verify=False, headers={'User-Agent': self.user_agent})
+                r = requests.get(
+                    url,
+                    timeout=30,
+                    allow_redirects=True,
+                    verify=False,
+                    headers={'User-Agent': self.user_agent},
+                )
                 code = r.status_code
                 rurl = r.url
-            except (requests.exceptions.MissingSchema,    # Still a relative URL? Must be broken
-                    requests.exceptions.ConnectionError,  # Name resolution or connection failed
-                    requests.exceptions.Timeout):         # Didn't respond in time
+            except (
+                requests.exceptions.MissingSchema,  # Still a relative URL? Must be broken
+                requests.exceptions.ConnectionError,  # Name resolution or connection failed
+                requests.exceptions.Timeout,
+            ):  # Didn't respond in time
                 code = None
             except Exception as e:
                 exception_catchall.send(e)
                 code = None
 
-        if rurl is not None and code in (200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 999):
+        if rurl is not None and code in (
+            200,
+            201,
+            202,
+            203,
+            204,
+            205,
+            206,
+            207,
+            208,
+            226,
+            999,
+        ):
             # 999 is a non-standard too-many-requests error. We can't look past it to
             # check a URL, so we let it pass
 
@@ -370,7 +452,11 @@ class ValidUrl(object):
                     # For text patterns, do a substring search. For regex patterns (assumed so if not text),
                     # do a regex search. Test with the final URL from the response, after redirects,
                     # but report errors using the URL the user provided
-                    if (pattern in rurl if isinstance(pattern, six.string_types) else pattern.search(rurl) is not None):
+                    if (
+                        pattern in rurl
+                        if isinstance(pattern, six.string_types)
+                        else pattern.search(rurl) is not None
+                    ):
                         return message.format(url=url, text=text)
             # All good. The URL works and isn't invalid, so save to cache and return without an error message
             asset_cache.set(cache_key, {'url': rurl, 'code': code}, timeout=86400)
@@ -389,7 +475,11 @@ class ValidUrl(object):
     def __call__(self, form, field):
         if field.data:
             current_url = request.url if request else None
-            invalid_urls = self.invalid_urls() if callable(self.invalid_urls) else self.invalid_urls
+            invalid_urls = (
+                self.invalid_urls()
+                if callable(self.invalid_urls)
+                else self.invalid_urls
+            )
 
             return self.call_inner(field, current_url, invalid_urls)
 
@@ -405,9 +495,13 @@ class AllUrlsValid(ValidUrl):
         where ``patterns`` is a list of strings or regular expressions. If ``invalid_urls`` is
         a callable, it will be called to retrieve the list.
     """
+
     def call_inner(self, field, current_url, invalid_urls):
         html_tree = html.fromstring(field.data)
-        for text, href in [(atag.text_content(), atag.attrib.get('href')) for atag in html_tree.xpath("//a")]:
+        for text, href in [
+            (atag.text_content(), atag.attrib.get('href'))
+            for atag in html_tree.xpath("//a")
+        ]:
             error = self.check_url(invalid_urls, urljoin(current_url, href), text)
             if error:
                 field.errors.append(error)
@@ -419,6 +513,7 @@ class NoObfuscatedEmail(object):
     """
     Scan for obfuscated email addresses in the provided text and reject them
     """
+
     def __init__(self, message=None):
         if not message:
             message = __(u"Email address identified")
@@ -438,8 +533,10 @@ class NoObfuscatedEmail(object):
 class ValidName(object):
     def __init__(self, message=None):
         if not message:
-            message = __(u"This name contains unsupported characters. "
-                u"It should have letters, numbers and non-terminal hyphens only")
+            message = __(
+                u"This name contains unsupported characters. "
+                u"It should have letters, numbers and non-terminal hyphens only"
+            )
         self.message = message
 
     def __call__(self, form, field):
@@ -450,8 +547,12 @@ class ValidName(object):
 class ValidCoordinates(object):
     def __init__(self, message=None, message_latitude=None, message_longitude=None):
         self.message = message or __(u"Valid latitude and longitude expected")
-        self.message_latitude = message_latitude or __(u"Latitude must be within ± 90 degrees")
-        self.message_longitude = message_longitude or __(u"Longitude must be within ± 180 degrees")
+        self.message_latitude = message_latitude or __(
+            u"Latitude must be within ± 90 degrees"
+        )
+        self.message_longitude = message_longitude or __(
+            u"Longitude must be within ± 180 degrees"
+        )
 
     def __call__(self, form, field):
         if len(field.data) != 2:

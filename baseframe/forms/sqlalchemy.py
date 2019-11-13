@@ -5,6 +5,7 @@ SQLAlchemy-based form fields and widgets
 """
 
 from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
+
 from .. import b__ as __
 from .validators import StopValidation
 
@@ -16,6 +17,7 @@ class AvailableAttr(object):
     Validator to check whether the specified attribute is available
     for the model being edited.
     """
+
     def __init__(self, attr, message=None, model=None):
         self.model = model
         self.attr = attr
@@ -26,7 +28,9 @@ class AvailableAttr(object):
     def __call__(self, form, field):
         model = self.model or form.edit_model
         if not model:
-            raise TypeError(u"Either the validator or the form MUST be linked to a model")
+            raise TypeError(
+                u"Either the validator or the form MUST be linked to a model"
+            )
         if hasattr(model, 'parent'):
             scoped = True
         else:
@@ -46,6 +50,7 @@ class AvailableName(AvailableAttr):
     Validator to check whether the specified name is available
     for the model being edited.
     """
+
     def __init__(self, message=None, model=None):
         if not message:
             message = __("This URL name is already in use")

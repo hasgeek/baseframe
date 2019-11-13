@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from baseframe import _localized_country_list_inner, localized_country_list
-from .fixtures import app1 as app, TestCaseBaseframe
+
+from .fixtures import TestCaseBaseframe
+from .fixtures import app1 as app
 
 
 @app.route('/localetest')
@@ -27,15 +29,24 @@ class TestUtils(TestCaseBaseframe):
             assert rv.data.decode('utf-8') == u"Germany"
 
         with app.test_client() as c:
-            rv = c.get('/localetest', headers={'Accept-Language': 'de;q=0.9, en;q=0.8, *;q=0.5'})
+            rv = c.get(
+                '/localetest',
+                headers={'Accept-Language': 'de;q=0.9, en;q=0.8, *;q=0.5'},
+            )
             assert rv.data.decode('utf-8') == u"Deutschland"
 
         with app.test_client() as c:
-            rv = c.get('/localetest', headers={'Accept-Language': 'es;q=0.9, en;q=0.8, *;q=0.5'})
+            rv = c.get(
+                '/localetest',
+                headers={'Accept-Language': 'es;q=0.9, en;q=0.8, *;q=0.5'},
+            )
             assert rv.data.decode('utf-8') == u"Alemania"
 
         with app.test_client() as c:
-            rv = c.get('/localetest', headers={'Accept-Language': 'hi;q=0.9, en;q=0.8, *;q=0.5'})
+            rv = c.get(
+                '/localetest',
+                headers={'Accept-Language': 'hi;q=0.9, en;q=0.8, *;q=0.5'},
+            )
             assert rv.data.decode('utf-8') == u"जर्मनी"
 
     def test_localized_country_order(self):
@@ -47,22 +58,30 @@ class TestUtils(TestCaseBaseframe):
         assert dict(countries)['DE'] == u"Germany"
         assert dict(countries)['DZ'] == u"Algeria"
         # index(DE) < index(DZ), but index(Germany) > index(Algeria)
-        assert countries.index((u'DE', u'Germany')) > countries.index((u'DZ', u'Algeria'))
+        assert countries.index((u'DE', u'Germany')) > countries.index(
+            (u'DZ', u'Algeria')
+        )
 
         countries = _localized_country_list_inner('de')
         assert dict(countries)['DE'] == u"Deutschland"
         assert dict(countries)['DZ'] == u"Algerien"
         # index(DE) < index(DZ), but index(Deutschland) > index(Algerien)
-        assert countries.index((u'DE', u'Deutschland')) > countries.index((u'DZ', u'Algerien'))
+        assert countries.index((u'DE', u'Deutschland')) > countries.index(
+            (u'DZ', u'Algerien')
+        )
 
         countries = _localized_country_list_inner('es')
         assert dict(countries)['DE'] == u"Alemania"
         assert dict(countries)['DZ'] == u"Algeria"
         # index(DE) < index(DZ), and index(Alemania) < index(Algeria)
-        assert countries.index((u'DE', u'Alemania')) < countries.index((u'DZ', u'Algeria'))
+        assert countries.index((u'DE', u'Alemania')) < countries.index(
+            (u'DZ', u'Algeria')
+        )
 
         countries = _localized_country_list_inner('hi')
         assert dict(countries)['DE'] == u"जर्मनी"
         assert dict(countries)['DZ'] == u"अल्जीरिया"
         # index(DE) < index(DZ), but index(जर्मनी) > index(अल्जीरिया)
-        assert countries.index((u'DE', u'जर्मनी')) > countries.index((u'DZ', u'अल्जीरिया'))
+        assert countries.index((u'DE', u'जर्मनी')) > countries.index(
+            (u'DZ', u'अल्जीरिया')
+        )

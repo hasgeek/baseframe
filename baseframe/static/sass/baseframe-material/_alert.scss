@@ -1,85 +1,85 @@
 .alert {
-	padding: $mui-panel-padding;
-	border: 1px solid transparent;
-	border-radius: $mui-border-radius-default ;
-	background-color: transparentize($mui-info-color, 0.9);
-	border-color: transparentize($mui-info-color, 0.8);
-	color: $mui-info-color;
+  padding: $mui-panel-padding;
+  border: 1px solid transparent;
+  border-radius: $mui-border-radius-default;
+  background-color: transparentize($mui-info-color, 0.9);
+  border-color: transparentize($mui-info-color, 0.8);
+  color: $mui-info-color;
 
-  	.alert__heading {
-		margin-top: 0;
-		color: inherit;
-	}
+  .alert__heading {
+    margin-top: 0;
+    color: inherit;
+  }
 
-	.alert__link {
-		font-weight: bold;
-		color: inherit;
-	}
+  .alert__link {
+    font-weight: bold;
+    color: inherit;
+  }
 
-	.alert__text {
-		@extend .mui--text-subhead;
-		margin-bottom: 0;
-	}
+  .alert__text {
+    @extend .mui--text-subhead;
+    margin-bottom: 0;
+  }
 
-	.alert__close {
-		float: right;
-	  	position: relative;
-	  	top: -2px;
-	  	right: -21px;
-	  	color: inherit;
-	  	cursor: pointer;
-	}
+  .alert__close {
+    float: right;
+    position: relative;
+    top: -2px;
+    right: -21px;
+    color: inherit;
+    cursor: pointer;
+  }
 
-	.alert__icon {
-	  	vertical-align: top;
-		font-size: inherit;
-		line-height: inherit;
-	}
+  .alert__icon {
+    vertical-align: top;
+    font-size: inherit;
+    line-height: inherit;
+  }
 }
 
 .alert--dismissable {
-  	padding-right: 35px;
+  padding-right: 35px;
 }
 
 .alert--success {
-  	background-color: transparentize($mui-success-color, 0.9);
-  	border-color: transparentize($mui-success-color, 0.8);
-  	color: $mui-success-color;
+  background-color: transparentize($mui-success-color, 0.9);
+  border-color: transparentize($mui-success-color, 0.8);
+  color: $mui-success-color;
 }
 
 .alert--success .alert__hr {
-  	border-top-color: #c9e2b3;
+  border-top-color: #c9e2b3;
 }
 
 .alert--info .alert__hr {
-  	border-top-color: #a6e1ec;
+  border-top-color: #a6e1ec;
 }
 
 .alert--warning {
-	background-color: transparentize($mui-warning-color, 0.9);
-	border-color: transparentize($mui-warning-color, 0.8);
-	color: $mui-warning-color;
+  background-color: transparentize($mui-warning-color, 0.9);
+  border-color: transparentize($mui-warning-color, 0.8);
+  color: $mui-warning-color;
 }
 
 .alert-warning .alert__hr {
-  	border-top-color: #f7e1b5;
+  border-top-color: #f7e1b5;
 }
 
 .alert--error,
 .alert--danger {
-	background-color: transparentize($mui-danger-color, 0.9);
-	border-color: transparentize($mui-danger-color, 0.8);
-	color: $mui-danger-color;
+  background-color: transparentize($mui-danger-color, 0.9);
+  border-color: transparentize($mui-danger-color, 0.8);
+  color: $mui-danger-color;
 }
 
 .alert--error .alert__hr,
 .alert--danger .alert__hr {
-  	border-top-color: #e4b9c0;
+  border-top-color: #e4b9c0;
 }
 
-@media(min-width: 768px) {
-    .alert {
-		margin-top: $reflex-cell-spacing;
-		margin-bottom: $reflex-cell-spacing;
-	}
+@media (min-width: 768px) {
+  .alert {
+    margin-top: $reflex-cell-spacing;
+    margin-bottom: $reflex-cell-spacing;
+  }
 }

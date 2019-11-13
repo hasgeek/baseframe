@@ -5,13 +5,13 @@
 Baseframe forms
 """
 
-from .patch_wtforms import *
-from .parsleyjs import *
+from .auto import *
 from .fields import *
-from .widgets import *
-from .validators import *
 from .filters import *
 from .form import *
-from .auto import *
+from .parsleyjs import *
+from .patch_wtforms import *
+from .validators import *
+from .widgets import *
 
 # SQLAlchemy-based fields/widgets/validators are not automatically imported here

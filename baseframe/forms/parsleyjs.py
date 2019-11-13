@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 WTForms fields and widgets with ParsleyJS headers. This is a fork of wtforms-parsleyjs
 based on https://github.com/johannes-gehrs/wtforms-parsleyjs and
@@ -12,37 +13,82 @@ various other open source licenses (other third party code).
 
 __author__ = 'Johannes Gehrs (jgehrs@gmail.com)'
 
-import re
 import copy
+import re
 
-from wtforms.widgets import html_params, HTMLString
-from wtforms.validators import (Length, NumberRange, Email, EqualTo, IPAddress,
-    Regexp, URL, AnyOf)
-from wtforms.validators import DataRequired, InputRequired
-
-from wtforms.widgets import (TextInput as _TextInput, PasswordInput as _PasswordInput,
-    CheckboxInput as _CheckboxInput, Select as _Select, TextArea as _TextArea,
-    ListWidget as _ListWidget, HiddenInput as _HiddenInput)
-from wtforms.widgets.html5 import (TelInput as _TelInput, URLInput as _URLInput, EmailInput as _EmailInput,
-    DateInput as _DateInput, NumberInput as _NumberInput)
-from wtforms.fields import (StringField as _StringField, BooleanField as _BooleanField,
-    DecimalField as _DecimalField, IntegerField as _IntegerField,
-    FloatField as _FloatField, PasswordField as _PasswordField,
-    SelectField as _SelectField, TextAreaField as _TextAreaField,
-    RadioField as _RadioField)
-from wtforms.fields.html5 import (URLField as _URLField, EmailField as _EmailField, TelField as _TelField,
-    DateField as _DateField)
-
+from wtforms.fields import BooleanField as _BooleanField
+from wtforms.fields import DecimalField as _DecimalField
+from wtforms.fields import FloatField as _FloatField
+from wtforms.fields import IntegerField as _IntegerField
+from wtforms.fields import PasswordField as _PasswordField
+from wtforms.fields import RadioField as _RadioField
+from wtforms.fields import SelectField as _SelectField
+from wtforms.fields import StringField as _StringField
+from wtforms.fields import TextAreaField as _TextAreaField
+from wtforms.fields.html5 import DateField as _DateField
+from wtforms.fields.html5 import EmailField as _EmailField
+from wtforms.fields.html5 import TelField as _TelField
+from wtforms.fields.html5 import URLField as _URLField
+from wtforms.validators import (
+    URL,
+    AnyOf,
+    DataRequired,
+    Email,
+    EqualTo,
+    InputRequired,
+    IPAddress,
+    Length,
+    NumberRange,
+    Regexp,
+)
+from wtforms.widgets import CheckboxInput as _CheckboxInput
+from wtforms.widgets import HiddenInput as _HiddenInput
+from wtforms.widgets import HTMLString
+from wtforms.widgets import ListWidget as _ListWidget
+from wtforms.widgets import PasswordInput as _PasswordInput
+from wtforms.widgets import Select as _Select
+from wtforms.widgets import TextArea as _TextArea
+from wtforms.widgets import TextInput as _TextInput
+from wtforms.widgets import html_params
+from wtforms.widgets.html5 import DateInput as _DateInput
+from wtforms.widgets.html5 import EmailInput as _EmailInput
+from wtforms.widgets.html5 import NumberInput as _NumberInput
+from wtforms.widgets.html5 import TelInput as _TelInput
+from wtforms.widgets.html5 import URLInput as _URLInput
 
 __all__ = [
     # ParsleyJS helpers
-    'parsley_kwargs', 'ParsleyInputMixin',
+    'parsley_kwargs',
+    'ParsleyInputMixin',
     # Widgets
-    'TextInput', 'PasswordInput', 'HiddenInput', 'TextArea', 'CheckboxInput', 'Select', 'ListWidget',
-    'TelInput', 'URLInput', 'EmailInput', 'DateInput', 'NumberInput',
+    'TextInput',
+    'PasswordInput',
+    'HiddenInput',
+    'TextArea',
+    'CheckboxInput',
+    'Select',
+    'ListWidget',
+    'TelInput',
+    'URLInput',
+    'EmailInput',
+    'DateInput',
+    'NumberInput',
     # Fields
-    'StringField', 'IntegerField', 'RadioField', 'BooleanField', 'DecimalField', 'FloatField', 'PasswordField',
-    'HiddenField', 'TextAreaField', 'SelectField', 'TelField', 'URLField', 'EmailField', 'DateField']
+    'StringField',
+    'IntegerField',
+    'RadioField',
+    'BooleanField',
+    'DecimalField',
+    'FloatField',
+    'PasswordField',
+    'HiddenField',
+    'TextAreaField',
+    'SelectField',
+    'TelField',
+    'URLField',
+    'EmailField',
+    'DateField',
+]
 
 
 def parsley_kwargs(field, kwargs, extend=True):
@@ -100,11 +146,12 @@ def _equal_to_kwargs(kwargs, vali):
 
 def _ip_address_kwargs(kwargs, vali):
     # Regexp from http://stackoverflow.com/a/4460645
-    kwargs[u'data-parsley-regexp'] =\
-        r'^\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.' \
-        r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.' \
-        r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.' \
+    kwargs[u'data-parsley-regexp'] = (
+        r'^\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.'
+        r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.'
+        r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.'
         r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b$'
+    )
 
 
 def _length_kwargs(kwargs, vali):
@@ -113,7 +160,9 @@ def _length_kwargs(kwargs, vali):
     if vali.max != default_number and vali.min != default_number:
         kwargs[u'minlength'] = str(vali.min)
         kwargs[u'maxlength'] = str(vali.max)
-        kwargs[u'data-parsley-length'] = u'[' + str(vali.min) + u',' + str(vali.max) + u']'
+        kwargs[u'data-parsley-length'] = (
+            u'[' + str(vali.min) + u',' + str(vali.max) + u']'
+        )
     else:
         if vali.min != default_number:
             kwargs[u'minlength'] = str(vali.min)
@@ -136,7 +185,7 @@ def _input_required_kwargs(kwargs, vali):
 def _regexp_kwargs(kwargs, vali):
     # Apparently, this is the best way to check for RegexObject Type
     # It's needed because WTForms allows compiled regexps to be passed to the validator
-    RegexObject = type(re.compile(''))
+    RegexObject = type(re.compile(''))  # NOQA: N806
     if isinstance(vali.regex, RegexObject):
         regex_string = vali.regex.pattern
     else:

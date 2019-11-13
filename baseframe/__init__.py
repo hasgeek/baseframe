@@ -1,27 +1,31 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import
-
-import types
-import json
-import gettext
-
-from pytz import timezone, UTC
-from pytz.tzinfo import BaseTzInfo
-from speaklater import is_lazy_string
 import six
-from furl import furl
-import pycountry
 
-from flask import Blueprint, request, current_app
+import gettext
+import json
+import types
+
+from flask import Blueprint, current_app, request
 from flask.json import JSONEncoder as JSONEncoderBase
-from flask_assets import Environment, Bundle
-from flask_caching import Cache
+from flask_assets import Bundle, Environment
 from flask_babelex import Babel, Domain
+from speaklater import is_lazy_string
+
+from flask_caching import Cache
+from furl import furl
+from pytz import UTC, timezone
+from pytz.tzinfo import BaseTzInfo
+import pycountry
 
 from coaster.assets import split_namespec
 from coaster.auth import current_auth, request_has_auth
-from coaster.sqlalchemy import RoleAccessProxy, MarkdownComposite
+from coaster.sqlalchemy import MarkdownComposite, RoleAccessProxy
+
+from . import translations
+from ._version import __version__, __version_info__
+from .assets import Version, assets
 
 try:
     from flask_debugtoolbar import DebugToolbarExtension
@@ -32,11 +36,20 @@ try:
 except ImportError:
     line_profile = None
 
-from ._version import *  # NOQA
-from .assets import assets, Version
-from . import translations
 
-__all__ = ['baseframe', 'baseframe_js', 'baseframe_css', 'assets', 'Version', '_', '__']  # NOQA
+# TODO: baseframe_js and baseframe_css are defined in deprecated.py
+# and pending removal after an audit of all apps
+__all__ = [  # NOQA: F405
+    '_',
+    '__',
+    '__version__',
+    '__version_info__',
+    'assets',
+    'baseframe',
+    'baseframe_css',
+    'baseframe_js',
+    'Version',
+]
 
 networkbar_cache = Cache(with_jinja2_ext=False)
 asset_cache = Cache(with_jinja2_ext=False)
@@ -54,16 +67,16 @@ THEME_FILES = {
         'autoform.html.jinja2': 'baseframe/bootstrap3/autoform.html.jinja2',
         'delete.html.jinja2': 'baseframe/bootstrap3/delete.html.jinja2',
         'message.html.jinja2': 'baseframe/bootstrap3/message.html.jinja2',
-        'redirect.html.jinja2': 'baseframe/bootstrap3/redirect.html.jinja2'
-        },
+        'redirect.html.jinja2': 'baseframe/bootstrap3/redirect.html.jinja2',
+    },
     'mui': {
         'ajaxform.html.jinja2': 'baseframe/mui/ajaxform.html.jinja2',
         'autoform.html.jinja2': 'baseframe/mui/autoform.html.jinja2',
         'delete.html.jinja2': 'baseframe/mui/delete.html.jinja2',
         'message.html.jinja2': 'baseframe/mui/message.html.jinja2',
-        'redirect.html.jinja2': 'baseframe/mui/redirect.html.jinja2'
-        }
-    }
+        'redirect.html.jinja2': 'baseframe/mui/redirect.html.jinja2',
+    },
+}
 
 baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
 _ = baseframe_translations.gettext
@@ -75,6 +88,7 @@ class JSONEncoder(JSONEncoderBase):
     Custom JSON encoder that adds support to types that are not supported
     by Flask's JSON encoder. Eg: lazy_gettext
     """
+
     def default(self, o):
         if is_lazy_string(o):
             return six.text_type(o)
@@ -97,12 +111,33 @@ def _select_jinja_autoescape(filename):
     """
     if filename is None:
         return False
-    return filename.endswith(('.html', '.htm', '.xml', '.xhtml',
-        '.html.jinja', '.html.jinja2', '.xml.jinja', '.xml.jinja2', '.xhtml.jinja', '.xhtml.jinja2'))
+    return filename.endswith(
+        (
+            '.html',
+            '.htm',
+            '.xml',
+            '.xhtml',
+            '.html.jinja',
+            '.html.jinja2',
+            '.xml.jinja',
+            '.xml.jinja2',
+            '.xhtml.jinja',
+            '.xhtml.jinja2',
+        )
+    )
 
 
 class BaseframeBlueprint(Blueprint):
-    def init_app(self, app, requires=[], ext_requires=[], bundle_js=None, bundle_css=None, assetenv=None, theme='bootstrap3'):
+    def init_app(
+        self,
+        app,
+        requires=[],
+        ext_requires=[],
+        bundle_js=None,
+        bundle_css=None,
+        assetenv=None,
+        theme='bootstrap3',
+    ):
         """
         Initialize an app and load necessary assets.
 
@@ -124,7 +159,8 @@ class BaseframeBlueprint(Blueprint):
         # Setting the config alone doesn't seem to work, so we explicitly
         # set the jinja environment here.
         if app.config.get('TEMPLATES_AUTO_RELOAD') or (
-                app.config.get('TEMPLATES_AUTO_RELOAD') is None and app.config.get('DEBUG')):
+            app.config.get('TEMPLATES_AUTO_RELOAD') is None and app.config.get('DEBUG')
+        ):
             app.jinja_env.auto_reload = True
         app.jinja_env.add_extension('jinja2.ext.do')
         app.jinja_env.autoescape = _select_jinja_autoescape
@@ -158,7 +194,10 @@ class BaseframeBlueprint(Blueprint):
                     itemgroup = [itemgroup]
                 for item in itemgroup:
                     name, spec = split_namespec(item)
-                    for alist, ilist, ext in [(sub_js, ignore_js, '.js'), (sub_css, ignore_css, '.css')]:
+                    for alist, ilist, ext in [
+                        (sub_js, ignore_js, '.js'),
+                        (sub_css, ignore_css, '.css'),
+                    ]:
                         if name + ext in assets:
                             alist.append(name + ext + six.text_type(spec))
                             ilist.append('!' + name + ext)
@@ -167,8 +206,13 @@ class BaseframeBlueprint(Blueprint):
                 if sub_css:
                     ext_css.append(sub_css)
         else:
-            requires = [item for itemgroup in ext_requires
-                for item in (itemgroup if isinstance(itemgroup, (list, tuple)) else [itemgroup])] + requires
+            requires = [
+                item
+                for itemgroup in ext_requires
+                for item in (
+                    itemgroup if isinstance(itemgroup, (list, tuple)) else [itemgroup]
+                )
+            ] + requires
 
         app.config['ext_js'] = ext_js
         app.config['ext_css'] = ext_css
@@ -180,10 +224,16 @@ class BaseframeBlueprint(Blueprint):
             for alist, ext in [(assets_js, '.js'), (assets_css, '.css')]:
                 if name + ext in assets:
                     alist.append(name + ext + six.text_type(spec))
-        js_all = Bundle(assets.require(*(ignore_js + assets_js)),
-            filters='uglipyjs', output='js/baseframe-packed.js')
-        css_all = Bundle(assets.require(*(ignore_css + assets_css)),
-            filters=['cssrewrite', 'cssmin'], output='css/baseframe-packed.css')
+        js_all = Bundle(
+            assets.require(*(ignore_js + assets_js)),
+            filters='uglipyjs',
+            output='js/baseframe-packed.js',
+        )
+        css_all = Bundle(
+            assets.require(*(ignore_css + assets_css)),
+            filters=['cssrewrite', 'cssmin'],
+            output='css/baseframe-packed.css',
+        )
         if bundle_js:
             js_all = Bundle(js_all, bundle_js)
         if bundle_css:
@@ -210,7 +260,9 @@ class BaseframeBlueprint(Blueprint):
             with app.open_resource(app.config['ASSET_MANIFEST_PATH']) as f:
                 asset_bundles = json.loads(f.read())
                 if app.config.get('assets'):
-                    raise ValueError("Loading assets via a manifest file needs the `ASSETS` config key to be unused")
+                    raise ValueError(
+                        "Loading assets via a manifest file needs the `ASSETS` config key to be unused"
+                    )
                 app.config['assets'] = {}
                 for asset_key, asset_path in asset_bundles['assets'].items():
                     app.config['assets'][asset_key] = asset_path
@@ -244,10 +296,11 @@ class BaseframeBlueprint(Blueprint):
                     'flask_debugtoolbar.panels.logger.LoggingPanel',
                     'flask_debugtoolbar.panels.route_list.RouteListDebugPanel',
                     'flask_debugtoolbar.panels.profiler.ProfilerDebugPanel',
-                    ]
+                ]
                 if line_profile is not None:
                     app.config['DEBUG_TB_PANELS'].append(
-                        'flask_debugtoolbar_lineprofilerpanel.panels.LineProfilerPanel')
+                        'flask_debugtoolbar_lineprofilerpanel.panels.LineProfilerPanel'
+                    )
             toolbar.init_app(app)
 
         app.json_encoder = JSONEncoder
@@ -263,13 +316,17 @@ class BaseframeBlueprint(Blueprint):
         app.config['theme'] = theme
 
         if 'NETWORKBAR_DATA' not in app.config:
-            app.config['NETWORKBAR_DATA'] = 'https://api.hasgeek.com/1/networkbar/networkbar.json'
+            app.config[
+                'NETWORKBAR_DATA'
+            ] = 'https://api.hasgeek.com/1/networkbar/networkbar.json'
 
         if isinstance(app.config.get('NETWORKBAR_DATA'), (list, tuple)):
             app.config['NETWORKBAR_LINKS'] = app.config['NETWORKBAR_DATA']
 
         app.config.setdefault('RECAPTCHA_DATA_ATTRS', {})
-        app.config['RECAPTCHA_DATA_ATTRS'].setdefault('callback', 'onInvisibleRecaptchaSubmit')
+        app.config['RECAPTCHA_DATA_ATTRS'].setdefault(
+            'callback', 'onInvisibleRecaptchaSubmit'
+        )
         app.config['RECAPTCHA_DATA_ATTRS'].setdefault('size', 'invisible')
 
     def register(self, app, options, first_registration=False):
@@ -293,16 +350,20 @@ class BaseframeBlueprint(Blueprint):
                 self.static_url_path + '/<path:filename>',
                 view_func=self.send_static_file,
                 endpoint='static',
-                subdomain=options.get('static_subdomain'))
+                subdomain=options.get('static_subdomain'),
+            )
 
         for deferred in self.deferred_functions:
             deferred(state)
 
 
-baseframe = BaseframeBlueprint('baseframe', __name__,
+baseframe = BaseframeBlueprint(
+    'baseframe',
+    __name__,
     static_folder='static',
     static_url_path='/_baseframe',
-    template_folder='templates')
+    template_folder='templates',
+)
 
 
 @babel.localeselector
@@ -316,14 +377,21 @@ def get_locale():
     # example. The best match wins.
 
     # FIXME: Do this properly. Don't use a random selection of languages
-    return request.accept_languages.best_match(['de', 'fr', 'es', 'hi', 'te', 'ta', 'kn', 'ml', 'en']) or 'en'
+    return (
+        request.accept_languages.best_match(
+            ['de', 'fr', 'es', 'hi', 'te', 'ta', 'kn', 'ml', 'en']
+        )
+        or 'en'
+    )
 
 
 @babel.timezoneselector
 def get_timezone():
     # If this app and request have a user, return user's timezone,
     # else return app default timezone
-    if current_auth.actor is not None:  # Use 'actor' instead of 'user' to support anon users
+    if (
+        current_auth.actor is not None
+    ):  # Use 'actor' instead of 'user' to support anon users
         user = current_auth.actor
         if hasattr(user, 'tz'):
             return user.tz
@@ -350,11 +418,22 @@ def _localized_country_list_inner(locale):
     if locale == 'en':
         countries = [(country.name, country.alpha_2) for country in pycountry.countries]
     else:
-        pycountry_locale = gettext.translation('iso3166-1', pycountry.LOCALES_DIR, languages=[locale])
+        pycountry_locale = gettext.translation(
+            'iso3166-1', pycountry.LOCALES_DIR, languages=[locale]
+        )
         if six.PY2:
-            countries = [(pycountry_locale.gettext(country.name).decode('utf-8'), country.alpha_2) for country in pycountry.countries]
+            countries = [
+                (
+                    pycountry_locale.gettext(country.name).decode('utf-8'),
+                    country.alpha_2,
+                )
+                for country in pycountry.countries
+            ]
         else:
-            countries = [(pycountry_locale.gettext(country.name), country.alpha_2) for country in pycountry.countries]
+            countries = [
+                (pycountry_locale.gettext(country.name), country.alpha_2)
+                for country in pycountry.countries
+            ]
     countries.sort()
     return [(code, name) for (name, code) in countries]
 
@@ -414,12 +493,13 @@ def process_response(response):
 # Replace gettext handlers for imports
 b_ = _
 b__ = __
-from flask_babelex import gettext as _, lazy_gettext as __
+from flask_babelex import gettext as _  # isort:skip
+from flask_babelex import lazy_gettext as __  # isort:skip
 
-from .utils import *    # NOQA
-from .views import *    # NOQA
-from .errors import *   # NOQA
-from .filters import *  # NOQA
+from .utils import *  # NOQA # isort:skip
+from .views import *  # NOQA # isort:skip
+from .errors import *  # NOQA # isort:skip
+from .filters import *  # NOQA # isort:skip
 
 # Deprecated imports
-from .deprecated import *  # NOQA
+from .deprecated import *  # NOQA # isort:skip
