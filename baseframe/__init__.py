@@ -248,11 +248,12 @@ class BaseframeBlueprint(Blueprint):
         app.assets.register('css_all', css_all)
         app.register_blueprint(self, static_subdomain=subdomain)
 
-        try:
-            module = __import__('baseframe-assets')
-            app.register_blueprint(module.blueprint)
-        except ImportError:
-            pass
+        for module_name in app.config.get('PRIVATE_ASSETS', []):
+            try:
+                module = __import__(module_name)
+                app.register_blueprint(module.blueprint)
+            except ImportError:
+                continue
 
         # Optional config for a client app to use a manifest file
         # to load fingerprinted assets
