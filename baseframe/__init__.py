@@ -251,6 +251,7 @@ class BaseframeBlueprint(Blueprint):
         for module_name in app.config.get('PRIVATE_ASSETS', []):
             try:
                 module = __import__(module_name)
+                module.blueprint.init_app_assets(app, assets)
                 app.register_blueprint(module.blueprint)
             except ImportError:
                 continue
