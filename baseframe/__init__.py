@@ -137,6 +137,7 @@ class BaseframeBlueprint(Blueprint):
         bundle_css=None,
         assetenv=None,
         theme='bootstrap3',
+        asset_modules=[]
     ):
         """
         Initialize an app and load necessary assets.
@@ -248,13 +249,13 @@ class BaseframeBlueprint(Blueprint):
         app.assets.register('css_all', css_all)
         app.register_blueprint(self, static_subdomain=subdomain)
 
-        for module_name in app.config.get('PRIVATE_ASSETS', []):
+        for module_name in asset_modules:
             try:
                 module = __import__(module_name)
-                module.blueprint.init_app_assets(app, assets)
+                module.blueprint.init_app(app)
                 app.register_blueprint(module.blueprint)
             except ImportError:
-                continue
+                app.logger.warning("Unable to import asset module: %s", module_name)
 
         # Optional config for a client app to use a manifest file
         # to load fingerprinted assets
