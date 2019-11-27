@@ -137,7 +137,7 @@ class BaseframeBlueprint(Blueprint):
         bundle_css=None,
         assetenv=None,
         theme='bootstrap3',
-        asset_modules=[]
+        asset_modules=()
     ):
         """
         Initialize an app and load necessary assets.
@@ -252,8 +252,7 @@ class BaseframeBlueprint(Blueprint):
         for module_name in asset_modules:
             try:
                 module = __import__(module_name)
-                module.blueprint.init_app(app)
-                app.register_blueprint(module.blueprint)
+                module.blueprint.init_app(app, subdomain)
             except ImportError:
                 app.logger.warning("Unable to import asset module: %s", module_name)
 
