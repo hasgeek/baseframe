@@ -3,7 +3,7 @@
 // ============================================================================
 
 .mui-list--aligned {
-    padding-left: $reflex-cell-spacing;
+  padding-left: $reflex-cell-spacing;
 }
 
 // ============================================================================
@@ -11,13 +11,13 @@
 // ============================================================================
 
 .mui--d-block {
-	display: block;
+  display: block;
 }
 .mui--d-inlineblock {
-	display: inline-block;
+  display: inline-block;
 }
 .mui--d-inline {
-	display: inline;
+  display: inline;
 }
 
 // ============================================================================
@@ -25,17 +25,17 @@
 // ============================================================================
 
 .mui--bg-primary {
-	background-color: $mui-bg-color-primary;
+  background-color: $mui-bg-color-primary;
 }
 .mui--bg-primary-dark {
-	background-color: $mui-bg-color-dark;
+  background-color: $mui-bg-color-dark;
 }
 .mui--bg-primary-light {
-	background-color: $mui-bg-color-light;
+  background-color: $mui-bg-color-light;
 }
 
 .mui--bg-accent {
-	background-color: $mui-bg-color-accent;
+  background-color: $mui-bg-color-accent;
 }
 
 // ============================================================================
@@ -43,64 +43,70 @@
 // ============================================================================
 
 .mui--text-display3 {
-	font-weight: 400;
-	font-size: 64px;
-	line-height: 64px;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1.2;
 }
 
 .mui--text-display2 {
-	font-weight: 400;
-	font-size: 48px;
-	line-height: 58px;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1.2;
 }
 
-.mui--text-display1, h1 {
-	font-weight: 400;
-	font-size: 32px;
-	line-height: 40px;
+.mui--text-display1,
+h1 {
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.2;
 }
 
-.mui--text-headline, h2 {
-	font-weight: 400;
-	font-size: 24px;
-	line-height: 32px;
+.mui--text-headline,
+h2 {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.4;
 }
 
-.mui--text-title, h3 {
-	font-weight: 400;
-	font-size: 18px;
-	line-height: 28px;
+.mui--text-title,
+h3 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.5;
 }
 
-.mui--text-subhead, h4 {
+.mui--text-subhead,
+h4 {
   font-weight: 400;
   font-size: 16px;
+  line-height: 1.5;
+}
+
+.mui--text-body2,
+h5 {
+  font-weight: 400;
+  font-size: 14px;
   line-height: 24px;
 }
 
-.mui--text-body2, h5 {
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 24px;
-}
-
 .mui--text-body1 {
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 24px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-.mui--text-caption, h6 {
-	font-weight: 400;
-	font-size: 12px;
-	line-height: 16px;
+.mui--text-caption,
+h6 {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .mui--text-menu,
 .mui--text-button {
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 18px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 // ============================================================================
@@ -108,11 +114,11 @@
 // ============================================================================
 
 .mui--text-uppercase {
-	text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .mui--text-capitalize {
-	text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 // ============================================================================
@@ -120,7 +126,7 @@
 // ============================================================================
 
 .mui--text-underline {
-	text-decoration: underline;
+  text-decoration: underline;
 }
 
 // ============================================================================
@@ -128,7 +134,7 @@
 // ============================================================================
 
 .mui--text-bold {
-	font-weight: 600;
+  font-weight: 600;
 }
 
 // ============================================================================
@@ -136,26 +142,25 @@
 // ============================================================================
 
 .mui-btn.mui-btn--nostyle {
-    padding: 0;
-    border: 0;
-    margin: 0;
-    cursor: pointer;
-    background: none;
-    box-shadow: none;
-    height: auto;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  cursor: pointer;
+  background: none;
+  box-shadow: none;
+  height: auto;
 }
 
 .mui-btn.mui-btn--nostyle:hover,
 .mui-btn.mui-btn--nostyle:active,
-.mui-btn.mui-btn--nostyle:focus
-.mui-btn.mui-btn--nostyle:active:hover {
-    padding: 0;
-    border: 0;
-    cursor: pointer;
-    background: none;
-    box-shadow: none;
+.mui-btn.mui-btn--nostyle:focus .mui-btn.mui-btn--nostyle:active:hover {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: none;
+  box-shadow: none;
 }
 
-.mui-btn--nostyle+.mui-btn--nostyle {
-	margin-left: 8px;
+.mui-btn--nostyle + .mui-btn--nostyle {
+  margin-left: 8px;
 }

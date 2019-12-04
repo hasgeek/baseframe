@@ -2,8 +2,9 @@
 
 from datetime import datetime, timedelta
 
-from coaster.utils import md5sum, utcnow
 from baseframe import filters, forms
+from coaster.utils import md5sum, utcnow
+
 from .fixtures import TestCaseBaseframe, UserTest
 
 
@@ -46,7 +47,9 @@ class TestDatetimeFilters(TestCaseBaseframe):
         self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 0
         testdate = self.now.date() - timedelta(days=5)
         with self.app.test_request_context('/'):
-            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime("%e %b '%y")
+            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime(
+                "%e %b '%y"
+            )
 
     def test_shortdate_datetime_with_threshold(self):
         self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 10
@@ -57,12 +60,16 @@ class TestDatetimeFilters(TestCaseBaseframe):
     def test_shortdate_datetime_without_threshold(self):
         testdate = self.now - timedelta(days=5)
         with self.app.test_request_context('/'):
-            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime("%e %b '%y")
+            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime(
+                "%e %b '%y"
+            )
 
     def test_shortdate_datetime_with_tz(self):
         testdate = self.now
         with self.app.test_request_context('/'):
-            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime("%e %b '%y")
+            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime(
+                "%e %b '%y"
+            )
 
     def test_longdate_date(self):
         testdate = self.now.date()
@@ -126,27 +133,48 @@ class TestFilters(TestCaseBaseframe):
     def test_avatar_url(self):
         # test_user object doesn't have an email or an avatar by default
         avatar_url = filters.avatar_url(self.test_user)
-        self.assertEqual(avatar_url, u'//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm')
+        self.assertEqual(
+            avatar_url,
+            u'//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm',
+        )
 
         # testing what if the user has an avatar already
         self.test_user.set_avatar(self.test_avatar_url)
         avatar_url = filters.avatar_url(self.test_user, self.test_avatar_size)
-        self.assertEqual(avatar_url, self.test_avatar_url + '?size=' + u'x'.join(self.test_avatar_size))
+        self.assertEqual(
+            avatar_url,
+            self.test_avatar_url + '?size=' + u'x'.join(self.test_avatar_size),
+        )
 
         # what if the user doesn't have an avatar but has an email
         self.test_user.set_avatar(None)
         self.test_user.set_email('foobar@foo.com')
         avatar_url = filters.avatar_url(self.test_user, self.test_avatar_size)
-        hash = md5sum(self.test_user.email)
-        self.assertEqual(avatar_url, u'//www.gravatar.com/avatar/' + hash + u'?d=mm&s=' + u'x'.join(self.test_avatar_size))
+        ehash = md5sum(self.test_user.email)
+        self.assertEqual(
+            avatar_url,
+            u'//www.gravatar.com/avatar/'
+            + ehash
+            + u'?d=mm&s='
+            + u'x'.join(self.test_avatar_size),
+        )
 
     def test_render_field_options(self):
-        test_attrs = dict(attrone='test', attrtwo=False, attrthree=None, attrfour='')
+        test_attrs = {
+            'attrone': 'test',
+            'attrtwo': False,
+            'attrthree': None,
+            'attrfour': '',
+        }
         modified_field = filters.render_field_options(forms.RichTextField, **test_attrs)
-        self.assertIn('attrone', modified_field.kwargs) and self.assertEqual(modified_field.kwargs['attrone'], 'test')
-        self.assertEqual(hasattr(modified_field.kwargs, 'attrtwo'), False)
-        self.assertEqual(hasattr(modified_field.kwargs, 'attrthree'), False)
-        self.assertIn('attrfour', modified_field.kwargs) and self.assertEqual(modified_field.kwargs['attrfour'], '')
+        self.assertIn('attrone', modified_field.kwargs) and self.assertEqual(
+            modified_field.kwargs['attrone'], 'test'
+        )
+        assert not hasattr(modified_field.kwargs, 'attrtwo')
+        assert not hasattr(modified_field.kwargs, 'attrthree')
+        self.assertIn('attrfour', modified_field.kwargs) and self.assertEqual(
+            modified_field.kwargs['attrfour'], ''
+        )
 
     def test_firstline(self):
         html = "<div>this is the first line</div><div>and second line</div>"
@@ -194,28 +222,16 @@ class TestFilters(TestCaseBaseframe):
 
     def test_strip_each(self):
         strip_each_func = forms.strip_each()
-        self.assertEqual(strip_each_func(None), None)
-        self.assertEqual(strip_each_func([]), [])
-        self.assertEqual(strip_each_func(
-            [
-                ' Left strip',
-                'Right strip ',
-                ' Full strip ',
-                '',
-                'No strip',
-                ''
-                ]),
-            [
-                'Left strip',
-                'Right strip',
-                'Full strip',
-                'No strip',
-            ])
+        assert strip_each_func(None) is None
+        assert strip_each_func([]) == []
+        assert strip_each_func(
+            [' Left strip', 'Right strip ', ' Full strip ', '', 'No strip', '']
+        ) == ['Left strip', 'Right strip', 'Full strip', 'No strip']
 
     def test_none_if_empty(self):
         none_if_empty_func = forms.none_if_empty()
-        self.assertEqual(none_if_empty_func('Test'), 'Test')
-        self.assertEqual(none_if_empty_func(''), None)
-        self.assertEqual(none_if_empty_func([]), None)
-        self.assertEqual(none_if_empty_func(False), None)
-        self.assertEqual(none_if_empty_func(0), None)
+        assert none_if_empty_func('Test') == 'Test'
+        assert none_if_empty_func('') is None
+        assert none_if_empty_func([]) is None
+        assert none_if_empty_func(False) is None
+        assert none_if_empty_func(0) is None

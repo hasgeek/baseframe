@@ -21,7 +21,7 @@ Reusable styles and templates for HasGeek projects.
 
 .. automodule:: baseframe.forms
    :members:
-   
+
 
 Indices and tables
 ==================
@@ -29,4 +29,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

@@ -1,7 +1,7 @@
 language: python
 python:
-  - "2.7"
-  - "3.6"
+  - '2.7'
+  - '3.6'
 # Enable 3.7 without globally enabling sudo and dist: xenial for other build jobs
 matrix:
   include:
@@ -9,7 +9,7 @@ matrix:
       dist: xenial
       sudo: true
 addons:
-  postgresql: "9.4"
+  postgresql: '9.4'
 services:
   - postgresql
 # command to install dependencies

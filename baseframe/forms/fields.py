@@ -1,40 +1,91 @@
 # -*- coding: utf-8 -*-
 
-from decimal import Decimal, InvalidOperation as DecimalError
-
-import six
 from six.moves.urllib.parse import urljoin
-from pytz import UTC, timezone as pytz_timezone
+import six
+
+from decimal import Decimal
+from decimal import InvalidOperation as DecimalError
+
 from flask import current_app
-import wtforms
-from wtforms.fields import SelectField as SelectFieldBase, SelectMultipleField, SubmitField, FileField
-from wtforms.widgets import Select as OriginalSelectWidget
-from wtforms.compat import text_type
-from wtforms.utils import unset_value
 from flask_wtf import RecaptchaField
+from wtforms.compat import text_type
+from wtforms.fields import FileField
+from wtforms.fields import SelectField as SelectFieldBase
+from wtforms.fields import SelectMultipleField, SubmitField
+from wtforms.utils import unset_value
+from wtforms.widgets import Select as OriginalSelectWidget
+import wtforms
+
+from pytz import UTC
+from pytz import timezone as pytz_timezone
 import bleach
 import simplejson as json
 
 from .. import _, get_timezone
 from ..utils import request_timestamp
-from .widgets import TinyMce3, TinyMce4, DateTimeInput, CoordinatesInput, RadioMatrixInput, SelectWidget, Select2Widget
-from .parsleyjs import TextAreaField, StringField, URLField
+from .parsleyjs import StringField, TextAreaField, URLField
+from .widgets import (
+    CoordinatesInput,
+    DateTimeInput,
+    RadioMatrixInput,
+    Select2Widget,
+    SelectWidget,
+    TinyMce3,
+    TinyMce4,
+)
 
 __all__ = [
     # Imported from WTForms
-    'FileField', 'SelectMultipleField', 'SubmitField', 'RecaptchaField',
+    'FileField',
+    'SelectMultipleField',
+    'SubmitField',
+    'RecaptchaField',
     # Baseframe fields (many of these are extensions of WTForms fields)
-    'AnnotatedTextField', 'AutocompleteField', 'AutocompleteMultipleField',
-    'CoordinatesField', 'DateTimeField', 'EnumSelectField', 'FormField', 'GeonameSelectField',
-    'GeonameSelectMultiField', 'ImgeeField', 'JsonField', 'MarkdownField', 'RadioMatrixField',
-    'RichTextField', 'SANITIZE_ATTRIBUTES', 'SANITIZE_TAGS', 'SelectField', 'StylesheetField',
-    'TextListField', 'TinyMce3Field', 'TinyMce4Field', 'UserSelectField', 'UserSelectMultiField'
-    ]
+    'AnnotatedTextField',
+    'AutocompleteField',
+    'AutocompleteMultipleField',
+    'CoordinatesField',
+    'DateTimeField',
+    'EnumSelectField',
+    'FormField',
+    'GeonameSelectField',
+    'GeonameSelectMultiField',
+    'ImgeeField',
+    'JsonField',
+    'MarkdownField',
+    'RadioMatrixField',
+    'RichTextField',
+    'SANITIZE_ATTRIBUTES',
+    'SANITIZE_TAGS',
+    'SelectField',
+    'StylesheetField',
+    'TextListField',
+    'TinyMce3Field',
+    'TinyMce4Field',
+    'UserSelectField',
+    'UserSelectMultiField',
+]
 
 
 # Default tags and attributes to allow in HTML sanitization
-SANITIZE_TAGS = ['p', 'br', 'strong', 'em', 'sup', 'sub', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a',
-    'blockquote', 'code']
+SANITIZE_TAGS = [
+    'p',
+    'br',
+    'strong',
+    'em',
+    'sup',
+    'sub',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'ul',
+    'ol',
+    'li',
+    'a',
+    'blockquote',
+    'code',
+]
 SANITIZE_ATTRIBUTES = {'a': ['href', 'title', 'target']}
 
 
@@ -59,6 +110,7 @@ class SelectField(SelectFieldBase):
     It's a little strange that the tuples are (value, label) except for groups which are (Group Label, list of tuples)
     but this is actually how Django does it too https://docs.djangoproject.com/en/dev/ref/models/fields/#choices
     """
+
     widget = SelectWidget()
 
     def pre_validate(self, form):
@@ -84,30 +136,45 @@ class TinyMce3Field(TextAreaField):
     """
     Rich text field using TinyMCE 3.
     """
+
     widget = TinyMce3()
 
-    def __init__(self,
-            # WTForms fields
-            label=u'',
-            validators=None,
-            filters=(),
-            description=u'',
-            id=None,
-            default=None,
-            widget=None,
-            _form=None,
-            _name=None,
-            _prefix='',
+    def __init__(
+        self,
+        # WTForms fields
+        label=u'',
+        validators=None,
+        filters=(),
+        description=u'',
+        id=None,  # NOQA: A002
+        default=None,
+        widget=None,
+        _form=None,
+        _name=None,
+        _prefix='',
+        # Additional fields
+        content_css=None,
+        linkify=True,
+        nofollow=True,
+        tinymce_options=None,
+        sanitize_tags=None,
+        sanitize_attributes=None,
+        **kwargs
+    ):
 
-            # Additional fields
-            content_css=None,
-            linkify=True, nofollow=True,
-            tinymce_options=None,
-            sanitize_tags=None, sanitize_attributes=None, **kwargs):
-
-        super(TinyMce3Field, self).__init__(label=label, validators=validators, filters=filters,
-            description=description, id=id, default=default, widget=widget, _form=_form, _name=_name,
-            _prefix=_prefix, **kwargs)
+        super(TinyMce3Field, self).__init__(
+            label=label,
+            validators=validators,
+            filters=filters,
+            description=description,
+            id=id,
+            default=default,
+            widget=widget,
+            _form=_form,
+            _name=_name,
+            _prefix=_prefix,
+            **kwargs
+        )
 
         if tinymce_options is None:
             tinymce_options = {}
@@ -118,15 +185,19 @@ class TinyMce3Field(TextAreaField):
         # Set defaults for TinyMCE
         tinymce_options.setdefault('theme', 'advanced')
         tinymce_options.setdefault('plugins', '')
-        tinymce_options.setdefault('theme_advanced_buttons1',
-            'bold,italic,|,sup,sub,|,bullist,numlist,|,link,unlink,|,blockquote,|,removeformat,code')
+        tinymce_options.setdefault(
+            'theme_advanced_buttons1',
+            'bold,italic,|,sup,sub,|,bullist,numlist,|,link,unlink,|,blockquote,|,removeformat,code',
+        )
         tinymce_options.setdefault('theme_advanced_buttons2', '')
         tinymce_options.setdefault('theme_advanced_buttons3', '')
         tinymce_options.setdefault('blockformats', 'p,h3,h4,h5,h6,blockquote,dt,dd')
         tinymce_options.setdefault('width', '100%')
         tinymce_options.setdefault('height', '159')
-        tinymce_options.setdefault('valid_elements',
-            'p,br,strong/b,em/i,sup,sub,h3,h4,h5,h6,ul,ol,li,a[!href|title|target],blockquote,code')
+        tinymce_options.setdefault(
+            'valid_elements',
+            'p,br,strong/b,em/i,sup,sub,h3,h4,h5,h6,ul,ol,li,a[!href|title|target],blockquote,code',
+        )
         tinymce_options.setdefault('theme_advanced_toolbar_location', 'top')
         tinymce_options.setdefault('theme_advanced_toolbar_align', 'left')
         tinymce_options.setdefault('theme_advanced_statusbar_location', 'bottom')
@@ -162,9 +233,12 @@ class TinyMce3Field(TextAreaField):
     def process_formdata(self, valuelist):
         super(TinyMce3Field, self).process_formdata(valuelist)
         # Sanitize data
-        self.data = bleach.clean(self.data, strip=True,
+        self.data = bleach.clean(
+            self.data,
+            strip=True,
             tags=self.sanitize_tags,
-            attributes=self.sanitize_attributes)
+            attributes=self.sanitize_attributes,
+        )
         if self.linkify:
             if self.nofollow:
                 self.data = bleach.linkify(self.data)
@@ -176,30 +250,45 @@ class TinyMce4Field(TextAreaField):
     """
     Rich text field using TinyMCE 4.
     """
+
     widget = TinyMce4()
 
-    def __init__(self,
-            # WTForms fields
-            label=u'',
-            validators=None,
-            filters=(),
-            description=u'',
-            id=None,
-            default=None,
-            widget=None,
-            _form=None,
-            _name=None,
-            _prefix='',
+    def __init__(
+        self,
+        # WTForms fields
+        label=u'',
+        validators=None,
+        filters=(),
+        description=u'',
+        id=None,  # NOQA: A002
+        default=None,
+        widget=None,
+        _form=None,
+        _name=None,
+        _prefix='',
+        # Additional fields
+        content_css=None,
+        linkify=True,
+        nofollow=True,
+        tinymce_options=None,
+        sanitize_tags=None,
+        sanitize_attributes=None,
+        **kwargs
+    ):
 
-            # Additional fields
-            content_css=None,
-            linkify=True, nofollow=True,
-            tinymce_options=None,
-            sanitize_tags=None, sanitize_attributes=None, **kwargs):
-
-        super(TinyMce4Field, self).__init__(label=label, validators=validators, filters=filters,
-            description=description, id=id, default=default, widget=widget, _form=_form, _name=_name,
-            _prefix=_prefix, **kwargs)
+        super(TinyMce4Field, self).__init__(
+            label=label,
+            validators=validators,
+            filters=filters,
+            description=description,
+            id=id,
+            default=default,
+            widget=widget,
+            _form=_form,
+            _name=_name,
+            _prefix=_prefix,
+            **kwargs
+        )
 
         if tinymce_options is None:
             tinymce_options = {}
@@ -208,14 +297,21 @@ class TinyMce4Field(TextAreaField):
             tinymce_options = dict(tinymce_options)
 
         # Set defaults for TinyMCE
-        tinymce_options.setdefault('plugins', 'autolink autoresize link lists paste searchreplace')
-        tinymce_options.setdefault('toolbar', 'bold italic | bullist numlist | link unlink | searchreplace undo redo')
+        tinymce_options.setdefault(
+            'plugins', 'autolink autoresize link lists paste searchreplace'
+        )
+        tinymce_options.setdefault(
+            'toolbar',
+            'bold italic | bullist numlist | link unlink | searchreplace undo redo',
+        )
         tinymce_options.setdefault('width', '100%')
         tinymce_options.setdefault('height', '200')
         tinymce_options.setdefault('autoresize_min_height', '159')
         tinymce_options.setdefault('autoresize_max_height', '200')
-        tinymce_options.setdefault('valid_elements',
-            'p,br,strong/b,em/i,sup,sub,h3,h4,h5,h6,ul,ol,li,a[!href|title|target],blockquote,code')
+        tinymce_options.setdefault(
+            'valid_elements',
+            'p,br,strong/b,em/i,sup,sub,h3,h4,h5,h6,ul,ol,li,a[!href|title|target],blockquote,code',
+        )
         tinymce_options.setdefault('statusbar', False)
         tinymce_options.setdefault('menubar', False)
         tinymce_options.setdefault('resize', True)
@@ -250,9 +346,12 @@ class TinyMce4Field(TextAreaField):
     def process_formdata(self, valuelist):
         super(TinyMce4Field, self).process_formdata(valuelist)
         # Sanitize data
-        self.data = bleach.clean(self.data, strip=True,
+        self.data = bleach.clean(
+            self.data,
+            strip=True,
             tags=self.sanitize_tags,
-            attributes=self.sanitize_attributes)
+            attributes=self.sanitize_attributes,
+        )
         if self.linkify:
             if self.nofollow:
                 self.data = bleach.linkify(self.data)
@@ -274,10 +373,18 @@ class DateTimeField(wtforms.fields.DateTimeField):
     :param str timezone: Timezone used for user input
     :param bool naive: If `True` (default), timezone info is stripped from the return data
     """
+
     widget = DateTimeInput()
 
-    def __init__(self, label=None, validators=None,
-            format='%Y-%m-%d %H:%M', timezone=None, naive=True, **kwargs):
+    def __init__(
+        self,
+        label=None,
+        validators=None,
+        format='%Y-%m-%d %H:%M',  # NOQA: A002
+        timezone=None,
+        naive=True,
+        **kwargs
+    ):
         super(DateTimeField, self).__init__(label, validators, **kwargs)
         self.format = format
         self.timezone = timezone() if callable(timezone) else timezone
@@ -368,7 +475,13 @@ class TextListField(wtforms.fields.TextAreaField):
 
     def process_formdata(self, valuelist):
         if valuelist and valuelist[0]:
-            self.data = [x for x in valuelist[0].replace('\r\n', '\n').replace('\r', '\n').split('\n')]
+            self.data = [
+                x
+                for x in valuelist[0]
+                .replace('\r\n', '\n')
+                .replace('\r', '\n')
+                .split('\n')
+            ]
         else:
             self.data = []
 
@@ -377,13 +490,20 @@ class UserSelectFieldBase(object):
     """
     Select a user
     """
+
     def __init__(self, *args, **kwargs):
         self.lastuser = kwargs.pop('lastuser', current_app.login_manager)
-        self.usermodel = kwargs.pop('usermodel', self.lastuser.usermanager.usermodel if self.lastuser else None)
+        self.usermodel = kwargs.pop(
+            'usermodel', self.lastuser.usermanager.usermodel if self.lastuser else None
+        )
         self.separator = kwargs.pop('separator', ',')
         if self.lastuser:
-            self.autocomplete_endpoint = self.lastuser.endpoint_url(current_app.lastuser_config['getuser_autocomplete_endpoint'])
-            self.getuser_endpoint = self.lastuser.endpoint_url(current_app.lastuser_config['getuser_userids_endpoint'])
+            self.autocomplete_endpoint = self.lastuser.endpoint_url(
+                current_app.lastuser_config['getuser_autocomplete_endpoint']
+            )
+            self.getuser_endpoint = self.lastuser.endpoint_url(
+                current_app.lastuser_config['getuser_userids_endpoint']
+            )
         else:
             self.autocomplete_endpoint = kwargs.pop('autocomplete_endpoint')()
             self.getuser_endpoint = kwargs.pop('getuser_endpoint')()
@@ -404,13 +524,17 @@ class UserSelectFieldBase(object):
                 # TODO: Move all of this inside the getuser method with user=True, create=True
                 for userinfo in usersdata:
                     if userinfo['type'] == 'user':
-                        user = self.usermodel.query.filter_by(userid=userinfo['buid']).first()
+                        user = self.usermodel.query.filter_by(
+                            userid=userinfo['buid']
+                        ).first()
                         if not user:
                             # New user in this app. Don't set username right now. It's not relevant
                             # until first login and we don't want to deal with conflicts.
                             # We don't add this user to the session. The view is responsible for that
                             # (using SQLAlchemy cascades when assigning users to a collection)
-                            user = self.usermodel(userid=userinfo['buid'], fullname=userinfo['title'])
+                            user = self.usermodel(
+                                userid=userinfo['buid'], fullname=userinfo['title']
+                            )
                         users.append(user)
             else:
                 users = self.usermodel.all(userids=userids)
@@ -422,6 +546,7 @@ class UserSelectField(UserSelectFieldBase, StringField):
     """
     Render a user select field that allows one user to be selected.
     """
+
     multiple = False
     widget = Select2Widget()
 
@@ -448,6 +573,7 @@ class UserSelectMultiField(UserSelectFieldBase, StringField):
     """
     Render a user select field that allows multiple users to be selected.
     """
+
     multiple = True
     widget = Select2Widget()
 
@@ -456,6 +582,7 @@ class AutocompleteFieldBase(object):
     """
     Autocomplete a field.
     """
+
     def __init__(self, *args, **kwargs):
         self.autocomplete_endpoint = kwargs.pop('autocomplete_endpoint')
         self.results_key = kwargs.pop('results_key', 'results')
@@ -483,6 +610,7 @@ class AutocompleteField(AutocompleteFieldBase, StringField):
     Select field that sources choices from a JSON API endpoint.
     Does not validate choices server-side.
     """
+
     multiple = False
     widget = Select2Widget()
 
@@ -506,6 +634,7 @@ class AutocompleteMultipleField(AutocompleteFieldBase, StringField):
     Multiple select field that sources choices from a JSON API endpoint.
     Does not validate choices server-side.
     """
+
     multiple = True
     widget = Select2Widget()
 
@@ -514,6 +643,7 @@ class GeonameSelectFieldBase(object):
     """
     Select a geoname location
     """
+
     def __init__(self, *args, **kwargs):
         self.separator = kwargs.pop('separator', ',')
         server = current_app.config.get('HASCORE_SERVER', 'https://api.hasgeek.com/')
@@ -537,6 +667,7 @@ class GeonameSelectField(GeonameSelectFieldBase, StringField):
     """
     Render a geoname select field that allows one geoname to be selected.
     """
+
     multiple = False
     widget = Select2Widget()
 
@@ -559,6 +690,7 @@ class GeonameSelectMultiField(GeonameSelectFieldBase, StringField):
     """
     Render a geoname select field that allows multiple geonames to be selected.
     """
+
     multiple = True
     widget = Select2Widget()
 
@@ -567,6 +699,7 @@ class AnnotatedTextField(StringField):
     """
     Text field with prefix and suffix annotations.
     """
+
     def __init__(self, *args, **kwargs):
         self.prefix = kwargs.pop('prefix', None)
         self.suffix = kwargs.pop('suffix', None)
@@ -577,6 +710,7 @@ class MarkdownField(TextAreaField):
     """
     TextArea field which has class='markdown'.
     """
+
     def __call__(self, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = "%s %s" % (c, 'markdown') if c else 'markdown'
@@ -587,6 +721,7 @@ class StylesheetField(wtforms.TextAreaField):
     """
     TextArea field which has class='stylesheet'.
     """
+
     def __call__(self, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = "%s %s" % (c, 'stylesheet') if c else 'stylesheet'
@@ -604,7 +739,16 @@ class ImgeeField(URLField):
             profile='foo', img_label='logos', img_size='100x75')
         )
     """
-    def __init__(self, label='', validators=None, profile=None, img_label=None, img_size=None, **kwargs):
+
+    def __init__(
+        self,
+        label='',
+        validators=None,
+        profile=None,
+        img_label=None,
+        img_size=None,
+        **kwargs
+    ):
         super(ImgeeField, self).__init__(label, validators, **kwargs)
         self.profile = profile
         self.img_label = img_label
@@ -612,9 +756,13 @@ class ImgeeField(URLField):
 
     def __call__(self, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = ("%s %s" % (c.strip(), 'imgee-url-holder') if c else 'imgee-url-holder').strip()
+        kwargs['class'] = (
+            "%s %s" % (c.strip(), 'imgee-url-holder') if c else 'imgee-url-holder'
+        ).strip()
         if self.profile:
-            kwargs['data-profile'] = self.profile() if callable(self.profile) else self.profile
+            kwargs['data-profile'] = (
+                self.profile() if callable(self.profile) else self.profile
+            )
         if self.img_label:
             kwargs['data-img-label'] = self.img_label
         if self.img_size:
@@ -626,6 +774,7 @@ class FormField(wtforms.FormField):
     """
     FormField that removes CSRF in sub-forms.
     """
+
     def process(self, *args, **kwargs):
         retval = super(FormField, self).process(*args, **kwargs)
         if hasattr(self.form, 'csrf_token'):
@@ -637,6 +786,7 @@ class CoordinatesField(wtforms.Field):
     """
     Adds latitude and longitude fields and returns them as a tuple.
     """
+
     widget = CoordinatesInput()
 
     def process_formdata(self, valuelist):
@@ -666,9 +816,18 @@ class RadioMatrixField(wtforms.Field):
     Presents a matrix of questions (rows) and choices (columns). Saves each row as either
     an attr or a dict key on the target field in the object.
     """
+
     widget = RadioMatrixInput()
 
-    def __init__(self, label=None, validators=None, coerce=text_type, fields=(), choices=(), **kwargs):
+    def __init__(
+        self,
+        label=None,
+        validators=None,
+        coerce=text_type,  # NOQA: A002
+        fields=(),
+        choices=(),
+        **kwargs
+    ):
         super(RadioMatrixField, self).__init__(label, validators, **kwargs)
         self.coerce = coerce
         self.fields = fields
@@ -699,8 +858,8 @@ class RadioMatrixField(wtforms.Field):
             self.process_formdata(raw_data)
 
         try:
-            for filter in self.filters:
-                self.data = filter(self.data)
+            for filt in self.filters:
+                self.data = filt(self.data)
         except ValueError as e:
             self.process_errors.append(e.args[0])
 
@@ -736,6 +895,7 @@ class EnumSelectField(SelectField):
             field = forms.EnumSelectField(__("My Field"), lenum=MY_ENUM, default=MY_ENUM.CHOICE)
 
     """
+
     widget = OriginalSelectWidget()
 
     def __init__(self, *args, **kwargs):
@@ -788,9 +948,12 @@ class JsonField(wtforms.TextAreaField):
     :param book use_decimal: Use decimals instead of floats (default `True`)
     :param kwargs: Additional field arguments, passed on to WTForms
     """
+
     prettyprint_args = {'sort_keys': True, 'indent': 2}
 
-    def __init__(self, label='', validators=None, require_dict=True, use_decimal=True, **kwargs):
+    def __init__(
+        self, label='', validators=None, require_dict=True, use_decimal=True, **kwargs
+    ):
         self.require_dict = require_dict
         self.use_decimal = use_decimal
         super(JsonField, self).__init__(label, validators, **kwargs)
@@ -805,7 +968,12 @@ class JsonField(wtforms.TextAreaField):
             # invalid JSON to be presented back to the user for correction.
             return self.raw_data[0]
         elif self.data is not None:
-            return json.dumps(self.data, use_decimal=self.use_decimal, ensure_ascii=False, **self.prettyprint_args)
+            return json.dumps(
+                self.data,
+                use_decimal=self.use_decimal,
+                ensure_ascii=False,
+                **self.prettyprint_args
+            )
         return u''
 
     def process_data(self, value):

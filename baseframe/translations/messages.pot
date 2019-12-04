@@ -243,4 +243,3 @@ msgstr ""
 #: tests/test_sqlalchemy.py:20
 msgid "Name"
 msgstr ""
-

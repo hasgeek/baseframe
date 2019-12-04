@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
 
-import os
-from datetime import datetime, timedelta
-from flask import Markup, request
-from pytz import UTC
 import six
 
-from coaster.utils import md5sum
-from coaster.gfm import markdown
-from coaster.utils import text_blocks
+from datetime import datetime, timedelta
+import os
 
-from . import b_ as _, cache
-from . import baseframe, current_app, get_timezone
+from flask import Markup, request
+
+from pytz import UTC
+
+from coaster.gfm import markdown
+from coaster.utils import md5sum, text_blocks
+
+from . import b_ as _
+from . import baseframe, cache, current_app, get_timezone
 from .utils import request_timestamp
 from .views import ext_assets
 
@@ -97,10 +99,12 @@ def avatar_url(user, size=None):
     email = user.email
     if email:
         if isinstance(email, six.string_types):
-            hash = md5sum(user.email)  # Flask-Lastuser's User model has email as a string
+            # Flask-Lastuser's User model has email as a string
+            ehash = md5sum(user.email)
         else:
-            hash = email.md5sum   # Lastuser's User model has email as a UserEmail object
-        gravatar = u'//www.gravatar.com/avatar/' + hash + u'?d=mm'
+            # Lastuser's User model has email as a UserEmail object
+            ehash = email.md5sum
+        gravatar = u'//www.gravatar.com/avatar/' + ehash + u'?d=mm'
         if size:
             gravatar += u'&s=' + six.text_type(size)
         return gravatar
@@ -113,7 +117,7 @@ def render_field_options(field, **kwargs):
     """
     Remove HTML attributes with a value of None or False before rendering a field.
     """
-    d = dict((k, v) for k, v in kwargs.items() if v is not None and v is not False)
+    d = {k: v for k, v in kwargs.items() if v is not None and v is not False}
     if hasattr(field, 'widget_attrs'):
         d.update(field.widget_attrs)
     return field(**d)
@@ -125,10 +129,12 @@ def form_field_to_json(field, **kwargs):
     d['id'] = field.id
     d['label'] = field.label.text
     d['has_errors'] = bool(field.errors)
-    d['errors'] = list(dict(error=e) for e in field.errors)
-    d['is_listwidget'] = bool(hasattr(field.widget, 'html_tag') and field.widget.html_tag in ['ul', 'ol'])
+    d['errors'] = [{'error': e} for e in field.errors]
+    d['is_listwidget'] = bool(
+        hasattr(field.widget, 'html_tag') and field.widget.html_tag in ['ul', 'ol']
+    )
     try:
-        d['is_checkbox'] = (field.widget.input_type == 'checkbox')
+        d['is_checkbox'] = field.widget.input_type == 'checkbox'
     except AttributeError:
         d['is_checkbox'] = False
     d['is_required'] = bool(field.flags.required)
@@ -184,7 +190,10 @@ def shortdate(value):
     else:
         dt = value
         utc_now = request_timestamp().date()
-    if dt > (utc_now - timedelta(days=int(current_app.config.get('SHORTDATE_THRESHOLD_DAYS', 0)))):
+    if dt > (
+        utc_now
+        - timedelta(days=int(current_app.config.get('SHORTDATE_THRESHOLD_DAYS', 0)))
+    ):
         return dt.strftime('%e %b')
     else:
         # The string replace hack is to deal with inconsistencies in the underlying
