@@ -259,6 +259,10 @@ assets['jquery.succinct.js'][Version('1.1.0')] = (
     'jquery.js',
     'baseframe/js/jquery.succinct.js',
 )
+assets['jquery.truncate8.js'][Version('1.3.3')] = (
+    'jquery.js',
+    'baseframe/js/jquery.truncate8.js',
+)
 
 # jQuery emoji picker
 assets['emojionearea.css'][Version('3.4.1')] = 'baseframe/css/emojionearea.css'
