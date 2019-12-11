@@ -173,6 +173,18 @@ def robots(subdomain=None):
     )
 
 
+@baseframe.route('/ads.txt', subdomain='<subdomain>')
+@baseframe.route('/ads.txt', defaults={'subdomain': None})
+def adstxt(subdomain=None):
+    return send_from_directory(
+        current_app.static_folder
+        if os.path.exists(os.path.join(current_app.static_folder, 'ads.txt'))
+        else baseframe.static_folder,
+        'ads.txt',
+        mimetype='text/plain',
+    )
+
+
 @baseframe.route('/.well-known/<path:filename>', subdomain='<subdomain>')
 @baseframe.route('/.well-known/<path:filename>', defaults={'subdomain': None})
 def well_known(filename, subdomain=None):
