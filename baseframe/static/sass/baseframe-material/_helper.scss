@@ -122,6 +122,14 @@ h6 {
 }
 
 // ============================================================================
+// Text decoration
+// ============================================================================
+
+.mui--text-underline {
+  text-decoration: underline;
+}
+
+// ============================================================================
 // Font weight
 // ============================================================================
 
@@ -133,10 +141,26 @@ h6 {
 // Button
 // ============================================================================
 
-.mui-btn--nostyle {
+.mui-btn.mui-btn--nostyle {
   padding: 0;
   border: 0;
   margin: 0;
   cursor: pointer;
   background: none;
+  box-shadow: none;
+  height: auto;
+}
+
+.mui-btn.mui-btn--nostyle:hover,
+.mui-btn.mui-btn--nostyle:active,
+.mui-btn.mui-btn--nostyle:focus .mui-btn.mui-btn--nostyle:active:hover {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: none;
+  box-shadow: none;
+}
+
+.mui-btn--nostyle + .mui-btn--nostyle {
+  margin-left: 8px;
 }

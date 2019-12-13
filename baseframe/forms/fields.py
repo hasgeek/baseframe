@@ -556,6 +556,10 @@ class UserSelectField(UserSelectFieldBase, StringField):
         else:
             return ''
 
+    def iter_choices(self):
+        if self.data:
+            return [(self.data.userid, self.data.pickername, True)]
+
     def process_formdata(self, valuelist):
         retval = super(UserSelectField, self).process_formdata(valuelist)
         if self.data:
