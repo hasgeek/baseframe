@@ -1,7 +1,3 @@
-.mui-select__menu {
-	display: none!important;
-}
-
 .select2-container .select2-selection {
 	border: none;
 	border-radius: 0;
@@ -18,7 +14,7 @@
     box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);
 }
 
-.select2-container.select2-container--focus .select2-selection, 
+.select2-container.select2-container--focus .select2-selection,
 .select2-container.select2-container--open .select2-selection {
 	box-shadow: none;
     border: none;

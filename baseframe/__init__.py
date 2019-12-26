@@ -235,6 +235,16 @@ class BaseframeBlueprint(Blueprint):
             filters=['cssrewrite', 'cssmin'],
             output='css/baseframe-packed.css',
         )
+        js_select2 = Bundle(
+            assets.require('!jquery.js', 'select2-material.js'),
+            filters='uglipyjs',
+            output='js/select2-material-packed.js',
+        )
+        css_select2 = Bundle(
+            assets.require('select2-material.css'),
+            filters=['cssrewrite', 'cssmin'],
+            output='css/select2-material-packed.css',
+        )
         if bundle_js:
             js_all = Bundle(js_all, bundle_js)
         if bundle_css:
@@ -247,6 +257,8 @@ class BaseframeBlueprint(Blueprint):
         app.assets.register('js_jquery', assets.require('jquery.js'))
         app.assets.register('js_all', js_all)
         app.assets.register('css_all', css_all)
+        app.assets.register('js_select2', js_select2)
+        app.assets.register('css_select2', css_select2)
         app.register_blueprint(self, static_subdomain=subdomain)
 
         for module_name in asset_modules:

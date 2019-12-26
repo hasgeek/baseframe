@@ -611,13 +611,16 @@ assets['extra.js'][Version('0.0.0')] = {
         'getdevicepixelratio.js',
     ]
 }
-assets['extra-material.js'][Version('0.0.0')] = {
+assets['extra-material.js'][Version('0.1.0')] = {
     'requires': [
         'jquery-modal.js',
         'jquery.form.js',
         'select2-material.js',
         'getdevicepixelratio.js',
     ]
+}
+assets['extra-material.js'][Version('0.2.0')] = {
+    'requires': ['jquery-modal.js', 'jquery.form.js', 'getdevicepixelratio.js']
 }
 
 assets['baseframe.js'][Version(__version__)] = {
@@ -665,9 +668,17 @@ assets['mui.js'][Version('0.9.21')] = 'baseframe/js/mui.js'
 assets['baseframe-material.js'][
     Version('0.9.21')
 ] = 'baseframe/js/baseframe-material.js'
-assets['baseframe-mui.js'][Version(__version__)] = {
+assets['baseframe-mui.js'][Version('0.1.0')] = {
     'requires': [
-        'extra-material.js',
+        'extra-material.js==0.1.0',
+        'mui.js',
+        'jquery.tinymce.js>=4.0.0',
+        'baseframe-material.js',
+    ]
+}
+assets['baseframe-mui.js'][Version('0.2.0')] = {
+    'requires': [
+        'extra-material.js==0.2.0',
         'mui.js',
         'jquery.tinymce.js>=4.0.0',
         'baseframe-material.js',
@@ -675,6 +686,9 @@ assets['baseframe-mui.js'][Version(__version__)] = {
 }
 
 assets['mui.css'][Version('0.9.21')] = 'baseframe/css/mui.css'
-assets['baseframe-mui.css'][Version(__version__)] = {
+assets['baseframe-mui.css'][Version('0.1.0')] = {
     'requires': ['jquery-modal.css', 'select2-material.css', 'mui.css']
+}
+assets['baseframe-mui.css'][Version('0.2.0')] = {
+    'requires': ['jquery-modal.css', 'mui.css']
 }

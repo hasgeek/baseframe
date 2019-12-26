@@ -3777,7 +3777,6 @@ h6 {
 
 .content-wrapper {
   position: relative;
-  z-index: 1;
   padding-top: 50px;
 }
 
@@ -4053,11 +4052,15 @@ li p + ol {
   margin-top: 20px;
   margin-bottom: 0;
 }
-.mui-select > label {
-  top: -5px;
-}
 .mui-select .select2 {
   width: 100% !important;
+}
+.mui-select .mui-select__menu {
+  z-index: 1001;
+}
+
+.mui-select.select2 .mui-select__menu {
+  display: none !important;
 }
 
 .listwidget ul,

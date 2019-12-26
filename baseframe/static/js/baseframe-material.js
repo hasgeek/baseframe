@@ -1,15 +1,10 @@
 // This is a global function. Isn't there a better way to do this?
 
 function activate_widgets() {
-  // Activate select2.js for non-mobile browsers
-  if (!Modernizr.touch) {
-    $('select:not(.notselect)').select2();
-
-    //Remove the scroll lock class added by mui.js on opening select menu
-    $('select:not(.notselect)').on('select2:select', function(e) {
-      $('body').removeClass('mui-scroll-lock');
-    });
-  }
+  //Remove the scroll lock class added by mui.js on opening select dropdown
+  $('select').on('select2:select', function(e) {
+    $('body').removeClass('mui-scroll-lock');
+  });
 
   var cm_markdown_config = {
     mode: 'gfm',
@@ -217,6 +212,9 @@ window.Baseframe.Forms = {
         return false;
       }
     });
+  },
+  enableSelect2: function() {
+    $('.mui-select2 select').select2();
   },
   lastuserAutocomplete: function(options) {
     var assembleUsers = function(users) {
