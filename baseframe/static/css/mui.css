@@ -3010,7 +3010,7 @@ h6 {
 }
 
 .mui--text-light {
-  color: #79818b;
+  color: #4d5763;
 }
 
 .mui--text-light-secondary {
@@ -3640,7 +3640,7 @@ h6 {
   color: inherit;
   width: calc(70% - 15px);
   padding-left: 15px;
-  color: #79818b;
+  color: #4d5763;
 }
 
 .header__site-title--smaller {
@@ -3665,7 +3665,7 @@ h6 {
   display: -webkit-box;
   display: flex;
   justify-content: flex-end;
-  color: #79818b;
+  color: #4d5763;
 }
 
 .header__right-nav--larger {
@@ -3699,7 +3699,7 @@ h6 {
 }
 
 .header__dropdown-app-title {
-  color: #79818b;
+  color: #4d5763;
   margin: 0 0 8px;
 }
 
@@ -3716,7 +3716,7 @@ h6 {
 }
 
 .header__nav-list__item {
-  color: #79818b;
+  color: #4d5763;
 }
 
 .header__button {
@@ -3726,7 +3726,7 @@ h6 {
 .header__nav-links {
   font-size: 14px;
   line-height: 1;
-  color: #79818b;
+  color: #4d5763;
   display: inline-block;
   text-decoration: none;
   text-align: center;
@@ -3762,7 +3762,7 @@ h6 {
   }
 }
 .header__nav-links:hover {
-  color: #79818b;
+  color: #4d5763;
   text-decoration: none;
 }
 
@@ -3992,7 +3992,7 @@ li p + ol {
 }
 .mui-form .mui-form__sidetext,
 .mui-form .mui-form__helptext {
-  color: #79818b;
+  color: #4d5763;
   margin: 8px 0 0;
 }
 .mui-form .mui-textfield--addon {
