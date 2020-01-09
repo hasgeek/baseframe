@@ -186,3 +186,14 @@ class TestJsonField(BaseTestCase):
         self.form.jsondata.data = {"key": datetime.now()}
         with self.assertRaises(TypeError):
             self.form.jsondata._value()
+
+    def test_escaped_label_text(self):
+        label = forms.Label('test', '<script>alert("test");</script>')
+        self.assertEqual(
+            label(for_='foo'),
+            """<label for="foo">&lt;script&gt;alert(&#34;test&#34;);&lt;/script&gt;</label>""",
+        )
+        self.assertEqual(
+            label(**{'for': 'bar'}),
+            """<label for="bar">&lt;script&gt;alert(&#34;test&#34;);&lt;/script&gt;</label>""",
+        )

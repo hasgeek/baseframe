@@ -6,7 +6,7 @@ Patches WTForms to add additional functionality as required by Baseframe.
 
 from __future__ import absolute_import
 
-from flask import escape
+from flask import Markup, escape
 import wtforms
 
 __all__ = []
@@ -71,3 +71,23 @@ def _patch_wtforms_field_init():
 
 _patch_wtforms_field_init()
 del _patch_wtforms_field_init
+
+
+def _patch_label_call():
+    """Escape text before display (bug in WTForms < 3.0)"""
+
+    def label_call(self, text=None, **kwargs):
+        if "for_" in kwargs:
+            kwargs["for"] = kwargs.pop("for_")
+        else:
+            kwargs.setdefault("for", self.field_id)
+
+        attributes = wtforms.widgets.html_params(**kwargs)
+        text = escape(text or self.text)
+        return Markup("<label %s>%s</label>" % (attributes, text))
+
+    wtforms.fields.core.Label.__call__ = label_call
+
+
+_patch_label_call()
+del _patch_label_call
