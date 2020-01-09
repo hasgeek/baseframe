@@ -6,6 +6,7 @@ Patches WTForms to add additional functionality as required by Baseframe.
 
 from __future__ import absolute_import
 
+from flask import escape
 import wtforms
 
 __all__ = []
@@ -47,7 +48,7 @@ def _patch_wtforms_field_init():
 
         original_field_init(
             self,
-            label,
+            escape(label),  # wtforms<3.0 doesn't escape label text
             validators,
             filters=filters,
             description=description,
