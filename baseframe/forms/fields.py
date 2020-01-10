@@ -9,7 +9,7 @@ from decimal import InvalidOperation as DecimalError
 from flask import current_app
 from flask_wtf import RecaptchaField
 from wtforms.compat import text_type
-from wtforms.fields import FileField
+from wtforms.fields import FileField, Label
 from wtforms.fields import SelectField as SelectFieldBase
 from wtforms.fields import SelectMultipleField, SubmitField
 from wtforms.utils import unset_value
@@ -36,6 +36,7 @@ from .widgets import (
 
 __all__ = [
     # Imported from WTForms
+    'Label',
     'FileField',
     'SelectMultipleField',
     'SubmitField',
