@@ -3,3 +3,4 @@ coverage
 coveralls
 psycopg2
 urllib3
+emoji==0.5.4
