@@ -9,6 +9,7 @@ from decimal import Decimal
 from fractions import Fraction
 import datetime
 import re
+import emoji
 
 from flask import request
 from wtforms.validators import (  # NOQA
@@ -316,6 +317,19 @@ class IsPublicEmailDomain(object):
 
     def __call__(self, form, field):
         if is_public_email_domain(field.data, default=False, timeout=self.timeout):
+            return
+        else:
+            raise ValidationError(self.message)
+            
+class IsEmoji(object):
+    """
+    Validate whether the supplied string is an emoji.
+    """
+    def __init__(self, message=None):
+        self.message = message or _(u'This is not a valid emoji.')
+
+    def __call__(self, form, field):
+        if field.data in emoji.UNICODE_EMOJI:
             return
         else:
             raise ValidationError(self.message)
