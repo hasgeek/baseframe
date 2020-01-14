@@ -322,16 +322,12 @@ class IsPublicEmailDomain(object):
             raise ValidationError(self.message)
             
 class IsEmoji(object):
-    """
-    Validate whether the supplied string is an emoji.
-    """
+
     def __init__(self, message=None):
         self.message = message
 
     def __call__(self, form, field):
-        if field.data in emoji.UNICODE_EMOJI:
-            return
-        else:
+        if not field.data in emoji.UNICODE_EMOJI:
             raise ValidationError(self.message)
 
 
