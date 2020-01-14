@@ -26,6 +26,7 @@ from wtforms.validators import (  # NOQA
 from lxml import html
 from pyisemail import is_email
 import dns.resolver
+import emoji
 import requests
 
 from coaster.utils import deobfuscate_email, make_name
@@ -318,6 +319,15 @@ class IsPublicEmailDomain(object):
         if is_public_email_domain(field.data, default=False, timeout=self.timeout):
             return
         else:
+            raise ValidationError(self.message)
+            
+class IsEmoji(object):
+
+    def __init__(self, message=None):
+        self.message = message
+
+    def __call__(self, form, field):
+        if not field.data in emoji.UNICODE_EMOJI:
             raise ValidationError(self.message)
 
 
