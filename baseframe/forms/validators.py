@@ -9,7 +9,6 @@ from decimal import Decimal
 from fractions import Fraction
 import datetime
 import re
-import emoji
 
 from flask import request
 from wtforms.validators import (  # NOQA
@@ -27,6 +26,7 @@ from wtforms.validators import (  # NOQA
 from lxml import html
 from pyisemail import is_email
 import dns.resolver
+import emoji
 import requests
 
 from coaster.utils import deobfuscate_email, make_name
