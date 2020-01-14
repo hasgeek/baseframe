@@ -3564,6 +3564,10 @@ h6 {
   text-transform: capitalize;
 }
 
+.mui--text-underline {
+  text-decoration: underline;
+}
+
 .mui--text-bold {
   font-weight: 600;
 }
@@ -4013,7 +4017,7 @@ li p + ol {
 }
 .mui-form input.datetime-time {
   display: inline;
-  width: 6em;
+  width: 6.5em;
 }
 .mui-form textarea {
   height: 10em;
