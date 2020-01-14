@@ -326,7 +326,7 @@ class IsEmoji(object):
     Validate whether the supplied string is an emoji.
     """
     def __init__(self, message=None):
-        self.message = message or _(u'This is not a valid emoji.')
+        self.message = message
 
     def __call__(self, form, field):
         if field.data in emoji.UNICODE_EMOJI:
