@@ -23,7 +23,6 @@ requires = [
     'pytz',
     'pyIsEmail',
     'dnspython',
-    'emoji',
     'WTForms>=2.2',
     'Flask>=1.0',
     'Flask-Assets',
