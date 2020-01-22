@@ -310,11 +310,10 @@ class IsEmoji(object):
     """
     def __init__(self, message=None):
         self.message = message or _(u'This is not a valid emoji.')
-
+        
     def __call__(self, form, field):
-        if field.data != "":
-            if not field.data in emoji.UNICODE_EMOJI:
-                raise ValidationError(self.message)
+        if field.data and field.data not in emoji.UNICODE_EMOJI:
+            raise ValidationError(self.message)
                 
 class IsPublicEmailDomain(object):
     """
