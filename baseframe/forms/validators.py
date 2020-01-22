@@ -26,6 +26,7 @@ from wtforms.validators import (  # NOQA
 from lxml import html
 from pyisemail import is_email
 import dns.resolver
+import emoji
 import requests
 
 from coaster.utils import deobfuscate_email, make_name
@@ -299,7 +300,23 @@ class NotEqualTo(_Comparison):
     def compare(self, value, other):
         return value != other
 
+class IsEmoji(object):
+    """
+    Validate that field.data does not belong to a public email domain.
+    If the domain lookup fails and mxsniff raises ``MXLookupException``, this validator
+    will still pass, as we expect that most domains are not public email domains.
 
+    :param message:
+        Error message to raise in case of a validation error.
+    """
+    def __init__(self, message=None):
+        self.message = message or _(u'This is not a valid emoji.')
+
+    def __call__(self, form, field):
+        if field.data != "":
+            if not field.data in emoji.UNICODE_EMOJI:
+                raise ValidationError(self.message)
+                
 class IsPublicEmailDomain(object):
     """
     Validate that field.data belongs to a public email domain.
