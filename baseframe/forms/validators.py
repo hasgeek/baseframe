@@ -302,7 +302,7 @@ class NotEqualTo(_Comparison):
 
 class IsEmoji(object):
     """
-    Validate field to contain a single emoji
+    Validate field to contain a single emoji.
 
     :param message:
         Error message to raise in case of a validation error.
@@ -313,7 +313,7 @@ class IsEmoji(object):
     def __call__(self, form, field):
         if field.data not in emoji.UNICODE_EMOJI:
             raise ValidationError(self.message)
-                
+
 class IsPublicEmailDomain(object):
     """
     Validate that field.data belongs to a public email domain.
