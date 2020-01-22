@@ -47,7 +47,7 @@ class TestValidators(TestCaseBaseframe):
             
     def test_valid_emoji(self):
         with self.app.test_request_context('/'):
-            dat = u'\u2604'
+            dat = u'👍'
             self.emoji_form.process(emoji=dat)
             assert self.emoji_form.validate() is True
 
