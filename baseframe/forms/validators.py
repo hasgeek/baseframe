@@ -302,9 +302,8 @@ class NotEqualTo(_Comparison):
 
 class IsEmoji(object):
     """
-    Validate that field.data does not belong to a public email domain.
-    If the domain lookup fails and mxsniff raises ``MXLookupException``, this validator
-    will still pass, as we expect that most domains are not public email domains.
+    Validate that field.data is either empty or contains an emoji
+    through use of the ``emoji `` package.
 
     :param message:
         Error message to raise in case of a validation error.
