@@ -12,6 +12,7 @@ from baseframe.utils import is_public_email_domain
 
 from .fixtures import (
     AllUrlsFormTest,
+    EmojiFormTest,
     PublicEmailDomainFormTest,
     TestCaseBaseframe,
     UrlFormTest,
@@ -23,6 +24,7 @@ class TestValidators(TestCaseBaseframe):
         super(TestValidators, self).setUp()
         with self.app.test_request_context('/'):
             self.form = UrlFormTest(meta={'csrf': False})
+            self.emoji_form = EmojiFormTest(meta={'csrf': False})
             self.all_urls_form = AllUrlsFormTest(meta={'csrf': False})
             self.webmail_form = PublicEmailDomainFormTest(meta={'csrf': False})
         urllib3.disable_warnings()
@@ -42,6 +44,18 @@ class TestValidators(TestCaseBaseframe):
             url = 'https://hasgeek'
             self.form.process(url=url)
             assert not self.form.validate()
+            
+    def test_valid_emoji(self):
+        with self.app.test_request_context('/'):
+            dat = u'👍'
+            self.emoji_form.process(emoji=dat)
+            assert self.emoji_form.validate() is True
+
+    def test_invalid_emoji(self):
+        with self.app.test_request_context('/'):
+            dat = 'eviltext'
+            self.emoji_form.process(emoji=dat)
+            assert self.emoji_form.validate() is False
 
     def test_public_email_domain(self):
         with self.app.test_request_context('/'):
