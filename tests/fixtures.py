@@ -57,6 +57,9 @@ class UrlFormTest(forms.Form):
         filters=[forms.filters.strip()],
     )
 
+class EmojiFormTest(forms.Form):
+    emoji = forms.StringField(__("Emoji"), validators=[forms.validators.IsEmoji()])
+
 
 class AllUrlsFormTest(forms.Form):
     content_with_urls = forms.TextAreaField(
