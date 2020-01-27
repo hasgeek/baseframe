@@ -374,6 +374,7 @@ window.Baseframe.MapMarker.prototype.activate = function() {
   $('#' + this.field.map_id).locationpicker({
     location: self.getDefaultLocation(),
     radius: 0,
+    zoom: 18,
     inputBinding: {
       latitudeInput: $('#' + this.field.latitude_id),
       longitudeInput: $('#' + this.field.longitude_id),

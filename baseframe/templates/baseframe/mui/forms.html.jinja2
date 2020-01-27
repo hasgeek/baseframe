@@ -59,10 +59,16 @@
               {%- endif %}
             </div>
           {%- elif field.type == 'CoordinatesField' %}
-            {%- if not nolabel %}
-              <label>{{ field.label.text }}</label>
-            {%- endif %}
-            {{ map_marker_widget(field) }}
+            <div class="map">
+              <div class="mui-textfield no-jshidden">
+                <input type="text" class="map__search-field" id="{{ field.id }}_search" placeholder="Enter a location">
+                {%- if not nolabel %}
+                  <label>{{ field.label.text }}</label>
+                {%- endif %}
+              </div>
+              <div id="{{ field.id }}_map" class="no-jshidden map__marker"></div>
+              <div class="jshidden">{{ field(class="field-" + field.id + " form-control") }}</div>
+            </div>
           {%- elif field.widget.input_type in ['text', 'email', 'search', 'url', 'number', 'tel', 'password'] and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-textfield mui-textfield--float-label">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
@@ -265,55 +271,22 @@
   {%- endif %}
 {% endmacro %}
 
-{% macro map_marker_widget(field) %}
-  <div class="map">
-    <div id="{{ field.id }}_map" class="no-jshidden map__marker"></div>
-    <div class="jshidden">{{ field(class="field-" + field.id + " form-control") }}</div>
-  </div>
+{%- macro map_marker_script(field) %}
+  new window.Baseframe.MapMarker({
+    location_id: "{{ field.id}}_search",
+    map_id: "{{ field.id }}_map",
+    latitude_id: "{{ field.id }}_latitude",
+    longitude_id: "{{ field.id}}_longitude"
+  });
 {% endmacro %}
 
 {% macro widget_ext_scripts(form) %}
   {%- with scripts = {} %}
     {%- for field in form %}
       {%- if field.type == 'CoordinatesField' %}
-        <script type="text/javascript">
-          var mapMarker = new window.Baseframe.MapMarker({
-            location_id: "{{ field.id}}_search",
-            map_id: "{{ field.id }}_map",
-            latitude_id: "{{ field.id }}_latitude",
-            longitude_id: "{{ field.id}}_longitude"
-          });
-          var mapCenter = [mapMarker.coordinates.latitude, mapMarker.coordinates.longitude]
-          var map = L.map('{{ field.id }}_map', {center : mapCenter, zoom : 17});
-          var mapMarker = new window.Baseframe.MapMarker({
-            location_id: "{{ field.id}}_search",
-            map_id: "{{ field.id }}_map",
-            latitude_id: "{{ field.id }}_latitude",
-            longitude_id: "{{ field.id}}_longitude"
-          });
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              maxZoom: 18,
-              attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-              noWrap : true
-          }).addTo(map);
-          var marker = L.marker(mapCenter, {draggable: true}).addTo(map);
-          var controlSearch = new L.Control.Search({
-            url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
-            jsonpParam: 'json_callback',
-            propertyName: 'display_name',
-            propertyLoc: ['lat','lon'],
-            marker: marker,
-            minLength: 2,
-            zoom: 17
-          }).on('search:locationfound', function(e) {
-            mapMarker.updateCoordinates(e.latlng.lat, e.latlng.lng)
-          });
-
-          map.addControl(controlSearch);
-          marker.on('dragend', function (e) {
-            mapMarker.updateCoordinates(marker.getLatLng().lat, marker.getLatLng().lng);
-          });
-        </script>
+        {#- We're using setdefault instead of a simple = because the do extension doesn't support assignment #}
+        {%- do scripts.setdefault('gmap', ('https://maps.googleapis.com/maps/api/js?key=' + config['GOOGLE_MAPS_API_KEY'] + '&libraries=places')) %}
+        {%- do scripts.setdefault('locationpicker', 'jquery.locationpicker.js'|ext_asset_url) %}
       {%- endif %}
     {%- endfor %}
     {%- for key in scripts %}
@@ -376,6 +349,8 @@
       {%- endif %}
     {%- elif field.type in ['GeonameSelectField', 'GeonameSelectMultiField'] %}
       activate_geoname_autocomplete({{ ('#'+field.id)|tojson }}, {{ field.autocomplete_endpoint|tojson }}, {{ field.getname_endpoint|tojson }}, {{ field.separator|tojson }});
+    {%- elif field.type == 'CoordinatesField' -%}
+      {{ map_marker_script(field) }}
     {%- endif -%}
   {%- endfor -%}
   {%- if script %}
