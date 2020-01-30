@@ -29,7 +29,7 @@ requires = [
     'Flask-Assets',
     'Flask-WTF>=0.14',
     'Flask-Caching',
-    'Flask-BabelEx',
+    'flask-babel2',
     'speaklater',
     'redis',
     'cssmin',
@@ -86,6 +86,6 @@ setup(
     cmdclass={'build_py': BaseframeBuildPy},
     dependency_links=[
         "https://github.com/hasgeek/coaster/archive/master.zip#egg=coaster-dev",
-        "https://github.com/mrjoes/flask-babelex/archive/master.zip#egg=Flask-BabelEx-0.8.2",
+        "https://github.com/hasgeek/flask-babel2/archive/master.zip#egg=Flask-Babel2",
     ],
 )
