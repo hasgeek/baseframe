@@ -86,6 +86,6 @@ setup(
     cmdclass={'build_py': BaseframeBuildPy},
     dependency_links=[
         "https://github.com/hasgeek/coaster/archive/master.zip#egg=coaster-dev",
-        "https://github.com/hasgeek/flask-babel2/archive/master.zip#egg=Flask-Babel2",
+        "https://github.com/hasgeek/flask-babel2/archive/master.zip#egg=flask_babel2",
     ],
 )
