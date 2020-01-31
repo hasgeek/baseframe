@@ -29,7 +29,7 @@ requires = [
     'Flask-Assets',
     'Flask-WTF>=0.14',
     'Flask-Caching',
-    'flask-babel2',
+    'Flask-Babel2',
     'speaklater',
     'redis',
     'cssmin',
