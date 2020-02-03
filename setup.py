@@ -43,6 +43,7 @@ requires = [
     'pyOpenSSL',
     'ndg-httpsclient',
     'pyasn1',
+    'werkzeug==0.16.1'
 ]
 
 
