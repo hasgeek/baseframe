@@ -43,6 +43,7 @@ requires = [
     'pyOpenSSL',
     'ndg-httpsclient',
     'pyasn1',
+    'werkzeug==0.16.1'
 ]
 
 
@@ -85,7 +86,7 @@ setup(
     tests_require=['Flask-SQLAlchemy'],
     cmdclass={'build_py': BaseframeBuildPy},
     dependency_links=[
-        "git+https://github.com/hasgeek/coaster#egg=coaster-dev",
-        "git+https://github.com/hasgeek/flask-babel2#egg=flask_babel2"
+        "https://github.com/hasgeek/coaster/archive/master.zip#egg=coaster-dev",
+        "https://github.com/hasgeek/flask-babel2/archive/master.zip#egg=Flask-Babel2-0.12.3"
     ],
 )
