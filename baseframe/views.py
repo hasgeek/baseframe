@@ -3,11 +3,8 @@
 from six.moves.urllib.parse import urljoin, urlparse
 
 from datetime import timedelta
+from functools import reduce
 import os
-import six
-
-if six.PY3:
-    from functools import reduce
 
 from flask import abort, current_app, render_template, request, send_from_directory
 from flask_assets import Bundle
