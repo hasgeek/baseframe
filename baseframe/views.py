@@ -3,6 +3,7 @@
 from six.moves.urllib.parse import urljoin, urlparse
 
 from datetime import timedelta
+from functools import reduce
 import os
 
 from flask import abort, current_app, render_template, request, send_from_directory
@@ -51,11 +52,13 @@ def asset_key(assets):
 
 
 def gen_assets_url(assets):
+    # TODO: write test for this function
     try:
         names = [split_namespec(a)[0] for a in assets]
     except ValueError:
         abort(400)
 
+    # TODO: replace reduce() with something simpler
     is_js = reduce(lambda status, name: status and name.endswith('.js'), names, True)
     is_css = reduce(lambda status, name: status and name.endswith('.css'), names, True)
     output_name = asset_key(assets)
