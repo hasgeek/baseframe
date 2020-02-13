@@ -88,7 +88,10 @@ def gen_assets_url(assets):
 
 def ext_assets(assets):
     key = asset_key(assets)
-    url = asset_cache.get('assets/' + key)
+    try:
+        url = asset_cache.get('assets/' + key)
+    except ValueError:  # Can happen due to Py2 vs Py3 pickle mismatch
+        url = None
     if url:
         return url
     if current_app.config.get('ASSET_SERVER'):

@@ -417,7 +417,10 @@ class ValidUrl(object):
             )
         else:
             cache_key = 'linkchecker/' + urlquote(url, safe='')
-        cache_check = asset_cache.get(cache_key)
+        try:
+            cache_check = asset_cache.get(cache_key)
+        except ValueError:  # Possible error from a broken pickle
+            cache_check = None
         # Read from cache, but assume cache may be broken
         # since Flask-Cache stores data as a pickle,
         # which is version-specific

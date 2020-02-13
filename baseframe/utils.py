@@ -48,7 +48,10 @@ def is_public_email_domain(email_or_domain, default=None, timeout=30):
     else:
         cache_key = 'mxrecord/' + urlquote(email_or_domain, safe='')
 
-    sniffedmx = asset_cache.get(cache_key)
+    try:
+        sniffedmx = asset_cache.get(cache_key)
+    except ValueError:  # Possible error from Py2 vs Py3 pickle mismatch
+        sniffedmx = None
 
     if sniffedmx is None or not isinstance(sniffedmx, dict):
         # Cache entry missing or corrupted; fetch a new result and update cache
