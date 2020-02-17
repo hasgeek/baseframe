@@ -448,6 +448,8 @@ assets['picturefill.js'][Version('0.1.0')] = (
 
 assets['dropzone.js'][Version('3.2.0')] = 'baseframe/js/dropzone.js'
 assets['dropzone.css'][Version('3.2.0')] = 'baseframe/css/dropzone.css'
+assets['dropzone.js'][Version('5.5.0')] = 'baseframe/js/dropzone-5.5.0.js'
+assets['dropzone.css'][Version('5.5.0')] = 'baseframe/css/dropzone-5.5.0.css'
 
 assets['mustache-hogan.js'][
     Version('2.0.0')
