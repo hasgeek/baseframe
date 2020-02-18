@@ -264,6 +264,11 @@ assets['jquery.truncate8.js'][Version('1.3.3')] = (
     'baseframe/js/jquery.truncate8.js',
 )
 
+assets['jquery_jeditable.js'][Version('2.0.14')] = (
+    'jquery.js',
+    'baseframe/js/jquery_jeditable.js',
+)
+
 # jQuery emoji picker
 assets['emojionearea.css'][Version('3.4.1')] = 'baseframe/css/emojionearea.css'
 assets['emojionearea-material.css'][Version('3.4.1')] = (
