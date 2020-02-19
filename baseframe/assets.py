@@ -264,6 +264,11 @@ assets['jquery.truncate8.js'][Version('1.3.3')] = (
     'baseframe/js/jquery.truncate8.js',
 )
 
+assets['jquery_jeditable.js'][Version('2.0.14')] = (
+    'jquery.js',
+    'baseframe/js/jquery_jeditable.js',
+)
+
 # jQuery emoji picker
 assets['emojionearea.css'][Version('3.4.1')] = 'baseframe/css/emojionearea.css'
 assets['emojionearea-material.css'][Version('3.4.1')] = (
@@ -448,6 +453,8 @@ assets['picturefill.js'][Version('0.1.0')] = (
 
 assets['dropzone.js'][Version('3.2.0')] = 'baseframe/js/dropzone.js'
 assets['dropzone.css'][Version('3.2.0')] = 'baseframe/css/dropzone.css'
+assets['dropzone.js'][Version('5.5.0')] = 'baseframe/js/dropzone-5.5.0.js'
+assets['dropzone.css'][Version('5.5.0')] = 'baseframe/css/dropzone-5.5.0.css'
 
 assets['mustache-hogan.js'][
     Version('2.0.0')
