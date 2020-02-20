@@ -123,7 +123,7 @@ class AllowedIf(object):
     Validator that allows a value only if another field also has a value.
 
     :param str fieldname: Name of the other field
-    :param str message: Validation error message. Will be formatted with an optional ``{field}}`` label
+    :param str message: Validation error message. Will be formatted with an optional ``{field}`` label
     """
 
     default_message = __(u"This requires ‘{field}’ to be specified")
@@ -315,7 +315,7 @@ class IsEmoji(object):
     :param message:
         Error message to raise in case of a validation error.
     """
-    default_message = __(u"This is not a valid emoji.")
+    default_message = __(u"This is not a valid emoji")
 
     def __init__(self, message=None):
         self.message = message or self.default_message
@@ -335,7 +335,7 @@ class IsPublicEmailDomain(object):
         Error message to raise in case of a validation error.
     """
 
-    default_message = __(u'This domain is not a public email domain.')
+    default_message = __(u'This domain is not a public email domain')
 
     def __init__(self, message=None, timeout=30):
         self.message = message or self.default_message
@@ -358,7 +358,7 @@ class IsNotPublicEmailDomain(object):
         Error message to raise in case of a validation error.
     """
 
-    default_message = __(u'This domain is a public email domain.')
+    default_message = __(u'This domain is a public email domain')
 
     def __init__(self, message=None, timeout=30):
         self.message = message or self.default_message
@@ -390,7 +390,7 @@ class ValidEmail(object):
         if diagnosis.code == 0:
             return
         else:
-            raise StopValidation(self.message or __(diagnosis.message))
+            raise StopValidation(self.message or _(diagnosis.message))
 
 
 # Legacy name
@@ -412,14 +412,18 @@ class ValidUrl(object):
         "Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 HasGeek/linkchecker"
     )
 
+    default_message = __(
+        u'The URL “{url}” is not valid or is currently inaccessible'
+    )
+
+    default_message_urltext = __(
+        u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible'
+    )
+
     def __init__(self, message=None, message_urltext=None, invalid_urls=[]):
-        self.message = message or __(
-            u'The URL “{url}” is not valid or is currently inaccessible'
-        )
+        self.message = message or self.default_message
         self.invalid_urls = invalid_urls
-        self.message_urltext = message_urltext or __(
-            u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible'
-        )
+        self.message_urltext = message_urltext or self.default_message_urltext
 
     def check_url(self, invalid_urls, url, text=None):
         if six.PY2:
