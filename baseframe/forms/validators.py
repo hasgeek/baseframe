@@ -123,12 +123,14 @@ class AllowedIf(object):
     Validator that allows a value only if another field also has a value.
 
     :param str fieldname: Name of the other field
-    :param str message: Validation error message. Will be formatted with an optional ``{field}}`` label
+    :param str message: Validation error message. Will be formatted with an optional ``{field}`` label
     """
+
+    default_message = __(u"This requires ‘{field}’ to be specified")
 
     def __init__(self, fieldname, message=None):
         self.fieldname = fieldname
-        self.message = message or __(u"This requires ‘{field}’ to be specified")
+        self.message = message or self.default_message
 
     def __call__(self, form, field):
         if field.data:
@@ -151,10 +153,12 @@ class OptionalIf(Optional):
     :param str message: Validation error message
     """
 
+    default_message = __("This is required")
+
     def __init__(self, fieldname, message=None):
         super(OptionalIf, self).__init__()
         self.fieldname = fieldname
-        self.message = message or __("This is required")
+        self.message = message or self.default_message
 
     def __call__(self, form, field):
         if not is_empty(form[self.fieldname].data):
@@ -174,10 +178,12 @@ class RequiredIf(DataRequired):
     :param str message: Validation error message
     """
 
+    default_message = __("This is required")
+
     field_flags = set()
 
     def __init__(self, fieldname, message=None):
-        message = message or __("This is required")
+        message = message or self.default_message
         super(RequiredIf, self).__init__(message=message)
         self.fieldname = fieldname
 
@@ -309,9 +315,10 @@ class IsEmoji(object):
     :param message:
         Error message to raise in case of a validation error.
     """
+    default_message = __(u"This is not a valid emoji")
 
     def __init__(self, message=None):
-        self.message = message or _(u"This is not a valid emoji.")
+        self.message = message or self.default_message
 
     def __call__(self, form, field):
         if field.data not in emoji.UNICODE_EMOJI:
@@ -328,8 +335,10 @@ class IsPublicEmailDomain(object):
         Error message to raise in case of a validation error.
     """
 
+    default_message = __(u'This domain is not a public email domain')
+
     def __init__(self, message=None, timeout=30):
-        self.message = message or _(u'This domain is not a public email domain.')
+        self.message = message or self.default_message
         self.timeout = timeout
 
     def __call__(self, form, field):
@@ -349,8 +358,10 @@ class IsNotPublicEmailDomain(object):
         Error message to raise in case of a validation error.
     """
 
+    default_message = __(u'This domain is a public email domain')
+
     def __init__(self, message=None, timeout=30):
-        self.message = message or _(u'This domain is a public email domain.')
+        self.message = message or self.default_message
         self.timeout = timeout
 
     def __call__(self, form, field):
@@ -401,14 +412,18 @@ class ValidUrl(object):
         "Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 HasGeek/linkchecker"
     )
 
+    default_message = __(
+        u'The URL “{url}” is not valid or is currently inaccessible'
+    )
+
+    default_message_urltext = __(
+        u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible'
+    )
+
     def __init__(self, message=None, message_urltext=None, invalid_urls=[]):
-        self.message = message or _(
-            u'The URL “{url}” is not valid or is currently inaccessible'
-        )
+        self.message = message or self.default_message
         self.invalid_urls = invalid_urls
-        self.message_urltext = message_urltext or _(
-            u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible'
-        )
+        self.message_urltext = message_urltext or self.default_message_urltext
 
     def check_url(self, invalid_urls, url, text=None):
         if six.PY2:
