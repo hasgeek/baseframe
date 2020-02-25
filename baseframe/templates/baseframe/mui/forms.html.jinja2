@@ -1,3 +1,5 @@
+{%- from "baseframe/mui/components.html.jinja2" import alertbox -%}
+
 {% macro rendererrors(field) -%}
     {%- if field.errors -%}
       {%- for error in field.errors %}
@@ -130,10 +132,7 @@
 
 {% macro renderform_inner(form, formid, style='horiz', autosave=False, draft_revision=None) -%}
   {%- if form.errors %}
-    <div class="alert alert--error alert--dismissable">
-      <a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a>
-      <p class="alert__text"><i class="material-icons alert__icon">error</i> {% trans %}Please review the indicated issues{% endtrans %}</p>
-    </div>
+    {{ alertbox('error', 'Please review the indicated issues') }}
   {%- endif %}
   {% if message %}<p>{{ message }}</p>{% endif %}
   <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>
@@ -177,7 +176,7 @@
             form.find('input[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('button[type="submit"]').prop('disabled', false).removeClass('submit-disabled');
             form.find('.loading').addClass('mui--hide');
-            form.append('<div class="alert alert--error"><a class="alert__close" href="javascript:void(0);" aria-label="close"><i class="material-icons">clear</i></a><p class="alert__text"><i class="material-icons alert__icon">error</i> An error occured when submitting the form</p></div>');
+            form.append({{ alertbox('error', 'An error occured when submitting the form') | tojson }});
           } // No comma or semicolon here
         });
       });
