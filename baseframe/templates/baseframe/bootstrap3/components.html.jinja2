@@ -229,7 +229,7 @@
       <li {% if links %} class="separator-authlinks" {%- endif %}>
         {%- with orgs = current_auth.user.organization_links() %}
         {% if orgs %}
-          <a href="/profile">My profile</a></li>
+          <a href="{{ current_auth.user.profile_url }}">My profile</a></li>
           {%- for org in orgs %}
           <li><a href="{{ org.link }}">{{ org.title }}</a></li>
           {%- endfor %}
