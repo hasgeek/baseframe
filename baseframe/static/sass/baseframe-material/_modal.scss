@@ -1,31 +1,31 @@
 .modal {
+  display: none;
+  padding: $reflex-cell-spacing;
+  @extend .mui--z1;
+
+  //Use fa5 icon for close
+  a.close-modal {
     display: none;
-    padding: $reflex-cell-spacing;
-    @extend .mui--z1;
+  }
 
-    //Use material design icon for close
-    a.close-modal {
-        display: none;
-    }
-
-    .modal__close {
-        position: absolute;
-        top: $reflex-cell-spacing/2;
-        right: $reflex-cell-spacing/2;
-        display: block;
-    }
-    .modal__header {
-        @extend .mui--text-title;
-    }
-    .modal__body {
-        @extend .mui--text-body2;
-    }
+  .modal__close {
+    position: absolute;
+    top: $reflex-cell-spacing/2;
+    right: $reflex-cell-spacing/2;
+    display: block;
+  }
+  .modal__header {
+    @extend .mui--text-title;
+  }
+  .modal__body {
+    @extend .mui--text-body2;
+  }
 }
 
 .jquery-modal.blocker.current {
-    z-index: 1001;
-    > .modal {
-        display: inline-block;
-        overflow: hidden;
-    }
+  z-index: 1001;
+  > .modal {
+    display: inline-block;
+    overflow: hidden;
+  }
 }
