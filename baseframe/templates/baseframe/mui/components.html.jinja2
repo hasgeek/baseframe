@@ -1,17 +1,21 @@
-{%- macro include_svg_icon(icon, css_class='') -%}
+{%- macro faicon(icon, css_class='') -%}
   {% assets "fa5-sprite" %}<svg class="fa5-icon {%- if css_class %} {{ css_class }} {%- endif -%}" aria-hidden="true" role="img"><use xlink:href="{{ ASSET_URL }}#{{icon}}"></use></svg>{% endassets %}
 {%- endmacro %}
 
-{%- macro flash_messages(svg_icon=false) -%}
+{%- macro alertbox(category, message="") %}
+  <div class="alert alert--{{category}} alert--dismissable">
+    <a class="alert__close" href="javascript:void(0);" aria-label="{% trans %}Close{% endtrans %}">
+    {{ faicon('times', 'fa5-icon--subhead fa5--align-baseline') }}
+    </a>
+    <p class="alert__text">{{ message }}</p>
+  </div>
+{%- endmacro %}
+
+{%- macro flash_messages() -%}
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category, message in messages %}
-        <div class="alert alert--{{category}} alert--dismissable">
-          <a class="alert__close" href="javascript:void(0);" aria-label="{% trans %}Close{% endtrans %}">
-          {% if not svg_icon %}<i class="material-icons">clear</i>{%- else %}{{ include_svg_icon('times', 'fa5-icon--subhead fa5--align-baseline') }}{% endif %}
-          </a>
-          <p class="alert__text">{{ message }}</p>
-        </div>
+        {{ alertbox(category, message) }}
       {% endfor %}
     {% endif %}
   {% endwith %}
@@ -21,11 +25,11 @@
   <iframe height="0" width="0" tabindex="-1" style="display: none; border: 0; height: 0; width: 0" aria-hidden="true" role="presentation" src="{{ url }}"></iframe>
 {% endmacro %}
 
-{%- macro hgtopnav(site_title="HasGeek", side_menu_button=none, site_links=[], auth=true, network=true, loginbtntext="Login", user_links=[], svg_icon=false) %}
+{%- macro hgtopnav(site_title="HasGeek", side_menu_button=none, site_links=[], auth=true, network=true, loginbtntext="Login", user_links=[]) %}
   <nav id="hgnav" class="header__nav" role="navigation">
     <div class="header__site-title {% if current_auth.is_anonymous -%}header__site-title--smaller{% endif %}">
       {% if side_menu_button %}
-        <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button" aria-label="{% trans %}Toggle menu{% endtrans %}" aria-expanded="false">{% if not svg_icon %}<i class="material-icons">menu</i>{%- else %}{{ include_svg_icon('bars', 'fa5-icon--title') }}{% endif %}</a>
+        <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button" aria-label="{% trans %}Toggle menu{% endtrans %}" aria-expanded="false">{{ faicon('bars', 'fa5-icon--title') }}</a>
       {% endif %}
       <div class="header__site-title__title">{{site_title}}</div>
     </div>
@@ -33,20 +37,20 @@
       <ul class="header__nav-list">
         {%- for link in site_links %}
           <li class="header__nav-list__item">
-            <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links {% if link.class %}{{ link.class }}{% endif %} {% if  current_view.current_section == link.name %}header__nav-links-active{% endif %}" aria-label="{{ link.title }}">{% if link.icon %}{% if not svg_icon %}<i class="material-icons mui--align-middle header__nav-links__icon" aria-hidden="true">{{link.icon}}</i>{% else %}}{{ include_svg_icon('link.icon', link.icon_class) }}{% endif %}{% endif %}<span class="header__nav-links__text">{{ link.title }}</span>
+            <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links {% if link.class %}{{ link.class }}{% endif %} {% if  current_view.current_section == link.name %}header__nav-links-active{% endif %}" aria-label="{{ link.title }}">{% if link.icon %}{{ faicon(link.icon, link.icon_class) }}{% endif %} <span class="header__nav-links__text">{{ link.title }}</span>
             </a>
           </li>
         {%- endfor %}
 
         {% if network %}
         <li class="mui-dropdown header__nav-list__item">
-          {{ add_hasgeek_network(svg_icon) }}
+          {{ add_hasgeek_network() }}
         </li>
         {% endif %}
 
         {% if auth %}
         <li class="mui-dropdown header__nav-list__item">
-          {{ add_hasgeek_auth(user_links, loginbtntext, svg_icon) }}
+          {{ add_hasgeek_auth(user_links, loginbtntext) }}
         </li>
         {%- endif %}
       </ul>
@@ -59,7 +63,7 @@
   {%- endif %}
 {%- endmacro %}
 
-{%- macro hgsidenav(site_title="HasGeek", site_links=[], user_links=[], svg_icon=false) %}
+{%- macro hgsidenav(site_title="HasGeek", site_links=[], user_links=[]) %}
   <div class="header__site-title header__site-title--sidenav">
     {{site_title}}
   </div>
@@ -67,24 +71,24 @@
     {%- for link in user_links %}
       <li class="header__side-nav-list__item">
         <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}" aria-label="{{ link.title }}">
-          {% if link.icon %}<i class="material-icons header__side-nav-list__item__icon" aria-hidden="true">{{link.icon}}</i>{% else %}{{ include_svg_icon('link.icon', link.icon_class) }}{% endif %} {{ link.title }}
+          {% if link.icon %}{{ faicon(link.icon, link.icon_class) }}{% endif %} {{ link.title }}
         </a>
       </li>
     {%- endfor %}
     {%- for link in site_links %}
       <li class="header__side-nav-list__item">
         <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}" aria-label="{{ link.title }}">
-          {% if link.icon %}<i class="material-icons header__side-nav-list__item__icon" aria-hidden="true">{{link.icon}}</i>{% else %}{{ include_svg_icon('link.icon', link.icon_class) }}{% endif %} {{ link.title }}
+          {% if link.icon %}{{ faicon(link.icon, link.icon_class) }}{% endif %} {{ link.title }}
         </a>
       </li>
     {%- endfor %}
   </ul>
 {%- endmacro %}
 
-{%- macro add_hasgeek_auth(links, loginbtntext, svg_icon=false) %}
+{%- macro add_hasgeek_auth(links, loginbtntext) %}
   {% if not current_auth.is_anonymous -%}
     <a class="header__app-icon" data-mui-toggle="dropdown" id="hg-user-btn" role="button" aria-expanded="false" aria-label="{% trans %}My account{% endtrans %}">
-      {% if not svg_icon %}<i class="material-icons">account_circle</i>{%- else %}{{ include_svg_icon('user', 'fa5-icon--title') }}{% endif %}
+      {{ faicon('user', 'fa5-icon--title') }}
     </a>
     <ul class="mui-dropdown__menu mui-dropdown__menu--right">
       {%- for link in links %}
@@ -109,7 +113,7 @@
   {%- endif %}
 {%- endmacro %}
 
-{%- macro add_hasgeek_network(svg_icon=false) %}
+{%- macro add_hasgeek_network() %}
   {% with %}
     {% set network_links=[
     {'title': 'HasGeek', 'url': 'http://hasgeek.com', 'icon': 'https://hasgeek.com/static/img/hg-banner.png'},
@@ -117,7 +121,7 @@
     {'title': 'HGTV', 'url': 'https://hasgeek.tv/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_hgtv.png'},
     ]%}
     <a class="header__app-icon" data-mui-toggle="dropdown" role="button" aria-expanded="false" aria-label="{% trans %}Apps{% endtrans %}">
-      {% if not svg_icon %}<i class="material-icons" aria-hidden="true">apps</i>{% else %}{{ include_svg_icon('th', 'fa5-icon--title') }}{% endif %}
+      {{ faicon('th', 'fa5-icon--title') }}
     </a>
     <ul class="mui-dropdown__menu mui-dropdown__menu--right" role="menu">
       {%- for link in network_links %}

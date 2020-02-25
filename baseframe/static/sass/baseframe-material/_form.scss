@@ -87,6 +87,10 @@
   .has-error label {
     color: $mui-text-danger;
   }
+
+  .alert {
+    margin-bottom: 15px;
+  }
 }
 
 .mui-form--margins {

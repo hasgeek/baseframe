@@ -3623,7 +3623,7 @@ h6 {
   display: inline-block;
   text-decoration: none;
   cursor: pointer;
-  margin-right: 8px;
+  margin-right: 15px;
   height: 24px;
 }
 
@@ -4047,6 +4047,9 @@ li p + ol {
 .mui-form .has-error label {
   color: #c04b61;
 }
+.mui-form .alert {
+  margin-bottom: 15px;
+}
 
 .mui-form--margins {
   margin-top: 15px;
@@ -4300,10 +4303,6 @@ li p + ol {
 .control-icon:active {
   outline: none;
   text-decoration: none;
-}
-
-.control-icon .material-icons {
-  font-size: 34px;
 }
 
 .modal {
