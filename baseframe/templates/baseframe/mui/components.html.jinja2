@@ -1,11 +1,11 @@
-{%- macro faicon(icon, icon_size='body', baseline=false, css_class='') -%}
+{%- macro faicon(icon, icon_size='body', baseline=true, css_class='') -%}
   {% assets "fa5-sprite" %}<svg class="fa5-icon {%- if icon_size %} fa5-icon--{{icon_size}} {%- endif -%} {%- if baseline %} fa5--align-baseline {%- endif -%} {%- if css_class %} {{ css_class }} {%- endif -%}" aria-hidden="true" role="img"><use xlink:href="{{ ASSET_URL }}#{{icon}}"></use></svg>{% endassets %}
 {%- endmacro %}
 
 {%- macro alertbox(category, message="") %}
   <div class="alert alert--{{category}} alert--dismissable">
     <a class="alert__close" href="javascript:void(0);" aria-label="{% trans %}Close{% endtrans %}">
-    {{ faicon('times', 'fa5-icon--subhead fa5--align-baseline') }}
+    {{ faicon(icon='times', icon_size='subhead', baseline=true) }}
     </a>
     <p class="alert__text">{{ message }}</p>
   </div>
@@ -29,7 +29,7 @@
   <nav id="hgnav" class="header__nav" role="navigation">
     <div class="header__site-title {% if current_auth.is_anonymous -%}header__site-title--smaller{% endif %}">
       {% if side_menu_button %}
-        <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button" aria-label="{% trans %}Toggle menu{% endtrans %}" aria-expanded="false">{{ faicon('bars', 'fa5-icon--title') }}</a>
+        <a class="header__app-icon header__app-icon--menu" id="js-sidebar-menu-button" aria-label="{% trans %}Toggle menu{% endtrans %}" aria-expanded="false">{{ faicon(icon='bars', icon_size='title', baseline=false) }}</a>
       {% endif %}
       <div class="header__site-title__title">{{site_title}}</div>
     </div>
@@ -37,7 +37,7 @@
       <ul class="header__nav-list">
         {%- for link in site_links %}
           <li class="header__nav-list__item">
-            <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links {% if link.class %}{{ link.class }}{% endif %} {% if  current_view.current_section == link.name %}header__nav-links-active{% endif %}" aria-label="{{ link.title }}">{% if link.icon %}{{ faicon(link.icon, link.icon_class) }}{% endif %} <span class="header__nav-links__text">{{ link.title }}</span>
+            <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links {% if link.class %}{{ link.class }}{% endif %} {% if  current_view.current_section == link.name %}header__nav-links-active{% endif %}" aria-label="{{ link.title }}">{% if link.icon %}{{ faicon(icon=link.icon, baseline=false, css_class=link.icon_class) }}{% endif %} <span class="header__nav-links__text">{{ link.title }}</span>
             </a>
           </li>
         {%- endfor %}
@@ -71,14 +71,14 @@
     {%- for link in user_links %}
       <li class="header__side-nav-list__item">
         <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}" aria-label="{{ link.title }}">
-          {% if link.icon %}{{ faicon(link.icon, link.icon_class) }}{% endif %} {{ link.title }}
+          {% if link.icon %}{{ faicon(icon=link.icon, baseline=false, css_class=link.icon_class) }}{% endif %} {{ link.title }}
         </a>
       </li>
     {%- endfor %}
     {%- for link in site_links %}
       <li class="header__side-nav-list__item">
         <a href="{{ link.url }}" {%- if link.rel %} rel="{{ link.rel }}"{% endif %} class="header__nav-links header__nav-links--sidebar {%- if link.class %}{{ link.class }} {% endif %}" aria-label="{{ link.title }}">
-          {% if link.icon %}{{ faicon(link.icon, link.icon_class) }}{% endif %} {{ link.title }}
+          {% if link.icon %}{{ faicon(icon=link.icon, baseline=false, css_class=link.icon_class) }}{% endif %} {{ link.title }}
         </a>
       </li>
     {%- endfor %}
@@ -88,7 +88,7 @@
 {%- macro add_hasgeek_auth(links, loginbtntext) %}
   {% if not current_auth.is_anonymous -%}
     <a class="header__app-icon" data-mui-toggle="dropdown" id="hg-user-btn" role="button" aria-expanded="false" aria-label="{% trans %}My account{% endtrans %}">
-      {{ faicon('user', 'fa5-icon--title') }}
+      {{ faicon(icon='user', baseline=false, icon_size='title') }}
     </a>
     <ul class="mui-dropdown__menu mui-dropdown__menu--right">
       {%- for link in links %}
@@ -121,7 +121,7 @@
     {'title': 'HGTV', 'url': 'https://hasgeek.tv/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_hgtv.png'},
     ]%}
     <a class="header__app-icon" data-mui-toggle="dropdown" role="button" aria-expanded="false" aria-label="{% trans %}Apps{% endtrans %}">
-      {{ faicon('th', 'fa5-icon--title') }}
+      {{ faicon(icon='th', baseline=false, icon_size='title') }}
     </a>
     <ul class="mui-dropdown__menu mui-dropdown__menu--right" role="menu">
       {%- for link in network_links %}

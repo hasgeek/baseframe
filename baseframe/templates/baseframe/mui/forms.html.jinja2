@@ -119,7 +119,7 @@
         {%- if tabindex %} tabindex="{{ tabindex }}" {% endif -%}
         >{{ value|e }}</button>
     {% endfor %}
-    {% if cancel_url %}<a href="{{ cancel_url }}" class="mui-btn mui-btn--raised mui-btn--primary">{% trans %}Cancel{% endtrans %}</a>{% endif %}
+    {% if cancel_url %}<a href="{{ cancel_url }}" class="mui-btn mui-btn--raised mui-btn">{% trans %}Cancel{% endtrans %}</a>{% endif %}
     <span class="loading mui--hide">&nbsp;</span>
     {% if csrf_error -%}
       <div><p class="mui-form__error">{% trans -%}
