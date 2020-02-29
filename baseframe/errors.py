@@ -20,7 +20,9 @@ def error404(e):
                 # Redirect only if it's not back to the same endpoint
                 redirect_url = request.base_url[:-1]
                 if request.query_string:
-                    redirect_url = redirect_url + u'?' + request.query_string
+                    redirect_url = (
+                        redirect_url + u'?' + request.query_string.decode('utf-8')
+                    )
                 return redirect(redirect_url)
         except (NotFound, RequestRedirect, MethodNotAllowed):
             pass
