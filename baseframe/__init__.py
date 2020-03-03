@@ -2,6 +2,7 @@
 
 from __future__ import absolute_import
 import six
+import six.moves.collections_abc as abc
 
 import gettext
 import json
@@ -21,7 +22,7 @@ import pycountry
 
 from coaster.assets import split_namespec
 from coaster.auth import current_auth, request_has_auth
-from coaster.sqlalchemy import MarkdownComposite, RoleAccessProxy
+from coaster.sqlalchemy import MarkdownComposite
 
 from . import translations
 from ._version import __version__, __version_info__
@@ -94,7 +95,7 @@ class JSONEncoder(JSONEncoderBase):
             return six.text_type(o)
         if isinstance(o, BaseTzInfo):
             return o.zone
-        if isinstance(o, RoleAccessProxy):
+        if isinstance(o, abc.Mapping):
             return dict(o)
         if isinstance(o, furl):
             return o.url
@@ -137,7 +138,7 @@ class BaseframeBlueprint(Blueprint):
         bundle_css=None,
         assetenv=None,
         theme='bootstrap3',
-        asset_modules=()
+        asset_modules=(),
     ):
         """
         Initialize an app and load necessary assets.
@@ -256,7 +257,7 @@ class BaseframeBlueprint(Blueprint):
                 app.register_blueprint(
                     module.blueprint,
                     url_prefix="/_baseframe",
-                    static_subdomain=subdomain
+                    static_subdomain=subdomain,
                 )
             except ImportError:
                 app.logger.warning("Unable to import asset module: %s", module_name)
