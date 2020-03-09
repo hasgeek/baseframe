@@ -18,6 +18,7 @@ from coaster.utils import buid
 
 from .. import THEME_FILES
 from .. import b__ as __
+from ..views import request_is_xhr
 from .fields import SubmitField
 from .form import Form
 
@@ -70,7 +71,7 @@ def render_form(
             autosave=autosave,
             draft_revision=draft_revision,
         )
-    if request.is_xhr and ajax:
+    if request_is_xhr() and ajax:
         template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
     else:
         template = THEME_FILES[current_app.config['theme']]['autoform.html.jinja2']
@@ -96,7 +97,7 @@ def render_form(
 
 def render_message(title, message, code=200):
     template = THEME_FILES[current_app.config['theme']]['message.html.jinja2']
-    if request.is_xhr:
+    if request_is_xhr():
         return make_response(Markup("<p>%s</p>" % escape(message)), code)
     else:
         return make_response(
@@ -106,7 +107,7 @@ def render_message(title, message, code=200):
 
 def render_redirect(url, code=302):
     template = THEME_FILES[current_app.config['theme']]['redirect.html.jinja2']
-    if request.is_xhr:
+    if request_is_xhr():
         return make_response(render_template(template, url=url))
     else:
         return redirect(url, code=code)
