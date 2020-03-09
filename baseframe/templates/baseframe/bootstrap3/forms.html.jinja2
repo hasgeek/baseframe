@@ -135,7 +135,7 @@
 {% endmacro %}
 
 {%- macro ajaxform(ref_id, request, force=false) %}
-  {%- if force or request.is_xhr %}
+  {%- if force or request_is_xhr() %}
     <script type="text/javascript">
       $(function() {
         $("#{{ ref_id }}").ajaxForm({
