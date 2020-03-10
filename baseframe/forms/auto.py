@@ -18,7 +18,7 @@ from coaster.utils import buid
 
 from .. import THEME_FILES
 from .. import b__ as __
-from ..views import request_is_xhr
+from .. import request_is_xhr
 from .fields import SubmitField
 from .form import Form
 

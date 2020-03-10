@@ -128,6 +128,17 @@ def _select_jinja_autoescape(filename):
     )
 
 
+def request_is_xhr():
+    """
+    True if the request was triggered via a JavaScript XMLHttpRequest. This only works
+    with libraries that support the `X-Requested-With` header and set it to
+    "XMLHttpRequest".  Libraries that do that are prototype, jQuery and Mochikit and
+    probably some more. This function was ported from Werkzeug after being removed from
+    there, as legacy apps may still be using jQuery.
+    """
+    return request.environ.get('HTTP_X_REQUESTED_WITH', '').lower() == 'xmlhttprequest'
+
+
 class BaseframeBlueprint(Blueprint):
     def init_app(
         self,
@@ -166,6 +177,7 @@ class BaseframeBlueprint(Blueprint):
             app.jinja_env.auto_reload = True
         app.jinja_env.add_extension('jinja2.ext.do')
         app.jinja_env.autoescape = _select_jinja_autoescape
+        app.jinja_env.globals['request_is_xhr'] = request_is_xhr
         if app.subdomain_matching:
             # Does this app want a static subdomain? (Default: yes, 'static').
             # Apps can disable this by setting STATIC_SUBDOMAIN = None.

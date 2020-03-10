@@ -130,24 +130,12 @@ def asset_path(bundle_key):
     )
 
 
-def request_is_xhr():
-    """
-    True if the request was triggered via a JavaScript XMLHttpRequest. This only works
-    with libraries that support the `X-Requested-With` header and set it to
-    "XMLHttpRequest".  Libraries that do that are prototype, jQuery and Mochikit and
-    probably some more. This function was ported from Werkzeug after being removed from
-    there, as legacy apps may still be using jQuery.
-    """
-    return request.environ.get('HTTP_X_REQUESTED_WITH', '').lower() == 'xmlhttprequest'
-
-
 @baseframe.app_context_processor
 def baseframe_context():
     return {
         'networkbar_links': networkbar_links,
         'csrf_token': generate_csrf,
         'asset_path': asset_path,
-        'request_is_xhr': request_is_xhr,
     }
 
 
