@@ -17,7 +17,7 @@ else:
     raise RuntimeError("Unable to find version string in baseframe/_version.py.")
 
 requires = [
-    'six',
+    'six>=1.13.0',
     'semantic_version',
     'bleach',
     'pytz',
