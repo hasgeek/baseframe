@@ -211,3 +211,42 @@ def longdate(value):
     else:
         dt = value
     return dt.strftime('%e %B %Y')
+
+
+@baseframe.app_template_filter('loclongdate')
+def loclongdate(value):
+    if isinstance(value, datetime):
+        if value.tzinfo is None:
+            dt = UTC.localize(value).astimezone(get_timezone())
+        else:
+            dt = value.astimezone(get_timezone())
+    else:
+        dt = value
+    return format_date(dt, format='long', locale=get_locale())
+
+
+@baseframe.app_template_filter('loctime')
+def loctime(value):
+    if isinstance(value, datetime):
+        if value.tzinfo is None:
+            dt = UTC.localize(value).astimezone(get_timezone())
+        else:
+            dt = value.astimezone(get_timezone())
+    else:
+        dt = value
+    return format_datetime(dt, "hh:mm a", locale=get_locale())
+
+
+@baseframe.app_template_filter('locdatetime')
+def locdatetime(value):
+    if isinstance(value, datetime):
+        if value.tzinfo is None:
+            dt = UTC.localize(value).astimezone(get_timezone())
+        else:
+            dt = value.astimezone(get_timezone())
+    else:
+        dt = value
+    locdate = format_date(dt, format='long', locale=get_locale())
+    loctime = format_time(dt, "h:mm a", locale=get_locale())
+    locdatetime = (str(locdate) + ' ' + str(loctime))
+    return locdatetime
