@@ -7,6 +7,7 @@ import os
 
 from flask import Markup, request
 
+from babel.dates import format_date, format_datetime, format_time
 from pytz import UTC
 
 from coaster.gfm import markdown
@@ -14,7 +15,6 @@ from coaster.utils import md5sum, text_blocks
 
 from . import b_ as _
 from . import baseframe, cache, current_app, get_locale, get_timezone
-from babel.dates import format_date, format_time, format_datetime
 from .utils import request_timestamp
 from .views import ext_assets
 
@@ -249,5 +249,5 @@ def locdatetime(value):
         dt = value
     locdate = format_date(dt, format='long', locale=get_locale())
     loctime = format_time(dt, "h:mm a", locale=get_locale())
-    locdatetime = (str(locdate) + ' ' + str(loctime))
+    locdatetime = str(locdate) + ' ' + str(loctime)
     return locdatetime
