@@ -7,7 +7,7 @@ import os
 
 from flask import Markup, request
 
-from babel.dates import format_date, format_datetime, format_time
+from babel.dates import format_date, format_time, format_datetime
 from pytz import UTC
 
 from coaster.gfm import markdown
@@ -191,7 +191,7 @@ def date_filter(value, fm='medium'):
     return format_date(dt, format=fm, locale=get_locale())
 
 
-@baseframe.app_template_filter('time')
+@baseframe.app_template_filter('format_time')
 def time_filter(value):
     if isinstance(value, datetime):
         if value.tzinfo is None:
