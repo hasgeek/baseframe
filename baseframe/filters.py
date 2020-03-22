@@ -179,31 +179,8 @@ def cdata(text):
     return Markup('<![CDATA[' + text.replace(']]>', ']]]]><![CDATA[>') + ']]>')
 
 
-@baseframe.app_template_filter('shortdate')
-def shortdate(value):
-    if isinstance(value, datetime):
-        tz = get_timezone()
-        if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(tz)
-        else:
-            dt = value.astimezone(tz)
-        utc_now = request_timestamp().astimezone(tz)
-    else:
-        dt = value
-        utc_now = request_timestamp().date()
-    if dt > (
-        utc_now
-        - timedelta(days=int(current_app.config.get('SHORTDATE_THRESHOLD_DAYS', 0)))
-    ):
-        return dt.strftime('%e %b')
-    else:
-        # The string replace hack is to deal with inconsistencies in the underlying
-        # implementation of strftime. See https://bugs.python.org/issue8304
-        return six.text_type(dt.strftime("%e %b '%y")).replace(u"'", u"’")
-
-
-@baseframe.app_template_filter('longdate')
-def longdate(value):
+@baseframe.app_template_filter('date')
+def date_filter(value, fm='medium'):
     if isinstance(value, datetime):
         if value.tzinfo is None:
             dt = UTC.localize(value).astimezone(get_timezone())
@@ -211,11 +188,11 @@ def longdate(value):
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    return dt.strftime('%e %B %Y')
+    return format_date(dt, format=fm, locale=get_locale())
 
 
-@baseframe.app_template_filter('loclongdate')
-def loclongdate(value):
+@baseframe.app_template_filter('time')
+def time_filter(value):
     if isinstance(value, datetime):
         if value.tzinfo is None:
             dt = UTC.localize(value).astimezone(get_timezone())
@@ -223,11 +200,11 @@ def loclongdate(value):
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    return format_date(dt, format='long', locale=get_locale())
+    return format_time(dt, "hh:mm a", locale=get_locale())
 
 
-@baseframe.app_template_filter('loctime')
-def loctime(value):
+@baseframe.app_template_filter('datetime')
+def datetime_filter(value, fm='medium'):
     if isinstance(value, datetime):
         if value.tzinfo is None:
             dt = UTC.localize(value).astimezone(get_timezone())
@@ -235,19 +212,4 @@ def loctime(value):
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    return format_datetime(dt, "hh:mm a", locale=get_locale())
-
-
-@baseframe.app_template_filter('locdatetime')
-def locdatetime(value):
-    if isinstance(value, datetime):
-        if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(get_timezone())
-        else:
-            dt = value.astimezone(get_timezone())
-    else:
-        dt = value
-    locdate = format_date(dt, format='long', locale=get_locale())
-    loctime = format_time(dt, "h:mm a", locale=get_locale())
-    locdatetime = str(locdate) + ' ' + str(loctime)
-    return locdatetime
+    return format_datetime(dt, format=fm, locale=get_locale())
