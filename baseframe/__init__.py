@@ -173,7 +173,6 @@ class BaseframeBlueprint(Blueprint):
         # Initialize Sentry logging
         if app.config.get('SENTRY_URL'):
             sentry_sdk.init(dsn=app.config['SENTRY_URL'], integrations=[FlaskIntegration()])
-            print(" - Sentry logging is enabled. \n - URL: %s" % app.config['SENTRY_URL'])
 
         # Since Flask 0.11, templates are no longer auto reloaded.
         # Setting the config alone doesn't seem to work, so we explicitly
