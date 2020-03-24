@@ -4,6 +4,7 @@ from __future__ import absolute_import
 import six
 import six.moves.collections_abc as abc
 
+from datetime import date, datetime, time
 import gettext
 import json
 import types
@@ -95,6 +96,8 @@ class JSONEncoder(JSONEncoderBase):
             return six.text_type(o)
         if isinstance(o, BaseTzInfo):
             return o.zone
+        if isinstance(o, (date, datetime, time)):
+            return o.isoformat()
         if isinstance(o, abc.Mapping):
             return dict(o)
         if isinstance(o, furl):
