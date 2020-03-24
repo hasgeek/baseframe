@@ -218,9 +218,12 @@ def longdate(value):
 def date_filter(value, format='medium', usertz=True):
     if isinstance(value, datetime):
         if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(get_timezone())
+            if usertz:
+                dt = UTC.localize(value).astimezone(get_timezone())
+            else:
+                dt = value
         else:
-            if usertz is True:
+            if usertz:
                 dt = value.astimezone(get_timezone())
             else:
                 dt = value
@@ -233,9 +236,12 @@ def date_filter(value, format='medium', usertz=True):
 def time_filter(value, format='short', usertz=True):
     if isinstance(value, datetime):
         if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(get_timezone())
+            if usertz:
+                dt = UTC.localize(value).astimezone(get_timezone())
+            else:
+                dt = value
         else:
-            if usertz is True:
+            if usertz:
                 dt = value.astimezone(get_timezone())
             else:
                 dt = value
@@ -248,9 +254,12 @@ def time_filter(value, format='short', usertz=True):
 def datetime_filter(value, format='medium', usertz=True):
     if isinstance(value, datetime):
         if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(get_timezone())
+            if usertz:
+                dt = UTC.localize(value).astimezone(get_timezone())
+            else:
+                dt = value
         else:
-            if usertz is True:
+            if usertz:
                 dt = value.astimezone(get_timezone())
             else:
                 dt = value
