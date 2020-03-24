@@ -215,36 +215,39 @@ def longdate(value):
 
 
 @baseframe.app_template_filter('date')
-def date_filter(value, format='medium'):
+def date_filter(value, format='medium', usertz=True):
     if isinstance(value, datetime):
         if value.tzinfo is None:
             dt = UTC.localize(value).astimezone(get_timezone())
         else:
-            dt = value.astimezone(get_timezone())
-    else:
-        dt = value
-    return format_date(dt, format=format, locale=get_locale())  # NOQA
+            if usertz is True:
+                dt = value.astimezone(get_timezone())
+            else:
+                dt = value
+    return format_date(dt, format=format, locale=get_locale())  # NOQA: A002
 
 
 @baseframe.app_template_filter('format_time')
-def time_filter(value, format='short'):
+def time_filter(value, format='short', usertz=True):
     if isinstance(value, datetime):
         if value.tzinfo is None:
             dt = UTC.localize(value).astimezone(get_timezone())
         else:
-            dt = value.astimezone(get_timezone())
-    else:
-        dt = value
-    return format_time(dt, format=format, locale=get_locale())  # NOQA
+            if usertz is True:
+                dt = value.astimezone(get_timezone())
+            else:
+                dt = value
+    return format_time(dt, format=format, locale=get_locale())  # NOQA: A002
 
 
 @baseframe.app_template_filter('datetime')
-def datetime_filter(value, format='medium'):
+def datetime_filter(value, format='medium', usertz=True):
     if isinstance(value, datetime):
         if value.tzinfo is None:
             dt = UTC.localize(value).astimezone(get_timezone())
         else:
-            dt = value.astimezone(get_timezone())
-    else:
-        dt = value
-    return format_datetime(dt, format=format, locale=get_locale())  # NOQA
+            if usertz is True:
+                dt = value.astimezone(get_timezone())
+            else:
+                dt = value
+    return format_datetime(dt, format=format, locale=get_locale())  # NOQA: A002
