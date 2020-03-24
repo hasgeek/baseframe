@@ -224,6 +224,8 @@ def date_filter(value, format='medium', usertz=True):
                 dt = value.astimezone(get_timezone())
             else:
                 dt = value
+    else:
+        dt = value
     return format_date(dt, format=format, locale=get_locale())  # NOQA: A002
 
 
@@ -237,6 +239,8 @@ def time_filter(value, format='short', usertz=True):
                 dt = value.astimezone(get_timezone())
             else:
                 dt = value
+    else:
+        dt = value
     return format_time(dt, format=format, locale=get_locale())  # NOQA: A002
 
 
@@ -250,4 +254,6 @@ def datetime_filter(value, format='medium', usertz=True):
                 dt = value.astimezone(get_timezone())
             else:
                 dt = value
+    else:
+        dt = value
     return format_datetime(dt, format=format, locale=get_locale())  # NOQA: A002
