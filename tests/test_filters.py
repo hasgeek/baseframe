@@ -12,7 +12,7 @@ class TestDatetimeFilters(TestCaseBaseframe):
     def setUp(self):
         super(TestDatetimeFilters, self).setUp()
         self.now = utcnow()
-        self.today = date.today()
+        self.date = date(2020, 1, 1)
 
     def test_age(self):
         age = filters.age(self.now)
@@ -88,8 +88,8 @@ class TestDatetimeFilters(TestCaseBaseframe):
             assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
 
     def test_date_filter(self):
-        testdate = self.today
-        testdate_string = self.today.strftime('%Y-%m-%d')
+        testdate = self.date
+        testdate_string = self.date.strftime('%Y-%m-%d')
         with self.app.test_request_context('/'):
             assert filters.date_filter(testdate, 'yyyy-MM-dd', usertz=False) == testdate_string
 
