@@ -216,17 +216,11 @@ def longdate(value):
 
 @baseframe.app_template_filter('date')
 def date_filter(value, format='medium', usertz=True):
-    if isinstance(value, datetime):
+    if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
-            if usertz:
-                dt = UTC.localize(value).astimezone(get_timezone())
-            else:
-                dt = value
+            dt = UTC.localize(value).astimezone(get_timezone())
         else:
-            if usertz:
-                dt = value.astimezone(get_timezone())
-            else:
-                dt = value
+            dt = value.astimezone(get_timezone())
     else:
         dt = value
     return format_date(dt, format=format, locale=get_locale())  # NOQA: A002
@@ -236,15 +230,9 @@ def date_filter(value, format='medium', usertz=True):
 def time_filter(value, format='short', usertz=True):
     if isinstance(value, datetime):
         if value.tzinfo is None:
-            if usertz:
-                dt = UTC.localize(value).astimezone(get_timezone())
-            else:
-                dt = value
+            dt = UTC.localize(value).astimezone(get_timezone())
         else:
-            if usertz:
-                dt = value.astimezone(get_timezone())
-            else:
-                dt = value
+            dt = value.astimezone(get_timezone())
     else:
         dt = value
     return format_time(dt, format=format, locale=get_locale())  # NOQA: A002
@@ -254,15 +242,9 @@ def time_filter(value, format='short', usertz=True):
 def datetime_filter(value, format='medium', usertz=True):
     if isinstance(value, datetime):
         if value.tzinfo is None:
-            if usertz:
-                dt = UTC.localize(value).astimezone(get_timezone())
-            else:
-                dt = value
+            dt = UTC.localize(value).astimezone(get_timezone())
         else:
-            if usertz:
-                dt = value.astimezone(get_timezone())
-            else:
-                dt = value
+            dt = value.astimezone(get_timezone())
     else:
         dt = value
     return format_datetime(dt, format=format, locale=get_locale())  # NOQA: A002
