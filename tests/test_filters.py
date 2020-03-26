@@ -92,25 +92,29 @@ class TestDatetimeFilters(TestCaseBaseframe):
         with self.app.test_request_context('/'):
             assert filters.date_filter(self.date, 'yyyy-MM-dd', usertz=False) == self.date.strftime('%Y-%m-%d')
 
-    def test_date_localized_short(self):
+    def test_date_localized_short_hi(self):
         with self.app.test_request_context('/'):
             assert filters.date_filter(self.date, locale='hi', format='short') == u'1/1/20'
 
-    def test_date_localized_medium(self):
+    def test_date_localized_medium_hi(self):
         with self.app.test_request_context('/'):
             assert filters.date_filter(self.date, locale='hi', format='medium') == u'1 जन॰ 2020'
 
-    def test_date_localized_long(self):
+    def test_date_localized_long_hi(self):
         with self.app.test_request_context('/'):
             assert filters.date_filter(self.date, locale='hi', format='long') == u'1 जनवरी 2020'
 
-    def test_time_localized(self):
+    def test_time_localized_hi(self):
         with self.app.test_request_context('/'):
             assert filters.datetime_filter(self.datetime, locale='hi', format='medium') == u'1 जन॰ 2020, 12:00:00 am'
 
-    def test_month_localized(self):
+    def test_month_localized_hi(self):
         with self.app.test_request_context('/'):
             assert filters.date_filter(self.date, "MMMM", locale='hi') == u'जनवरी'
+
+    def test_month_localized_ru(self):
+        with self.app.test_request_context('/'):
+            assert filters.date_filter(self.date, "MMMM", locale='ru') == u'января'
 
 
 class TestNaiveDatetimeFilters(TestDatetimeFilters):
