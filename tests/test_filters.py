@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, time, timedelta
 
 from baseframe import filters, forms
 from coaster.utils import md5sum, utcnow
+
+from pytz import timezone as tz
 
 from .fixtures import TestCaseBaseframe, UserTest
 
@@ -13,7 +15,9 @@ class TestDatetimeFilters(TestCaseBaseframe):
         super(TestDatetimeFilters, self).setUp()
         self.now = utcnow()
         self.date = date(2020, 1, 1)
-        self.datetime = datetime(2020, 1, 1, 0, 0)
+        self.datetime = datetime(2020, 1, 1, 0, 0, tzinfo=tz("UTC"))
+        self.time = time(23, 59, 59)
+        self.datetimeEST = datetime(2020, 1, 1, 0, 0, tzinfo=tz("EST"))
 
     def test_age(self):
         age = filters.age(self.now)
@@ -116,9 +120,21 @@ class TestDatetimeFilters(TestCaseBaseframe):
         with self.app.test_request_context('/'):
             assert filters.date_filter(self.date, "MMMM") == 'January'
 
-    def test_time_localized(self):
+    def test_datetime_localized(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
             assert filters.time_filter(self.datetime, format='medium') == '12:00:00 am'
+
+    def test_time_localized(self):
+        with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
+            assert filters.time_filter(self.time, format='full') == u'11:59:59 pm समन्वित वैश्विक समय'
+
+    def test_time_with_usertz(self):
+        with self.app.test_request_context('/'):
+            assert filters.datetime_filter(self.datetimeEST, format='full', usertz=False) == u'Wednesday, January 1, 2020 at 12:00:00 AM GMT-05:00'
+
+    def test_time_without_usertz(self):
+        with self.app.test_request_context('/'):
+            assert filters.datetime_filter(self.datetimeEST, format='full', usertz=True) == u'Wednesday, January 1, 2020 at 5:00:00 AM Coordinated Universal Time'
 
 
 class TestNaiveDatetimeFilters(TestDatetimeFilters):
