@@ -112,9 +112,9 @@ class TestDatetimeFilters(TestCaseBaseframe):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
             assert filters.date_filter(self.date, "MMMM") == u'जनवरी'
 
-    def test_month_localized_fr(self):
-        with self.app.test_request_context('/', headers={'Accept-Language': 'fr'}):
-            assert filters.date_filter(self.date, "MMMM") == 'janvier'
+    def test_month_localized_en(self):
+        with self.app.test_request_context('/'):
+            assert filters.date_filter(self.date, "MMMM") == 'January'
 
     def test_time_localized(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
