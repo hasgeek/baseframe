@@ -223,10 +223,7 @@ def date_filter(value, format='medium', locale=None, usertz=True):
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    if locale is not None:
-        return format_date(dt, format=format, locale=locale)  # NOQA: A002
-    else:
-        return format_date(dt, format=format, locale=get_locale())  # NOQA: A002
+    return format_date(dt, format=format, locale=locale if locale else get_locale())  # NOQA: A002
 
 
 @baseframe.app_template_filter('format_time')
@@ -238,10 +235,7 @@ def time_filter(value, format='short', locale=None, usertz=True):
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    if locale is not None:
-        return format_time(dt, format=format, locale=locale)  # NOQA: A002
-    else:
-        return format_time(dt, format=format, locale=get_locale())  # NOQA: A002
+    return format_time(dt, format=format, locale=locale if locale else get_locale())  # NOQA: A002
 
 
 @baseframe.app_template_filter('datetime')
@@ -253,7 +247,4 @@ def datetime_filter(value, format='medium', locale=None, usertz=True):
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    if locale is not None:
-        return format_datetime(dt, format=format, locale=locale)  # NOQA: A002
-    else:
-        return format_datetime(dt, format=format, locale=get_locale())  # NOQA: A002
+    return format_datetime(dt, format=format, locale=locale if locale else get_locale())  # NOQA: A002
