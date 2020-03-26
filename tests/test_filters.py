@@ -93,28 +93,32 @@ class TestDatetimeFilters(TestCaseBaseframe):
             assert filters.date_filter(self.date, 'yyyy-MM-dd', usertz=False) == self.date.strftime('%Y-%m-%d')
 
     def test_date_localized_short_hi(self):
-        with self.app.test_request_context('/'):
-            assert filters.date_filter(self.date, locale='hi', format='short') == u'1/1/20'
+        with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
+            assert filters.date_filter(self.date, format='short') == u'1/1/20'
 
     def test_date_localized_medium_hi(self):
-        with self.app.test_request_context('/'):
-            assert filters.date_filter(self.date, locale='hi', format='medium') == u'1 जन॰ 2020'
+        with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
+            assert filters.date_filter(self.date, format='medium') == u'1 जन॰ 2020'
 
     def test_date_localized_long_hi(self):
-        with self.app.test_request_context('/'):
-            assert filters.date_filter(self.date, locale='hi', format='long') == u'1 जनवरी 2020'
+        with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
+            assert filters.date_filter(self.date, format='long') == u'1 जनवरी 2020'
 
     def test_time_localized_hi(self):
-        with self.app.test_request_context('/'):
-            assert filters.datetime_filter(self.datetime, locale='hi', format='medium') == u'1 जन॰ 2020, 12:00:00 am'
+        with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
+            assert filters.datetime_filter(self.datetime, format='medium') == u'1 जन॰ 2020, 12:00:00 am'
 
     def test_month_localized_hi(self):
-        with self.app.test_request_context('/'):
-            assert filters.date_filter(self.date, "MMMM", locale='hi') == u'जनवरी'
+        with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
+            assert filters.date_filter(self.date, "MMMM") == u'जनवरी'
 
-    def test_month_localized_ru(self):
-        with self.app.test_request_context('/'):
-            assert filters.date_filter(self.date, "MMMM", locale='ru') == u'января'
+    def test_month_localized_fr(self):
+        with self.app.test_request_context('/', headers={'Accept-Language': 'fr'}):
+            assert filters.date_filter(self.date, "MMMM") == 'janvier'
+
+    def test_time_localized(self):
+        with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
+            assert filters.time_filter(self.datetime, format='medium') == '12:00:00 am'
 
 
 class TestNaiveDatetimeFilters(TestDatetimeFilters):
