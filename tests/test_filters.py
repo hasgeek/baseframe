@@ -6,6 +6,12 @@ from baseframe import filters, forms
 from coaster.utils import md5sum, utcnow
 
 from .fixtures import TestCaseBaseframe, UserTest
+from .fixtures import app1 as app
+
+
+@app.route('/localedatetest')
+def locale_date_test():
+    return filters.date_filter(date(2020, 1, 1), format="medium")
 
 
 class TestDatetimeFilters(TestCaseBaseframe):
@@ -92,6 +98,11 @@ class TestDatetimeFilters(TestCaseBaseframe):
         testdate_string = self.date.strftime('%Y-%m-%d')
         with self.app.test_request_context('/'):
             assert filters.date_filter(testdate, 'yyyy-MM-dd', usertz=False) == testdate_string
+
+    def test_date_filter_localized(self):
+        with app.test_client() as c:
+            response = c.get('/localedatetest', headers={'Accept-Language': 'hi;q=0.5'})
+            assert response.data.decode('utf-8') == u"1 जन॰ 2020"
 
 
 class TestNaiveDatetimeFilters(TestDatetimeFilters):
