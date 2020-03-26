@@ -6,12 +6,6 @@ from baseframe import filters, forms
 from coaster.utils import md5sum, utcnow
 
 from .fixtures import TestCaseBaseframe, UserTest
-from .fixtures import app1 as app
-
-
-@app.route('/localedatetest')
-def locale_date_test():
-    return filters.date_filter(date(2020, 1, 1), format="medium")
 
 
 class TestDatetimeFilters(TestCaseBaseframe):
@@ -19,6 +13,7 @@ class TestDatetimeFilters(TestCaseBaseframe):
         super(TestDatetimeFilters, self).setUp()
         self.now = utcnow()
         self.date = date(2020, 1, 1)
+        self.datetime = datetime(2020, 1, 1, 0, 0)
 
     def test_age(self):
         age = filters.age(self.now)
@@ -94,15 +89,28 @@ class TestDatetimeFilters(TestCaseBaseframe):
             assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
 
     def test_date_filter(self):
-        testdate = self.date
-        testdate_string = self.date.strftime('%Y-%m-%d')
         with self.app.test_request_context('/'):
-            assert filters.date_filter(testdate, 'yyyy-MM-dd', usertz=False) == testdate_string
+            assert filters.date_filter(self.date, 'yyyy-MM-dd', usertz=False) == self.date.strftime('%Y-%m-%d')
 
-    def test_date_filter_localized(self):
-        with app.test_client() as c:
-            response = c.get('/localedatetest', headers={'Accept-Language': 'hi;q=0.5'})
-            assert response.data.decode('utf-8') == u"1 जन॰ 2020"
+    def test_date_localized_short(self):
+        with self.app.test_request_context('/'):
+            assert filters.date_filter(self.date, locale='hi', format='short') == u'1/1/20'
+
+    def test_date_localized_medium(self):
+        with self.app.test_request_context('/'):
+            assert filters.date_filter(self.date, locale='hi', format='medium') == u'1 जन॰ 2020'
+
+    def test_date_localized_long(self):
+        with self.app.test_request_context('/'):
+            assert filters.date_filter(self.date, locale='hi', format='long') == u'1 जनवरी 2020'
+
+    def test_time_localized(self):
+        with self.app.test_request_context('/'):
+            assert filters.datetime_filter(self.datetime, locale='hi', format='medium') == u'1 जन॰ 2020, 12:00:00 am'
+
+    def test_month_localized(self):
+        with self.app.test_request_context('/'):
+            assert filters.date_filter(self.date, "MMMM", locale='hi') == u'जनवरी'
 
 
 class TestNaiveDatetimeFilters(TestDatetimeFilters):
