@@ -226,8 +226,8 @@ def date_filter(value, format='medium', locale=None, usertz=True):
     return format_date(dt, format=format, locale=locale if locale else get_locale())  # NOQA: A002
 
 
-@baseframe.app_template_filter('format_time')
-def time_filter(value, format='short', locale=None, usertz=True):
+@baseframe.app_template_filter('time')
+def time_filter(value, format='short', locale=None, usertz=True):  # Default format = hh:mm
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
             dt = UTC.localize(value).astimezone(get_timezone())
