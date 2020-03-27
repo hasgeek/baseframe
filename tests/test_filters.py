@@ -3,9 +3,9 @@
 from datetime import date, datetime, time, timedelta
 
 from baseframe import filters, forms
-from coaster.utils import md5sum, utcnow
+from coaster.utils import md5sum
 
-from pytz import timezone as tz
+from pytz import timezone, UTC
 
 from .fixtures import TestCaseBaseframe, UserTest
 
@@ -13,11 +13,11 @@ from .fixtures import TestCaseBaseframe, UserTest
 class TestDatetimeFilters(TestCaseBaseframe):
     def setUp(self):
         super(TestDatetimeFilters, self).setUp()
-        self.now = utcnow()
-        self.date = date(2020, 1, 1)
-        self.datetime = datetime(2020, 1, 1, 0, 0, tzinfo=tz("UTC"))
+        self.now = datetime.now(UTC)
+        self.date = date(2020, 1, 31)
+        self.datetime = datetime(2020, 1, 31, 0, 0, tzinfo=timezone("UTC"))
         self.time = time(23, 59, 59)
-        self.datetimeEST = datetime(2020, 1, 1, 0, 0, tzinfo=tz("EST"))
+        self.datetimeEST = datetime(2020, 1, 31, 0, 0, tzinfo=timezone("America/New_York"))
 
     def test_age(self):
         age = filters.age(self.now)
@@ -94,23 +94,23 @@ class TestDatetimeFilters(TestCaseBaseframe):
 
     def test_date_filter(self):
         with self.app.test_request_context('/'):
-            assert filters.date_filter(self.date, 'yyyy-MM-dd', usertz=False) == self.date.strftime('%Y-%m-%d')
+            assert filters.date_filter(self.date, 'yyyy-MM-dd', usertz=False) == u'2020-01-31'
 
     def test_date_localized_short_hi(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
-            assert filters.date_filter(self.date, format='short') == u'1/1/20'
+            assert filters.date_filter(self.date, format='short') == u'31/1/20'
 
     def test_date_localized_medium_hi(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
-            assert filters.date_filter(self.date, format='medium') == u'1 जन॰ 2020'
+            assert filters.date_filter(self.date, format='medium') == u'31 जन॰ 2020'
 
     def test_date_localized_long_hi(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
-            assert filters.date_filter(self.date, format='long') == u'1 जनवरी 2020'
+            assert filters.date_filter(self.date, format='long') == u'31 जनवरी 2020'
 
-    def test_time_localized_hi(self):
+    def test_time_localized_hi_medium(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
-            assert filters.datetime_filter(self.datetime, format='medium') == u'1 जन॰ 2020, 12:00:00 am'
+            assert filters.datetime_filter(self.datetime, format='medium') == u'31 जन॰ 2020, 12:00:00 am'
 
     def test_month_localized_hi(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
@@ -118,23 +118,43 @@ class TestDatetimeFilters(TestCaseBaseframe):
 
     def test_month_localized_en(self):
         with self.app.test_request_context('/'):
-            assert filters.date_filter(self.date, "MMMM") == 'January'
+            assert filters.date_filter(self.date, "MMMM") == u'January'
 
-    def test_datetime_localized(self):
+    def test_time_localized_short(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
-            assert filters.time_filter(self.datetime, format='medium') == '12:00:00 am'
+            assert filters.time_filter(self.datetime, format='short') == u'12:00 am'
 
-    def test_time_localized(self):
+    def test_time_localized_medium(self):
+        with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
+            assert filters.time_filter(self.datetime, format='medium') == u'12:00:00 am'
+
+    def test_time_localized_long(self):
+        with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
+            assert filters.time_filter(self.datetime, format='long') == u'12:00:00 am UTC'
+
+    def test_time_localized_hi_full(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
             assert filters.time_filter(self.time, format='full') == u'11:59:59 pm समन्वित वैश्विक समय'
 
-    def test_time_with_usertz(self):
-        with self.app.test_request_context('/'):
-            assert filters.datetime_filter(self.datetimeEST, format='full', usertz=False) == u'Wednesday, January 1, 2020 at 12:00:00 AM GMT-05:00'
+    def test_time_localized_en_full(self):
+        with self.app.test_request_context('/', headers={'Accept-Language': 'en'}):
+            assert filters.time_filter(self.time, format='full') == u'11:59:59 PM Coordinated Universal Time'
 
-    def test_time_without_usertz(self):
+    def test_datetime_with_usertz(self):
         with self.app.test_request_context('/'):
-            assert filters.datetime_filter(self.datetimeEST, format='full', usertz=True) == u'Wednesday, January 1, 2020 at 5:00:00 AM Coordinated Universal Time'
+            assert filters.datetime_filter(self.datetimeEST, format='full', usertz=False) == u'Friday, January 31, 2020 at 12:00:00 AM Eastern Standard Time'
+
+    def test_datetime_without_usertz(self):
+        with self.app.test_request_context('/'):
+            assert filters.datetime_filter(self.datetimeEST, format='full', usertz=True) == u'Friday, January 31, 2020 at 4:56:00 AM Coordinated Universal Time'
+
+    def test_date_dmy(self):
+        with self.app.test_request_context('/'):
+            assert filters.date_filter(self.datetime, format='short', locale='en_GB') == u'31/01/2020'
+
+    def test_date_mdy(self):
+        with self.app.test_request_context('/'):
+            assert filters.date_filter(self.datetime, format='short', locale='en_US') == u'1/31/20'
 
 
 class TestNaiveDatetimeFilters(TestDatetimeFilters):
