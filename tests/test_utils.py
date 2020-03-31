@@ -16,10 +16,6 @@ class TestUtils(TestCaseBaseframe):
     def test_localized_country_list(self):
         countries = _localized_country_list_inner('en')
         assert dict(countries)['DE'] == u"Germany"
-        countries = _localized_country_list_inner('de')
-        assert dict(countries)['DE'] == u"Deutschland"
-        countries = _localized_country_list_inner('es')
-        assert dict(countries)['DE'] == u"Alemania"
         countries = _localized_country_list_inner('hi')
         assert dict(countries)['DE'] == u"जर्मनी"
 
@@ -27,20 +23,6 @@ class TestUtils(TestCaseBaseframe):
         with app.test_client() as c:
             rv = c.get('/localetest', headers={'Accept-Language': 'en;q=0.8, *;q=0.5'})
             assert rv.data.decode('utf-8') == u"Germany"
-
-        with app.test_client() as c:
-            rv = c.get(
-                '/localetest',
-                headers={'Accept-Language': 'de;q=0.9, en;q=0.8, *;q=0.5'},
-            )
-            assert rv.data.decode('utf-8') == u"Deutschland"
-
-        with app.test_client() as c:
-            rv = c.get(
-                '/localetest',
-                headers={'Accept-Language': 'es;q=0.9, en;q=0.8, *;q=0.5'},
-            )
-            assert rv.data.decode('utf-8') == u"Alemania"
 
         with app.test_client() as c:
             rv = c.get(
