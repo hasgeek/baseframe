@@ -476,13 +476,9 @@ class TextListField(wtforms.fields.TextAreaField):
 
     def process_formdata(self, valuelist):
         if valuelist and valuelist[0]:
-            self.data = [
-                x
-                for x in valuelist[0]
-                .replace('\r\n', '\n')
-                .replace('\r', '\n')
-                .split('\n')
-            ]
+            self.data = (
+                valuelist[0].replace('\r\n', '\n').replace('\r', '\n').split('\n')
+            )
         else:
             self.data = []
 
