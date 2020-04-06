@@ -7,13 +7,14 @@ import os
 
 from flask import Markup, request
 
+from babel.dates import format_date, format_time, format_datetime
 from pytz import UTC
 
 from coaster.gfm import markdown
 from coaster.utils import md5sum, text_blocks
 
 from . import b_ as _
-from . import baseframe, cache, current_app, get_timezone
+from . import baseframe, cache, current_app, get_locale, get_timezone
 from .utils import request_timestamp
 from .views import ext_assets
 
@@ -211,3 +212,39 @@ def longdate(value):
     else:
         dt = value
     return dt.strftime('%e %B %Y')
+
+
+@baseframe.app_template_filter('date')
+def date_filter(value, format='medium', locale=None, usertz=True):
+    if isinstance(value, datetime) and usertz:
+        if value.tzinfo is None:
+            dt = UTC.localize(value).astimezone(get_timezone())
+        else:
+            dt = value.astimezone(get_timezone())
+    else:
+        dt = value
+    return format_date(dt, format=format, locale=locale if locale else get_locale())  # NOQA: A002
+
+
+@baseframe.app_template_filter('time')
+def time_filter(value, format='short', locale=None, usertz=True):  # Default format = hh:mm
+    if isinstance(value, datetime) and usertz:
+        if value.tzinfo is None:
+            dt = UTC.localize(value).astimezone(get_timezone())
+        else:
+            dt = value.astimezone(get_timezone())
+    else:
+        dt = value
+    return format_time(dt, format=format, locale=locale if locale else get_locale())  # NOQA: A002
+
+
+@baseframe.app_template_filter('datetime')
+def datetime_filter(value, format='medium', locale=None, usertz=True):
+    if isinstance(value, datetime) and usertz:
+        if value.tzinfo is None:
+            dt = UTC.localize(value).astimezone(get_timezone())
+        else:
+            dt = value.astimezone(get_timezone())
+    else:
+        dt = value
+    return format_datetime(dt, format=format, locale=locale if locale else get_locale())  # NOQA: A002

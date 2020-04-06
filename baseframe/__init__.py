@@ -411,10 +411,12 @@ def get_locale():
     # header the browser transmits. We support a few in this
     # example. The best match wins.
 
-    # FIXME: Do this properly. Don't use a random selection of languages
+    # Only en/hi are supported at the moment. Variants like en_IN/en_GB
+    # are not explicitly supported and will default to 'en'. These will
+    # need to be explicitly added in the future.
     return (
         request.accept_languages.best_match(
-            ['de', 'fr', 'es', 'hi', 'te', 'ta', 'kn', 'ml', 'en']
+            ['hi', 'en']
         )
         or 'en'
     )
