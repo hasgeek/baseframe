@@ -495,12 +495,8 @@ class UserSelectFieldBase(object):
         )
         self.separator = kwargs.pop('separator', ',')
         if self.lastuser:
-            self.autocomplete_endpoint = self.lastuser.endpoint_url(
-                current_app.lastuser_config['getuser_autocomplete_endpoint']
-            )
-            self.getuser_endpoint = self.lastuser.endpoint_url(
-                current_app.lastuser_config['getuser_userids_endpoint']
-            )
+            self.autocomplete_endpoint = self.lastuser.autocomplete_endpoint
+            self.getuser_endpoint = self.lastuser.getuser_endpoint
         else:
             self.autocomplete_endpoint = kwargs.pop('autocomplete_endpoint')()
             self.getuser_endpoint = kwargs.pop('getuser_endpoint')()
@@ -516,7 +512,7 @@ class UserSelectFieldBase(object):
         # Convert strings in userids into User objects
         users = []
         if userids:
-            if self.lastuser:
+            if self.lastuser and not getattr(self.lastuser, 'is_master_data_source'):
                 usersdata = self.lastuser.getuser_by_userids(userids)
                 # TODO: Move all of this inside the getuser method with user=True, create=True
                 for userinfo in usersdata:
