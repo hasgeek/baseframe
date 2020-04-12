@@ -512,7 +512,9 @@ class UserSelectFieldBase(object):
         # Convert strings in userids into User objects
         users = []
         if userids:
-            if self.lastuser and not getattr(self.lastuser, 'is_master_data_source'):
+            if self.lastuser and not getattr(
+                self.lastuser, 'is_master_data_source', False
+            ):
                 usersdata = self.lastuser.getuser_by_userids(userids)
                 # TODO: Move all of this inside the getuser method with user=True, create=True
                 for userinfo in usersdata:
