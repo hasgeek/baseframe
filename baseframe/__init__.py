@@ -8,20 +8,20 @@ from datetime import date, datetime, time
 import gettext
 import json
 import types
-import sentry_sdk
 
 from flask import Blueprint, current_app, request
 from flask.json import JSONEncoder as JSONEncoderBase
 from flask_assets import Bundle, Environment
 from flask_babelhg import Babel, Domain
 from speaklater import is_lazy_string
-from sentry_sdk.integrations.flask import FlaskIntegration
 
 from flask_caching import Cache
 from furl import furl
 from pytz import UTC, timezone
 from pytz.tzinfo import BaseTzInfo
+from sentry_sdk.integrations.flask import FlaskIntegration
 import pycountry
+import sentry_sdk
 
 from coaster.assets import split_namespec
 from coaster.auth import current_auth, request_has_auth
@@ -175,7 +175,9 @@ class BaseframeBlueprint(Blueprint):
         """
         # Initialize Sentry logging
         if app.config.get('SENTRY_URL'):
-            sentry_sdk.init(dsn=app.config['SENTRY_URL'], integrations=[FlaskIntegration()])
+            sentry_sdk.init(
+                dsn=app.config['SENTRY_URL'], integrations=[FlaskIntegration()]
+            )
 
         # Since Flask 0.11, templates are no longer auto reloaded.
         # Setting the config alone doesn't seem to work, so we explicitly
@@ -414,12 +416,7 @@ def get_locale():
     # Only en/hi are supported at the moment. Variants like en_IN/en_GB
     # are not explicitly supported and will default to 'en'. These will
     # need to be explicitly added in the future.
-    return (
-        request.accept_languages.best_match(
-            ['hi', 'en']
-        )
-        or 'en'
-    )
+    return request.accept_languages.best_match(['hi', 'en']) or 'en'
 
 
 @babel.timezoneselector
