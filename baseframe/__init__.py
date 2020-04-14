@@ -498,15 +498,9 @@ def process_response(response):
             # That means this piece of code will never be called in production.
             response.headers['Access-Control-Allow-Origin'] = '*'
 
-    if 'Vary' in response.headers:
-        vary_values = [item.strip() for item in response.headers['Vary'].split(',')]
-        if 'Accept-Language' not in vary_values:
-            vary_values.append('Accept-Language')
-        if 'Cookie' not in vary_values:
-            vary_values.append('Cookie')
-        response.headers['Vary'] = ', '.join(vary_values)
-    else:
-        response.headers['Vary'] = 'Accept-Language, Cookie'
+    response.vary.add('Accept-Language')
+    if request_has_auth():
+        response.vary.add('Cookie')
 
     # Prevent pages from being placed in an iframe. If the response already
     # set has a value for this option, let it pass through
