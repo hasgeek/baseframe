@@ -498,7 +498,10 @@ def process_response(response):
             # That means this piece of code will never be called in production.
             response.headers['Access-Control-Allow-Origin'] = '*'
 
+    # TODO: Confirm Babel was accessed in this request before setting this
     response.vary.add('Accept-Language')
+    # If current_auth was accessed during this request, it is sensitive to the lastuser
+    # cookie
     if request_has_auth():
         response.vary.add('Cookie')
 
