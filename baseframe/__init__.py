@@ -12,7 +12,7 @@ import types
 from flask import Blueprint, current_app, request
 from flask.json import JSONEncoder as JSONEncoderBase
 from flask_assets import Bundle, Environment
-from flask_babelhg import Babel, Domain
+from flask_babelhg import Babel, Domain, ctx_has_locale
 from speaklater import is_lazy_string
 
 from flask_caching import Cache
@@ -429,8 +429,11 @@ def get_timezone():
         user = current_auth.actor
         if hasattr(user, 'tz'):
             return user.tz
-        elif hasattr(user, 'timezone'):
-            return timezone(user.timezone)
+        elif hasattr(user, 'timezone') and user.timezone:
+            if isinstance(user.timezone, six.string_types):
+                return timezone(user.timezone)
+            else:
+                return user.timezone
     return current_app.config.get('tz') or UTC
 
 
@@ -495,15 +498,14 @@ def process_response(response):
             # That means this piece of code will never be called in production.
             response.headers['Access-Control-Allow-Origin'] = '*'
 
-    if 'Vary' in response.headers:
-        vary_values = [item.strip() for item in response.headers['Vary'].split(',')]
-        if 'Accept-Language' not in vary_values:
-            vary_values.append('Accept-Language')
-        if 'Cookie' not in vary_values:
-            vary_values.append('Cookie')
-        response.headers['Vary'] = ', '.join(vary_values)
-    else:
-        response.headers['Vary'] = 'Accept-Language, Cookie'
+    # If Babel was accessed in this request, the response's contents will vary with
+    # the accepted language
+    if ctx_has_locale():
+        response.vary.add('Accept-Language')
+    # If current_auth was accessed during this request, it is sensitive to the lastuser
+    # cookie
+    if request_has_auth():
+        response.vary.add('Cookie')
 
     # Prevent pages from being placed in an iframe. If the response already
     # set has a value for this option, let it pass through
