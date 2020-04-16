@@ -109,6 +109,10 @@ h6 {
   line-height: 1.5;
 }
 
+.mui--text-warning {
+  color: $mui-warning-color;
+}
+
 // ============================================================================
 // Text transform
 // ============================================================================
@@ -149,6 +153,7 @@ h6 {
   background: none;
   box-shadow: none;
   height: auto;
+  border: none;
 }
 
 .mui-btn.mui-btn--nostyle:hover,
