@@ -315,6 +315,7 @@ class IsEmoji(object):
     :param message:
         Error message to raise in case of a validation error.
     """
+
     default_message = __(u"This is not a valid emoji")
 
     def __init__(self, message=None):
@@ -412,9 +413,7 @@ class ValidUrl(object):
         "Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 HasGeek/linkchecker"
     )
 
-    default_message = __(
-        u'The URL “{url}” is not valid or is currently inaccessible'
-    )
+    default_message = __(u'The URL “{url}” is not valid or is currently inaccessible')
 
     default_message_urltext = __(
         u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible'

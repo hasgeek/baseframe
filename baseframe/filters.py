@@ -7,7 +7,7 @@ import os
 
 from flask import Markup, request
 
-from babel.dates import format_date, format_time, format_datetime
+from babel.dates import format_date, format_datetime, format_time
 from pytz import UTC
 
 from coaster.gfm import markdown
@@ -215,7 +215,7 @@ def longdate(value):
 
 
 @baseframe.app_template_filter('date')
-def date_filter(value, format='medium', locale=None, usertz=True):
+def date_filter(value, format='medium', locale=None, usertz=True):  # NOQA: A002
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
             dt = UTC.localize(value).astimezone(get_timezone())
@@ -223,11 +223,14 @@ def date_filter(value, format='medium', locale=None, usertz=True):
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    return format_date(dt, format=format, locale=locale if locale else get_locale())  # NOQA: A002
+    return format_date(
+        dt, format=format, locale=locale if locale else get_locale()
+    )  # NOQA: A002
 
 
 @baseframe.app_template_filter('time')
-def time_filter(value, format='short', locale=None, usertz=True):  # Default format = hh:mm
+def time_filter(value, format='short', locale=None, usertz=True):  # NOQA: A002
+    # Default format = hh:mm
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
             dt = UTC.localize(value).astimezone(get_timezone())
@@ -235,11 +238,13 @@ def time_filter(value, format='short', locale=None, usertz=True):  # Default for
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    return format_time(dt, format=format, locale=locale if locale else get_locale())  # NOQA: A002
+    return format_time(
+        dt, format=format, locale=locale if locale else get_locale()
+    )  # NOQA: A002
 
 
 @baseframe.app_template_filter('datetime')
-def datetime_filter(value, format='medium', locale=None, usertz=True):
+def datetime_filter(value, format='medium', locale=None, usertz=True):  # NOQA: A002
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
             dt = UTC.localize(value).astimezone(get_timezone())
@@ -247,4 +252,6 @@ def datetime_filter(value, format='medium', locale=None, usertz=True):
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    return format_datetime(dt, format=format, locale=locale if locale else get_locale())  # NOQA: A002
+    return format_datetime(
+        dt, format=format, locale=locale if locale else get_locale()
+    )  # NOQA: A002
