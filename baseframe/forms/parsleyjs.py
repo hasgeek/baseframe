@@ -16,6 +16,7 @@ __author__ = 'Johannes Gehrs (jgehrs@gmail.com)'
 import copy
 import re
 
+from flask import Markup
 from wtforms.fields import BooleanField as _BooleanField
 from wtforms.fields import DecimalField as _DecimalField
 from wtforms.fields import FloatField as _FloatField
@@ -43,7 +44,6 @@ from wtforms.validators import (
 )
 from wtforms.widgets import CheckboxInput as _CheckboxInput
 from wtforms.widgets import HiddenInput as _HiddenInput
-from wtforms.widgets import HTMLString
 from wtforms.widgets import ListWidget as _ListWidget
 from wtforms.widgets import PasswordInput as _PasswordInput
 from wtforms.widgets import Select as _Select
@@ -286,7 +286,7 @@ class ListWidget(_ListWidget):
             else:
                 html.append('<li>%s %s</li>' % (subfield(**sub_kwargs), subfield.label))
         html.append('</%s>' % self.html_tag)
-        return HTMLString(''.join(html))
+        return Markup(''.join(html))
 
 
 class StringField(_StringField):

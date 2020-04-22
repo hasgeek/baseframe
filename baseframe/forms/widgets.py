@@ -4,7 +4,7 @@ import six
 
 from flask import Markup
 from wtforms.compat import text_type
-from wtforms.widgets import HTMLString, RadioInput, Select, html_params
+from wtforms.widgets import RadioInput, Select, html_params
 import wtforms
 
 from .. import b_ as _
@@ -53,7 +53,7 @@ class SelectWidget(Select):
                 label = item2
                 html.append(self.render_option(val, label, val == field.data))
         html.append('</select>')
-        return HTMLString(''.join(html))
+        return Markup(''.join(html))
 
 
 class Select2Widget(Select):
@@ -76,7 +76,7 @@ class Select2Widget(Select):
             for val, label, selected in field.iter_choices():
                 html.append(self.render_option(val, label, selected))
         html.append('</select>')
-        return HTMLString(''.join(html))
+        return Markup(''.join(html))
 
 
 class TinyMce3(wtforms.widgets.TextArea):
