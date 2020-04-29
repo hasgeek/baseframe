@@ -1,11 +1,6 @@
 // This is a global function. Isn't there a better way to do this?
 
 function activate_widgets() {
-  // Activate select2.js for non-mobile browsers
-  if (!Modernizr.touch) {
-    $('select:not(.notselect)').select2({ theme: 'bootstrap' });
-  }
-
   var cm_markdown_config = {
     mode: 'gfm',
     lineNumbers: false,
