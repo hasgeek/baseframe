@@ -110,7 +110,7 @@
 }
 // For select dropdown will be on top of the header
 .mui-scroll-lock .header--fixed {
-  position: static;
+  z-index: 1;
 }
 
 .listwidget ul,

@@ -4114,7 +4114,7 @@ li p + ol {
 }
 
 .mui-scroll-lock .header--fixed {
-  position: static;
+  z-index: 1;
 }
 
 .listwidget ul,
