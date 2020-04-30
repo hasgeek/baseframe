@@ -108,6 +108,10 @@
     width: 100% !important;
   }
 }
+// For select dropdown will be on top of the header
+.mui-scroll-lock .header--fixed {
+  z-index: 1;
+}
 
 .listwidget ul,
 .listwidget ol {

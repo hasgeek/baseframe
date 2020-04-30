@@ -4113,6 +4113,10 @@ li p + ol {
   width: 100% !important;
 }
 
+.mui-scroll-lock .header--fixed {
+  z-index: 1;
+}
+
 .listwidget ul,
 .listwidget ol {
   list-style: none;
