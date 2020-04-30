@@ -13,6 +13,7 @@ from baseframe.utils import is_public_email_domain
 from .fixtures import (
     AllUrlsFormTest,
     EmojiFormTest,
+    FormTest,
     PublicEmailDomainFormTest,
     TestCaseBaseframe,
     UrlFormTest,
@@ -27,6 +28,7 @@ class TestValidators(TestCaseBaseframe):
             self.emoji_form = EmojiFormTest(meta={'csrf': False})
             self.all_urls_form = AllUrlsFormTest(meta={'csrf': False})
             self.webmail_form = PublicEmailDomainFormTest(meta={'csrf': False})
+            self.nonce_form = FormTest(meta={'csrf': False})
         urllib3.disable_warnings()
 
     def tearDown(self):
@@ -156,6 +158,35 @@ class TestValidators(TestCaseBaseframe):
             )
             self.all_urls_form.process(content_with_urls=snippet)
             assert not self.all_urls_form.validate()
+
+    def test_nonce_form_on_success(self):
+        """A form with a nonce cannot be submitted twice"""
+        nonce = self.nonce_form.nonce.data
+        assert nonce
+        assert self.nonce_form.validate() is True
+        assert nonce == self.nonce_form.nonce.data
+        assert not self.nonce_form.nonce.errors
+        # Second attempt on the same form will fail
+        assert self.nonce_form.validate() is False
+        assert self.nonce_form.nonce.errors
+
+    def test_nonce_form_on_failure(self):
+        """Form resubmission is not blocked (via the nonce) when validation fails"""
+        self.emoji_form.process(
+            formdata=MultiDict(
+                {'emoji': 'not-emoji', 'nonce': self.emoji_form.nonce.data}
+            )
+        )
+        assert self.emoji_form.validate() is False
+        assert not self.emoji_form.nonce.errors
+        self.emoji_form.process(
+            formdata=MultiDict({'emoji': u'👍', 'nonce': self.emoji_form.nonce.data})
+        )
+        assert self.emoji_form.validate() is True
+        assert not self.emoji_form.nonce.errors
+        # Second attempt on the same form will fail
+        assert self.emoji_form.validate() is False
+        assert self.emoji_form.errors
 
 
 class TestFormBase(TestCaseBaseframe):

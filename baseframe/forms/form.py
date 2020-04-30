@@ -2,12 +2,16 @@
 
 import six
 
+import uuid
+
 from flask import current_app
 from flask_wtf import FlaskForm as BaseForm
 from speaklater import is_lazy_string
 from wtforms.compat import iteritems
 import wtforms
 
+from .. import asset_cache
+from .. import b_ as _
 from ..signals import form_validation_error, form_validation_success
 from . import fields as bfields
 from . import filters as bfilters
@@ -76,6 +80,19 @@ filter_registry = {
 }
 
 
+def _nonce_cache_key(nonce):
+    return 'form_nonce/' + nonce
+
+
+def _nonce_validator(form, field):
+    # Check for already-used form nonce
+    if field.data:
+        nonce_cache_key = _nonce_cache_key(field.data)
+        nonce_cache_hit = asset_cache.get(nonce_cache_key)
+        if nonce_cache_hit is not None:
+            raise bvalidators.StopValidation(_("This form has already been submitted"))
+
+
 class Form(BaseForm):
     """
     Form with additional methods.
@@ -83,6 +100,8 @@ class Form(BaseForm):
 
     __expects__ = ()
     __returns__ = ()
+
+    nonce = bparsleyjs.HiddenField("Nonce", validators=[_nonce_validator])
 
     def __init_subclass__(cls, **kwargs):
         """
@@ -101,6 +120,8 @@ class Form(BaseForm):
 
     def __init__(self, *args, **kwargs):
         super(Form, self).__init__(*args, **kwargs)
+        if not self.nonce.data:
+            self.nonce.data = uuid.uuid4().hex
 
         for attr in self.__expects__:
             if attr not in kwargs:
@@ -125,13 +146,16 @@ class Form(BaseForm):
         self.set_queries()
 
     def validate(self, send_signals=True):
-        result = super(Form, self).validate()
+        success = super(Form, self).validate()
+        if success and self.nonce.data:
+            # Mark this nonce as used for a minute
+            asset_cache.set(_nonce_cache_key(self.nonce.data), True, 60)
         for attr in self.__returns__:
             if not hasattr(self, attr):
                 setattr(self, attr, None)
         if send_signals:
             self.send_signals()
-        return result
+        return success
 
     def send_signals(self):
         if self.errors:
