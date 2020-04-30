@@ -301,6 +301,7 @@ class TestOptionalIf(TestFormBase):
             ],
         )
 
+    other_empty = ''
     other_not_empty = "Not empty"
 
     def test_is_optional(self):
@@ -324,7 +325,7 @@ class TestOptionalIf(TestFormBase):
         assert self.form.validate() is True
 
     def test_is_required_with_empty_and_accepted(self):
-        self.form.process(other='', field="Not empty")
+        self.form.process(other=self.other_empty, field="Not empty")
         assert self.form.validate() is True
 
 
@@ -339,6 +340,7 @@ class TestOptionalIfInteger(TestOptionalIf):
             ],
         )
 
+    other_empty = None  # '' is not valid in IntegerField
     other_not_empty = 0
 
 
@@ -353,6 +355,7 @@ class TestRequiredIf(TestFormBase):
             ],
         )
 
+    other_empty = ''
     other_not_empty = "Not empty"
 
     def test_is_required(self):
@@ -372,7 +375,7 @@ class TestRequiredIf(TestFormBase):
         assert self.form.validate() is True
 
     def test_is_not_required2(self):
-        self.form.process(other="")
+        self.form.process(other=self.other_empty)
         assert self.form.validate() is True
 
 
@@ -387,4 +390,5 @@ class TestRequiredIfInteger(TestRequiredIf):
             ],
         )
 
+    other_empty = None  # '' is not valid in IntegerField
     other_not_empty = 0
