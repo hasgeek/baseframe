@@ -44,7 +44,7 @@ class TestValidators(TestCaseBaseframe):
             url = 'https://hasgeek'
             self.form.process(url=url)
             assert not self.form.validate()
-            
+
     def test_valid_emoji(self):
         with self.app.test_request_context('/'):
             dat = u'👍'
