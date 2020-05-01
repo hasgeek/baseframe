@@ -11,7 +11,7 @@ from wtforms.compat import iteritems
 import wtforms
 
 from .. import asset_cache
-from .. import b_ as _
+from .. import b__ as __
 from ..signals import form_validation_error, form_validation_success
 from . import fields as bfields
 from . import filters as bfilters
@@ -90,7 +90,7 @@ def _nonce_validator(form, field):
         nonce_cache_key = _nonce_cache_key(field.data)
         nonce_cache_hit = asset_cache.get(nonce_cache_key)
         if nonce_cache_hit is not None:
-            raise bvalidators.StopValidation(_("This form has already been submitted"))
+            raise bvalidators.StopValidation(form.nonce_error)
 
 
 class Form(BaseForm):
@@ -102,6 +102,7 @@ class Form(BaseForm):
     __returns__ = ()
 
     nonce = bparsleyjs.HiddenField("Nonce", validators=[_nonce_validator])
+    nonce_error = __("This form has already been submitted")
 
     def __init_subclass__(cls, **kwargs):
         """
