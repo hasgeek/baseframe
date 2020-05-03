@@ -161,29 +161,31 @@ class TestValidators(TestCaseBaseframe):
 
     def test_nonce_form_on_success(self):
         """A form with a nonce cannot be submitted twice"""
-        nonce = self.nonce_form.nonce.data
+        nonce = self.nonce_form.form_nonce.data
         assert nonce
         assert self.nonce_form.validate() is True
-        assert nonce == self.nonce_form.nonce.data
-        assert not self.nonce_form.nonce.errors
+        assert nonce == self.nonce_form.form_nonce.data
+        assert not self.nonce_form.form_nonce.errors
         # Second attempt on the same form will fail
         assert self.nonce_form.validate() is False
-        assert self.nonce_form.nonce.errors
+        assert self.nonce_form.form_nonce.errors
 
     def test_nonce_form_on_failure(self):
         """Form resubmission is not blocked (via the nonce) when validation fails"""
         self.emoji_form.process(
             formdata=MultiDict(
-                {'emoji': 'not-emoji', 'nonce': self.emoji_form.nonce.data}
+                {'emoji': 'not-emoji', 'form_nonce': self.emoji_form.form_nonce.data}
             )
         )
         assert self.emoji_form.validate() is False
-        assert not self.emoji_form.nonce.errors
+        assert not self.emoji_form.form_nonce.errors
         self.emoji_form.process(
-            formdata=MultiDict({'emoji': u'👍', 'nonce': self.emoji_form.nonce.data})
+            formdata=MultiDict(
+                {'emoji': u'👍', 'form_nonce': self.emoji_form.form_nonce.data}
+            )
         )
         assert self.emoji_form.validate() is True
-        assert not self.emoji_form.nonce.errors
+        assert not self.emoji_form.form_nonce.errors
         # Second attempt on the same form will fail
         assert self.emoji_form.validate() is False
         assert self.emoji_form.errors

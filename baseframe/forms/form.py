@@ -90,7 +90,18 @@ def _nonce_validator(form, field):
         nonce_cache_key = _nonce_cache_key(field.data)
         nonce_cache_hit = asset_cache.get(nonce_cache_key)
         if nonce_cache_hit is not None:
-            raise bvalidators.StopValidation(form.nonce_error)
+            raise bvalidators.StopValidation(form.form_nonce_error)
+
+
+class _NonceField(bparsleyjs.HiddenField):
+    """Customized HiddenField for nonce values that ignores the form target object"""
+
+    def process(self, formdata, data=None):
+        """Discard data coming from an object"""
+        super(_NonceField, self).process(formdata)
+
+    def populate_obj(self, *args):
+        """Override populate_obj to not attempting setting nonce on the object"""
 
 
 class Form(BaseForm):
@@ -101,8 +112,10 @@ class Form(BaseForm):
     __expects__ = ()
     __returns__ = ()
 
-    nonce = bparsleyjs.HiddenField("Nonce", validators=[_nonce_validator])
-    nonce_error = __("This form has already been submitted")
+    form_nonce = _NonceField(
+        "Nonce", validators=[_nonce_validator], default=lambda: uuid.uuid4().hex
+    )
+    form_nonce_error = __("This form has already been submitted")
 
     def __init_subclass__(cls, **kwargs):
         """
@@ -121,9 +134,6 @@ class Form(BaseForm):
 
     def __init__(self, *args, **kwargs):
         super(Form, self).__init__(*args, **kwargs)
-        if not self.nonce.data:
-            self.nonce.data = uuid.uuid4().hex
-
         for attr in self.__expects__:
             if attr not in kwargs:
                 raise TypeError("Expected parameter %s was not supplied" % attr)
@@ -148,9 +158,9 @@ class Form(BaseForm):
 
     def validate(self, send_signals=True):
         success = super(Form, self).validate()
-        if success and self.nonce.data:
+        if success and self.form_nonce.data:
             # Mark this nonce as used for a minute
-            asset_cache.set(_nonce_cache_key(self.nonce.data), True, 60)
+            asset_cache.set(_nonce_cache_key(self.form_nonce.data), True, 60)
         for attr in self.__returns__:
             if not hasattr(self, attr):
                 setattr(self, attr, None)
