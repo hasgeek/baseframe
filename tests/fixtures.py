@@ -10,14 +10,19 @@ from baseframe import __, baseframe, forms
 app1 = Flask(__name__)
 app1.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
 app1.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app1.config['CACHE_TYPE'] = 'simple'
 app2 = Flask(__name__)
 app2.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///baseframe_test'
 app2.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app2.config['CACHE_TYPE'] = 'simple'
+baseframe.init_app(app1, requires=['baseframe'])
+baseframe.init_app(app2, requires=['baseframe'])
 
 
 class TestCaseBaseframe(unittest.TestCase):
     def setUp(self):
         self.app = Flask(__name__)
+        self.app.config['CACHE_TYPE'] = 'simple'
         baseframe.init_app(self.app, requires=['baseframe'])
 
 
