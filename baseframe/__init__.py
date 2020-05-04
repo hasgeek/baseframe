@@ -20,6 +20,8 @@ from furl import furl
 from pytz import UTC, timezone
 from pytz.tzinfo import BaseTzInfo
 from sentry_sdk.integrations.flask import FlaskIntegration
+from sentry_sdk.integrations.rq import RqIntegration
+from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 import pycountry
 import sentry_sdk
 
@@ -176,7 +178,12 @@ class BaseframeBlueprint(Blueprint):
         # Initialize Sentry logging
         if app.config.get('SENTRY_URL'):
             sentry_sdk.init(
-                dsn=app.config['SENTRY_URL'], integrations=[FlaskIntegration()]
+                dsn=app.config['SENTRY_URL'],
+                integrations=[
+                    FlaskIntegration(),
+                    RqIntegration(),
+                    SqlalchemyIntegration(),
+                ],
             )
 
         # Since Flask 0.11, templates are no longer auto reloaded.
