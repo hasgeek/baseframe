@@ -19,7 +19,7 @@
     <fieldset>
       <legend>{{ field.label.text }}</legend>
       {%- for subfield in field.form %}
-        {%- if not subfield.type in ['CSRFTokenField', 'HiddenField'] -%}
+        {%- if not subfield.type in ['CSRFTokenField', 'HiddenField', 'NonceField'] -%}
           {{ renderfield(field=subfield, css_class=css_class, widget_css_class=widget_css_class, sidetext=sidetext, tabindex=tabindex, autofocus=false, nolabel=nolabel, style=style, rows=rows) }}
         {%- endif %}
       {%- endfor %}
@@ -118,7 +118,7 @@
   {%- endif %}
   {%- set autofocus = true %}
   {% for field in form -%}
-    {%- if field.type in ['CSRFTokenField', 'HiddenField'] -%}
+    {%- if field.type in ['CSRFTokenField', 'HiddenField', 'NonceField'] -%}
       {# Don't show hidden #}
     {%- else -%}
       {{ renderfield(field, autofocus=autofocus, style=style) }}

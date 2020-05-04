@@ -93,17 +93,6 @@ def _nonce_validator(form, field):
             raise bvalidators.StopValidation(form.form_nonce_error)
 
 
-class _NonceField(bparsleyjs.HiddenField):
-    """Customized HiddenField for nonce values that ignores the form target object"""
-
-    def process(self, formdata, data=None):
-        """Discard data coming from an object"""
-        super(_NonceField, self).process(formdata)
-
-    def populate_obj(self, *args):
-        """Override populate_obj to not attempting setting nonce on the object"""
-
-
 class Form(BaseForm):
     """
     Form with additional methods.
@@ -112,7 +101,7 @@ class Form(BaseForm):
     __expects__ = ()
     __returns__ = ()
 
-    form_nonce = _NonceField(
+    form_nonce = bfields.NonceField(
         "Nonce", validators=[_nonce_validator], default=lambda: uuid.uuid4().hex
     )
     form_nonce_error = __("This form has already been submitted")

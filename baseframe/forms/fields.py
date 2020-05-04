@@ -23,7 +23,7 @@ import simplejson as json
 
 from .. import _, get_timezone
 from ..utils import request_timestamp
-from .parsleyjs import StringField, TextAreaField, URLField
+from .parsleyjs import HiddenField, StringField, TextAreaField, URLField
 from .widgets import (
     CoordinatesInput,
     DateTimeInput,
@@ -37,6 +37,7 @@ from .widgets import (
 __all__ = [
     # Imported from WTForms
     'Label',
+    'NonceField',
     'FileField',
     'SelectMultipleField',
     'SubmitField',
@@ -88,6 +89,17 @@ SANITIZE_TAGS = [
     'code',
 ]
 SANITIZE_ATTRIBUTES = {'a': ['href', 'title', 'target']}
+
+
+class NonceField(HiddenField):
+    """Customized HiddenField for nonce values that ignores the form target object"""
+
+    def process(self, formdata, data=None):
+        """Discard data coming from an object"""
+        super(NonceField, self).process(formdata)
+
+    def populate_obj(self, *args):
+        """Override populate_obj to not attempting setting nonce on the object"""
 
 
 # This class borrowed from https://github.com/industrydive/wtforms_extended_selectfield
