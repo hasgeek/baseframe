@@ -369,6 +369,74 @@ assets['codemirror-css.js'][Version('4.11.0')] = {
     ]
 }
 
+assets['codemirror.js'][
+    Version('5.53.2')
+] = 'baseframe/js/codemirror-5.53.2/codemirror.js'
+assets['codemirror.css'][
+    Version('5.53.2')
+] = 'baseframe/css/codemirror-5.53.2/codemirror-basic.css'
+
+assets['codemirror.mode.markdown.js'][
+    Version('5.53.2')
+] = 'baseframe/js/codemirror-5.53.2/mode/markdown/markdown.js'
+assets['codemirror.mode.gfm.js'][
+    Version('5.53.2')
+] = 'baseframe/js/codemirror-5.53.2/mode/gfm/gfm.js'
+assets['codemirror.mode.htmlmixed.js'][
+    Version('5.53.2')
+] = 'baseframe/js/codemirror-5.53.2/mode/htmlmixed/htmlmixed.js'
+assets['codemirror.mode.css.js'][
+    Version('5.53.2')
+] = 'baseframe/js/codemirror-5.53.2/mode/css/css.js'
+assets['codemirror.addon.mode.overlay.js'][
+    Version('5.53.2')
+] = 'baseframe/js/codemirror-5.53.2/addon/mode/overlay.js'
+assets['codemirror.addon.edit.continuelist.js'][
+    Version('5.53.2')
+] = 'baseframe/js/codemirror-5.53.2/addon/edit/continuelist.js'
+assets['codemirror.addon.edit.closebrackets.js'][
+    Version('5.53.2')
+] = 'baseframe/js/codemirror-5.53.2/addon/edit/closebrackets.js'
+assets['codemirror.addon.edit.matchbrackets.js'][
+    Version('5.53.2')
+] = 'baseframe/js/codemirror-5.53.2/addon/edit/matchbrackets.js'
+assets['codemirror.addon.hint.css-hint.js'][
+    Version('5.53.2')
+] = 'baseframe/js/codemirror-5.53.2/addon/hint/css-hint.js'
+assets['codemirror.addon.lint.css-lint.js'][
+    Version('5.53.2')
+] = 'baseframe/js/codemirror-5.53.2/addon/lint/css-lint.js'
+
+assets['codemirror-markdown.js'][Version('5.53.2')] = {
+    'requires': [
+        'codemirror.js==5.53.2',
+        'codemirror.mode.markdown.js==5.53.2',
+        'codemirror.mode.gfm.js==5.53.2',
+        'codemirror.mode.htmlmixed.js==5.53.2',
+        'codemirror.addon.mode.overlay.js==5.53.2',
+        'codemirror.addon.edit.continuelist.js==5.53.2',
+        'codemirror.addon.edit.closebrackets.js==5.53.2',
+    ]
+}
+assets['codemirror-markdown.css'][Version('5.53.2')] = (
+    'codemirror.css==5.53.2',
+    'baseframe/css/codemirror.css',
+)
+assets['codemirror-markdown-material.css'][Version('5.53.2')] = (
+    'codemirror.css==5.53.2',
+    'baseframe/css/codemirror-material.css',
+)
+assets['codemirror-css.js'][Version('5.53.2')] = {
+    'requires': [
+        'codemirror.js==5.53.2',
+        'codemirror.mode.css.js==5.53.2',
+        'codemirror.addon.hint.css-hint.js==5.53.2',
+        'codemirror.addon.lint.css-lint.js==5.53.2',
+        'codemirror.addon.edit.closebrackets.js==5.53.2',
+    ]
+}
+
+
 assets['pygments-default.css'][Version('1.5.0')] = 'baseframe/css/pygments-default.css'
 assets['pygments-zenburn.css'][Version('1.5.0')] = 'baseframe/css/pygments-zenburn.css'
 assets['pygments.css'][Version('1.5.0')] = {'requires': 'pygments-default.css'}
