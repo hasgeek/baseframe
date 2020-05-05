@@ -129,6 +129,21 @@
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {%- endassets -%}
 
+  {%- if config['MATOMO_URL'] and config['MATOMO_ID'] and not config['DEBUG'] -%}
+    <script type="text/javascript">
+    var _paq = window._paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="{{ config['MATOMO_URL'] }}";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '{{ config['MATOMO_ID'] }}']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+    </script>
+  {%- endif -%}
+
   {%- if config['GA_CODE'] and not config['DEBUG'] -%}
     <script type="text/javascript">
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
