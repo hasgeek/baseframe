@@ -38,6 +38,7 @@ requires = [
     'mxsniff',
     'furl',
     'pycountry',
+    'rq',
     'sentry-sdk',
     # For link validation with SNI SSL support
     'requests',
