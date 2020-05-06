@@ -32,6 +32,7 @@ from coaster.sqlalchemy import MarkdownComposite
 from . import translations
 from ._version import __version__, __version_info__
 from .assets import Version, assets
+from .statsd import Statsd
 
 try:
     from flask_debugtoolbar import DebugToolbarExtension
@@ -61,6 +62,7 @@ networkbar_cache = Cache(with_jinja2_ext=False)
 asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
 babel = Babel()
+statsd = Statsd()
 if DebugToolbarExtension is not None:  # pragma: no cover
     toolbar = DebugToolbarExtension()
 else:  # pragma: no cover
@@ -185,6 +187,8 @@ class BaseframeBlueprint(Blueprint):
                     SqlalchemyIntegration(),
                 ],
             )
+
+        statsd.init_app(app)
 
         # Since Flask 0.11, templates are no longer auto reloaded.
         # Setting the config alone doesn't seem to work, so we explicitly
