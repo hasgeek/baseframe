@@ -52,9 +52,15 @@ __all__ = [  # NOQA: F405
     '__version__',
     '__version_info__',
     'assets',
+    'babel',
     'baseframe',
     'baseframe_css',
     'baseframe_js',
+    'cache',
+    'localize_timezone',
+    'localized_country_list',
+    'request_is_xhr',
+    'statsd',
     'Version',
 ]
 
