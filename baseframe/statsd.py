@@ -26,15 +26,16 @@ class Statsd(object):
     3. Sampling rate can be specified in app config instead of in each call
     4. Requests are automatically timed and counted unless STATSD_REQUEST_TIMER is False
 
-    App configuration defaults:
+    App configuration defaults::
 
-    STATSD_HOST = '127.0.0.1'
-    STATSD_PORT = 8125
-    STATSD_PREFIX = None
-    STATSD_MAXUDPSIZE = 512
-    STATSD_IPV6 = False
-    STATSD_RATE = 1
-    STATSD_REQUEST_TIMER = True
+        SITE_ID = app.name  # Used as a prefix in stats
+        STATSD_HOST = '127.0.0.1'
+        STATSD_PORT = 8125
+        STATSD_PREFIX = None
+        STATSD_MAXUDPSIZE = 512
+        STATSD_IPV6 = False
+        STATSD_RATE = 1
+        STATSD_REQUEST_TIMER = True
     """
 
     def __init__(self, app=None):
@@ -43,6 +44,7 @@ class Statsd(object):
 
     def init_app(self, app):
         app.config.setdefault('STATSD_RATE', 1)
+        app.config.setdefault('SITE_ID', app.name)
 
         app.statsd = StatsClient(
             host=app.config.setdefault('STATSD_HOST', '127.0.0.1'),
@@ -57,7 +59,7 @@ class Statsd(object):
             app.after_request(self._after_request)
 
     def _metric_name(self, name):
-        return '%s.%s' % (current_app.name, name)
+        return '%s.%s' % (current_app.config['SITE_ID'], name)
 
     def timer(self, stat, rate=None):
         """
@@ -126,17 +128,25 @@ class Statsd(object):
     def pipeline(self):
         return current_app.statsd.pipeline()
 
+    # before/after request don't always capture the time taken by _other_ before/after
+    # request handlers since they can run even before or after. We also miss requests
+    # that result in errors unless the error handler makes a log entry.
+    # For comprehensive logging of the entire request, we need WSGI middleware wrapping
+    # the entire app, as described here: https://steinn.org/post/flask-statsd-revisited/
+
     def _before_request(self):
         if current_app.config['STATSD_RATE'] != 0:
             setattr(request, START_TIME_ATTR, time.time())
 
     def _after_request(self, response):
+        self.log_request_timer(response.status_code)
+        return response
+
+    def log_request_timer(self, status_code):
         if hasattr(request, START_TIME_ATTR):
             metrics = [
-                '.'.join(
-                    ['request_handlers', request.endpoint, str(response.status_code)]
-                ),
-                '.'.join(['request_handlers', '_overall', str(response.status_code)]),
+                '.'.join(['request_handlers', request.endpoint, str(status_code)]),
+                '.'.join(['request_handlers', '_overall', str(status_code)]),
             ]
 
             for metric_name in metrics:
@@ -147,5 +157,3 @@ class Statsd(object):
                     int((time.time() - getattr(request, START_TIME_ATTR)) * 1000),
                 )
                 self.incr(metric_name)
-
-        return response
