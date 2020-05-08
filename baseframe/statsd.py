@@ -45,7 +45,8 @@ class Statsd(object):
         app.config.setdefault('STATSD_RATE', 1)
         app.config.setdefault('SITE_ID', app.name)
 
-        app.statsd = StatsClient(
+        app.extensions['statsd'] = self
+        app.extensions['statsd_core'] = StatsClient(
             host=app.config.setdefault('STATSD_HOST', '127.0.0.1'),
             port=app.config.setdefault('STATSD_PORT', 8125),
             prefix=None,
@@ -66,7 +67,7 @@ class Statsd(object):
         record timing for a block or function call. Use as a decorator is not supported
         as an application context is required.
         """
-        return current_app.statsd.timer(
+        return current_app.extensions['statsd_core'].timer(
             stat, rate=rate if rate is not None else current_app.config['STATSD_RATE']
         )
 
@@ -74,7 +75,7 @@ class Statsd(object):
         """
         Record timer information.
         """
-        return current_app.statsd.timing(
+        return current_app.extensions['statsd_core'].timing(
             self._metric_name(stat),
             delta,
             rate=rate if rate is not None else current_app.config['STATSD_RATE'],
@@ -84,7 +85,7 @@ class Statsd(object):
         """
         Increment a counter.
         """
-        return current_app.statsd.incr(
+        return current_app.extensions['statsd_core'].incr(
             self._metric_name(stat),
             count,
             rate=rate if rate is not None else current_app.config['STATSD_RATE'],
@@ -94,7 +95,7 @@ class Statsd(object):
         """
         Decrement a counter.
         """
-        return current_app.statsd.decr(
+        return current_app.extensions['statsd_core'].decr(
             self._metric_name(stat),
             count,
             rate=rate if rate is not None else current_app.config['STATSD_RATE'],
@@ -104,7 +105,7 @@ class Statsd(object):
         """
         Set a gauge value.
         """
-        return current_app.statsd.gauge(
+        return current_app.extensions['statsd_core'].gauge(
             self._metric_name(stat),
             value,
             rate=rate if rate is not None else current_app.config['STATSD_RATE'],
@@ -118,14 +119,14 @@ class Statsd(object):
         The statsd server does _not_ take the sample rate into account for sets. Use
         with care.
         """
-        return current_app.statsd.set(
+        return current_app.extensions['statsd_core'].set(
             self._metric_name(stat),
             value,
             rate=rate if rate is not None else current_app.config['STATSD_RATE'],
         )
 
     def pipeline(self):
-        return current_app.statsd.pipeline()
+        return current_app.extensions['statsd_core'].pipeline()
 
     # before/after request don't always capture the time taken by _other_ before/after
     # request handlers since they can run even before or after. We also miss requests
