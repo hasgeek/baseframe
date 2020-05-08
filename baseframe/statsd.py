@@ -31,7 +31,6 @@ class Statsd(object):
         SITE_ID = app.name  # Used as a prefix in stats
         STATSD_HOST = '127.0.0.1'
         STATSD_PORT = 8125
-        STATSD_PREFIX = None
         STATSD_MAXUDPSIZE = 512
         STATSD_IPV6 = False
         STATSD_RATE = 1
@@ -49,7 +48,7 @@ class Statsd(object):
         app.statsd = StatsClient(
             host=app.config.setdefault('STATSD_HOST', '127.0.0.1'),
             port=app.config.setdefault('STATSD_PORT', 8125),
-            prefix=app.config.setdefault('STATSD_PREFIX', None),
+            prefix=None,
             maxudpsize=app.config.setdefault('STATSD_MAXUDPSIZE', 512),
             ipv6=app.config.setdefault('STATSD_IPV6', False),
         )
@@ -59,7 +58,7 @@ class Statsd(object):
             app.after_request(self._after_request)
 
     def _metric_name(self, name):
-        return '%s.%s' % (current_app.config['SITE_ID'], name)
+        return 'app.%s.%s' % (current_app.config['SITE_ID'], name)
 
     def timer(self, stat, rate=None):
         """
