@@ -89,7 +89,7 @@ setup(
     tests_require=['Flask-SQLAlchemy'],
     cmdclass={'build_py': BaseframeBuildPy},
     dependency_links=[
-        "https://github.com/hasgeek/coaster/archive/master.zip#egg=coaster-dev",
+        "https://github.com/hasgeek/coaster/archive/master.zip#egg=coaster",
         "https://github.com/hasgeek/flask-babelhg/archive/master.zip#egg=Flask-Babelhg-0.12.3",
     ],
 )

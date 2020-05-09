@@ -2,6 +2,7 @@
 
 from __future__ import absolute_import
 
+from functools import partial
 import time
 
 from flask import current_app, request, request_finished, request_started
@@ -20,10 +21,10 @@ class Statsd(object):
     """
     Statsd extension for Flask
 
-    Offers conveniences on top of using statsd directly:
+    Offers conveniences on top of using py-statsd directly:
     1. In a multi-app setup, each app can have its own statsd config
     2. The app's name is automatically prefixed to all stats
-    3. Sampling rate can be specified in app config instead of in each call
+    3. Sampling rate can be specified in app config
     4. Requests are automatically timed and counted unless STATSD_REQUEST_TIMER is False
 
     App configuration defaults::
@@ -34,16 +35,55 @@ class Statsd(object):
         STATSD_MAXUDPSIZE = 512
         STATSD_IPV6 = False
         STATSD_RATE = 1
+        STATSD_TAGS = None
         STATSD_REQUEST_TIMER = True
+
+    If the statsd server supports tags, the ``STATSD_TAGS`` parameter may contain a
+    separator character per the server's syntax::
+
+        # Influxdb:
+        ',' == 'metric_name,tag1=value1,tag2=value2'
+        # Carbon/Graphite:
+        ';' == 'metric_name;tag1=value;tag2=value2'
+
+    Tags will be discarded when ``STATSD_TAGS`` is unset. Servers have varying
+    limitations on the allowed content in tags and values. Alphanumeric values are
+    generally safe.
+
+    From Carbon/Graphite's documentation:
+
+    > Tag names must have a length >= 1 and may contain any ascii characters except
+    > ``;!^=``. Tag values must also have a length >= 1, they may contain any ascii
+    > characters except ``;`` and the first character must not be ``~``. UTF-8
+    > characters may work for names and values, but they are not well tested and it is
+    > not recommended to use non-ascii characters in metric names or tags.
+
+    The Datadog and SignalFx tag formats are not supported at this time.
     """
 
     def __init__(self, app=None):
         if app is not None:
             self.init_app(app)
 
+        # TODO: When Baseframe drops Python 2.7 support, replace `partial` here with
+        # `partialmethod` (Py 3.4+) and set these on the class definition
+
+        for method in ('timer', 'timing', 'incr', 'decr', 'gauge', 'set'):
+            func = partial(self._wrapper, method)
+            func.__name__ = method
+            func.__doc__ = getattr(StatsClient, method).__doc__
+            setattr(self, method, func)
+
+        self.timer.__doc__ = """
+        Return a Timer object that can be used as a context manager to automatically
+        record timing for a block or function call. Use as a decorator is not supported
+        as an application context is required.
+        """
+
     def init_app(self, app):
         app.config.setdefault('STATSD_RATE', 1)
         app.config.setdefault('SITE_ID', app.name)
+        app.config.setdefault('STATSD_TAGS', None)
 
         app.extensions['statsd'] = self
         app.extensions['statsd_core'] = StatsClient(
@@ -60,72 +100,24 @@ class Statsd(object):
             request_started.connect(self._request_started, app)
             request_finished.connect(self._request_finished, app)
 
-    def _metric_name(self, name):
+    def _metric_name(self, name, tags):
+        # In Py 3.8, the following two lines can be combined with a walrus operator:
+        # if tags and (tag_sep := current_app.config['STATSD_TAGS']):
+        if tags and current_app.config['STATSD_TAGS']:
+            tag_sep = current_app.config['STATSD_TAGS']
+            name += tag_sep + tag_sep.join(
+                '='.join((str(t), str(v))) if v is not None else str(t)
+                for t, v in tags.items()
+            )
         return 'app.%s.%s' % (current_app.config['SITE_ID'], name)
 
-    def timer(self, stat, rate=None):
-        """
-        Return a Timer object that can be used as a context manager to automatically
-        record timing for a block or function call. Use as a decorator is not supported
-        as an application context is required.
-        """
-        return current_app.extensions['statsd_core'].timer(
-            stat, rate=rate if rate is not None else current_app.config['STATSD_RATE']
-        )
+    def _wrapper(self, metric, stat, *args, **kwargs):
+        tags = kwargs.pop('tags', None)
+        if kwargs.setdefault('rate', None) is None:
+            kwargs['rate'] = current_app.config['STATSD_RATE']
+        stat = self._metric_name(stat, tags)
 
-    def timing(self, stat, delta, rate=None):
-        """
-        Record timer information.
-        """
-        return current_app.extensions['statsd_core'].timing(
-            self._metric_name(stat),
-            delta,
-            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
-        )
-
-    def incr(self, stat, count=1, rate=None):
-        """
-        Increment a counter.
-        """
-        return current_app.extensions['statsd_core'].incr(
-            self._metric_name(stat),
-            count,
-            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
-        )
-
-    def decr(self, stat, count=1, rate=None):
-        """
-        Decrement a counter.
-        """
-        return current_app.extensions['statsd_core'].decr(
-            self._metric_name(stat),
-            count,
-            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
-        )
-
-    def gauge(self, stat, value, rate=None, delta=False):
-        """
-        Set a gauge value.
-        """
-        return current_app.extensions['statsd_core'].gauge(
-            self._metric_name(stat),
-            value,
-            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
-            delta=delta,
-        )
-
-    def set(self, stat, value, rate=None):  # NOQA: A003
-        """
-        Increment a set value.
-
-        The statsd server does _not_ take the sample rate into account for sets. Use
-        with care.
-        """
-        return current_app.extensions['statsd_core'].set(
-            self._metric_name(stat),
-            value,
-            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
-        )
+        getattr(current_app.extensions['statsd_core'], metric)(stat, *args, **kwargs)
 
     def pipeline(self):
         return current_app.extensions['statsd_core'].pipeline()
@@ -150,4 +142,7 @@ class Statsd(object):
                     metric_name,
                     int((time.time() - getattr(request, START_TIME_ATTR)) * 1000),
                 )
+                # The timer metric also registers a count, making the counter metric
+                # seemingly redundant, but the counter metric also includes a rate, so
+                # we use both: timer (via `timing`) and counter (via `incr`).
                 self.incr(metric_name)
