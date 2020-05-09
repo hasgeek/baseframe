@@ -5,7 +5,7 @@ from werkzeug.routing import MethodNotAllowed, NotFound, RequestRedirect
 
 from coaster.views import render_with
 
-from . import baseframe, baseframe_translations, statsd
+from . import baseframe, baseframe_translations
 
 
 @baseframe.app_errorhandler(404)
@@ -27,7 +27,6 @@ def error404(e):
         except (NotFound, RequestRedirect, MethodNotAllowed):
             pass
     baseframe_translations.as_default()
-    statsd.log_request_timer(404)
     return {'error': "404 Not Found"}, 404
 
 
@@ -35,7 +34,6 @@ def error404(e):
 @render_with('403.html.jinja2', json=True)
 def error403(e):
     baseframe_translations.as_default()
-    statsd.log_request_timer(403)
     return {'error': "403 Forbidden"}, 403
 
 
@@ -46,5 +44,4 @@ def error500(e):
         current_app.extensions['sqlalchemy'].db.session.rollback()
 
     baseframe_translations.as_default()
-    statsd.log_request_timer(500)
     return {'error': "500 Internal Server Error"}, 500

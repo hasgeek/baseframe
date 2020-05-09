@@ -4,7 +4,7 @@ from __future__ import absolute_import
 
 import time
 
-from flask import current_app, request
+from flask import current_app, request, request_finished, request_started
 
 from statsd import StatsClient
 
@@ -55,8 +55,10 @@ class Statsd(object):
         )
 
         if app.config.setdefault('STATSD_REQUEST_TIMER', True):
-            app.before_request(self._before_request)
-            app.after_request(self._after_request)
+            # Use signals because they are called before and after all other request
+            # processors, allowing us to capture (nearly) all time taken for processing
+            request_started.connect(self._request_started, app)
+            request_finished.connect(self._request_finished, app)
 
     def _metric_name(self, name):
         return 'app.%s.%s' % (current_app.config['SITE_ID'], name)
@@ -128,25 +130,17 @@ class Statsd(object):
     def pipeline(self):
         return current_app.extensions['statsd_core'].pipeline()
 
-    # before/after request don't always capture the time taken by _other_ before/after
-    # request handlers since they can run even before or after. We also miss requests
-    # that result in errors unless the error handler makes a log entry.
-    # For comprehensive logging of the entire request, we need WSGI middleware wrapping
-    # the entire app, as described here: https://steinn.org/post/flask-statsd-revisited/
-
-    def _before_request(self):
-        if current_app.config['STATSD_RATE'] != 0:
+    def _request_started(self, app):
+        if app.config['STATSD_RATE'] != 0:
             setattr(request, START_TIME_ATTR, time.time())
 
-    def _after_request(self, response):
-        self.log_request_timer(response.status_code)
-        return response
-
-    def log_request_timer(self, status_code):
+    def _request_finished(self, app, response):
         if hasattr(request, START_TIME_ATTR):
             metrics = [
-                '.'.join(['request_handlers', request.endpoint, str(status_code)]),
-                '.'.join(['request_handlers', '_overall', str(status_code)]),
+                '.'.join(
+                    ['request_handlers', request.endpoint, str(response.status_code)]
+                ),
+                '.'.join(['request_handlers', '_overall', str(response.status_code)]),
             ]
 
             for metric_name in metrics:
