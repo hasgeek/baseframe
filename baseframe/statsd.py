@@ -41,7 +41,7 @@ class Statsd(object):
     If the statsd server supports tags, the ``STATSD_TAGS`` parameter may be set to a
     separator character as per the server's syntax.
 
-    Influxdb uses a comma: ``'metric_name,tag1=value1,tag2=value2'``
+    Telegraf/Influxdb uses a comma: ``'metric_name,tag1=value1,tag2=value2'``
 
     Carbon/Graphite uses a semicolon: ``'metric_name;tag1=value;tag2=value2'``
 
@@ -67,6 +67,8 @@ class Statsd(object):
         # on the class, but as per `timeit` it is about 50% slower. Since this class
         # will be instantiated only once per runtime, we get an overall performance
         # improvement at the cost of making it slightly harder to find documentation.
+        # https://gist.github.com/jace/9897629abda9bbd06f5a1bf862f43d42
+
         for method in ('timer', 'timing', 'incr', 'decr', 'gauge', 'set'):
             func = partial(self._wrapper, method)
             func.__name__ = method
