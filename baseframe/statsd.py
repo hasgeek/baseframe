@@ -38,19 +38,17 @@ class Statsd(object):
         STATSD_TAGS = None
         STATSD_REQUEST_TIMER = True
 
-    If the statsd server supports tags, the ``STATSD_TAGS`` parameter may contain a
-    separator character per the server's syntax::
+    If the statsd server supports tags, the ``STATSD_TAGS`` parameter may be set to a
+    separator character as per the server's syntax.
 
-        # Influxdb:
-        ',' == 'metric_name,tag1=value1,tag2=value2'
-        # Carbon/Graphite:
-        ';' == 'metric_name;tag1=value;tag2=value2'
+    Influxdb uses a comma: ``'metric_name,tag1=value1,tag2=value2'``
+
+    Carbon/Graphite uses a semicolon: ``'metric_name;tag1=value;tag2=value2'``
 
     Tags will be discarded when ``STATSD_TAGS`` is unset. Servers have varying
     limitations on the allowed content in tags and values. Alphanumeric values are
-    generally safe.
-
-    From Carbon/Graphite's documentation:
+    generally safe. This extension does not validate content. From Carbon/Graphite's
+    documentation:
 
     > Tag names must have a length >= 1 and may contain any ascii characters except
     > ``;!^=``. Tag values must also have a length >= 1, they may contain any ascii
