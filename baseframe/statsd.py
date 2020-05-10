@@ -65,20 +65,14 @@ class Statsd(object):
         if app is not None:
             self.init_app(app)
 
-        # TODO: When Baseframe drops Python 2.7 support, replace `partial` here with
-        # `partialmethod` (Py 3.4+) and set these on the class definition
-
+        # Py 3.4+ has `functools.partialmethod`, allowing these to be set directly
+        # on the class, but as per `timeit` it is about 50% slower. Since this class
+        # will be instantiated only once per runtime, we get an overall performance
+        # improvement at the cost of making it slightly harder to find documentation.
         for method in ('timer', 'timing', 'incr', 'decr', 'gauge', 'set'):
             func = partial(self._wrapper, method)
             func.__name__ = method
-            func.__doc__ = getattr(StatsClient, method).__doc__
             setattr(self, method, func)
-
-        self.timer.__doc__ = """
-        Return a Timer object that can be used as a context manager to automatically
-        record timing for a block or function call. Use as a decorator is not supported
-        as an application context is required.
-        """
 
     def init_app(self, app):
         app.config.setdefault('STATSD_RATE', 1)
