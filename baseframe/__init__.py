@@ -186,6 +186,11 @@ class BaseframeBlueprint(Blueprint):
                 ],
             )
 
+        # Default .js and tracking file for Matomo
+        if app.config.get('MATOMO_URL') and app.config.get('MATOMO_ID'):
+            app.config.setdefault('MATOMO_JS', 'matomo.js')
+            app.config.setdefault('MATOMO_FILE', 'matomo.php')
+
         # Since Flask 0.11, templates are no longer auto reloaded.
         # Setting the config alone doesn't seem to work, so we explicitly
         # set the jinja environment here.
