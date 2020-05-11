@@ -129,17 +129,17 @@
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
   {%- endassets -%}
 
-  {%- if config['MATOMO_ID'] and not config['DEBUG'] -%}
+  {%- if config['MATOMO_URL'] and config['MATOMO_ID'] and not config['DEBUG'] -%}
     <script type="text/javascript">
     var _paq = window._paq || [];
     _paq.push(['trackPageView']);
     _paq.push(['enableLinkTracking']);
     (function() {
-      var u="//stats.hasgeek.co.in/";
-      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      var u="{{ config['MATOMO_URL'] }}";
+      _paq.push(['setTrackerUrl', u+'{{ config['MATOMO_FILE'] }}']);
       _paq.push(['setSiteId', '{{ config['MATOMO_ID'] }}']);
       var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'stats.js'; s.parentNode.insertBefore(g,s);
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'{{ config['MATOMO_JS'] }}'; s.parentNode.insertBefore(g,s);
     })();
     </script>
   {%- endif -%}
