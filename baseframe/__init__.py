@@ -32,6 +32,7 @@ from coaster.sqlalchemy import MarkdownComposite
 from . import translations
 from ._version import __version__, __version_info__
 from .assets import Version, assets
+from .statsd import Statsd
 
 try:
     from flask_debugtoolbar import DebugToolbarExtension
@@ -51,9 +52,15 @@ __all__ = [  # NOQA: F405
     '__version__',
     '__version_info__',
     'assets',
+    'babel',
     'baseframe',
     'baseframe_css',
     'baseframe_js',
+    'cache',
+    'localize_timezone',
+    'localized_country_list',
+    'request_is_xhr',
+    'statsd',
     'Version',
 ]
 
@@ -61,6 +68,7 @@ networkbar_cache = Cache(with_jinja2_ext=False)
 asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
 babel = Babel()
+statsd = Statsd()
 if DebugToolbarExtension is not None:  # pragma: no cover
     toolbar = DebugToolbarExtension()
 else:  # pragma: no cover
@@ -190,6 +198,8 @@ class BaseframeBlueprint(Blueprint):
         if app.config.get('MATOMO_URL') and app.config.get('MATOMO_ID'):
             app.config.setdefault('MATOMO_JS', 'matomo.js')
             app.config.setdefault('MATOMO_FILE', 'matomo.php')
+
+        statsd.init_app(app)
 
         # Since Flask 0.11, templates are no longer auto reloaded.
         # Setting the config alone doesn't seem to work, so we explicitly

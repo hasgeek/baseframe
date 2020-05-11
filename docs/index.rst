@@ -17,10 +17,28 @@ Reusable styles and templates for HasGeek projects.
     :maxdepth: 2
 
 .. automodule:: baseframe
-	:members:
+    :members:
 
 .. automodule:: baseframe.forms
-   :members:
+    :members:
+
+.. automodule:: baseframe.errors
+    :members:
+
+.. automodule:: baseframe.filters
+    :members:
+
+.. automodule:: baseframe.signals
+    :members:
+
+.. automodule:: baseframe.statsd
+    :members:
+
+.. automodule:: baseframe.utils
+    :members:
+
+.. automodule:: baseframe.views
+    :members:
 
 
 Indices and tables
