@@ -124,7 +124,11 @@ class Statsd(object):
         if hasattr(request, START_TIME_ATTR):
             metrics = [
                 '.'.join(
-                    ['request_handlers', request.endpoint, str(response.status_code)]
+                    [
+                        'request_handlers',
+                        str(request.endpoint),
+                        str(response.status_code),
+                    ]
                 ),
                 '.'.join(['request_handlers', '_overall', str(response.status_code)]),
             ]
