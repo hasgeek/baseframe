@@ -3,7 +3,6 @@
 from six.moves.urllib.parse import urljoin, urlparse
 
 from datetime import timedelta
-from functools import reduce
 import os
 
 from flask import abort, current_app, render_template, request, send_from_directory
@@ -58,9 +57,8 @@ def gen_assets_url(assets):
     except ValueError:
         abort(400)
 
-    # TODO: replace reduce() with something simpler
-    is_js = reduce(lambda status, name: status and name.endswith('.js'), names, True)
-    is_css = reduce(lambda status, name: status and name.endswith('.css'), names, True)
+    is_js = all(name.endswith('.js') for name in names)
+    is_css = all(name.endswith('.css') for name in names)
     output_name = asset_key(assets)
     gendir = os.path.join(current_app.static_folder, 'gen')
     if not os.path.exists(gendir):
