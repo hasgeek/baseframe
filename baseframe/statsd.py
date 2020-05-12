@@ -9,6 +9,8 @@ from flask import current_app, request, request_finished, request_started
 
 from statsd import StatsClient
 
+from .signals import form_validation_error, form_validation_success
+
 __all__ = ['Statsd']
 
 START_TIME_ATTR = 'statsd_start_time'
@@ -34,6 +36,7 @@ class Statsd(object):
         STATSD_RATE = 1
         STATSD_TAGS = False
         STATSD_REQUEST_LOG = True
+        STATSD_FORM_LOG = True
 
     If the statsd server supports tags, the ``STATSD_TAGS`` parameter may be set to a
     separator character as per the server's syntax.
@@ -76,6 +79,7 @@ class Statsd(object):
         app.config.setdefault('STATSD_RATE', 1)
         app.config.setdefault('SITE_ID', app.name)
         app.config.setdefault('STATSD_TAGS', False)
+        app.config.setdefault('STATSD_FORM_LOG', True)
 
         app.extensions['statsd'] = self
         app.extensions['statsd_core'] = StatsClient(
@@ -154,3 +158,30 @@ class Statsd(object):
                 # seemingly redundant, but the counter metric also includes a rate, so
                 # we use both: timer (via `timing`) and counter (via `incr`).
                 self.incr(metric_name, tags=tags)
+
+
+@form_validation_success.connect
+def _statsd_form_validation_success(form):
+    if (
+        current_app
+        and current_app.config.get('STATSD_FORM_LOG')
+        and 'statsd' in current_app.extensions
+    ):
+        current_app.extensions['statsd'].incr(
+            'form_validation_success', tags={'form': form.__class__.__name__}
+        )
+
+
+@form_validation_error.connect
+def _statsd_form_validation_error(form):
+    if (
+        current_app
+        and current_app.config.get('STATSD_FORM_LOG')
+        and 'statsd' in current_app.extensions
+    ):
+        # Submit errors one metric at a time as there's no obvious way to submit all
+        for field in form.errors:
+            current_app.extensions['statsd'].incr(
+                'form_validation_error',
+                tags={'form': form.__class__.__name__, 'field': field},
+            )
