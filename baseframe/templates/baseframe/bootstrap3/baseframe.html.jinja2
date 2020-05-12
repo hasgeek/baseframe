@@ -132,6 +132,7 @@
   {%- if config['MATOMO_URL'] and config['MATOMO_ID'] and not config['DEBUG'] -%}
     <script type="text/javascript">
     var _paq = window._paq || [];
+    _paq.push(['setRequestMethod', 'POST']);
     _paq.push(['trackPageView']);
     _paq.push(['enableLinkTracking']);
     (function() {
