@@ -13,9 +13,6 @@ __all__ = ['Statsd']
 
 START_TIME_ATTR = 'statsd_start_time'
 
-# This extension was adapted from
-# https://github.com/nylas/flask-statsd/blob/master/flask_statsd.py
-
 
 class Statsd(object):
     """
@@ -35,8 +32,8 @@ class Statsd(object):
         STATSD_MAXUDPSIZE = 512
         STATSD_IPV6 = False
         STATSD_RATE = 1
-        STATSD_TAGS = None
-        STATSD_REQUEST_TIMER = True
+        STATSD_TAGS = False
+        STATSD_REQUEST_LOG = True
 
     If the statsd server supports tags, the ``STATSD_TAGS`` parameter may be set to a
     separator character as per the server's syntax.
@@ -45,10 +42,11 @@ class Statsd(object):
 
     Carbon/Graphite uses a semicolon: ``'metric_name;tag1=value;tag2=value2'``
 
-    Tags will be discarded when ``STATSD_TAGS`` is unset. Servers have varying
-    limitations on the allowed content in tags and values. Alphanumeric values are
-    generally safe. This extension does not validate content. From Carbon/Graphite's
-    documentation:
+    Tags will be converted into dot-separated buckets if ``STATSD_TAGS`` is falsy.
+    Using an ordered dict is recommended (default in Py 3.6+) to ensure meaningful
+    bucket order. Servers have varying limitations on the allowed content in tags and
+    values. Alphanumeric values are generally safe. This extension does not validate
+    content. From Carbon/Graphite's documentation:
 
     > Tag names must have a length >= 1 and may contain any ascii characters except
     > ``;!^=``. Tag values must also have a length >= 1, they may contain any ascii
@@ -77,7 +75,7 @@ class Statsd(object):
     def init_app(self, app):
         app.config.setdefault('STATSD_RATE', 1)
         app.config.setdefault('SITE_ID', app.name)
-        app.config.setdefault('STATSD_TAGS', None)
+        app.config.setdefault('STATSD_TAGS', False)
 
         app.extensions['statsd'] = self
         app.extensions['statsd_core'] = StatsClient(
@@ -88,22 +86,29 @@ class Statsd(object):
             ipv6=app.config.setdefault('STATSD_IPV6', False),
         )
 
-        if app.config.setdefault('STATSD_REQUEST_TIMER', True):
+        if app.config.setdefault('STATSD_REQUEST_LOG', True):
             # Use signals because they are called before and after all other request
             # processors, allowing us to capture (nearly) all time taken for processing
             request_started.connect(self._request_started, app)
             request_finished.connect(self._request_finished, app)
 
     def _metric_name(self, name, tags):
-        # In Py 3.8, the following two lines can be combined with a walrus operator:
-        # if tags and (tag_sep := current_app.config['STATSD_TAGS']):
-        if tags and current_app.config['STATSD_TAGS']:
+        if current_app.config['STATSD_TAGS']:
+            prefix = 'flask_app'
+            if tags is None:
+                tags = {}
+            tags['app'] = current_app.config['SITE_ID']
             tag_sep = current_app.config['STATSD_TAGS']
+            tag_join = '='
+        else:
+            prefix = 'flask_app.{}'.format(current_app.config['SITE_ID'])
+            tag_sep = tag_join = '.'
+        if tags:
             name += tag_sep + tag_sep.join(
-                '='.join((str(t), str(v))) if v is not None else str(t)
+                tag_join.join((str(t), str(v))) if v is not None else str(t)
                 for t, v in tags.items()
             )
-        return 'app.%s.%s' % (current_app.config['SITE_ID'], name)
+        return '%s.%s' % (prefix, name)
 
     def _wrapper(self, metric, stat, *args, **kwargs):
         tags = kwargs.pop('tags', None)
@@ -123,24 +128,28 @@ class Statsd(object):
     def _request_finished(self, app, response):
         if hasattr(request, START_TIME_ATTR):
             metrics = [
-                '.'.join(
-                    [
-                        'request_handlers',
-                        str(request.endpoint),
-                        str(response.status_code),
-                    ]
-                ),
-                '.'.join(['request_handlers', '_overall', str(response.status_code)]),
+                (
+                    'request_handlers',
+                    {'endpoint': request.endpoint, 'status_code': response.status_code},
+                )
             ]
+            if not app.config['STATSD_TAGS']:
+                metrics.append(
+                    (
+                        'request_handlers',
+                        {'endpoint': '_overall', 'status_code': response.status_code},
+                    )
+                )
 
-            for metric_name in metrics:
+            for metric_name, tags in metrics:
                 # Use `timing` instead of `timer` because we record it as two metrics.
                 # Convert time from seconds:float to milliseconds:int
                 self.timing(
                     metric_name,
                     int((time.time() - getattr(request, START_TIME_ATTR)) * 1000),
+                    tags=tags,
                 )
                 # The timer metric also registers a count, making the counter metric
                 # seemingly redundant, but the counter metric also includes a rate, so
                 # we use both: timer (via `timing`) and counter (via `incr`).
-                self.incr(metric_name)
+                self.incr(metric_name, tags=tags)
