@@ -102,13 +102,14 @@ class Statsd(object):
             tag_join = '='
         else:
             prefix = 'flask_app.{}'.format(current_app.config['SITE_ID'])
-            tag_sep = tag_join = '.'
+            tag_sep = '.'
+            tag_join = '_'
         if tags:
             name += tag_sep + tag_sep.join(
                 tag_join.join((str(t), str(v))) if v is not None else str(t)
                 for t, v in tags.items()
             )
-        return '%s.%s' % (prefix, name)
+        return '{}.{}'.format(prefix, name)
 
     def _wrapper(self, metric, stat, *args, **kwargs):
         tags = kwargs.pop('tags', None)
