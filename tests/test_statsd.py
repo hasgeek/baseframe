@@ -92,7 +92,7 @@ class TestStatsd(unittest.TestCase):
             with patch('statsd.StatsClient.incr') as mock_incr:
                 statsd.incr('test.counter', tags={'tag': 'value'})
                 mock_incr.assert_called_once_with(
-                    'flask_app.tests.test_statsd.test.counter.tag.value', rate=1
+                    'flask_app.tests.test_statsd.test.counter.tag_value', rate=1
                 )
 
             # Tags are enabled if a separator character is specified in config,
