@@ -41,6 +41,7 @@ __local = [
     'AllUrlsValid',
     'IsEmoji',
     'IsNotPublicEmailDomain',
+    'IsNotHttps',
     'IsPublicEmailDomain',
     'NoObfuscatedEmail',
     'AllowedIf',
@@ -396,6 +397,21 @@ class ValidEmail(object):
 
 # Legacy name
 ValidEmailDomain = ValidEmail
+
+class IsNotHttps(object):
+    """
+    Validator to confirm that a URL has 'https://'
+    """
+
+    default_message = __(u'The URL provided is not HTTPS')
+
+    def __init__(self, message=None, message_urltext=None):
+        self.message = message or self.default_message
+
+    def __call__(self, form, field):
+        if field.data:
+            if "https://" not in field.data:
+                raise ValidationError(self.message)
 
 
 class ValidUrl(object):
