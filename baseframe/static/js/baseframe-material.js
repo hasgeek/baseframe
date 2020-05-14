@@ -44,24 +44,24 @@ function activate_widgets() {
   };
 
   // Activate codemirror on all textareas with class='markdown'
-  $('textarea.markdown').each(function() {
+  $('textarea.markdown').each(function () {
     var editor = CodeMirror.fromTextArea(this, cm_markdown_config);
     var delay;
-    editor.on('change', function(instance) {
+    editor.on('change', function (instance) {
       clearTimeout(delay);
-      delay = setTimeout(function() {
+      delay = setTimeout(function () {
         editor.save();
       }, 300);
     });
   });
 
   // Activate codemirror on all textareas with class='stylesheet'
-  $('textarea.stylesheet').each(function() {
+  $('textarea.stylesheet').each(function () {
     var editor = CodeMirror.fromTextArea(this, cm_css_config);
     var delay;
-    editor.on('change', function(instance) {
+    editor.on('change', function (instance) {
       clearTimeout(delay);
-      delay = setTimeout(function() {
+      delay = setTimeout(function () {
         editor.save();
       }, 300);
     });
@@ -73,10 +73,8 @@ function radioHighlight(radioName, highlightClass) {
   $(selector + ':checked')
     .parent()
     .addClass(highlightClass);
-  var handler = function() {
-    $(selector)
-      .parent()
-      .removeClass(highlightClass);
+  var handler = function () {
+    $(selector).parent().removeClass(highlightClass);
     $(selector + ':checked')
       .parent()
       .addClass(highlightClass);
@@ -98,12 +96,12 @@ function activate_geoname_autocomplete(
     ajax: {
       url: autocomplete_endpoint,
       dataType: 'jsonp',
-      data: function(params, page) {
+      data: function (params, page) {
         return {
           q: params.term,
         };
       },
-      processResults: function(data, page) {
+      processResults: function (data, page) {
         var rdata = [];
         if (data.status == 'ok') {
           for (var i = 0; i < data.result.length; i++) {
@@ -121,14 +119,14 @@ function activate_geoname_autocomplete(
   //Setting label for Geoname ids
   var val = $(selector).val();
   if (val) {
-    val = val.map(function(id) {
+    val = val.map(function (id) {
       return 'name=' + id;
     });
     var qs = val.join('&');
     $.ajax(getname_endpoint + '?' + qs, {
       accepts: 'application/json',
       dataType: 'jsonp',
-    }).done(function(data) {
+    }).done(function (data) {
       $(selector).empty();
       var rdata = [];
       if (data.status == 'ok') {
@@ -142,19 +140,17 @@ function activate_geoname_autocomplete(
           );
           rdata.push(data.result[i].geonameid);
         }
-        $(selector)
-          .val(rdata)
-          .trigger('change');
+        $(selector).val(rdata).trigger('change');
       }
     });
   }
 }
 
-$(function() {
+$(function () {
   // activate all widgets
   activate_widgets();
 
-  var matchtab = function() {
+  var matchtab = function () {
     var url = document.location.toString(),
       tabmatch = null;
     if (url.match('#/')) {
@@ -176,7 +172,7 @@ $(function() {
   // Load correct tab when the page loads
   matchtab();
   // Change hash for tab click
-  $('.nav-tabs.nav-tabs-auto a').on('shown', function(e) {
+  $('.nav-tabs.nav-tabs-auto a').on('shown', function (e) {
     window.location.hash = '#/' + e.target.hash.slice(1);
   });
   var url = document.location.toString();
@@ -189,7 +185,7 @@ $(function() {
   }
 });
 
-$(function() {
+$(function () {
   // Code notice
   console.log(
     'Hello, curious geek. Our source is at https://github.com/hasgeek. Why not contribute a patch?'
@@ -205,8 +201,8 @@ window.Baseframe.Config = {
 };
 
 window.Baseframe.Forms = {
-  preventSubmitOnEnter: function(id) {
-    $('#' + id).on('keyup keypress', function(e) {
+  preventSubmitOnEnter: function (id) {
+    $('#' + id).on('keyup keypress', function (e) {
       var code = e.keyCode || e.which;
       if (code === 13) {
         e.preventDefault();
@@ -214,9 +210,9 @@ window.Baseframe.Forms = {
       }
     });
   },
-  lastuserAutocomplete: function(options) {
-    var assembleUsers = function(users) {
-      return users.map(function(user) {
+  lastuserAutocomplete: function (options) {
+    var assembleUsers = function (users) {
+      return users.map(function (user) {
         return { id: user.buid, text: user.label };
       });
     };
@@ -228,7 +224,7 @@ window.Baseframe.Forms = {
       ajax: {
         url: options.autocomplete_endpoint,
         dataType: 'jsonp',
-        data: function(params, page) {
+        data: function (params, page) {
           if ('client_id' in options) {
             return {
               q: params.term,
@@ -241,7 +237,7 @@ window.Baseframe.Forms = {
             };
           }
         },
-        processResults: function(data, page) {
+        processResults: function (data, page) {
           var users = [];
           if (data.status == 'ok') {
             users = assembleUsers(data.users);
@@ -251,7 +247,7 @@ window.Baseframe.Forms = {
       },
     });
   },
-  textAutocomplete: function(options) {
+  textAutocomplete: function (options) {
     $('#' + options.id).select2({
       placeholder: 'Type to select',
       multiple: options.multiple,
@@ -259,16 +255,16 @@ window.Baseframe.Forms = {
       ajax: {
         url: options.autocomplete_endpoint,
         dataType: 'json',
-        data: function(params, page) {
+        data: function (params, page) {
           return {
             q: params.term,
             page: page,
           };
         },
-        processResults: function(data, page) {
+        processResults: function (data, page) {
           return {
             more: false,
-            results: data[options.key].map(function(item) {
+            results: data[options.key].map(function (item) {
               return { id: item, text: item };
             }),
           };
@@ -293,9 +289,9 @@ window.Baseframe.Forms = {
     using the unique form id. And the newly created 'p' tag
     is inserted in the DOM below the field.
   */
-  showValidationErrors: function(formId, errors) {
+  showValidationErrors: function (formId, errors) {
     var form = document.getElementById(formId);
-    Object.keys(errors).forEach(function(fieldName) {
+    Object.keys(errors).forEach(function (fieldName) {
       if (Array.isArray(errors[fieldName])) {
         var fieldWrapper = form.querySelector('#field-' + fieldName);
         if (fieldWrapper) {
@@ -326,17 +322,17 @@ window.Baseframe.Forms = {
       displays the loading indicator and submits the form via ajax.
       On completing the ajax request, calls the onSuccess/onError callback function.
   */
-  handleFormSubmit: function(formId, url, onSuccess, onError, config) {
+  handleFormSubmit: function (formId, url, onSuccess, onError, config) {
     $('#' + formId)
       .find('button[type="submit"]')
-      .click(function(event) {
+      .click(function (event) {
         event.preventDefault();
         $.ajax({
           url: url,
           type: 'POST',
           data: $('#' + formId).serialize(),
           dataType: config.dataType ? config.dataType : 'json',
-          beforeSend: function() {
+          beforeSend: function () {
             // Disable submit button to prevent double submit
             $('#' + formId)
               .find('button[type="submit"]')
@@ -348,23 +344,23 @@ window.Baseframe.Forms = {
             if (config.beforeSend) config.beforeSend();
           },
         })
-          .done(function(remoteData) {
+          .done(function (remoteData) {
             onSuccess(remoteData);
           })
-          .fail(function(response) {
+          .fail(function (response) {
             onError(response);
           });
       });
   },
 };
 
-window.Baseframe.MapMarker = function(field) {
+window.Baseframe.MapMarker = function (field) {
   this.field = field;
   this.activate();
   return this;
 };
 
-window.Baseframe.MapMarker.prototype.activate = function() {
+window.Baseframe.MapMarker.prototype.activate = function () {
   var self = this;
   Baseframe.Forms.preventSubmitOnEnter(this.field.location_id);
 
@@ -379,24 +375,37 @@ window.Baseframe.MapMarker.prototype.activate = function() {
       locationNameInput: $('#' + this.field.location_id),
     },
     enableAutocomplete: true,
-    onchanged: function(currentLocation, radius, isMarkerDropped) {},
-    onlocationnotfound: function(locationName) {},
-    oninitialized: function(component) {},
+    onchanged: function (currentLocation, radius, isMarkerDropped) {
+      if ($('#' + self.field.location_id).val()) {
+        $('#' + self.field.map_id).removeClass('mui--hide');
+      }
+    },
+    onlocationnotfound: function (locationName) {},
+    oninitialized: function (component) {
+      // Locationpicker sets latitude and longitude field value to 0,
+      // this is to empty the fields and hide the map
+      if (!$('#' + self.field.location_id).val()) {
+        $('#' + self.field.latitude_id).val('');
+        $('#' + self.field.longitude_id).val('');
+        $('#' + self.field.map_id).addClass('mui--hide');
+      }
+    },
+  });
+
+  // On clicking clear, empty latitude, longitude, location fields and hide map
+  $('#' + this.field.clear_id).on('click', function (event) {
+    event.preventDefault();
+    $('#' + self.field.latitude_id).val('');
+    $('#' + self.field.longitude_id).val('');
+    $('#' + self.field.location_id).val('');
+    $('#' + self.field.map_id).addClass('mui--hide');
   });
 };
 
-window.Baseframe.MapMarker.prototype.getDefaultLocation = function() {
+window.Baseframe.MapMarker.prototype.getDefaultLocation = function () {
   var latitude, longitude;
-  if (
-    $('#' + this.field.latitude_id).val() === '' &&
-    $('#' + this.field.longitude_id).val() === ''
-  ) {
-    latitude = Baseframe.Config.defaultLatitude;
-    longitude = Baseframe.Config.defaultLongitude;
-  } else {
-    latitude = $('#' + this.field.latitude_id).val();
-    longitude = $('#' + this.field.longitude_id).val();
-  }
+  latitude = $('#' + this.field.latitude_id).val();
+  longitude = $('#' + this.field.longitude_id).val();
   return { latitude: latitude, longitude: longitude };
 };
 
@@ -404,10 +413,10 @@ window.ParsleyConfig = {
   errorsWrapper: '<div></div>',
   errorTemplate: '<p class="mui-form__error"></p>',
   errorClass: 'has-error',
-  classHandler: function(ParsleyField) {
+  classHandler: function (ParsleyField) {
     return ParsleyField.$element.closest('.mui-form__fields');
   },
-  errorsContainer: function(ParsleyField) {
+  errorsContainer: function (ParsleyField) {
     return ParsleyField.$element.closest('.mui-form__controls');
   },
   i18n: {
@@ -415,7 +424,7 @@ window.ParsleyConfig = {
   },
 };
 
-$(function() {
+$(function () {
   // Override Parsley.js's default messages after the page loads.
   // Our versions don't use full stops after phrases.
   window.ParsleyConfig.i18n.en = $.extend(window.ParsleyConfig.i18n.en || {}, {
@@ -446,13 +455,13 @@ $(function() {
     }
   );
 
-  var csrfRefresh = function() {
+  var csrfRefresh = function () {
     $.ajax({
       type: 'GET',
       url: '/api/baseframe/1/csrf/refresh',
       timeout: 5000,
       dataType: 'json',
-      success: function(data) {
+      success: function (data) {
         $('meta[name="csrf-token"]').attr('content', data.csrf_token);
         $('input[name="csrf_token"]').val(data.csrf_token);
       },
@@ -462,13 +471,13 @@ $(function() {
   //Request for new CSRF token and update the page every 15 mins
   setInterval(csrfRefresh, 900000);
 
-  $('#js-sidebar-menu-button').on('click', function(e) {
+  $('#js-sidebar-menu-button').on('click', function (e) {
     e.stopPropagation();
     $('#js-sidebar').addClass('open');
     mui.overlay('on');
   });
 
-  $('body').on('click', function(e) {
+  $('body').on('click', function (e) {
     if (
       $('#js-sidebar').hasClass('open') &&
       !$(e.target).is('#js-sidebar-menu-button') &&
@@ -484,7 +493,7 @@ $(function() {
 
     document.body.addEventListener(
       'touchstart',
-      function(e) {
+      function (e) {
         start.x = e.changedTouches[0].clientX;
         start.y = e.changedTouches[0].clientY;
       },
@@ -493,7 +502,7 @@ $(function() {
 
     document.body.addEventListener(
       'touchend',
-      function(e) {
+      function (e) {
         end.y = e.changedTouches[0].clientY;
         end.x = e.changedTouches[0].clientX;
 
@@ -515,9 +524,7 @@ $(function() {
     );
   }
 
-  $('body').on('click', '.alert__close', function() {
-    $(this)
-      .parents('.alert')
-      .fadeOut();
+  $('body').on('click', '.alert__close', function () {
+    $(this).parents('.alert').fadeOut();
   });
 });
