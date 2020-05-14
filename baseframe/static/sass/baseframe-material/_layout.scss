@@ -74,10 +74,18 @@ li p + ol {
 }
 
 .map {
+  position: relative;
   .map__marker {
     margin-top: $mui-form-group-margin-bottom/2;
     width: 100%;
     height: 40em;
+  }
+  .map__clear {
+    position: absolute;
+    top: 22px;
+    right: 0;
+    z-index: 2;
+    background: #fff;
   }
 }
 

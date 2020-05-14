@@ -247,9 +247,10 @@
 {% endmacro %}
 
 {%- macro map_marker_widget(field) %}
-  <div class="input-group no-jshidden">
+  <div class="input-group no-jshidde map-location">
     <span class="input-group-addon"><i class="fa fa-search"></i></span>
     <input type="text" class="form-control" id="{{ field.id }}_search" placeholder="Enter a location">
+    <a href="javascript:void(0)" id="{{ field.id }}_clear" class="map-clear"><i class="fa fa-times"></i></a>
   </div>
   <div id="{{ field.id }}_map" class="no-jshidden map-marker"></div>
   <div class="jshidden">{{ field(class="field-" + field.id + " form-control") }}</div>
@@ -260,7 +261,8 @@
     location_id: "{{ field.id}}_search",
     map_id: "{{ field.id }}_map",
     latitude_id: "{{ field.id }}_latitude",
-    longitude_id: "{{ field.id}}_longitude"
+    longitude_id: "{{ field.id}}_longitude",
+    clear_id: "{{ field.id}}_clear"
   });
 {% endmacro %}
 
