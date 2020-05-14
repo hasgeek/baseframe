@@ -247,10 +247,10 @@
 {% endmacro %}
 
 {%- macro map_marker_widget(field) %}
-  <div class="input-group no-jshidde map-location">
+  <div class="input-group no-jshidden map-location">
     <span class="input-group-addon"><i class="fa fa-search"></i></span>
     <input type="text" class="form-control" id="{{ field.id }}_search" placeholder="Enter a location">
-    <a href="javascript:void(0)" id="{{ field.id }}_clear" class="map-clear"><i class="fa fa-times"></i></a>
+    <a href="javascript:void(0)" id="{{ field.id }}_clear" class="map-clear" aria-label="clear location"><i class="fa fa-times"></i></a>
   </div>
   <div id="{{ field.id }}_map" class="no-jshidden map-marker"></div>
   <div class="jshidden">{{ field(class="field-" + field.id + " form-control") }}</div>
