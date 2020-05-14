@@ -9,8 +9,8 @@ function activate_widgets() {
     autoCloseBrackets: true,
     viewportMargin: Infinity,
     indentWithTabs: false,
-    indentUnit: 2,
-    tabSize: 2,
+    indentUnit: 1,
+    tabSize: 1,
     extraKeys: {
       Enter: 'newlineAndIndentContinueMarkdownList',
       Tab: false,
@@ -31,8 +31,8 @@ function activate_widgets() {
     matchBrackets: true,
     viewportMargin: Infinity,
     indentWithTabs: false,
-    indentUnit: 2,
-    tabSize: 2,
+    indentUnit: 1,
+    tabSize: 1,
     extraKeys: {
       Tab: false,
       'Shift-Tab': false,
