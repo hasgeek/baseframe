@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
 import six
 
 from flask import Markup
@@ -68,7 +69,7 @@ class Select2Widget(Select):
             kwargs['multiple'] = 'multiple'
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         if c:
-            kwargs['class'] = u'%s %s' % ('select2', c)
+            kwargs['class'] = '%s %s' % ('select2', c)
         else:
             kwargs['class'] = 'select2'
         html = ['<select %s>' % html_params(name=field.name, **kwargs)]
@@ -89,7 +90,7 @@ class TinyMce3(wtforms.widgets.TextArea):
     def __call__(self, field, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         if c:
-            kwargs['class'] = u'%s %s' % ('richtext', c)
+            kwargs['class'] = '%s %s' % ('richtext', c)
         else:
             kwargs['class'] = 'richtext'
         return super(TinyMce3, self).__call__(field, **kwargs)
@@ -105,7 +106,7 @@ class TinyMce4(wtforms.widgets.TextArea):
     def __call__(self, field, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         if c:
-            kwargs['class'] = u'%s %s' % ('richtext', c)
+            kwargs['class'] = '%s %s' % ('richtext', c)
         else:
             kwargs['class'] = 'richtext'
         return super(TinyMce4, self).__call__(field, **kwargs)
@@ -122,7 +123,7 @@ class SubmitInput(wtforms.widgets.SubmitInput):
 
     def __call__(self, field, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = u'%s %s' % (self.css_class, c)
+        kwargs['class'] = '%s %s' % (self.css_class, c)
         return super(SubmitInput, self).__call__(field, **kwargs)
 
 
@@ -145,7 +146,7 @@ class DateTimeInput(wtforms.widgets.Input):
         class_ = kwargs.pop('class', kwargs.pop('class_', ''))
         date_value, time_value = value.split(' ', 1)
         return Markup(
-            u'<input type="date" class="datetime-date %s" %s /> <input type="time" class="datetime-time %s" %s /> %s'
+            '<input type="date" class="datetime-date %s" %s /> <input type="time" class="datetime-time %s" %s /> %s'
             % (
                 class_,
                 wtforms.widgets.html_params(

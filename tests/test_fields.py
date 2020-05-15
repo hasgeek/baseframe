@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 from datetime import datetime
 from decimal import Decimal
 import unittest
@@ -21,7 +23,7 @@ class MY_ENUM(LabeledEnum):  # NOQA: N801
     __order__ = (FIRST, SECOND, THIRD)
 
 
-DEFAULT_JSONDATA = {'key': u"val"}
+DEFAULT_JSONDATA = {'key': "val"}
 
 
 class EnumForm(forms.Form):
@@ -129,13 +131,13 @@ class TestJsonField(BaseTestCase):
         assert self.form.validate() is True
 
     def test_unicode(self):
-        self.form.process(formdata=MultiDict({'jsondata': u'{"key": "val😡"}'}))
+        self.form.process(formdata=MultiDict({'jsondata': '{"key": "val😡"}'}))
         assert self.form.validate() is True
-        assert self.form.jsondata.data == {"key": u"val😡"}
+        assert self.form.jsondata.data == {"key": "val😡"}
 
     def test_unicode_dumps(self):
-        self.form.jsondata.data = {"key": u"val😡"}
-        assert self.form.jsondata._value() == u'{\n  "key": "val😡"\n}'
+        self.form.jsondata.data = {"key": "val😡"}
+        assert self.form.jsondata._value() == '{\n  "key": "val😡"\n}'
 
     def test_decimal(self):
         self.form.jsondata.data = {"key": Decimal('1.2')}
@@ -156,13 +158,13 @@ class TestJsonField(BaseTestCase):
 
     def test_array(self):
         self.form.process(
-            formdata=MultiDict({'jsondata': u'[{"key": "val"}, {"key2": "val2"}]'})
+            formdata=MultiDict({'jsondata': '[{"key": "val"}, {"key2": "val2"}]'})
         )
         assert self.form.validate() is False
 
         self.form.process(
             formdata=MultiDict(
-                {'jsondata_no_dict': u'[{"key": "val"}, {"key2": "val2"}]'}
+                {'jsondata_no_dict': '[{"key": "val"}, {"key2": "val2"}]'}
             )
         )
         assert self.form.validate() is True
@@ -172,7 +174,7 @@ class TestJsonField(BaseTestCase):
         self.form.process(
             formdata=MultiDict(
                 {
-                    'jsondata': u"""
+                    'jsondata': """
             {
                 "key": "val" # test comment
             }
