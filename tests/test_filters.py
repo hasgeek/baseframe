@@ -199,9 +199,9 @@ class TestNaiveDatetimeFilters(TestDatetimeFilters):
 class TestFilters(TestCaseBaseframe):
     def setUp(self):
         super(TestFilters, self).setUp()
-        self.test_user = UserTest()
-        self.test_avatar_size = ('100', '100')
-        self.test_avatar_url = '//images.hasgeek.com/embed/test'
+        self.user = UserTest()
+        self.avatar_size = ('100', '100')
+        self.avatar_url = '//images.hasgeek.com/embed/test'
 
     def test_usessl(self):
         with self.app.test_request_context('/'):
@@ -231,32 +231,31 @@ class TestFilters(TestCaseBaseframe):
             self.assertEqual(nossled, 'http://hasgeek.com')
 
     def test_avatar_url(self):
-        # test_user object doesn't have an email or an avatar by default
-        avatar_url = filters.avatar_url(self.test_user)
+        # user object doesn't have an email or an avatar by default
+        avatar_url = filters.avatar_url(self.user)
         self.assertEqual(
             avatar_url,
             '//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm',
         )
 
         # testing what if the user has an avatar already
-        self.test_user.set_avatar(self.test_avatar_url)
-        avatar_url = filters.avatar_url(self.test_user, self.test_avatar_size)
+        self.user.set_avatar(self.avatar_url)
+        avatar_url = filters.avatar_url(self.user, self.avatar_size)
         self.assertEqual(
-            avatar_url,
-            self.test_avatar_url + '?size=' + 'x'.join(self.test_avatar_size),
+            avatar_url, self.avatar_url + '?size=' + 'x'.join(self.avatar_size)
         )
 
         # what if the user doesn't have an avatar but has an email
-        self.test_user.set_avatar(None)
-        self.test_user.set_email('foobar@foo.com')
-        avatar_url = filters.avatar_url(self.test_user, self.test_avatar_size)
-        ehash = md5sum(self.test_user.email)
+        self.user.set_avatar(None)
+        self.user.set_email('foobar@foo.com')
+        avatar_url = filters.avatar_url(self.user, self.avatar_size)
+        ehash = md5sum(self.user.email)
         self.assertEqual(
             avatar_url,
             '//www.gravatar.com/avatar/'
             + ehash
             + '?d=mm&s='
-            + 'x'.join(self.test_avatar_size),
+            + 'x'.join(self.avatar_size),
         )
 
     def test_render_field_options(self):
