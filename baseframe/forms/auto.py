@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 from flask import (
     Markup,
     abort,
@@ -29,8 +31,8 @@ class ConfirmDeleteForm(Form):
     """
 
     # The labels on these widgets are not used. See delete.html.
-    delete = SubmitField(__(u"Delete"))
-    cancel = SubmitField(__(u"Cancel"))
+    delete = SubmitField(__("Delete"))
+    cancel = SubmitField(__("Cancel"))
 
 
 def render_form(
@@ -38,7 +40,7 @@ def render_form(
     title,
     message='',
     formid=None,
-    submit=__(u"Submit"),
+    submit=__("Submit"),
     cancel_url=None,
     ajax=False,
     with_chrome=True,
@@ -118,7 +120,7 @@ def render_delete_sqla(
     db,
     title,
     message,
-    success=u'',
+    success='',
     next=None,  # NOQA: A002
     cancel_url=None,
     delete_text=None,

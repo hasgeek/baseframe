@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
 from six.moves.urllib.parse import urljoin, urlparse
 
 from datetime import timedelta
@@ -212,7 +213,7 @@ def editorcss(subdomain=None):
 @render_with({'text/plain': lambda r: r['csrf_token']}, json=True, jsonp=False)
 def csrf_refresh(subdomain=None):
     parsed_host = urlparse(request.url_root)
-    origin = parsed_host.scheme + u'://' + parsed_host.netloc
+    origin = parsed_host.scheme + '://' + parsed_host.netloc
     if 'Origin' in request.headers:
         # Origin is present in (a) cross-site requests and (b) same site requests in some browsers.
         # Therefore, if Origin is present, confirm it matches our domain.

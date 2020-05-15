@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
 import six
 
 from datetime import datetime, timedelta
@@ -27,31 +28,31 @@ def age(dt):
     if delta.days == 0:
         # < 1 day
         if delta.seconds < 1:
-            return _(u"now")
+            return _("now")
         if delta.seconds < 10:
-            return _(u"seconds ago")
+            return _("seconds ago")
         elif delta.seconds < 60:
-            return _(u"%(num)s seconds ago", num=delta.seconds)
+            return _("%(num)s seconds ago", num=delta.seconds)
         elif delta.seconds < 120:
-            return _(u"a minute ago")
+            return _("a minute ago")
         elif delta.seconds < 3600:  # < 1 hour
-            return _(u"%(num)s minutes ago", num=int(delta.seconds / 60))
+            return _("%(num)s minutes ago", num=int(delta.seconds / 60))
         elif delta.seconds < 7200:  # < 2 hours
-            return _(u"an hour ago")
+            return _("an hour ago")
         else:
             return _("%(num)s hours ago", num=int(delta.seconds / 3600))
     elif delta.days == 1:
-        return _(u"a day ago")
+        return _("a day ago")
     elif delta.days < 30:
-        return _(u"%(num)s days ago", num=delta.days)
+        return _("%(num)s days ago", num=delta.days)
     elif delta.days < 60:
-        return _(u"a month ago")
+        return _("a month ago")
     elif delta.days < 365:
-        return _(u"%(num)s months ago", num=int(delta.days / 30))
+        return _("%(num)s months ago", num=int(delta.days / 30))
     elif delta.days < 730:  # < 2 years
-        return _(u"a year ago")
+        return _("a year ago")
     else:
-        return _(u"%(num)s years ago", num=int(delta.days / 365))
+        return _("%(num)s years ago", num=int(delta.days / 365))
 
 
 @baseframe.app_template_filter('usessl')
@@ -87,14 +88,14 @@ def nossl(url):
 @baseframe.app_template_filter('avatar_url')
 def avatar_url(user, size=None):
     if isinstance(size, (list, tuple)):
-        size = u'x'.join(size)
+        size = 'x'.join(size)
     if user.avatar:
         if size:
             # TODO: Use a URL parser
-            if u'?' in user.avatar:
-                return user.avatar + u'&size=' + six.text_type(size)
+            if '?' in user.avatar:
+                return user.avatar + '&size=' + six.text_type(size)
             else:
-                return user.avatar + u'?size=' + six.text_type(size)
+                return user.avatar + '?size=' + six.text_type(size)
         else:
             return user.avatar
     email = user.email
@@ -105,12 +106,12 @@ def avatar_url(user, size=None):
         else:
             # Lastuser's User model has email as a UserEmail object
             ehash = email.md5sum
-        gravatar = u'//www.gravatar.com/avatar/' + ehash + u'?d=mm'
+        gravatar = '//www.gravatar.com/avatar/' + ehash + '?d=mm'
         if size:
-            gravatar += u'&s=' + six.text_type(size)
+            gravatar += '&s=' + six.text_type(size)
         return gravatar
     # Return Gravatar's missing man image
-    return u'//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm'
+    return '//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm'
 
 
 @baseframe.app_template_filter('render_field_options')
@@ -199,7 +200,7 @@ def shortdate(value):
     else:
         # The string replace hack is to deal with inconsistencies in the underlying
         # implementation of strftime. See https://bugs.python.org/issue8304
-        return six.text_type(dt.strftime("%e %b '%y")).replace(u"'", u"’")
+        return six.text_type(dt.strftime("%e %b '%y")).replace("'", "’")
 
 
 @baseframe.app_template_filter('longdate')

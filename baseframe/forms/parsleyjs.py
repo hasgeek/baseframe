@@ -11,7 +11,7 @@ wtforms-parsleysj is MIT licensed, while the rest of Baseframe is either BSD (ou
 various other open source licenses (other third party code).
 """
 
-__author__ = 'Johannes Gehrs (jgehrs@gmail.com)'
+from __future__ import unicode_literals
 
 import copy
 import re
@@ -55,6 +55,8 @@ from wtforms.widgets.html5 import EmailInput as _EmailInput
 from wtforms.widgets.html5 import NumberInput as _NumberInput
 from wtforms.widgets.html5 import TelInput as _TelInput
 from wtforms.widgets.html5 import URLInput as _URLInput
+
+__author__ = 'Johannes Gehrs (jgehrs@gmail.com)'
 
 __all__ = [
     # ParsleyJS helpers
@@ -137,16 +139,16 @@ def parsley_kwargs(field, kwargs, extend=True):
 
 
 def _email_kwargs(kwargs, vali):
-    kwargs[u'data-parsley-type'] = u'email'
+    kwargs['data-parsley-type'] = 'email'
 
 
 def _equal_to_kwargs(kwargs, vali):
-    kwargs[u'data-parsley-equalto'] = u'#' + vali.fieldname
+    kwargs['data-parsley-equalto'] = '#' + vali.fieldname
 
 
 def _ip_address_kwargs(kwargs, vali):
     # Regexp from http://stackoverflow.com/a/4460645
-    kwargs[u'data-parsley-regexp'] = (
+    kwargs['data-parsley-regexp'] = (
         r'^\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.'
         r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.'
         r'(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.'
@@ -158,28 +160,26 @@ def _length_kwargs(kwargs, vali):
     default_number = -1
 
     if vali.max != default_number and vali.min != default_number:
-        kwargs[u'minlength'] = str(vali.min)
-        kwargs[u'maxlength'] = str(vali.max)
-        kwargs[u'data-parsley-length'] = (
-            u'[' + str(vali.min) + u',' + str(vali.max) + u']'
-        )
+        kwargs['minlength'] = str(vali.min)
+        kwargs['maxlength'] = str(vali.max)
+        kwargs['data-parsley-length'] = '[' + str(vali.min) + ',' + str(vali.max) + ']'
     else:
         if vali.min != default_number:
-            kwargs[u'minlength'] = str(vali.min)
-            kwargs[u'data-parsley-minlength'] = str(vali.min)
+            kwargs['minlength'] = str(vali.min)
+            kwargs['data-parsley-minlength'] = str(vali.min)
         if vali.max != default_number:
-            kwargs[u'maxlength'] = str(vali.max)
-            kwargs[u'data-parsley-maxlength'] = str(vali.max)
+            kwargs['maxlength'] = str(vali.max)
+            kwargs['data-parsley-maxlength'] = str(vali.max)
 
 
 def _number_range_kwargs(kwargs, vali):
-    kwargs[u'data-parsley-range'] = u'[' + str(vali.min) + u',' + str(vali.max) + u']'
+    kwargs['data-parsley-range'] = '[' + str(vali.min) + ',' + str(vali.max) + ']'
 
 
 def _input_required_kwargs(kwargs, vali):
-    kwargs[u'data-parsley-required'] = u'true'
+    kwargs['data-parsley-required'] = 'true'
     if vali.message:
-        kwargs[u'data-parsley-required-message'] = vali.message
+        kwargs['data-parsley-required-message'] = vali.message
 
 
 def _regexp_kwargs(kwargs, vali):
@@ -190,39 +190,39 @@ def _regexp_kwargs(kwargs, vali):
         regex_string = vali.regex.pattern
     else:
         regex_string = vali.regex
-    kwargs[u'data-parsley-regexp'] = regex_string
+    kwargs['data-parsley-regexp'] = regex_string
 
 
 def _url_kwargs(kwargs, vali):
-    kwargs[u'data-parsley-type'] = u'url'
+    kwargs['data-parsley-type'] = 'url'
 
 
 def _string_seq_delimiter(kwargs, vali):
     # We normally use a comma as the delimiter - looks clean and it's parsley's default.
     # If the strings for which we check contain a comma, we cannot use it as a delimiter.
-    default_delimiter = u','
-    fallback_delimiter = u';;;'
+    default_delimiter = ','
+    fallback_delimiter = ';;;'
     delimiter = default_delimiter
     for value in vali.values:
         if value.find(',') != -1:
             delimiter = fallback_delimiter
             break
     if delimiter != default_delimiter:
-        kwargs[u'data-parsley-inlist-delimiter'] = delimiter
+        kwargs['data-parsley-inlist-delimiter'] = delimiter
     return delimiter
 
 
 def _anyof_kwargs(kwargs, vali):
     delimiter = _string_seq_delimiter(kwargs, vali)
-    kwargs[u'data-parsley-inlist'] = delimiter.join(vali.values)
+    kwargs['data-parsley-inlist'] = delimiter.join(vali.values)
 
 
-def _trigger_kwargs(kwargs, trigger=u'change focusout'):
-    kwargs[u'data-parsley-trigger'] = trigger
+def _trigger_kwargs(kwargs, trigger='change focusout'):
+    kwargs['data-parsley-trigger'] = trigger
 
 
 def _message_kwargs(kwargs, message):
-    kwargs[u'data-parsley-error-message'] = message
+    kwargs['data-parsley-error-message'] = message
 
 
 class ParsleyInputMixin(object):

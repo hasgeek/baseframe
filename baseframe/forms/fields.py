@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
 from six.moves.urllib.parse import urljoin
 import six
 
@@ -155,10 +156,10 @@ class TinyMce3Field(TextAreaField):
     def __init__(
         self,
         # WTForms fields
-        label=u'',
+        label='',
         validators=None,
         filters=(),
-        description=u'',
+        description='',
         id=None,  # NOQA: A002
         default=None,
         widget=None,
@@ -269,10 +270,10 @@ class TinyMce4Field(TextAreaField):
     def __init__(
         self,
         # WTForms fields
-        label=u'',
+        label='',
         validators=None,
         filters=(),
-        description=u'',
+        description='',
         id=None,  # NOQA: A002
         default=None,
         widget=None,
@@ -482,9 +483,9 @@ class TextListField(wtforms.fields.TextAreaField):
 
     def _value(self):
         if self.data:
-            return u'\r\n'.join(self.data)
+            return '\r\n'.join(self.data)
         else:
-            return u''
+            return ''
 
     def process_formdata(self, valuelist):
         if valuelist and valuelist[0]:
@@ -981,7 +982,7 @@ class JsonField(wtforms.TextAreaField):
                 ensure_ascii=False,
                 **self.prettyprint_args
             )
-        return u''
+        return ''
 
     def process_data(self, value):
         if value is not None and self.require_dict and not isinstance(value, dict):

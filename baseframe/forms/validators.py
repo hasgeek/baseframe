@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from six.moves.urllib.parse import quote as urlquote
+from __future__ import unicode_literals
 from six.moves.urllib.parse import urljoin
 import six
 
@@ -29,7 +29,7 @@ import dns.resolver
 import emoji
 import requests
 
-from coaster.utils import deobfuscate_email, make_name
+from coaster.utils import deobfuscate_email, make_name, md5sum
 
 from .. import asset_cache
 from .. import b_ as _
@@ -126,7 +126,7 @@ class AllowedIf(object):
     :param str message: Validation error message. Will be formatted with an optional ``{field}`` label
     """
 
-    default_message = __(u"This requires ‘{field}’ to be specified")
+    default_message = __("This requires ‘{field}’ to be specified")
 
     def __init__(self, fieldname, message=None):
         self.fieldname = fieldname
@@ -316,7 +316,7 @@ class IsEmoji(object):
         Error message to raise in case of a validation error.
     """
 
-    default_message = __(u"This is not a valid emoji")
+    default_message = __("This is not a valid emoji")
 
     def __init__(self, message=None):
         self.message = message or self.default_message
@@ -336,7 +336,7 @@ class IsPublicEmailDomain(object):
         Error message to raise in case of a validation error.
     """
 
-    default_message = __(u'This domain is not a public email domain')
+    default_message = __("This domain is not a public email domain")
 
     def __init__(self, message=None, timeout=30):
         self.message = message or self.default_message
@@ -359,7 +359,7 @@ class IsNotPublicEmailDomain(object):
         Error message to raise in case of a validation error.
     """
 
-    default_message = __(u'This domain is a public email domain')
+    default_message = __("This domain is a public email domain")
 
     def __init__(self, message=None, timeout=30):
         self.message = message or self.default_message
@@ -413,10 +413,10 @@ class ValidUrl(object):
         "Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 HasGeek/linkchecker"
     )
 
-    default_message = __(u'The URL “{url}” is not valid or is currently inaccessible')
+    default_message = __("The URL “{url}” is not valid or is currently inaccessible")
 
     default_message_urltext = __(
-        u'The URL “{url}” linked from “{text}” is not valid or is currently inaccessible'
+        "The URL “{url}” linked from “{text}” is not valid or is currently inaccessible"
     )
 
     def __init__(self, message=None, message_urltext=None, invalid_urls=[]):
@@ -426,11 +426,11 @@ class ValidUrl(object):
 
     def check_url(self, invalid_urls, url, text=None):
         if six.PY2:
-            cache_key = 'linkchecker/' + urlquote(
-                url.encode('utf-8') if isinstance(url, six.text_type) else url, safe=''
+            cache_key = b'linkchecker/' + md5sum(
+                url.encode('utf-8') if isinstance(url, six.text_type) else url
             )
         else:
-            cache_key = 'linkchecker/' + urlquote(url, safe='')
+            cache_key = 'linkchecker/' + md5sum(url)
         try:
             cache_check = asset_cache.get(cache_key)
         except ValueError:  # Possible error from a broken pickle
@@ -481,7 +481,8 @@ class ValidUrl(object):
             # 999 is a non-standard too-many-requests error. We can't look past it to
             # check a URL, so we let it pass
 
-            # The URL works, so now we check if it's in a reject list
+            # The URL works, so now we check if it's in a reject list. This part
+            # runs _after_ attempting to load the URL as we want to catch redirects.
             for patterns, message in invalid_urls:
                 for pattern in patterns:
                     # For text patterns, do a substring search. For regex patterns (assumed so if not text),
@@ -549,13 +550,13 @@ class NoObfuscatedEmail(object):
     Scan for obfuscated email addresses in the provided text and reject them
     """
 
+    default_message = __("Email address identified")
+
     def __init__(self, message=None):
-        if not message:
-            message = __(u"Email address identified")
-        self.message = message
+        self.message = message or self.default_message
 
     def __call__(self, form, field):
-        emails = EMAIL_RE.findall(deobfuscate_email(field.data or u''))
+        emails = EMAIL_RE.findall(deobfuscate_email(field.data or ''))
         for email in emails:
             try:
                 diagnosis = is_email(email, check_dns=True, diagnose=True)
@@ -566,13 +567,14 @@ class NoObfuscatedEmail(object):
 
 
 class ValidName(object):
+
+    default_message = __(
+        "This name contains unsupported characters. "
+        "It should have letters, numbers and non-terminal hyphens only"
+    )
+
     def __init__(self, message=None):
-        if not message:
-            message = __(
-                u"This name contains unsupported characters. "
-                u"It should have letters, numbers and non-terminal hyphens only"
-            )
-        self.message = message
+        self.message = message or self.default_message
 
     def __call__(self, form, field):
         if make_name(field.data) != field.data:
@@ -580,14 +582,15 @@ class ValidName(object):
 
 
 class ValidCoordinates(object):
+
+    default_message = __("Valid latitude and longitude expected")
+    default_message_latitude = __("Latitude must be within ± 90 degrees")
+    default_message_longitude = __("Longitude must be within ± 180 degrees")
+
     def __init__(self, message=None, message_latitude=None, message_longitude=None):
-        self.message = message or __(u"Valid latitude and longitude expected")
-        self.message_latitude = message_latitude or __(
-            u"Latitude must be within ± 90 degrees"
-        )
-        self.message_longitude = message_longitude or __(
-            u"Longitude must be within ± 180 degrees"
-        )
+        self.message = message or self.default_message
+        self.message_latitude = message_latitude or self.default_message_latitude
+        self.message_longitude = message_longitude or self.default_message_longitude
 
     def __call__(self, form, field):
         if len(field.data) != 2:
