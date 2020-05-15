@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from six.moves.urllib.parse import quote as urlquote
 from six.moves.urllib.parse import urljoin
 import six
 
@@ -30,7 +29,7 @@ import dns.resolver
 import emoji
 import requests
 
-from coaster.utils import deobfuscate_email, make_name
+from coaster.utils import deobfuscate_email, make_name, md5sum
 
 from .. import asset_cache
 from .. import b_ as _
@@ -427,11 +426,11 @@ class ValidUrl(object):
 
     def check_url(self, invalid_urls, url, text=None):
         if six.PY2:
-            cache_key = 'linkchecker/' + urlquote(
-                url.encode('utf-8') if isinstance(url, six.text_type) else url, safe=''
+            cache_key = b'linkchecker/' + md5sum(
+                url.encode('utf-8') if isinstance(url, six.text_type) else url
             )
         else:
-            cache_key = 'linkchecker/' + urlquote(url, safe='')
+            cache_key = 'linkchecker/' + md5sum(url)
         try:
             cache_check = asset_cache.get(cache_key)
         except ValueError:  # Possible error from a broken pickle

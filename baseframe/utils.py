@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
-from six.moves.urllib.parse import quote as urlquote
 import six
 
 from flask import g
 
 from mxsniff import MXLookupException, mxsniff
 
-from coaster.utils import utcnow
+from coaster.utils import md5sum, utcnow
 
 from . import asset_cache
 
@@ -39,14 +38,13 @@ def is_public_email_domain(email_or_domain, default=None, timeout=30):
     :raises MXLookupException: If a DNS lookup error happens and no default is specified
     """
     if six.PY2:
-        cache_key = 'mxrecord/' + urlquote(
+        cache_key = b'mxrecord/' + md5sum(
             email_or_domain.encode('utf-8')
             if isinstance(email_or_domain, six.text_type)
-            else email_or_domain,
-            safe='',
+            else email_or_domain
         )
     else:
-        cache_key = 'mxrecord/' + urlquote(email_or_domain, safe='')
+        cache_key = 'mxrecord/' + md5sum(email_or_domain)
 
     try:
         sniffedmx = asset_cache.get(cache_key)
