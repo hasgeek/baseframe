@@ -161,12 +161,16 @@ class TestValidators(TestCaseBaseframe):
 
     def test_nonce_form_on_success(self):
         """A form with a nonce cannot be submitted twice"""
+        formdata = MultiDict({field.name: field.data for field in self.nonce_form})
         nonce = self.nonce_form.form_nonce.data
         assert nonce
         assert self.nonce_form.validate() is True
-        assert nonce == self.nonce_form.form_nonce.data
+        # Nonce changes on each submit
+        assert nonce != self.nonce_form.form_nonce.data
         assert not self.nonce_form.form_nonce.errors
-        # Second attempt on the same form will fail
+        # Now restore old form contents
+        self.nonce_form.process(formdata=formdata)
+        # Second attempt on the same form contents will fail
         assert self.nonce_form.validate() is False
         assert self.nonce_form.form_nonce.errors
 
@@ -179,14 +183,14 @@ class TestValidators(TestCaseBaseframe):
         )
         assert self.emoji_form.validate() is False
         assert not self.emoji_form.form_nonce.errors
-        self.emoji_form.process(
-            formdata=MultiDict(
-                {'emoji': u'👍', 'form_nonce': self.emoji_form.form_nonce.data}
-            )
+        formdata = MultiDict(
+            {'emoji': u'👍', 'form_nonce': self.emoji_form.form_nonce.data}
         )
+        self.emoji_form.process(formdata=formdata)
         assert self.emoji_form.validate() is True
         assert not self.emoji_form.form_nonce.errors
-        # Second attempt on the same form will fail
+        # Second attempt on the same form data will fail
+        self.emoji_form.process(formdata)
         assert self.emoji_form.validate() is False
         assert self.emoji_form.errors
 
