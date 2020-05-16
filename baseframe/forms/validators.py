@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from six.moves.urllib.parse import urljoin
+from six.moves.urllib.parse import urljoin, urlparse
 import six
 
 from collections import namedtuple
@@ -23,10 +23,10 @@ from wtforms.validators import (  # NOQA
     ValidationError,
 )
 
-from lxml import html
 from pyisemail import is_email
 import dns.resolver
 import emoji
+import html5lib
 import requests
 
 from coaster.utils import deobfuscate_email, make_name, md5sum
@@ -123,7 +123,8 @@ class AllowedIf(object):
     Validator that allows a value only if another field also has a value.
 
     :param str fieldname: Name of the other field
-    :param str message: Validation error message. Will be formatted with an optional ``{field}`` label
+    :param str message: Validation error message. Will be formatted with an optional
+        ``{field}`` label
     """
 
     default_message = __("This requires ‘{field}’ to be specified")
@@ -147,7 +148,10 @@ class OptionalIf(Optional):
     :class:`DataRequired`::
 
         field = forms.StringField("Field",
-            validators=[forms.validators.OptionalIf('other'), forms.validators.DataRequired()])
+            validators=[
+                forms.validators.OptionalIf('other'), forms.validators.DataRequired()
+            ]
+        )
 
     :param str fieldname: Name of the other field
     :param str message: Validation error message
@@ -172,7 +176,10 @@ class RequiredIf(DataRequired):
     :class:`Optional`::
 
         field = forms.StringField("Field",
-            validators=[forms.validators.RequiredIf('other'), forms.validators.Optional()])
+            validators=[
+                forms.validators.RequiredIf('other'), forms.validators.Optional()
+            ]
+        )
 
     :param str fieldname: Name of the other field
     :param str message: Validation error message
@@ -400,13 +407,24 @@ ValidEmailDomain = ValidEmail
 
 class ValidUrl(object):
     """
-    Validator to confirm a URL is valid (returns 2xx status code)
+    Validator to confirm a HTTP URL is valid (returns 2xx status code).
 
-    :param unicode message: Error message (None for default error message)
-    :param unicode message_urltext: Unused parameter, only used in the :class:`AllUrlsValid` validator
-    :param list invalid_urls: A list of (patterns, message) tuples for URLs that will be rejected,
-        where ``patterns`` is a list of strings or regular expressions. If ``invalid_urls`` is
-        a callable, it will be called to retrieve the list.
+    URIs using other protocol schemes are not validated, but can be explicitly
+    disallowed by specifying ``allowed_schemes``.
+
+    :param str message: Error message (None for default error message)
+    :param str message_urltext: Unused parameter, only used in the :class:`AllUrlsValid`
+        validator
+    :param str message_schemes: Error message when the URL scheme is invalid
+    :param str message_domains: Error message when the URL domain is not whitelisted
+    :param list invalid_urls: A list of (patterns, message) tuples for URLs that will be
+        rejected, where ``patterns`` is a list of strings or regular expressions. If
+        ``invalid_urls`` is a callable, it will be called to retrieve the list.
+    :param set allowed_schemes: Allowed schemes in URLs (`None` implies no constraints)
+    :param set allowed_domains: Whitelisted domains (`None` implies no constraints)
+    :param bool visit_url: Visit the URL to confirm availability (default `True`)
+
+    ``allowed_schemes`` and ``allowed_domains`` may be callables that return a set
     """
 
     user_agent = (
@@ -419,12 +437,47 @@ class ValidUrl(object):
         "The URL “{url}” linked from “{text}” is not valid or is currently inaccessible"
     )
 
-    def __init__(self, message=None, message_urltext=None, invalid_urls=[]):
-        self.message = message or self.default_message
-        self.invalid_urls = invalid_urls
-        self.message_urltext = message_urltext or self.default_message_urltext
+    default_message_schemes = __("This URL’s protocol is not allowed")
 
-    def check_url(self, invalid_urls, url, text=None):
+    default_message_domains = __("This URL’s domain is not allowed")
+
+    def __init__(
+        self,
+        message=None,
+        message_urltext=None,
+        message_schemes=None,
+        message_domains=None,
+        invalid_urls=(),
+        allowed_schemes=None,
+        allowed_domains=None,
+        visit_url=True,
+    ):
+        self.message = message or self.default_message
+        self.message_urltext = message_urltext or self.default_message_urltext
+        self.message_schemes = message_schemes or self.default_message_schemes
+        self.message_domains = message_domains or self.default_message_domains
+        self.invalid_urls = invalid_urls
+        self.allowed_schemes = allowed_schemes
+        self.allowed_domains = allowed_domains
+        self.visit_url = visit_url
+
+    def check_url(self, url, allowed_schemes, allowed_domains, invalid_urls, text=None):
+        urlparts = urlparse(url)
+        if allowed_schemes:
+            if urlparts.scheme not in allowed_schemes:
+                return self.message_schemes.format(
+                    url=url, schemes=_(', ').join(allowed_schemes)
+                )
+        if allowed_domains:
+            if urlparts.netloc.lower() not in allowed_domains:
+                return self.message_domains.format(
+                    url=url, domains=_(', ').join(allowed_domains)
+                )
+
+        if urlparts.scheme not in ('http', 'https') or not self.visit_url:
+            # The rest of this function only validates HTTP urls.
+            return
+
         if six.PY2:
             cache_key = b'linkchecker/' + md5sum(
                 url.encode('utf-8') if isinstance(url, six.text_type) else url
@@ -456,10 +509,13 @@ class ValidUrl(object):
                 code = r.status_code
                 rurl = r.url
             except (
-                requests.exceptions.MissingSchema,  # Still a relative URL? Must be broken
-                requests.exceptions.ConnectionError,  # Name resolution or connection failed
+                # Still a relative URL? Must be broken
+                requests.exceptions.MissingSchema,
+                # Name resolution or connection failed
+                requests.exceptions.ConnectionError,
+                # Didn't respond in time
                 requests.exceptions.Timeout,
-            ):  # Didn't respond in time
+            ):
                 code = None
             except Exception as e:
                 exception_catchall.send(e)
@@ -485,16 +541,18 @@ class ValidUrl(object):
             # runs _after_ attempting to load the URL as we want to catch redirects.
             for patterns, message in invalid_urls:
                 for pattern in patterns:
-                    # For text patterns, do a substring search. For regex patterns (assumed so if not text),
-                    # do a regex search. Test with the final URL from the response, after redirects,
-                    # but report errors using the URL the user provided
+                    # For text patterns, do a substring search. For regex patterns
+                    # (assumed so if not text), do a regex search. Test with the final
+                    # URL from the response, after redirects, but report errors using
+                    # the URL the user provided
                     if (
                         pattern in rurl
                         if isinstance(pattern, six.string_types)
                         else pattern.search(rurl) is not None
                     ):
                         return message.format(url=url, text=text)
-            # All good. The URL works and isn't invalid, so save to cache and return without an error message
+            # All good. The URL works and isn't invalid, so save to cache and return
+            # without an error message
             asset_cache.set(cache_key, {'url': rurl, 'code': code}, timeout=86400)
             return
         else:
@@ -503,8 +561,15 @@ class ValidUrl(object):
             else:
                 return self.message.format(url=url)
 
-    def call_inner(self, field, current_url, invalid_urls):
-        error = self.check_url(invalid_urls, urljoin(current_url, field.data))
+    def call_inner(
+        self, field, current_url, allowed_schemes, allowed_domains, invalid_urls
+    ):
+        error = self.check_url(
+            urljoin(current_url, field.data),
+            allowed_schemes,
+            allowed_domains,
+            invalid_urls,
+        )
         if error:
             raise StopValidation(error)
 
@@ -516,29 +581,43 @@ class ValidUrl(object):
                 if callable(self.invalid_urls)
                 else self.invalid_urls
             )
+            allowed_schemes = (
+                self.allowed_schemes()
+                if callable(self.allowed_schemes)
+                else self.allowed_schemes
+            )
+            allowed_domains = (
+                self.allowed_domains()
+                if callable(self.allowed_domains)
+                else self.allowed_domains
+            )
 
-            return self.call_inner(field, current_url, invalid_urls)
+            return self.call_inner(
+                field, current_url, allowed_schemes, allowed_domains, invalid_urls
+            )
 
 
 class AllUrlsValid(ValidUrl):
     """
-    Validator to confirm all URLs in a HTML snippet are valid because loading
-    them returns 2xx status codes.
+    Validator to confirm all URLs in a HTML snippet.
 
-    :param unicode message: Error message (None for default error message)
-    :param unicode message_urltext: Error message when the URL also has text (None to use default)
-    :param list invalid_urls: A list of (patterns, message) tuples for URLs that will be rejected,
-        where ``patterns`` is a list of strings or regular expressions. If ``invalid_urls`` is
-        a callable, it will be called to retrieve the list.
+    Subclasses :class:`ValidUrl` and accepts the same parameters.
     """
 
-    def call_inner(self, field, current_url, invalid_urls):
-        html_tree = html.fromstring(field.data)
-        for text, href in [
-            (atag.text_content(), atag.attrib.get('href'))
-            for atag in html_tree.xpath("//a")
-        ]:
-            error = self.check_url(invalid_urls, urljoin(current_url, href), text)
+    def call_inner(
+        self, field, current_url, allowed_schemes, allowed_domains, invalid_urls
+    ):
+        html_tree = html5lib.parse(field.data, namespaceHTMLElements=False)
+        for text, href in (
+            (tag.text, tag.attrib.get('href')) for tag in html_tree.iter('a')
+        ):
+            error = self.check_url(
+                urljoin(current_url, href),
+                allowed_schemes,
+                allowed_domains,
+                invalid_urls,
+                text,
+            )
             if error:
                 field.errors.append(error)
         if field.errors:
