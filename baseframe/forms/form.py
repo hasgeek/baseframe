@@ -176,7 +176,7 @@ class Form(BaseForm):
             form_validation_success.send(self)
 
     def errors_with_data(self):
-        # Convert lazy_gettext error strings into str so they don't cause problems downstream
+        # Convert lazy_gettext error strings into unicode so they don't cause problems downstream
         # (like when pickling)
         return {
             name: {

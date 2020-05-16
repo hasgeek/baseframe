@@ -418,13 +418,14 @@ class ValidUrl(object):
     :param str message_schemes: Error message when the URL scheme is invalid
     :param str message_domains: Error message when the URL domain is not whitelisted
     :param list invalid_urls: A list of (patterns, message) tuples for URLs that will be
-        rejected, where ``patterns`` is a list of strings or regular expressions. If
-        ``invalid_urls`` is a callable, it will be called to retrieve the list.
+        rejected, where ``patterns`` is a list of strings or regular expressions
     :param set allowed_schemes: Allowed schemes in URLs (`None` implies no constraints)
     :param set allowed_domains: Whitelisted domains (`None` implies no constraints)
     :param bool visit_url: Visit the URL to confirm availability (default `True`)
 
-    ``allowed_schemes`` and ``allowed_domains`` may be callables that return a set
+    ``invalid_urls``, ``allowed_schemes`` and ``allowed_domains`` may also be callables
+    that take no parameters and return the required data. They will be called once per
+    validation.
     """
 
     user_agent = (
@@ -462,6 +463,19 @@ class ValidUrl(object):
         self.visit_url = visit_url
 
     def check_url(self, url, allowed_schemes, allowed_domains, invalid_urls, text=None):
+        """
+        Inner method to actually check the URL.
+
+        This method accepts ``allowed_schemes``, ``allowed_domains`` and
+        ``invalid_urls`` as direct parameters despite their availability via `self`
+        because they may be callables, and in :class:`AllUrlsValid` we call
+        :meth:`check_url` repeatedly. The callables should be called only once. This
+        optimization has no value in the base class :class:`ValidUrl`.
+
+        As the validator is instantiated once per form field, it cannot mutate itself
+        at runtime to cache the callables' results, and must instead pass them from one
+        method to the next.
+        """
         urlparts = urlparse(url)
         if allowed_schemes:
             if urlparts.scheme not in allowed_schemes:
