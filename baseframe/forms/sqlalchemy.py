@@ -4,6 +4,8 @@
 SQLAlchemy-based form fields and widgets
 """
 
+from __future__ import unicode_literals
+
 from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 
 from .. import b__ as __
@@ -29,7 +31,7 @@ class AvailableAttr(object):
         model = self.model or form.edit_model
         if not model:
             raise TypeError(
-                u"Either the validator or the form MUST be linked to a model"
+                "Either the validator or the form MUST be linked to a model"
             )
         if hasattr(model, 'parent'):
             scoped = True

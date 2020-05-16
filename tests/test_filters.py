@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 from datetime import date, datetime, time, timedelta
 
 from pytz import UTC, timezone
@@ -23,27 +25,27 @@ class TestDatetimeFilters(TestCaseBaseframe):
 
     def test_age(self):
         age = filters.age(self.now)
-        self.assertEqual(age, u'now')
+        self.assertEqual(age, 'now')
 
         nine_seconds = self.now - timedelta(seconds=9)
         age = filters.age(nine_seconds)
-        self.assertEqual(age, u'seconds ago')
+        self.assertEqual(age, 'seconds ago')
 
         thirty_minutes = self.now - timedelta(minutes=30)
         age = filters.age(thirty_minutes)
-        self.assertEqual(age, u'30 minutes ago')
+        self.assertEqual(age, '30 minutes ago')
 
         one_half_hour = self.now - timedelta(hours=1.5)
         age = filters.age(one_half_hour)
-        self.assertEqual(age, u'an hour ago')
+        self.assertEqual(age, 'an hour ago')
 
         ten_months = self.now - timedelta(days=10 * 30)
         age = filters.age(ten_months)
-        self.assertEqual(age, u'10 months ago')
+        self.assertEqual(age, '10 months ago')
 
         three_years = self.now - timedelta(days=3 * 12 * 30)
         age = filters.age(three_years)
-        self.assertEqual(age, u'2 years ago')
+        self.assertEqual(age, '2 years ago')
 
     def test_shortdate_date_with_threshold(self):
         self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 10
@@ -55,7 +57,7 @@ class TestDatetimeFilters(TestCaseBaseframe):
         self.app.config['SHORTDATE_THRESHOLD_DAYS'] = 0
         testdate = self.now.date() - timedelta(days=5)
         with self.app.test_request_context('/'):
-            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime(
+            assert filters.shortdate(testdate).replace("’", "'") == testdate.strftime(
                 "%e %b '%y"
             )
 
@@ -68,14 +70,14 @@ class TestDatetimeFilters(TestCaseBaseframe):
     def test_shortdate_datetime_without_threshold(self):
         testdate = self.now - timedelta(days=5)
         with self.app.test_request_context('/'):
-            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime(
+            assert filters.shortdate(testdate).replace("’", "'") == testdate.strftime(
                 "%e %b '%y"
             )
 
     def test_shortdate_datetime_with_tz(self):
         testdate = self.now
         with self.app.test_request_context('/'):
-            assert filters.shortdate(testdate).replace(u"’", u"'") == testdate.strftime(
+            assert filters.shortdate(testdate).replace("’", "'") == testdate.strftime(
                 "%e %b '%y"
             )
 
@@ -98,90 +100,90 @@ class TestDatetimeFilters(TestCaseBaseframe):
         with self.app.test_request_context('/'):
             assert (
                 filters.date_filter(self.date, 'yyyy-MM-dd', usertz=False)
-                == u'2020-01-31'
+                == '2020-01-31'
             )
 
     def test_date_localized_short_hi(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
-            assert filters.date_filter(self.date, format='short') == u'31/1/20'
+            assert filters.date_filter(self.date, format='short') == '31/1/20'
 
     def test_date_localized_medium_hi(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
-            assert filters.date_filter(self.date, format='medium') == u'31 जन॰ 2020'
+            assert filters.date_filter(self.date, format='medium') == '31 जन॰ 2020'
 
     def test_date_localized_long_hi(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
-            assert filters.date_filter(self.date, format='long') == u'31 जनवरी 2020'
+            assert filters.date_filter(self.date, format='long') == '31 जनवरी 2020'
 
     def test_time_localized_hi_medium(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
             assert (
                 filters.datetime_filter(self.datetime, format='medium')
-                == u'31 जन॰ 2020, 12:00:00 am'
+                == '31 जन॰ 2020, 12:00:00 am'
             )
 
     def test_month_localized_hi(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
-            assert filters.date_filter(self.date, "MMMM") == u'जनवरी'
+            assert filters.date_filter(self.date, "MMMM") == 'जनवरी'
 
     def test_month_localized_en(self):
         with self.app.test_request_context('/'):
-            assert filters.date_filter(self.date, "MMMM") == u'January'
+            assert filters.date_filter(self.date, "MMMM") == 'January'
 
     def test_time_localized_short(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
-            assert filters.time_filter(self.datetime, format='short') == u'12:00 am'
+            assert filters.time_filter(self.datetime, format='short') == '12:00 am'
 
     def test_time_localized_medium(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
-            assert filters.time_filter(self.datetime, format='medium') == u'12:00:00 am'
+            assert filters.time_filter(self.datetime, format='medium') == '12:00:00 am'
 
     def test_time_localized_long(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
             assert (
-                filters.time_filter(self.datetime, format='long') == u'12:00:00 am UTC'
+                filters.time_filter(self.datetime, format='long') == '12:00:00 am UTC'
             )
 
     def test_time_localized_hi_full(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
             assert (
                 filters.time_filter(self.time, format='full')
-                == u'11:59:59 pm समन्वित वैश्विक समय'
+                == '11:59:59 pm समन्वित वैश्विक समय'
             )
 
     def test_time_localized_en_full(self):
         with self.app.test_request_context('/', headers={'Accept-Language': 'en'}):
             assert (
                 filters.time_filter(self.time, format='full')
-                == u'11:59:59 PM Coordinated Universal Time'
+                == '11:59:59 PM Coordinated Universal Time'
             )
 
     def test_datetime_with_usertz(self):
         with self.app.test_request_context('/'):
             assert (
                 filters.datetime_filter(self.datetimeEST, format='full', usertz=False)
-                == u'Friday, January 31, 2020 at 12:00:00 AM Eastern Standard Time'
+                == 'Friday, January 31, 2020 at 12:00:00 AM Eastern Standard Time'
             )
 
     def test_datetime_without_usertz(self):
         with self.app.test_request_context('/'):
             assert (
                 filters.datetime_filter(self.datetimeEST, format='full', usertz=True)
-                == u'Friday, January 31, 2020 at 4:56:00 AM Coordinated Universal Time'
+                == 'Friday, January 31, 2020 at 4:56:00 AM Coordinated Universal Time'
             )
 
     def test_date_dmy(self):
         with self.app.test_request_context('/'):
             assert (
                 filters.date_filter(self.datetime, format='short', locale='en_GB')
-                == u'31/01/2020'
+                == '31/01/2020'
             )
 
     def test_date_mdy(self):
         with self.app.test_request_context('/'):
             assert (
                 filters.date_filter(self.datetime, format='short', locale='en_US')
-                == u'1/31/20'
+                == '1/31/20'
             )
 
 
@@ -197,9 +199,9 @@ class TestNaiveDatetimeFilters(TestDatetimeFilters):
 class TestFilters(TestCaseBaseframe):
     def setUp(self):
         super(TestFilters, self).setUp()
-        self.test_user = UserTest()
-        self.test_avatar_size = ('100', '100')
-        self.test_avatar_url = u'//images.hasgeek.com/embed/test'
+        self.user = UserTest()
+        self.avatar_size = ('100', '100')
+        self.avatar_url = '//images.hasgeek.com/embed/test'
 
     def test_usessl(self):
         with self.app.test_request_context('/'):
@@ -229,32 +231,31 @@ class TestFilters(TestCaseBaseframe):
             self.assertEqual(nossled, 'http://hasgeek.com')
 
     def test_avatar_url(self):
-        # test_user object doesn't have an email or an avatar by default
-        avatar_url = filters.avatar_url(self.test_user)
+        # user object doesn't have an email or an avatar by default
+        avatar_url = filters.avatar_url(self.user)
         self.assertEqual(
             avatar_url,
-            u'//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm',
+            '//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm',
         )
 
         # testing what if the user has an avatar already
-        self.test_user.set_avatar(self.test_avatar_url)
-        avatar_url = filters.avatar_url(self.test_user, self.test_avatar_size)
+        self.user.set_avatar(self.avatar_url)
+        avatar_url = filters.avatar_url(self.user, self.avatar_size)
         self.assertEqual(
-            avatar_url,
-            self.test_avatar_url + '?size=' + u'x'.join(self.test_avatar_size),
+            avatar_url, self.avatar_url + '?size=' + 'x'.join(self.avatar_size)
         )
 
         # what if the user doesn't have an avatar but has an email
-        self.test_user.set_avatar(None)
-        self.test_user.set_email('foobar@foo.com')
-        avatar_url = filters.avatar_url(self.test_user, self.test_avatar_size)
-        ehash = md5sum(self.test_user.email)
+        self.user.set_avatar(None)
+        self.user.set_email('foobar@foo.com')
+        avatar_url = filters.avatar_url(self.user, self.avatar_size)
+        ehash = md5sum(self.user.email)
         self.assertEqual(
             avatar_url,
-            u'//www.gravatar.com/avatar/'
+            '//www.gravatar.com/avatar/'
             + ehash
-            + u'?d=mm&s='
-            + u'x'.join(self.test_avatar_size),
+            + '?d=mm&s='
+            + 'x'.join(self.avatar_size),
         )
 
     def test_render_field_options(self):

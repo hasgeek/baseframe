@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 import re
 import unittest
 
@@ -48,7 +50,7 @@ class DocumentTest(object):
         self.content = content
 
 
-reject_list = [(['example.com', re.compile(r'example.in')], u'This URL is not allowed')]
+reject_list = [(['example.com', re.compile(r'example.in')], 'This URL is not allowed')]
 
 
 class UrlFormTest(forms.Form):

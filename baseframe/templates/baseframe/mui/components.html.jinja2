@@ -57,7 +57,7 @@
     </div>
   </nav>
   {%- if current_auth.is_anonymous %}
-    {%- if current_auth.lastuser %}
+    {%- if current_auth.lastuser and not current_auth.lastuser.is_master_data_source %}
       {{ networkbar_login_beacon(current_auth.lastuser.endpoint_url(current_auth.lastuser.login_beacon_iframe_endpoint) + '?client_id=' + config['LASTUSER_CLIENT_ID'] + '&login_url=' + url_for('login', _external=true)) }}
     {%- endif %}
   {%- endif %}

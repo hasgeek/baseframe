@@ -2,6 +2,7 @@
 
 import six
 
+from threading import Lock
 import uuid
 
 from flask import current_app
@@ -80,6 +81,9 @@ filter_registry = {
 }
 
 
+_nonce_lock = Lock()
+
+
 def _nonce_cache_key(nonce):
     return 'form_nonce/' + nonce
 
@@ -87,10 +91,21 @@ def _nonce_cache_key(nonce):
 def _nonce_validator(form, field):
     # Check for already-used form nonce
     if field.data:
-        nonce_cache_key = _nonce_cache_key(field.data)
-        nonce_cache_hit = asset_cache.get(nonce_cache_key)
-        if nonce_cache_hit is not None:
-            raise bvalidators.StopValidation(form.form_nonce_error)
+        with _nonce_lock:
+            # nonce_lock prevents parallel requests from attempting to use the same
+            # nonce in a multi-threaded deployment. As a thread lock, it is ineffective
+            # in a multi-process deployment, as is typical when using uwsgi or gunicorn.
+            nonce_cache_key = _nonce_cache_key(field.data)
+            nonce_cache_hit = asset_cache.get(nonce_cache_key)
+            if nonce_cache_hit is not None:
+                raise bvalidators.StopValidation(form.form_nonce_error)
+            # Mark this nonce as used for 10 seconds
+            asset_cache.set(_nonce_cache_key(field.data), True, 10)
+        # Set a new nonce. This is a conscious deviation from the convention for
+        # validators, which are expected to validate but not modify the data, leaving
+        # that to filters. However, filters run before validators, and the form nonce
+        # is nonsense data that will be imminently discarded, so this is okay here.
+        field.data = field.default()
 
 
 class Form(BaseForm):
@@ -147,9 +162,6 @@ class Form(BaseForm):
 
     def validate(self, send_signals=True):
         success = super(Form, self).validate()
-        if success and self.form_nonce.data:
-            # Mark this nonce as used for a minute
-            asset_cache.set(_nonce_cache_key(self.form_nonce.data), True, 60)
         for attr in self.__returns__:
             if not hasattr(self, attr):
                 setattr(self, attr, None)

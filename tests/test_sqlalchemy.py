@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 import unittest
 
 from sqlalchemy import Column, Unicode
@@ -49,25 +51,25 @@ class TestFormSQLAlchemy(unittest.TestCase):
 
     def test_available_attr(self):
         c1 = Container()
-        self.form.process(name=u'c1', title=u't1')
+        self.form.process(name='c1', title='t1')
         self.assertTrue(self.form.validate())
         self.form.populate_obj(c1)
         db.session.add(c1)
 
         c2 = Container()
-        self.form.process(name=u'c2', title=u't1')
-        # title u't1' is repeated
+        self.form.process(name='c2', title='t1')
+        # title 't1' is repeated
         self.assertFalse(self.form.validate())
-        self.form.process(name=u'c2', title=u't2')
+        self.form.process(name='c2', title='t2')
         self.assertTrue(self.form.validate())
         self.form.populate_obj(c2)
         db.session.add(c2)
 
         c3 = Container()
-        self.form.process(name=u'c2', title=u't3')
-        # name u'c2' repeated
+        self.form.process(name='c2', title='t3')
+        # name 'c2' repeated
         self.assertFalse(self.form.validate())
-        self.form.process(name=u'c3', title=u't3')
+        self.form.process(name='c3', title='t3')
         self.form.populate_obj(c3)
         db.session.add(c3)
 
