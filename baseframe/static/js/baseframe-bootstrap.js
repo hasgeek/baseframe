@@ -1,71 +1,74 @@
 // This is a global function. Isn't there a better way to do this?
 
 function activate_widgets() {
-  var cm_markdown_config = {
-    mode: 'gfm',
-    lineNumbers: false,
-    theme: 'default',
-    lineWrapping: true,
-    autoCloseBrackets: true,
-    viewportMargin: Infinity,
-    indentWithTabs: false,
-    indentUnit: 1,
-    tabSize: 1,
-    extraKeys: {
-      Enter: 'newlineAndIndentContinueMarkdownList',
-      Tab: false,
-      'Shift-Tab': false,
-      Home: 'goLineLeft',
-      End: 'goLineRight',
-      'Cmd-Left': 'goLineLeft',
-      'Cmd-Right': 'goLineRight',
-    },
-  };
+  // Activate CodeMirror for non-mobile browsers
+  if (!navigator.userAgent.match(/(iPod|iPad|iPhone|Android)/)) {
+    var cm_markdown_config = {
+      mode: 'gfm',
+      lineNumbers: false,
+      theme: 'default',
+      lineWrapping: true,
+      autoCloseBrackets: true,
+      viewportMargin: Infinity,
+      indentWithTabs: false,
+      indentUnit: 1,
+      tabSize: 1,
+      extraKeys: {
+        Enter: 'newlineAndIndentContinueMarkdownList',
+        Tab: false,
+        'Shift-Tab': false,
+        Home: 'goLineLeft',
+        End: 'goLineRight',
+        'Cmd-Left': 'goLineLeft',
+        'Cmd-Right': 'goLineRight',
+      },
+    };
 
-  var cm_css_config = {
-    mode: 'css',
-    lineNumbers: false,
-    theme: 'default',
-    lineWrapping: true,
-    autoCloseBrackets: true,
-    matchBrackets: true,
-    viewportMargin: Infinity,
-    indentWithTabs: false,
-    indentUnit: 1,
-    tabSize: 1,
-    extraKeys: {
-      Tab: false,
-      'Shift-Tab': false,
-      Home: 'goLineLeft',
-      End: 'goLineRight',
-      'Cmd-Left': 'goLineLeft',
-      'Cmd-Right': 'goLineRight',
-    },
-  };
+    var cm_css_config = {
+      mode: 'css',
+      lineNumbers: false,
+      theme: 'default',
+      lineWrapping: true,
+      autoCloseBrackets: true,
+      matchBrackets: true,
+      viewportMargin: Infinity,
+      indentWithTabs: false,
+      indentUnit: 1,
+      tabSize: 1,
+      extraKeys: {
+        Tab: false,
+        'Shift-Tab': false,
+        Home: 'goLineLeft',
+        End: 'goLineRight',
+        'Cmd-Left': 'goLineLeft',
+        'Cmd-Right': 'goLineRight',
+      },
+    };
 
-  // Activate codemirror on all textareas with class='markdown'
-  $('textarea.markdown').each(function () {
-    var editor = CodeMirror.fromTextArea(this, cm_markdown_config);
-    var delay;
-    editor.on('change', function (instance) {
-      clearTimeout(delay);
-      delay = setTimeout(function () {
-        editor.save();
-      }, 300);
+    // Activate codemirror on all textareas with class='markdown'
+    $('textarea.markdown').each(function () {
+      var editor = CodeMirror.fromTextArea(this, cm_markdown_config);
+      var delay;
+      editor.on('change', function (instance) {
+        clearTimeout(delay);
+        delay = setTimeout(function () {
+          editor.save();
+        }, 300);
+      });
     });
-  });
 
-  // Activate codemirror on all textareas with class='stylesheet'
-  $('textarea.stylesheet').each(function () {
-    var editor = CodeMirror.fromTextArea(this, cm_css_config);
-    var delay;
-    editor.on('change', function (instance) {
-      clearTimeout(delay);
-      delay = setTimeout(function () {
-        editor.save();
-      }, 300);
+    // Activate codemirror on all textareas with class='stylesheet'
+    $('textarea.stylesheet').each(function () {
+      var editor = CodeMirror.fromTextArea(this, cm_css_config);
+      var delay;
+      editor.on('change', function (instance) {
+        clearTimeout(delay);
+        delay = setTimeout(function () {
+          editor.save();
+        }, 300);
+      });
     });
-  });
+  }
 }
 
 function radioHighlight(radioName, highlightClass) {
