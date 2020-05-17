@@ -4,6 +4,10 @@ test_patterns = [
   "tests/**"
 ]
 
+exclude_patterns = [
+  "baseframe/static/**"
+]
+
 [[analyzers]]
 name = "python"
 enabled = true
