@@ -432,6 +432,7 @@ assets['codemirror-css.js'][Version('5.53.2')] = {
         'codemirror.mode.css.js==5.53.2',
         'codemirror.addon.hint.css-hint.js==5.53.2',
         'codemirror.addon.lint.css-lint.js==5.53.2',
+        'codemirror.addon.edit.closebrackets.js==5.53.2',
     ]
 }
 
