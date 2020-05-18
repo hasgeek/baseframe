@@ -370,41 +370,41 @@ assets['codemirror-css.js'][Version('4.11.0')] = {
 }
 
 assets['codemirror.js'][Version('5.53.2')] = (
-    'baseframe/js/codemirror-5.53.2/codemirror.js'
+    'baseframe/js/codemirror-5.53.2/codemirror.min.js'
 )
 assets['codemirror.css'][Version('5.53.2')] = (
     'baseframe/css/codemirror-5.53.2/codemirror-basic.css'
 )
 
 assets['codemirror.mode.markdown.js'][Version('5.53.2')] = (
-    'baseframe/js/codemirror-5.53.2/mode/markdown/markdown.js'
+    'baseframe/js/codemirror-5.53.2/mode/markdown/markdown.min.js'
 )
 assets['codemirror.mode.gfm.js'][Version('5.53.2')] = (
-    'baseframe/js/codemirror-5.53.2/mode/gfm/gfm.js'
+    'baseframe/js/codemirror-5.53.2/mode/gfm/gfm.min.js'
 )
 assets['codemirror.mode.htmlmixed.js'][Version('5.53.2')] = (
-    'baseframe/js/codemirror-5.53.2/mode/htmlmixed/htmlmixed.js'
+    'baseframe/js/codemirror-5.53.2/mode/htmlmixed/htmlmixed.min.js'
 )
 assets['codemirror.mode.css.js'][Version('5.53.2')] = (
-    'baseframe/js/codemirror-5.53.2/mode/css/css.js'
+    'baseframe/js/codemirror-5.53.2/mode/css/css.min.js'
 )
 assets['codemirror.addon.mode.overlay.js'][Version('5.53.2')] = (
-    'baseframe/js/codemirror-5.53.2/addon/mode/overlay.js'
+    'baseframe/js/codemirror-5.53.2/addon/mode/overlay.min.js'
 )
 assets['codemirror.addon.edit.continuelist.js'][Version('5.53.2')] = (
-    'baseframe/js/codemirror-5.53.2/addon/edit/continuelist.js'
+    'baseframe/js/codemirror-5.53.2/addon/edit/continuelist.min.js'
 )
 assets['codemirror.addon.edit.closebrackets.js'][Version('5.53.2')] = (
-    'baseframe/js/codemirror-5.53.2/addon/edit/closebrackets.js'
+    'baseframe/js/codemirror-5.53.2/addon/edit/closebrackets.min.js'
 )
 assets['codemirror.addon.edit.matchbrackets.js'][Version('5.53.2')] = (
-    'baseframe/js/codemirror-5.53.2/addon/edit/matchbrackets.js'
+    'baseframe/js/codemirror-5.53.2/addon/edit/matchbrackets.min.js'
 )
 assets['codemirror.addon.hint.css-hint.js'][Version('5.53.2')] = (
-    'baseframe/js/codemirror-5.53.2/addon/hint/css-hint.js'
+    'baseframe/js/codemirror-5.53.2/addon/hint/css-hint.min.js'
 )
 assets['codemirror.addon.lint.css-lint.js'][Version('5.53.2')] = (
-    'baseframe/js/codemirror-5.53.2/addon/lint/css-lint.js'
+    'baseframe/js/codemirror-5.53.2/addon/lint/css-lint.min.js'
 )
 
 assets['codemirror-markdown.js'][Version('5.53.2')] = {
