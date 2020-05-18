@@ -26,7 +26,7 @@ class TestValidators(TestCaseBaseframe):
     def setUp(self):
         super(TestValidators, self).setUp()
         with self.app.test_request_context('/'):
-            self.form = UrlFormTest(meta={'csrf': False})
+            self.url_form = UrlFormTest(meta={'csrf': False})
             self.emoji_form = EmojiFormTest(meta={'csrf': False})
             self.all_urls_form = AllUrlsFormTest(meta={'csrf': False})
             self.webmail_form = PublicEmailDomainFormTest(meta={'csrf': False})
@@ -40,14 +40,14 @@ class TestValidators(TestCaseBaseframe):
     def test_valid_url(self):
         with self.app.test_request_context('/'):
             url = 'https://hasgeek.com/'
-            self.form.process(url=url)
-            assert self.form.validate()
+            self.url_form.process(url=url)
+            assert self.url_form.validate()
 
     def test_invalid_url(self):
         with self.app.test_request_context('/'):
             url = 'https://hasgeek'
-            self.form.process(url=url)
-            assert not self.form.validate()
+            self.url_form.process(url=url)
+            assert not self.url_form.validate()
 
     def test_valid_emoji(self):
         with self.app.test_request_context('/'):
@@ -123,23 +123,23 @@ class TestValidators(TestCaseBaseframe):
     def test_url_without_protocol(self):
         with self.app.test_request_context('/'):
             url = 'hasgeek.com'
-            self.form.process(url=url)
-            assert not self.form.validate()
+            self.url_form.process(url=url)
+            assert not self.url_form.validate()
 
     def test_inaccessible_url(self):
         with self.app.test_request_context('/'):
             url = 'http://4dc1f6f0e7bc44f2b5b44f00abea4eae.com/'
-            self.form.process(url=url)
-            assert not self.form.validate()
+            self.url_form.process(url=url)
+            assert not self.url_form.validate()
 
     def test_disallowed_url(self):
         with self.app.test_request_context('/'):
             url = 'https://example.com/'
-            self.form.process(url=url)
-            assert not self.form.validate()
+            self.url_form.process(url=url)
+            assert not self.url_form.validate()
             url = 'https://example.in/'
-            self.form.process(url=url)
-            assert not self.form.validate()
+            self.url_form.process(url=url)
+            assert not self.url_form.validate()
 
     def test_html_snippet_valid_urls(self):
         url1 = 'https://hasgeek.com/'
@@ -195,6 +195,250 @@ class TestValidators(TestCaseBaseframe):
         self.emoji_form.process(formdata)
         assert self.emoji_form.validate() is False
         assert self.emoji_form.errors
+
+
+class TestValidUrl(TestCaseBaseframe):
+    """Additional tests for the ValidUrl validator"""
+
+    def setUp(self):
+        super(TestValidUrl, self).setUp()
+        self.ctx = self.app.test_request_context()
+        self.ctx.push()
+
+    def tearDown(self):
+        self.ctx.pop()
+
+    def test_no_schemes(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField("URL", validators=[forms.validators.ValidUrl()])
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'mailto:example@example.com'
+        assert form.validate() is True
+
+    def test_static_schemes(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[
+                    forms.validators.ValidUrl(allowed_schemes=('http', 'https'))
+                ],
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'mailto:example@example.com'
+        assert form.validate() is False
+
+    def test_static_schemes_allowed(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[
+                    forms.validators.ValidUrl(
+                        allowed_schemes=('http', 'https', 'mailto')
+                    )
+                ],
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'mailto:example@example.com'
+        assert form.validate() is True
+
+    def test_callable_schemes(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[
+                    forms.validators.ValidUrl(allowed_schemes=lambda: ('http', 'https'))
+                ],
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'mailto:example@example.com'
+        assert form.validate() is False
+
+    def test_callable_schemes_allowed(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[
+                    forms.validators.ValidUrl(
+                        allowed_schemes=lambda: ('http', 'https', 'mailto')
+                    )
+                ],
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'mailto:example@example.com'
+        assert form.validate() is True
+
+    def test_no_domains(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField("URL", validators=[forms.validators.ValidUrl()])
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'http://www.example.com'
+        assert form.validate() is True
+
+    def test_static_domains(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[
+                    forms.validators.ValidUrl(allowed_domains=('example.net',))
+                ],
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'http://www.example.com'
+        assert form.validate() is False
+
+    def test_static_domains_misconfigured(self):
+        """Domains must be exact matches including subdomains"""
+
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[
+                    forms.validators.ValidUrl(
+                        allowed_domains=('example.net', 'example.com')
+                    )
+                ],
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'http://www.example.com'
+        assert form.validate() is False
+
+    def test_static_domains_allowed(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[
+                    forms.validators.ValidUrl(
+                        allowed_domains=(
+                            'example.net',
+                            'example.com',
+                            'www.example.com',
+                        )
+                    )
+                ],
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'http://www.example.com'
+        assert form.validate() is True
+
+    def test_static_domains_case(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[
+                    forms.validators.ValidUrl(
+                        allowed_domains=(
+                            'example.net',
+                            'example.com',
+                            'www.example.com',
+                        )
+                    )
+                ],
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'http://WWW.EXAMPLE.COM'
+        assert form.validate() is True
+
+    def test_callable_domains(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[
+                    forms.validators.ValidUrl(allowed_domains=lambda: ('example.net',))
+                ],
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'http://www.example.com'
+        assert form.validate() is False
+
+    def test_callable_domains_allowed(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[
+                    forms.validators.ValidUrl(
+                        allowed_domains=lambda: (
+                            'example.net',
+                            'example.com',
+                            'www.example.com',
+                        )
+                    )
+                ],
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'http://www.example.com'
+        assert form.validate() is True
+
+    def test_visit_url_true(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL", validators=[forms.validators.ValidUrl(visit_url=True)]
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        # Invalid URL will fail a load test
+        form.url.data = 'http://localhosta'
+        assert form.validate() is False
+
+    def test_visit_url_false(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL", validators=[forms.validators.ValidUrl(visit_url=False)]
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        # Invalid URL won't be tested
+        form.url.data = 'http://localhosta'
+        assert form.validate() is True
+
+    def test_message_schemes(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[
+                    forms.validators.ValidUrl(
+                        allowed_schemes=('https', 'mailto'),
+                        message_schemes="Scheme for '{url}' must be: {schemes}",
+                    )
+                ],
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'http://example.com'
+        assert form.validate() is False
+        assert form.url.errors == [
+            "Scheme for 'http://example.com' must be: https, mailto"
+        ]
+
+    def test_message_domains(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[
+                    forms.validators.ValidUrl(
+                        allowed_domains=('example.net', 'example.org'),
+                        message_domains="Allowed domains for '{url}': {domains}",
+                    )
+                ],
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'http://example.com'
+        assert form.validate() is False
+        assert form.url.errors == [
+            "Allowed domains for 'http://example.com': example.net, example.org"
+        ]
 
 
 class TestFormBase(TestCaseBaseframe):
