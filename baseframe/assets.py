@@ -414,6 +414,8 @@ assets['codemirror-markdown.js'][Version('5.53.2')] = {
         'codemirror.mode.gfm.js==5.53.2',
         'codemirror.mode.htmlmixed.js==5.53.2',
         'codemirror.addon.mode.overlay.js==5.53.2',
+        'codemirror.addon.edit.continuelist.js==5.53.2',
+        'codemirror.addon.edit.closebrackets.js==5.53.2',
     ]
 }
 assets['codemirror-markdown.css'][Version('5.53.2')] = (
