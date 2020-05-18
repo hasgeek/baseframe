@@ -1,7 +1,6 @@
 // This is a global function. Isn't there a better way to do this?
 
 function activate_widgets() {
-  // Activate CodeMirror for non-mobile browsers
   var cm_markdown_config = {
     mode: 'gfm',
     lineNumbers: false,
