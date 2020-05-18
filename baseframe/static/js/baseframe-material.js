@@ -10,6 +10,7 @@ function activate_widgets() {
     autoCloseBrackets: true,
     viewportMargin: Infinity,
     extraKeys: {
+      Enter: 'newlineAndIndentContinueMarkdownList',
       Tab: false,
       'Shift-Tab': false,
       Home: 'goLineLeft',
