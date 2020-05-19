@@ -14,16 +14,16 @@ assets['jquery.js'][Version('1.8.3')] = 'baseframe/js/jquery-1.8.3.js'
 assets['jquery.js'][Version('1.9.1')] = 'baseframe/js/jquery-1.9.1.js'
 
 assets['baseframe-networkbar.js'][Version(__version__)] = 'baseframe/js/networkbar.js'
-assets['baseframe-networkbar.css'][
-    Version(__version__)
-] = 'baseframe/css/networkbar.css'
-assets['baseframe-base.js'][
-    Version(__version__)
-] = 'baseframe/js/baseframe-bootstrap.js'
+assets['baseframe-networkbar.css'][Version(__version__)] = (
+    'baseframe/css/networkbar.css'
+)
+assets['baseframe-base.js'][Version(__version__)] = (
+    'baseframe/js/baseframe-bootstrap.js'
+)
 assets['baseframe-base.css'][Version(__version__)] = 'baseframe/css/baseframe.css'
-assets['baseframe-base-bs3.css'][
-    Version(__version__)
-] = 'baseframe/css/baseframe-bs3.css'
+assets['baseframe-base-bs3.css'][Version(__version__)] = (
+    'baseframe/css/baseframe-bs3.css'
+)
 
 # Bootstrap 2.0.1
 assets['bootstrap.css'][Version('2.0.1')] = 'baseframe/css/bootstrap.css'
@@ -165,9 +165,9 @@ assets['jquery.ui.sortable.js'][Version('1.12.1')] = (
     'jquery.js',
     'baseframe/js/jquery-ui-sortable-1.12.1.js',
 )
-assets['jquery.ui.sortable.css'][
-    Version('1.12.1')
-] = 'baseframe/css/jquery-ui-sortable-1.12.1.css'
+assets['jquery.ui.sortable.css'][Version('1.12.1')] = (
+    'baseframe/css/jquery-ui-sortable-1.12.1.css'
+)
 assets['jquery.ui.touch-punch.js'][Version('0.2.3')] = (
     'jquery.js',
     'baseframe/js/jquery.ui.touch-punch.js',
@@ -200,9 +200,9 @@ assets['jquery.nouislider.js'][Version('7.0.10')] = (
     'jquery.js',
     'baseframe/js/jquery.nouislider.min.js',
 )
-assets['jquery.nouislider.css'][
-    Version('7.0.10')
-] = 'baseframe/css/jquery.nouislider.min.css'
+assets['jquery.nouislider.css'][Version('7.0.10')] = (
+    'baseframe/css/jquery.nouislider.min.css'
+)
 
 # textarea-expander is deprecated. Use autosize instead
 assets['jquery.textarea-expander.js'][Version('1.0.0')] = (
@@ -301,48 +301,48 @@ assets['select2-material.css'][Version('4.0.3')] = (
 assets['select2-material.js'][Version('4.0.3')] = {'requires': ['select2.js==4.0.3']}
 
 
-assets['bootstrap-multiselect.css'][
-    Version('0.9.13')
-] = 'baseframe/css/bootstrap-multiselect.css'
-assets['bootstrap-multiselect.js'][
-    Version('0.9.13')
-] = 'baseframe/js/bootstrap-multiselect.js'
+assets['bootstrap-multiselect.css'][Version('0.9.13')] = (
+    'baseframe/css/bootstrap-multiselect.css'
+)
+assets['bootstrap-multiselect.js'][Version('0.9.13')] = (
+    'baseframe/js/bootstrap-multiselect.js'
+)
 
 assets['codemirror.js'][Version('4.11.0')] = 'baseframe/js/codemirror/lib/codemirror.js'
-assets['codemirror.css'][
-    Version('4.11.0')
-] = 'baseframe/js/codemirror/lib/codemirror.css'
+assets['codemirror.css'][Version('4.11.0')] = (
+    'baseframe/js/codemirror/lib/codemirror.css'
+)
 
-assets['codemirror.mode.markdown.js'][
-    Version('4.11.0')
-] = 'baseframe/js/codemirror/mode/markdown/markdown.js'
-assets['codemirror.mode.gfm.js'][
-    Version('4.11.0')
-] = 'baseframe/js/codemirror/mode/gfm/gfm.js'
-assets['codemirror.mode.htmlmixed.js'][
-    Version('4.11.0')
-] = 'baseframe/js/codemirror/mode/htmlmixed/htmlmixed.js'
-assets['codemirror.mode.css.js'][
-    Version('4.11.0')
-] = 'baseframe/js/codemirror/mode/css/css.js'
-assets['codemirror.addon.mode.overlay.js'][
-    Version('4.11.0')
-] = 'baseframe/js/codemirror/addon/mode/overlay.js'
-assets['codemirror.addon.edit.continuelist.js'][
-    Version('4.11.0')
-] = 'baseframe/js/codemirror/addon/edit/continuelist.js'
-assets['codemirror.addon.edit.closebrackets.js'][
-    Version('4.11.0')
-] = 'baseframe/js/codemirror/addon/edit/closebrackets.js'
-assets['codemirror.addon.edit.matchbrackets.js'][
-    Version('4.11.0')
-] = 'baseframe/js/codemirror/addon/edit/matchbrackets.js'
-assets['codemirror.addon.hint.css-hint.js'][
-    Version('4.11.0')
-] = 'baseframe/js/codemirror/addon/hint/css-hint.js'
-assets['codemirror.addon.lint.css-lint.js'][
-    Version('4.11.0')
-] = 'baseframe/js/codemirror/addon/lint/css-lint.js'
+assets['codemirror.mode.markdown.js'][Version('4.11.0')] = (
+    'baseframe/js/codemirror/mode/markdown/markdown.js'
+)
+assets['codemirror.mode.gfm.js'][Version('4.11.0')] = (
+    'baseframe/js/codemirror/mode/gfm/gfm.js'
+)
+assets['codemirror.mode.htmlmixed.js'][Version('4.11.0')] = (
+    'baseframe/js/codemirror/mode/htmlmixed/htmlmixed.js'
+)
+assets['codemirror.mode.css.js'][Version('4.11.0')] = (
+    'baseframe/js/codemirror/mode/css/css.js'
+)
+assets['codemirror.addon.mode.overlay.js'][Version('4.11.0')] = (
+    'baseframe/js/codemirror/addon/mode/overlay.js'
+)
+assets['codemirror.addon.edit.continuelist.js'][Version('4.11.0')] = (
+    'baseframe/js/codemirror/addon/edit/continuelist.js'
+)
+assets['codemirror.addon.edit.closebrackets.js'][Version('4.11.0')] = (
+    'baseframe/js/codemirror/addon/edit/closebrackets.js'
+)
+assets['codemirror.addon.edit.matchbrackets.js'][Version('4.11.0')] = (
+    'baseframe/js/codemirror/addon/edit/matchbrackets.js'
+)
+assets['codemirror.addon.hint.css-hint.js'][Version('4.11.0')] = (
+    'baseframe/js/codemirror/addon/hint/css-hint.js'
+)
+assets['codemirror.addon.lint.css-lint.js'][Version('4.11.0')] = (
+    'baseframe/js/codemirror/addon/lint/css-lint.js'
+)
 
 assets['codemirror-markdown.js'][Version('4.11.0')] = {
     'requires': [
@@ -369,43 +369,43 @@ assets['codemirror-css.js'][Version('4.11.0')] = {
     ]
 }
 
-assets['codemirror.js'][
-    Version('5.53.2')
-] = 'baseframe/js/codemirror-5.53.2/codemirror.js'
-assets['codemirror.css'][
-    Version('5.53.2')
-] = 'baseframe/css/codemirror-5.53.2/codemirror-basic.css'
+assets['codemirror.js'][Version('5.53.2')] = (
+    'baseframe/js/codemirror-5.53.2/codemirror.min.js'
+)
+assets['codemirror.css'][Version('5.53.2')] = (
+    'baseframe/css/codemirror-5.53.2/codemirror-basic.css'
+)
 
-assets['codemirror.mode.markdown.js'][
-    Version('5.53.2')
-] = 'baseframe/js/codemirror-5.53.2/mode/markdown/markdown.js'
-assets['codemirror.mode.gfm.js'][
-    Version('5.53.2')
-] = 'baseframe/js/codemirror-5.53.2/mode/gfm/gfm.js'
-assets['codemirror.mode.htmlmixed.js'][
-    Version('5.53.2')
-] = 'baseframe/js/codemirror-5.53.2/mode/htmlmixed/htmlmixed.js'
-assets['codemirror.mode.css.js'][
-    Version('5.53.2')
-] = 'baseframe/js/codemirror-5.53.2/mode/css/css.js'
-assets['codemirror.addon.mode.overlay.js'][
-    Version('5.53.2')
-] = 'baseframe/js/codemirror-5.53.2/addon/mode/overlay.js'
-assets['codemirror.addon.edit.continuelist.js'][
-    Version('5.53.2')
-] = 'baseframe/js/codemirror-5.53.2/addon/edit/continuelist.js'
-assets['codemirror.addon.edit.closebrackets.js'][
-    Version('5.53.2')
-] = 'baseframe/js/codemirror-5.53.2/addon/edit/closebrackets.js'
-assets['codemirror.addon.edit.matchbrackets.js'][
-    Version('5.53.2')
-] = 'baseframe/js/codemirror-5.53.2/addon/edit/matchbrackets.js'
-assets['codemirror.addon.hint.css-hint.js'][
-    Version('5.53.2')
-] = 'baseframe/js/codemirror-5.53.2/addon/hint/css-hint.js'
-assets['codemirror.addon.lint.css-lint.js'][
-    Version('5.53.2')
-] = 'baseframe/js/codemirror-5.53.2/addon/lint/css-lint.js'
+assets['codemirror.mode.markdown.js'][Version('5.53.2')] = (
+    'baseframe/js/codemirror-5.53.2/mode/markdown/markdown.min.js'
+)
+assets['codemirror.mode.gfm.js'][Version('5.53.2')] = (
+    'baseframe/js/codemirror-5.53.2/mode/gfm/gfm.min.js'
+)
+assets['codemirror.mode.htmlmixed.js'][Version('5.53.2')] = (
+    'baseframe/js/codemirror-5.53.2/mode/htmlmixed/htmlmixed.min.js'
+)
+assets['codemirror.mode.css.js'][Version('5.53.2')] = (
+    'baseframe/js/codemirror-5.53.2/mode/css/css.min.js'
+)
+assets['codemirror.addon.mode.overlay.js'][Version('5.53.2')] = (
+    'baseframe/js/codemirror-5.53.2/addon/mode/overlay.min.js'
+)
+assets['codemirror.addon.edit.continuelist.js'][Version('5.53.2')] = (
+    'baseframe/js/codemirror-5.53.2/addon/edit/continuelist.min.js'
+)
+assets['codemirror.addon.edit.closebrackets.js'][Version('5.53.2')] = (
+    'baseframe/js/codemirror-5.53.2/addon/edit/closebrackets.min.js'
+)
+assets['codemirror.addon.edit.matchbrackets.js'][Version('5.53.2')] = (
+    'baseframe/js/codemirror-5.53.2/addon/edit/matchbrackets.min.js'
+)
+assets['codemirror.addon.hint.css-hint.js'][Version('5.53.2')] = (
+    'baseframe/js/codemirror-5.53.2/addon/hint/css-hint.min.js'
+)
+assets['codemirror.addon.lint.css-lint.js'][Version('5.53.2')] = (
+    'baseframe/js/codemirror-5.53.2/addon/lint/css-lint.min.js'
+)
 
 assets['codemirror-markdown.js'][Version('5.53.2')] = {
     'requires': [
@@ -501,9 +501,9 @@ assets['nprogress.css'][Version('0.2.0')] = 'baseframe/css/nprogress.css'
 assets['ractive.js'][Version('0.7.3')] = 'baseframe/js/ractive.js'
 
 # Ractive fly transition
-assets['ractive-transitions-fly.js'][
-    Version('0.3.0')
-] = 'baseframe/js/ractive-transitions-fly.js'
+assets['ractive-transitions-fly.js'][Version('0.3.0')] = (
+    'baseframe/js/ractive-transitions-fly.js'
+)
 
 # Validate
 assets['validate.js'][Version('2.0.1')] = 'baseframe/js/validate.js'
@@ -524,20 +524,20 @@ assets['dropzone.css'][Version('3.2.0')] = 'baseframe/css/dropzone.css'
 assets['dropzone.js'][Version('5.5.0')] = 'baseframe/js/dropzone-5.5.0.js'
 assets['dropzone.css'][Version('5.5.0')] = 'baseframe/css/dropzone-5.5.0.css'
 
-assets['mustache-hogan.js'][
-    Version('2.0.0')
-] = 'baseframe/js/mustache-hogan/hogan-2.0.0.min.mustache.js'
-assets['mustache-loader.js'][
-    Version('0.5.1')
-] = 'baseframe/js/mustache-hogan/mustache-loader.js'
+assets['mustache-hogan.js'][Version('2.0.0')] = (
+    'baseframe/js/mustache-hogan/hogan-2.0.0.min.mustache.js'
+)
+assets['mustache-loader.js'][Version('0.5.1')] = (
+    'baseframe/js/mustache-hogan/mustache-loader.js'
+)
 
 assets['marked.js'][Version('0.3.0')] = 'baseframe/js/marked.js'
 
 assets['moment.js'][Version('2.24.0')] = 'baseframe/js/moment.js'
 # To use moment timezone in the browser, zone data needs to be loaded.
-assets['moment-timezone-data.js'][
-    Version('0.5.25')
-] = 'baseframe/js/moment-timezone-with-data-10-year-range.js'
+assets['moment-timezone-data.js'][Version('0.5.25')] = (
+    'baseframe/js/moment-timezone-with-data-10-year-range.js'
+)
 
 assets['leaflet.js'][Version('1.3.4')] = 'baseframe/js/leaflet.js'
 assets['leaflet.css'][Version('1.3.4')] = 'baseframe/css/leaflet.css'
@@ -553,29 +553,29 @@ assets['rrssb.js'][Version('1.8.5')] = 'baseframe/js/rrssb.js'
 assets['rrssb.css'][Version('1.8.5')] = 'baseframe/css/rrssb.css'
 
 # Fira Sans and Fira Mono
-assets['firasans-regular.css'][
-    Version('1.0.0')
-] = 'baseframe/css/fira/firasans-regular.css'
-assets['firasans-regularitalic.css'][
-    Version('1.0.0')
-] = 'baseframe/css/fira/firasans-regularitalic.css'
+assets['firasans-regular.css'][Version('1.0.0')] = (
+    'baseframe/css/fira/firasans-regular.css'
+)
+assets['firasans-regularitalic.css'][Version('1.0.0')] = (
+    'baseframe/css/fira/firasans-regularitalic.css'
+)
 assets['firasans-light.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-light.css'
-assets['firasans-lightitalic.css'][
-    Version('1.0.0')
-] = 'baseframe/css/fira/firasans-lightitalic.css'
-assets['firasans-medium.css'][
-    Version('1.0.0')
-] = 'baseframe/css/fira/firasans-medium.css'
-assets['firasans-mediumitalic.css'][
-    Version('1.0.0')
-] = 'baseframe/css/fira/firasans-mediumitalic.css'
+assets['firasans-lightitalic.css'][Version('1.0.0')] = (
+    'baseframe/css/fira/firasans-lightitalic.css'
+)
+assets['firasans-medium.css'][Version('1.0.0')] = (
+    'baseframe/css/fira/firasans-medium.css'
+)
+assets['firasans-mediumitalic.css'][Version('1.0.0')] = (
+    'baseframe/css/fira/firasans-mediumitalic.css'
+)
 assets['firasans-bold.css'][Version('1.0.0')] = 'baseframe/css/fira/firasans-bold.css'
-assets['firasans-bolditalic.css'][
-    Version('1.0.0')
-] = 'baseframe/css/fira/firasans-bolditalic.css'
-assets['firamono-regular.css'][
-    Version('1.0.0')
-] = 'baseframe/css/fira/firamono-regular.css'
+assets['firasans-bolditalic.css'][Version('1.0.0')] = (
+    'baseframe/css/fira/firasans-bolditalic.css'
+)
+assets['firamono-regular.css'][Version('1.0.0')] = (
+    'baseframe/css/fira/firamono-regular.css'
+)
 assets['firamono-bold.css'][Version('1.0.0')] = 'baseframe/css/fira/firamono-bold.css'
 
 assets['firasans.css'][Version('1.0.0')] = {
@@ -592,18 +592,18 @@ assets['firamono.css'][Version('1.0.0')] = {
 }
 
 
-assets['firasans-regular.css'][
-    Version('4.2.0')
-] = 'baseframe/fonts/fira-4/firasans-regular.css'
-assets['firasans-regular-italic.css'][
-    Version('4.2.0')
-] = 'baseframe/fonts/fira-4/firasans-regular-italic.css'
-assets['firasans-bold.css'][
-    Version('4.2.0')
-] = 'baseframe/fonts/fira-4/firasans-bold.css'
-assets['firasans-bold-italic.css'][
-    Version('4.2.0')
-] = 'baseframe/fonts/fira-4/firasans-bold-italic.css'
+assets['firasans-regular.css'][Version('4.2.0')] = (
+    'baseframe/fonts/fira-4/firasans-regular.css'
+)
+assets['firasans-regular-italic.css'][Version('4.2.0')] = (
+    'baseframe/fonts/fira-4/firasans-regular-italic.css'
+)
+assets['firasans-bold.css'][Version('4.2.0')] = (
+    'baseframe/fonts/fira-4/firasans-bold.css'
+)
+assets['firasans-bold-italic.css'][Version('4.2.0')] = (
+    'baseframe/fonts/fira-4/firasans-bold-italic.css'
+)
 
 assets['firasans.css'][Version('4.2.0')] = {
     'requires': [
@@ -615,9 +615,9 @@ assets['firasans.css'][Version('4.2.0')] = {
 }
 
 
-assets['firamono-regular.css'][
-    Version('4.2.0')
-] = 'baseframe/fonts/fira/firamono-regular.css'
+assets['firamono-regular.css'][Version('4.2.0')] = (
+    'baseframe/fonts/fira/firamono-regular.css'
+)
 assets['firamono-bold.css'][Version('4.2.0')] = 'baseframe/fonts/fira/firamono-bold.css'
 
 assets['firamono.css'][Version('4.2.0')] = {
@@ -625,13 +625,13 @@ assets['firamono.css'][Version('4.2.0')] = {
 }
 
 
-assets['baseframe-firasans.css'][
-    Version('1.0.0')
-] = 'baseframe/css/baseframe-firasans.css'
+assets['baseframe-firasans.css'][Version('1.0.0')] = (
+    'baseframe/css/baseframe-firasans.css'
+)
 
-assets['getdevicepixelratio.js'][
-    Version('1.0.0')
-] = 'baseframe/js/getdevicepixelratio.js'
+assets['getdevicepixelratio.js'][Version('1.0.0')] = (
+    'baseframe/js/getdevicepixelratio.js'
+)
 
 # Asset packages
 assets['bootstrap.js'][Version('2.0.1')] = {
@@ -741,9 +741,9 @@ assets['baseframe-bs3.css'][Version(__version__)] = {
 }
 
 assets['mui.js'][Version('0.9.21')] = 'baseframe/js/mui.js'
-assets['baseframe-material.js'][
-    Version('0.9.21')
-] = 'baseframe/js/baseframe-material.js'
+assets['baseframe-material.js'][Version('0.9.21')] = (
+    'baseframe/js/baseframe-material.js'
+)
 assets['baseframe-mui.js'][Version(__version__)] = {
     'requires': [
         'extra-material.js',
