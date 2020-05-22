@@ -633,6 +633,8 @@ assets['getdevicepixelratio.js'][Version('1.0.0')] = (
     'baseframe/js/getdevicepixelratio.js'
 )
 
+assets['pace.js'][Version('1.0.0')] = 'baseframe/js/pace.js'
+
 # Asset packages
 assets['bootstrap.js'][Version('2.0.1')] = {
     'requires': [
