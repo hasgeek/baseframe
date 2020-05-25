@@ -217,9 +217,12 @@ class TestFilters(TestCaseBaseframe):
         self.assertEqual(initial, 'E')
 
         initial = filters.initials('एक एक्साम्पल')
-        self.assertEqual(initial, 'ए')
+        self.assertEqual(initial, 'एए')
 
         initial = filters.initials(' ')
+        self.assertEqual(initial, '')
+
+        initial = filters.initials(None)
         self.assertEqual(initial, '')
 
     def test_usessl(self):
