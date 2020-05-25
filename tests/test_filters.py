@@ -210,11 +210,17 @@ class TestFilters(TestCaseBaseframe):
         initial = filters.initials('A Slightly Longer Named Example')
         self.assertEqual(initial, 'AE')
 
+        initial = filters.initials(' Abnormally  Spaced Example ')
+        self.assertEqual(initial, 'AE')
+
         initial = filters.initials('Example')
         self.assertEqual(initial, 'E')
 
         initial = filters.initials('एक एक्साम्पल')
         self.assertEqual(initial, 'एए')
+
+        initial = filters.initials('Пример')
+        self.assertEqual(initial, 'П')
 
     def test_usessl(self):
         with self.app.test_request_context('/'):
