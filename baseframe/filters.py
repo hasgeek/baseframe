@@ -61,7 +61,7 @@ def initials(field):
     """
     Return first and last initials from the given input, meant for use as avatar stand-in.
     """
-    parts = field.translate(str.maketrans('', '', string.punctuation)).split()
+    parts = field.split()
     if len(parts) > 1:
         return parts[0][0] + parts[-1][0]
     elif parts[0]:
