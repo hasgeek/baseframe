@@ -5,7 +5,7 @@
 {%- macro alertbox(category, message="") %}
   <div class="alert alert--{{category}} alert--dismissable">
     <a class="alert__close" href="javascript:void(0);" aria-label="{% trans %}Close{% endtrans %}">
-    {{ faicon(icon='times', icon_size='subhead', baseline=true) }}
+    {{ faicon(icon='times', icon_size='title', baseline=true) }}
     </a>
     <p class="alert__text">{{ message }}</p>
   </div>
