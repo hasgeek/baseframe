@@ -54,6 +54,21 @@ def age(dt):
     else:
         return _("%(num)s years ago", num=int(delta.days / 365))
 
+@baseframe.app_template_filter('initials')
+def initials(text):
+    """
+    Return first and last initials from the given input, meant for use as avatar stand-in.
+    """
+    if not text:
+        return ''
+    parts = text.split()
+    if len(parts) > 1:
+        return parts[0][0] + parts[-1][0]
+    elif parts:
+        return parts[0][0]
+    else:
+        return ''
+
 
 @baseframe.app_template_filter('usessl')
 def usessl(url):
