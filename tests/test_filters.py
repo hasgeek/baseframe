@@ -203,6 +203,19 @@ class TestFilters(TestCaseBaseframe):
         self.avatar_size = ('100', '100')
         self.avatar_url = '//images.hasgeek.com/embed/test'
 
+    def test_initials(self):
+        initial = filters.initials('A Named Example')
+        self.assertEqual(initial, 'AE')
+
+        initial = filters.initials('A Slightly Longer Named Example')
+        self.assertEqual(initial, 'AE')
+
+        initial = filters.initials('Example')
+        self.assertEqual(initial, 'E')
+
+        initial = filters.initials('एक एक्साम्पल')
+        self.assertEqual(initial, 'एए')
+
     def test_usessl(self):
         with self.app.test_request_context('/'):
             self.app.config['USE_SSL'] = False
