@@ -6,6 +6,8 @@ import six
 from datetime import datetime, timedelta
 import os
 
+import string
+
 from flask import Markup, request
 
 from babel.dates import format_date, format_datetime, format_time
@@ -54,13 +56,12 @@ def age(dt):
     else:
         return _("%(num)s years ago", num=int(delta.days / 365))
 
-
 @baseframe.app_template_filter('initials')
 def initials(field):
     """
     Return first and last initials from the given input, meant for use as avatar stand-in.
     """
-    parts = field.split()
+    parts = field.translate(str.maketrans('', '', string.punctuation)).split()
     if len(parts) > 1:
         return parts[0][0] + parts[-1][0]
     elif parts[0]:
