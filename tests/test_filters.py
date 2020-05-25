@@ -222,6 +222,9 @@ class TestFilters(TestCaseBaseframe):
         initial = filters.initials(' ')
         self.assertEqual(initial, '')
 
+        initial = filters.initials('')
+        self.assertEqual(initial, '')
+
         initial = filters.initials(None)
         self.assertEqual(initial, '')
 
