@@ -59,10 +59,12 @@ def initials(field):
     """
     Return first and last initials from the given input, meant for use as avatar stand-in.
     """
+    if not field:
+        return ''
     parts = field.split()
     if len(parts) > 1:
         return parts[0][0] + parts[-1][0]
-    elif parts[0]:
+    elif len(parts) > 0:
         return parts[0][0]
     else:
         return ''
