@@ -6,8 +6,6 @@ import six
 from datetime import datetime, timedelta
 import os
 
-import string
-
 from flask import Markup, request
 
 from babel.dates import format_date, format_datetime, format_time
