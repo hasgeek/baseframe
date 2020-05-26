@@ -3556,6 +3556,10 @@ h6 {
   line-height: 1.5;
 }
 
+.mui--text-success {
+  color: #53b783;
+}
+
 .mui--text-warning {
   color: #f0a40c;
 }
