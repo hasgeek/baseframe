@@ -406,6 +406,24 @@ window.Baseframe.MapMarker.prototype.getDefaultLocation = function () {
   return { latitude: latitude, longitude: longitude };
 };
 
+window.Baseframe.Utils = {
+  getInitials: function (name) {
+    if (name) {
+      var parts = name.split(/\s+/);
+      var len = parts.length;
+      if (len > 1) {
+        return (
+          (parts[0] ? parts[0][0] : '') +
+          (parts[len - 1] ? parts[len - 1][0] : '')
+        );
+      } else if (parts) {
+        return parts[0] ? parts[0][0] : '';
+      }
+    }
+    return '';
+  },
+};
+
 window.ParsleyConfig = {
   errorsWrapper: '<div></div>',
   errorTemplate: '<p class="help-error"></p>',
