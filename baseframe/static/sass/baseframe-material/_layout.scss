@@ -24,7 +24,7 @@ ol ul {
 
 li p + ul,
 li p + ol {
-  margin-bottom: $reflex-cell-spacing/2;
+  margin-bottom: $mui-grid-padding/2;
 }
 
 .mui-container {
@@ -49,8 +49,8 @@ li p + ol {
 @media (min-width: 1200px) {
   .main-content--with-sidebar {
     margin-left: 160px;
-    padding-left: $reflex-cell-spacing;
-    padding-right: $reflex-cell-spacing;
+    padding-left: $mui-grid-padding;
+    padding-right: $mui-grid-padding;
   }
 }
 
@@ -101,7 +101,7 @@ li p + ol {
 }
 
 .no-cookies .cookies-required-alert {
-  margin-top: $reflex-cell-spacing;
+  margin-top: $mui-grid-padding;
 }
 
 .js .jshidden,

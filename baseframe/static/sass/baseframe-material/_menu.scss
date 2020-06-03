@@ -26,7 +26,7 @@
   display: inline-block;
   text-decoration: none;
   cursor: pointer;
-  margin-right: 15px;
+  margin-right: $mui-grid-padding;
   height: 24px;
 }
 
@@ -46,13 +46,13 @@
   margin: 0;
   @extend .mui--text-headline;
   color: inherit;
-  width: calc(70% - #{$mui-grid-gutter-width/2});
-  padding-left: $mui-grid-gutter-width/2;
+  width: calc(70% - #{$mui-grid-padding});
+  padding-left: $mui-grid-padding;
   color: $mui-text-light;
 }
 
 .header__site-title--smaller {
-  width: calc(55% - #{$mui-grid-gutter-width/2});
+  width: calc(55% - #{$mui-grid-padding});
 }
 
 .header__site-title__item {
@@ -69,8 +69,8 @@
 }
 
 .header__right-nav {
-  width: calc(30% - #{$mui-grid-gutter-width/2});
-  padding-right: $mui-grid-gutter-width/2;
+  width: calc(30% - #{$mui-grid-padding});
+  padding-right: $mui-grid-padding;
   display: -webkit-box;
   display: flex;
   justify-content: flex-end;
@@ -78,7 +78,7 @@
 }
 
 .header__right-nav--larger {
-  width: calc(45% - #{$mui-grid-gutter-width/2});
+  width: calc(45% - #{$mui-grid-padding});
 }
 
 .header__site-title--sidenav {
@@ -91,10 +91,10 @@
 
 @media (min-width: 1200px) {
   .header__site-title {
-    padding-left: 15px;
+    padding-left: $mui-grid-padding;
   }
   .header__right-nav {
-    padding-right: 15px;
+    padding-right: $mui-grid-padding;
   }
   .header__app-icon--menu {
     display: none;

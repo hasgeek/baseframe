@@ -2,22 +2,22 @@
   @extend .mui--z1;
   position: relative;
   background: #fff;
-  margin-bottom: 2 * $reflex-cell-spacing;
+  margin-bottom: 2 * $mui-grid-padding;
 
   .card__image {
     width: 100%;
   }
 
   .card__title {
-    padding: 0 $reflex-cell-spacing;
+    padding: 0 $mui-grid-padding;
   }
 
   .card__title__heading {
-    margin: $reflex-cell-spacing/4 auto;
+    margin: $mui-grid-padding/4 auto;
   }
 
   .card__header {
-    padding: $reflex-cell-spacing;
+    padding: $mui-grid-padding;
     background: $mui-bg-color-light;
   }
 
@@ -39,7 +39,7 @@
 
   .card__body {
     @extend .mui--text-body2;
-    padding: $reflex-cell-spacing/2 $reflex-cell-spacing;
+    padding: $mui-grid-padding/2 $mui-grid-padding;
     word-break: break-word;
   }
 
@@ -48,7 +48,7 @@
   }
 
   .card__body__text__heading {
-    margin: $reflex-cell-spacing/4 auto;
+    margin: $mui-grid-padding/4 auto;
   }
 
   .card__body__logo {
@@ -62,7 +62,7 @@
 
   .card__footer {
     @extend .mui--clearfix;
-    padding: 0 $reflex-cell-spacing/2;
+    padding: 0 $mui-grid-padding/2;
   }
 
   .card__footer__floatbtn {

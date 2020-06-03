@@ -62,14 +62,14 @@
 
   .mui-form__label {
     position: static;
-    margin: 0 0 8px;
+    margin: 0 0 $mui-grid-padding/2;
     color: $mui-label-font-color;
     @include mui-text('subhead');
   }
 
   .mui-form__error {
     color: $mui-text-danger;
-    margin: 8px 0 0;
+    margin: $mui-grid-padding/2 0 0;
     padding: 0;
     @extend .mui--text-caption;
 
@@ -89,13 +89,13 @@
   }
 
   .alert {
-    margin-bottom: 15px;
+    margin-bottom: $mui-grid-padding;
   }
 }
 
 .mui-form--margins {
-  margin-top: 1 * $reflex-cell-spacing;
-  margin-bottom: 2 * $reflex-cell-spacing;
+  margin-top: 1 * $mui-grid-padding;
+  margin-bottom: 2 * $mui-grid-padding;
 }
 
 .mui-select {

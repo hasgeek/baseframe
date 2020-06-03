@@ -1,6 +1,6 @@
 .modal {
   display: none;
-  padding: $reflex-cell-spacing;
+  padding: $mui-grid-padding;
   @extend .mui--z1;
 
   //Use fa5 icon for close
@@ -10,8 +10,8 @@
 
   .modal__close {
     position: absolute;
-    top: $reflex-cell-spacing/2;
-    right: $reflex-cell-spacing/2;
+    top: $mui-grid-padding/2;
+    right: $mui-grid-padding/2;
     display: block;
   }
   .modal__header {
@@ -19,6 +19,12 @@
   }
   .modal__body {
     @extend .mui--text-body2;
+  }
+}
+
+@media (min-width: 1200px) {
+  .modal {
+    padding: $mui-grid-padding + $mui-grid-padding/2;
   }
 }
 
