@@ -4372,6 +4372,8 @@ li p + ol {
 .modal {
   display: none;
   padding: 16px;
+  width: 100%;
+  height: 100%;
 }
 .modal a.close-modal {
   display: none;
@@ -4382,20 +4384,30 @@ li p + ol {
   right: 8px;
   display: block;
 }
-
-@media (min-width: 1200px) {
-  .modal {
-    padding: 24px;
-  }
+.modal .modal__body__btn {
+  margin-top: 16px;
 }
+
 .jquery-modal.blocker.current {
   z-index: 1001;
+  padding: 0;
 }
-.jquery-modal.blocker.current > .modal {
+.jquery-modal.blocker.current .modal {
   display: inline-block;
   overflow: hidden;
 }
 
+@media (min-width: 768px) {
+  .jquery-modal.blocker.current {
+    padding: 16px;
+  }
+  .jquery-modal.blocker.current .modal {
+    max-width: 500px;
+    width: 90%;
+    padding: 24px;
+    height: auto;
+  }
+}
 .tab-container {
   display: flex;
   padding: 0;

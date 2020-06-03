@@ -2,6 +2,8 @@
   display: none;
   padding: $mui-grid-padding;
   @extend .mui--z1;
+  width: 100%;
+  height: 100%;
 
   //Use fa5 icon for close
   a.close-modal {
@@ -20,18 +22,29 @@
   .modal__body {
     @extend .mui--text-body2;
   }
-}
-
-@media (min-width: 1200px) {
-  .modal {
-    padding: $mui-grid-padding + $mui-grid-padding/2;
+  .modal__body__btn {
+    margin-top: $mui-grid-padding;
   }
 }
 
 .jquery-modal.blocker.current {
   z-index: 1001;
-  > .modal {
+  padding: 0;
+  .modal {
     display: inline-block;
     overflow: hidden;
+  }
+}
+
+@media (min-width: 768px) {
+  .jquery-modal.blocker.current {
+    padding: $mui-grid-padding;
+
+    .modal {
+      max-width: 500px;
+      width: 90%;
+      padding: $mui-grid-padding + $mui-grid-padding/2;
+      height: auto;
+    }
   }
 }
