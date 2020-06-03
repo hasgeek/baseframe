@@ -13,6 +13,7 @@
     width: 100%;
     height: auto;
     max-width: 100%;
+    border-radius: 0;
 
     //Use fa5 icon for close
     a.close-modal {
@@ -46,6 +47,7 @@
       width: 90%;
       padding: $mui-grid-padding + $mui-grid-padding/2;
       height: auto;
+      border-radius: 8px;
     }
   }
 }

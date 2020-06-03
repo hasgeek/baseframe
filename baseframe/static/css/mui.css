@@ -4384,6 +4384,7 @@ li p + ol {
   width: 100%;
   height: auto;
   max-width: 100%;
+  border-radius: 0;
 }
 .jquery-modal.blocker.current .modal a.close-modal {
   display: none;
@@ -4407,6 +4408,7 @@ li p + ol {
     width: 90%;
     padding: 24px;
     height: auto;
+    border-radius: 8px;
   }
 }
 .tab-container {
