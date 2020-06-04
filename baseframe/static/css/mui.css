@@ -58,7 +58,7 @@
   position: relative;
   width: 100%;
   vertical-align: top;
-  padding: 15px;
+  padding: 16px;
 }
 
 .grid__cell {
@@ -1181,11 +1181,11 @@
 }
 
 .grid__col--bleed-x {
-  padding: 15px 0;
+  padding: 16px 0;
 }
 
 .grid__col--bleed-y {
-  padding: 0 15px;
+  padding: 0 16px;
 }
 
 .grid__col--bg {
@@ -1196,15 +1196,15 @@
 }
 
 .grid__cell--padding-sm {
-  padding: 7.5px;
+  padding: 8px;
 }
 
 .grid__cell--padding-md {
-  padding: 15px;
+  padding: 16px;
 }
 
 .grid__cell--padding-lg {
-  padding: 30px;
+  padding: 32px;
 }
 
 .grid__cell-img {
@@ -2225,8 +2225,8 @@ h6 {
   box-sizing: border-box;
   margin-right: auto;
   margin-left: auto;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 .mui-container:before,
 .mui-container:after {
@@ -2261,8 +2261,8 @@ h6 {
   box-sizing: border-box;
   margin-right: auto;
   margin-left: auto;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 .mui-container-fluid:before,
 .mui-container-fluid:after {
@@ -2430,7 +2430,7 @@ h6 {
  * MUI Panel module
  */
 .mui-panel {
-  padding: 15px;
+  padding: 16px;
   margin-bottom: 21px;
   border-radius: 0;
   background-color: #fff;
@@ -3099,7 +3099,7 @@ h6 {
 .card,
 .thumbnail,
 .control-icon,
-.modal {
+.jquery-modal.blocker.current .modal {
   box-shadow: 0 1px 3px rgba(158, 158, 158, 0.12),
     0 1px 2px rgba(158, 158, 158, 0.24);
 }
@@ -3439,7 +3439,7 @@ h6 {
 }
 
 .mui-list--aligned {
-  padding-left: 15px;
+  padding-left: 16px;
 }
 
 .mui--d-block {
@@ -3504,7 +3504,7 @@ h2 {
 h3,
 .header__side-nav-list .header__side-nav-list__item__icon,
 .form-message,
-.modal .modal__header,
+.jquery-modal.blocker.current .modal .modal__header,
 h3 {
   font-weight: 400;
   font-size: 18px;
@@ -3525,7 +3525,7 @@ h5,
 .header__dropdown-app-title,
 .header__side-nav-list .header__side-nav-list__item,
 .card .card__body,
-.modal .modal__body,
+.jquery-modal.blocker.current .modal .modal__body,
 h5 {
   font-weight: 400;
   font-size: 14px;
@@ -3673,7 +3673,7 @@ h6 {
   display: inline-block;
   text-decoration: none;
   cursor: pointer;
-  margin-right: 15px;
+  margin-right: 16px;
   height: 24px;
 }
 
@@ -3692,13 +3692,13 @@ h6 {
   align-items: center;
   margin: 0;
   color: inherit;
-  width: calc(70% - 15px);
-  padding-left: 15px;
+  width: calc(70% - 16px);
+  padding-left: 16px;
   color: #4d5763;
 }
 
 .header__site-title--smaller {
-  width: calc(55% - 15px);
+  width: calc(55% - 16px);
 }
 
 .header__site-title__item {
@@ -3714,8 +3714,8 @@ h6 {
 }
 
 .header__right-nav {
-  width: calc(30% - 15px);
-  padding-right: 15px;
+  width: calc(30% - 16px);
+  padding-right: 16px;
   display: -webkit-box;
   display: flex;
   justify-content: flex-end;
@@ -3723,7 +3723,7 @@ h6 {
 }
 
 .header__right-nav--larger {
-  width: calc(45% - 15px);
+  width: calc(45% - 16px);
 }
 
 .header__site-title--sidenav {
@@ -3736,11 +3736,11 @@ h6 {
 
 @media (min-width: 1200px) {
   .header__site-title {
-    padding-left: 15px;
+    padding-left: 16px;
   }
 
   .header__right-nav {
-    padding-right: 15px;
+    padding-right: 16px;
   }
 
   .header__app-icon--menu {
@@ -3895,7 +3895,7 @@ ol ul {
 
 li p + ul,
 li p + ol {
-  margin-bottom: 7.5px;
+  margin-bottom: 8px;
 }
 
 .mui-container {
@@ -3919,8 +3919,8 @@ li p + ol {
 @media (min-width: 1200px) {
   .main-content--with-sidebar {
     margin-left: 160px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
 .table-wrapper {
@@ -3970,7 +3970,7 @@ li p + ol {
 }
 
 .no-cookies .cookies-required-alert {
-  margin-top: 15px;
+  margin-top: 16px;
 }
 
 .js .jshidden,
@@ -4019,15 +4019,15 @@ li p + ol {
 .footer {
   clear: both;
   position: relative;
-  margin-top: 15px;
+  margin-top: 16px;
   background: whiteSmoke url('/_baseframe/img/shadow.png?1460092674') no-repeat
     top center;
 }
 .footer .footer__container {
   min-height: 25px;
   text-align: center;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 .footer .footer__container p {
   font-size: inherit;
@@ -4108,12 +4108,12 @@ li p + ol {
   color: #c04b61;
 }
 .mui-form .alert {
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 
 .mui-form--margins {
-  margin-top: 15px;
-  margin-bottom: 30px;
+  margin-top: 16px;
+  margin-bottom: 32px;
 }
 
 .mui-select {
@@ -4199,19 +4199,19 @@ li p + ol {
 .card {
   position: relative;
   background: #fff;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
 }
 .card .card__image {
   width: 100%;
 }
 .card .card__title {
-  padding: 0 15px;
+  padding: 0 16px;
 }
 .card .card__title__heading {
-  margin: 3.75px auto;
+  margin: 4px auto;
 }
 .card .card__header {
-  padding: 15px;
+  padding: 16px;
   background: #eff2f7;
 }
 .card .card__header__title {
@@ -4228,14 +4228,14 @@ li p + ol {
   width: 20%;
 }
 .card .card__body {
-  padding: 7.5px 15px;
+  padding: 8px 16px;
   word-break: break-word;
 }
 .card .card__body__text {
   width: 75%;
 }
 .card .card__body__text__heading {
-  margin: 3.75px auto;
+  margin: 4px auto;
 }
 .card .card__body__logo {
   width: 25%;
@@ -4245,7 +4245,7 @@ li p + ol {
   align-self: center;
 }
 .card .card__footer {
-  padding: 0 7.5px;
+  padding: 0 8px;
 }
 .card .card__footer__floatbtn {
   float: right;
@@ -4255,7 +4255,7 @@ li p + ol {
 }
 
 .alert {
-  padding: 15px;
+  padding: 16px;
   border: 1px solid transparent;
   border-radius: 2px;
   background-color: rgba(74, 144, 226, 0.1);
@@ -4329,8 +4329,8 @@ li p + ol {
 
 @media (min-width: 768px) {
   .alert {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-top: 16px;
+    margin-bottom: 16px;
   }
 }
 .thumbnail {
@@ -4371,26 +4371,46 @@ li p + ol {
 
 .modal {
   display: none;
-  padding: 15px;
-}
-.modal a.close-modal {
-  display: none;
-}
-.modal .modal__close {
-  position: absolute;
-  top: 7.5px;
-  right: 7.5px;
-  display: block;
 }
 
 .jquery-modal.blocker.current {
   z-index: 1001;
+  padding: 0;
 }
-.jquery-modal.blocker.current > .modal {
+.jquery-modal.blocker.current .modal {
   display: inline-block;
   overflow: hidden;
+  padding: 16px;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border-radius: 0;
+}
+.jquery-modal.blocker.current .modal a.close-modal {
+  display: none;
+}
+.jquery-modal.blocker.current .modal .modal__close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: block;
+}
+.jquery-modal.blocker.current .modal .modal__body__btn {
+  margin-top: 16px;
 }
 
+@media (min-width: 768px) {
+  .jquery-modal.blocker.current {
+    padding: 16px;
+  }
+  .jquery-modal.blocker.current .modal {
+    max-width: 500px;
+    width: 90%;
+    padding: 24px;
+    height: auto;
+    border-radius: 8px;
+  }
+}
 .tab-container {
   display: flex;
   padding: 0;
@@ -4399,7 +4419,7 @@ li p + ol {
 }
 .tab-container .tab-container__tab {
   flex: 1 0 0;
-  padding: 7.5px;
+  padding: 8px;
   opacity: 0.4;
   text-align: center;
   border-bottom: 2px solid transparent;
@@ -4443,10 +4463,10 @@ li p + ol {
     padding: 10px 0;
   }
   .mui-table.mui-table--responsive > tbody > tr > td:first-child {
-    padding-top: 7.5px;
+    padding-top: 8px;
   }
   .mui-table.mui-table--responsive > tbody > tr > td:last-child {
-    padding-bottom: 7.5px;
+    padding-bottom: 8px;
   }
   .mui-table.mui-table--responsive > tbody > tr > td:before {
     content: attr(data-th);

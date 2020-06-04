@@ -1,5 +1,5 @@
 .alert {
-  padding: $mui-panel-padding;
+  padding: $mui-grid-padding;
   border: 1px solid transparent;
   border-radius: $mui-border-radius-default;
   background-color: transparentize($mui-info-color, 0.9);
@@ -79,7 +79,7 @@
 
 @media (min-width: 768px) {
   .alert {
-    margin-top: $reflex-cell-spacing;
-    margin-bottom: $reflex-cell-spacing;
+    margin-top: $mui-grid-padding;
+    margin-bottom: $mui-grid-padding;
   }
 }

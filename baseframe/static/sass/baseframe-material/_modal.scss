@@ -1,31 +1,53 @@
 .modal {
   display: none;
-  padding: $reflex-cell-spacing;
-  @extend .mui--z1;
-
-  //Use fa5 icon for close
-  a.close-modal {
-    display: none;
-  }
-
-  .modal__close {
-    position: absolute;
-    top: $reflex-cell-spacing/2;
-    right: $reflex-cell-spacing/2;
-    display: block;
-  }
-  .modal__header {
-    @extend .mui--text-title;
-  }
-  .modal__body {
-    @extend .mui--text-body2;
-  }
 }
 
 .jquery-modal.blocker.current {
   z-index: 1001;
-  > .modal {
+  padding: 0;
+  .modal {
     display: inline-block;
     overflow: hidden;
+    padding: $mui-grid-padding;
+    @extend .mui--z1;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    border-radius: 0;
+
+    //Use fa5 icon for close
+    a.close-modal {
+      display: none;
+    }
+
+    .modal__close {
+      position: absolute;
+      top: $mui-grid-padding/2;
+      right: $mui-grid-padding/2;
+      display: block;
+    }
+    .modal__header {
+      @extend .mui--text-title;
+    }
+    .modal__body {
+      @extend .mui--text-body2;
+    }
+    .modal__body__btn {
+      margin-top: $mui-grid-padding;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .jquery-modal.blocker.current {
+    padding: $mui-grid-padding;
+
+    .modal {
+      max-width: 500px;
+      width: 90%;
+      padding: $mui-grid-padding + $mui-grid-padding/2;
+      height: auto;
+      border-radius: 8px;
+    }
   }
 }

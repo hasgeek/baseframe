@@ -13,15 +13,15 @@
 .footer {
   clear: both;
   position: relative;
-  margin-top: $reflex-cell-spacing;
+  margin-top: $mui-grid-padding;
   background: whiteSmoke image-url('shadow.png') no-repeat top center;
 
   .footer__container {
     min-height: 25px;
     text-align: center;
     @extend .mui--text-caption;
-    padding-top: $reflex-cell-spacing;
-    padding-bottom: $reflex-cell-spacing;
+    padding-top: $mui-grid-padding;
+    padding-bottom: $mui-grid-padding;
     p {
       font-size: inherit;
     }
