@@ -492,6 +492,12 @@ assets['baseframe-footable.css'][Version('2.0.3')] = {
     'requires': 'fontawesome.css>=4.4.0',
     'bundle': 'baseframe/css/baseframe-footable.css',
 }
+assets['baseframe-footable-mui.css'][Version('2.0.3')] = {
+    'provides': 'footable-mui.css',
+    'requires': 'baseframe-footable.css=2.0.3',
+    'bundle': 'baseframe/css/footable-mui.css',
+}
+
 
 # NProgress
 assets['nprogress.js'][Version('0.2.0')] = 'baseframe/js/nprogress.js'
