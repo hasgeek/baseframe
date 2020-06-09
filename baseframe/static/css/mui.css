@@ -3473,13 +3473,13 @@ h6 {
 .mui--text-display3 {
   font-weight: 400;
   font-size: 64px;
-  line-height: 1.2;
+  line-height: 85px;
 }
 
 .mui--text-display2 {
   font-weight: 400;
   font-size: 48px;
-  line-height: 1.2;
+  line-height: 64px;
 }
 
 .mui--text-display1,
@@ -3487,7 +3487,7 @@ h1,
 h1 {
   font-weight: 400;
   font-size: 32px;
-  line-height: 1.2;
+  line-height: 42px;
 }
 
 .mui--text-headline,
@@ -3497,7 +3497,7 @@ h2,
 h2 {
   font-weight: 400;
   font-size: 24px;
-  line-height: 1.4;
+  line-height: 32px;
 }
 
 .mui--text-title,
@@ -3508,7 +3508,7 @@ h3,
 h3 {
   font-weight: 400;
   font-size: 18px;
-  line-height: 1.5;
+  line-height: 27px;
 }
 
 .mui--text-subhead,
@@ -3517,7 +3517,7 @@ h4,
 h4 {
   font-weight: 400;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 24px;
 }
 
 .mui--text-body2,
@@ -3532,28 +3532,33 @@ h5 {
   line-height: 24px;
 }
 
-.mui--text-body1 {
+h6 {
   font-weight: 400;
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 12px;
+  line-height: 18px;
 }
 
 .mui--text-caption,
 .footer .footer__container,
 .mui-form .mui-form__sidetext,
 .mui-form .mui-form__helptext,
-.mui-form .mui-form__error,
-h6 {
+.mui-form .mui-form__error {
   font-weight: 400;
   font-size: 12px;
-  line-height: 1.5;
+  line-height: 16px;
 }
 
 .mui--text-menu,
 .mui--text-button {
   font-weight: 400;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 24px;
+}
+
+.mui--text-body1 {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 16px;
 }
 
 .mui--text-success {
