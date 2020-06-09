@@ -107,6 +107,9 @@
   .select2 {
     width: 100% !important;
   }
+  .mui-select__menu {
+    z-index: 100;
+  }
 }
 // For select dropdown will be on top of the header
 .mui-scroll-lock .header--fixed {

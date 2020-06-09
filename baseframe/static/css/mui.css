@@ -4126,6 +4126,9 @@ li p + ol {
 .mui-select .select2 {
   width: 100% !important;
 }
+.mui-select .mui-select__menu {
+  z-index: 100;
+}
 
 .mui-scroll-lock .header--fixed {
   z-index: 1;
