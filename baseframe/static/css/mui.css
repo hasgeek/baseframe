@@ -1695,7 +1695,7 @@ body {
     'Segoe UI Emoji', 'Segoe UI Symbol';
   font-size: 14px;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 24px;
   color: #1f2d3d;
   background-color: #f9fafc;
 }
@@ -1720,18 +1720,18 @@ a:focus {
 }
 
 p {
-  margin: 0 0 10.5px;
+  margin: 0 0 11.5px;
 }
 
 ul,
 ol {
   margin-top: 0;
-  margin-bottom: 10.5px;
+  margin-bottom: 11.5px;
 }
 
 hr {
-  margin-top: 21px;
-  margin-bottom: 21px;
+  margin-top: 23px;
+  margin-bottom: 23px;
   border: 0;
   height: 1px;
   background-color: rgba(132, 146, 166, 0.2);
@@ -1749,15 +1749,15 @@ abbr[title] {
 h1,
 h2,
 h3 {
-  margin-top: 21px;
-  margin-bottom: 10.5px;
+  margin-top: 23px;
+  margin-bottom: 11.5px;
 }
 
 h4,
 h5,
 h6 {
-  margin-top: 10.5px;
-  margin-bottom: 10.5px;
+  margin-top: 11.5px;
+  margin-bottom: 11.5px;
 }
 
 /**
@@ -2160,7 +2160,7 @@ h6 {
 }
 .mui-radio > label,
 .mui-checkbox > label {
-  min-height: 21px;
+  min-height: 23px;
   padding-left: 20px;
   margin-bottom: 0;
   font-weight: normal;
@@ -2346,7 +2346,7 @@ h6 {
   padding: 3px 20px;
   clear: both;
   font-weight: normal;
-  line-height: 1.5;
+  line-height: 1.7;
   color: #1f2d3d;
   text-decoration: none;
   white-space: nowrap;
@@ -2382,7 +2382,7 @@ h6 {
   display: block;
   width: 100%;
   padding: 0;
-  margin-bottom: 10.5px;
+  margin-bottom: 11.5px;
   font-size: 21px;
   color: #1f2d3d;
   line-height: inherit;
@@ -2431,7 +2431,7 @@ h6 {
  */
 .mui-panel {
   padding: 16px;
-  margin-bottom: 21px;
+  margin-bottom: 23px;
   border-radius: 0;
   background-color: #fff;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
@@ -2598,7 +2598,7 @@ h6 {
 .mui-table {
   width: 100%;
   max-width: 100%;
-  margin-bottom: 21px;
+  margin-bottom: 23px;
 }
 .mui-table > thead > tr > th,
 .mui-table > tbody > tr > th,
@@ -2612,7 +2612,7 @@ h6 {
 .mui-table > tfoot > tr > th,
 .mui-table > tfoot > tr > td {
   padding: 10px;
-  line-height: 1.5;
+  line-height: 1.7;
 }
 .mui-table > thead > tr > th {
   border-bottom: 2px solid rgba(132, 146, 166, 0.3);
