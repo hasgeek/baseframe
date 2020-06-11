@@ -274,7 +274,7 @@ def datetime_filter(value, format='medium', locale=None, usertz=True):  # NOQA: 
 
 
 @baseframe.app_template_filter('timestamp')
-def timestamp_filter(value):  # NOQA: A002
+def timestamp_filter(value):
     if isinstance(value, datetime):
         if six.PY2:
             ts = (value - datetime(1970, 1, 1)).total_seconds()
