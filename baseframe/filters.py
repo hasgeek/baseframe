@@ -271,3 +271,15 @@ def datetime_filter(value, format='medium', locale=None, usertz=True):  # NOQA: 
     return format_datetime(
         dt, format=format, locale=locale if locale else get_locale()
     )  # NOQA: A002
+
+
+@baseframe.app_template_filter('timestamp')
+def timestamp_filter(value):  # NOQA: A002
+    if isinstance(value, datetime):
+        if six.PY2:
+            ts = (value - datetime(1970, 1, 1)).total_seconds()
+        else:
+            ts = value.timestamp()
+    else:
+        ts = value
+    return ts
