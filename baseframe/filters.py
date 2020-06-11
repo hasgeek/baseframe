@@ -54,6 +54,7 @@ def age(dt):
     else:
         return _("%(num)s years ago", num=int(delta.days / 365))
 
+
 @baseframe.app_template_filter('initials')
 def initials(text):
     """
