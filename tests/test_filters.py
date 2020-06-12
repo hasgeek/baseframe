@@ -186,6 +186,10 @@ class TestDatetimeFilters(TestCaseBaseframe):
                 == '1/31/20'
             )
 
+    def test_timestamp(self):
+        with self.app.test_request_context('/'):
+            assert filters.timestamp_filter(self.datetime) == 1580428800.0
+
 
 class TestNaiveDatetimeFilters(TestDatetimeFilters):
     def setUp(self):
