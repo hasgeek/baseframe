@@ -91,15 +91,6 @@
   .alert {
     margin-bottom: $mui-grid-padding;
   }
-
-  .password-toggle {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-  }
-  .progress {
-    display: none;
-  }
 }
 
 .mui-form--margins {
@@ -151,10 +142,11 @@
   display: inline-block;
 }
 
-#form-registeraccount #field-password,
-#form-changepassword #field-password {
+.mui-textfield--password {
   .password-toggle {
-    bottom: 12px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
   }
   .progress {
     height: 4px;
@@ -164,8 +156,7 @@
     box-shadow: 0 1px 3px rgba(mui-color('grey'), 0.12),
       0 1px 2px rgba(mui-color('grey'), 0.24);
     position: relative;
-    visibility: hidden;
-    display: block;
+    display: none;
 
     .progress__bar {
       float: left;
@@ -203,12 +194,4 @@
       }
     }
   }
-}
-
-#form-registeraccount #field-password .progress.progress--show,
-#form-changepassword #field-password .progress.progress--show {
-  visibility: visible;
-}
-.password-valid.parsley-valid .js-change-password {
-  display: block !important;
 }
