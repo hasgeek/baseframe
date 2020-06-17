@@ -4110,6 +4110,14 @@ li p + ol {
 .mui-form .alert {
   margin-bottom: 16px;
 }
+.mui-form .password-toggle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.mui-form .progress {
+  display: none;
+}
 
 .mui-form--margins {
   margin-top: 16px;

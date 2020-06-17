@@ -60,6 +60,16 @@ function activate_widgets() {
       }, 300);
     });
   });
+
+  $('.js-show-password').click(function (argument) {
+    $(this).parent().find('.password-toggle').toggleClass('mui--hide');
+    $(this).parent().find('input').attr('type', 'text');
+  });
+
+  $('.js-hide-password').click(function (argument) {
+    $(this).parent().find('.password-toggle').toggleClass('mui--hide');
+    $(this).parent().find('input').attr('type', 'password');
+  });
 }
 
 function radioHighlight(radioName, highlightClass) {
@@ -405,6 +415,7 @@ window.Baseframe.MapMarker.prototype.getDefaultLocation = function () {
 
 window.Baseframe.Utils = {
   getInitials: function (name) {
+    console.log('name', name);
     if (name) {
       var parts = name.split(/\s+/);
       var len = parts.length;

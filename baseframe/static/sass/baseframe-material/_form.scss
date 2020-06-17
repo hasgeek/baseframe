@@ -91,6 +91,15 @@
   .alert {
     margin-bottom: $mui-grid-padding;
   }
+
+  .password-toggle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  .progress {
+    display: none;
+  }
 }
 
 .mui-form--margins {
