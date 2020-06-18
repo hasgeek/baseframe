@@ -415,7 +415,6 @@ window.Baseframe.MapMarker.prototype.getDefaultLocation = function () {
 
 window.Baseframe.Utils = {
   getInitials: function (name) {
-    console.log('name', name);
     if (name) {
       var parts = name.split(/\s+/);
       var len = parts.length;
