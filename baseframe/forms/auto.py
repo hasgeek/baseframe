@@ -56,8 +56,9 @@ def render_form(
     for field in form:
         if isinstance(field.widget, wtforms.widgets.FileInput):
             multipart = True
-    if not template and not with_chrome:
-        template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
+    if not with_chrome:
+        if not template:
+            template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
         return render_template(
             template,
             form=form,
