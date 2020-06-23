@@ -1695,7 +1695,7 @@ body {
     'Segoe UI Emoji', 'Segoe UI Symbol';
   font-size: 14px;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 24px;
   color: #1f2d3d;
   background-color: #f9fafc;
 }
@@ -1720,18 +1720,18 @@ a:focus {
 }
 
 p {
-  margin: 0 0 10.5px;
+  margin: 0 0 11.5px;
 }
 
 ul,
 ol {
   margin-top: 0;
-  margin-bottom: 10.5px;
+  margin-bottom: 11.5px;
 }
 
 hr {
-  margin-top: 21px;
-  margin-bottom: 21px;
+  margin-top: 23px;
+  margin-bottom: 23px;
   border: 0;
   height: 1px;
   background-color: rgba(132, 146, 166, 0.2);
@@ -1749,15 +1749,15 @@ abbr[title] {
 h1,
 h2,
 h3 {
-  margin-top: 21px;
-  margin-bottom: 10.5px;
+  margin-top: 23px;
+  margin-bottom: 11.5px;
 }
 
 h4,
 h5,
 h6 {
-  margin-top: 10.5px;
-  margin-bottom: 10.5px;
+  margin-top: 11.5px;
+  margin-bottom: 11.5px;
 }
 
 /**
@@ -2160,7 +2160,7 @@ h6 {
 }
 .mui-radio > label,
 .mui-checkbox > label {
-  min-height: 21px;
+  min-height: 23px;
   padding-left: 20px;
   margin-bottom: 0;
   font-weight: normal;
@@ -2346,7 +2346,7 @@ h6 {
   padding: 3px 20px;
   clear: both;
   font-weight: normal;
-  line-height: 1.5;
+  line-height: 1.7;
   color: #1f2d3d;
   text-decoration: none;
   white-space: nowrap;
@@ -2382,7 +2382,7 @@ h6 {
   display: block;
   width: 100%;
   padding: 0;
-  margin-bottom: 10.5px;
+  margin-bottom: 11.5px;
   font-size: 21px;
   color: #1f2d3d;
   line-height: inherit;
@@ -2431,7 +2431,7 @@ h6 {
  */
 .mui-panel {
   padding: 16px;
-  margin-bottom: 21px;
+  margin-bottom: 23px;
   border-radius: 0;
   background-color: #fff;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
@@ -2598,7 +2598,7 @@ h6 {
 .mui-table {
   width: 100%;
   max-width: 100%;
-  margin-bottom: 21px;
+  margin-bottom: 23px;
 }
 .mui-table > thead > tr > th,
 .mui-table > tbody > tr > th,
@@ -2612,7 +2612,7 @@ h6 {
 .mui-table > tfoot > tr > th,
 .mui-table > tfoot > tr > td {
   padding: 10px;
-  line-height: 1.5;
+  line-height: 1.7;
 }
 .mui-table > thead > tr > th {
   border-bottom: 2px solid rgba(132, 146, 166, 0.3);
@@ -3473,13 +3473,13 @@ h6 {
 .mui--text-display3 {
   font-weight: 400;
   font-size: 64px;
-  line-height: 1.2;
+  line-height: 85px;
 }
 
 .mui--text-display2 {
   font-weight: 400;
   font-size: 48px;
-  line-height: 1.2;
+  line-height: 64px;
 }
 
 .mui--text-display1,
@@ -3487,7 +3487,7 @@ h1,
 h1 {
   font-weight: 400;
   font-size: 32px;
-  line-height: 1.2;
+  line-height: 42px;
 }
 
 .mui--text-headline,
@@ -3497,7 +3497,7 @@ h2,
 h2 {
   font-weight: 400;
   font-size: 24px;
-  line-height: 1.4;
+  line-height: 32px;
 }
 
 .mui--text-title,
@@ -3508,7 +3508,7 @@ h3,
 h3 {
   font-weight: 400;
   font-size: 18px;
-  line-height: 1.5;
+  line-height: 27px;
 }
 
 .mui--text-subhead,
@@ -3517,7 +3517,7 @@ h4,
 h4 {
   font-weight: 400;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 24px;
 }
 
 .mui--text-body2,
@@ -3532,28 +3532,33 @@ h5 {
   line-height: 24px;
 }
 
-.mui--text-body1 {
+h6 {
   font-weight: 400;
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 12px;
+  line-height: 18px;
 }
 
 .mui--text-caption,
 .footer .footer__container,
 .mui-form .mui-form__sidetext,
 .mui-form .mui-form__helptext,
-.mui-form .mui-form__error,
-h6 {
+.mui-form .mui-form__error {
   font-weight: 400;
   font-size: 12px;
-  line-height: 1.5;
+  line-height: 16px;
 }
 
 .mui--text-menu,
 .mui--text-button {
   font-weight: 400;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 24px;
+}
+
+.mui--text-body1 {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 16px;
 }
 
 .mui--text-success {
@@ -4436,7 +4441,7 @@ li p + ol {
   overflow: hidden;
   padding: 16px;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   max-width: 100%;
   border-radius: 0;
 }
