@@ -315,6 +315,15 @@
   <script type="text/javascript">
     $(function() {
   {%- endif %}
+    $('.js-show-password').click(function (argument) {
+      $(this).parent().find('.password-toggle').toggleClass('mui--hide');
+      $(this).parent().find('input').attr('type', 'text');
+    });
+
+    $('.js-hide-password').click(function (argument) {
+      $(this).parent().find('.password-toggle').toggleClass('mui--hide');
+      $(this).parent().find('input').attr('type', 'password');
+    });
   {%- for field in form -%}
     {%- if field.type == 'FormField' %}
       {{ widgetscripts(field.form, script=false) }}

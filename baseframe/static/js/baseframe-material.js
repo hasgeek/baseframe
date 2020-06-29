@@ -60,16 +60,6 @@ function activate_widgets() {
       }, 300);
     });
   });
-
-  $('.js-show-password').click(function (argument) {
-    $(this).parent().find('.password-toggle').toggleClass('mui--hide');
-    $(this).parent().find('input').attr('type', 'text');
-  });
-
-  $('.js-hide-password').click(function (argument) {
-    $(this).parent().find('.password-toggle').toggleClass('mui--hide');
-    $(this).parent().find('input').attr('type', 'password');
-  });
 }
 
 function radioHighlight(radioName, highlightClass) {
