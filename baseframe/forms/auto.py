@@ -47,6 +47,7 @@ def render_form(
     action=None,
     autosave=False,
     draft_revision=None,
+    template='',
 ):
     multipart = False
     ref_id = 'form-' + (formid or buid())
@@ -56,7 +57,8 @@ def render_form(
         if isinstance(field.widget, wtforms.widgets.FileInput):
             multipart = True
     if not with_chrome:
-        template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
+        if not template:
+            template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
         return render_template(
             template,
             form=form,
@@ -73,9 +75,9 @@ def render_form(
             autosave=autosave,
             draft_revision=draft_revision,
         )
-    if request_is_xhr() and ajax:
+    if not template and request_is_xhr() and ajax:
         template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
-    else:
+    elif not template:
         template = THEME_FILES[current_app.config['theme']]['autoform.html.jinja2']
     return make_response(
         render_template(
