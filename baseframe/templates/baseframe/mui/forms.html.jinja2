@@ -315,12 +315,12 @@
   <script type="text/javascript">
     $(function() {
   {%- endif %}
-    $('.js-show-password').click(function (argument) {
+    $('body').on('click', '.js-show-password', function () {
       $(this).parent().find('.password-toggle').toggleClass('mui--hide');
       $(this).parent().find('input').attr('type', 'text');
     });
 
-    $('.js-hide-password').click(function (argument) {
+    $('body').on('click', '.js-hide-password', function () {
       $(this).parent().find('.password-toggle').toggleClass('mui--hide');
       $(this).parent().find('input').attr('type', 'password');
     });
