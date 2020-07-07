@@ -136,7 +136,7 @@
 .header__nav-links {
   font-size: 14px;
   line-height: 1;
-  color: $mui-text-light;
+  color: $mui-primary-color;
   display: inline-block;
   text-decoration: none;
   text-align: center;
@@ -152,7 +152,7 @@
 }
 
 .header__nav-links-active .header__nav-links__icon {
-  color: #e05f26;
+  color: $mui-primary-color;
 }
 
 @media only screen and (max-device-width: 1200px) and (orientation: landscape) {
@@ -180,7 +180,6 @@
 }
 
 .header__nav-links:hover {
-  color: $mui-text-light;
   text-decoration: none;
 }
 
