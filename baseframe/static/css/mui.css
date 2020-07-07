@@ -4316,7 +4316,7 @@ li p + ol {
   padding: 16px;
   border: 1px solid transparent;
   border-radius: 2px;
-  background-color: #cfefff;
+  background-color: rgba(207, 239, 255, 0.1);
   border-color: rgba(207, 239, 255, 0.2);
   color: #5da9e8;
 }
@@ -4350,7 +4350,7 @@ li p + ol {
 }
 
 .alert--success {
-  background-color: #ddf5ed;
+  background-color: rgba(221, 245, 237, 0.1);
   border-color: rgba(221, 245, 237, 0.2);
   color: #21b685;
 }
@@ -4364,7 +4364,7 @@ li p + ol {
 }
 
 .alert--warning {
-  background-color: #f0a40c;
+  background-color: rgba(240, 164, 12, 0.1);
   border-color: rgba(240, 164, 12, 0.2);
   color: #f0a40c;
 }
@@ -4375,7 +4375,7 @@ li p + ol {
 
 .alert--error,
 .alert--danger {
-  background-color: #fcdcda;
+  background-color: rgba(252, 220, 218, 0.1);
   border-color: rgba(252, 220, 218, 0.2);
   color: #f04e45;
 }
