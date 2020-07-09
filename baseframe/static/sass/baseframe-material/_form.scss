@@ -176,21 +176,21 @@
       position: absolute;
       top: 4px;
       left: 0;
-      color: $mui-danger-color;
+      color: $mui-text-danger;
     }
     .progress__bar--danger {
-      background-color: $mui-danger-color;
+      background-color: $mui-text-danger;
     }
     .progress__bar--warning {
-      background-color: $mui-warning-color;
+      background-color: $mui-warning-color-txt;
       .progress__txt {
-        color: $mui-warning-color;
+        color: $mui-warning-color-txt;
       }
     }
     .progress__bar--success {
-      background-color: $mui-success-color;
+      background-color: $mui-success-color-txt;
       .progress__txt {
-        color: $mui-success-color;
+        color: $mui-success-color-txt;
       }
     }
   }

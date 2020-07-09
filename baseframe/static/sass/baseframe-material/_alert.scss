@@ -2,8 +2,8 @@
   padding: $mui-grid-padding;
   border: 1px solid transparent;
   border-radius: $mui-border-radius-default;
-  background-color: transparentize($mui-info-color, 0.9);
-  border-color: transparentize($mui-info-color, 0.8);
+  background-color: $mui-info-color;
+  border-color: transparentize($mui-info-color-txt, 0.8);
   color: $mui-info-color-txt;
 
   .alert__heading {
@@ -42,39 +42,39 @@
 }
 
 .alert--success {
-  background-color: transparentize($mui-success-color, 0.9);
-  border-color: transparentize($mui-success-color, 0.8);
+  background-color: $mui-success-color;
+  border-color: transparentize($mui-success-color-txt, 0.8);
   color: $mui-success-color-txt;
 }
 
 .alert--success .alert__hr {
-  border-top-color: transparentize($mui-success-color, 0.9);
+  border-top-color: transparentize($mui-success-color-txt, 0.9);
 }
 
 .alert--info .alert__hr {
-  border-top-color: transparentize($mui-info-color, 0.9);
+  border-top-color: transparentize($mui-info-color-txt, 0.9);
 }
 
 .alert--warning {
-  background-color: transparentize($mui-warning-color, 0.9);
-  border-color: transparentize($mui-warning-color, 0.8);
+  background-color: $mui-warning-color;
+  border-color: transparentize($mui-warning-color-txt, 0.8);
   color: $mui-warning-color-txt;
 }
 
 .alert-warning .alert__hr {
-  border-top-color: transparentize($mui-warning-color, 0.9);
+  border-top-color: transparentize($mui-warning-color-txt, 0.9);
 }
 
 .alert--error,
 .alert--danger {
-  background-color: transparentize($mui-danger-color, 0.9);
-  border-color: transparentize($mui-danger-color, 0.8);
-  color: $mui-danger-color-txt;
+  background-color: $mui-danger-color;
+  border-color: transparentize($mui-text-danger, 0.8);
+  color: $mui-text-danger;
 }
 
 .alert--error .alert__hr,
 .alert--danger .alert__hr {
-  border-top-color: transparentize($mui-danger-color, 0.9);
+  border-top-color: transparentize($mui-text-danger, 0.9);
 }
 
 @media (min-width: 768px) {

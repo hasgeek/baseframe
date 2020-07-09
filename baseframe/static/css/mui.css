@@ -1697,7 +1697,7 @@ body {
   font-weight: 400;
   line-height: 24px;
   color: #1f2d3d;
-  background-color: #f9fafc;
+  background-color: #f2f6f9;
 }
 
 @media (min-width: 1200px) {
@@ -1706,7 +1706,7 @@ body {
   }
 }
 a {
-  color: #4a90e2;
+  color: #0f73ed;
   text-decoration: none;
 }
 a:hover,
@@ -2474,7 +2474,7 @@ h6 {
 .mui-select:focus > select {
   height: 33px;
   margin-bottom: -1px;
-  border-color: #4a90e2;
+  border-color: #0f73ed;
   border-width: 2px;
 }
 .mui-select > select {
@@ -2507,7 +2507,7 @@ h6 {
   outline: 0;
   height: 33px;
   margin-bottom: -1px;
-  border-color: #4a90e2;
+  border-color: #0f73ed;
   border-width: 2px;
 }
 .mui-select > select:disabled {
@@ -2540,7 +2540,7 @@ h6 {
 
 .mui-select:focus > label,
 .mui-select > select:focus ~ label {
-  color: #4a90e2;
+  color: #0f73ed;
 }
 
 .mui-select__menu {
@@ -2711,7 +2711,7 @@ h6 {
 }
 .mui-textfield > input:focus ~ label,
 .mui-textfield > textarea:focus ~ label {
-  color: #4a90e2;
+  color: #0f73ed;
 }
 
 .mui-textfield--float-label > label {
@@ -2784,7 +2784,7 @@ h6 {
 }
 .mui-textfield > input:focus,
 .mui-textfield > textarea:focus {
-  border-color: #4a90e2;
+  border-color: #0f73ed;
   border-width: 2px;
 }
 .mui-textfield > input:disabled,
@@ -3042,11 +3042,11 @@ h6 {
 }
 
 .mui--text-danger {
-  color: #fcdcda;
+  color: #f04e45;
 }
 
 .mui--text-hyperlink {
-  color: #4a90e2;
+  color: #0f73ed;
 }
 
 .mui--bg-primary {
@@ -3463,11 +3463,11 @@ h6 {
 }
 
 .mui--bg-primary-light {
-  background-color: #eff2f7;
+  background-color: #f9fafc;
 }
 
 .mui--bg-accent {
-  background-color: #f9fafc;
+  background-color: #f2f6f9;
 }
 
 .mui--text-display3 {
@@ -4095,7 +4095,7 @@ li p + ol {
   line-height: 24px;
 }
 .mui-form .mui-form__error {
-  color: #fcdcda;
+  color: #f04e45;
   margin: 8px 0 0;
   padding: 0;
 }
@@ -4105,11 +4105,11 @@ li p + ol {
 }
 .mui-form .has-error .mui-textfield > input,
 .mui-form .has-error .mui-textfield > textarea {
-  border-bottom: 1px solid #fcdcda;
+  border-bottom: 1px solid #f04e45;
 }
 .mui-form .has-error .mui-textfield > label,
 .mui-form .has-error label {
-  color: #fcdcda;
+  color: #f04e45;
 }
 .mui-form .alert {
   margin-bottom: 16px;
@@ -4197,10 +4197,10 @@ li p + ol {
   position: absolute;
   top: 4px;
   left: 0;
-  color: #fcdcda;
+  color: #f04e45;
 }
 .mui-textfield--password .progress .progress__bar--danger {
-  background-color: #fcdcda;
+  background-color: #f04e45;
 }
 .mui-textfield--password .progress .progress__bar--warning {
   background-color: #f0a40c;
@@ -4209,10 +4209,10 @@ li p + ol {
   color: #f0a40c;
 }
 .mui-textfield--password .progress .progress__bar--success {
-  background-color: #ddf5ed;
+  background-color: #21b685;
 }
 .mui-textfield--password .progress .progress__bar--success .progress__txt {
-  color: #ddf5ed;
+  color: #21b685;
 }
 
 .chip {
@@ -4231,12 +4231,12 @@ li p + ol {
 }
 
 .chip--bg-accent {
-  background-color: #f9fafc;
+  background-color: #f2f6f9;
   color: #1f2d3d;
 }
 
 .chip--bg-light {
-  background-color: #eff2f7;
+  background-color: #f9fafc;
   color: #1f2d3d;
 }
 
@@ -4270,7 +4270,7 @@ li p + ol {
 }
 .card .card__header {
   padding: 16px;
-  background: #eff2f7;
+  background: #f9fafc;
 }
 .card .card__header__title {
   width: 80%;
@@ -4316,8 +4316,8 @@ li p + ol {
   padding: 16px;
   border: 1px solid transparent;
   border-radius: 2px;
-  background-color: rgba(207, 239, 255, 0.1);
-  border-color: rgba(207, 239, 255, 0.2);
+  background-color: #cfefff;
+  border-color: rgba(93, 169, 232, 0.2);
   color: #5da9e8;
 }
 .alert .alert__heading {
@@ -4350,21 +4350,21 @@ li p + ol {
 }
 
 .alert--success {
-  background-color: rgba(221, 245, 237, 0.1);
-  border-color: rgba(221, 245, 237, 0.2);
+  background-color: #ddf5ed;
+  border-color: rgba(33, 182, 133, 0.2);
   color: #21b685;
 }
 
 .alert--success .alert__hr {
-  border-top-color: rgba(221, 245, 237, 0.1);
+  border-top-color: rgba(33, 182, 133, 0.1);
 }
 
 .alert--info .alert__hr {
-  border-top-color: rgba(207, 239, 255, 0.1);
+  border-top-color: rgba(93, 169, 232, 0.1);
 }
 
 .alert--warning {
-  background-color: rgba(240, 164, 12, 0.1);
+  background-color: #f0a40c;
   border-color: rgba(240, 164, 12, 0.2);
   color: #f0a40c;
 }
@@ -4375,14 +4375,14 @@ li p + ol {
 
 .alert--error,
 .alert--danger {
-  background-color: rgba(252, 220, 218, 0.1);
-  border-color: rgba(252, 220, 218, 0.2);
+  background-color: #fcdcda;
+  border-color: rgba(240, 78, 69, 0.2);
   color: #f04e45;
 }
 
 .alert--error .alert__hr,
 .alert--danger .alert__hr {
-  border-top-color: rgba(252, 220, 218, 0.1);
+  border-top-color: rgba(240, 78, 69, 0.1);
 }
 
 @media (min-width: 768px) {
@@ -4484,8 +4484,8 @@ li p + ol {
 }
 .tab-container .tab-container__tab.active {
   opacity: 1;
-  border-bottom: 2px solid #4a90e2;
-  color: #4a90e2;
+  border-bottom: 2px solid #0f73ed;
+  color: #0f73ed;
 }
 .tab-container .tab-container__tab a {
   color: inherit;
