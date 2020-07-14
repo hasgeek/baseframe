@@ -3566,7 +3566,7 @@ h6 {
 }
 
 .mui--text-warning {
-  color: #f0a40c;
+  color: #fdf6ea;
 }
 
 .mui--text-uppercase {
@@ -4364,7 +4364,7 @@ li p + ol {
 }
 
 .alert--warning {
-  background-color: #f0a40c;
+  background-color: #fdf6ea;
   border-color: rgba(240, 164, 12, 0.2);
   color: #f0a40c;
 }
