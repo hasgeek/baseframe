@@ -144,13 +144,23 @@
 
 .mui-textfield--password {
   .password-toggle {
-    position: absolute;
+    position: relative;
     right: 0;
-    bottom: 0;
+    bottom: 22px;
+    float: right;
+  }
+  .password-strength-icon {
+    position: absolute;
+    right: 22px;
+    bottom: 9px;
+    display: none;
+  }
+  .password-strength-icon--show {
+    display: inline-block;
   }
   .progress {
     height: 4px;
-    margin: $mui-grid-padding/2 0 $mui-grid-padding * 2;
+    margin: $mui-grid-padding/2 0 25px;
     background-color: #f5f5f5;
     border-radius: 4px;
     box-shadow: 0 1px 3px rgba(mui-color('grey'), 0.12),
