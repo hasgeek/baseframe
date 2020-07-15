@@ -114,7 +114,7 @@ class JSONEncoder(JSONEncoderBase):
             return dict(o)
         if isinstance(o, furl):
             return o.url
-        if isinstance(o, types.GeneratorType):
+        if isinstance(o, types.GeneratorType) or isinstance(o, set):
             return list(o)
         if isinstance(o, MarkdownComposite):
             return {'text': o.text, 'html': o.html}
