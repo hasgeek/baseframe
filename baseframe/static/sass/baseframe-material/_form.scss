@@ -191,12 +191,6 @@
     .progress__bar--danger {
       background-color: $mui-danger-color;
     }
-    .progress__bar--warning {
-      background-color: $mui-warning-color;
-      .progress__txt {
-        color: $mui-warning-color;
-      }
-    }
     .progress__bar--success {
       background-color: $mui-success-color;
       .progress__txt {

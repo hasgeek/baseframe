@@ -4213,12 +4213,6 @@ li p + ol {
 .mui-textfield--password .progress .progress__bar--danger {
   background-color: #c04b61;
 }
-.mui-textfield--password .progress .progress__bar--warning {
-  background-color: #f0a40c;
-}
-.mui-textfield--password .progress .progress__bar--warning .progress__txt {
-  color: #f0a40c;
-}
 .mui-textfield--password .progress .progress__bar--success {
   background-color: #53b783;
 }
