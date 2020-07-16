@@ -156,12 +156,13 @@
     <input type="hidden" name="form.revision" value="{{ draft_revision if draft_revision is not none }}" />
   {%- endif %}
   {%- set autofocus = true %}
+  {% set autofocus = namespace(val=true) %}
   {% for field in form -%}
     {%- if field.type in ['CSRFTokenField', 'HiddenField', 'NonceField'] -%}
       {# Don't show hidden #}
     {%- else -%}
-      {{ renderfield(field, autofocus=autofocus, style=style) }}
-      {%- if autofocus %}{% set autofocus = false %}{% endif %}
+      {{ renderfield(field, autofocus=autofocus.val, style=style) }}
+      {%- if autofocus.val %}{% set autofocus.val = false %}{% endif %}
     {%- endif %}
   {% endfor %}
 {%- endmacro %}
