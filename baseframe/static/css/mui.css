@@ -4444,10 +4444,7 @@ li p + ol {
   display: inline-block;
   overflow: hidden;
   padding: 16px;
-  width: 100%;
-  min-height: 100%;
-  max-width: 100%;
-  border-radius: 0;
+  border-radius: 8px;
 }
 .jquery-modal.blocker.current .modal a.close-modal {
   display: none;
@@ -4460,6 +4457,12 @@ li p + ol {
 }
 .jquery-modal.blocker.current .modal .modal__body__btn {
   margin-top: 16px;
+}
+.jquery-modal.blocker.current .modal-form {
+  width: 100%;
+  border-radius: 0;
+  overflow: auto;
+  min-height: 100%;
 }
 
 @media (min-width: 768px) {
