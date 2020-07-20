@@ -4096,20 +4096,36 @@ li p + ol {
   line-height: 24px;
 }
 .mui-form .mui-form__error {
-  color: #c04b61;
+  color: #ffffff;
   margin: 8px 0 0;
-  padding: 0;
+  background: #c04b61;
+  border: 1px solid #c04b61;
+  padding: 8px 16px;
+  position: relative;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
+  border-radius: 2px;
+  display: inline-block;
 }
 .mui-form .mui-form__error > li {
   list-style: none;
   margin-top: 10px;
+}
+.mui-form .mui-form__error:before {
+  display: block;
+  content: '';
+  position: absolute;
+  border: 6px solid transparent;
+  border-bottom: 6px solid #c04b61;
+  top: -13px;
+  left: 20px;
 }
 .mui-form .has-error .mui-textfield > input,
 .mui-form .has-error .mui-textfield > textarea {
   border-bottom: 1px solid #c04b61;
 }
 .mui-form .has-error .mui-textfield > label,
-.mui-form .has-error label {
+.mui-form .has-error label,
+.mui-form .has-error .mui-form__helptext {
   color: #c04b61;
 }
 .mui-form .alert {
