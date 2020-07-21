@@ -48,21 +48,21 @@
 }
 
 .alert--success .alert__hr {
-  border-top-color: transparentize($mui-success-color-txt, 0.9);
+  border-top-color: transparentize($mui-text-succes, 0.9);
 }
 
 .alert--info .alert__hr {
-  border-top-color: transparentize($mui-info-color-txt, 0.9);
+  border-top-color: transparentize($mui-text-info, 0.9);
 }
 
 .alert--warning {
   background-color: $mui-warning-color;
-  border-color: transparentize($mui-warning-color-txt, 0.8);
-  color: $mui-warning-color-txt;
+  border-color: transparentize($mui-text-warning, 0.8);
+  color: $mui-text-warning;
 }
 
 .alert-warning .alert__hr {
-  border-top-color: transparentize($mui-warning-color-txt, 0.9);
+  border-top-color: transparentize($mui-text-warning, 0.9);
 }
 
 .alert--error,
