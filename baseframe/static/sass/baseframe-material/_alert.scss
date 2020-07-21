@@ -3,8 +3,8 @@
   border: 1px solid transparent;
   border-radius: $mui-border-radius-default;
   background-color: $mui-info-color;
-  border-color: transparentize($mui-info-color-txt, 0.8);
-  color: $mui-info-color-txt;
+  border-color: transparentize($mui-text-info, 0.8);
+  color: $mui-text-info;
 
   .alert__heading {
     margin-top: 0;
@@ -43,12 +43,12 @@
 
 .alert--success {
   background-color: $mui-success-color;
-  border-color: transparentize($mui-success-color-txt, 0.8);
-  color: $mui-success-color-txt;
+  border-color: transparentize($mui-text-success, 0.8);
+  color: $mui-text-success;
 }
 
 .alert--success .alert__hr {
-  border-top-color: transparentize($mui-text-succes, 0.9);
+  border-top-color: transparentize($mui-text-success, 0.9);
 }
 
 .alert--info .alert__hr {
