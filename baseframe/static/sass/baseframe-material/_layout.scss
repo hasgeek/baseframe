@@ -143,3 +143,7 @@ li p + ol {
   color: $mui-primary-color;
   border: 1px solid $mui-primary-color;
 }
+
+.mui-btn--accent.mui-btn--flat {
+  border: none !important;
+}

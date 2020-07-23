@@ -4029,6 +4029,10 @@ li p + ol {
   border: 1px solid #0f73ed;
 }
 
+.mui-btn--accent.mui-btn--flat {
+  border: none !important;
+}
+
 #root {
   clear: both;
   min-height: 100%;
