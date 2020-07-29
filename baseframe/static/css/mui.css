@@ -2058,34 +2058,34 @@ h6 {
 
 .mui-btn--danger {
   color: #fff;
-  background-color: #fcdcda;
+  background-color: #f04e45;
 }
 .mui-btn--danger:hover,
 .mui-btn--danger:focus,
 .mui-btn--danger:active {
   color: #fff;
-  background-color: #fef2f2;
+  background-color: #f2645d;
 }
 .mui-btn--danger[disabled]:hover,
 .mui-btn--danger[disabled]:focus,
 .mui-btn--danger[disabled]:active {
   color: #fff;
-  background-color: #fcdcda;
+  background-color: #f04e45;
 }
 .mui-btn--danger.mui-btn--flat {
-  color: #fcdcda;
+  color: #f04e45;
   background-color: transparent;
 }
 .mui-btn--danger.mui-btn--flat:hover,
 .mui-btn--danger.mui-btn--flat:focus,
 .mui-btn--danger.mui-btn--flat:active {
-  color: #fcdcda;
+  color: #f04e45;
   background-color: #f2f2f2;
 }
 .mui-btn--danger.mui-btn--flat[disabled]:hover,
 .mui-btn--danger.mui-btn--flat[disabled]:focus,
 .mui-btn--danger.mui-btn--flat[disabled]:active {
-  color: #fcdcda;
+  color: #f04e45;
   background-color: transparent;
 }
 
