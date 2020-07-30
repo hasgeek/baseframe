@@ -8,7 +8,7 @@ Welcome to baseframe's documentation!
 
 Baseframe's documentation
 *************************
-Reusable styles and templates for HasGeek projects.
+Reusable styles and templates for Hasgeek projects.
 
 :license: BSD, see LICENSE.txt for more details.
 

@@ -3,13 +3,14 @@ Baseframe
 
 |docs| |travis| |coveralls|
 
-Reusable styles and templates for HasGeek projects. Setup instructions::
+Reusable styles and templates for Hasgeek projects. Setup instructions::
 
     python setup.py install
 
 Or, to use in a development environment where Baseframe will change frequently::
 
     python setup.py develop
+    make
 
 You'll need this boilerplate in your code to use it::
 

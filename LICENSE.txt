@@ -5,7 +5,7 @@ the BSD license is below.
 
 ----------------------------------------
 
-Copyright (c) 2010-17, HasGeek
+Copyright (c) 2010-20, Hasgeek
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

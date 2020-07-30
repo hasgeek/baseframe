@@ -110,7 +110,7 @@
           </button>
         {% endif -%}
         {% block navbar_brand %}
-          <a class="navbar-brand" href="{{ request.script_root or '/' }}" title="Home">HasGeek</a>
+          <a class="navbar-brand" href="{{ request.script_root or '/' }}" title="Home">Hasgeek</a>
         {% endblock %}
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -163,7 +163,7 @@
   </nav>
 {%- endmacro -%}
 
-{%- macro hgnav(site_title="HasGeek", site_nav_button=none, site_nav=none, auth=true, network=true, site_links=[], user_links=[], loginbtntext="Login") -%}
+{%- macro hgnav(site_title="Hasgeek", site_nav_button=none, site_nav=none, auth=true, network=true, site_links=[], user_links=[], loginbtntext="Login") -%}
   <nav class="navbar navbar-default navbar-fixed-top" id="hgnav" role="navigation">
     <div class="container">
       <div class="navbar-header pull-left hg-header-app-nav">
@@ -248,7 +248,7 @@
 {%- macro add_hasgeek_network() -%}
   {% with %}
     {% set network_links=[
-    {'title': 'HasGeek', 'url': 'http://hasgeek.com', 'icon': 'https://hasgeek.com/static/img/hg-banner.png'},
+    {'title': 'Hasgeek', 'url': 'http://hasgeek.com/', 'icon': 'https://hasgeek.com/static/img/hg-banner.png'},
     {'title': 'Hasjob', 'url': 'https://hasjob.co/', 'icon': 'https://static.hasjob.co/static/img/hasjob-logo-200x200.png'},
     {'title': 'HGTV', 'url': 'https://hasgeek.tv/', 'icon': 'https://static.hasgeek.co.in/static/img/hgnav/hg_hgtv.png'},
     ]%}
