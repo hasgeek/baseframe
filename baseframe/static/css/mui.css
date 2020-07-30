@@ -4123,8 +4123,8 @@ li p + ol {
 .mui-form .mui-form__error {
   color: #ffffff;
   margin: 8px 0 0;
-  background: #fcdcda;
-  border: 1px solid #f04e45;
+  background: #f04e45;
+  border: 1px solid rgba(240, 78, 69, 0.2);
   padding: 8px 16px;
   position: relative;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
