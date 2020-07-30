@@ -1,20 +1,20 @@
 /*!
- * HasGeek baseframe CSS, based on Twitter Bootstrap.
+ * Hasgeek baseframe CSS, based on Twitter Bootstrap.
  */
 
 // Compass
-@import "compass";
-@import "compass/layout";
+@import 'compass';
+@import 'compass/layout';
 
 // Local settings
-@import "settings-bs3";
-@import "layout";
-@import "bootstrap3-custom";
-@import "infobox";
-@import "datepicker";
-@import "adunits";
-@import "print";
-@import "responsive";
+@import 'settings-bs3';
+@import 'layout';
+@import 'bootstrap3-custom';
+@import 'infobox';
+@import 'datepicker';
+@import 'adunits';
+@import 'print';
+@import 'responsive';
 
 // Only import this when in debug mode
 // @import "gridlines";
@@ -23,20 +23,20 @@
 	baseframe customizations
 */
 #page-header {
-    display: none;
+  display: none;
 }
 header {
-    min-height: 50px;
+  min-height: 50px;
 }
 @media screen and (min-width: 768px) {
-    #page-header{
-        display: block;
-    }
-    header {
-        min-height: 0;
-    }
-    .listwidget.horizlist li {
-        display: inline-block;
-        margin-right: 1em
-    }
+  #page-header {
+    display: block;
+  }
+  header {
+    min-height: 0;
+  }
+  .listwidget.horizlist li {
+    display: inline-block;
+    margin-right: 1em;
+  }
 }

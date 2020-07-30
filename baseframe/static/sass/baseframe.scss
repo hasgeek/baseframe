@@ -1,20 +1,20 @@
 /*!
- * HasGeek baseframe CSS, based on Twitter Bootstrap.
+ * Hasgeek baseframe CSS, based on Twitter Bootstrap.
  */
 
 // Compass
-@import "compass";
-@import "compass/layout";
+@import 'compass';
+@import 'compass/layout';
 
 // Local settings
-@import "settings";
-@import "bootstrap-custom";
-@import "layout";
-@import "infobox";
-@import "datepicker";
-@import "adunits";
-@import "print";
-@import "responsive";
+@import 'settings';
+@import 'bootstrap-custom';
+@import 'layout';
+@import 'infobox';
+@import 'datepicker';
+@import 'adunits';
+@import 'print';
+@import 'responsive';
 
 // Only import this when in debug mode
 // @import "gridlines";
