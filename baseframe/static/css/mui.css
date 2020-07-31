@@ -3471,11 +3471,7 @@ h6 {
 }
 
 .mui--bg-primary-dark {
-  background-color: #1f2d3d;
-}
-
-.mui--bg-primary-light {
-  background-color: #f9fafc;
+  background-color: #f1f1f1;
 }
 
 .mui--bg-accent {
@@ -4283,12 +4279,12 @@ li p + ol {
 }
 
 .chip--bg-light {
-  background-color: #f9fafc;
+  background-color: #f1f1f1;
   color: #1f2d3d;
 }
 
 .chip--bg-dark {
-  background-color: #1f2d3d;
+  background-color: #f1f1f1;
   color: #1f2d3d;
 }
 
@@ -4317,7 +4313,7 @@ li p + ol {
 }
 .card .card__header {
   padding: 16px;
-  background: #f9fafc;
+  background: #f1f1f1;
 }
 .card .card__header__title {
   width: 80%;
@@ -4444,7 +4440,7 @@ li p + ol {
   display: -webkit-flex;
   display: flex;
   margin-bottom: 5px;
-  border: 1px solid #1f2d3d;
+  border: 1px solid #f1f1f1;
   min-width: 150px;
 }
 .thumbnail .thumbnail__play-icon {
