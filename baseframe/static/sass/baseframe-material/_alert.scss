@@ -2,9 +2,9 @@
   padding: $mui-grid-padding;
   border: 1px solid transparent;
   border-radius: $mui-border-radius-default;
-  background-color: transparentize($mui-info-color, 0.9);
-  border-color: transparentize($mui-info-color, 0.8);
-  color: $mui-info-color;
+  background-color: $mui-info-color;
+  border-color: transparentize($mui-text-info, 0.8);
+  color: $mui-text-info;
 
   .alert__heading {
     margin-top: 0;
@@ -42,39 +42,39 @@
 }
 
 .alert--success {
-  background-color: transparentize($mui-success-color, 0.9);
-  border-color: transparentize($mui-success-color, 0.8);
-  color: $mui-success-color;
+  background-color: $mui-success-color;
+  border-color: transparentize($mui-text-success, 0.8);
+  color: $mui-text-success;
 }
 
 .alert--success .alert__hr {
-  border-top-color: #c9e2b3;
+  border-top-color: transparentize($mui-text-success, 0.9);
 }
 
 .alert--info .alert__hr {
-  border-top-color: #a6e1ec;
+  border-top-color: transparentize($mui-text-info, 0.9);
 }
 
 .alert--warning {
-  background-color: transparentize($mui-warning-color, 0.9);
-  border-color: transparentize($mui-warning-color, 0.8);
-  color: $mui-warning-color;
+  background-color: $mui-warning-color;
+  border-color: transparentize($mui-text-warning, 0.8);
+  color: $mui-text-warning;
 }
 
 .alert-warning .alert__hr {
-  border-top-color: #f7e1b5;
+  border-top-color: transparentize($mui-text-warning, 0.9);
 }
 
 .alert--error,
 .alert--danger {
-  background-color: transparentize($mui-danger-color, 0.9);
-  border-color: transparentize($mui-danger-color, 0.8);
-  color: $mui-danger-color;
+  background-color: $mui-danger-color;
+  border-color: transparentize($mui-text-danger, 0.8);
+  color: $mui-text-danger;
 }
 
 .alert--error .alert__hr,
 .alert--danger .alert__hr {
-  border-top-color: #e4b9c0;
+  border-top-color: transparentize($mui-text-danger, 0.9);
 }
 
 @media (min-width: 768px) {

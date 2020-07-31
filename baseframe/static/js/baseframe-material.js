@@ -321,6 +321,7 @@ window.Baseframe.Forms = {
       .find('button[type="submit"]')
       .click(function (event) {
         event.preventDefault();
+
         $.ajax({
           url: url,
           type: 'POST',

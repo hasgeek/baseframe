@@ -2,14 +2,13 @@
 // COLORS
 // ============================================================================
 
-$mui-primary-color: #e05f26 !default;
-
-$mui-accent-color: #856a91 !default;
-
-$mui-danger-color: #c04b61 !default;
-$mui-success-color: #53b783 !default;
-$mui-warning-color: #f0a40c !default;
-$mui-info-color: #4a90e2 !default;
+$mui-primary-color: #0f73ed !default;
+$mui-accent-color: #f06a5e !default;
+$mui-danger-color: #fcdcda !default;
+$mui-success-color: #ddf5ed !default;
+$mui-warning-color: #fdf6ea !default;
+$mui-info-color: #cfefff !default;
+$mui-neutral-color: #656565 !default;
 
 // ============================================================================
 // TEXT COLORS
@@ -18,8 +17,12 @@ $mui-info-color: #4a90e2 !default;
 $mui-text-dark: #1f2d3d !default;
 $mui-text-accent: #c0ccda !default;
 $mui-text-light: #4d5763 !default;
-$mui-text-danger: $mui-danger-color !default;
-$mui-text-hyperlink: #4a90e2 !default;
+$mui-text-danger: #f04e45 !default;
+$mui-text-hyperlink: #0f73ed !default;
+$mui-text-success: #21b685 !default;
+$mui-text-warning: #f0a40c !default;
+$mui-text-info: #5da9e8 !default;
+$mui-text-white: #ffffff !default;
 $mui-text-white: #ffffff !default;
 
 // ============================================================================
@@ -27,10 +30,10 @@ $mui-text-white: #ffffff !default;
 // ============================================================================
 
 $mui-bg-color-primary: #ffffff !default;
-$mui-bg-color-accent: #f9fafc !default;
-$mui-bg-color-light: #eff2f7 !default;
-$mui-bg-color-dark: #1f2d3d !default;
+$mui-bg-color-accent: #f9f9f9 !default;
+$mui-bg-color-dark: #f1f1f1 !default;
 $mui-body-bg-color: $mui-bg-color-accent !default;
+$mui-btn-danger-bg-color: $mui-text-danger;
 
 $mui-base-font-color: $mui-text-dark !default;
 $mui-base-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,

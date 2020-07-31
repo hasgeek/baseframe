@@ -70,8 +70,8 @@
   .mui-form__error {
     color: $mui-text-white;
     margin: $mui-grid-padding/2 0 0;
-    background: $mui-danger-color;
-    border: 1px solid $mui-text-danger;
+    background: $mui-text-danger;
+    border: 1px solid transparentize($mui-text-danger, 0.8);
     padding: $mui-grid-padding/2 $mui-grid-padding;
     position: relative;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.14);
@@ -204,15 +204,15 @@
       position: absolute;
       top: 4px;
       left: 0;
-      color: $mui-danger-color;
+      color: $mui-text-danger;
     }
     .progress__bar--danger {
-      background-color: $mui-danger-color;
+      background-color: $mui-text-danger;
     }
     .progress__bar--success {
-      background-color: $mui-success-color;
+      background-color: $mui-text-success;
       .progress__txt {
-        color: $mui-success-color;
+        color: $mui-text-success;
       }
     }
   }
