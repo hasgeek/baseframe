@@ -387,6 +387,8 @@ class ValidEmail(object):
     :param str message: Optional validation error message.
     """
 
+    default_message = __("This email address does not appear to be valid")
+
     def __init__(self, message=None):
         self.message = message
 
@@ -395,10 +397,12 @@ class ValidEmail(object):
             diagnosis = is_email(field.data, check_dns=True, diagnose=True)
         except (dns.resolver.Timeout, dns.resolver.NoNameservers):
             return
-        if diagnosis.code == 0:
+        if diagnosis.code in (0, 3, 4):  # 0 is valid, 3 is DNS No NS, 4 is DNS timeout
             return
         else:
-            raise StopValidation(self.message or _(diagnosis.message))
+            raise StopValidation(
+                self.message or diagnosis.message or self.default_message
+            )
 
 
 # Legacy name
