@@ -363,3 +363,23 @@ class TestFilters(TestCaseBaseframe):
         assert none_if_empty_func([]) is None
         assert none_if_empty_func(False) is None
         assert none_if_empty_func(0) is None
+
+    def test_cleanurl(self):
+        assert (
+            filters.cleanurl_filter("https://example.com/some/path/?query=value")
+            == "example.com/some/path"
+        )
+        assert (
+            filters.cleanurl_filter("example.com/some/path/?query=value")
+            == "example.com/some/path"
+        )
+        assert (
+            filters.cleanurl_filter("example.com/some/path/") == "example.com/some/path"
+        )
+        assert (
+            filters.cleanurl_filter("example.com/some/path") == "example.com/some/path"
+        )
+        assert filters.cleanurl_filter("example.com/") == "example.com"
+        assert filters.cleanurl_filter("//example.com/") == "example.com"
+        assert filters.cleanurl_filter("//test/") == "test"
+        assert filters.cleanurl_filter("foobar") == "foobar"

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+from six.moves.urllib.parse import urlparse, urlunparse
 import six
 
 from datetime import datetime, timedelta
@@ -288,12 +289,10 @@ def timestamp_filter(value):
 
 @baseframe.app_template_filter('cleanurl')
 def cleanurl_filter(url):
-    if url.startswith('http://'):
-        url = url[7:]
-    elif url.startswith('https://'):
-        url = url[8:]
-    if url.endswith('/') and url.count('/') == 1:
-        # Remove trailing slash if applied to end of domain name
-        # but leave it in if it's a path
-        url = url[:-1]
-    return url
+    parsed_url = urlparse(url)
+    unparsed_url = urlunparse(('', parsed_url.netloc, parsed_url.path, '', '', ''))
+    if unparsed_url.startswith('//'):
+        unparsed_url = unparsed_url.lstrip('//')
+    if unparsed_url.endswith('/'):
+        unparsed_url = unparsed_url.rstrip('/')
+    return unparsed_url
