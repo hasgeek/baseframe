@@ -28,6 +28,7 @@ from .parsleyjs import HiddenField, StringField, TextAreaField, URLField
 from .widgets import (
     CoordinatesInput,
     DateTimeInput,
+    ImgeeWidget,
     RadioMatrixInput,
     Select2Widget,
     SelectWidget,
@@ -747,6 +748,8 @@ class ImgeeField(URLField):
             profile='foo', img_label='logos', img_size='100x75')
         )
     """
+
+    widget = ImgeeWidget()
 
     def __init__(
         self,
