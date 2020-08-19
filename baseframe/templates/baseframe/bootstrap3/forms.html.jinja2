@@ -313,6 +313,13 @@
           document.getElementById("{{ ref_id }}").submit();
         }
       })
+    {%- elif field.type == 'ImgeeField' %}
+      console.log('asd');
+      window.addEventListener("message", function (event) {
+        console.log(event);
+        if (event.origin !== "%s")
+            return;
+      });
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
       {%- if config['LASTUSER_CLIENT_ID'] and current_auth.cookie and 'sessionid' in current_auth.cookie %}
         Baseframe.Forms.lastuserAutocomplete({

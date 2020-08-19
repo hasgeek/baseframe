@@ -301,7 +301,7 @@ class ImgeeWidget(wtforms.widgets.Input):
         if not imgee_host:
             raise ValueError("No imgee server specified")
 
-        upload_url = f'{imgee_host}/{field.profile}/new/popup'
+        upload_url = f'{imgee_host}/{field.profile}/new/iframe'
 
         value = kwargs.pop('value', None)
         if not value:
