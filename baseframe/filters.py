@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+from six.moves.urllib.parse import urlsplit, urlunsplit
 import six
 
 from datetime import datetime, timedelta
@@ -293,3 +294,9 @@ def cleanurl_filter(url):
         url = furl(url)
     url.path.normalize()
     return furl().set(netloc=url.netloc, path=url.path).url.lstrip('//').rstrip('/')
+
+
+@baseframe.app_template_filter('make_relative_url')
+def make_relative_url(url):
+    """Filter to discard scheme and netloc from a URL, used to undo _external=True"""
+    return urlunsplit(urlsplit(url)._replace(scheme='', netloc=''))

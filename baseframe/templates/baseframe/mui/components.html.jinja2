@@ -1,5 +1,5 @@
 {%- macro faicon(icon, icon_size='body', baseline=true, css_class='') -%}
-  {% assets "fa5-sprite" %}<svg class="fa5-icon {%- if icon_size %} fa5-icon--{{icon_size}} {%- endif -%} {%- if baseline %} fa5--align-baseline {%- endif -%} {%- if css_class %} {{ css_class }} {%- endif -%}" aria-hidden="true" role="img"><use xlink:href="{{ ASSET_URL }}#{{icon}}"></use></svg>{% endassets %}
+  {% assets "fa5-sprite" %}<svg class="fa5-icon {%- if icon_size %} fa5-icon--{{icon_size}} {%- endif -%} {%- if baseline %} fa5--align-baseline {%- endif -%} {%- if css_class %} {{ css_class }} {%- endif -%}" aria-hidden="true" role="img"><use xlink:href="{{ ASSET_URL|make_relative_url }}#{{icon}}"></use></svg>{% endassets %}
 {%- endmacro %}
 
 {%- macro alertbox(category, message="") %}
