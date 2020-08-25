@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from six.moves.urllib.parse import urlparse, urlunparse
 import six
 
 from datetime import datetime, timedelta
@@ -10,6 +9,7 @@ import os
 from flask import Markup, request
 
 from babel.dates import format_date, format_datetime, format_time
+from furl import furl
 from pytz import UTC
 
 from coaster.gfm import markdown
@@ -289,10 +289,7 @@ def timestamp_filter(value):
 
 @baseframe.app_template_filter('cleanurl')
 def cleanurl_filter(url):
-    parsed_url = urlparse(url)
-    unparsed_url = urlunparse(('', parsed_url.netloc, parsed_url.path, '', '', ''))
-    if unparsed_url.startswith('//'):
-        unparsed_url = unparsed_url.lstrip('//')
-    if unparsed_url.endswith('/'):
-        unparsed_url = unparsed_url.rstrip('/')
-    return unparsed_url
+    if not isinstance(url, furl):
+        url = furl(url)
+    url.path.normalize()
+    return furl().set(netloc=url.netloc, path=url.path).url.lstrip('//').rstrip('/')
