@@ -30,3 +30,29 @@
     outline: none;
   }
 }
+
+.mui-tabs__bar--pills {
+  li {
+    border: 1px solid $mui-divider-color;
+    border-radius: 30px;
+    margin-right: $mui-grid-padding/2;
+    background: $mui-bg-color-accent;
+  }
+  li a {
+    height: 30px;
+    line-height: 30px;
+    padding-left: $mui-grid-padding;
+    padding-right: $mui-grid-padding;
+    cursor: pointer;
+    color: $mui-text-light;
+    text-decoration: none !important;
+    text-transform: inherit;
+  }
+  li.mui--is-active {
+    border: 1px solid transparentize($mui-text-info, 0.8);
+    background: $mui-info-color;
+    a {
+      text-decoration: none !important;
+    }
+  }
+}

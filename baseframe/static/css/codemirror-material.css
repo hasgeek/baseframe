@@ -16,3 +16,8 @@
   border-color: #4a90e2;
   border-width: 2px;
 }
+
+.CodeMirror-wrap pre.CodeMirror-line,
+.CodeMirror-wrap pre.CodeMirror-line-like {
+  padding: 0;
+}
