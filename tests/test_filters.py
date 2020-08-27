@@ -366,7 +366,7 @@ class TestFilters(TestCaseBaseframe):
 
     def test_cleanurl(self):
         assert (
-            filters.cleanurl_filter("https://example.com/some/path/?query=value")
+            filters.cleanurl_filter("https://www.example.com/some/path/?query=value")
             == "example.com/some/path"
         )
         assert (
@@ -374,12 +374,13 @@ class TestFilters(TestCaseBaseframe):
             == "example.com/some/path"
         )
         assert (
-            filters.cleanurl_filter("example.com/some/path/") == "example.com/some/path"
+            filters.cleanurl_filter("www.example.com/some/path/")
+            == "example.com/some/path"
         )
         assert (
             filters.cleanurl_filter("example.com/some/path") == "example.com/some/path"
         )
-        assert filters.cleanurl_filter("example.com/") == "example.com"
+        assert filters.cleanurl_filter("http://www.example.com/") == "example.com"
         assert filters.cleanurl_filter("//example.com/") == "example.com"
         assert filters.cleanurl_filter("//test/") == "test"
         assert filters.cleanurl_filter("foobar") == "foobar"

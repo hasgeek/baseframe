@@ -293,7 +293,10 @@ def cleanurl_filter(url):
     if not isinstance(url, furl):
         url = furl(url)
     url.path.normalize()
-    return furl().set(netloc=url.netloc, path=url.path).url.lstrip('//').rstrip('/')
+    netloc = url.netloc.lstrip('www.') if url.netloc else url.netloc
+    # if scheme is missing, netloc becomes a part of path
+    path = str(url.path).lstrip('www.') if not url.scheme and url.path else url.path
+    return furl().set(netloc=netloc, path=path).url.lstrip('//').rstrip('/')
 
 
 @baseframe.app_template_filter('make_relative_url')
