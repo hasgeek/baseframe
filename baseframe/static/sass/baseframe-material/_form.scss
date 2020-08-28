@@ -266,3 +266,7 @@
   -webkit-transform: translate(80%, -50%);
   transform: translate(80%, -50%);
 }
+.switch-label--disabled {
+  opacity: 0.5;
+  cursor: default;
+}

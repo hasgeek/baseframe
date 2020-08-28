@@ -4313,6 +4313,11 @@ li p + ol {
   transform: translate(80%, -50%);
 }
 
+.switch-label--disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 .chip {
   padding: 0 5px 5px;
   border: 0;
