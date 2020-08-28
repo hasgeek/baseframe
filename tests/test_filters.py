@@ -370,17 +370,18 @@ class TestFilters(TestCaseBaseframe):
             == "example.com/some/path"
         )
         assert (
-            filters.cleanurl_filter("example.com/some/path/?query=value")
+            filters.cleanurl_filter("//example.com/some/path/?query=value")
             == "example.com/some/path"
         )
+        assert filters.cleanurl_filter("http://www.example.com/") == "example.com"
+        assert filters.cleanurl_filter("//www.example.com/") == "example.com"
+        assert filters.cleanurl_filter("//test/") == "test"
+        # cannot process if scheme is missing and no // to begin with
         assert (
             filters.cleanurl_filter("www.example.com/some/path/")
-            == "example.com/some/path"
+            == "www.example.com/some/path"
         )
         assert (
             filters.cleanurl_filter("example.com/some/path") == "example.com/some/path"
         )
-        assert filters.cleanurl_filter("http://www.example.com/") == "example.com"
-        assert filters.cleanurl_filter("//example.com/") == "example.com"
-        assert filters.cleanurl_filter("//test/") == "test"
         assert filters.cleanurl_filter("foobar") == "foobar"
