@@ -10,6 +10,7 @@ import os
 from flask import Markup, request
 
 from babel.dates import format_date, format_datetime, format_time
+from furl import furl
 from pytz import UTC
 
 from coaster.gfm import markdown
@@ -285,6 +286,15 @@ def timestamp_filter(value):
     else:
         ts = value
     return ts
+
+
+@baseframe.app_template_filter('cleanurl')
+def cleanurl_filter(url):
+    if not isinstance(url, furl):
+        url = furl(url)
+    url.path.normalize()
+    netloc = url.netloc.lstrip('www.') if url.netloc else url.netloc
+    return furl().set(netloc=netloc, path=url.path).url.lstrip('//').rstrip('/')
 
 
 @baseframe.app_template_filter('make_relative_url')
