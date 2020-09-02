@@ -4629,6 +4629,63 @@ li p + ol {
   text-decoration: none !important;
 }
 
+.mui-tabs__bar--pills--wraps {
+  white-space: normal;
+}
+.mui-tabs__bar--pills--wraps li {
+  margin-bottom: 8px;
+}
+
+.tabs {
+  display: flex;
+  width: 100%;
+  overflow: auto;
+  align-items: center;
+}
+.tabs .tabs__item {
+  padding: 16px;
+  cursor: pointer;
+  position: relative;
+  min-width: 32px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin: 0;
+  text-align: center;
+  cursor: pointer;
+  flex: 0 0 auto;
+  background: none;
+}
+.tabs .tabs__item--width {
+  min-width: auto;
+}
+.tabs .tabs__item:hover,
+.tabs .tabs__item:focus {
+  text-decoration: none;
+  outline: none;
+}
+.tabs .tabs__item--active {
+  border-bottom: 2px solid #f06a5e;
+}
+.tabs .tabs__item-control {
+  position: fixed;
+  z-index: 1000;
+  background: #ffffff;
+  min-width: auto;
+  top: 0;
+  padding: 16px 16px 6px;
+  align-self: center;
+  box-shadow: 0 2px 2px -1px rgba(158, 158, 158, 0.24);
+}
+.tabs .tabs__item-control .tabs__item-control__icon {
+  vertical-align: middle;
+}
+.tabs .tabs__item-control--prev {
+  left: 0;
+}
+.tabs .tabs__item-control--next {
+  right: 0;
+}
+
 .mui-table.mui-table--hover > tbody > tr > td:hover {
   background-color: #bbdefb;
 }
