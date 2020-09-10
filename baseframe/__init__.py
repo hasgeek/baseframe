@@ -413,10 +413,10 @@ class BaseframeBlueprint(Blueprint):
                 app.logger.debug("Successfully initiated Newrelic")
             else:
                 app.logger.debug(
-                    "Did not find Newrelic settings file newerlic.ini, skipping it"
+                    "Did not find Newrelic settings file newrelic.ini, skipping it"
                 )
         except ImportError:
-            app.logger.debug("Did not find newerlic package, skipping it")
+            app.logger.debug("Did not find `newrelic` package, skipping it")
 
     def register(self, app, options, first_registration=False):
         """
