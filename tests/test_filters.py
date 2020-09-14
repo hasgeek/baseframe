@@ -363,3 +363,25 @@ class TestFilters(TestCaseBaseframe):
         assert none_if_empty_func([]) is None
         assert none_if_empty_func(False) is None
         assert none_if_empty_func(0) is None
+
+    def test_cleanurl(self):
+        assert (
+            filters.cleanurl_filter("https://www.example.com/some/path/?query=value")
+            == "example.com/some/path"
+        )
+        assert (
+            filters.cleanurl_filter("//example.com/some/path/?query=value")
+            == "example.com/some/path"
+        )
+        assert filters.cleanurl_filter("http://www.example.com/") == "example.com"
+        assert filters.cleanurl_filter("//www.example.com/") == "example.com"
+        assert filters.cleanurl_filter("//test/") == "test"
+        # cannot process if scheme is missing and no // to begin with
+        assert (
+            filters.cleanurl_filter("www.example.com/some/path/")
+            == "www.example.com/some/path"
+        )
+        assert (
+            filters.cleanurl_filter("example.com/some/path") == "example.com/some/path"
+        )
+        assert filters.cleanurl_filter("foobar") == "foobar"

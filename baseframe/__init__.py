@@ -15,6 +15,7 @@ from flask_assets import Bundle, Environment
 from flask_babelhg import Babel, Domain, ctx_has_locale
 from speaklater import is_lazy_string
 
+from babel import Locale
 from flask_caching import Cache
 from furl import furl
 from pytz import UTC, timezone
@@ -111,6 +112,8 @@ class JSONEncoder(JSONEncoderBase):
             return o.zone
         if isinstance(o, (date, datetime, time)):
             return o.isoformat()
+        if isinstance(o, Locale):
+            return str(o)
         if isinstance(o, abc.Mapping):
             return dict(o)
         if isinstance(o, furl):
@@ -400,6 +403,20 @@ class BaseframeBlueprint(Blueprint):
             'callback', 'onInvisibleRecaptchaSubmit'
         )
         app.config['RECAPTCHA_DATA_ATTRS'].setdefault('size', 'invisible')
+
+        try:
+            import newrelic.agent
+            import os.path
+
+            if os.path.isfile('newrelic.ini'):
+                newrelic.agent.initialize('newrelic.ini')
+                app.logger.debug("Successfully initiated Newrelic")
+            else:
+                app.logger.debug(
+                    "Did not find Newrelic settings file newrelic.ini, skipping it"
+                )
+        except ImportError:
+            app.logger.debug("Did not find `newrelic` package, skipping it")
 
     def register(self, app, options, first_registration=False):
         """
