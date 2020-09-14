@@ -356,6 +356,14 @@
           document.getElementById("{{ ref_id }}").submit();
         }
       })
+    {%- elif field.type == 'ImgeeField' %}
+      window.addEventListener("message", function (event) {
+        console.log(event);
+        if (event.origin !== "{{ config['IMGEE_HOST'] }}")
+            return;
+        $('#img_{{ field.id }}').attr('src', event.data.embed_url);
+        $('#{{ field.id }}').val(event.data.embed_url);
+      });
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
       {%- if config['LASTUSER_CLIENT_ID'] and current_auth.cookie and 'sessionid' in current_auth.cookie %}
         Baseframe.Forms.lastuserAutocomplete({

@@ -312,8 +312,9 @@ class ImgeeWidget(wtforms.widgets.Input):
             value = furl.url
 
         return Markup(
-            '<input %s> <iframe %s></iframe>'
+            '<img %s> <input %s> <iframe %s></iframe>'
             % (
+                self.html_params(id='img_' + id_, src=value, width='200', **kwargs),
                 self.html_params(
                     id=id_,
                     name=field.name,
