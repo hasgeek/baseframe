@@ -3569,14 +3569,6 @@ h6 {
   line-height: 16px;
 }
 
-.mui--text-success {
-  color: #ddf5ed;
-}
-
-.mui--text-warning {
-  color: #fdf6ea;
-}
-
 .mui--text-uppercase {
   text-transform: uppercase;
 }
@@ -3879,6 +3871,25 @@ h6 {
 .sidebar.open {
   -webkit-transform: translate(0, 0);
   transform: translate(0, 0);
+}
+
+.mui-dropdown__menu {
+  border-radius: 0 16px 16px 16px;
+  padding: 0;
+  overflow: hidden;
+}
+.mui-dropdown__menu > li > a {
+  padding: 16px;
+}
+.mui-dropdown__menu > li > a:hover,
+.mui-dropdown__menu > li > a:focus {
+  text-decoration: none;
+  color: #16212c;
+  background-color: #f9f9f9;
+}
+
+.mui-dropdown__menu--right {
+  border-radius: 16px 0 16px 16px;
 }
 
 html,

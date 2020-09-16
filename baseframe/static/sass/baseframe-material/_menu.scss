@@ -240,3 +240,24 @@
   -webkit-transform: translate(0, 0);
   transform: translate(0, 0);
 }
+
+.mui-dropdown__menu {
+  border-radius: 0 16px 16px 16px;
+  padding: 0;
+  overflow: hidden;
+  > li > a {
+    padding: $mui-grid-padding;
+
+    // hover & focus state
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      color: $mui-dropdown-link-font-color-hover;
+      background-color: $mui-bg-color-accent;
+    }
+  }
+}
+
+.mui-dropdown__menu--right {
+  border-radius: 16px 0 16px 16px;
+}
