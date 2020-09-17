@@ -292,7 +292,7 @@ class InlineListWidget(object):
 
 
 class ImgeeWidget(wtforms.widgets.Input):
-    input_type = 'url'
+    input_type = 'hidden'
 
     def __call__(self, field, **kwargs):
         id_ = kwargs.pop('id', field.id)
