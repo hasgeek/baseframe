@@ -67,6 +67,15 @@ class GetSetForm(forms.Form):
         pass
 
 
+class InitOrderForm(forms.Form):
+    __expects__ = ('expected_item',)
+
+    has_context = forms.StringField("Has context")
+
+    def get_has_context(self, obj):
+        return self.expected_item
+
+
 @pytest.fixture
 def user():
     return SimpleUser(fullname="Test user", company="Test company", password="test")
@@ -148,3 +157,19 @@ def test_set(test_client, user):
     assert not user.password_is("test")
     assert user.password_is("Test123")
     assert not hasattr(user, 'confirm_password')
+
+
+def test_init_order(test_client):
+    """Test that get_<fieldname> methods have proper context."""
+
+    with pytest.raises(TypeError):
+        # A parameter named `expected_item` is expected
+        InitOrderForm(meta={'csrf': False})
+
+    # get_<fieldname> is only called when there is an object
+    form = InitOrderForm(expected_item='probe', meta={'csrf': False})
+    assert form.has_context.data is None
+
+    # get_<fieldname> has context when it is called
+    form = InitOrderForm(expected_item='probe', obj=object(), meta={'csrf': False})
+    assert form.has_context.data == 'probe'

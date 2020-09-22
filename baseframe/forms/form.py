@@ -138,13 +138,13 @@ class Form(BaseForm):
             )
 
     def __init__(self, *args, **kwargs):
-        super(Form, self).__init__(*args, **kwargs)
         for attr in self.__expects__:
             if attr not in kwargs:
                 raise TypeError("Expected parameter %s was not supplied" % attr)
             setattr(self, attr, kwargs.pop(attr))
 
-        # Make editing objects easier
+        # TODO: These fields predate the `__expects__` protocol and are pending
+        # deprecation.
         self.edit_obj = kwargs.get('obj')
         self.edit_model = kwargs.get('model')
         self.edit_parent = kwargs.get('parent')
@@ -159,6 +159,13 @@ class Form(BaseForm):
                 self.edit_parent = self.edit_obj.parent
         else:
             self.edit_id = None
+
+        # Call baseclass after expected parameters have been set. `__init__` will call
+        # `process`, which will in turn call the ``get_<fieldname>`` methods, and they
+        # will need proper context
+        super(Form, self).__init__(*args, **kwargs)
+
+        # Finally, populate the ``choices`` attr of selection fields
         self.set_queries()
 
     def populate_obj(self, obj):
