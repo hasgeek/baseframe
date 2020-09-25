@@ -301,7 +301,7 @@ class ImgeeWidget(wtforms.widgets.Input):
         if not imgee_host:
             raise ValueError("No imgee server specified")
 
-        upload_url = f'{imgee_host}/{field.profile}/new/iframe'
+        upload_url = f'{imgee_host}/{field.profile}/popup'
 
         value = kwargs.pop('value', None)
         if not value:
@@ -310,9 +310,18 @@ class ImgeeWidget(wtforms.widgets.Input):
             value = ''
         elif isinstance(value, furl):
             value = furl.url
+            
+        field.iframe = Markup(
+            '<iframe %s class="imgee-upload"></iframe>'
+            % (
+                self.html_params(
+                    id='iframe_' + id_ + '_upload', input_id=id_, src=upload_url,
+                ),
+            )
+        )
 
         return Markup(
-            '<img %s> <input %s> <iframe %s></iframe>'
+            '<img %s> <input %s>'
             % (
                 self.html_params(id='img_' + id_, src=value, width='200', **kwargs),
                 self.html_params(
@@ -321,9 +330,6 @@ class ImgeeWidget(wtforms.widgets.Input):
                     placeholder=_("Image URL"),
                     value=value,
                     **kwargs
-                ),
-                self.html_params(
-                    id='iframe_' + id_ + '_upload', input_id=id_, src=upload_url
                 ),
             )
         )
