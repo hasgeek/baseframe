@@ -79,6 +79,17 @@
                 <label>{{ field.label.text }}</label>
               {%- endif %}
             </div>
+          {%- elif field.type == 'ImgeeField' %}
+            {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows) }}
+            <a href="#imgee-{{field.id}}" rel="modal:open" class="mui-btn mui-btn--raised imgee-button">Select or Upload Image</a>
+            <div class="modal modal-fullscreen" id="imgee-{{field.id}}">
+              <div class="modal__header">
+                <a class="modal__close mui--text-dark" href="javascript:void(0);" data-target="close cancel register modal" aria-label="{% trans %}Close{% endtrans %}" rel="modal:close">{{ faicon(icon='times', icon_size='title') }}</a>
+              </div>
+              <div class="modal__body">
+                {{ field.iframe }}
+              </div>
+            </div>
           {%- elif field.widget.input_type == 'password' and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-textfield mui-textfield--password mui-textfield--float-label">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
@@ -357,12 +368,20 @@
         }
       })
     {%- elif field.type == 'ImgeeField' %}
+      console.log('{{field.widget_type}}')
       window.addEventListener("message", function (event) {
-        console.log(event);
-        if (event.origin !== "{{ config['IMGEE_HOST'] }}")
-            return;
-        $('#img_{{ field.id }}').attr('src', event.data.embed_url);
-        $('#{{ field.id }}').val(event.data.embed_url);
+        if (event.origin === "{{ config['IMGEE_HOST'] }}") {
+          var message = JSON.parse(event.data);
+          console.log(message.embed_url);
+          if (message.context == 'imgee.upload') {
+            console.log('imgee upload')
+            $('#img_{{ field.id }}').attr('src', message.embed_url);
+            $('#{{ field.id }}').val(message.embed_url);
+            {%- if field.widget_type != 'modal' %}
+              $.modal.close();
+            {%- endif %}
+          }
+        }
       });
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
       {%- if config['LASTUSER_CLIENT_ID'] and current_auth.cookie and 'sessionid' in current_auth.cookie %}
