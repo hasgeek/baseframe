@@ -81,7 +81,7 @@
             </div>
           {%- elif field.type == 'ImgeeField' %}
             {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows) }}
-            <a href="#imgee-{{field.id}}" rel="modal:open" class="mui-btn mui-btn--raised imgee-button">Select or Upload Image</a>
+            <a href="#imgee-{{field.id}}" rel="modal:open" class="mui-btn mui-btn--raised imgee-button">{% trans %}Select or Upload Image{% endtrans %}</a>
             <div class="modal modal-fullscreen" id="imgee-{{field.id}}">
               <div class="modal__header">
                 <a class="modal__close mui--text-dark" href="javascript:void(0);" data-target="close cancel register modal" aria-label="{% trans %}Close{% endtrans %}" rel="modal:close">{{ faicon(icon='times', icon_size='title') }}</a>

@@ -4319,8 +4319,7 @@ li p + ol {
 }
 
 .imgee-url-holder {
-  display: inline-block;
-  vertical-align: bottom;
+  display: block;
   max-width: 200px;
   margin-bottom: 8px;
 }
