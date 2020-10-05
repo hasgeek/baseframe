@@ -4608,7 +4608,7 @@ li p + ol {
   .jquery-modal.blocker.current .modal {
     max-width: 500px;
     width: 90%;
-    padding: 24px;
+    padding: 16px;
     min-height: auto;
     border-radius: 8px;
   }

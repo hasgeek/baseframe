@@ -385,7 +385,6 @@
         }
       });
       $('#img_{{ field.id }}').on('load', function() {
-        console.log('image loaded');
         $('#imgee-loader-{{field.id}}').addClass('mui--hide');
       });
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
