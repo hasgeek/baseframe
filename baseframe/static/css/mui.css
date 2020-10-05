@@ -4318,17 +4318,26 @@ li p + ol {
   cursor: default;
 }
 
-.imgee-url-holder {
+.imgee {
+  position: relative;
+}
+.imgee .imgee__url-holder {
   display: block;
   max-width: 200px;
   margin-bottom: 8px;
 }
-
-.imgee-button {
+.imgee .imgee__loader {
+  position: absolute;
+  top: 100px;
+  left: 200px;
+  width: 35px;
+  height: 35px;
+}
+.imgee .imgee__button {
   margin-bottom: 8px;
 }
 
-.modal-fullscreen iframe.imgee-upload {
+.modal--fullscreen iframe.imgee-upload {
   width: 100%;
   height: 100vh;
   border: 0;
@@ -4579,13 +4588,13 @@ li p + ol {
 .jquery-modal.blocker.current .modal .modal__body__btn {
   margin-top: 16px;
 }
-.jquery-modal.blocker.current .modal-form {
+.jquery-modal.blocker.current .modal--form {
   width: 100%;
   border-radius: 0;
   overflow: auto;
   min-height: 100%;
 }
-.jquery-modal.blocker.current .modal-fullscreen {
+.jquery-modal.blocker.current .modal--fullscreen {
   width: 100%;
   height: 100%;
   padding: 0;
@@ -4603,7 +4612,7 @@ li p + ol {
     min-height: auto;
     border-radius: 8px;
   }
-  .jquery-modal.blocker.current .modal-fullscreen {
+  .jquery-modal.blocker.current .modal--fullscreen {
     max-width: 90%;
     padding: 16px;
     height: auto;

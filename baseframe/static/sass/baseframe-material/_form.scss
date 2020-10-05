@@ -271,17 +271,28 @@
   cursor: default;
 }
 
-.imgee-url-holder {
-  display: block;
-  max-width: 200px;
-  margin-bottom: $mui-grid-padding/2;
+.imgee {
+  position: relative;
+  .imgee__url-holder {
+    display: block;
+    max-width: 200px;
+    margin-bottom: $mui-grid-padding/2;
+  }
+
+  .imgee__loader {
+    position: absolute;
+    top: 100px;
+    left: 200px;
+    width: 35px;
+    height: 35px;
+  }
+
+  .imgee__button {
+    margin-bottom: $mui-grid-padding/2;
+  }
 }
 
-.imgee-button {
-  margin-bottom: $mui-grid-padding/2;
-}
-
-.modal-fullscreen {
+.modal--fullscreen {
   iframe.imgee-upload {
     width: 100%;
     height: 100vh;
