@@ -1,7 +1,10 @@
-// This is a global function. Isn't there a better way to do this?
+// Single Global Baseframe Object that serves as a namespace
+window.Baseframe = {};
 
-function activate_widgets() {
-  var cm_markdown_config = {
+window.Baseframe.Config = {
+  defaultLatitude: '12.961443',
+  defaultLongitude: '77.64435000000003',
+  cm_markdown_config: {
     mode: 'gfm',
     lineNumbers: false,
     theme: 'default',
@@ -17,29 +20,31 @@ function activate_widgets() {
       'Cmd-Left': 'goLineLeft',
       'Cmd-Right': 'goLineRight',
     },
-  };
+  },
+  cm_markdown_config: 'css',
+  lineNumbers: false,
+  theme: 'default',
+  lineWrapping: true,
+  autoCloseBrackets: true,
+  matchBrackets: true,
+  viewportMargin: Infinity,
+  extraKeys: {
+    Tab: false,
+    'Shift-Tab': false,
+    Home: 'goLineLeft',
+    End: 'goLineRight',
+    'Cmd-Left': 'goLineLeft',
+    'Cmd-Right': 'goLineRight',
+  },
+};
 
-  var cm_css_config = {
-    mode: 'css',
-    lineNumbers: false,
-    theme: 'default',
-    lineWrapping: true,
-    autoCloseBrackets: true,
-    matchBrackets: true,
-    viewportMargin: Infinity,
-    extraKeys: {
-      Tab: false,
-      'Shift-Tab': false,
-      Home: 'goLineLeft',
-      End: 'goLineRight',
-      'Cmd-Left': 'goLineLeft',
-      'Cmd-Right': 'goLineRight',
-    },
-  };
-
+function activate_widgets() {
   // Activate codemirror on all textareas with class='markdown'
   $('textarea.markdown').each(function () {
-    var editor = CodeMirror.fromTextArea(this, cm_markdown_config);
+    var editor = CodeMirror.fromTextArea(
+      textareaElem,
+      window.Baseframe.Config.cm_markdown_config
+    );
     var delay;
     editor.on('change', function (instance) {
       clearTimeout(delay);
@@ -51,7 +56,10 @@ function activate_widgets() {
 
   // Activate codemirror on all textareas with class='stylesheet'
   $('textarea.stylesheet').each(function () {
-    var editor = CodeMirror.fromTextArea(this, cm_css_config);
+    var editor = CodeMirror.fromTextArea(
+      this,
+      window.Baseframe.Config.cm_css_config
+    );
     var delay;
     editor.on('change', function (instance) {
       clearTimeout(delay);
@@ -185,14 +193,6 @@ $(function () {
     'Hello, curious geek. Our source is at https://github.com/hasgeek. Why not contribute a patch?'
   );
 });
-
-// Single Global Baseframe Object that serves as a namespace
-window.Baseframe = {};
-
-window.Baseframe.Config = {
-  defaultLatitude: '12.961443',
-  defaultLongitude: '77.64435000000003',
-};
 
 window.Baseframe.Forms = {
   preventSubmitOnEnter: function (id) {
