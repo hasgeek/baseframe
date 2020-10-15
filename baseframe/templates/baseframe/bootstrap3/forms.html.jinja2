@@ -165,7 +165,7 @@
           if(!$(this).data('parsley-validate') ||  $(this).data('parsley-validate') && $(this).hasClass('parsley-valid')) {
             $(this).find('button[type="submit"]').prop('disabled', true);
             $(this).find('input[type="submit"]').prop('disabled', true);
-            $(this).find(".loading").removeClass('mui--hide');
+            $(this).find(".loading").removeClass('hidden');
           }
         });
       });
@@ -313,13 +313,6 @@
           document.getElementById("{{ ref_id }}").submit();
         }
       })
-    {%- elif field.type == 'ImgeeField' %}
-      console.log('asd');
-      window.addEventListener("message", function (event) {
-        console.log(event);
-        if (event.origin !== "%s")
-            return;
-      });
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
       {%- if config['LASTUSER_CLIENT_ID'] and current_auth.cookie and 'sessionid' in current_auth.cookie %}
         Baseframe.Forms.lastuserAutocomplete({
