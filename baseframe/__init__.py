@@ -7,13 +7,14 @@ import six.moves.collections_abc as abc
 from datetime import date, datetime, time
 import gettext
 import json
+import os.path
 import types
 
 from flask import Blueprint, current_app, request
 from flask.json import JSONEncoder as JSONEncoderBase
 from flask_assets import Bundle, Environment
 from flask_babelhg import Babel, Domain, ctx_has_locale
-from speaklater import is_lazy_string
+from flask_babelhg.speaklater import is_lazy_string
 
 from babel import Locale
 from flask_caching import Cache
@@ -44,6 +45,10 @@ try:
     from flask_debugtoolbar_lineprofilerpanel.profile import line_profile
 except ImportError:
     line_profile = None
+try:
+    import newrelic.agent
+except ImportError:
+    newrelic = None
 
 
 # TODO: baseframe_js and baseframe_css are defined in deprecated.py
@@ -404,19 +409,15 @@ class BaseframeBlueprint(Blueprint):
         )
         app.config['RECAPTCHA_DATA_ATTRS'].setdefault('size', 'invisible')
 
-        try:
-            import newrelic.agent
-            import os.path
-
-            if os.path.isfile('newrelic.ini'):
-                newrelic.agent.initialize('newrelic.ini')
-                app.logger.debug("Successfully initiated Newrelic")
-            else:
-                app.logger.debug(
-                    "Did not find Newrelic settings file newrelic.ini, skipping it"
-                )
-        except ImportError:
+        if newrelic and os.path.isfile('newrelic.ini'):
+            newrelic.agent.initialize('newrelic.ini')
+            app.logger.debug("Successfully initiated Newrelic")
+        elif not newrelic:
             app.logger.debug("Did not find `newrelic` package, skipping it")
+        else:
+            app.logger.debug(
+                "Did not find Newrelic settings file newrelic.ini, skipping it"
+            )
 
     def register(self, app, options, first_registration=False):
         """

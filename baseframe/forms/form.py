@@ -6,8 +6,8 @@ from threading import Lock
 import uuid
 
 from flask import current_app
+from flask_babelhg.speaklater import is_lazy_string
 from flask_wtf import FlaskForm as BaseForm
-from speaklater import is_lazy_string
 from wtforms.compat import iteritems
 import wtforms
 
