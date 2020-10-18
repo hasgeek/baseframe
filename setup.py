@@ -42,7 +42,6 @@ requires = [
     'semantic_version',
     'sentry-sdk',
     'six>=1.13.0',
-    'speaklater',
     'statsd',
     'werkzeug',
     'WTForms>=2.2',
