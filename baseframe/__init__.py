@@ -416,7 +416,7 @@ class BaseframeBlueprint(Blueprint):
             app.logger.debug("Did not find `newrelic` package, skipping it")
         else:
             app.logger.debug(
-                "Did not find Newrelic settings file newrelic.ini, skipping it"
+                "Did not find New Relic settings file newrelic.ini, skipping it"
             )
 
     def register(self, app, options, first_registration=False):
