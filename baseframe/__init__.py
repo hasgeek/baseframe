@@ -14,7 +14,8 @@ from flask import Blueprint, current_app, request
 from flask.json import JSONEncoder as JSONEncoderBase
 from flask_assets import Bundle, Environment
 from flask_babelhg import Babel, Domain, ctx_has_locale
-from flask_babelhg.speaklater import is_lazy_string
+from flask_babelhg.speaklater import is_lazy_string as is_lazy_string_hg
+from speaklater import is_lazy_string as is_lazy_string_sl
 
 from babel import Locale
 from flask_caching import Cache
@@ -102,6 +103,11 @@ THEME_FILES = {
 baseframe_translations = Domain(translations.__path__[0], domain='baseframe')
 _ = baseframe_translations.gettext
 __ = baseframe_translations.lazy_gettext
+
+
+def is_lazy_string(string):
+    # Some lazy strings are from the speaklater library, some from Flask-Babelhg's fork
+    return is_lazy_string_hg(string) or is_lazy_string_sl(string)
 
 
 class JSONEncoder(JSONEncoderBase):
