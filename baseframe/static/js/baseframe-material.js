@@ -21,7 +21,7 @@ window.Baseframe.Config = {
       'Cmd-Right': 'goLineRight',
     },
   },
-  cm_markdown_config: 'css',
+  cm_css_config: 'css',
   lineNumbers: false,
   theme: 'default',
   lineWrapping: true,
