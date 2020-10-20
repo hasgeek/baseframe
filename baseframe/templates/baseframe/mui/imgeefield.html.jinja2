@@ -1,0 +1,13 @@
+{%- from "baseframe/mui/components.html.jinja2" import faicon -%}
+
+{{ field_html|escape }}
+<span class="loading imgee__loader mui--hide" id="imgee-loader-{{field.id}}">&nbsp;</span>
+<a href="#imgee-{{field.id}}" rel="modal:open" class="mui-btn mui-btn--raised imgee__button">{% trans %}Select or Upload Image{% endtrans %}</a>
+<div class="modal modal--fullscreen" id="imgee-{{field.id}}">
+  <div class="modal__header">
+    <a class="modal__close mui--text-dark" href="javascript:void(0);" data-target="close cancel register modal" aria-label="{% trans %}Close{% endtrans %}" rel="modal:close">{{ faicon(icon='times', icon_size='title') }}</a>
+  </div>
+  <div class="modal__body">
+    {{ iframe_html|escape }}
+  </div>
+</div>
