@@ -7,12 +7,12 @@ import uuid
 
 from flask import current_app
 from flask_wtf import FlaskForm as BaseForm
-from speaklater import is_lazy_string
 from wtforms.compat import iteritems
 import wtforms
 
 from .. import asset_cache
 from .. import b__ as __
+from .. import is_lazy_string
 from ..signals import form_validation_error, form_validation_success
 from . import fields as bfields
 from . import filters as bfilters
