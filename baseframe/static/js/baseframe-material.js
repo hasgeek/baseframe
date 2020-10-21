@@ -42,7 +42,7 @@ function activate_widgets() {
   // Activate codemirror on all textareas with class='markdown'
   $('textarea.markdown').each(function () {
     var editor = CodeMirror.fromTextArea(
-      textareaElem,
+      this,
       window.Baseframe.Config.cm_markdown_config
     );
     var delay;
