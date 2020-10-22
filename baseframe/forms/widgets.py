@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 import six
 
-from flask import Markup, current_app
+from flask import Markup, current_app, render_template
 from wtforms.compat import text_type
 from wtforms.widgets import RadioInput, Select, html_params
 import wtforms
@@ -299,7 +299,7 @@ class ImgeeWidget(wtforms.widgets.Input):
         kwargs.setdefault('type', self.input_type)
         imgee_host = current_app.config.get('IMGEE_HOST')
         if not imgee_host:
-            raise ValueError("No imgee server specified")
+            raise ValueError("No imgee server specified in config variable IMGEE_HOST")
 
         upload_url = f'{imgee_host}/{field.profile}/popup'
 
@@ -310,17 +310,19 @@ class ImgeeWidget(wtforms.widgets.Input):
             value = ''
         elif isinstance(value, furl):
             value = furl.url
-            
-        field.iframe = Markup(
+
+        iframe_html = Markup(
             '<iframe %s class="imgee-upload"></iframe>'
             % (
                 self.html_params(
-                    id='iframe_' + id_ + '_upload', input_id=id_, src=upload_url,
+                    id='iframe_' + id_ + '_upload',
+                    input_id=id_,
+                    src=upload_url,
                 ),
             )
         )
 
-        return Markup(
+        field_html = Markup(
             '<img %s> <input %s>'
             % (
                 self.html_params(id='img_' + id_, src=value, width='200', **kwargs),
@@ -331,5 +333,14 @@ class ImgeeWidget(wtforms.widgets.Input):
                     value=value,
                     **kwargs
                 ),
+            )
+        )
+
+        return Markup(
+            render_template(
+                'baseframe/mui/imgeefield.html.jinja2',
+                field=field,
+                iframe_html=iframe_html,
+                field_html=field_html,
             )
         )
