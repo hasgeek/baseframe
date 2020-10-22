@@ -5,7 +5,7 @@
 <a href="#imgee-{{field.id}}" rel="modal:open" class="mui-btn mui-btn--raised imgee__button">{% trans %}Select or upload image{% endtrans %}</a>
 <div class="modal modal--fullscreen" id="imgee-{{field.id}}">
   <div class="modal__header">
-    <a class="modal__close mui--text-dark" href="javascript:void(0);" data-target="close cancel register modal" aria-label="{% trans %}Close{% endtrans %}" rel="modal:close">{{ faicon(icon='times', icon_size='title') }}</a>
+    <a class="modal__close mui--text-dark" href="javascript:void(0);" data-target="close modal" aria-label="{% trans %}Close{% endtrans %}" rel="modal:close">{{ faicon(icon='times', icon_size='title') }}</a>
   </div>
   <div class="modal__body">
     {{ iframe_html|escape }}
