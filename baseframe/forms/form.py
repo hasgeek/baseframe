@@ -7,12 +7,12 @@ import uuid
 
 from flask import current_app
 from flask_wtf import FlaskForm as BaseForm
-from speaklater import is_lazy_string
 from wtforms.compat import iteritems
 import wtforms
 
 from .. import asset_cache
 from .. import b__ as __
+from .. import is_lazy_string
 from ..signals import form_validation_error, form_validation_success
 from . import fields as bfields
 from . import filters as bfilters
@@ -128,7 +128,8 @@ class Form(BaseForm):
         super().__init_subclass__(**kwargs)
         if {'edit_obj', 'edit_model', 'edit_parent', 'edit_id'} & set(cls.__expects__):
             raise TypeError(
-                "This form has __expects__ parameters that are reserved by the base form"
+                "This form has __expects__ parameters that are reserved by the base"
+                " form"
             )
 
         if set(cls.__dict__.keys()) & set(cls.__expects__):
@@ -137,13 +138,13 @@ class Form(BaseForm):
             )
 
     def __init__(self, *args, **kwargs):
-        super(Form, self).__init__(*args, **kwargs)
         for attr in self.__expects__:
             if attr not in kwargs:
                 raise TypeError("Expected parameter %s was not supplied" % attr)
             setattr(self, attr, kwargs.pop(attr))
 
-        # Make editing objects easier
+        # TODO: These fields predate the `__expects__` protocol and are pending
+        # deprecation.
         self.edit_obj = kwargs.get('obj')
         self.edit_model = kwargs.get('model')
         self.edit_parent = kwargs.get('parent')
@@ -158,7 +159,77 @@ class Form(BaseForm):
                 self.edit_parent = self.edit_obj.parent
         else:
             self.edit_id = None
+
+        # Call baseclass after expected parameters have been set. `__init__` will call
+        # `process`, which will in turn call the ``get_<fieldname>`` methods, and they
+        # will need proper context
+        super(Form, self).__init__(*args, **kwargs)
+
+        # Finally, populate the ``choices`` attr of selection fields
         self.set_queries()
+
+    def populate_obj(self, obj):
+        """
+        Populates the attributes of the passed `obj` with data from the form's
+        fields.
+
+        If the form has a ``set_<fieldname>`` method, it will be called with the object
+        in place of the field's ``populate_obj`` method. The custom method is then
+        responsible for populating the object with that field's value.
+
+        This method overrides the default implementation in WTForms to support custom
+        set methods.
+        """
+        for name, field in iteritems(self._fields):
+            if hasattr(self, 'set_' + name):
+                getattr(self, 'set_' + name)(obj)
+            else:
+                field.populate_obj(obj, name)
+
+    def process(self, formdata=None, obj=None, data=None, **kwargs):
+        """
+        Take form, object data, and keyword arg input and have the fields
+        process them.
+
+        :param formdata:
+            Used to pass data coming from the enduser, usually `request.POST` or
+            equivalent.
+        :param obj:
+            If `formdata` is empty or not provided, this object is checked for
+            attributes matching form field names, which will be used for field
+            values. If the form has a ``get_<fieldname>`` method, it will be called
+            with the object as an attribute and is expected to return the value
+        :param data:
+            If provided, must be a dictionary of data. This is only used if
+            `formdata` is empty or not provided and `obj` does not contain
+            an attribute named the same as the field.
+        :param `**kwargs`:
+            If `formdata` is empty or not provided and `obj` does not contain
+            an attribute named the same as a field, form will assign the value
+            of a matching keyword argument to the field, if one exists.
+
+        This method overrides the default implementation in WTForms to support custom
+        load methods.
+        """
+        formdata = self.meta.wrap_formdata(self, formdata)
+
+        if data is not None:
+            # Preserved comment from WTForms source:
+            # XXX we want to eventually process 'data' as a new entity.
+            #     Temporarily, this can simply be merged with kwargs.
+            kwargs = dict(data, **kwargs)
+
+        for (name, field) in iteritems(self._fields):
+            # This `if` condition is the only change from the WTForms source. It must be
+            # synced with the `process` method in future WTForms releases.
+            if obj is not None and hasattr(self, 'get_' + name):
+                field.process(formdata, getattr(self, 'get_' + name)(obj))
+            elif obj is not None and hasattr(obj, name):
+                field.process(formdata, getattr(obj, name))
+            elif name in kwargs:
+                field.process(formdata, kwargs[name])
+            else:
+                field.process(formdata)
 
     def validate(self, send_signals=True):
         success = super(Form, self).validate()
@@ -176,8 +247,8 @@ class Form(BaseForm):
             form_validation_success.send(self)
 
     def errors_with_data(self):
-        # Convert lazy_gettext error strings into unicode so they don't cause problems downstream
-        # (like when pickling)
+        # Convert lazy_gettext error strings into unicode so they don't cause problems
+        # downstream (like when pickling)
         return {
             name: {
                 'data': f.data,
@@ -268,7 +339,8 @@ class FormGenerator(object):
                                 itemparams[paramname] = item[paramname]
                         filters.append(filter_registry[itemname][0](**itemparams))
 
-            # TODO: Also validate the parameters in fielddata, like with validators above
+            # TODO: Also validate the parameters in fielddata, like with validators
+            # above
             setattr(
                 DynamicForm,
                 name,

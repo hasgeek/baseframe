@@ -21,3 +21,17 @@
 .CodeMirror-wrap pre.CodeMirror-line-like {
   padding: 0;
 }
+
+.CodeMirror-focused .CodeMirror-selected {
+  background: Highlight;
+}
+.CodeMirror-line::selection,
+.CodeMirror-line > span::selection,
+.CodeMirror-line > span > span::selection {
+  background: Highlight;
+}
+.CodeMirror-line::-moz-selection,
+.CodeMirror-line > span::-moz-selection,
+.CodeMirror-line > span > span::-moz-selection {
+  background: Highlight;
+}
