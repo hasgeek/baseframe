@@ -299,7 +299,7 @@ class ImgeeWidget(wtforms.widgets.Input):
         kwargs.setdefault('type', self.input_type)
         imgee_host = current_app.config.get('IMGEE_HOST')
         if not imgee_host:
-            raise ValueError("No imgee server specified")
+            raise ValueError("No imgee server specified in config variable IMGEE_HOST")
 
         upload_url = f'{imgee_host}/{field.profile}/popup'
 
@@ -315,7 +315,9 @@ class ImgeeWidget(wtforms.widgets.Input):
             '<iframe %s class="imgee-upload"></iframe>'
             % (
                 self.html_params(
-                    id='iframe_' + id_ + '_upload', input_id=id_, src=upload_url,
+                    id='iframe_' + id_ + '_upload',
+                    input_id=id_,
+                    src=upload_url,
                 ),
             )
         )
