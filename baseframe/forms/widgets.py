@@ -3,10 +3,12 @@
 from __future__ import unicode_literals
 import six
 
-from flask import Markup
+from flask import Markup, current_app, render_template
 from wtforms.compat import text_type
 from wtforms.widgets import RadioInput, Select, html_params
 import wtforms
+
+from furl import furl
 
 from .. import b_ as _
 
@@ -17,6 +19,7 @@ __all__ = [
     'DateTimeInput',
     'CoordinatesInput',
     'RadioMatrixInput',
+    'ImgeeWidget',
     'InlineListWidget',
     'RadioInput',
     'SelectWidget',
@@ -286,3 +289,58 @@ class InlineListWidget(object):
             )
         html.append('</%s>' % self.html_tag)
         return Markup('\n'.join(html))
+
+
+class ImgeeWidget(wtforms.widgets.Input):
+    input_type = 'hidden'
+
+    def __call__(self, field, **kwargs):
+        id_ = kwargs.pop('id', field.id)
+        kwargs.setdefault('type', self.input_type)
+        imgee_host = current_app.config.get('IMGEE_HOST')
+        if not imgee_host:
+            raise ValueError("No imgee server specified in config variable IMGEE_HOST")
+
+        upload_url = f'{imgee_host}/{field.profile}/popup'
+
+        value = kwargs.pop('value', None)
+        if not value:
+            value = field._value()
+        if not value:
+            value = ''
+        elif isinstance(value, furl):
+            value = furl.url
+
+        iframe_html = Markup(
+            '<iframe %s class="imgee-upload"></iframe>'
+            % (
+                self.html_params(
+                    id='iframe_' + id_ + '_upload',
+                    input_id=id_,
+                    src=upload_url,
+                ),
+            )
+        )
+
+        field_html = Markup(
+            '<img %s> <input %s>'
+            % (
+                self.html_params(id='img_' + id_, src=value, width='200', **kwargs),
+                self.html_params(
+                    id=id_,
+                    name=field.name,
+                    placeholder=_("Image URL"),
+                    value=value,
+                    **kwargs
+                ),
+            )
+        )
+
+        return Markup(
+            render_template(
+                'baseframe/mui/imgeefield.html.jinja2',
+                field=field,
+                iframe_html=iframe_html,
+                field_html=field_html,
+            )
+        )

@@ -270,3 +270,41 @@
   opacity: 0.5;
   cursor: default;
 }
+
+.imgee {
+  position: relative;
+  .imgee__url-holder {
+    display: block;
+    max-width: 200px;
+    margin-bottom: $mui-grid-padding/2;
+  }
+
+  .imgee__loader {
+    position: absolute;
+    top: 100px;
+    left: 200px;
+    width: 35px;
+    height: 35px;
+  }
+
+  .imgee__button {
+    margin-bottom: $mui-grid-padding/2;
+  }
+}
+
+.modal--fullscreen {
+  iframe.imgee-upload {
+    width: 100%;
+    height: 100vh;
+    border: 0;
+  }
+}
+
+.popup {
+  .mui-container {
+    max-width: calc(100% - 32px);
+    .popup__imgee {
+      padding: 0;
+    }
+  }
+}

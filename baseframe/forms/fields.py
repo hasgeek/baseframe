@@ -28,6 +28,7 @@ from .parsleyjs import HiddenField, StringField, TextAreaField, URLField
 from .widgets import (
     CoordinatesInput,
     DateTimeInput,
+    ImgeeWidget,
     RadioMatrixInput,
     Select2Widget,
     SelectWidget,
@@ -748,6 +749,8 @@ class ImgeeField(URLField):
         )
     """
 
+    widget = ImgeeWidget()
+
     def __init__(
         self,
         label='',
@@ -765,7 +768,7 @@ class ImgeeField(URLField):
     def __call__(self, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = (
-            "%s %s" % (c.strip(), 'imgee-url-holder') if c else 'imgee-url-holder'
+            "%s %s" % (c.strip(), 'imgee__url-holder') if c else 'imgee__url-holder'
         ).strip()
         if self.profile:
             kwargs['data-profile'] = (

@@ -79,6 +79,10 @@
                 <label>{{ field.label.text }}</label>
               {%- endif %}
             </div>
+          {%- elif field.type == 'ImgeeField' %}
+            <div class="imgee">
+              {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows) }}
+            </div>
           {%- elif field.widget.input_type == 'password' and field.widget.html_tag not in ['ul', 'ol'] %}
             <div class="mui-textfield mui-textfield--password mui-textfield--float-label">
               {{ field | render_field_options(class="field-" + field.id + " " + widget_css_class, tabindex=tabindex, autofocus=autofocus, rows=rows)}}
@@ -356,6 +360,23 @@
           document.getElementById("{{ ref_id }}").submit();
         }
       })
+    {%- elif field.type == 'ImgeeField' %}
+      window.addEventListener("message", function (event) {
+        if (event.origin === "{{ config['IMGEE_HOST'] }}") {
+          var message = JSON.parse(event.data);
+          if (message.context == 'imgee.upload') {
+            $('#imgee-loader-{{field.id}}').removeClass('mui--hide');
+            $('#img_{{ field.id }}').attr('src', message.embed_url);
+            $('#{{ field.id }}').val(message.embed_url);
+            {%- if field.widget_type != 'modal' %}
+              $.modal.close();
+            {%- endif %}
+          }
+        }
+      });
+      $('#img_{{ field.id }}').on('load', function() {
+        $('#imgee-loader-{{field.id}}').addClass('mui--hide');
+      });
     {%- elif field.type in ['UserSelectField', 'UserSelectMultiField'] %}
       {%- if config['LASTUSER_CLIENT_ID'] and current_auth.cookie and 'sessionid' in current_auth.cookie %}
         Baseframe.Forms.lastuserAutocomplete({
