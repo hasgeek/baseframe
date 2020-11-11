@@ -463,7 +463,7 @@ baseframe = BaseframeBlueprint(
 
 
 @babel.localeselector
-def get_locale():
+def get_preferred_locale():
     # If this app and request have a user that specifies a locale, use it
     user = current_auth.actor  # Use 'actor' instead of 'user' to support anon users
     if user is not None and hasattr(user, 'locale') and user.locale:
@@ -499,11 +499,11 @@ def get_timezone():
 def localized_country_list():
     """
     Returns a list of country codes (ISO3166-1 alpha-2) and country names,
-    localized to the user's locale as determined by :func:`get_locale`.
+    localized to the user's locale as determined by :func:`get_preferred_locale`.
 
     The localized list is cached for 24 hours.
     """
-    return _localized_country_list_inner(get_locale())
+    return _localized_country_list_inner(get_preferred_locale())
 
 
 @cache.memoize(timeout=86400)

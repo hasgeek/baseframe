@@ -17,7 +17,7 @@ from coaster.gfm import markdown
 from coaster.utils import md5sum, text_blocks
 
 from . import b_ as _
-from . import baseframe, cache, current_app, get_locale, get_timezone
+from . import baseframe, cache, current_app, get_preferred_locale, get_timezone
 from .utils import request_timestamp
 from .views import ext_assets
 
@@ -243,7 +243,7 @@ def date_filter(value, format='medium', locale=None, usertz=True):  # NOQA: A002
     else:
         dt = value
     return format_date(
-        dt, format=format, locale=locale if locale else get_locale()
+        dt, format=format, locale=locale if locale else get_preferred_locale()
     )  # NOQA: A002
 
 
@@ -258,7 +258,7 @@ def time_filter(value, format='short', locale=None, usertz=True):  # NOQA: A002
     else:
         dt = value
     return format_time(
-        dt, format=format, locale=locale if locale else get_locale()
+        dt, format=format, locale=locale if locale else get_preferred_locale()
     )  # NOQA: A002
 
 
@@ -272,7 +272,7 @@ def datetime_filter(value, format='medium', locale=None, usertz=True):  # NOQA: 
     else:
         dt = value
     return format_datetime(
-        dt, format=format, locale=locale if locale else get_locale()
+        dt, format=format, locale=locale if locale else get_preferred_locale()
     )  # NOQA: A002
 
 
