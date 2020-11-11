@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-11-10 12:17+0530\n"
+"POT-Creation-Date: 2020-11-11 12:02+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,60 +17,60 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: baseframe/filters.py:33 build/lib/baseframe/filters.py:29
+#: baseframe/filters.py:33
 msgid "now"
 msgstr ""
 
-#: baseframe/filters.py:35 build/lib/baseframe/filters.py:31
+#: baseframe/filters.py:35
 msgid "seconds ago"
 msgstr ""
 
-#: baseframe/filters.py:37 build/lib/baseframe/filters.py:33
+#: baseframe/filters.py:37
 #, python-format
 msgid "%(num)s seconds ago"
 msgstr ""
 
-#: baseframe/filters.py:39 build/lib/baseframe/filters.py:35
+#: baseframe/filters.py:39
 msgid "a minute ago"
 msgstr ""
 
-#: baseframe/filters.py:41 build/lib/baseframe/filters.py:37
+#: baseframe/filters.py:41
 #, python-format
 msgid "%(num)s minutes ago"
 msgstr ""
 
-#: baseframe/filters.py:43 build/lib/baseframe/filters.py:39
+#: baseframe/filters.py:43
 msgid "an hour ago"
 msgstr ""
 
-#: baseframe/filters.py:45 build/lib/baseframe/filters.py:41
+#: baseframe/filters.py:45
 #, python-format
 msgid "%(num)s hours ago"
 msgstr ""
 
-#: baseframe/filters.py:47 build/lib/baseframe/filters.py:43
+#: baseframe/filters.py:47
 msgid "a day ago"
 msgstr ""
 
-#: baseframe/filters.py:49 build/lib/baseframe/filters.py:45
+#: baseframe/filters.py:49
 #, python-format
 msgid "%(num)s days ago"
 msgstr ""
 
-#: baseframe/filters.py:51 build/lib/baseframe/filters.py:47
+#: baseframe/filters.py:51
 msgid "a month ago"
 msgstr ""
 
-#: baseframe/filters.py:53 build/lib/baseframe/filters.py:49
+#: baseframe/filters.py:53
 #, python-format
 msgid "%(num)s months ago"
 msgstr ""
 
-#: baseframe/filters.py:55 build/lib/baseframe/filters.py:51
+#: baseframe/filters.py:55
 msgid "a year ago"
 msgstr ""
 
-#: baseframe/filters.py:57 build/lib/baseframe/filters.py:53
+#: baseframe/filters.py:57
 #, python-format
 msgid "%(num)s years ago"
 msgstr ""
@@ -78,59 +78,48 @@ msgstr ""
 #: baseframe/forms/auto.py:34
 #: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:11
 #: baseframe/templates/baseframe/mui/delete.html.jinja2:13
-#: build/lib/baseframe/forms/auto.py:31
-#: build/lib/baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:11
-#: build/lib/baseframe/templates/baseframe/mui/delete.html.jinja2:13
 msgid "Delete"
 msgstr ""
 
 #: baseframe/forms/auto.py:35
 #: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:12
-#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:95
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:53
 #: baseframe/templates/baseframe/mui/delete.html.jinja2:14
-#: baseframe/templates/baseframe/mui/forms.html.jinja2:145
-#: build/lib/baseframe/forms/auto.py:32
-#: build/lib/baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:12
-#: build/lib/baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:95
-#: build/lib/baseframe/templates/baseframe/mui/delete.html.jinja2:14
-#: build/lib/baseframe/templates/baseframe/mui/forms.html.jinja2:120
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:95
 msgid "Cancel"
 msgstr ""
 
 #: baseframe/forms/auto.py:43
-#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:133
-#: baseframe/templates/baseframe/mui/forms.html.jinja2:181
-#: build/lib/baseframe/forms/auto.py:40
-#: build/lib/baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:133
-#: build/lib/baseframe/templates/baseframe/mui/forms.html.jinja2:158
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:76
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:118
 msgid "Submit"
 msgstr ""
 
-#: baseframe/forms/fields.py:147 build/lib/baseframe/forms/fields.py:133
+#: baseframe/forms/fields.py:147
 msgid "Not a valid choice!"
 msgstr ""
 
-#: baseframe/forms/fields.py:929 build/lib/baseframe/forms/fields.py:919
+#: baseframe/forms/fields.py:929
 msgid "Value not in LabeledEnum"
 msgstr ""
 
-#: baseframe/forms/fields.py:939 build/lib/baseframe/forms/fields.py:929
+#: baseframe/forms/fields.py:939
 msgid "Invalid Choice: could not coerce"
 msgstr ""
 
-#: baseframe/forms/fields.py:943 build/lib/baseframe/forms/fields.py:933
+#: baseframe/forms/fields.py:943
 msgid "Not a valid choice"
 msgstr ""
 
-#: baseframe/forms/fields.py:992 build/lib/baseframe/forms/fields.py:982
+#: baseframe/forms/fields.py:992
 msgid "Field value must be a dictionary"
 msgstr ""
 
-#: baseframe/forms/fields.py:1010 build/lib/baseframe/forms/fields.py:1000
+#: baseframe/forms/fields.py:1010
 msgid "Invalid JSON: {0!r}"
 msgstr ""
 
-#: baseframe/forms/fields.py:1013 build/lib/baseframe/forms/fields.py:1003
+#: baseframe/forms/fields.py:1013
 msgid "The JSON root must be a hash object"
 msgstr ""
 
@@ -138,57 +127,47 @@ msgstr ""
 msgid "This form has already been submitted"
 msgstr ""
 
-#: baseframe/forms/sqlalchemy.py:27 build/lib/baseframe/forms/sqlalchemy.py:25
+#: baseframe/forms/sqlalchemy.py:27
 msgid "This {attr} is already in use"
 msgstr ""
 
-#: baseframe/forms/sqlalchemy.py:58 build/lib/baseframe/forms/sqlalchemy.py:56
+#: baseframe/forms/sqlalchemy.py:58
 msgid "This URL name is already in use"
 msgstr ""
 
 #: baseframe/forms/validators.py:130
-#: build/lib/baseframe/forms/validators.py:131
 msgid "This requires ‘{field}’ to be specified"
 msgstr ""
 
 #: baseframe/forms/validators.py:160 baseframe/forms/validators.py:188
-#: build/lib/baseframe/forms/validators.py:157
-#: build/lib/baseframe/forms/validators.py:180
 msgid "This is required"
 msgstr ""
 
 #: baseframe/forms/validators.py:207
-#: build/lib/baseframe/forms/validators.py:194
 msgid "Comparison failed"
 msgstr ""
 
 #: baseframe/forms/validators.py:225
-#: build/lib/baseframe/forms/validators.py:212
 msgid "Subclasses must define ``compare``"
 msgstr ""
 
 #: baseframe/forms/validators.py:240
-#: build/lib/baseframe/forms/validators.py:227
 msgid "This must be greater than {other_label}"
 msgstr ""
 
 #: baseframe/forms/validators.py:258
-#: build/lib/baseframe/forms/validators.py:245
 msgid "This must be greater than or equal to {other_label}"
 msgstr ""
 
 #: baseframe/forms/validators.py:276
-#: build/lib/baseframe/forms/validators.py:263
 msgid "This must be lesser than {other_label}"
 msgstr ""
 
 #: baseframe/forms/validators.py:294
-#: build/lib/baseframe/forms/validators.py:281
 msgid "This must be lesser than or equal to {other_label}"
 msgstr ""
 
 #: baseframe/forms/validators.py:312
-#: build/lib/baseframe/forms/validators.py:299
 msgid "This must not be the same as {other_label}"
 msgstr ""
 
@@ -209,12 +188,10 @@ msgid "This email address does not appear to be valid"
 msgstr ""
 
 #: baseframe/forms/validators.py:439
-#: build/lib/baseframe/forms/validators.py:405
 msgid "The URL “{url}” is not valid or is currently inaccessible"
 msgstr ""
 
 #: baseframe/forms/validators.py:441
-#: build/lib/baseframe/forms/validators.py:409
 msgid ""
 "The URL “{url}” linked from “{text}” is not valid or is currently "
 "inaccessible"
@@ -233,37 +210,32 @@ msgid ", "
 msgstr ""
 
 #: baseframe/forms/validators.py:650
-#: build/lib/baseframe/forms/validators.py:537
 msgid "Email address identified"
 msgstr ""
 
 #: baseframe/forms/validators.py:668
-#: build/lib/baseframe/forms/validators.py:554
 msgid ""
 "This name contains unsupported characters. It should have letters, "
 "numbers and non-terminal hyphens only"
 msgstr ""
 
 #: baseframe/forms/validators.py:683
-#: build/lib/baseframe/forms/validators.py:567
 msgid "Valid latitude and longitude expected"
 msgstr ""
 
 #: baseframe/forms/validators.py:684
-#: build/lib/baseframe/forms/validators.py:568
 msgid "Latitude must be within ± 90 degrees"
 msgstr ""
 
 #: baseframe/forms/validators.py:685
-#: build/lib/baseframe/forms/validators.py:571
 msgid "Longitude must be within ± 180 degrees"
 msgstr ""
 
-#: baseframe/forms/widgets.py:205 build/lib/baseframe/forms/widgets.py:201
+#: baseframe/forms/widgets.py:205
 msgid "Latitude"
 msgstr ""
 
-#: baseframe/forms/widgets.py:212 build/lib/baseframe/forms/widgets.py:208
+#: baseframe/forms/widgets.py:212
 msgid "Longitude"
 msgstr ""
 
@@ -272,54 +244,42 @@ msgid "Image URL"
 msgstr ""
 
 #: baseframe/templates/403.html.jinja2:2
-#: build/lib/baseframe/templates/403.html.jinja2:2
 msgid "Access denied"
 msgstr ""
 
 #: baseframe/templates/403.html.jinja2:5
-#: build/lib/baseframe/templates/403.html.jinja2:5
 msgid "You do not have access to that page."
 msgstr ""
 
 #: baseframe/templates/404.html.jinja2:2
-#: build/lib/baseframe/templates/404.html.jinja2:2
 msgid "Not Found"
 msgstr ""
 
 #: baseframe/templates/404.html.jinja2:5
-#: build/lib/baseframe/templates/404.html.jinja2:5
 msgid "The page you were looking for does not exist."
 msgstr ""
 
 #: baseframe/templates/500.html.jinja2:2
-#: build/lib/baseframe/templates/500.html.jinja2:2
 msgid "Internal Server Error"
 msgstr ""
 
 #: baseframe/templates/500.html.jinja2:5
-#: build/lib/baseframe/templates/500.html.jinja2:5
 msgid ""
 "Something broke inside. A report has been sent to the server’s "
 "administrator. Our apologies for the inconvenience."
 msgstr ""
 
-#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:98
-#: baseframe/templates/baseframe/mui/forms.html.jinja2:148
-#: build/lib/baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:98
-#: build/lib/baseframe/templates/baseframe/mui/forms.html.jinja2:123
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:56
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:98
 msgid "This form has timed out. Please submit again to confirm"
 msgstr ""
 
-#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:110
-#: build/lib/baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:110
-#: build/lib/baseframe/templates/baseframe/mui/forms.html.jinja2:135
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:63
 msgid "Please review the indicated issues"
 msgstr ""
 
 #: baseframe/templates/baseframe/bootstrap3/redirect.html.jinja2:1
 #: baseframe/templates/baseframe/mui/redirect.html.jinja2:1
-#: build/lib/baseframe/templates/baseframe/bootstrap3/redirect.html.jinja2:1
-#: build/lib/baseframe/templates/baseframe/mui/redirect.html.jinja2:1
 msgid "Loading..."
 msgstr ""
 
@@ -328,36 +288,7 @@ msgid "Select or upload image"
 msgstr ""
 
 #: baseframe/templates/baseframe/mui/imgeefield.html.jinja2:8
-#: build/lib/baseframe/templates/baseframe/mui/components.html.jinja2:6
 msgid "Close"
-msgstr ""
-
-#: build/lib/baseframe/forms/validators.py:314
-msgid "This is not a valid emoji."
-msgstr ""
-
-#: build/lib/baseframe/forms/validators.py:332
-msgid "This domain is not a public email domain."
-msgstr ""
-
-#: build/lib/baseframe/forms/validators.py:353
-msgid "This domain is a public email domain."
-msgstr ""
-
-#: build/lib/baseframe/templates/baseframe/mui/components.html.jinja2:22
-msgid "Toggle menu"
-msgstr ""
-
-#: build/lib/baseframe/templates/baseframe/mui/components.html.jinja2:80
-msgid "My account"
-msgstr ""
-
-#: build/lib/baseframe/templates/baseframe/mui/components.html.jinja2:90
-msgid "My profile"
-msgstr ""
-
-#: build/lib/baseframe/templates/baseframe/mui/components.html.jinja2:113
-msgid "Apps"
 msgstr ""
 
 #: tests/fixtures.py:58
