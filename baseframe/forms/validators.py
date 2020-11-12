@@ -722,7 +722,7 @@ class Recaptcha(object):
 
     def __call__(self, form, field):
         if current_app.testing:
-            return True
+            return
 
         if request.json:
             response = request.json.get('g-recaptcha-response', '')
