@@ -85,17 +85,6 @@ RECAPTCHA_ERROR_CODES = {
 def is_empty(value):
     """
     Returns True if the value is falsy but not a numeric zero::
-
-        >>> is_empty(0)
-        False
-        >>> is_empty('0')
-        False
-        >>> is_empty('')
-        True
-        >>> is_empty(())
-        True
-        >>> is_empty(None)
-        True
     """
     return value not in _zero_values and not value
 

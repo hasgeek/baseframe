@@ -37,6 +37,13 @@ class TestValidators(TestCaseBaseframe):
         super(TestValidators, self).tearDown()
         warnings.resetwarnings()
 
+    def test_is_empty(self):
+        assert forms.validators.is_empty(0) is False
+        assert forms.validators.is_empty('0') is False
+        assert forms.validators.is_empty('') is True
+        assert forms.validators.is_empty(()) is True
+        assert forms.validators.is_empty(None) is True
+
     def test_valid_url(self):
         with self.app.test_request_context('/'):
             url = 'https://hasgeek.com/'
