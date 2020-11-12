@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-11-11 12:02+0530\n"
+"POT-Creation-Date: 2020-11-12 15:41+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,60 +17,60 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: baseframe/filters.py:33
+#: baseframe/filters.py:34
 msgid "now"
 msgstr ""
 
-#: baseframe/filters.py:35
+#: baseframe/filters.py:36
 msgid "seconds ago"
 msgstr ""
 
-#: baseframe/filters.py:37
+#: baseframe/filters.py:38
 #, python-format
 msgid "%(num)s seconds ago"
 msgstr ""
 
-#: baseframe/filters.py:39
+#: baseframe/filters.py:40
 msgid "a minute ago"
 msgstr ""
 
-#: baseframe/filters.py:41
+#: baseframe/filters.py:42
 #, python-format
 msgid "%(num)s minutes ago"
 msgstr ""
 
-#: baseframe/filters.py:43
+#: baseframe/filters.py:44
 msgid "an hour ago"
 msgstr ""
 
-#: baseframe/filters.py:45
+#: baseframe/filters.py:46
 #, python-format
 msgid "%(num)s hours ago"
 msgstr ""
 
-#: baseframe/filters.py:47
+#: baseframe/filters.py:48
 msgid "a day ago"
 msgstr ""
 
-#: baseframe/filters.py:49
+#: baseframe/filters.py:50
 #, python-format
 msgid "%(num)s days ago"
 msgstr ""
 
-#: baseframe/filters.py:51
+#: baseframe/filters.py:52
 msgid "a month ago"
 msgstr ""
 
-#: baseframe/filters.py:53
+#: baseframe/filters.py:54
 #, python-format
 msgid "%(num)s months ago"
 msgstr ""
 
-#: baseframe/filters.py:55
+#: baseframe/filters.py:56
 msgid "a year ago"
 msgstr ""
 
-#: baseframe/filters.py:57
+#: baseframe/filters.py:58
 #, python-format
 msgid "%(num)s years ago"
 msgstr ""
