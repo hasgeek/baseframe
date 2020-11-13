@@ -8,7 +8,7 @@ from decimal import Decimal
 from decimal import InvalidOperation as DecimalError
 
 from flask import current_app
-from flask_wtf import RecaptchaField
+from flask_wtf import RecaptchaField as RecaptchaFieldBase
 from wtforms.compat import text_type
 from wtforms.fields import FileField, Label
 from wtforms.fields import SelectField as SelectFieldBase
@@ -25,6 +25,7 @@ import simplejson as json
 from .. import _, get_timezone
 from ..utils import request_timestamp
 from .parsleyjs import HiddenField, StringField, TextAreaField, URLField
+from .validators import Recaptcha
 from .widgets import (
     CoordinatesInput,
     DateTimeInput,
@@ -102,6 +103,14 @@ class NonceField(HiddenField):
 
     def populate_obj(self, *args):
         """Override populate_obj to not attempting setting nonce on the object"""
+
+
+class RecaptchaField(RecaptchaFieldBase):
+    """RecaptchaField with an improved validator."""
+
+    def __init__(self, label='', validators=None, **kwargs):
+        validators = validators or [Recaptcha()]
+        super(RecaptchaField, self).__init__(label, validators, **kwargs)
 
 
 # This class borrowed from https://github.com/industrydive/wtforms_extended_selectfield

@@ -10,7 +10,7 @@ from fractions import Fraction
 import datetime
 import re
 
-from flask import request
+from flask import current_app, request
 from wtforms.validators import (  # NOQA
     URL,
     DataRequired,
@@ -52,6 +52,7 @@ __local = [
     'ValidName',
     'ValidUrl',
     'ForEach',
+    'Recaptcha',
 ]
 __imported = [  # WTForms validators
     'DataRequired',
@@ -71,21 +72,19 @@ EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b', re.I)
 
 _zero_values = (0, 0.0, Decimal('0'), 0j, Fraction(0, 1), datetime.time(0, 0, 0))
 
+RECAPTCHA_VERIFY_SERVER = 'https://www.google.com/recaptcha/api/siteverify'
+# Reproduced from flask_wtf.validators, with gettext applied
+RECAPTCHA_ERROR_CODES = {
+    'missing-input-secret': __("The secret parameter is missing"),
+    'invalid-input-secret': __("The secret parameter is invalid or malformed"),
+    'missing-input-response': __("The response parameter is missing"),
+    'invalid-input-response': __("The response parameter is invalid or malformed"),
+}
+
 
 def is_empty(value):
     """
     Returns True if the value is falsy but not a numeric zero::
-
-        >>> is_empty(0)
-        False
-        >>> is_empty('0')
-        False
-        >>> is_empty('')
-        True
-        >>> is_empty(())
-        True
-        >>> is_empty(None)
-        True
     """
     return value not in _zero_values and not value
 
@@ -696,3 +695,68 @@ class ValidCoordinates(object):
             raise StopValidation(self.message_latitude)
         if not -180 <= field.data[1] <= 180:
             raise StopValidation(self.message_longitude)
+
+
+class Recaptcha(object):
+    """Validates a ReCaptcha."""
+
+    default_message_network = __("The server was temporarily unreachable. Try again")
+
+    def __init__(self, message=None, message_network=None):
+        if message is None:
+            message = RECAPTCHA_ERROR_CODES['missing-input-response']
+
+        self.message = message
+        self.message_network = message_network or self.default_message_network
+
+    def __call__(self, form, field):
+        if current_app.testing:
+            return
+
+        if request.json:
+            response = request.json.get('g-recaptcha-response', '')
+        else:
+            response = request.form.get('g-recaptcha-response', '')
+        remote_ip = request.remote_addr
+
+        if not response:
+            raise ValidationError(self.message)
+
+        if not self._validate_recaptcha(response, remote_ip):
+            field.recaptcha_error = 'incorrect-captcha-sol'
+            raise ValidationError(self.message)
+
+    def _validate_recaptcha(self, response, remote_addr):
+        """Perform the actual validation."""
+        try:
+            private_key = current_app.config['RECAPTCHA_PRIVATE_KEY']
+        except KeyError:
+            raise RuntimeError("No RECAPTCHA_PRIVATE_KEY config set")
+
+        data = {
+            'secret': private_key,
+            'remoteip': remote_addr,
+            'response': response,
+        }
+
+        try:
+            http_response = requests.post(RECAPTCHA_VERIFY_SERVER, data=data)
+        except (
+            requests.exceptions.ConnectionError,
+            requests.exceptions.Timeout,
+        ):
+            raise ValidationError(self.message_network)
+
+        if http_response.status_code != 200:
+            return False
+
+        json_resp = http_response.json()
+
+        if json_resp["success"]:
+            return True
+
+        for error in json_resp.get("error-codes", []):
+            if error in RECAPTCHA_ERROR_CODES:
+                raise ValidationError(RECAPTCHA_ERROR_CODES[error])
+
+        return False
