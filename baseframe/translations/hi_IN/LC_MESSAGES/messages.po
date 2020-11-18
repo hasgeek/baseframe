@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-11-17 20:44+0530\n"
+"POT-Creation-Date: 2020-11-18 10:17+0530\n"
 "PO-Revision-Date: 2020-11-03 12:31+0530\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi_IN\n"
@@ -20,61 +20,61 @@ msgstr ""
 
 #: baseframe/filters.py:34
 msgid "now"
-msgstr ""
+msgstr "अभी"
 
 #: baseframe/filters.py:36
 msgid "seconds ago"
-msgstr ""
+msgstr "सेकंड पहले"
 
 #: baseframe/filters.py:38
 #, python-format
 msgid "%(num)s seconds ago"
-msgstr ""
+msgstr "%(num)s सेकंड पहले"
 
 #: baseframe/filters.py:40
 msgid "a minute ago"
-msgstr ""
+msgstr "एक मिनट पहले"
 
 #: baseframe/filters.py:42
 #, python-format
 msgid "%(num)s minutes ago"
-msgstr ""
+msgstr "%(num)s मिनट पहले"
 
 #: baseframe/filters.py:44
 msgid "an hour ago"
-msgstr ""
+msgstr "एक घंटा पहले"
 
 #: baseframe/filters.py:46
 #, python-format
 msgid "%(num)s hours ago"
-msgstr ""
+msgstr "%(num)s घंटा पहले"
 
 #: baseframe/filters.py:48
 msgid "a day ago"
-msgstr ""
+msgstr "एक दिन पहले"
 
 #: baseframe/filters.py:50
 #, python-format
 msgid "%(num)s days ago"
-msgstr ""
+msgstr "%(num)s दिन पहले"
 
 #: baseframe/filters.py:52
 msgid "a month ago"
-msgstr ""
+msgstr "एक महीने पहले"
 
 #: baseframe/filters.py:54
 #, python-format
 msgid "%(num)s months ago"
-msgstr ""
+msgstr "%(num)s महीने पहले"
 
 #: baseframe/filters.py:56
 msgid "a year ago"
-msgstr ""
+msgstr "एक साल पहले"
 
 #: baseframe/filters.py:58
 #, python-format
 msgid "%(num)s years ago"
-msgstr ""
+msgstr "%(num)s साल पहले"
 
 #: baseframe/forms/auto.py:34
 #: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:11
