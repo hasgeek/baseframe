@@ -7,71 +7,71 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-11-18 10:17+0530\n"
-"PO-Revision-Date: 2020-11-03 12:31+0530\n"
+"POT-Creation-Date: 2020-11-19 09:30+0530\n"
+"PO-Revision-Date: 2020-11-18 12:37+0530\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: hi_IN\n"
 "Language-Team: hi_IN <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=n>1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: baseframe/filters.py:34
+#: baseframe/filters.py:35
 msgid "now"
 msgstr "अभी"
 
-#: baseframe/filters.py:36
+#: baseframe/filters.py:37
 msgid "seconds ago"
-msgstr "सेकंड पहले"
+msgstr "कुछ सेकंड पहले"
 
-#: baseframe/filters.py:38
+#: baseframe/filters.py:39
 #, python-format
 msgid "%(num)s seconds ago"
 msgstr "%(num)s सेकंड पहले"
 
-#: baseframe/filters.py:40
+#: baseframe/filters.py:41
 msgid "a minute ago"
 msgstr "एक मिनट पहले"
 
-#: baseframe/filters.py:42
+#: baseframe/filters.py:43
 #, python-format
 msgid "%(num)s minutes ago"
 msgstr "%(num)s मिनट पहले"
 
-#: baseframe/filters.py:44
+#: baseframe/filters.py:45
 msgid "an hour ago"
 msgstr "एक घंटा पहले"
 
-#: baseframe/filters.py:46
+#: baseframe/filters.py:47
 #, python-format
 msgid "%(num)s hours ago"
 msgstr "%(num)s घंटा पहले"
 
-#: baseframe/filters.py:48
+#: baseframe/filters.py:49
 msgid "a day ago"
 msgstr "एक दिन पहले"
 
-#: baseframe/filters.py:50
+#: baseframe/filters.py:51
 #, python-format
 msgid "%(num)s days ago"
 msgstr "%(num)s दिन पहले"
 
-#: baseframe/filters.py:52
+#: baseframe/filters.py:53
 msgid "a month ago"
 msgstr "एक महीने पहले"
 
-#: baseframe/filters.py:54
+#: baseframe/filters.py:55
 #, python-format
 msgid "%(num)s months ago"
 msgstr "%(num)s महीने पहले"
 
-#: baseframe/filters.py:56
+#: baseframe/filters.py:57
 msgid "a year ago"
 msgstr "एक साल पहले"
 
-#: baseframe/filters.py:58
+#: baseframe/filters.py:59
 #, python-format
 msgid "%(num)s years ago"
 msgstr "%(num)s साल पहले"
@@ -84,15 +84,15 @@ msgstr ""
 
 #: baseframe/forms/auto.py:35
 #: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:12
-#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:53
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:95
 #: baseframe/templates/baseframe/mui/delete.html.jinja2:14
-#: baseframe/templates/baseframe/mui/forms.html.jinja2:95
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:145
 msgid "Cancel"
 msgstr ""
 
 #: baseframe/forms/auto.py:43
-#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:76
-#: baseframe/templates/baseframe/mui/forms.html.jinja2:118
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:133
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:181
 msgid "Submit"
 msgstr ""
 
@@ -270,12 +270,12 @@ msgid ""
 "administrator. Our apologies for the inconvenience."
 msgstr ""
 
-#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:56
-#: baseframe/templates/baseframe/mui/forms.html.jinja2:98
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:98
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:148
 msgid "This form has timed out. Please submit again to confirm"
 msgstr ""
 
-#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:63
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:110
 msgid "Please review the indicated issues"
 msgstr ""
 
@@ -339,24 +339,3 @@ msgstr ""
 #: tests/test_sqlalchemy.py:30
 msgid "Title"
 msgstr ""
-
-#~ msgid "This is not a valid emoji."
-#~ msgstr ""
-
-#~ msgid "This domain is not a public email domain."
-#~ msgstr ""
-
-#~ msgid "This domain is a public email domain."
-#~ msgstr ""
-
-#~ msgid "Toggle menu"
-#~ msgstr ""
-
-#~ msgid "My account"
-#~ msgstr ""
-
-#~ msgid "My profile"
-#~ msgstr ""
-
-#~ msgid "Apps"
-#~ msgstr ""

@@ -1,0 +1,340 @@
+# Translations template for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-11-19 09:30+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: baseframe/filters.py:35
+msgid "now"
+msgstr ""
+
+#: baseframe/filters.py:37
+msgid "seconds ago"
+msgstr ""
+
+#: baseframe/filters.py:39
+#, python-format
+msgid "%(num)s seconds ago"
+msgstr ""
+
+#: baseframe/filters.py:41
+msgid "a minute ago"
+msgstr ""
+
+#: baseframe/filters.py:43
+#, python-format
+msgid "%(num)s minutes ago"
+msgstr ""
+
+#: baseframe/filters.py:45
+msgid "an hour ago"
+msgstr ""
+
+#: baseframe/filters.py:47
+#, python-format
+msgid "%(num)s hours ago"
+msgstr ""
+
+#: baseframe/filters.py:49
+msgid "a day ago"
+msgstr ""
+
+#: baseframe/filters.py:51
+#, python-format
+msgid "%(num)s days ago"
+msgstr ""
+
+#: baseframe/filters.py:53
+msgid "a month ago"
+msgstr ""
+
+#: baseframe/filters.py:55
+#, python-format
+msgid "%(num)s months ago"
+msgstr ""
+
+#: baseframe/filters.py:57
+msgid "a year ago"
+msgstr ""
+
+#: baseframe/filters.py:59
+#, python-format
+msgid "%(num)s years ago"
+msgstr ""
+
+#: baseframe/forms/auto.py:34
+#: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:11
+#: baseframe/templates/baseframe/mui/delete.html.jinja2:13
+msgid "Delete"
+msgstr ""
+
+#: baseframe/forms/auto.py:35
+#: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:12
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:95
+#: baseframe/templates/baseframe/mui/delete.html.jinja2:14
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:145
+msgid "Cancel"
+msgstr ""
+
+#: baseframe/forms/auto.py:43
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:133
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:181
+msgid "Submit"
+msgstr ""
+
+#: baseframe/forms/fields.py:147
+msgid "Not a valid choice!"
+msgstr ""
+
+#: baseframe/forms/fields.py:929
+msgid "Value not in LabeledEnum"
+msgstr ""
+
+#: baseframe/forms/fields.py:939
+msgid "Invalid Choice: could not coerce"
+msgstr ""
+
+#: baseframe/forms/fields.py:943
+msgid "Not a valid choice"
+msgstr ""
+
+#: baseframe/forms/fields.py:992
+msgid "Field value must be a dictionary"
+msgstr ""
+
+#: baseframe/forms/fields.py:1010
+msgid "Invalid JSON: {0!r}"
+msgstr ""
+
+#: baseframe/forms/fields.py:1013
+msgid "The JSON root must be a hash object"
+msgstr ""
+
+#: baseframe/forms/form.py:122
+msgid "This form has already been submitted"
+msgstr ""
+
+#: baseframe/forms/sqlalchemy.py:27
+msgid "This {attr} is already in use"
+msgstr ""
+
+#: baseframe/forms/sqlalchemy.py:58
+msgid "This URL name is already in use"
+msgstr ""
+
+#: baseframe/forms/validators.py:130
+msgid "This requires ‘{field}’ to be specified"
+msgstr ""
+
+#: baseframe/forms/validators.py:160 baseframe/forms/validators.py:188
+msgid "This is required"
+msgstr ""
+
+#: baseframe/forms/validators.py:207
+msgid "Comparison failed"
+msgstr ""
+
+#: baseframe/forms/validators.py:225
+msgid "Subclasses must define ``compare``"
+msgstr ""
+
+#: baseframe/forms/validators.py:240
+msgid "This must be greater than {other_label}"
+msgstr ""
+
+#: baseframe/forms/validators.py:258
+msgid "This must be greater than or equal to {other_label}"
+msgstr ""
+
+#: baseframe/forms/validators.py:276
+msgid "This must be lesser than {other_label}"
+msgstr ""
+
+#: baseframe/forms/validators.py:294
+msgid "This must be lesser than or equal to {other_label}"
+msgstr ""
+
+#: baseframe/forms/validators.py:312
+msgid "This must not be the same as {other_label}"
+msgstr ""
+
+#: baseframe/forms/validators.py:326
+msgid "This is not a valid emoji"
+msgstr ""
+
+#: baseframe/forms/validators.py:346
+msgid "This domain is not a public email domain"
+msgstr ""
+
+#: baseframe/forms/validators.py:369
+msgid "This domain is a public email domain"
+msgstr ""
+
+#: baseframe/forms/validators.py:390
+msgid "This email address does not appear to be valid"
+msgstr ""
+
+#: baseframe/forms/validators.py:439
+msgid "The URL “{url}” is not valid or is currently inaccessible"
+msgstr ""
+
+#: baseframe/forms/validators.py:441
+msgid ""
+"The URL “{url}” linked from “{text}” is not valid or is currently "
+"inaccessible"
+msgstr ""
+
+#: baseframe/forms/validators.py:445
+msgid "This URL’s protocol is not allowed"
+msgstr ""
+
+#: baseframe/forms/validators.py:447
+msgid "This URL’s domain is not allowed"
+msgstr ""
+
+#: baseframe/forms/validators.py:487 baseframe/forms/validators.py:492
+msgid ", "
+msgstr ""
+
+#: baseframe/forms/validators.py:650
+msgid "Email address identified"
+msgstr ""
+
+#: baseframe/forms/validators.py:668
+msgid ""
+"This name contains unsupported characters. It should have letters, "
+"numbers and non-terminal hyphens only"
+msgstr ""
+
+#: baseframe/forms/validators.py:683
+msgid "Valid latitude and longitude expected"
+msgstr ""
+
+#: baseframe/forms/validators.py:684
+msgid "Latitude must be within ± 90 degrees"
+msgstr ""
+
+#: baseframe/forms/validators.py:685
+msgid "Longitude must be within ± 180 degrees"
+msgstr ""
+
+#: baseframe/forms/widgets.py:205
+msgid "Latitude"
+msgstr ""
+
+#: baseframe/forms/widgets.py:212
+msgid "Longitude"
+msgstr ""
+
+#: baseframe/forms/widgets.py:332
+msgid "Image URL"
+msgstr ""
+
+#: baseframe/templates/403.html.jinja2:2
+msgid "Access denied"
+msgstr ""
+
+#: baseframe/templates/403.html.jinja2:5
+msgid "You do not have access to that page."
+msgstr ""
+
+#: baseframe/templates/404.html.jinja2:2
+msgid "Not Found"
+msgstr ""
+
+#: baseframe/templates/404.html.jinja2:5
+msgid "The page you were looking for does not exist."
+msgstr ""
+
+#: baseframe/templates/500.html.jinja2:2
+msgid "Internal Server Error"
+msgstr ""
+
+#: baseframe/templates/500.html.jinja2:5
+msgid ""
+"Something broke inside. A report has been sent to the server’s "
+"administrator. Our apologies for the inconvenience."
+msgstr ""
+
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:98
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:148
+msgid "This form has timed out. Please submit again to confirm"
+msgstr ""
+
+#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:110
+msgid "Please review the indicated issues"
+msgstr ""
+
+#: baseframe/templates/baseframe/bootstrap3/redirect.html.jinja2:1
+#: baseframe/templates/baseframe/mui/redirect.html.jinja2:1
+msgid "Loading..."
+msgstr ""
+
+#: baseframe/templates/baseframe/mui/imgeefield.html.jinja2:5
+msgid "Select or upload image"
+msgstr ""
+
+#: baseframe/templates/baseframe/mui/imgeefield.html.jinja2:8
+msgid "Close"
+msgstr ""
+
+#: tests/fixtures.py:58
+msgid "URL"
+msgstr ""
+
+#: tests/fixtures.py:69
+msgid "Emoji"
+msgstr ""
+
+#: tests/fixtures.py:74 tests/test_sqlalchemy.py:32
+msgid "Content"
+msgstr ""
+
+#: tests/fixtures.py:81
+msgid "Webmail Domain"
+msgstr ""
+
+#: tests/fixtures.py:84
+msgid "Not Webmail Domain"
+msgstr ""
+
+#: tests/test_fields.py:19
+msgid "First"
+msgstr ""
+
+#: tests/test_fields.py:20
+msgid "Second"
+msgstr ""
+
+#: tests/test_fields.py:21
+msgid "Third"
+msgstr ""
+
+#: tests/test_fields.py:31
+msgid "Position"
+msgstr ""
+
+#: tests/test_fields.py:34
+msgid "Position Without Default"
+msgstr ""
+
+#: tests/test_sqlalchemy.py:28
+msgid "Name"
+msgstr ""
+
+#: tests/test_sqlalchemy.py:30
+msgid "Title"
+msgstr ""
