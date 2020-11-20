@@ -23,6 +23,7 @@
   @media (min-width: 1200px) {
     body {
       font-size: $mui-base-font-size-desktop;
+      line-height: $mui-base-line-height-px-desktop;
     }
   }
 
@@ -43,7 +44,13 @@
 
   // paragraphs
   p {
-    margin: 0 0 ($mui-base-line-height-computed / 2);
+    margin: 0 0 14px;
+  }
+
+  @media (min-width: 1200px) {
+    p {
+      margin-bottom: 16px;
+    }
   }
 
   // lists

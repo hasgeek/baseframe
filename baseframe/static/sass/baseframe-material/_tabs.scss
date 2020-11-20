@@ -69,19 +69,23 @@
   width: 100%;
   overflow: auto;
   align-items: center;
+  margin: $mui-grid-padding/2 0;
 
   .tabs__item {
-    padding: $mui-grid-padding;
+    padding: $mui-grid-padding/2 $mui-grid-padding;
     cursor: pointer;
     position: relative;
     min-width: 2 * $mui-grid-padding;
     border: none;
-    border-bottom: 2px solid transparent;
-    margin: 0;
+    margin: 0 8px 0 0;
     text-align: center;
     cursor: pointer;
     flex: 0 0 auto;
     background: none;
+    border-radius: 16px;
+    font-weight: 500;
+    color: $mui-text-dark;
+    background: $mui-bg-color-dark;
   }
 
   .tabs__item--width {
@@ -95,7 +99,8 @@
   }
 
   .tabs__item--active {
-    border-bottom: 2px solid $mui-accent-color;
+    color: $mui-primary-color;
+    background: transparentize($mui-primary-color, 0.9);
   }
 
   .tabs__item-control {

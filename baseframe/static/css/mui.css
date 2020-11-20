@@ -1695,7 +1695,7 @@ body {
     'Segoe UI Emoji', 'Segoe UI Symbol';
   font-size: 14px;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 21px;
   color: #1f2d3d;
   background-color: #f9f9f9;
 }
@@ -1703,6 +1703,7 @@ body {
 @media (min-width: 1200px) {
   body {
     font-size: 16px;
+    line-height: 24px;
   }
 }
 a {
@@ -1720,18 +1721,23 @@ a:focus {
 }
 
 p {
-  margin: 0 0 11.5px;
+  margin: 0 0 14px;
 }
 
+@media (min-width: 1200px) {
+  p {
+    margin-bottom: 16px;
+  }
+}
 ul,
 ol {
   margin-top: 0;
-  margin-bottom: 11.5px;
+  margin-bottom: 10.5px;
 }
 
 hr {
-  margin-top: 23px;
-  margin-bottom: 23px;
+  margin-top: 21px;
+  margin-bottom: 21px;
   border: 0;
   height: 1px;
   background-color: rgba(132, 146, 166, 0.2);
@@ -1749,15 +1755,15 @@ abbr[title] {
 h1,
 h2,
 h3 {
-  margin-top: 23px;
-  margin-bottom: 11.5px;
+  margin-top: 21px;
+  margin-bottom: 10.5px;
 }
 
 h4,
 h5,
 h6 {
-  margin-top: 11.5px;
-  margin-bottom: 11.5px;
+  margin-top: 10.5px;
+  margin-bottom: 10.5px;
 }
 
 /**
@@ -2160,7 +2166,7 @@ h6 {
 }
 .mui-radio > label,
 .mui-checkbox > label {
-  min-height: 23px;
+  min-height: 21px;
   padding-left: 20px;
   margin-bottom: 0;
   font-weight: normal;
@@ -2346,7 +2352,7 @@ h6 {
   padding: 3px 20px;
   clear: both;
   font-weight: normal;
-  line-height: 1.7;
+  line-height: 1.5;
   color: #1f2d3d;
   text-decoration: none;
   white-space: nowrap;
@@ -2382,7 +2388,7 @@ h6 {
   display: block;
   width: 100%;
   padding: 0;
-  margin-bottom: 11.5px;
+  margin-bottom: 10.5px;
   font-size: 21px;
   color: #1f2d3d;
   line-height: inherit;
@@ -2431,7 +2437,7 @@ h6 {
  */
 .mui-panel {
   padding: 16px;
-  margin-bottom: 23px;
+  margin-bottom: 21px;
   border-radius: 0;
   background-color: #fff;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0px 2px 0 rgba(0, 0, 0, 0.12);
@@ -2598,7 +2604,7 @@ h6 {
 .mui-table {
   width: 100%;
   max-width: 100%;
-  margin-bottom: 23px;
+  margin-bottom: 21px;
 }
 .mui-table > thead > tr > th,
 .mui-table > tbody > tr > th,
@@ -2612,7 +2618,7 @@ h6 {
 .mui-table > tfoot > tr > th,
 .mui-table > tfoot > tr > td {
   padding: 10px;
-  line-height: 1.7;
+  line-height: 1.5;
 }
 .mui-table > thead > tr > th {
   border-bottom: 2px solid rgba(132, 146, 166, 0.3);
@@ -3528,6 +3534,14 @@ h4 {
   line-height: 24px;
 }
 
+p.mui--text-body2,
+p.header__dropdown-app-title,
+.header__side-nav-list p.header__side-nav-list__item,
+.card p.card__body,
+.jquery-modal.blocker.current .modal p.modal__body {
+  margin-bottom: 16px;
+}
+
 .mui--text-body2,
 h5,
 .header__dropdown-app-title,
@@ -3537,7 +3551,15 @@ h5,
 h5 {
   font-weight: 400;
   font-size: 14px;
-  line-height: 24px;
+  line-height: 21px;
+}
+
+p.mui--text-body2,
+p.header__dropdown-app-title,
+.header__side-nav-list p.header__side-nav-list__item,
+.card p.card__body,
+.jquery-modal.blocker.current .modal p.modal__body {
+  margin-bottom: 14px;
 }
 
 h6 {
@@ -4696,19 +4718,23 @@ li p + ol {
   width: 100%;
   overflow: auto;
   align-items: center;
+  margin: 8px 0;
 }
 .tabs .tabs__item {
-  padding: 16px;
+  padding: 8px 16px;
   cursor: pointer;
   position: relative;
   min-width: 32px;
   border: none;
-  border-bottom: 2px solid transparent;
-  margin: 0;
+  margin: 0 8px 0 0;
   text-align: center;
   cursor: pointer;
   flex: 0 0 auto;
   background: none;
+  border-radius: 16px;
+  font-weight: 500;
+  color: #1f2d3d;
+  background: #f1f1f1;
 }
 .tabs .tabs__item--width {
   min-width: auto;
@@ -4719,7 +4745,8 @@ li p + ol {
   outline: none;
 }
 .tabs .tabs__item--active {
-  border-bottom: 2px solid #f06a5e;
+  color: #0f73ed;
+  background: rgba(15, 115, 237, 0.1);
 }
 .tabs .tabs__item-control {
   position: fixed;
