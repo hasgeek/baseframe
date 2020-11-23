@@ -13,7 +13,7 @@ import types
 from flask import Blueprint, current_app, request
 from flask.json import JSONEncoder as JSONEncoderBase
 from flask_assets import Bundle, Environment
-from flask_babelhg import Babel, Domain, ctx_has_locale
+from flask_babelhg import Babel, Domain, ctx_has_locale, get_locale
 from flask_babelhg.speaklater import is_lazy_string as is_lazy_string_hg
 from speaklater import is_lazy_string as is_lazy_string_sl
 
@@ -238,6 +238,7 @@ class BaseframeBlueprint(Blueprint):
         app.jinja_env.add_extension('jinja2.ext.do')
         app.jinja_env.autoescape = _select_jinja_autoescape
         app.jinja_env.globals['request_is_xhr'] = request_is_xhr
+        app.jinja_env.globals['get_locale'] = get_locale
         if app.subdomain_matching:
             # Does this app want a static subdomain? (Default: yes, 'static').
             # Apps can disable this by setting STATIC_SUBDOMAIN = None.
@@ -463,7 +464,7 @@ baseframe = BaseframeBlueprint(
 
 
 @babel.localeselector
-def get_locale():
+def get_user_locale():
     # If this app and request have a user that specifies a locale, use it
     user = current_auth.actor  # Use 'actor' instead of 'user' to support anon users
     if user is not None and hasattr(user, 'locale') and user.locale:
@@ -499,11 +500,11 @@ def get_timezone():
 def localized_country_list():
     """
     Returns a list of country codes (ISO3166-1 alpha-2) and country names,
-    localized to the user's locale as determined by :func:`get_locale`.
+    localized to the user's locale as determined by :func:`get_user_locale`.
 
     The localized list is cached for 24 hours.
     """
-    return _localized_country_list_inner(get_locale())
+    return _localized_country_list_inner(get_user_locale())
 
 
 @cache.memoize(timeout=86400)

@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 import os
 
 from flask import Markup, request
+from flask_babelhg import get_locale
 
 from babel.dates import format_date, format_datetime, format_time
 from furl import furl
@@ -17,7 +18,7 @@ from coaster.gfm import markdown
 from coaster.utils import md5sum, text_blocks
 
 from . import b_ as _
-from . import baseframe, cache, current_app, get_locale, get_timezone
+from . import baseframe, cache, current_app, get_timezone
 from .utils import request_timestamp
 from .views import ext_assets
 
