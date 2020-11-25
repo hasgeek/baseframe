@@ -1689,8 +1689,7 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-body,
-p {
+body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol';
@@ -1702,8 +1701,7 @@ p {
 }
 
 @media (min-width: 1200px) {
-  body,
-  p {
+  body {
     font-size: 16px;
     line-height: 24px;
   }

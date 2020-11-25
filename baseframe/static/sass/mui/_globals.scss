@@ -11,8 +11,7 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
 
-  body,
-  p {
+  body {
     font-family: $mui-base-font-family;
     font-size: $mui-base-font-size;
     font-weight: $mui-base-font-weight;
@@ -22,8 +21,7 @@
   }
 
   @media (min-width: 1200px) {
-    body,
-    p {
+    body {
       font-size: $mui-base-font-size-desktop;
       line-height: $mui-base-line-height-px-desktop;
     }
