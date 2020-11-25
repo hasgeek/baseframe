@@ -1689,7 +1689,8 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-body {
+body,
+p {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol';
@@ -1701,7 +1702,8 @@ body {
 }
 
 @media (min-width: 1200px) {
-  body {
+  body,
+  p {
     font-size: 16px;
     line-height: 24px;
   }
@@ -3536,9 +3538,7 @@ h4 {
 
 p.mui--text-body2,
 p.header__dropdown-app-title,
-.header__side-nav-list p.header__side-nav-list__item,
-.card p.card__body,
-.jquery-modal.blocker.current .modal p.modal__body {
+.header__side-nav-list p.header__side-nav-list__item {
   margin-bottom: 16px;
 }
 
@@ -3546,8 +3546,6 @@ p.header__dropdown-app-title,
 h5,
 .header__dropdown-app-title,
 .header__side-nav-list .header__side-nav-list__item,
-.card .card__body,
-.jquery-modal.blocker.current .modal .modal__body,
 h5 {
   font-weight: 400;
   font-size: 14px;
@@ -3556,9 +3554,7 @@ h5 {
 
 p.mui--text-body2,
 p.header__dropdown-app-title,
-.header__side-nav-list p.header__side-nav-list__item,
-.card p.card__body,
-.jquery-modal.blocker.current .modal p.modal__body {
+.header__side-nav-list p.header__side-nav-list__item {
   margin-bottom: 14px;
 }
 
