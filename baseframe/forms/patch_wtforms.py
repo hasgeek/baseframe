@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
-
 """
 Patches WTForms to add additional functionality as required by Baseframe.
 """
-
-from __future__ import absolute_import
 
 from flask import Markup, escape
 import wtforms

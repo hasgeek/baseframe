@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
 from six.moves.urllib.parse import urljoin, urlparse
 import six
 

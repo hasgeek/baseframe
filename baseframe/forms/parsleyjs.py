@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 WTForms fields and widgets with ParsleyJS headers. This is a fork of wtforms-parsleyjs
 based on https://github.com/johannes-gehrs/wtforms-parsleyjs and
@@ -11,7 +10,6 @@ wtforms-parsleysj is MIT licensed, while the rest of Baseframe is either BSD (ou
 various other open source licenses (other third party code).
 """
 
-from __future__ import unicode_literals
 
 import copy
 import re

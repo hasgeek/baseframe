@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
 import six
 
 from flask import Markup, current_app, render_template
@@ -157,7 +154,7 @@ class DateTimeInput(wtforms.widgets.Input):
                     id=field_id + '-date',
                     value=date_value,
                     placeholder="yyy-mm-dd",
-                    **kwargs
+                    **kwargs,
                 ),
                 class_,
                 wtforms.widgets.html_params(
@@ -165,7 +162,7 @@ class DateTimeInput(wtforms.widgets.Input):
                     id=field_id + '-time',
                     value=time_value,
                     placeholder="--:--",
-                    **kwargs
+                    **kwargs,
                 ),
                 field.tzname,
             )
@@ -204,14 +201,14 @@ class CoordinatesInput(wtforms.widgets.core.Input):
                     name=field.name,
                     placeholder=_("Latitude"),
                     value=value[0],
-                    **kwargs
+                    **kwargs,
                 ),
                 self.html_params(
                     id=id_ + '_longitude',
                     name=field.name,
                     placeholder=_("Longitude"),
                     value=value[1],
-                    **kwargs
+                    **kwargs,
                 ),
             )
         )
@@ -331,7 +328,7 @@ class ImgeeWidget(wtforms.widgets.Input):
                     name=field.name,
                     placeholder=_("Image URL"),
                     value=value,
-                    **kwargs
+                    **kwargs,
                 ),
             )
         )

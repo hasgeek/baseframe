@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os
 import re
 
@@ -67,14 +66,13 @@ setup(
     long_description=README,
     classifiers=[
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Intended Audience :: Developers",
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 5 - Production/Stable",
         "Topic :: Software Development :: Libraries",
     ],
     author='Kiran Jonnalagadda',

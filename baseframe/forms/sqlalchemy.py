@@ -1,10 +1,6 @@
-# -*- coding: utf-8 -*-
-
 """
 SQLAlchemy-based form fields and widgets
 """
-
-from __future__ import unicode_literals
 
 from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 
