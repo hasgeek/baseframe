@@ -11,8 +11,8 @@ body {
 h1,
 h2,
 h3 {
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin-top: $mui-grid-padding/2;
+  margin-bottom: $mui-grid-padding/2;
 }
 
 ul ul,

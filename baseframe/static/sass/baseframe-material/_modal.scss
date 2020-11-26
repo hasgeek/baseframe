@@ -26,9 +26,6 @@
     .modal__header {
       @extend .mui--text-title;
     }
-    .modal__body {
-      @extend .mui--text-body2;
-    }
     .modal__body__btn {
       margin-top: $mui-grid-padding;
     }

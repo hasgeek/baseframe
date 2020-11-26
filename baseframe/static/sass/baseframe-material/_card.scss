@@ -38,7 +38,6 @@
   }
 
   .card__body {
-    @extend .mui--text-body2;
     padding: $mui-grid-padding/2 $mui-grid-padding;
     word-break: break-word;
   }
