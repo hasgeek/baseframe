@@ -5,8 +5,6 @@ Patches WTForms to add additional functionality as required by Baseframe.
 from flask import Markup, escape
 import wtforms
 
-__all__ = []
-
 
 def _patch_wtforms_add_flags():
     def add_flags(validator, flags):

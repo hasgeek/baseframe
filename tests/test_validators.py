@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
-
+from typing import Any
 import warnings
 
 from werkzeug.datastructures import MultiDict
@@ -463,7 +460,9 @@ class TestFormBase(TestCaseBaseframe):
 
 class TestForEach(TestFormBase):
     class Form(forms.Form):
-        textlist = forms.TextListField(validators=[forms.ForEach([forms.URL()])])
+        textlist = forms.TextListField(
+            validators=[forms.validators.ForEach([forms.validators.URL()])]
+        )
 
     def test_passes_single(self):
         self.form.process(formdata=MultiDict({'textlist': "http://www.example.com/"}))
@@ -513,7 +512,11 @@ class TestForEach(TestFormBase):
 class TestForEachChained(TestFormBase):
     class Form(forms.Form):
         textlist = forms.TextListField(
-            validators=[forms.ForEach([forms.Optional(), forms.URL()])]
+            validators=[
+                forms.validators.ForEach(
+                    [forms.validators.Optional(), forms.validators.URL()]
+                )
+            ]
         )
 
     def test_skips_blanklines_and_fails(self):
@@ -530,7 +533,8 @@ class TestForEachChained(TestFormBase):
 class TestForEachFiltered(TestFormBase):
     class Form(forms.Form):
         textlist = forms.TextListField(
-            validators=[forms.ForEach([forms.URL()])], filters=[forms.strip_each()]
+            validators=[forms.validators.ForEach([forms.validators.URL()])],
+            filters=[forms.filters.strip_each()],
         )
 
     def test_passes_blanklines(self):
@@ -547,7 +551,7 @@ class TestAllowedIf(TestFormBase):
             "Field", validators=[forms.validators.AllowedIf('other')]
         )
 
-    other_not_empty = "Not empty"
+    other_not_empty: Any = "Not empty"
 
     def test_is_allowed(self):
         self.form.process(other=self.other_not_empty, field="Also not empty")
@@ -591,8 +595,8 @@ class TestOptionalIf(TestFormBase):
             ],
         )
 
-    other_empty = ''
-    other_not_empty = "Not empty"
+    other_empty: Any = ''
+    other_not_empty: Any = "Not empty"
 
     def test_is_optional(self):
         self.form.process(other=self.other_not_empty)
@@ -645,8 +649,8 @@ class TestRequiredIf(TestFormBase):
             ],
         )
 
-    other_empty = ''
-    other_not_empty = "Not empty"
+    other_empty: Any = ''
+    other_not_empty: Any = "Not empty"
 
     def test_is_required(self):
         self.form.process(other=self.other_not_empty)

@@ -1,9 +1,8 @@
-from six.moves.urllib.parse import urljoin, urlparse
-import six
-
 from collections import namedtuple
 from decimal import Decimal
 from fractions import Fraction
+from typing import Set
+from urllib.parse import urljoin, urlparse
 import datetime
 import re
 
@@ -28,9 +27,7 @@ import requests
 
 from coaster.utils import deobfuscate_email, make_name, md5sum
 
-from .. import asset_cache
-from .. import b_ as _
-from .. import b__ as __
+from ..extensions import _, __, asset_cache
 from ..signals import exception_catchall
 from ..utils import is_public_email_domain
 
@@ -108,7 +105,7 @@ class ForEach(object):
                 try:
                     validator(form, fake_field)
                 except StopValidation as e:
-                    if six.text_type(e):
+                    if str(e):
                         raise
                     else:
                         break
@@ -183,7 +180,7 @@ class RequiredIf(DataRequired):
 
     default_message = __("This is required")
 
-    field_flags = set()
+    field_flags: Set[str] = set()
 
     def __init__(self, fieldname, message=None):
         message = message or self.default_message
@@ -492,12 +489,7 @@ class ValidUrl(object):
             # The rest of this function only validates HTTP urls.
             return
 
-        if six.PY2:
-            cache_key = b'linkchecker/' + md5sum(
-                url.encode('utf-8') if isinstance(url, six.text_type) else url
-            )
-        else:
-            cache_key = 'linkchecker/' + md5sum(url)
+        cache_key = 'linkchecker/' + md5sum(url)
         try:
             cache_check = asset_cache.get(cache_key)
         except ValueError:  # Possible error from a broken pickle
@@ -561,7 +553,7 @@ class ValidUrl(object):
                     # the URL the user provided
                     if (
                         pattern in rurl
-                        if isinstance(pattern, six.string_types)
+                        if isinstance(pattern, str)
                         else pattern.search(rurl) is not None
                     ):
                         return message.format(url=url, text=text)

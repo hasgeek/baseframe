@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
-
-from baseframe import _localized_country_list_inner, localized_country_list
+from baseframe.utils import _localized_country_list_inner, localized_country_list
 
 from .fixtures import TestCaseBaseframe
 from .fixtures import app1 as app

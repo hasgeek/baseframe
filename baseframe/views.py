@@ -1,21 +1,23 @@
-from six.moves.urllib.parse import urljoin, urlparse
-
 from datetime import timedelta
+from urllib.parse import urljoin, urlparse
 import os
+import os.path
 
 from flask import abort, current_app, render_template, request, send_from_directory
 from flask_assets import Bundle
+from flask_babelhg import ctx_has_locale
 from flask_wtf.csrf import generate_csrf
 
 import requests
 
 from coaster.assets import split_namespec
+from coaster.auth import current_auth, request_has_auth
 from coaster.utils import make_name
 from coaster.views import render_with
 
-from . import asset_cache
-from . import assets as assets_repo
-from . import baseframe, networkbar_cache
+from .assets import assets as assets_repo
+from .blueprint import baseframe
+from .extensions import asset_cache, networkbar_cache
 from .utils import request_timestamp
 
 
@@ -228,3 +230,40 @@ def csrf_refresh(subdomain=None):
             ),
         },
     )
+
+
+@baseframe.after_app_request
+def process_response(response):
+    if request.endpoint in ('static', 'baseframe.static'):
+        if 'Access-Control-Allow-Origin' not in response.headers:
+            # This is required for webfont resources
+            # Note: We do not serve static assets in production, nginx does.
+            # That means this piece of code will never be called in production.
+            response.headers['Access-Control-Allow-Origin'] = '*'
+
+    # If Babel was accessed in this request, the response's contents will vary with
+    # the accepted language
+    if ctx_has_locale():
+        response.vary.add('Accept-Language')
+    # If current_auth was accessed during this request, it is sensitive to the lastuser
+    # cookie
+    if request_has_auth():
+        response.vary.add('Cookie')
+
+    # Prevent pages from being placed in an iframe. If the response already
+    # set has a value for this option, let it pass through
+    if 'X-Frame-Options' in response.headers:
+        frameoptions = response.headers.get('X-Frame-Options')
+        if not frameoptions or frameoptions == 'ALLOW':
+            # 'ALLOW' is an unofficial signal from the app to Baseframe.
+            # It signals us to remove the header and not set a default
+            response.headers.pop('X-Frame-Options')
+    else:
+        if request_has_auth() and getattr(current_auth, 'login_required', False):
+            # Protect only login_required pages from appearing in frames
+            response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+
+    # In memoriam. http://www.gnuterrypratchett.com/
+    response.headers['X-Clacks-Overhead'] = 'GNU Terry Pratchett'
+
+    return response

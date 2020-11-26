@@ -1,5 +1,3 @@
-import six
-
 from flask import Markup, current_app, render_template
 from wtforms.compat import text_type
 from wtforms.widgets import RadioInput, Select, html_params
@@ -7,7 +5,7 @@ import wtforms
 
 from furl import furl
 
-from .. import b_ as _
+from ..extensions import _
 
 __all__ = [
     'TinyMce3',
@@ -188,7 +186,7 @@ class CoordinatesInput(wtforms.widgets.core.Input):
             value = field._value()
         if not value:
             value = ['', '']
-        elif isinstance(value, six.string_types):
+        elif isinstance(value, str):
             value = value.split(',', 1)
         if len(value) < 2:
             value.append('')

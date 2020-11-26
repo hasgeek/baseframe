@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
-
-import six
-
 from threading import Lock
+from typing import Dict, Iterable, Type
 import uuid
 
 from flask import current_app
@@ -10,10 +7,9 @@ from flask_wtf import FlaskForm as BaseForm
 from wtforms.compat import iteritems
 import wtforms
 
-from .. import asset_cache
-from .. import b__ as __
-from .. import is_lazy_string
+from ..extensions import __, asset_cache
 from ..signals import form_validation_error, form_validation_success
+from ..utils import is_lazy_string
 from . import fields as bfields
 from . import filters as bfilters
 from . import parsleyjs as bparsleyjs
@@ -57,7 +53,7 @@ field_registry = {
     'ImageField': bfields.ImgeeField,
 }
 
-widget_registry = {}
+widget_registry: Dict[str, Type] = {}
 
 validator_registry = {
     'Length': (wtforms.validators.Length, 'min', 'max', 'message'),
@@ -113,8 +109,8 @@ class Form(BaseForm):
     Form with additional methods.
     """
 
-    __expects__ = ()
-    __returns__ = ()
+    __expects__: Iterable[str] = ()
+    __returns__: Iterable[str] = ()
 
     form_nonce = bfields.NonceField(
         "Nonce", validators=[_nonce_validator], default=lambda: uuid.uuid4().hex
@@ -252,9 +248,7 @@ class Form(BaseForm):
         return {
             name: {
                 'data': f.data,
-                'errors': [
-                    six.text_type(e) if is_lazy_string(e) else e for e in f.errors
-                ],
+                'errors': [str(e) if is_lazy_string(e) else e for e in f.errors],
             }
             for name, f in iteritems(self._fields)
             if f.errors
@@ -313,7 +307,7 @@ class FormGenerator(object):
             validators = []
             validators_data = fielddata.pop('validators', [])
             for item in validators_data:
-                if isinstance(item, six.string_types) and item in validator_registry:
+                if isinstance(item, str) and item in validator_registry:
                     validators.append(validator_registry[item][0]())
                 else:
                     itemname = item.pop('type', None)
@@ -328,7 +322,7 @@ class FormGenerator(object):
             filters = []
             filters_data = fielddata.pop('filters', [])
             for item in filters_data:
-                if isinstance(item, six.string_types) and item in filter_registry:
+                if isinstance(item, str) and item in filter_registry:
                     filters.append(filter_registry[item][0]())
                 else:
                     itemname = item.pop('type', None)

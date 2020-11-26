@@ -14,9 +14,9 @@ import wtforms
 
 from coaster.utils import buid
 
-from .. import THEME_FILES
-from .. import b__ as __
-from .. import request_is_xhr
+from ..blueprint import THEME_FILES
+from ..extensions import __
+from ..utils import request_is_xhr
 from .fields import SubmitField
 from .form import Form
 

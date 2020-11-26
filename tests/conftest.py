@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import pytest
 
 from .fixtures import app1 as app

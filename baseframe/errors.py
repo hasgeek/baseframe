@@ -1,9 +1,11 @@
 from flask import current_app, redirect, request
-from werkzeug.routing import MethodNotAllowed, NotFound, RequestRedirect
+from werkzeug.exceptions import MethodNotAllowed, NotFound
+from werkzeug.routing import RequestRedirect
 
 from coaster.views import render_with
 
-from . import baseframe, baseframe_translations
+from .blueprint import baseframe
+from .extensions import baseframe_translations
 
 
 @baseframe.app_errorhandler(404)

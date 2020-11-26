@@ -4,7 +4,7 @@ SQLAlchemy-based form fields and widgets
 
 from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 
-from .. import b__ as __
+from ..extensions import __
 from .validators import StopValidation
 
 __all__ = ['AvailableName', 'QuerySelectField', 'QuerySelectMultipleField']

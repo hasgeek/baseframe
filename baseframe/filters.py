@@ -1,10 +1,8 @@
-from six.moves.urllib.parse import urlsplit, urlunsplit
-import six
-
 from datetime import datetime, timedelta
-import os
+from urllib.parse import urlsplit, urlunsplit
+import os.path
 
-from flask import Markup, request
+from flask import Markup, current_app, request
 from flask_babelhg import get_locale
 
 from babel.dates import format_date, format_datetime, format_time
@@ -14,9 +12,9 @@ from pytz import UTC
 from coaster.gfm import markdown
 from coaster.utils import md5sum, text_blocks
 
-from . import b_ as _
-from . import baseframe, cache, current_app, get_timezone
-from .utils import request_timestamp
+from .blueprint import baseframe
+from .extensions import _, cache
+from .utils import get_timezone, request_timestamp
 from .views import ext_assets
 
 
@@ -109,14 +107,14 @@ def avatar_url(user, size=None):
         if size:
             # TODO: Use a URL parser
             if '?' in user.avatar:
-                return user.avatar + '&size=' + six.text_type(size)
+                return user.avatar + '&size=' + str(size)
             else:
-                return user.avatar + '?size=' + six.text_type(size)
+                return user.avatar + '?size=' + str(size)
         else:
             return user.avatar
     email = user.email
     if email:
-        if isinstance(email, six.string_types):
+        if isinstance(email, str):
             # Flask-Lastuser's User model has email as a string
             ehash = md5sum(user.email)
         else:
@@ -124,7 +122,7 @@ def avatar_url(user, size=None):
             ehash = email.md5sum
         gravatar = '//www.gravatar.com/avatar/' + ehash + '?d=mm'
         if size:
-            gravatar += '&s=' + six.text_type(size)
+            gravatar += '&s=' + str(size)
         return gravatar
     # Return Gravatar's missing man image
     return '//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm'
@@ -171,7 +169,7 @@ def ext_asset_url(asset):
     """
     This filter makes ext_assets available to templates.
     """
-    if isinstance(asset, six.string_types):
+    if isinstance(asset, str):
         return ext_assets([asset])
     else:
         return ext_assets(asset)
@@ -216,7 +214,7 @@ def shortdate(value):
     else:
         # The string replace hack is to deal with inconsistencies in the underlying
         # implementation of strftime. See https://bugs.python.org/issue8304
-        return six.text_type(dt.strftime("%e %b '%y")).replace("'", "’")
+        return str(dt.strftime("%e %b '%y")).replace("'", "’")
 
 
 @baseframe.app_template_filter('longdate')
@@ -277,10 +275,7 @@ def datetime_filter(value, format='medium', locale=None, usertz=True):  # NOQA: 
 @baseframe.app_template_filter('timestamp')
 def timestamp_filter(value):
     if isinstance(value, datetime):
-        if six.PY2:
-            ts = (value - datetime(1970, 1, 1)).total_seconds()
-        else:
-            ts = value.timestamp()
+        ts = value.timestamp()
     else:
         ts = value
     return ts

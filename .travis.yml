@@ -9,7 +9,6 @@ services:
 install:
   - pip install -r test_requirements.txt
   - python setup.py install
-  - pip install six --upgrade --ignore-installed
 # command to run tests
 before_script:
   - psql -c 'create database baseframe_test;' -U postgres

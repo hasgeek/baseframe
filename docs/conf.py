@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # flake8: noqa
 #
 # baseframe documentation build configuration file, created by
@@ -12,8 +11,7 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-from __future__ import unicode_literals
-
+from typing import Dict
 import os
 import sys
 
@@ -180,7 +178,7 @@ htmlhelp_basename = 'baseframedoc'
 
 # -- Options for LaTeX output --------------------------------------------------
 
-latex_elements = {
+latex_elements: Dict[str, str] = {
     # The paper size ('letterpaper' or 'a4paper').
     #'papersize': 'letterpaper',
     # The font size ('10pt', '11pt' or '12pt').

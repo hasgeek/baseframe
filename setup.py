@@ -40,7 +40,6 @@ requires = [
     'rq',
     'semantic_version',
     'sentry-sdk',
-    'six>=1.13.0',
     'speaklater',
     'statsd',
     'werkzeug',

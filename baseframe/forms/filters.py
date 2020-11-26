@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 Use filters with form fields to process filter data::
 

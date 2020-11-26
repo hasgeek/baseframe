@@ -1,8 +1,6 @@
-from six.moves.urllib.parse import urljoin
-import six
-
 from decimal import Decimal
 from decimal import InvalidOperation as DecimalError
+from urllib.parse import urljoin
 
 from flask import current_app
 from flask_wtf import RecaptchaField as RecaptchaFieldBase
@@ -19,7 +17,7 @@ from pytz import timezone as pytz_timezone
 import bleach
 import simplejson as json
 
-from .. import _, get_timezone
+from ..extensions import _, get_timezone
 from ..utils import request_timestamp
 from .parsleyjs import HiddenField, StringField, TextAreaField, URLField
 from .validators import Recaptcha
@@ -420,7 +418,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
     def timezone(self, value):
         if value is None:
             value = get_timezone()
-        if isinstance(value, six.string_types):
+        if isinstance(value, str):
             self.tz = pytz_timezone(value)
             self._timezone = value
         else:
@@ -607,7 +605,7 @@ class AutocompleteFieldBase(object):
 
     def iter_choices(self):
         if self.data:
-            return [(six.text_type(u), six.text_type(u), True) for u in self.data]
+            return [(str(u), str(u), True) for u in self.data]
 
     def process_formdata(self, valuelist):
         retval = super(AutocompleteFieldBase, self).process_formdata(valuelist)
@@ -669,7 +667,7 @@ class GeonameSelectFieldBase(object):
 
     def iter_choices(self):
         if self.data:
-            return [(six.text_type(u), six.text_type(u), True) for u in self.data]
+            return [(str(u), str(u), True) for u in self.data]
 
     def process_formdata(self, valuelist):
         retval = super(GeonameSelectFieldBase, self).process_formdata(valuelist)
