@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-11-19 09:30+0530\n"
-"PO-Revision-Date: 2020-11-18 12:37+0530\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2020-11-27 11:48+0530\n"
 "Language: hi_IN\n"
 "Language-Team: hi_IN <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
+"Last-Translator: \n"
+"X-Generator: Poedit 2.3\n"
 
 #: baseframe/filters.py:35
 msgid "now"
@@ -80,7 +81,7 @@ msgstr "%(num)s साल पहले"
 #: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:11
 #: baseframe/templates/baseframe/mui/delete.html.jinja2:13
 msgid "Delete"
-msgstr ""
+msgstr "मिटाएं"
 
 #: baseframe/forms/auto.py:35
 #: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:12
@@ -88,13 +89,13 @@ msgstr ""
 #: baseframe/templates/baseframe/mui/delete.html.jinja2:14
 #: baseframe/templates/baseframe/mui/forms.html.jinja2:145
 msgid "Cancel"
-msgstr ""
+msgstr "रद्द करें"
 
 #: baseframe/forms/auto.py:43
 #: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:133
 #: baseframe/templates/baseframe/mui/forms.html.jinja2:181
 msgid "Submit"
-msgstr ""
+msgstr "जमा करें"
 
 #: baseframe/forms/fields.py:147
 msgid "Not a valid choice!"
@@ -254,7 +255,7 @@ msgstr ""
 
 #: baseframe/templates/404.html.jinja2:2
 msgid "Not Found"
-msgstr ""
+msgstr "नहीं प्राप्त हुआ"
 
 #: baseframe/templates/404.html.jinja2:5
 msgid "The page you were looking for does not exist."
@@ -262,7 +263,7 @@ msgstr ""
 
 #: baseframe/templates/500.html.jinja2:2
 msgid "Internal Server Error"
-msgstr ""
+msgstr "आंतरिक सर्वर त्रुटि"
 
 #: baseframe/templates/500.html.jinja2:5
 msgid ""
@@ -282,7 +283,7 @@ msgstr ""
 #: baseframe/templates/baseframe/bootstrap3/redirect.html.jinja2:1
 #: baseframe/templates/baseframe/mui/redirect.html.jinja2:1
 msgid "Loading..."
-msgstr ""
+msgstr "लोड हो रहा है…"
 
 #: baseframe/templates/baseframe/mui/imgeefield.html.jinja2:5
 msgid "Select or upload image"
@@ -290,11 +291,11 @@ msgstr ""
 
 #: baseframe/templates/baseframe/mui/imgeefield.html.jinja2:8
 msgid "Close"
-msgstr ""
+msgstr "बंद करें"
 
 #: tests/fixtures.py:58
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: tests/fixtures.py:69
 msgid "Emoji"
@@ -334,8 +335,8 @@ msgstr ""
 
 #: tests/test_sqlalchemy.py:28
 msgid "Name"
-msgstr ""
+msgstr "नाम"
 
 #: tests/test_sqlalchemy.py:30
 msgid "Title"
-msgstr ""
+msgstr "शीर्षक"
