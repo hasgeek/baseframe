@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime, time, timedelta
 from typing import Any, List, Tuple, Union
 from urllib.parse import urlsplit, urlunsplit
 import os.path
@@ -190,14 +190,20 @@ def cdata(text: str) -> str:
 
 # TODO: Used only in Hasjob. Move there?
 @baseframe.app_template_filter('shortdate')
-def shortdate(value: datetime) -> str:
-    """Render a short date (deprecated as i18n is not supported)."""
-    tz = get_timezone()
-    if value.tzinfo is None:
-        dt = UTC.localize(value).astimezone(tz)
+def shortdate(value: Union[datetime, date]) -> str:
+    """Render a date in short form (deprecated for lack of i18n support)."""
+    dt: Union[datetime, date]
+    utc_now: Union[datetime, date]
+    if isinstance(value, datetime):
+        tz = get_timezone()
+        if value.tzinfo is None:
+            dt = UTC.localize(value).astimezone(tz)
+        else:
+            dt = value.astimezone(tz)
+        utc_now = request_timestamp().astimezone(tz)
     else:
-        dt = value.astimezone(tz)
-    utc_now = request_timestamp().astimezone(tz)
+        dt = value
+        utc_now = request_timestamp().date()
     if dt > (
         utc_now
         - timedelta(days=int(current_app.config.get('SHORTDATE_THRESHOLD_DAYS', 0)))
@@ -211,24 +217,29 @@ def shortdate(value: datetime) -> str:
 
 # TODO: Only used in Hasjob. Move there?
 @baseframe.app_template_filter('longdate')
-def longdate(value: datetime) -> str:
-    """Render a long date (deprecated as i18n is not supported)."""
-    if value.tzinfo is None:
-        dt = UTC.localize(value).astimezone(get_timezone())
+def longdate(value: Union[datetime, date]) -> str:
+    """Render a date in long form (deprecated for lack of i18n support)."""
+    dt: Union[datetime, date]
+    if isinstance(value, datetime):
+        if value.tzinfo is None:
+            dt = UTC.localize(value).astimezone(get_timezone())
+        else:
+            dt = value.astimezone(get_timezone())
     else:
-        dt = value.astimezone(get_timezone())
+        dt = value
     return dt.strftime('%e %B %Y')
 
 
 @baseframe.app_template_filter('date')
 def date_filter(
-    value: datetime,
+    value: Union[datetime, date],
     format: str = 'medium',  # NOQA: A002
     locale: Locale = None,
     usertz: bool = True,
 ) -> str:
     """Render a localized date."""
-    if usertz:
+    dt: Union[datetime, date]
+    if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
             dt = UTC.localize(value).astimezone(get_timezone())
         else:
@@ -240,14 +251,15 @@ def date_filter(
 
 @baseframe.app_template_filter('time')
 def time_filter(
-    value: datetime,
+    value: Union[datetime, time],
     format: str = 'short',  # NOQA: A002
     locale: Locale = None,
     usertz: bool = True,
 ) -> str:
     """Render a localized time."""
     # Default format = hh:mm
-    if usertz:
+    dt: Union[datetime, time]
+    if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
             dt = UTC.localize(value).astimezone(get_timezone())
         else:
@@ -259,13 +271,14 @@ def time_filter(
 
 @baseframe.app_template_filter('datetime')
 def datetime_filter(
-    value: datetime,
+    value: Union[datetime, date, time],
     format: str = 'medium',  # NOQA: A002
     locale: Locale = None,
     usertz: bool = True,
 ) -> str:
     """Render a localized date and time."""
-    if usertz:
+    dt: Union[datetime, date, time]
+    if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
             dt = UTC.localize(value).astimezone(get_timezone())
         else:
@@ -278,6 +291,8 @@ def datetime_filter(
 @baseframe.app_template_filter('timestamp')
 def timestamp_filter(value: datetime) -> float:
     """Render a POSIX timestamp."""
+    if not value.tzinfo:
+        return UTC.localize(value).timestamp()
     return value.timestamp()
 
 
@@ -293,5 +308,5 @@ def cleanurl_filter(url: Union[str, furl]) -> str:
 
 @baseframe.app_template_filter('make_relative_url')
 def make_relative_url(url: str) -> str:
-    """Discard scheme and netloc from a URL, used to undo _external=True"""
+    """Discard scheme and netloc from a URL, used to undo _external=True."""
     return urlunsplit(urlsplit(url)._replace(scheme='', netloc=''))

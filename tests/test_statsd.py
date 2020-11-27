@@ -1,16 +1,11 @@
 # Tests adapted from https://github.com/bbelyeu/flask-statsdclient
 
+from unittest.mock import patch
 import unittest
 
 from flask import Flask
 
 from baseframe.statsd import Statsd
-
-try:
-    from unittest.mock import patch
-except ImportError:
-    patch = None  # type: ignore[assignment]
-
 
 statsd = Statsd()
 
@@ -24,7 +19,7 @@ def create_app(config=None):
 
 
 class TestStatsd(unittest.TestCase):
-    """Test Statsd extension"""
+    """Test Statsd extension."""
 
     def setUp(self):
         self.app = create_app()
@@ -56,12 +51,12 @@ class TestStatsd(unittest.TestCase):
         with patch('statsd.StatsClient.incr') as mock_incr:
             statsd.incr('test.counter')
             mock_incr.assert_called_once_with(
-                'flask_app.tests.test_statsd.test.counter', rate=1
+                'flask_app.tests.test_statsd.test.counter', 1, rate=1
             )
         with patch('statsd.StatsClient.incr') as mock_incr:
             statsd.incr('test.counter', rate=0.5)
             mock_incr.assert_called_once_with(
-                'flask_app.tests.test_statsd.test.counter', rate=0.5
+                'flask_app.tests.test_statsd.test.counter', 1, rate=0.5
             )
         with patch('statsd.StatsClient.incr') as mock_incr:
             statsd.incr('test.counter', 2, rate=0.5)
@@ -74,12 +69,12 @@ class TestStatsd(unittest.TestCase):
         with patch('statsd.StatsClient.incr') as mock_incr:
             statsd.incr('test.counter')
             mock_incr.assert_called_once_with(
-                'flask_app.tests.test_statsd.test.counter', rate=0.3
+                'flask_app.tests.test_statsd.test.counter', 1, rate=0.3
             )
         with patch('statsd.StatsClient.incr') as mock_incr:
             statsd.incr('test.counter', rate=0.5)
             mock_incr.assert_called_once_with(
-                'flask_app.tests.test_statsd.test.counter', rate=0.5
+                'flask_app.tests.test_statsd.test.counter', 1, rate=0.5
             )
 
     def test_wrapper_tags(self):
@@ -87,34 +82,37 @@ class TestStatsd(unittest.TestCase):
         with patch('statsd.StatsClient.incr') as mock_incr:
             statsd.incr('test.counter', tags={'tag': 'value'})
             mock_incr.assert_called_once_with(
-                'flask_app.tests.test_statsd.test.counter.tag_value', rate=1
+                'flask_app.tests.test_statsd.test.counter.tag_value', 1, rate=1
             )
 
-        # Tags are enabled if a separator character is specified in config,
-        # and the app name is included as a tag instead of as a prefix.
+        # Tags are enabled if a separator character is specified in config.
+        # The app name is then included as a tag instead of as a prefix.
         # `flask_app` is retained as a prefix.
         self.app.config['STATSD_TAGS'] = ';'
         with patch('statsd.StatsClient.incr') as mock_incr:
             statsd.incr('test.counter', tags={'tag': 'value'})
             mock_incr.assert_called_once_with(
-                'flask_app.test.counter;tag=value;app=tests.test_statsd', rate=1
+                'flask_app.test.counter;tag=value;app=tests.test_statsd', 1, rate=1
             )
         with patch('statsd.StatsClient.incr') as mock_incr:
             statsd.incr('test.counter', tags={'tag': 'value', 't2': 'v2'})
             mock_incr.assert_called_once_with(
                 'flask_app.test.counter;tag=value;t2=v2;app=tests.test_statsd',
+                1,
                 rate=1,
             )
         with patch('statsd.StatsClient.incr') as mock_incr:
             statsd.incr('test.counter', tags={'tag': 'val', 't2': 'v2', 't3': None})
             mock_incr.assert_called_once_with(
                 'flask_app.test.counter;tag=val;t2=v2;t3;app=tests.test_statsd',
+                1,
                 rate=1,
             )
         with patch('statsd.StatsClient.incr') as mock_incr:
             statsd.incr('test.counter', tags={'tag': 'val', 't2': None, 't3': 'v3'})
             mock_incr.assert_called_once_with(
                 'flask_app.test.counter;tag=val;t2;t3=v3;app=tests.test_statsd',
+                1,
                 rate=1,
             )
 
@@ -124,6 +122,7 @@ class TestStatsd(unittest.TestCase):
             statsd.incr('test.counter', tags={'tag': 'value', 't2': 'v2'})
             mock_incr.assert_called_once_with(
                 'flask_app.test.counter,tag=value,t2=v2,app=tests.test_statsd',
+                1,
                 rate=1,
             )
 

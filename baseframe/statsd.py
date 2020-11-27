@@ -66,12 +66,6 @@ class Statsd(object):
         if app is not None:
             self.init_app(app)
 
-        # Py 3.4+ has `functools.partialmethod`, allowing these to be set directly
-        # on the class, but as per `timeit` it is about 50% slower. Since this class
-        # will be instantiated only once per runtime, we get an overall performance
-        # improvement at the cost of making it slightly harder to find documentation.
-        # https://gist.github.com/jace/9897629abda9bbd06f5a1bf862f43d42
-
     def init_app(self, app: Flask):
         app.config.setdefault('STATSD_RATE', 1)
         app.config.setdefault('SITE_ID', app.name)
@@ -112,27 +106,20 @@ class Statsd(object):
             )
         return '{}.{}'.format(prefix, name)
 
-    def _wrapper(
-        self, metric: str, stat: str, *args, tags: TagsType = None, **kwargs
-    ) -> None:
-        if kwargs.get('rate', None) is None:
-            kwargs['rate'] = current_app.config['STATSD_RATE']
-        stat = self._metric_name(stat, tags)
-
-        getattr(current_app.extensions['statsd_core'], metric)(stat, *args, **kwargs)
-
-    def timer(self, stat: str, rate: int = None, tags: TagsType = None) -> Timer:
+    def timer(
+        self, stat: str, rate: Union[int, float] = None, tags: TagsType = None
+    ) -> Timer:
         """Return a Timer."""
         stat = self._metric_name(stat, tags)
         return current_app.extensions['statsd_core'].timer(
-            stat, rate if rate is not None else current_app.config['STATSD_RATE']
+            stat, rate=rate if rate is not None else current_app.config['STATSD_RATE']
         )
 
     def timing(
         self,
         stat: str,
         delta: Union[int, timedelta],
-        rate: int = None,
+        rate: Union[int, float] = None,
         tags: TagsType = None,
     ) -> None:
         """
@@ -142,32 +129,46 @@ class Statsd(object):
         """
         stat = self._metric_name(stat, tags)
         current_app.extensions['statsd_core'].timing(
-            stat, delta, rate if rate is not None else current_app.config['STATSD_RATE']
+            stat,
+            delta,
+            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
         )
 
     def incr(
-        self, stat: str, count: int = 1, rate: int = None, tags: TagsType = None
+        self,
+        stat: str,
+        count: int = 1,
+        rate: Union[int, float] = None,
+        tags: TagsType = None,
     ) -> None:
         """Increment a stat by `count`."""
         stat = self._metric_name(stat, tags)
         current_app.extensions['statsd_core'].incr(
-            stat, count, rate if rate is not None else current_app.config['STATSD_RATE']
+            stat,
+            count,
+            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
         )
 
     def decr(
-        self, stat: str, count: int = 1, rate: int = None, tags: TagsType = None
+        self,
+        stat: str,
+        count: int = 1,
+        rate: Union[int, float] = None,
+        tags: TagsType = None,
     ) -> None:
         """Decrement a stat by `count`."""
         stat = self._metric_name(stat, tags)
         current_app.extensions['statsd_core'].decr(
-            stat, count, rate if rate is not None else current_app.config['STATSD_RATE']
+            stat,
+            count,
+            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
         )
 
     def gauge(
         self,
         stat: str,
         value: int,
-        rate: int = None,
+        rate: Union[int, float] = None,
         delta: bool = False,
         tags: TagsType = None,
     ) -> None:
@@ -176,17 +177,23 @@ class Statsd(object):
         current_app.extensions['statsd_core'].gauge(
             stat,
             value,
-            rate if rate is not None else current_app.config['STATSD_RATE'],
-            delta,
+            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
+            delta=delta,
         )
 
     def set(  # NOQA: A003
-        self, stat: str, value: str, rate: int = None, tags: TagsType = None
+        self,
+        stat: str,
+        value: str,
+        rate: Union[int, float] = None,
+        tags: TagsType = None,
     ) -> None:
         """Set a set value."""
         stat = self._metric_name(stat, tags)
         current_app.extensions['statsd_core'].set(
-            stat, value, rate if rate is not None else current_app.config['STATSD_RATE']
+            stat,
+            value,
+            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
         )
 
     def pipeline(self) -> StatsClient:

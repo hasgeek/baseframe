@@ -6,6 +6,7 @@ from .assets import Version, assets
 from .blueprint import *  # NOQA
 from .deprecated import *  # NOQA
 from .errors import *  # NOQA
+from .extensions import *  # NOQA
 from .filters import *  # NOQA
 from .utils import *  # NOQA
 from .views import *  # NOQA
