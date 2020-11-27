@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-11-19 09:30+0530\n"
-"PO-Revision-Date: 2020-11-27 11:48+0530\n"
+"PO-Revision-Date: 2020-11-27 13:22+0530\n"
 "Language: hi_IN\n"
 "Language-Team: hi_IN <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -283,7 +283,7 @@ msgstr ""
 #: baseframe/templates/baseframe/bootstrap3/redirect.html.jinja2:1
 #: baseframe/templates/baseframe/mui/redirect.html.jinja2:1
 msgid "Loading..."
-msgstr "लोड हो रहा है…"
+msgstr "लोडिंग…"
 
 #: baseframe/templates/baseframe/mui/imgeefield.html.jinja2:5
 msgid "Select or upload image"
@@ -299,7 +299,7 @@ msgstr "URL"
 
 #: tests/fixtures.py:69
 msgid "Emoji"
-msgstr ""
+msgstr "इमोजी"
 
 #: tests/fixtures.py:74 tests/test_sqlalchemy.py:32
 msgid "Content"
