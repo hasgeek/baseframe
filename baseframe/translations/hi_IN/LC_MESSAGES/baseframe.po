@@ -48,7 +48,7 @@ msgstr "एक घंटा पहले"
 #: baseframe/filters.py:47
 #, python-format
 msgid "%(num)s hours ago"
-msgstr "%(num)s घंटा पहले"
+msgstr "%(num)s घंटो पहले"
 
 #: baseframe/filters.py:49
 msgid "a day ago"
