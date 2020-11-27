@@ -1,0 +1,6 @@
+{% extends "layout.html.jinja2" %}
+{% block title %}{% trans %}Too Many Requests{% endtrans %}{% endblock %}
+
+{% block content %}
+<p>{% trans %}You have exceeded the rate limit and must try after some time.{% endtrans %}</p>
+{% endblock %}

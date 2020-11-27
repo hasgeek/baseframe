@@ -1,6 +1,4 @@
-"""
-Deprecated declarations. Will be removed in Baseframe 0.3.0
-"""
+"""Deprecated declarations. To be removed when dependent apps have been audited."""
 
 from webassets import Bundle
 

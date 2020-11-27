@@ -1,7 +1,10 @@
+from __future__ import annotations
+
+from typing import Iterable, List, Optional, Tuple, Union
 import json
 import os.path
 
-from flask import Blueprint
+from flask import Blueprint, Flask
 from flask_assets import Bundle, Environment
 from flask_babelhg import get_locale
 
@@ -51,10 +54,8 @@ THEME_FILES = {
 }
 
 
-def _select_jinja_autoescape(filename):
-    """
-    Returns `True` if autoescaping should be active for the given template name.
-    """
+def _select_jinja_autoescape(filename: Optional[str]) -> bool:
+    """Return `True` if autoescaping should be active for the given template name."""
     if filename is None:
         return False
     return filename.endswith(
@@ -76,17 +77,17 @@ def _select_jinja_autoescape(filename):
 class BaseframeBlueprint(Blueprint):
     def init_app(
         self,
-        app,
-        requires=[],
-        ext_requires=[],
+        app: Flask,
+        requires: Iterable[str] = (),
+        ext_requires: Iterable[Union[str, List[str], Tuple[str, ...]]] = (),
         bundle_js=None,
         bundle_css=None,
         assetenv=None,
-        theme='bootstrap3',
+        theme: str = 'bootstrap3',
         asset_modules=(),
     ):
         """
-        Initialize an app and load necessary assets.
+        Initialize an app with Baseframe and load necessary assets.
 
         :param requires: List of required assets. If an asset has both .js
             and .css components, both will be added to the requirement list.
@@ -100,7 +101,10 @@ class BaseframeBlueprint(Blueprint):
             ``requires`` if there is no asset server
         :param bundle_js: Bundle of additional JavaScript
         :param bundle_css: Bundle of additional CSS
-        :param assetenv: Environment for assets (in case your app needs a custom environment)
+        :param theme: CSS theme, one of 'bootstrap3' (default) or 'mui'
+        :param assetenv: Environment for assets (in case your app needs a custom
+            environment)
+        :param asset_modules: Modules providing additional assets
         """
         # Initialize Sentry logging
         if app.config.get('SENTRY_URL'):
@@ -161,14 +165,14 @@ class BaseframeBlueprint(Blueprint):
         else:
             subdomain = None
 
-        ignore_js = ['!jquery.js']
-        ignore_css = []
-        ext_js = []
-        ext_css = []
+        ignore_js: List[str] = ['!jquery.js']
+        ignore_css: List[str] = []
+        ext_js: List[List[str]] = []
+        ext_css: List[List[str]] = []
         if app.config.get('ASSET_SERVER'):
             for itemgroup in ext_requires:
-                sub_js = []
-                sub_css = []
+                sub_js: List[str] = []
+                sub_css: List[str] = []
                 if not isinstance(itemgroup, (list, tuple)):
                     itemgroup = [itemgroup]
                 for item in itemgroup:
@@ -191,13 +195,13 @@ class BaseframeBlueprint(Blueprint):
                 for item in (
                     itemgroup if isinstance(itemgroup, (list, tuple)) else [itemgroup]
                 )
-            ] + requires
+            ] + list(requires)
 
         app.config['ext_js'] = ext_js
         app.config['ext_css'] = ext_css
 
-        assets_js = []
-        assets_css = []
+        assets_js: List[str] = []
+        assets_css: List[str] = []
         for item in requires:
             name, spec = split_namespec(item)
             for alist, ext in [(assets_js, '.js'), (assets_css, '.css')]:
@@ -330,8 +334,10 @@ class BaseframeBlueprint(Blueprint):
                 "Did not find New Relic settings file newrelic.ini, skipping it"
             )
 
-    def register(self, app, options, first_registration=False):
+    def register(self, app: Flask, options: dict, first_registration: bool = False):
         """
+        Register blueprint on the app (internal method).
+
         Called by :meth:`Flask.register_blueprint` to register all views
         and callbacks registered on the blueprint with the application. Creates
         a :class:`.BlueprintSetupState` and calls each :meth:`record` callback
@@ -348,7 +354,7 @@ class BaseframeBlueprint(Blueprint):
 
         if self.has_static_folder:
             state.add_url_rule(
-                self.static_url_path + '/<path:filename>',
+                self.static_url_path + '/<path:filename>',  # type: ignore[operator]
                 view_func=self.send_static_file,
                 endpoint='static',
                 subdomain=options.get('static_subdomain'),

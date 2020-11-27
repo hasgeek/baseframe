@@ -5,6 +5,7 @@ from flask_babelhg import Babel, Domain
 
 from flask_caching import Cache
 from pytz import timezone, utc
+from pytz.tzinfo import BaseTzInfo
 
 from coaster.auth import current_auth
 
@@ -39,7 +40,7 @@ __ = baseframe_translations.lazy_gettext
 
 
 @babel.localeselector
-def get_user_locale():
+def get_user_locale() -> str:
     # If this app and request have a user that specifies a locale, use it
     user = current_auth.actor  # Use 'actor' instead of 'user' to support anon users
     if user is not None and hasattr(user, 'locale') and user.locale:
@@ -55,7 +56,7 @@ def get_user_locale():
 
 
 @babel.timezoneselector
-def get_timezone():
+def get_timezone() -> BaseTzInfo:
     # If this app and request have a user, return user's timezone,
     # else return app default timezone
     if (
