@@ -8,6 +8,7 @@ from werkzeug.wrappers import Response
 
 from statsd import StatsClient
 from statsd.client.timer import Timer
+from statsd.client.udp import Pipeline
 
 from .signals import form_validation_error, form_validation_success
 
@@ -196,7 +197,7 @@ class Statsd(object):
             rate=rate if rate is not None else current_app.config['STATSD_RATE'],
         )
 
-    def pipeline(self) -> StatsClient:
+    def pipeline(self) -> Pipeline:
         return current_app.extensions['statsd_core'].pipeline()
 
     def _request_started(self, app: Flask) -> None:
