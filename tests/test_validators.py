@@ -21,7 +21,7 @@ from .fixtures import (
 
 class TestValidators(TestCaseBaseframe):
     def setUp(self):
-        super(TestValidators, self).setUp()
+        super().setUp()
         with self.app.test_request_context('/'):
             self.url_form = UrlFormTest(meta={'csrf': False})
             self.emoji_form = EmojiFormTest(meta={'csrf': False})
@@ -31,7 +31,7 @@ class TestValidators(TestCaseBaseframe):
         urllib3.disable_warnings()
 
     def tearDown(self):
-        super(TestValidators, self).tearDown()
+        super().tearDown()
         warnings.resetwarnings()
 
     def test_is_empty(self):
@@ -205,7 +205,7 @@ class TestValidUrl(TestCaseBaseframe):
     """Additional tests for the ValidUrl validator"""
 
     def setUp(self):
-        super(TestValidUrl, self).setUp()
+        super().setUp()
         self.ctx = self.app.test_request_context()
         self.ctx.push()
 
@@ -449,7 +449,7 @@ class TestFormBase(TestCaseBaseframe):
     # Subclasses must define a `Form`
 
     def setUp(self):
-        super(TestFormBase, self).setUp()
+        super().setUp()
         self.ctx = self.app.test_request_context()
         self.ctx.push()
         self.form = self.Form(meta={'csrf': False})

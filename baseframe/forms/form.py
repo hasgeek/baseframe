@@ -159,7 +159,7 @@ class Form(BaseForm):
         # Call baseclass after expected parameters have been set. `__init__` will call
         # `process`, which will in turn call the ``get_<fieldname>`` methods, and they
         # will need proper context
-        super(Form, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         # Finally, populate the ``choices`` attr of selection fields
         self.set_queries()
@@ -228,7 +228,7 @@ class Form(BaseForm):
                 field.process(formdata)
 
     def validate(self, send_signals=True):
-        success = super(Form, self).validate()
+        success = super().validate()
         for attr in self.__returns__:
             if not hasattr(self, attr):
                 setattr(self, attr, None)
@@ -351,7 +351,7 @@ class RecaptchaForm(Form):
     recaptcha = bfields.RecaptchaField()
 
     def __init__(self, *args, **kwargs):
-        super(RecaptchaForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         if not (
             current_app.config.get('RECAPTCHA_PUBLIC_KEY')
             and current_app.config.get('RECAPTCHA_PRIVATE_KEY')

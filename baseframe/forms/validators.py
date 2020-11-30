@@ -153,13 +153,13 @@ class OptionalIf(Optional):
     default_message = __("This is required")
 
     def __init__(self, fieldname, message=None):
-        super(OptionalIf, self).__init__()
+        super().__init__()
         self.fieldname = fieldname
         self.message = message or self.default_message
 
     def __call__(self, form, field):
         if not is_empty(form[self.fieldname].data):
-            return super(OptionalIf, self).__call__(form, field)
+            return super().__call__(form, field)
 
 
 class RequiredIf(DataRequired):
@@ -184,12 +184,12 @@ class RequiredIf(DataRequired):
 
     def __init__(self, fieldname, message=None):
         message = message or self.default_message
-        super(RequiredIf, self).__init__(message=message)
+        super().__init__(message=message)
         self.fieldname = fieldname
 
     def __call__(self, form, field):
         if not is_empty(form[self.fieldname].data):
-            super(RequiredIf, self).__call__(form, field)
+            super().__call__(form, field)
 
 
 class _Comparison(object):

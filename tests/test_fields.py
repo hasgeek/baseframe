@@ -50,7 +50,7 @@ class BaseTestCase(unittest.TestCase):
 
 class TestEnumField(BaseTestCase):
     def setUp(self):
-        super(TestEnumField, self).setUp()
+        super().setUp()
         self.form = EnumForm(meta={'csrf': False})
 
     def test_default(self):
@@ -83,7 +83,7 @@ class TestEnumField(BaseTestCase):
 
 class TestJsonField(BaseTestCase):
     def setUp(self):
-        super(TestJsonField, self).setUp()
+        super().setUp()
         self.form = JsonForm(meta={'csrf': False})
 
     def test_default(self):

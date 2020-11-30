@@ -55,7 +55,7 @@ class JSONEncoder(JSONEncoderBase):
             return list(o)
         if isinstance(o, MarkdownComposite):
             return {'text': o.text, 'html': o.html}
-        return super(JSONEncoder, self).default(o)
+        return super().default(o)
 
 
 def request_timestamp() -> datetime:

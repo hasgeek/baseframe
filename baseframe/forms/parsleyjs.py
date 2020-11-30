@@ -226,7 +226,7 @@ def _message_kwargs(kwargs, message):
 class ParsleyInputMixin(object):
     def __call__(self, field, **kwargs):
         kwargs = parsley_kwargs(field, kwargs)
-        return super(ParsleyInputMixin, self).__call__(field, **kwargs)
+        return super().__call__(field, **kwargs)
 
 
 class TextInput(ParsleyInputMixin, _TextInput):

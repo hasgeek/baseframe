@@ -91,7 +91,7 @@ class TinyMce3(wtforms.widgets.TextArea):
             kwargs['class'] = '%s %s' % ('richtext', c)
         else:
             kwargs['class'] = 'richtext'
-        return super(TinyMce3, self).__call__(field, **kwargs)
+        return super().__call__(field, **kwargs)
 
 
 class TinyMce4(wtforms.widgets.TextArea):
@@ -107,7 +107,7 @@ class TinyMce4(wtforms.widgets.TextArea):
             kwargs['class'] = '%s %s' % ('richtext', c)
         else:
             kwargs['class'] = 'richtext'
-        return super(TinyMce4, self).__call__(field, **kwargs)
+        return super().__call__(field, **kwargs)
 
 
 class SubmitInput(wtforms.widgets.SubmitInput):
@@ -117,12 +117,12 @@ class SubmitInput(wtforms.widgets.SubmitInput):
 
     def __init__(self, *args, **kwargs):
         self.css_class = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        super(SubmitInput, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def __call__(self, field, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = '%s %s' % (self.css_class, c)
-        return super(SubmitInput, self).__call__(field, **kwargs)
+        return super().__call__(field, **kwargs)
 
 
 class DateTimeInput(wtforms.widgets.Input):

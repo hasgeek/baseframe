@@ -10,7 +10,7 @@ from .fixtures import TestCaseBaseframe, UserTest
 
 class TestDatetimeFilters(TestCaseBaseframe):
     def setUp(self):
-        super(TestDatetimeFilters, self).setUp()
+        super().setUp()
         self.now = datetime.now(UTC)
         self.date = date(2020, 1, 31)
         self.datetime = datetime(2020, 1, 31, 0, 0, tzinfo=timezone("UTC"))
@@ -189,7 +189,7 @@ class TestDatetimeFilters(TestCaseBaseframe):
 
 class TestNaiveDatetimeFilters(TestDatetimeFilters):
     def setUp(self):
-        super(TestNaiveDatetimeFilters, self).setUp()
+        super().setUp()
         self.now = datetime.utcnow()
 
     def test_now_is_naive(self):
@@ -198,7 +198,7 @@ class TestNaiveDatetimeFilters(TestDatetimeFilters):
 
 class TestFilters(TestCaseBaseframe):
     def setUp(self):
-        super(TestFilters, self).setUp()
+        super().setUp()
         self.user = UserTest()
         self.avatar_size = ('100', '100')
         self.avatar_url = '//images.hasgeek.com/embed/test'

@@ -94,7 +94,7 @@ class NonceField(HiddenField):
 
     def process(self, formdata, data=None):
         """Discard data coming from an object"""
-        super(NonceField, self).process(formdata)
+        super().process(formdata)
 
     def populate_obj(self, *args):
         """Override populate_obj to not attempting setting nonce on the object"""
@@ -105,7 +105,7 @@ class RecaptchaField(RecaptchaFieldBase):
 
     def __init__(self, label='', validators=None, **kwargs):
         validators = validators or [Recaptcha()]
-        super(RecaptchaField, self).__init__(label, validators, **kwargs)
+        super().__init__(label, validators, **kwargs)
 
 
 # This class borrowed from https://github.com/industrydive/wtforms_extended_selectfield
@@ -181,7 +181,7 @@ class TinyMce3Field(TextAreaField):
         **kwargs
     ):
 
-        super(TinyMce3Field, self).__init__(
+        super().__init__(
             label=label,
             validators=validators,
             filters=filters,
@@ -250,7 +250,7 @@ class TinyMce3Field(TextAreaField):
             return self._content_css
 
     def process_formdata(self, valuelist):
-        super(TinyMce3Field, self).process_formdata(valuelist)
+        super().process_formdata(valuelist)
         # Sanitize data
         self.data = bleach.clean(
             self.data,
@@ -295,7 +295,7 @@ class TinyMce4Field(TextAreaField):
         **kwargs
     ):
 
-        super(TinyMce4Field, self).__init__(
+        super().__init__(
             label=label,
             validators=validators,
             filters=filters,
@@ -363,7 +363,7 @@ class TinyMce4Field(TextAreaField):
             return self._content_css
 
     def process_formdata(self, valuelist):
-        super(TinyMce4Field, self).process_formdata(valuelist)
+        super().process_formdata(valuelist)
         # Sanitize data
         self.data = bleach.clean(
             self.data,
@@ -404,7 +404,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
         naive=True,
         **kwargs
     ):
-        super(DateTimeField, self).__init__(label, validators, **kwargs)
+        super().__init__(label, validators, **kwargs)
         self.format = format
         self.timezone = timezone() if callable(timezone) else timezone
         self.naive = naive
@@ -467,7 +467,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
 
     def process_formdata(self, valuelist):
         # We received a naive timestamp from the browser. Save it
-        super(DateTimeField, self).process_formdata(valuelist)
+        super().process_formdata(valuelist)
         # The received timestamp hasn't been localized to the expected timezone yet
         self._timezone_converted = False
 
@@ -518,14 +518,14 @@ class UserSelectFieldBase(object):
         else:
             self.autocomplete_endpoint = kwargs.pop('autocomplete_endpoint')()
             self.getuser_endpoint = kwargs.pop('getuser_endpoint')()
-        super(UserSelectFieldBase, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)  # type: ignore[call-arg]
 
     def iter_choices(self):
         if self.data:
             return [(u.userid, u.pickername, True) for u in self.data]
 
     def process_formdata(self, valuelist):
-        retval = super(UserSelectFieldBase, self).process_formdata(valuelist)
+        retval = super().process_formdata(valuelist)
         userids = valuelist
         # Convert strings in userids into User objects
         users = []
@@ -574,7 +574,7 @@ class UserSelectField(UserSelectFieldBase, StringField):
             return [(self.data.userid, self.data.pickername, True)]
 
     def process_formdata(self, valuelist):
-        retval = super(UserSelectField, self).process_formdata(valuelist)
+        retval = super().process_formdata(valuelist)
         if self.data:
             self.data = self.data[0]
         else:
@@ -600,7 +600,7 @@ class AutocompleteFieldBase(object):
         self.autocomplete_endpoint = kwargs.pop('autocomplete_endpoint')
         self.results_key = kwargs.pop('results_key', 'results')
         self.separator = kwargs.pop('separator', ',')
-        super(AutocompleteFieldBase, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.choices = ()  # Disregard server-side choices
 
     def iter_choices(self):
@@ -608,7 +608,7 @@ class AutocompleteFieldBase(object):
             return [(str(u), str(u), True) for u in self.data]
 
     def process_formdata(self, valuelist):
-        retval = super(AutocompleteFieldBase, self).process_formdata(valuelist)
+        retval = super().process_formdata(valuelist)
         # Convert strings into Tag objects
         self.data = valuelist
         return retval
@@ -634,7 +634,7 @@ class AutocompleteField(AutocompleteFieldBase, StringField):
             return None
 
     def process_formdata(self, valuelist):
-        retval = super(AutocompleteField, self).process_formdata(valuelist)
+        retval = super().process_formdata(valuelist)
         if self.data:
             self.data = self.data[0]
         else:
@@ -663,14 +663,14 @@ class GeonameSelectFieldBase(object):
         self.autocomplete_endpoint = urljoin(server, '/1/geo/autocomplete')
         self.getname_endpoint = urljoin(server, '/1/geo/get_by_names')
 
-        super(GeonameSelectFieldBase, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def iter_choices(self):
         if self.data:
             return [(str(u), str(u), True) for u in self.data]
 
     def process_formdata(self, valuelist):
-        retval = super(GeonameSelectFieldBase, self).process_formdata(valuelist)
+        retval = super().process_formdata(valuelist)
         # Convert strings into GeoName objects
         self.data = valuelist
         return retval
@@ -691,7 +691,7 @@ class GeonameSelectField(GeonameSelectFieldBase, StringField):
             return None
 
     def process_formdata(self, valuelist):
-        retval = super(GeonameSelectField, self).process_formdata(valuelist)
+        retval = super().process_formdata(valuelist)
         if self.data:
             self.data = self.data[0]
         else:
@@ -716,7 +716,7 @@ class AnnotatedTextField(StringField):
     def __init__(self, *args, **kwargs):
         self.prefix = kwargs.pop('prefix', None)
         self.suffix = kwargs.pop('suffix', None)
-        super(AnnotatedTextField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class MarkdownField(TextAreaField):
@@ -727,7 +727,7 @@ class MarkdownField(TextAreaField):
     def __call__(self, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = "%s %s" % (c, 'markdown') if c else 'markdown'
-        return super(MarkdownField, self).__call__(**kwargs)
+        return super().__call__(**kwargs)
 
 
 class StylesheetField(wtforms.TextAreaField):
@@ -738,7 +738,7 @@ class StylesheetField(wtforms.TextAreaField):
     def __call__(self, **kwargs):
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = "%s %s" % (c, 'stylesheet') if c else 'stylesheet'
-        return super(StylesheetField, self).__call__(**kwargs)
+        return super().__call__(**kwargs)
 
 
 class ImgeeField(URLField):
@@ -764,7 +764,7 @@ class ImgeeField(URLField):
         img_size=None,
         **kwargs
     ):
-        super(ImgeeField, self).__init__(label, validators, **kwargs)
+        super().__init__(label, validators, **kwargs)
         self.profile = profile
         self.img_label = img_label
         self.img_size = img_size
@@ -782,7 +782,7 @@ class ImgeeField(URLField):
             kwargs['data-img-label'] = self.img_label
         if self.img_size:
             kwargs['data-img-size'] = self.img_size
-        return super(ImgeeField, self).__call__(**kwargs)
+        return super().__call__(**kwargs)
 
 
 class FormField(wtforms.FormField):
@@ -791,7 +791,7 @@ class FormField(wtforms.FormField):
     """
 
     def process(self, *args, **kwargs):
-        retval = super(FormField, self).process(*args, **kwargs)
+        retval = super().process(*args, **kwargs)
         if hasattr(self.form, 'csrf_token'):
             del self.form.csrf_token
         return retval
@@ -843,7 +843,7 @@ class RadioMatrixField(wtforms.Field):
         choices=(),
         **kwargs
     ):
-        super(RadioMatrixField, self).__init__(label, validators, **kwargs)
+        super().__init__(label, validators, **kwargs)
         self.coerce = coerce
         self.fields = fields
         self.choices = choices
@@ -917,7 +917,7 @@ class EnumSelectField(SelectField):
         self.lenum = kwargs.pop('lenum')
         kwargs['choices'] = self.lenum.nametitles()
 
-        super(EnumSelectField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def iter_choices(self):
         selected_name = self.lenum[self.data].name if self.data is not None else None
@@ -971,7 +971,7 @@ class JsonField(wtforms.TextAreaField):
     ):
         self.require_dict = require_dict
         self.use_decimal = use_decimal
-        super(JsonField, self).__init__(label, validators, **kwargs)
+        super().__init__(label, validators, **kwargs)
 
     def _value(self):
         """

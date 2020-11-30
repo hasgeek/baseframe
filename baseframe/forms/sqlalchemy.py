@@ -52,4 +52,4 @@ class AvailableName(AvailableAttr):
     def __init__(self, message=None, model=None):
         if not message:
             message = __("This URL name is already in use")
-        super(AvailableName, self).__init__('name', message, model)
+        super().__init__('name', message, model)
