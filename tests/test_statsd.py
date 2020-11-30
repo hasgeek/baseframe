@@ -10,6 +10,7 @@ from statsd.client.udp import Pipeline
 import pytest
 
 from baseframe.statsd import Statsd
+import baseframe.forms as forms
 
 
 @pytest.fixture()
@@ -31,6 +32,27 @@ def ctx(app):
     ctx.push()
     yield ctx
     ctx.pop()
+
+
+@pytest.fixture()
+def view(app):
+    @app.route('/')
+    def index():
+        return 'index'
+
+    return index
+
+
+@pytest.fixture()
+def form():
+    class SimpleForm(forms.Form):
+        field = forms.StringField(
+            "Required", validators=[forms.validators.DataRequired()]
+        )
+
+    form = SimpleForm(meta={'csrf': False})
+    del form.form_nonce
+    return form
 
 
 def test_default_config(app, statsd):
@@ -212,4 +234,94 @@ def test_tags(app, ctx, statsd):
         )
 
 
-# TODO: Test request handler and form error stats
+def test_request_handler_notags(app, statsd, view):
+    with patch('statsd.StatsClient.incr') as mock_incr:
+        with patch('statsd.StatsClient.timing') as mock_timing:
+            with app.test_client() as client:
+                client.get('/')
+                # First call
+                mock_incr.assert_any_call(
+                    'flask_app.tests.test_statsd.request_handlers.endpoint_index.status_code_200',
+                    1,
+                    rate=1,
+                )
+                # Second and last call
+                mock_incr.assert_called_with(
+                    'flask_app.tests.test_statsd.request_handlers.endpoint__overall.status_code_200',
+                    1,
+                    rate=1,
+                )
+                mock_timing.assert_called()
+
+
+def test_request_handler_tags(app, statsd, view):
+    app.config['STATSD_TAGS'] = ','
+    with patch('statsd.StatsClient.incr') as mock_incr:
+        with patch('statsd.StatsClient.timing') as mock_timing:
+            with app.test_client() as client:
+                client.get('/')
+                mock_incr.assert_called_once_with(
+                    'flask_app.request_handlers,endpoint=index,status_code=200,app=tests.test_statsd',
+                    1,
+                    rate=1,
+                )
+                mock_timing.assert_called_once()
+
+
+def test_request_handler_disabled(app, view):
+    app.config['STATSD_REQUEST_LOG'] = False
+    Statsd(app)
+    with patch('statsd.StatsClient.incr') as mock_incr:
+        with patch('statsd.StatsClient.timing') as mock_timing:
+            with app.test_client() as client:
+                client.get('/')
+                mock_incr.assert_not_called()
+                mock_timing.assert_not_called()
+
+
+def test_form_success(ctx, app, statsd, form):
+    app.config['STATSD_TAGS'] = ','
+    with patch('statsd.StatsClient.incr') as mock_incr:
+        form.field.data = "test"
+        assert form.validate() is True
+        mock_incr.assert_called_once_with(
+            'flask_app.form_validation_success,form=SimpleForm,app=tests.test_statsd',
+            1,
+            rate=1,
+        )
+
+
+def test_form_error(ctx, app, statsd, form):
+    app.config['STATSD_TAGS'] = ','
+    with patch('statsd.StatsClient.incr') as mock_incr:
+        form.field.data = None
+        assert form.validate() is False
+        mock_incr.assert_called_once_with(
+            'flask_app.form_validation_error,form=SimpleForm,field=field,app=tests.test_statsd',
+            1,
+            rate=1,
+        )
+
+
+def test_form_nolog(ctx, app, statsd, form):
+    app.config['STATSD_TAGS'] = ','
+    app.config['STATSD_FORM_LOG'] = False
+    with patch('statsd.StatsClient.incr') as mock_incr:
+        form.field.data = 'test'
+        assert form.validate() is True
+        mock_incr.assert_not_called()
+        form.field.data = False
+        assert form.validate() is False
+        mock_incr.assert_not_called()
+
+
+def test_form_signals_off(ctx, app, statsd, form):
+    app.config['STATSD_TAGS'] = ','
+    app.config['STATSD_FORM_LOG'] = True
+    with patch('statsd.StatsClient.incr') as mock_incr:
+        form.field.data = 'test'
+        assert form.validate(send_signals=False) is True
+        mock_incr.assert_not_called()
+        form.field.data = False
+        assert form.validate(send_signals=False) is False
+        mock_incr.assert_not_called()

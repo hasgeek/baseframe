@@ -233,14 +233,16 @@ class Form(BaseForm):
             if not hasattr(self, attr):
                 setattr(self, attr, None)
         if send_signals:
-            self.send_signals()
+            self.send_signals(success)
         return success
 
-    def send_signals(self):
-        if self.errors:
-            form_validation_error.send(self)
-        else:
+    def send_signals(self, success=None):
+        if success is None:
+            success = not self.errors
+        if success:
             form_validation_success.send(self)
+        else:
+            form_validation_error.send(self)
 
     def errors_with_data(self):
         # Convert lazy_gettext error strings into unicode so they don't cause problems
