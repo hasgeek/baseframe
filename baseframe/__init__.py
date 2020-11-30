@@ -15,6 +15,7 @@ from flask.json import JSONEncoder as JSONEncoderBase
 from flask_assets import Bundle, Environment
 from flask_babelhg import Babel, Domain, ctx_has_locale, get_locale
 from flask_babelhg.speaklater import is_lazy_string as is_lazy_string_hg
+from flask_wtf.csrf import generate_csrf
 from speaklater import is_lazy_string as is_lazy_string_sl
 
 from babel import Locale
@@ -239,6 +240,7 @@ class BaseframeBlueprint(Blueprint):
         app.jinja_env.autoescape = _select_jinja_autoescape
         app.jinja_env.globals['request_is_xhr'] = request_is_xhr
         app.jinja_env.globals['get_locale'] = get_locale
+        app.jinja_env.globals['csrf_token'] = generate_csrf
         if app.subdomain_matching:
             # Does this app want a static subdomain? (Default: yes, 'static').
             # Apps can disable this by setting STATIC_SUBDOMAIN = None.

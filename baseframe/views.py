@@ -133,7 +133,6 @@ def asset_path(bundle_key):
 def baseframe_context():
     return {
         'networkbar_links': networkbar_links,
-        'csrf_token': generate_csrf,
         'asset_path': asset_path,
     }
 
