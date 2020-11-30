@@ -1,7 +1,7 @@
 from collections import namedtuple
 from decimal import Decimal
 from fractions import Fraction
-from typing import Set
+from typing import Callable, Iterable, Set, Tuple, Union
 from urllib.parse import urljoin, urlparse
 import datetime
 import re
@@ -75,11 +75,15 @@ RECAPTCHA_ERROR_CODES = {
     'invalid-input-response': __("The response parameter is invalid or malformed"),
 }
 
+# XXX: This should use `Iterable[Union[str, Pattern]]` instead of `Iterable[object]`,
+# but mypy doesn't recognise the output of re.compile as being an instance of Pattern
+InvalidUrlPatterns = Iterable[Tuple[Iterable[object], str]]
+AllowedListInit = Union[Iterable[str], Callable[[], Iterable[str]], None]
+AllowedList = Union[Iterable[str], None]
 
-def is_empty(value):
-    """
-    Returns True if the value is falsy but not a numeric zero::
-    """
+
+def is_empty(value) -> bool:
+    """Return True if the value is falsy but not a numeric zero."""
     return value not in _zero_values and not value
 
 
@@ -90,15 +94,16 @@ FakeField = namedtuple(
 
 class ForEach(object):
     """
-    Runs specified validators on each element of an iterable value. If a validator
-    raises :exc:`StopValidation`, it stops other validators within the chain given
-    to :class:`ForEach`, but not validators specified alongside.
+    Runs specified validators on each element of an iterable value.
+
+    If a validator raises :exc:`StopValidation`, it stops other validators within the
+    chain given to :class:`ForEach`, but not validators specified alongside.
     """
 
-    def __init__(self, validators):
+    def __init__(self, validators) -> None:
         self.validators = validators
 
-    def __call__(self, form, field):
+    def __call__(self, form, field) -> None:
         for element in field.data:
             fake_field = FakeField(element, element, [], field.gettext, field.ngettext)
             for validator in self.validators:
@@ -122,11 +127,11 @@ class AllowedIf(object):
 
     default_message = __("This requires ‘{field}’ to be specified")
 
-    def __init__(self, fieldname, message=None):
+    def __init__(self, fieldname: str, message: str = None) -> None:
         self.fieldname = fieldname
         self.message = message or self.default_message
 
-    def __call__(self, form, field):
+    def __call__(self, form, field) -> None:
         if field.data:
             if is_empty(form[self.fieldname].data):
                 raise StopValidation(
@@ -136,8 +141,9 @@ class AllowedIf(object):
 
 class OptionalIf(Optional):
     """
-    Validator that makes this field optional if another field has data. If this
-    field is required when the other field is empty, chain it with
+    Validator that makes this field optional if another field has data.
+
+    If this field is required when the other field is empty, chain it with
     :class:`DataRequired`::
 
         field = forms.StringField("Field",
@@ -152,20 +158,21 @@ class OptionalIf(Optional):
 
     default_message = __("This is required")
 
-    def __init__(self, fieldname, message=None):
+    def __init__(self, fieldname: str, message: str = None) -> None:
         super().__init__()
         self.fieldname = fieldname
         self.message = message or self.default_message
 
-    def __call__(self, form, field):
+    def __call__(self, form, field) -> None:
         if not is_empty(form[self.fieldname].data):
             return super().__call__(form, field)
 
 
 class RequiredIf(DataRequired):
     """
-    Validator that makes this field required if another field has data. If this
-    field is also optional when the other field is empty, chain it with
+    Validator that makes this field required if another field has data.
+
+    If this field is also optional when the other field is empty, chain it with
     :class:`Optional`::
 
         field = forms.StringField("Field",
@@ -182,28 +189,26 @@ class RequiredIf(DataRequired):
 
     field_flags: Set[str] = set()
 
-    def __init__(self, fieldname, message=None):
+    def __init__(self, fieldname: str, message: str = None) -> None:
         message = message or self.default_message
         super().__init__(message=message)
         self.fieldname = fieldname
 
-    def __call__(self, form, field):
+    def __call__(self, form, field) -> None:
         if not is_empty(form[self.fieldname].data):
             super().__call__(form, field)
 
 
 class _Comparison(object):
-    """
-    Base class for validators that compare this field's value with another field
-    """
+    """Base class for validators that compare this field's value with another field."""
 
     default_message = __("Comparison failed")
 
-    def __init__(self, fieldname, message=None):
+    def __init__(self, fieldname: str, message: str = None) -> None:
         self.fieldname = fieldname
         self.message = message or self.default_message
 
-    def __call__(self, form, field):
+    def __call__(self, form, field) -> None:
         other = form[self.fieldname]
         if not self.compare(field.data, other.data):
             d = {
@@ -214,13 +219,13 @@ class _Comparison(object):
             }
             raise ValidationError(self.message.format(**d))
 
-    def compare(self, value, other):
+    def compare(self, value, other) -> bool:
         raise NotImplementedError(_("Subclasses must define ``compare``"))
 
 
 class GreaterThan(_Comparison):
     """
-    Validate field.data > otherfield.data
+    Validate field.data > otherfield.data.
 
     :param fieldname:
         The name of the other field to compare to.
@@ -232,13 +237,13 @@ class GreaterThan(_Comparison):
 
     default_message = __("This must be greater than {other_label}")
 
-    def compare(self, value, other):
+    def compare(self, value, other) -> bool:
         return value > other
 
 
 class GreaterThanEqualTo(_Comparison):
     """
-    Validate field.data >= otherfield.data
+    Validate field.data >= otherfield.data.
 
     :param fieldname:
         The name of the other field to compare to.
@@ -250,13 +255,13 @@ class GreaterThanEqualTo(_Comparison):
 
     default_message = __("This must be greater than or equal to {other_label}")
 
-    def compare(self, value, other):
+    def compare(self, value, other) -> bool:
         return value >= other
 
 
 class LesserThan(_Comparison):
     """
-    Validate field.data < otherfield.data
+    Validate field.data < otherfield.data.
 
     :param fieldname:
         The name of the other field to compare to.
@@ -268,13 +273,13 @@ class LesserThan(_Comparison):
 
     default_message = __("This must be lesser than {other_label}")
 
-    def compare(self, value, other):
+    def compare(self, value, other) -> bool:
         return value < other
 
 
 class LesserThanEqualTo(_Comparison):
     """
-    Validate field.data <= otherfield.data
+    Validate field.data <= otherfield.data.
 
     :param fieldname:
         The name of the other field to compare to.
@@ -286,13 +291,13 @@ class LesserThanEqualTo(_Comparison):
 
     default_message = __("This must be lesser than or equal to {other_label}")
 
-    def compare(self, value, other):
+    def compare(self, value, other) -> bool:
         return value <= other
 
 
 class NotEqualTo(_Comparison):
     """
-    Validate field.data != otherfield.data
+    Validate field.data != otherfield.data.
 
     :param fieldname:
         The name of the other field to compare to.
@@ -304,7 +309,7 @@ class NotEqualTo(_Comparison):
 
     default_message = __("This must not be the same as {other_label}")
 
-    def compare(self, value, other):
+    def compare(self, value, other) -> bool:
         return value != other
 
 
@@ -318,19 +323,20 @@ class IsEmoji(object):
 
     default_message = __("This is not a valid emoji")
 
-    def __init__(self, message=None):
+    def __init__(self, message: str = None) -> None:
         self.message = message or self.default_message
 
-    def __call__(self, form, field):
-        if field.data not in emoji.UNICODE_EMOJI:
+    def __call__(self, form, field) -> None:
+        if field.data not in emoji.UNICODE_EMOJI:  # type: ignore[attr-defined]
             raise ValidationError(self.message)
 
 
 class IsPublicEmailDomain(object):
     """
     Validate that field.data belongs to a public email domain.
-    If the domain lookup fails and mxsniff raises ``MXLookupException``,
-    this validator will fail.
+
+    If the domain lookup fails and mxsniff raises ``MXLookupException``, this validator
+    will fail.
 
     :param message:
         Error message to raise in case of a validation error.
@@ -338,11 +344,11 @@ class IsPublicEmailDomain(object):
 
     default_message = __("This domain is not a public email domain")
 
-    def __init__(self, message=None, timeout=30):
+    def __init__(self, message: str = None, timeout: int = 30) -> None:
         self.message = message or self.default_message
         self.timeout = timeout
 
-    def __call__(self, form, field):
+    def __call__(self, form, field) -> None:
         if is_public_email_domain(field.data, default=False, timeout=self.timeout):
             return
         else:
@@ -352,6 +358,7 @@ class IsPublicEmailDomain(object):
 class IsNotPublicEmailDomain(object):
     """
     Validate that field.data does not belong to a public email domain.
+
     If the domain lookup fails and mxsniff raises ``MXLookupException``, this validator
     will still pass, as we expect that most domains are not public email domains.
 
@@ -361,11 +368,11 @@ class IsNotPublicEmailDomain(object):
 
     default_message = __("This domain is a public email domain")
 
-    def __init__(self, message=None, timeout=30):
+    def __init__(self, message: str = None, timeout: int = 30) -> None:
         self.message = message or self.default_message
         self.timeout = timeout
 
-    def __call__(self, form, field):
+    def __call__(self, form, field) -> None:
         if not is_public_email_domain(field.data, default=False, timeout=self.timeout):
             return
         else:
@@ -374,18 +381,19 @@ class IsNotPublicEmailDomain(object):
 
 class ValidEmail(object):
     """
-    Validator to confirm an email address is likely to be valid because it is properly
-    formatted and the domain exists.
+    Validator to confirm an email address is likely to be valid.
+
+    Criteria: email address is properly formatted and the domain exists.
 
     :param str message: Optional validation error message.
     """
 
     default_message = __("This email address does not appear to be valid")
 
-    def __init__(self, message=None):
+    def __init__(self, message: str = None) -> None:
         self.message = message
 
-    def __call__(self, form, field):
+    def __call__(self, form, field) -> None:
         try:
             diagnosis = is_email(field.data, check_dns=True, diagnose=True)
         except (dns.resolver.Timeout, dns.resolver.NoNameservers):
@@ -441,14 +449,14 @@ class ValidUrl(object):
 
     def __init__(
         self,
-        message=None,
-        message_urltext=None,
-        message_schemes=None,
-        message_domains=None,
-        invalid_urls=(),
-        allowed_schemes=None,
-        allowed_domains=None,
-        visit_url=True,
+        message: str = None,
+        message_urltext: str = None,
+        message_schemes: str = None,
+        message_domains: str = None,
+        invalid_urls: InvalidUrlPatterns = (),
+        allowed_schemes: AllowedListInit = None,
+        allowed_domains: AllowedListInit = None,
+        visit_url: bool = True,
     ):
         self.message = message or self.default_message
         self.message_urltext = message_urltext or self.default_message_urltext
@@ -459,7 +467,14 @@ class ValidUrl(object):
         self.allowed_domains = allowed_domains
         self.visit_url = visit_url
 
-    def check_url(self, url, allowed_schemes, allowed_domains, invalid_urls, text=None):
+    def check_url(
+        self,
+        url: str,
+        allowed_schemes: AllowedList,
+        allowed_domains: AllowedList,
+        invalid_urls: InvalidUrlPatterns,
+        text: Union[str, None] = None,
+    ):
         """
         Inner method to actually check the URL.
 
@@ -554,7 +569,7 @@ class ValidUrl(object):
                     if (
                         pattern in rurl
                         if isinstance(pattern, str)
-                        else pattern.search(rurl) is not None
+                        else pattern.search(rurl) is not None  # type: ignore[attr-defined]
                     ):
                         return message.format(url=url, text=text)
             # All good. The URL works and isn't invalid, so save to cache and return
@@ -568,7 +583,12 @@ class ValidUrl(object):
                 return self.message.format(url=url)
 
     def call_inner(
-        self, field, current_url, allowed_schemes, allowed_domains, invalid_urls
+        self,
+        field,
+        current_url: str,
+        allowed_schemes: AllowedList,
+        allowed_domains: AllowedList,
+        invalid_urls: InvalidUrlPatterns,
     ):
         error = self.check_url(
             urljoin(current_url, field.data),
@@ -579,9 +599,9 @@ class ValidUrl(object):
         if error:
             raise StopValidation(error)
 
-    def __call__(self, form, field):
+    def __call__(self, form, field) -> None:
         if field.data:
-            current_url = request.url if request else None
+            current_url = request.url if request else ''
             invalid_urls = (
                 self.invalid_urls()
                 if callable(self.invalid_urls)
@@ -611,8 +631,13 @@ class AllUrlsValid(ValidUrl):
     """
 
     def call_inner(
-        self, field, current_url, allowed_schemes, allowed_domains, invalid_urls
-    ):
+        self,
+        field,
+        current_url: str,
+        allowed_schemes: AllowedList,
+        allowed_domains: AllowedList,
+        invalid_urls: InvalidUrlPatterns,
+    ) -> None:
         html_tree = html5lib.parse(field.data, namespaceHTMLElements=False)
         for text, href in (
             (tag.text, tag.attrib.get('href')) for tag in html_tree.iter('a')
@@ -631,16 +656,14 @@ class AllUrlsValid(ValidUrl):
 
 
 class NoObfuscatedEmail(object):
-    """
-    Scan for obfuscated email addresses in the provided text and reject them
-    """
+    """Scan for obfuscated email addresses in the provided text and reject them."""
 
     default_message = __("Email address identified")
 
-    def __init__(self, message=None):
+    def __init__(self, message: str = None) -> None:
         self.message = message or self.default_message
 
-    def __call__(self, form, field):
+    def __call__(self, form, field) -> None:
         emails = EMAIL_RE.findall(deobfuscate_email(field.data or ''))
         for email in emails:
             try:
@@ -658,10 +681,10 @@ class ValidName(object):
         "It should have letters, numbers and non-terminal hyphens only"
     )
 
-    def __init__(self, message=None):
+    def __init__(self, message: str = None) -> None:
         self.message = message or self.default_message
 
-    def __call__(self, form, field):
+    def __call__(self, form, field) -> None:
         if make_name(field.data) != field.data:
             raise StopValidation(self.message)
 
@@ -672,12 +695,17 @@ class ValidCoordinates(object):
     default_message_latitude = __("Latitude must be within ± 90 degrees")
     default_message_longitude = __("Longitude must be within ± 180 degrees")
 
-    def __init__(self, message=None, message_latitude=None, message_longitude=None):
+    def __init__(
+        self,
+        message: str = None,
+        message_latitude: str = None,
+        message_longitude: str = None,
+    ) -> None:
         self.message = message or self.default_message
         self.message_latitude = message_latitude or self.default_message_latitude
         self.message_longitude = message_longitude or self.default_message_longitude
 
-    def __call__(self, form, field):
+    def __call__(self, form, field) -> None:
         if len(field.data) != 2:
             raise StopValidation(self.message)
         if not -90 <= field.data[0] <= 90:
@@ -691,14 +719,14 @@ class Recaptcha(object):
 
     default_message_network = __("The server was temporarily unreachable. Try again")
 
-    def __init__(self, message=None, message_network=None):
+    def __init__(self, message: str = None, message_network: str = None) -> None:
         if message is None:
             message = RECAPTCHA_ERROR_CODES['missing-input-response']
 
         self.message = message
         self.message_network = message_network or self.default_message_network
 
-    def __call__(self, form, field):
+    def __call__(self, form, field) -> None:
         if current_app.testing:
             return
 
@@ -715,7 +743,7 @@ class Recaptcha(object):
             field.recaptcha_error = 'incorrect-captcha-sol'
             raise ValidationError(self.message)
 
-    def _validate_recaptcha(self, response, remote_addr):
+    def _validate_recaptcha(self, response: str, remote_addr: str) -> bool:
         """Perform the actual validation."""
         try:
             private_key = current_app.config['RECAPTCHA_PRIVATE_KEY']

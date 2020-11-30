@@ -1,10 +1,22 @@
+from datetime import datetime
 from decimal import Decimal
 from decimal import InvalidOperation as DecimalError
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Generator,
+    Iterable,
+    List,
+    Optional,
+    Tuple,
+    Type,
+    Union,
+)
 from urllib.parse import urljoin
 
 from flask import current_app
 from flask_wtf import RecaptchaField as RecaptchaFieldBase
-from wtforms.compat import text_type
 from wtforms.fields import FileField, Label
 from wtforms.fields import SelectField as SelectFieldBase
 from wtforms.fields import SelectMultipleField, SubmitField
@@ -12,8 +24,9 @@ from wtforms.utils import unset_value
 from wtforms.widgets import Select as OriginalSelectWidget
 import wtforms
 
-from pytz import UTC
 from pytz import timezone as pytz_timezone
+from pytz import utc
+from pytz.tzinfo import BaseTzInfo
 import bleach
 import simplejson as json
 
@@ -66,7 +79,6 @@ __all__ = [
     'UserSelectMultiField',
 ]
 
-
 # Default tags and attributes to allow in HTML sanitization
 SANITIZE_TAGS = [
     'p',
@@ -88,22 +100,26 @@ SANITIZE_TAGS = [
 ]
 SANITIZE_ATTRIBUTES = {'a': ['href', 'title', 'target']}
 
+ValidatorList = Iterable[Callable[[Type, Type], None]]
+FilterList = Iterable[Callable[[Any], Any]]
+ReturnIterChoices = Generator[Tuple[str, str, bool], None, None]
+
 
 class NonceField(HiddenField):
-    """Customized HiddenField for nonce values that ignores the form target object"""
+    """Customized HiddenField for nonce values that ignores the form target object."""
 
-    def process(self, formdata, data=None):
-        """Discard data coming from an object"""
+    def process(self, formdata, data=None) -> None:
+        """Discard data coming from an object."""
         super().process(formdata)
 
-    def populate_obj(self, *args):
-        """Override populate_obj to not attempting setting nonce on the object"""
+    def populate_obj(self, *args) -> None:
+        """Override populate_obj to not attempting setting nonce on the object."""
 
 
 class RecaptchaField(RecaptchaFieldBase):
     """RecaptchaField with an improved validator."""
 
-    def __init__(self, label='', validators=None, **kwargs):
+    def __init__(self, label: str = '', validators: ValidatorList = None, **kwargs):
         validators = validators or [Recaptcha()]
         super().__init__(label, validators, **kwargs)
 
@@ -111,8 +127,10 @@ class RecaptchaField(RecaptchaFieldBase):
 # This class borrowed from https://github.com/industrydive/wtforms_extended_selectfield
 class SelectField(SelectFieldBase):
     """
-    Add support of ``optgroup`` grouping to default WTForms's ``SelectField`` class.
-    Here is an example of how the data is laid out.
+    Add support of ``optgroup`` grouping to the default ``SelectField`` from WTForms.
+
+    Here is an example of how the data is laid out::
+
         (
             ("Fruits", (
                 ('apple', "Apple"),
@@ -126,16 +144,16 @@ class SelectField(SelectFieldBase):
             )),
             ('other', "None of the above")
         )
-    It's a little strange that the tuples are (value, label) except for groups which are (Group Label, list of tuples)
-    but this is actually how Django does it too https://docs.djangoproject.com/en/dev/ref/models/fields/#choices
+
+    It's a little strange that the tuples are (value, label) except for groups which are
+    (Group Label, list of tuples) but this is how Django does it too.
+    https://docs.djangoproject.com/en/dev/ref/models/fields/#choices
     """
 
     widget = SelectWidget()
 
-    def pre_validate(self, form):
-        """
-        Don't forget to also validate values from embedded lists.
-        """
+    def pre_validate(self, form) -> None:
+        """Don't forget to also validate values from embedded lists."""
         for item1, item2 in self.choices:
             if isinstance(item2, (list, tuple)):
                 # group_label = item1
@@ -152,32 +170,30 @@ class SelectField(SelectFieldBase):
 
 
 class TinyMce3Field(TextAreaField):
-    """
-    Rich text field using TinyMCE 3.
-    """
+    """Rich text field using TinyMCE 3."""
 
     widget = TinyMce3()
 
     def __init__(
         self,
         # WTForms fields
-        label='',
-        validators=None,
-        filters=(),
-        description='',
-        id=None,  # NOQA: A002
-        default=None,
+        label: str = '',
+        validators: ValidatorList = None,
+        filters: FilterList = (),
+        description: str = '',
+        id: Optional[str] = None,  # NOQA: A002
+        default: Optional[str] = None,
         widget=None,
         _form=None,
         _name=None,
         _prefix='',
         # Additional fields
-        content_css=None,
-        linkify=True,
-        nofollow=True,
-        tinymce_options=None,
-        sanitize_tags=None,
-        sanitize_attributes=None,
+        content_css: Union[str, Callable[[], str]] = None,
+        linkify: bool = True,
+        nofollow: bool = True,
+        tinymce_options: dict = None,
+        sanitize_tags: Optional[List] = None,
+        sanitize_attributes: Optional[Dict[str, List[str]]] = None,
         **kwargs
     ):
 
@@ -266,32 +282,30 @@ class TinyMce3Field(TextAreaField):
 
 
 class TinyMce4Field(TextAreaField):
-    """
-    Rich text field using TinyMCE 4.
-    """
+    """Rich text field using TinyMCE 4."""
 
     widget = TinyMce4()
 
     def __init__(
         self,
         # WTForms fields
-        label='',
-        validators=None,
-        filters=(),
-        description='',
-        id=None,  # NOQA: A002
-        default=None,
+        label: str = '',
+        validators: ValidatorList = None,
+        filters: FilterList = (),
+        description: str = '',
+        id: Optional[str] = None,  # NOQA: A002
+        default: Optional[str] = None,
         widget=None,
         _form=None,
         _name=None,
         _prefix='',
         # Additional fields
-        content_css=None,
-        linkify=True,
-        nofollow=True,
-        tinymce_options=None,
-        sanitize_tags=None,
-        sanitize_attributes=None,
+        content_css: Union[str, Callable[[], str]] = None,
+        linkify: bool = True,
+        nofollow: bool = True,
+        tinymce_options: dict = None,
+        sanitize_tags: Optional[List] = None,
+        sanitize_attributes: Optional[Dict[str, List[str]]] = None,
         **kwargs
     ):
 
@@ -394,28 +408,31 @@ class DateTimeField(wtforms.fields.DateTimeField):
     """
 
     widget = DateTimeInput()
+    data: Optional[datetime]
 
     def __init__(
         self,
-        label=None,
-        validators=None,
-        format='%Y-%m-%d %H:%M',  # NOQA: A002
-        timezone=None,
-        naive=True,
+        label: str = None,
+        validators: ValidatorList = None,
+        format: str = '%Y-%m-%d %H:%M',  # NOQA: A002
+        timezone: Union[
+            BaseTzInfo, str, Callable[[], Union[BaseTzInfo, str]], None
+        ] = None,
+        naive: bool = True,
         **kwargs
     ):
         super().__init__(label, validators, **kwargs)
         self.format = format
-        self.timezone = timezone() if callable(timezone) else timezone
+        self.timezone = timezone() if callable(timezone) else timezone  # type: ignore[assignment]
         self.naive = naive
-        self._timezone_converted = None
+        self._timezone_converted: Optional[bool] = None
 
     @property
-    def timezone(self):
+    def timezone(self) -> str:
         return self._timezone
 
     @timezone.setter
-    def timezone(self, value):
+    def timezone(self, value: Union[str, BaseTzInfo, None]) -> None:
         if value is None:
             value = get_timezone()
         if isinstance(value, str):
@@ -452,11 +469,11 @@ class DateTimeField(wtforms.fields.DateTimeField):
         self.tzname = now.tzname()
         self.is_dst = bool(now.dst())
 
-    def _value(self):
+    def _value(self) -> str:
         if self.data:
             if self.data.tzinfo is None:
                 # We got a naive datetime from the calling app. Assume UTC
-                data = UTC.localize(self.data).astimezone(self.tz)
+                data = utc.localize(self.data).astimezone(self.tz)
             else:
                 # We got a tz-aware datetime. Cast into the required timezone
                 data = self.data.astimezone(self.tz)
@@ -465,16 +482,16 @@ class DateTimeField(wtforms.fields.DateTimeField):
             value = ''
         return value
 
-    def process_formdata(self, valuelist):
+    def process_formdata(self, valuelist) -> None:
         # We received a naive timestamp from the browser. Save it
         super().process_formdata(valuelist)
         # The received timestamp hasn't been localized to the expected timezone yet
         self._timezone_converted = False
 
-    def pre_validate(self, form):
+    def pre_validate(self, form) -> None:
         if self.data and self._timezone_converted is False:
             # Convert from user timezone back to UTC
-            self.data = self.tz.localize(self.data, is_dst=self.is_dst).astimezone(UTC)
+            self.data = self.tz.localize(self.data, is_dst=self.is_dst).astimezone(utc)
             # If the app wanted a naive datetime, strip the timezone info
             if self.naive:
                 self.data = self.data.replace(tzinfo=None)
@@ -482,17 +499,15 @@ class DateTimeField(wtforms.fields.DateTimeField):
 
 
 class TextListField(wtforms.fields.TextAreaField):
-    """
-    A list field that renders as a textarea with one line per list item.
-    """
+    """A list field that renders as a textarea with one line per list item."""
 
-    def _value(self):
+    def _value(self) -> str:
         if self.data:
             return '\r\n'.join(self.data)
         else:
             return ''
 
-    def process_formdata(self, valuelist):
+    def process_formdata(self, valuelist) -> None:
         if valuelist and valuelist[0]:
             self.data = (
                 valuelist[0].replace('\r\n', '\n').replace('\r', '\n').split('\n')
@@ -502,11 +517,11 @@ class TextListField(wtforms.fields.TextAreaField):
 
 
 class UserSelectFieldBase(object):
-    """
-    Select a user
-    """
+    """Select a user."""
 
-    def __init__(self, *args, **kwargs):
+    data: Union[Type, List[Type], None]
+
+    def __init__(self, *args, **kwargs) -> None:
         self.lastuser = kwargs.pop('lastuser', current_app.login_manager)
         self.usermodel = kwargs.pop(
             'usermodel', self.lastuser.usermanager.usermodel if self.lastuser else None
@@ -520,12 +535,13 @@ class UserSelectFieldBase(object):
             self.getuser_endpoint = kwargs.pop('getuser_endpoint')()
         super().__init__(*args, **kwargs)  # type: ignore[call-arg]
 
-    def iter_choices(self):
+    def iter_choices(self) -> ReturnIterChoices:
         if self.data:
-            return [(u.userid, u.pickername, True) for u in self.data]
+            for user in self.data:
+                yield (user.userid, user.pickername, True)
 
-    def process_formdata(self, valuelist):
-        retval = super().process_formdata(valuelist)
+    def process_formdata(self, valuelist) -> None:
+        super().process_formdata(valuelist)  # type: ignore[misc]
         userids = valuelist
         # Convert strings in userids into User objects
         users = []
@@ -534,17 +550,19 @@ class UserSelectFieldBase(object):
                 self.lastuser, 'is_master_data_source', False
             ):
                 usersdata = self.lastuser.getuser_by_userids(userids)
-                # TODO: Move all of this inside the getuser method with user=True, create=True
+                # TODO: Move all of this inside the getuser method with user=True,
+                # create=True
                 for userinfo in usersdata:
                     if userinfo['type'] == 'user':
                         user = self.usermodel.query.filter_by(
                             userid=userinfo['buid']
                         ).first()
                         if not user:
-                            # New user in this app. Don't set username right now. It's not relevant
-                            # until first login and we don't want to deal with conflicts.
-                            # We don't add this user to the session. The view is responsible for that
-                            # (using SQLAlchemy cascades when assigning users to a collection)
+                            # New user in this app. Don't set username right now. It's
+                            # not relevant until first login and we don't want to deal
+                            # with conflicts. We don't add this user to the session. The
+                            # view is responsible for that (using SQLAlchemy cascades
+                            # when assigning users to a collection).
                             user = self.usermodel(
                                 userid=userinfo['buid'], fullname=userinfo['title']
                             )
@@ -552,99 +570,94 @@ class UserSelectFieldBase(object):
             else:
                 users = self.usermodel.all(userids=userids)
         self.data = users
-        return retval
 
 
 class UserSelectField(UserSelectFieldBase, StringField):
-    """
-    Render a user select field that allows one user to be selected.
-    """
+    """Render a user select field that allows one user to be selected."""
 
+    data: Optional[Type]
     multiple = False
     widget = Select2Widget()
 
-    def _value(self):
+    def _value(self) -> str:
         if self.data:
             return self.data.userid
         else:
             return ''
 
-    def iter_choices(self):
+    def iter_choices(self) -> ReturnIterChoices:
         if self.data:
-            return [(self.data.userid, self.data.pickername, True)]
+            yield (self.data.userid, self.data.pickername, True)
 
-    def process_formdata(self, valuelist):
-        retval = super().process_formdata(valuelist)
+    def process_formdata(self, valuelist) -> None:
+        super().process_formdata(valuelist)
         if self.data:
             self.data = self.data[0]
         else:
             self.data = None
-        return retval
 
 
 class UserSelectMultiField(UserSelectFieldBase, StringField):
-    """
-    Render a user select field that allows multiple users to be selected.
-    """
+    """Render a user select field that allows multiple users to be selected."""
 
+    data = List[Type]
     multiple = True
     widget = Select2Widget()
 
 
 class AutocompleteFieldBase(object):
-    """
-    Autocomplete a field.
-    """
+    """Autocomplete a field."""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         self.autocomplete_endpoint = kwargs.pop('autocomplete_endpoint')
         self.results_key = kwargs.pop('results_key', 'results')
         self.separator = kwargs.pop('separator', ',')
-        super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)  # type: ignore[call-arg]
         self.choices = ()  # Disregard server-side choices
 
-    def iter_choices(self):
+    def iter_choices(self) -> ReturnIterChoices:
         if self.data:
-            return [(str(u), str(u), True) for u in self.data]
+            for user in self.data:
+                yield (str(user), str(user), True)
 
-    def process_formdata(self, valuelist):
-        retval = super().process_formdata(valuelist)
+    def process_formdata(self, valuelist) -> None:
+        super().process_formdata(valuelist)  # type: ignore[misc]
         # Convert strings into Tag objects
         self.data = valuelist
-        return retval
 
-    def pre_validate(self, form):
-        """Do not validate data"""
+    def pre_validate(self, form) -> None:
+        """Do not validate data."""
         return
 
 
 class AutocompleteField(AutocompleteFieldBase, StringField):
     """
     Select field that sources choices from a JSON API endpoint.
+
     Does not validate choices server-side.
     """
 
     multiple = False
     widget = Select2Widget()
 
-    def _value(self):
+    def _value(self) -> str:
         if self.data:
             return self.data
         else:
-            return None
+            return ''
 
-    def process_formdata(self, valuelist):
-        retval = super().process_formdata(valuelist)
+    def process_formdata(self, valuelist) -> None:
+        super().process_formdata(valuelist)
         if self.data:
             self.data = self.data[0]
         else:
             self.data = None
-        return retval
 
 
 class AutocompleteMultipleField(AutocompleteFieldBase, StringField):
     """
     Multiple select field that sources choices from a JSON API endpoint.
+
     Does not validate choices server-side.
     """
 
@@ -653,89 +666,76 @@ class AutocompleteMultipleField(AutocompleteFieldBase, StringField):
 
 
 class GeonameSelectFieldBase(object):
-    """
-    Select a geoname location
-    """
+    """Select a geoname location."""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         self.separator = kwargs.pop('separator', ',')
         server = current_app.config.get('HASCORE_SERVER', 'https://api.hasgeek.com/')
         self.autocomplete_endpoint = urljoin(server, '/1/geo/autocomplete')
         self.getname_endpoint = urljoin(server, '/1/geo/get_by_names')
 
-        super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)  # type: ignore[call-arg]
 
-    def iter_choices(self):
+    def iter_choices(self) -> ReturnIterChoices:
         if self.data:
-            return [(str(u), str(u), True) for u in self.data]
+            for item in self.data:
+                yield (str(item), str(item), True)
 
-    def process_formdata(self, valuelist):
-        retval = super().process_formdata(valuelist)
+    def process_formdata(self, valuelist) -> None:
+        super().process_formdata(valuelist)  # type: ignore[misc]
         # Convert strings into GeoName objects
         self.data = valuelist
-        return retval
 
 
 class GeonameSelectField(GeonameSelectFieldBase, StringField):
-    """
-    Render a geoname select field that allows one geoname to be selected.
-    """
+    """Render a geoname select field that allows one geoname to be selected."""
 
     multiple = False
     widget = Select2Widget()
 
-    def _value(self):
+    def _value(self) -> str:
         if self.data:
             return self.data.geonameid
         else:
-            return None
+            return ''
 
-    def process_formdata(self, valuelist):
-        retval = super().process_formdata(valuelist)
+    def process_formdata(self, valuelist) -> None:
+        super().process_formdata(valuelist)
         if self.data:
             self.data = self.data[0]
         else:
             self.data = None
-        return retval
 
 
 class GeonameSelectMultiField(GeonameSelectFieldBase, StringField):
-    """
-    Render a geoname select field that allows multiple geonames to be selected.
-    """
+    """Render a geoname select field that allows multiple geonames to be selected."""
 
     multiple = True
     widget = Select2Widget()
 
 
 class AnnotatedTextField(StringField):
-    """
-    Text field with prefix and suffix annotations.
-    """
+    """Text field with prefix and suffix annotations."""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         self.prefix = kwargs.pop('prefix', None)
         self.suffix = kwargs.pop('suffix', None)
         super().__init__(*args, **kwargs)
 
 
 class MarkdownField(TextAreaField):
-    """
-    TextArea field which has class='markdown'.
-    """
+    """TextArea field which has class='markdown'."""
 
-    def __call__(self, **kwargs):
+    def __call__(self, **kwargs) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = "%s %s" % (c, 'markdown') if c else 'markdown'
         return super().__call__(**kwargs)
 
 
 class StylesheetField(wtforms.TextAreaField):
-    """
-    TextArea field which has class='stylesheet'.
-    """
+    """TextArea field which has class='stylesheet'."""
 
-    def __call__(self, **kwargs):
+    def __call__(self, **kwargs) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = "%s %s" % (c, 'stylesheet') if c else 'stylesheet'
         return super().__call__(**kwargs)
@@ -743,25 +743,25 @@ class StylesheetField(wtforms.TextAreaField):
 
 class ImgeeField(URLField):
     """
-    A URLField which lets the user choose an image from Imgee. The field is filled
-    with the url of the image chosen.
+    A URLField which lets the user choose an image from Imgee and returns the URL.
 
-    Example usage:
-    image = ImgeeField(label='Logo', description='Your company logo here',
-            validators=[validators.DataRequired()],
-            profile='foo', img_label='logos', img_size='100x75')
-        )
+    Example usage::
+
+        image = ImgeeField(label="Logo", description="Your company logo here",
+                validators=[validators.DataRequired()],
+                profile='foo', img_label='logos', img_size='100x75')
+            )
     """
 
     widget = ImgeeWidget()
 
     def __init__(
         self,
-        label='',
-        validators=None,
-        profile=None,
-        img_label=None,
-        img_size=None,
+        label: str = '',
+        validators: ValidatorList = None,
+        profile: Optional[str] = None,
+        img_label: Optional[str] = None,
+        img_size: Optional[str] = None,
         **kwargs
     ):
         super().__init__(label, validators, **kwargs)
@@ -769,7 +769,7 @@ class ImgeeField(URLField):
         self.img_label = img_label
         self.img_size = img_size
 
-    def __call__(self, **kwargs):
+    def __call__(self, **kwargs) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = (
             "%s %s" % (c.strip(), 'imgee__url-holder') if c else 'imgee__url-holder'
@@ -786,25 +786,24 @@ class ImgeeField(URLField):
 
 
 class FormField(wtforms.FormField):
-    """
-    FormField that removes CSRF in sub-forms.
-    """
+    """FormField that removes CSRF in sub-forms."""
 
-    def process(self, *args, **kwargs):
-        retval = super().process(*args, **kwargs)
+    def process(self, *args, **kwargs) -> None:
+        super().process(*args, **kwargs)
         if hasattr(self.form, 'csrf_token'):
             del self.form.csrf_token
-        return retval
 
 
 class CoordinatesField(wtforms.Field):
-    """
-    Adds latitude and longitude fields and returns them as a tuple.
-    """
+    """Adds latitude and longitude fields and returns them as a tuple."""
 
+    data: Optional[Tuple[Optional[Decimal], Optional[Decimal]]]
     widget = CoordinatesInput()
 
-    def process_formdata(self, valuelist):
+    def process_formdata(self, valuelist) -> None:
+        latitude: Optional[Decimal]
+        longitude: Optional[Decimal]
+
         if valuelist and len(valuelist) == 2:
             try:
                 latitude = Decimal(valuelist[0])
@@ -819,37 +818,39 @@ class CoordinatesField(wtforms.Field):
         else:
             self.data = None, None
 
-    def _value(self):
+    def _value(self) -> Tuple[str, str]:
         if self.data is not None and self.data != (None, None):
-            return text_type(self.data[0]), text_type(self.data[1])
+            return str(self.data[0]), str(self.data[1])
         else:
             return '', ''
 
 
 class RadioMatrixField(wtforms.Field):
     """
-    Presents a matrix of questions (rows) and choices (columns). Saves each row as either
-    an attr or a dict key on the target field in the object.
+    Presents a matrix of questions (rows) and choices (columns).
+
+    Saves each row as either an attr or a dict key on the target field in the object.
     """
 
+    data: Dict[str, Any]
     widget = RadioMatrixInput()
 
     def __init__(
         self,
-        label=None,
-        validators=None,
-        coerce=text_type,  # NOQA: A002
+        label: str = None,
+        validators: ValidatorList = None,
+        coerce: Callable[[Any], Any] = str,
         fields=(),
         choices=(),
         **kwargs
-    ):
+    ) -> None:
         super().__init__(label, validators, **kwargs)
         self.coerce = coerce
         self.fields = fields
         self.choices = choices
         self._obj = None
 
-    def process(self, formdata, data=unset_value):
+    def process(self, formdata, data=unset_value) -> None:
         self.process_errors = []
         if data is unset_value:
             try:
@@ -878,16 +879,16 @@ class RadioMatrixField(wtforms.Field):
         except ValueError as e:
             self.process_errors.append(e.args[0])
 
-    def process_data(self, data):
+    def process_data(self, data) -> None:
         if data:
             self.data = {fname: getattr(data, fname) for fname, ftitle in self.fields}
         else:
             self.data = {}
 
-    def process_formdata(self, raw_data):
+    def process_formdata(self, raw_data) -> None:
         self.data = {key: self.coerce(value) for key, value in raw_data.items()}
 
-    def populate_obj(self, obj, name):
+    def populate_obj(self, obj, name: str) -> None:
         # 'name' is the name of this field in the form. Ignore it for RadioMatrixField
 
         for fname, ftitle in self.fields:
@@ -900,31 +901,33 @@ _invalid_marker = object()
 
 class EnumSelectField(SelectField):
     """
-    SelectField that populates choices from a LabeledEnum that uses
-    (value, name, title) tuples for all elements in the enum. Only name and
-    title are exposed to the form, keeping value private.
+    SelectField that populates choices from a LabeledEnum.
+
+    The LabeledEnum must use (value, name, title) tuples for all elements in the enum.
+    Only name and title are exposed to the form, keeping value private.
 
     Takes a ``lenum`` argument instead of ``choices``::
 
         class MyForm(forms.Form):
-            field = forms.EnumSelectField(__("My Field"), lenum=MY_ENUM, default=MY_ENUM.CHOICE)
-
+            field = forms.EnumSelectField(
+                __("My Field"), lenum=MY_ENUM, default=MY_ENUM.CHOICE
+            )
     """
 
     widget = OriginalSelectWidget()
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         self.lenum = kwargs.pop('lenum')
         kwargs['choices'] = self.lenum.nametitles()
 
         super().__init__(*args, **kwargs)
 
-    def iter_choices(self):
+    def iter_choices(self) -> ReturnIterChoices:
         selected_name = self.lenum[self.data].name if self.data is not None else None
         for name, title in self.choices:
             yield (name, title, name == selected_name)
 
-    def process_data(self, value):
+    def process_data(self, value) -> None:
         if value is None:
             self.data = None
         elif value in self.lenum:
@@ -932,7 +935,7 @@ class EnumSelectField(SelectField):
         else:
             raise KeyError(_("Value not in LabeledEnum"))
 
-    def process_formdata(self, valuelist):
+    def process_formdata(self, valuelist) -> None:
         if valuelist:
             try:
                 value = self.lenum.value_for(self.coerce(valuelist[0]))
@@ -942,7 +945,7 @@ class EnumSelectField(SelectField):
             except ValueError:
                 raise ValueError(self.gettext('Invalid Choice: could not coerce'))
 
-    def pre_validate(self, form):
+    def pre_validate(self, form) -> None:
         if self.data is _invalid_marker:
             raise ValueError(self.gettext('Not a valid choice'))
 
@@ -950,6 +953,7 @@ class EnumSelectField(SelectField):
 class JsonField(wtforms.TextAreaField):
     """
     A field to accept JSON input, stored internally as a Python-native type.
+
     By default, requires the JSON root object to be a dictionary/hash.
 
     ::
@@ -967,15 +971,21 @@ class JsonField(wtforms.TextAreaField):
     prettyprint_args = {'sort_keys': True, 'indent': 2}
 
     def __init__(
-        self, label='', validators=None, require_dict=True, use_decimal=True, **kwargs
+        self,
+        label: str = '',
+        validators: ValidatorList = None,
+        require_dict: bool = True,
+        use_decimal: bool = True,
+        **kwargs
     ):
         self.require_dict = require_dict
         self.use_decimal = use_decimal
         super().__init__(label, validators, **kwargs)
 
-    def _value(self):
+    def _value(self) -> str:
         """
         Render the internal Python value as a JSON string.
+
         Specialcase `None` to return an empty string instead of a JSON ``null``.
         """
         if self.raw_data:
@@ -991,7 +1001,7 @@ class JsonField(wtforms.TextAreaField):
             )
         return ''
 
-    def process_data(self, value):
+    def process_data(self, value) -> None:
         if value is not None and self.require_dict and not isinstance(value, dict):
             raise ValueError(_("Field value must be a dictionary"))
 
@@ -1002,7 +1012,7 @@ class JsonField(wtforms.TextAreaField):
 
         self.data = value
 
-    def process_formdata(self, valuelist):
+    def process_formdata(self, valuelist) -> None:
         if valuelist:
             value = valuelist[0]
             if not value:
