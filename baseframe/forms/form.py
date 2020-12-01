@@ -1,5 +1,5 @@
 from threading import Lock
-from typing import Dict, Iterable, Optional, Type
+from typing import Callable, Dict, Iterable, Optional, Tuple, Type, Union
 import uuid
 
 from flask import current_app
@@ -25,7 +25,7 @@ __all__ = [
 ]
 
 # Use a hardcoded list to control what is available to user-facing apps
-field_registry = {
+field_registry: Dict[str, Type] = {
     'SelectField': bparsleyjs.SelectField,
     'SelectMultipleField': bfields.SelectMultipleField,
     'RadioField': bparsleyjs.RadioField,
@@ -53,9 +53,17 @@ field_registry = {
     'ImageField': bfields.ImgeeField,
 }
 
-widget_registry: Dict[str, Type] = {}
+widget_registry: Dict[str, Tuple] = {}
 
-validator_registry = {
+validator_registry: Dict[
+    str,
+    Union[
+        Tuple[Callable],
+        Tuple[Callable, str],
+        Tuple[Callable, str, str],
+        Tuple[Callable, str, str, str],
+    ],
+] = {
     'Length': (wtforms.validators.Length, 'min', 'max', 'message'),
     'NumberRange': (wtforms.validators.NumberRange, 'min', 'max', 'message'),
     'Optional': (wtforms.validators.Optional, 'strip_whitespace'),
@@ -67,7 +75,7 @@ validator_registry = {
     'AllUrlsValid': (bvalidators.AllUrlsValid,),
 }
 
-filter_registry = {
+filter_registry: Dict[str, Union[Tuple[Callable], Tuple[Callable, str]]] = {
     'lower': (bfilters.lower,),
     'upper': (bfilters.upper,),
     'strip': (bfilters.strip, 'chars'),
@@ -284,7 +292,7 @@ class FormGenerator:
 
         self.default_field = default_field
 
-    def generate(self, formstruct):  # TODO: Add: -> Type[Form]
+    def generate(self, formstruct: dict) -> Type[Form]:
         """Generate a dynamic form from the given data structure."""
 
         class DynamicForm(Form):
