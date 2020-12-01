@@ -194,7 +194,7 @@ class TinyMce3Field(TextAreaField):
         tinymce_options: dict = None,
         sanitize_tags: Optional[List] = None,
         sanitize_attributes: Optional[Dict[str, List[str]]] = None,
-        **kwargs
+        **kwargs,
     ):
 
         super().__init__(
@@ -208,7 +208,7 @@ class TinyMce3Field(TextAreaField):
             _form=_form,
             _name=_name,
             _prefix=_prefix,
-            **kwargs
+            **kwargs,
         )
 
         if tinymce_options is None:
@@ -306,7 +306,7 @@ class TinyMce4Field(TextAreaField):
         tinymce_options: dict = None,
         sanitize_tags: Optional[List] = None,
         sanitize_attributes: Optional[Dict[str, List[str]]] = None,
-        **kwargs
+        **kwargs,
     ):
 
         super().__init__(
@@ -320,7 +320,7 @@ class TinyMce4Field(TextAreaField):
             _form=_form,
             _name=_name,
             _prefix=_prefix,
-            **kwargs
+            **kwargs,
         )
 
         if tinymce_options is None:
@@ -419,7 +419,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
             BaseTzInfo, str, Callable[[], Union[BaseTzInfo, str]], None
         ] = None,
         naive: bool = True,
-        **kwargs
+        **kwargs,
     ):
         super().__init__(label, validators, **kwargs)
         self.format = format
@@ -762,7 +762,7 @@ class ImgeeField(URLField):
         profile: Optional[str] = None,
         img_label: Optional[str] = None,
         img_size: Optional[str] = None,
-        **kwargs
+        **kwargs,
     ):
         super().__init__(label, validators, **kwargs)
         self.profile = profile
@@ -842,7 +842,7 @@ class RadioMatrixField(wtforms.Field):
         coerce: Callable[[Any], Any] = str,
         fields=(),
         choices=(),
-        **kwargs
+        **kwargs,
     ) -> None:
         super().__init__(label, validators, **kwargs)
         self.coerce = coerce
@@ -976,7 +976,7 @@ class JsonField(wtforms.TextAreaField):
         validators: ValidatorList = None,
         require_dict: bool = True,
         use_decimal: bool = True,
-        **kwargs
+        **kwargs,
     ):
         self.require_dict = require_dict
         self.use_decimal = use_decimal
@@ -997,7 +997,7 @@ class JsonField(wtforms.TextAreaField):
                 self.data,
                 use_decimal=self.use_decimal,
                 ensure_ascii=False,
-                **self.prettyprint_args
+                **self.prettyprint_args,
             )
         return ''
 

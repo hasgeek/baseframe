@@ -291,14 +291,12 @@ class TestFilters(TestCaseBaseframe):
             'attrfour': '',
         }
         modified_field = filters.render_field_options(forms.RichTextField, **test_attrs)
-        self.assertIn('attrone', modified_field.kwargs) and self.assertEqual(
-            modified_field.kwargs['attrone'], 'test'
-        )
+        self.assertIn('attrone', modified_field.kwargs)
+        self.assertEqual(modified_field.kwargs['attrone'], 'test')
         assert not hasattr(modified_field.kwargs, 'attrtwo')
         assert not hasattr(modified_field.kwargs, 'attrthree')
-        self.assertIn('attrfour', modified_field.kwargs) and self.assertEqual(
-            modified_field.kwargs['attrfour'], ''
-        )
+        self.assertIn('attrfour', modified_field.kwargs)
+        self.assertEqual(modified_field.kwargs['attrfour'], '')
 
     def test_firstline(self):
         html = "<div>this is the first line</div><div>and second line</div>"

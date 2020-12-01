@@ -35,7 +35,7 @@ def _patch_wtforms_field_init() -> None:
         _translations=None,
         _meta=None,
         widget_attrs=None,
-        **kwargs
+        **kwargs,
     ):
 
         original_field_init(
@@ -52,7 +52,7 @@ def _patch_wtforms_field_init() -> None:
             _prefix=_prefix,
             _translations=_translations,
             _meta=_meta,
-            **kwargs
+            **kwargs,
         )
         self.widget_attrs = widget_attrs or {}
 

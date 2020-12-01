@@ -245,10 +245,12 @@ class BaseframeBlueprint(Blueprint):
 
         # Optional config for a client app to use a manifest file
         # to load fingerprinted assets
-        # If used with webpack, the client app is expected to specify its own webpack.config.js
+        # If used with webpack, the client app is expected to specify its own
+        # webpack.config.js
         # Set `ASSETS_MANIFEST_PATH` in `app.config` to the path for `manifest.json`.
         # Eg: "static/build/manifest.json"
-        # Set `ASSET_BASE_PATH` in `app.config` to the path in which the compiled assets are present.
+        # Set `ASSET_BASE_PATH` in `app.config` to the path in which the compiled assets
+        # are present.
         # Eg: "static/build"
         if app.config.get('ASSET_MANIFEST_PATH'):
             # Load assets into config from a manifest file
