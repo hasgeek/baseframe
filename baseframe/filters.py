@@ -230,7 +230,7 @@ def longdate(value: Union[datetime, date]) -> str:
 @baseframe.app_template_filter('date')
 def date_filter(
     value: Union[datetime, date],
-    format: str = 'medium',  # NOQA: A002
+    format: str = 'medium',  # NOQA: A002  # skipcq: PYL-W0622
     locale: Locale = None,
     usertz: bool = True,
 ) -> str:
@@ -249,7 +249,7 @@ def date_filter(
 @baseframe.app_template_filter('time')
 def time_filter(
     value: Union[datetime, time],
-    format: str = 'short',  # NOQA: A002
+    format: str = 'short',  # NOQA: A002  # skipcq: PYL-W0622
     locale: Locale = None,
     usertz: bool = True,
 ) -> str:
@@ -269,7 +269,7 @@ def time_filter(
 @baseframe.app_template_filter('datetime')
 def datetime_filter(
     value: Union[datetime, date, time],
-    format: str = 'medium',  # NOQA: A002
+    format: str = 'medium',  # NOQA: A002  # skipcq: PYL-W0622
     locale: Locale = None,
     usertz: bool = True,
 ) -> str:

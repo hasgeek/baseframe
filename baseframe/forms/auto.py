@@ -123,7 +123,7 @@ def render_delete_sqla(
     title: str,
     message: str,
     success: str = '',
-    next: Optional[str] = None,  # NOQA: A002
+    next: Optional[str] = None,  # NOQA: A002  # skipcq: PYL-W0622
     cancel_url: Optional[str] = None,
     delete_text: Optional[str] = None,
     cancel_text: Optional[str] = None,

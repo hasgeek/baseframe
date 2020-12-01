@@ -52,7 +52,9 @@ def get_user_locale() -> str:
     # Only en/hi are supported at the moment. Variants like en_IN/en_GB
     # are not explicitly supported and will default to 'en'. These will
     # need to be explicitly added in the future.
-    return (request and request.accept_languages.best_match(['hi', 'en'])) or 'en'
+    return (
+        request.accept_languages.best_match(['hi', 'en']) if request else None
+    ) or 'en'
 
 
 @babel.timezoneselector

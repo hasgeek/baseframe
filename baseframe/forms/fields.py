@@ -414,7 +414,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
         self,
         label: str = None,
         validators: ValidatorList = None,
-        format: str = '%Y-%m-%d %H:%M',  # NOQA: A002
+        format: str = '%Y-%m-%d %H:%M',  # NOQA: A002  # skipcq: PYL-W0622
         timezone: Union[
             BaseTzInfo, str, Callable[[], Union[BaseTzInfo, str]], None
         ] = None,
