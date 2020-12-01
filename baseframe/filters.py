@@ -9,7 +9,7 @@ from flask_babelhg import get_locale
 from babel import Locale
 from babel.dates import format_date, format_datetime, format_time
 from furl import furl
-from pytz import UTC
+from pytz import utc
 
 from coaster.gfm import markdown
 from coaster.utils import md5sum, text_blocks
@@ -24,7 +24,7 @@ from .views import ext_assets
 def age(dt: datetime) -> str:
     """Render a datetime as an age from present time."""
     if dt.tzinfo is None:
-        dt = UTC.localize(dt)
+        dt = utc.localize(dt)
     delta = request_timestamp() - dt
     if delta.days == 0:
         # < 1 day
@@ -32,28 +32,26 @@ def age(dt: datetime) -> str:
             return _("now")
         if delta.seconds < 10:
             return _("seconds ago")
-        elif delta.seconds < 60:
+        if delta.seconds < 60:
             return _("%(num)s seconds ago", num=delta.seconds)
-        elif delta.seconds < 120:
+        if delta.seconds < 120:
             return _("a minute ago")
-        elif delta.seconds < 3600:  # < 1 hour
+        if delta.seconds < 3600:  # < 1 hour
             return _("%(num)s minutes ago", num=int(delta.seconds / 60))
-        elif delta.seconds < 7200:  # < 2 hours
+        if delta.seconds < 7200:  # < 2 hours
             return _("an hour ago")
-        else:
-            return _("%(num)s hours ago", num=int(delta.seconds / 3600))
-    elif delta.days == 1:
+        return _("%(num)s hours ago", num=int(delta.seconds / 3600))
+    if delta.days == 1:
         return _("a day ago")
-    elif delta.days < 30:
+    if delta.days < 30:
         return _("%(num)s days ago", num=delta.days)
-    elif delta.days < 60:
+    if delta.days < 60:
         return _("a month ago")
-    elif delta.days < 365:
+    if delta.days < 365:
         return _("%(num)s months ago", num=int(delta.days / 30))
-    elif delta.days < 730:  # < 2 years
+    if delta.days < 730:  # < 2 years
         return _("a year ago")
-    else:
-        return _("%(num)s years ago", num=int(delta.days / 365))
+    return _("%(num)s years ago", num=int(delta.days / 365))
 
 
 @baseframe.app_template_filter('initials')
@@ -64,10 +62,9 @@ def initials(text: str) -> str:
     parts = text.split()
     if len(parts) > 1:
         return parts[0][0] + parts[-1][0]
-    elif parts:
+    if parts:
         return parts[0][0]
-    else:
-        return ''
+    return ''
 
 
 @baseframe.app_template_filter('usessl')
@@ -197,7 +194,7 @@ def shortdate(value: Union[datetime, date]) -> str:
     if isinstance(value, datetime):
         tz = get_timezone()
         if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(tz)
+            dt = utc.localize(value).astimezone(tz)
         else:
             dt = value.astimezone(tz)
         utc_now = request_timestamp().astimezone(tz)
@@ -222,7 +219,7 @@ def longdate(value: Union[datetime, date]) -> str:
     dt: Union[datetime, date]
     if isinstance(value, datetime):
         if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(get_timezone())
+            dt = utc.localize(value).astimezone(get_timezone())
         else:
             dt = value.astimezone(get_timezone())
     else:
@@ -241,7 +238,7 @@ def date_filter(
     dt: Union[datetime, date]
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(get_timezone())
+            dt = utc.localize(value).astimezone(get_timezone())
         else:
             dt = value.astimezone(get_timezone())
     else:
@@ -261,7 +258,7 @@ def time_filter(
     dt: Union[datetime, time]
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(get_timezone())
+            dt = utc.localize(value).astimezone(get_timezone())
         else:
             dt = value.astimezone(get_timezone())
     else:
@@ -280,7 +277,7 @@ def datetime_filter(
     dt: Union[datetime, date, time]
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(get_timezone())
+            dt = utc.localize(value).astimezone(get_timezone())
         else:
             dt = value.astimezone(get_timezone())
     else:
@@ -292,7 +289,7 @@ def datetime_filter(
 def timestamp_filter(value: datetime) -> float:
     """Render a POSIX timestamp."""
     if not value.tzinfo:
-        return UTC.localize(value).timestamp()
+        return utc.localize(value).timestamp()
     return value.timestamp()
 
 

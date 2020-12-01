@@ -197,7 +197,7 @@ class CoordinatesInput(wtforms.widgets.core.Input):
         )
 
 
-class RadioMatrixInput(object):
+class RadioMatrixInput:
     """Render a table with a radio matrix."""
 
     def __call__(self, field, **kwargs) -> str:
@@ -229,7 +229,7 @@ class RadioMatrixInput(object):
         return Markup('\n'.join(rendered))
 
 
-class InlineListWidget(object):
+class InlineListWidget:
     """
     Renders a list of fields as buttons.
 

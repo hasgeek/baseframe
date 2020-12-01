@@ -159,7 +159,7 @@ def _ip_address_kwargs(kwargs, vali) -> None:
 def _length_kwargs(kwargs, vali) -> None:
     default_number = -1
 
-    if vali.max != default_number and vali.min != default_number:
+    if default_number not in (vali.min, vali.max):
         kwargs['minlength'] = str(vali.min)
         kwargs['maxlength'] = str(vali.max)
         kwargs['data-parsley-length'] = '[' + str(vali.min) + ',' + str(vali.max) + ']'
@@ -225,7 +225,7 @@ def _message_kwargs(kwargs, message) -> None:
     kwargs['data-parsley-error-message'] = message
 
 
-class ParsleyInputMixin(object):
+class ParsleyInputMixin:
     def __call__(self, field, **kwargs) -> str:
         kwargs = parsley_kwargs(field, kwargs)
         return super().__call__(field, **kwargs)  # type: ignore[misc]

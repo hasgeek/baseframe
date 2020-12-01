@@ -19,7 +19,7 @@ START_TIME_ATTR = 'statsd_start_time'
 TagsType = Dict[str, Union[int, str, None]]
 
 
-class Statsd(object):
+class Statsd:
     """
     Statsd extension for Flask.
 

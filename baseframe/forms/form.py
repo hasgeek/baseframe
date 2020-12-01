@@ -260,7 +260,7 @@ class Form(BaseForm):
         """
 
 
-class FormGenerator(object):
+class FormGenerator:
     """
     Creates forms from a JSON-compatible dictionary structure.
 

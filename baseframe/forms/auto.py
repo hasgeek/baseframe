@@ -139,8 +139,7 @@ def render_delete_sqla(
             if success:
                 flash(success, 'success')
             return render_redirect(next or url_for('index'), code=303)
-        else:
-            return render_redirect(cancel_url or next or url_for('index'), code=303)
+        return render_redirect(cancel_url or next or url_for('index'), code=303)
     template = THEME_FILES[current_app.config['theme']]['delete.html.jinja2']
     return make_response(
         render_template(

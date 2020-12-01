@@ -102,8 +102,7 @@ def is_public_email_domain(
             # Domain lookup failed
             if default is None:
                 raise e
-            else:
-                return default
+            return default
 
     if any(p['public'] for p in sniffedmx['providers']):
         return True

@@ -516,7 +516,7 @@ class TextListField(wtforms.fields.TextAreaField):
             self.data = []
 
 
-class UserSelectFieldBase(object):
+class UserSelectFieldBase:
     """Select a user."""
 
     data: Union[Type, List[Type], None]
@@ -605,7 +605,7 @@ class UserSelectMultiField(UserSelectFieldBase, StringField):
     widget = Select2Widget()
 
 
-class AutocompleteFieldBase(object):
+class AutocompleteFieldBase:
     """Autocomplete a field."""
 
     def __init__(self, *args, **kwargs) -> None:
@@ -665,7 +665,7 @@ class AutocompleteMultipleField(AutocompleteFieldBase, StringField):
     widget = Select2Widget()
 
 
-class GeonameSelectFieldBase(object):
+class GeonameSelectFieldBase:
     """Select a geoname location."""
 
     def __init__(self, *args, **kwargs) -> None:
@@ -992,7 +992,7 @@ class JsonField(wtforms.TextAreaField):
             # If we've received data from a form, render it as is. This allows
             # invalid JSON to be presented back to the user for correction.
             return self.raw_data[0]
-        elif self.data is not None:
+        if self.data is not None:
             return json.dumps(
                 self.data,
                 use_decimal=self.use_decimal,

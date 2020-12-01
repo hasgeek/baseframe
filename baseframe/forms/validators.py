@@ -92,7 +92,7 @@ FakeField = namedtuple(
 )
 
 
-class ForEach(object):
+class ForEach:
     """
     Runs specified validators on each element of an iterable value.
 
@@ -112,11 +112,10 @@ class ForEach(object):
                 except StopValidation as e:
                     if str(e):
                         raise
-                    else:
-                        break
+                    break
 
 
-class AllowedIf(object):
+class AllowedIf:
     """
     Validator that allows a value only if another field also has a value.
 
@@ -199,7 +198,7 @@ class RequiredIf(DataRequired):
             super().__call__(form, field)
 
 
-class _Comparison(object):
+class _Comparison:
     """Base class for validators that compare this field's value with another field."""
 
     default_message = __("Comparison failed")
@@ -313,7 +312,7 @@ class NotEqualTo(_Comparison):
         return value != other
 
 
-class IsEmoji(object):
+class IsEmoji:
     """
     Validate field to contain a single emoji.
 
@@ -331,7 +330,7 @@ class IsEmoji(object):
             raise ValidationError(self.message)
 
 
-class IsPublicEmailDomain(object):
+class IsPublicEmailDomain:
     """
     Validate that field.data belongs to a public email domain.
 
@@ -351,11 +350,10 @@ class IsPublicEmailDomain(object):
     def __call__(self, form, field) -> None:
         if is_public_email_domain(field.data, default=False, timeout=self.timeout):
             return
-        else:
-            raise ValidationError(self.message)
+        raise ValidationError(self.message)
 
 
-class IsNotPublicEmailDomain(object):
+class IsNotPublicEmailDomain:
     """
     Validate that field.data does not belong to a public email domain.
 
@@ -375,11 +373,10 @@ class IsNotPublicEmailDomain(object):
     def __call__(self, form, field) -> None:
         if not is_public_email_domain(field.data, default=False, timeout=self.timeout):
             return
-        else:
-            raise ValidationError(self.message)
+        raise ValidationError(self.message)
 
 
-class ValidEmail(object):
+class ValidEmail:
     """
     Validator to confirm an email address is likely to be valid.
 
@@ -400,17 +397,14 @@ class ValidEmail(object):
             return
         if diagnosis.code in (0, 3, 4):  # 0 is valid, 3 is DNS No NS, 4 is DNS timeout
             return
-        else:
-            raise StopValidation(
-                self.message or diagnosis.message or self.default_message
-            )
+        raise StopValidation(self.message or diagnosis.message or self.default_message)
 
 
 # Legacy name
 ValidEmailDomain = ValidEmail
 
 
-class ValidUrl(object):
+class ValidUrl:
     """
     Validator to confirm a HTTP URL is valid (returns 2xx status code).
 
@@ -655,7 +649,7 @@ class AllUrlsValid(ValidUrl):
             raise StopValidation()
 
 
-class NoObfuscatedEmail(object):
+class NoObfuscatedEmail:
     """Scan for obfuscated email addresses in the provided text and reject them."""
 
     default_message = __("Email address identified")
@@ -674,7 +668,7 @@ class NoObfuscatedEmail(object):
                 pass
 
 
-class ValidName(object):
+class ValidName:
 
     default_message = __(
         "This name contains unsupported characters. "
@@ -689,7 +683,7 @@ class ValidName(object):
             raise StopValidation(self.message)
 
 
-class ValidCoordinates(object):
+class ValidCoordinates:
 
     default_message = __("Valid latitude and longitude expected")
     default_message_latitude = __("Latitude must be within ± 90 degrees")
@@ -714,7 +708,7 @@ class ValidCoordinates(object):
             raise StopValidation(self.message_longitude)
 
 
-class Recaptcha(object):
+class Recaptcha:
     """Validates a ReCaptcha."""
 
     default_message_network = __("The server was temporarily unreachable. Try again")

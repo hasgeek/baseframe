@@ -10,7 +10,7 @@ from .validators import StopValidation
 __all__ = ['AvailableName', 'QuerySelectField', 'QuerySelectMultipleField']
 
 
-class AvailableAttr(object):
+class AvailableAttr:
     """Check whether the specified attribute is available for the model being edited."""
 
     def __init__(self, attr: str, message=None, model=None) -> None:

@@ -65,9 +65,8 @@ def get_timezone() -> BaseTzInfo:
         user = current_auth.actor
         if hasattr(user, 'tz'):
             return user.tz
-        elif hasattr(user, 'timezone') and user.timezone:
+        if hasattr(user, 'timezone') and user.timezone:
             if isinstance(user.timezone, str):
                 return timezone(user.timezone)
-            else:
-                return user.timezone
+            return user.timezone
     return current_app.config.get('tz') or utc
