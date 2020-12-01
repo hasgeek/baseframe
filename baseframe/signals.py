@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from flask.signals import Namespace
 
 baseframe_signals = Namespace()

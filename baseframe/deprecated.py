@@ -1,10 +1,4 @@
-# -*- coding: utf-8 -*-
-
-"""
-Deprecated declarations. Will be removed in Baseframe 0.3.0
-"""
-
-from __future__ import absolute_import
+"""Deprecated declarations. To be removed when dependent apps have been audited."""
 
 from webassets import Bundle
 
@@ -44,7 +38,8 @@ extra_js = Bundle(
 
 networkbar_js = Bundle('baseframe/js/networkbar.js')
 
-baseframe_js = Bundle(  # jquery_js,  # Not required since baseframe.html now loads from CDN
+baseframe_js = Bundle(
+    # jquery_js,  # Not required since baseframe.html now loads from CDN
     bootstrap_js,
     extra_js,
     networkbar_js,

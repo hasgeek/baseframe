@@ -1,32 +1,30 @@
-# -*- coding: utf-8 -*-
+from datetime import date, datetime, time, timedelta
+from typing import Any, List, Tuple, Union
+from urllib.parse import urlsplit, urlunsplit
+import os.path
 
-from __future__ import unicode_literals
-from six.moves.urllib.parse import urlsplit, urlunsplit
-import six
-
-from datetime import datetime, timedelta
-import os
-
-from flask import Markup, request
+from flask import Markup, current_app, request
 from flask_babelhg import get_locale
 
+from babel import Locale
 from babel.dates import format_date, format_datetime, format_time
 from furl import furl
-from pytz import UTC
+from pytz import utc
 
 from coaster.gfm import markdown
 from coaster.utils import md5sum, text_blocks
 
-from . import b_ as _
-from . import baseframe, cache, current_app, get_timezone
-from .utils import request_timestamp
+from .blueprint import baseframe
+from .extensions import _, cache
+from .utils import get_timezone, request_timestamp
 from .views import ext_assets
 
 
 @baseframe.app_template_filter('age')
-def age(dt):
+def age(dt: datetime) -> str:
+    """Render a datetime as an age from present time."""
     if dt.tzinfo is None:
-        dt = UTC.localize(dt)
+        dt = utc.localize(dt)
     delta = request_timestamp() - dt
     if delta.days == 0:
         # < 1 day
@@ -34,51 +32,44 @@ def age(dt):
             return _("now")
         if delta.seconds < 10:
             return _("seconds ago")
-        elif delta.seconds < 60:
+        if delta.seconds < 60:
             return _("%(num)s seconds ago", num=delta.seconds)
-        elif delta.seconds < 120:
+        if delta.seconds < 120:
             return _("a minute ago")
-        elif delta.seconds < 3600:  # < 1 hour
+        if delta.seconds < 3600:  # < 1 hour
             return _("%(num)s minutes ago", num=int(delta.seconds / 60))
-        elif delta.seconds < 7200:  # < 2 hours
+        if delta.seconds < 7200:  # < 2 hours
             return _("an hour ago")
-        else:
-            return _("%(num)s hours ago", num=int(delta.seconds / 3600))
-    elif delta.days == 1:
+        return _("%(num)s hours ago", num=int(delta.seconds / 3600))
+    if delta.days == 1:
         return _("a day ago")
-    elif delta.days < 30:
+    if delta.days < 30:
         return _("%(num)s days ago", num=delta.days)
-    elif delta.days < 60:
+    if delta.days < 60:
         return _("a month ago")
-    elif delta.days < 365:
+    if delta.days < 365:
         return _("%(num)s months ago", num=int(delta.days / 30))
-    elif delta.days < 730:  # < 2 years
+    if delta.days < 730:  # < 2 years
         return _("a year ago")
-    else:
-        return _("%(num)s years ago", num=int(delta.days / 365))
+    return _("%(num)s years ago", num=int(delta.days / 365))
 
 
 @baseframe.app_template_filter('initials')
-def initials(text):
-    """
-    Return first and last initials from the given input, meant for use as avatar stand-in.
-    """
+def initials(text: str) -> str:
+    """Return up to two initials from the given string, for a default avatar image."""
     if not text:
         return ''
     parts = text.split()
     if len(parts) > 1:
         return parts[0][0] + parts[-1][0]
-    elif parts:
+    if parts:
         return parts[0][0]
-    else:
-        return ''
+    return ''
 
 
 @baseframe.app_template_filter('usessl')
-def usessl(url):
-    """
-    Convert a URL to https:// if SSL is enabled in site config
-    """
+def usessl(url: str) -> str:
+    """Convert a URL to https:// if SSL is enabled in site config."""
     if not current_app.config.get('USE_SSL'):
         return url
     if url.startswith('//'):  # //www.example.com/path
@@ -91,10 +82,8 @@ def usessl(url):
 
 
 @baseframe.app_template_filter('nossl')
-def nossl(url):
-    """
-    Convert a URL to http:// if using SSL
-    """
+def nossl(url: str) -> str:
+    """Convert a URL to http:// if using SSL."""
     if url.startswith('//'):
         return 'http:' + url
     if url.startswith('/') and request.url.startswith('https:'):  # /path and SSL is on
@@ -104,22 +93,24 @@ def nossl(url):
     return url
 
 
+# TODO: Move this into Hasjob as it's not used elsewhere
 @baseframe.app_template_filter('avatar_url')
-def avatar_url(user, size=None):
+def avatar_url(user: Any, size: Union[str, List[int], Tuple[int, int]] = None) -> str:
+    """Generate an avatar for the given user."""
     if isinstance(size, (list, tuple)):
-        size = 'x'.join(size)
+        size = 'x'.join(str(s) for s in size)
     if user.avatar:
         if size:
             # TODO: Use a URL parser
             if '?' in user.avatar:
-                return user.avatar + '&size=' + six.text_type(size)
+                return user.avatar + '&size=' + str(size)
             else:
-                return user.avatar + '?size=' + six.text_type(size)
+                return user.avatar + '?size=' + str(size)
         else:
             return user.avatar
     email = user.email
     if email:
-        if isinstance(email, six.string_types):
+        if isinstance(email, str):
             # Flask-Lastuser's User model has email as a string
             ehash = md5sum(user.email)
         else:
@@ -127,25 +118,25 @@ def avatar_url(user, size=None):
             ehash = email.md5sum
         gravatar = '//www.gravatar.com/avatar/' + ehash + '?d=mm'
         if size:
-            gravatar += '&s=' + six.text_type(size)
+            gravatar += '&s=' + str(size)
         return gravatar
     # Return Gravatar's missing man image
     return '//www.gravatar.com/avatar/00000000000000000000000000000000?d=mm'
 
 
 @baseframe.app_template_filter('render_field_options')
-def render_field_options(field, **kwargs):
-    """
-    Remove HTML attributes with a value of None or False before rendering a field.
-    """
+def render_field_options(field, **kwargs) -> str:
+    """Remove HTML attributes with falsy values before rendering a field."""
     d = {k: v for k, v in kwargs.items() if v is not None and v is not False}
     if hasattr(field, 'widget_attrs'):
         d.update(field.widget_attrs)
     return field(**d)
 
 
+# TODO: Only used in renderfield.mustache. Re-check whether this is necessary at all.
 @baseframe.app_template_filter('to_json')
-def form_field_to_json(field, **kwargs):
+def form_field_to_json(field, **kwargs) -> dict:
+    """Render a form field as JSON."""
     d = {}
     d['id'] = field.id
     d['label'] = field.label.text
@@ -164,17 +155,15 @@ def form_field_to_json(field, **kwargs):
 
 
 @baseframe.app_template_filter('markdown')
-def field_markdown(field):
-    html = markdown(field)
-    return Markup(html)
+def field_markdown(text: str) -> Markup:
+    """Render text as Markdown."""
+    return Markup(markdown(text))
 
 
 @baseframe.app_template_filter('ext_asset_url')
-def ext_asset_url(asset):
-    """
-    This filter makes ext_assets available to templates.
-    """
-    if isinstance(asset, six.string_types):
+def ext_asset_url(asset: Union[str, List[str]]) -> str:
+    """Return external asset URL for use in templates."""
+    if isinstance(asset, str):
         return ext_assets([asset])
     else:
         return ext_assets(asset)
@@ -182,29 +171,30 @@ def ext_asset_url(asset):
 
 @baseframe.app_template_filter('firstline')
 @cache.memoize(timeout=600)
-def firstline(html):
-    """
-    Returns the first line from a HTML blob as plain text
-    """
+def firstline(html: str) -> str:
+    """Return the first line from a HTML blob as plain text."""
     result = text_blocks(html)
     if result:
         return result[0]
+    return ''
 
 
 @baseframe.app_template_filter('cdata')
-def cdata(text):
-    """
-    Convert text to a CDATA sequence
-    """
+def cdata(text: str) -> str:
+    """Convert text to a CDATA sequence."""
     return Markup('<![CDATA[' + text.replace(']]>', ']]]]><![CDATA[>') + ']]>')
 
 
+# TODO: Used only in Hasjob. Move there?
 @baseframe.app_template_filter('shortdate')
-def shortdate(value):
+def shortdate(value: Union[datetime, date]) -> str:
+    """Render a date in short form (deprecated for lack of i18n support)."""
+    dt: Union[datetime, date]
+    utc_now: Union[datetime, date]
     if isinstance(value, datetime):
         tz = get_timezone()
         if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(tz)
+            dt = utc.localize(value).astimezone(tz)
         else:
             dt = value.astimezone(tz)
         utc_now = request_timestamp().astimezone(tz)
@@ -219,14 +209,17 @@ def shortdate(value):
     else:
         # The string replace hack is to deal with inconsistencies in the underlying
         # implementation of strftime. See https://bugs.python.org/issue8304
-        return six.text_type(dt.strftime("%e %b '%y")).replace("'", "’")
+        return str(dt.strftime("%e %b '%y")).replace("'", "’")
 
 
+# TODO: Only used in Hasjob. Move there?
 @baseframe.app_template_filter('longdate')
-def longdate(value):
+def longdate(value: Union[datetime, date]) -> str:
+    """Render a date in long form (deprecated for lack of i18n support)."""
+    dt: Union[datetime, date]
     if isinstance(value, datetime):
         if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(get_timezone())
+            dt = utc.localize(value).astimezone(get_timezone())
         else:
             dt = value.astimezone(get_timezone())
     else:
@@ -235,62 +228,74 @@ def longdate(value):
 
 
 @baseframe.app_template_filter('date')
-def date_filter(value, format='medium', locale=None, usertz=True):  # NOQA: A002
+def date_filter(
+    value: Union[datetime, date],
+    format: str = 'medium',  # NOQA: A002  # skipcq: PYL-W0622
+    locale: Locale = None,
+    usertz: bool = True,
+) -> str:
+    """Render a localized date."""
+    dt: Union[datetime, date]
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(get_timezone())
+            dt = utc.localize(value).astimezone(get_timezone())
         else:
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    return format_date(
-        dt, format=format, locale=locale if locale else get_locale()
-    )  # NOQA: A002
+    return format_date(dt, format=format, locale=locale if locale else get_locale())
 
 
 @baseframe.app_template_filter('time')
-def time_filter(value, format='short', locale=None, usertz=True):  # NOQA: A002
+def time_filter(
+    value: Union[datetime, time],
+    format: str = 'short',  # NOQA: A002  # skipcq: PYL-W0622
+    locale: Locale = None,
+    usertz: bool = True,
+) -> str:
+    """Render a localized time."""
     # Default format = hh:mm
+    dt: Union[datetime, time]
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(get_timezone())
+            dt = utc.localize(value).astimezone(get_timezone())
         else:
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    return format_time(
-        dt, format=format, locale=locale if locale else get_locale()
-    )  # NOQA: A002
+    return format_time(dt, format=format, locale=locale if locale else get_locale())
 
 
 @baseframe.app_template_filter('datetime')
-def datetime_filter(value, format='medium', locale=None, usertz=True):  # NOQA: A002
+def datetime_filter(
+    value: Union[datetime, date, time],
+    format: str = 'medium',  # NOQA: A002  # skipcq: PYL-W0622
+    locale: Locale = None,
+    usertz: bool = True,
+) -> str:
+    """Render a localized date and time."""
+    dt: Union[datetime, date, time]
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
-            dt = UTC.localize(value).astimezone(get_timezone())
+            dt = utc.localize(value).astimezone(get_timezone())
         else:
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    return format_datetime(
-        dt, format=format, locale=locale if locale else get_locale()
-    )  # NOQA: A002
+    return format_datetime(dt, format=format, locale=locale if locale else get_locale())
 
 
 @baseframe.app_template_filter('timestamp')
-def timestamp_filter(value):
-    if isinstance(value, datetime):
-        if six.PY2:
-            ts = (value - datetime(1970, 1, 1)).total_seconds()
-        else:
-            ts = value.timestamp()
-    else:
-        ts = value
-    return ts
+def timestamp_filter(value: datetime) -> float:
+    """Render a POSIX timestamp."""
+    if not value.tzinfo:
+        return utc.localize(value).timestamp()
+    return value.timestamp()
 
 
 @baseframe.app_template_filter('cleanurl')
-def cleanurl_filter(url):
+def cleanurl_filter(url: Union[str, furl]) -> str:
+    """Clean a URL visually by removing defaults like scheme and the ``www`` prefix."""
     if not isinstance(url, furl):
         url = furl(url)
     url.path.normalize()
@@ -299,6 +304,6 @@ def cleanurl_filter(url):
 
 
 @baseframe.app_template_filter('make_relative_url')
-def make_relative_url(url):
-    """Filter to discard scheme and netloc from a URL, used to undo _external=True"""
+def make_relative_url(url: str) -> str:
+    """Discard scheme and netloc from a URL, used to undo _external=True."""
     return urlunsplit(urlsplit(url)._replace(scheme='', netloc=''))

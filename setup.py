@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os
 import re
 
@@ -41,7 +40,6 @@ requires = [
     'rq',
     'semantic_version',
     'sentry-sdk',
-    'six>=1.13.0',
     'speaklater',
     'statsd',
     'werkzeug',
@@ -51,13 +49,12 @@ requires = [
 
 class BaseframeBuildPy(build_py):
     def run(self):
-        result = build_py.run(self)
+        build_py.run(self)
         if not self._dry_run:
             curdir = os.getcwd()
             os.chdir(os.path.join(self.build_lib, 'baseframe'))
             os.system("make")
             os.chdir(curdir)
-        return result
 
 
 setup(
@@ -67,14 +64,13 @@ setup(
     long_description=README,
     classifiers=[
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Intended Audience :: Developers",
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 5 - Production/Stable",
         "Topic :: Software Development :: Libraries",
     ],
     author='Kiran Jonnalagadda',

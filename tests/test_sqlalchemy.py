@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
-
 import unittest
 
 from sqlalchemy import Column, Unicode
@@ -17,7 +13,7 @@ from .fixtures import app1, app2
 db = SQLAlchemy()
 
 
-class Container(BaseMixin, db.Model):
+class Container(BaseMixin, db.Model):  # type: ignore[name-defined]
     __tablename__ = 'container'
     name = Column(Unicode(80), nullable=True)
     title = Column(Unicode(80), nullable=True)

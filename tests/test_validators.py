@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
-
+from typing import Any
 import warnings
 
 from werkzeug.datastructures import MultiDict
@@ -24,7 +21,7 @@ from .fixtures import (
 
 class TestValidators(TestCaseBaseframe):
     def setUp(self):
-        super(TestValidators, self).setUp()
+        super().setUp()
         with self.app.test_request_context('/'):
             self.url_form = UrlFormTest(meta={'csrf': False})
             self.emoji_form = EmojiFormTest(meta={'csrf': False})
@@ -34,7 +31,7 @@ class TestValidators(TestCaseBaseframe):
         urllib3.disable_warnings()
 
     def tearDown(self):
-        super(TestValidators, self).tearDown()
+        super().tearDown()
         warnings.resetwarnings()
 
     def test_is_empty(self):
@@ -169,7 +166,7 @@ class TestValidators(TestCaseBaseframe):
             assert not self.all_urls_form.validate()
 
     def test_nonce_form_on_success(self):
-        """A form with a nonce cannot be submitted twice"""
+        """A form with a nonce cannot be submitted twice."""
         formdata = MultiDict({field.name: field.data for field in self.nonce_form})
         nonce = self.nonce_form.form_nonce.data
         assert nonce
@@ -184,7 +181,7 @@ class TestValidators(TestCaseBaseframe):
         assert self.nonce_form.form_nonce.errors
 
     def test_nonce_form_on_failure(self):
-        """Form resubmission is not blocked (via the nonce) when validation fails"""
+        """Form resubmission is not blocked (via the nonce) when validation fails."""
         self.emoji_form.process(
             formdata=MultiDict(
                 {'emoji': 'not-emoji', 'form_nonce': self.emoji_form.form_nonce.data}
@@ -205,10 +202,10 @@ class TestValidators(TestCaseBaseframe):
 
 
 class TestValidUrl(TestCaseBaseframe):
-    """Additional tests for the ValidUrl validator"""
+    """Additional tests for the ValidUrl validator."""
 
     def setUp(self):
-        super(TestValidUrl, self).setUp()
+        super().setUp()
         self.ctx = self.app.test_request_context()
         self.ctx.push()
 
@@ -301,7 +298,7 @@ class TestValidUrl(TestCaseBaseframe):
         assert form.validate() is False
 
     def test_static_domains_misconfigured(self):
-        """Domains must be exact matches including subdomains"""
+        """Domains must be exact matches including subdomains."""
 
         class UrlForm(forms.Form):
             url = forms.StringField(
@@ -452,7 +449,7 @@ class TestFormBase(TestCaseBaseframe):
     # Subclasses must define a `Form`
 
     def setUp(self):
-        super(TestFormBase, self).setUp()
+        super().setUp()
         self.ctx = self.app.test_request_context()
         self.ctx.push()
         self.form = self.Form(meta={'csrf': False})
@@ -463,7 +460,11 @@ class TestFormBase(TestCaseBaseframe):
 
 class TestForEach(TestFormBase):
     class Form(forms.Form):
-        textlist = forms.TextListField(validators=[forms.ForEach([forms.URL()])])
+        """Test form."""
+
+        textlist = forms.TextListField(
+            validators=[forms.validators.ForEach([forms.validators.URL()])]
+        )
 
     def test_passes_single(self):
         self.form.process(formdata=MultiDict({'textlist': "http://www.example.com/"}))
@@ -512,8 +513,14 @@ class TestForEach(TestFormBase):
 
 class TestForEachChained(TestFormBase):
     class Form(forms.Form):
+        """Test form."""
+
         textlist = forms.TextListField(
-            validators=[forms.ForEach([forms.Optional(), forms.URL()])]
+            validators=[
+                forms.validators.ForEach(
+                    [forms.validators.Optional(), forms.validators.URL()]
+                )
+            ]
         )
 
     def test_skips_blanklines_and_fails(self):
@@ -529,8 +536,11 @@ class TestForEachChained(TestFormBase):
 
 class TestForEachFiltered(TestFormBase):
     class Form(forms.Form):
+        """Test form."""
+
         textlist = forms.TextListField(
-            validators=[forms.ForEach([forms.URL()])], filters=[forms.strip_each()]
+            validators=[forms.validators.ForEach([forms.validators.URL()])],
+            filters=[forms.filters.strip_each()],
         )
 
     def test_passes_blanklines(self):
@@ -542,12 +552,14 @@ class TestForEachFiltered(TestFormBase):
 
 class TestAllowedIf(TestFormBase):
     class Form(forms.Form):
+        """Test form."""
+
         other = forms.StringField("Other")
         field = forms.StringField(
             "Field", validators=[forms.validators.AllowedIf('other')]
         )
 
-    other_not_empty = "Not empty"
+    other_not_empty: Any = "Not empty"
 
     def test_is_allowed(self):
         self.form.process(other=self.other_not_empty, field="Also not empty")
@@ -572,6 +584,8 @@ class TestAllowedIf(TestFormBase):
 
 class TestAllowedIfInteger(TestAllowedIf):
     class Form(forms.Form):
+        """Test form."""
+
         other = forms.IntegerField("Other")
         field = forms.StringField(
             "Field", validators=[forms.validators.AllowedIf('other')]
@@ -582,6 +596,8 @@ class TestAllowedIfInteger(TestAllowedIf):
 
 class TestOptionalIf(TestFormBase):
     class Form(forms.Form):
+        """Test form."""
+
         other = forms.StringField("Other")
         field = forms.StringField(
             "Field",
@@ -591,8 +607,8 @@ class TestOptionalIf(TestFormBase):
             ],
         )
 
-    other_empty = ''
-    other_not_empty = "Not empty"
+    other_empty: Any = ''
+    other_not_empty: Any = "Not empty"
 
     def test_is_optional(self):
         self.form.process(other=self.other_not_empty)
@@ -621,6 +637,8 @@ class TestOptionalIf(TestFormBase):
 
 class TestOptionalIfInteger(TestOptionalIf):
     class Form(forms.Form):
+        """Test form."""
+
         other = forms.IntegerField("Other")
         field = forms.StringField(
             "Field",
@@ -636,6 +654,8 @@ class TestOptionalIfInteger(TestOptionalIf):
 
 class TestRequiredIf(TestFormBase):
     class Form(forms.Form):
+        """Test form."""
+
         other = forms.StringField("Other")
         field = forms.StringField(
             "Field",
@@ -645,8 +665,8 @@ class TestRequiredIf(TestFormBase):
             ],
         )
 
-    other_empty = ''
-    other_not_empty = "Not empty"
+    other_empty: Any = ''
+    other_not_empty: Any = "Not empty"
 
     def test_is_required(self):
         self.form.process(other=self.other_not_empty)
@@ -671,6 +691,8 @@ class TestRequiredIf(TestFormBase):
 
 class TestRequiredIfInteger(TestRequiredIf):
     class Form(forms.Form):
+        """Test form."""
+
         other = forms.IntegerField("Other")
         field = forms.StringField(
             "Field",

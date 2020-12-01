@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
-
-import six
-
 from threading import Lock
+from typing import Callable, Dict, Iterable, Optional, Tuple, Type, Union
 import uuid
 
 from flask import current_app
@@ -10,10 +7,9 @@ from flask_wtf import FlaskForm as BaseForm
 from wtforms.compat import iteritems
 import wtforms
 
-from .. import asset_cache
-from .. import b__ as __
-from .. import is_lazy_string
+from ..extensions import __, asset_cache
 from ..signals import form_validation_error, form_validation_success
+from ..utils import is_lazy_string
 from . import fields as bfields
 from . import filters as bfilters
 from . import parsleyjs as bparsleyjs
@@ -29,7 +25,7 @@ __all__ = [
 ]
 
 # Use a hardcoded list to control what is available to user-facing apps
-field_registry = {
+field_registry: Dict[str, Type] = {
     'SelectField': bparsleyjs.SelectField,
     'SelectMultipleField': bfields.SelectMultipleField,
     'RadioField': bparsleyjs.RadioField,
@@ -57,38 +53,46 @@ field_registry = {
     'ImageField': bfields.ImgeeField,
 }
 
-widget_registry = {}
+widget_registry: Dict[str, Tuple] = {}
 
-validator_registry = {
+validator_registry: Dict[
+    str,
+    Union[
+        Tuple[Callable],
+        Tuple[Callable, str],
+        Tuple[Callable, str, str],
+        Tuple[Callable, str, str, str],
+    ],
+] = {
     'Length': (wtforms.validators.Length, 'min', 'max', 'message'),
     'NumberRange': (wtforms.validators.NumberRange, 'min', 'max', 'message'),
     'Optional': (wtforms.validators.Optional, 'strip_whitespace'),
     'Required': (wtforms.validators.DataRequired, 'message'),
     'AnyOf': (wtforms.validators.AnyOf, 'values', 'message'),
     'NoneOf': (wtforms.validators.NoneOf, 'values', 'message'),
-    'ValidEmail': bvalidators.ValidEmail,
-    'ValidUrl': bvalidators.ValidUrl,
-    'AllUrlsValid': bvalidators.AllUrlsValid,
+    'ValidEmail': (bvalidators.ValidEmail,),
+    'ValidUrl': (bvalidators.ValidUrl,),
+    'AllUrlsValid': (bvalidators.AllUrlsValid,),
 }
 
-filter_registry = {
+filter_registry: Dict[str, Union[Tuple[Callable], Tuple[Callable, str]]] = {
     'lower': (bfilters.lower,),
     'upper': (bfilters.upper,),
     'strip': (bfilters.strip, 'chars'),
     'lstrip': (bfilters.lstrip, 'chars'),
     'rstrip': (bfilters.rstrip, 'chars'),
-    'none_if_empty': (bfilters.none_if_empty),
+    'none_if_empty': (bfilters.none_if_empty,),
 }
 
 
 _nonce_lock = Lock()
 
 
-def _nonce_cache_key(nonce):
+def _nonce_cache_key(nonce: str) -> str:
     return 'form_nonce/' + nonce
 
 
-def _nonce_validator(form, field):
+def _nonce_validator(form, field) -> None:
     # Check for already-used form nonce
     if field.data:
         with _nonce_lock:
@@ -109,22 +113,18 @@ def _nonce_validator(form, field):
 
 
 class Form(BaseForm):
-    """
-    Form with additional methods.
-    """
+    """Form with additional methods."""
 
-    __expects__ = ()
-    __returns__ = ()
+    __expects__: Iterable[str] = ()
+    __returns__: Iterable[str] = ()
 
     form_nonce = bfields.NonceField(
         "Nonce", validators=[_nonce_validator], default=lambda: uuid.uuid4().hex
     )
     form_nonce_error = __("This form has already been submitted")
 
-    def __init_subclass__(cls, **kwargs):
-        """
-        Validate :attr:`__expects__` and :attr:`__returns__` in sub-classes
-        """
+    def __init_subclass__(cls, **kwargs) -> None:
+        """Validate :attr:`__expects__` and :attr:`__returns__` in sub-classes."""
         super().__init_subclass__(**kwargs)
         if {'edit_obj', 'edit_model', 'edit_parent', 'edit_id'} & set(cls.__expects__):
             raise TypeError(
@@ -137,7 +137,7 @@ class Form(BaseForm):
                 "This form has __expects__ parameters that clash with field names"
             )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         for attr in self.__expects__:
             if attr not in kwargs:
                 raise TypeError("Expected parameter %s was not supplied" % attr)
@@ -163,15 +163,14 @@ class Form(BaseForm):
         # Call baseclass after expected parameters have been set. `__init__` will call
         # `process`, which will in turn call the ``get_<fieldname>`` methods, and they
         # will need proper context
-        super(Form, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         # Finally, populate the ``choices`` attr of selection fields
         self.set_queries()
 
-    def populate_obj(self, obj):
+    def populate_obj(self, obj) -> None:
         """
-        Populates the attributes of the passed `obj` with data from the form's
-        fields.
+        Populate the attributes of the passed `obj` with data from the form's fields.
 
         If the form has a ``set_<fieldname>`` method, it will be called with the object
         in place of the field's ``populate_obj`` method. The custom method is then
@@ -186,10 +185,9 @@ class Form(BaseForm):
             else:
                 field.populate_obj(obj, name)
 
-    def process(self, formdata=None, obj=None, data=None, **kwargs):
+    def process(self, formdata=None, obj=None, data=None, **kwargs) -> None:
         """
-        Take form, object data, and keyword arg input and have the fields
-        process them.
+        Take form, object data, and keyword arg input and have the fields process them.
 
         :param formdata:
             Used to pass data coming from the enduser, usually `request.POST` or
@@ -231,46 +229,50 @@ class Form(BaseForm):
             else:
                 field.process(formdata)
 
-    def validate(self, send_signals=True):
-        success = super(Form, self).validate()
+    def validate(self, send_signals: bool = True) -> bool:
+        success = super().validate()
         for attr in self.__returns__:
             if not hasattr(self, attr):
                 setattr(self, attr, None)
         if send_signals:
-            self.send_signals()
+            self.send_signals(success)
         return success
 
-    def send_signals(self):
-        if self.errors:
-            form_validation_error.send(self)
-        else:
+    def send_signals(self, success: Optional[bool] = None) -> None:
+        if success is None:
+            success = not self.errors
+        if success:
             form_validation_success.send(self)
+        else:
+            form_validation_error.send(self)
 
-    def errors_with_data(self):
+    def errors_with_data(self) -> dict:
         # Convert lazy_gettext error strings into unicode so they don't cause problems
         # downstream (like when pickling)
         return {
             name: {
                 'data': f.data,
-                'errors': [
-                    six.text_type(e) if is_lazy_string(e) else e for e in f.errors
-                ],
+                'errors': [str(e) if is_lazy_string(e) else e for e in f.errors],
             }
             for name, f in iteritems(self._fields)
             if f.errors
         }
 
-    def set_queries(self):
+    def set_queries(self) -> None:
         """
-        Override this method in the sub-class to set queries that might
-        be required for form fields such as QuerySelectField or QuerySelectMultipleField
+        Set queries/choices as may be required for fields.
+
+        This is an overridable method and is typically required on forms that use
+        QuerySelectField or QuerySelectMultipleField, or have select fields with choices
+        that are only available at runtime.
         """
 
 
-class FormGenerator(object):
+class FormGenerator:
     """
-    Creates forms from a JSON-compatible dictionary structure
-    based on the allowed set of fields, widgets, validators and filters.
+    Creates forms from a JSON-compatible dictionary structure.
+
+    Consults an allowed set of fields, widgets, validators and filters.
     """
 
     def __init__(
@@ -280,7 +282,7 @@ class FormGenerator(object):
         validators=None,
         filters=None,
         default_field='StringField',
-    ):
+    ) -> None:
         # If using global defaults, make a copy in this class so that
         # they can be customised post-init without clobbering the globals
         self.fields = fields or dict(field_registry)
@@ -290,10 +292,8 @@ class FormGenerator(object):
 
         self.default_field = default_field
 
-    def generate(self, formstruct):
-        """
-        Generate a dynamic form from the given data structure.
-        """
+    def generate(self, formstruct: dict) -> Type[Form]:
+        """Generate a dynamic form from the given data structure."""
 
         class DynamicForm(Form):
             pass
@@ -313,7 +313,7 @@ class FormGenerator(object):
             validators = []
             validators_data = fielddata.pop('validators', [])
             for item in validators_data:
-                if isinstance(item, six.string_types) and item in validator_registry:
+                if isinstance(item, str) and item in validator_registry:
                     validators.append(validator_registry[item][0]())
                 else:
                     itemname = item.pop('type', None)
@@ -328,7 +328,7 @@ class FormGenerator(object):
             filters = []
             filters_data = fielddata.pop('filters', [])
             for item in filters_data:
-                if isinstance(item, six.string_types) and item in filter_registry:
+                if isinstance(item, str) and item in filter_registry:
                     filters.append(filter_registry[item][0]())
                 else:
                     itemname = item.pop('type', None)
@@ -354,8 +354,8 @@ class FormGenerator(object):
 class RecaptchaForm(Form):
     recaptcha = bfields.RecaptchaField()
 
-    def __init__(self, *args, **kwargs):
-        super(RecaptchaForm, self).__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
         if not (
             current_app.config.get('RECAPTCHA_PUBLIC_KEY')
             and current_app.config.get('RECAPTCHA_PRIVATE_KEY')

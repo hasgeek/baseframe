@@ -1,13 +1,14 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import
-
-from functools import partial
+from datetime import timedelta
+from typing import Dict, Optional, Union
 import time
 
-from flask import current_app, request, request_finished, request_started
+from flask import Flask, current_app, request, request_finished, request_started
+from flask_wtf import FlaskForm
+from werkzeug.wrappers import Response
 
 from statsd import StatsClient
+from statsd.client.timer import Timer
+from statsd.client.udp import Pipeline
 
 from .signals import form_validation_error, form_validation_success
 
@@ -15,10 +16,12 @@ __all__ = ['Statsd']
 
 START_TIME_ATTR = 'statsd_start_time'
 
+TagsType = Dict[str, Union[int, str, None]]
 
-class Statsd(object):
+
+class Statsd:
     """
-    Statsd extension for Flask
+    Statsd extension for Flask.
 
     Offers conveniences on top of using py-statsd directly:
     1. In a multi-app setup, each app can have its own statsd config
@@ -60,22 +63,11 @@ class Statsd(object):
     The Datadog and SignalFx tag formats are not supported at this time.
     """
 
-    def __init__(self, app=None):
+    def __init__(self, app: Optional[Flask] = None) -> None:
         if app is not None:
             self.init_app(app)
 
-        # Py 3.4+ has `functools.partialmethod`, allowing these to be set directly
-        # on the class, but as per `timeit` it is about 50% slower. Since this class
-        # will be instantiated only once per runtime, we get an overall performance
-        # improvement at the cost of making it slightly harder to find documentation.
-        # https://gist.github.com/jace/9897629abda9bbd06f5a1bf862f43d42
-
-        for method in ('timer', 'timing', 'incr', 'decr', 'gauge', 'set'):
-            func = partial(self._wrapper, method)
-            func.__name__ = method
-            setattr(self, method, func)
-
-    def init_app(self, app):
+    def init_app(self, app: Flask):
         app.config.setdefault('STATSD_RATE', 1)
         app.config.setdefault('SITE_ID', app.name)
         app.config.setdefault('STATSD_TAGS', False)
@@ -96,11 +88,11 @@ class Statsd(object):
             request_started.connect(self._request_started, app)
             request_finished.connect(self._request_finished, app)
 
-    def _metric_name(self, name, tags):
+    def _metric_name(self, name: str, tags: TagsType = None) -> str:
+        if tags is None:
+            tags = {}
         if current_app.config['STATSD_TAGS']:
             prefix = 'flask_app'
-            if tags is None:
-                tags = {}
             tags['app'] = current_app.config['SITE_ID']
             tag_sep = current_app.config['STATSD_TAGS']
             tag_join = '='
@@ -115,22 +107,104 @@ class Statsd(object):
             )
         return '{}.{}'.format(prefix, name)
 
-    def _wrapper(self, metric, stat, *args, **kwargs):
-        tags = kwargs.pop('tags', None)
-        if kwargs.setdefault('rate', None) is None:
-            kwargs['rate'] = current_app.config['STATSD_RATE']
+    def timer(
+        self, stat: str, rate: Union[int, float] = None, tags: TagsType = None
+    ) -> Timer:
+        """Return a Timer."""
         stat = self._metric_name(stat, tags)
+        return current_app.extensions['statsd_core'].timer(
+            stat, rate=rate if rate is not None else current_app.config['STATSD_RATE']
+        )
 
-        getattr(current_app.extensions['statsd_core'], metric)(stat, *args, **kwargs)
+    def timing(
+        self,
+        stat: str,
+        delta: Union[int, timedelta],
+        rate: Union[int, float] = None,
+        tags: TagsType = None,
+    ) -> None:
+        """
+        Send new timing information.
 
-    def pipeline(self):
+        :param delta: Either a number of milliseconds, or a timedelta
+        """
+        stat = self._metric_name(stat, tags)
+        current_app.extensions['statsd_core'].timing(
+            stat,
+            delta,
+            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
+        )
+
+    def incr(
+        self,
+        stat: str,
+        count: int = 1,
+        rate: Union[int, float] = None,
+        tags: TagsType = None,
+    ) -> None:
+        """Increment a stat by `count`."""
+        stat = self._metric_name(stat, tags)
+        current_app.extensions['statsd_core'].incr(
+            stat,
+            count,
+            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
+        )
+
+    def decr(
+        self,
+        stat: str,
+        count: int = 1,
+        rate: Union[int, float] = None,
+        tags: TagsType = None,
+    ) -> None:
+        """Decrement a stat by `count`."""
+        stat = self._metric_name(stat, tags)
+        current_app.extensions['statsd_core'].decr(
+            stat,
+            count,
+            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
+        )
+
+    def gauge(
+        self,
+        stat: str,
+        value: int,
+        rate: Union[int, float] = None,
+        delta: bool = False,
+        tags: TagsType = None,
+    ) -> None:
+        """Set a gauge value."""
+        stat = self._metric_name(stat, tags)
+        current_app.extensions['statsd_core'].gauge(
+            stat,
+            value,
+            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
+            delta=delta,
+        )
+
+    def set(  # NOQA: A003
+        self,
+        stat: str,
+        value: str,
+        rate: Union[int, float] = None,
+        tags: TagsType = None,
+    ) -> None:
+        """Set a set value."""
+        stat = self._metric_name(stat, tags)
+        current_app.extensions['statsd_core'].set(
+            stat,
+            value,
+            rate=rate if rate is not None else current_app.config['STATSD_RATE'],
+        )
+
+    def pipeline(self) -> Pipeline:
         return current_app.extensions['statsd_core'].pipeline()
 
-    def _request_started(self, app):
+    def _request_started(self, app: Flask) -> None:
         if app.config['STATSD_RATE'] != 0:
             setattr(request, START_TIME_ATTR, time.time())
 
-    def _request_finished(self, app, response):
+    def _request_finished(self, app: Flask, response: Response) -> None:
         if hasattr(request, START_TIME_ATTR):
             metrics = [
                 (
@@ -161,7 +235,7 @@ class Statsd(object):
 
 
 @form_validation_success.connect
-def _statsd_form_validation_success(form):
+def _statsd_form_validation_success(form: FlaskForm) -> None:
     if (
         current_app
         and current_app.config.get('STATSD_FORM_LOG')
@@ -173,7 +247,7 @@ def _statsd_form_validation_success(form):
 
 
 @form_validation_error.connect
-def _statsd_form_validation_error(form):
+def _statsd_form_validation_error(form: FlaskForm) -> None:
     if (
         current_app
         and current_app.config.get('STATSD_FORM_LOG')

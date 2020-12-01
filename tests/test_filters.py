@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
-
 from datetime import date, datetime, time, timedelta
 
 from pytz import UTC, timezone
@@ -14,7 +10,7 @@ from .fixtures import TestCaseBaseframe, UserTest
 
 class TestDatetimeFilters(TestCaseBaseframe):
     def setUp(self):
-        super(TestDatetimeFilters, self).setUp()
+        super().setUp()
         self.now = datetime.now(UTC)
         self.date = date(2020, 1, 31)
         self.datetime = datetime(2020, 1, 31, 0, 0, tzinfo=timezone("UTC"))
@@ -193,7 +189,7 @@ class TestDatetimeFilters(TestCaseBaseframe):
 
 class TestNaiveDatetimeFilters(TestDatetimeFilters):
     def setUp(self):
-        super(TestNaiveDatetimeFilters, self).setUp()
+        super().setUp()
         self.now = datetime.utcnow()
 
     def test_now_is_naive(self):
@@ -202,7 +198,7 @@ class TestNaiveDatetimeFilters(TestDatetimeFilters):
 
 class TestFilters(TestCaseBaseframe):
     def setUp(self):
-        super(TestFilters, self).setUp()
+        super().setUp()
         self.user = UserTest()
         self.avatar_size = ('100', '100')
         self.avatar_url = '//images.hasgeek.com/embed/test'
@@ -295,14 +291,12 @@ class TestFilters(TestCaseBaseframe):
             'attrfour': '',
         }
         modified_field = filters.render_field_options(forms.RichTextField, **test_attrs)
-        self.assertIn('attrone', modified_field.kwargs) and self.assertEqual(
-            modified_field.kwargs['attrone'], 'test'
-        )
+        self.assertIn('attrone', modified_field.kwargs)
+        self.assertEqual(modified_field.kwargs['attrone'], 'test')
         assert not hasattr(modified_field.kwargs, 'attrtwo')
         assert not hasattr(modified_field.kwargs, 'attrthree')
-        self.assertIn('attrfour', modified_field.kwargs) and self.assertEqual(
-            modified_field.kwargs['attrfour'], ''
-        )
+        self.assertIn('attrfour', modified_field.kwargs)
+        self.assertEqual(modified_field.kwargs['attrfour'], '')
 
     def test_firstline(self):
         html = "<div>this is the first line</div><div>and second line</div>"

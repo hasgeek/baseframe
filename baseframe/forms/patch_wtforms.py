@@ -1,18 +1,10 @@
-# -*- coding: utf-8 -*-
-
-"""
-Patches WTForms to add additional functionality as required by Baseframe.
-"""
-
-from __future__ import absolute_import
+"""Patches WTForms to add additional functionality as required by Baseframe."""
 
 from flask import Markup, escape
 import wtforms
 
-__all__ = []
 
-
-def _patch_wtforms_add_flags():
+def _patch_wtforms_add_flags() -> None:
     def add_flags(validator, flags):
         validator.field_flags = tuple(flags) + tuple(
             getattr(validator, 'field_flags', ())
@@ -25,7 +17,7 @@ _patch_wtforms_add_flags()
 del _patch_wtforms_add_flags
 
 
-def _patch_wtforms_field_init():
+def _patch_wtforms_field_init() -> None:
     original_field_init = None
 
     def field_init(
@@ -43,7 +35,7 @@ def _patch_wtforms_field_init():
         _translations=None,
         _meta=None,
         widget_attrs=None,
-        **kwargs
+        **kwargs,
     ):
 
         original_field_init(
@@ -60,7 +52,7 @@ def _patch_wtforms_field_init():
             _prefix=_prefix,
             _translations=_translations,
             _meta=_meta,
-            **kwargs
+            **kwargs,
         )
         self.widget_attrs = widget_attrs or {}
 
@@ -73,8 +65,8 @@ _patch_wtforms_field_init()
 del _patch_wtforms_field_init
 
 
-def _patch_label_call():
-    """Escape text before display (bug in WTForms < 3.0)"""
+def _patch_label_call() -> None:
+    """Escape text before display (bug in WTForms < 3.0)."""
 
     def label_call(self, text=None, **kwargs):
         if "for_" in kwargs:

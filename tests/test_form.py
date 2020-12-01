@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
-
 from werkzeug.datastructures import MultiDict
 
 import pytest
@@ -161,7 +157,6 @@ def test_set(test_client, user):
 
 def test_init_order(test_client):
     """Test that get_<fieldname> methods have proper context."""
-
     with pytest.raises(TypeError):
         # A parameter named `expected_item` is expected
         InitOrderForm(meta={'csrf': False})

@@ -1,33 +1,26 @@
-# -*- coding: utf-8 -*-
+"""SQLAlchemy-based form fields and widgets."""
 
-"""
-SQLAlchemy-based form fields and widgets
-"""
-
-from __future__ import unicode_literals
+from typing import Optional
 
 from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 
-from .. import b__ as __
+from ..extensions import __
 from .validators import StopValidation
 
 __all__ = ['AvailableName', 'QuerySelectField', 'QuerySelectMultipleField']
 
 
-class AvailableAttr(object):
-    """
-    Validator to check whether the specified attribute is available
-    for the model being edited.
-    """
+class AvailableAttr:
+    """Check whether the specified attribute is available for the model being edited."""
 
-    def __init__(self, attr, message=None, model=None):
+    def __init__(self, attr: str, message=None, model=None) -> None:
         self.model = model
         self.attr = attr
         if not message:
             message = __("This {attr} is already in use".format(attr=attr))
         self.message = message
 
-    def __call__(self, form, field):
+    def __call__(self, form, field) -> None:
         model = self.model or form.edit_model
         if not model:
             raise TypeError(
@@ -48,12 +41,9 @@ class AvailableAttr(object):
 
 
 class AvailableName(AvailableAttr):
-    """
-    Validator to check whether the specified name is available
-    for the model being edited.
-    """
+    """Check whether the specified name is available for the model being edited."""
 
-    def __init__(self, message=None, model=None):
+    def __init__(self, message: Optional[str] = None, model=None) -> None:
         if not message:
             message = __("This URL name is already in use")
-        super(AvailableName, self).__init__('name', message, model)
+        super().__init__('name', message, model)

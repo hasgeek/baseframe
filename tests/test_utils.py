@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
-
-from baseframe import _localized_country_list_inner, localized_country_list
+from baseframe.utils import _localized_country_list_inner, localized_country_list
 
 from .fixtures import TestCaseBaseframe
 from .fixtures import app1 as app
@@ -34,10 +30,8 @@ class TestUtils(TestCaseBaseframe):
             assert rv.data.decode('utf-8') == "जर्मनी"
 
     def test_localized_country_order(self):
-        """
-        Ordering is done by name. So even though index(DE) < index(DZ),
-        the order will vary because of their localized names.
-        """
+        # Ordering is done by name. So even though index(DE) < index(DZ),
+        # the order will vary because of their localized names.
         countries = _localized_country_list_inner('en')
         assert dict(countries)['DE'] == "Germany"
         assert dict(countries)['DZ'] == "Algeria"

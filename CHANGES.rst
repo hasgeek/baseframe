@@ -1,9 +1,15 @@
+0.4.0
+-----
+
+* Dropped Python 2.7 support
+
 0.3.2
 -----
 
 * Added a custom JSON encoder for lazy_gettext objects
 * New AvailableAttr to check if a value can be assigned to a model's attribute
 * Removed CsrfProtect support as it was user hostile and had been discoutinued in all apps
+* Changelog updates have been discontinued as this is now a living repo with no releases
 
 0.3.1
 -----

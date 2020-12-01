@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
 """
-WTForms fields and widgets with ParsleyJS headers. This is a fork of wtforms-parsleyjs
+WTForms fields and widgets with ParsleyJS headers.
+
+This is a fork of wtforms-parsleyjs
 based on https://github.com/johannes-gehrs/wtforms-parsleyjs and
 https://github.com/fuhrysteve/wtforms-parsleyjs. We've forked it into Baseframe because
 the upstream repositories appear unmaintained, and from past experience, we'll have trouble
@@ -11,8 +12,7 @@ wtforms-parsleysj is MIT licensed, while the rest of Baseframe is either BSD (ou
 various other open source licenses (other third party code).
 """
 
-from __future__ import unicode_literals
-
+from typing import Any, Dict
 import copy
 import re
 
@@ -93,7 +93,7 @@ __all__ = [
 ]
 
 
-def parsley_kwargs(field, kwargs, extend=True):
+def parsley_kwargs(field, kwargs, extend=True) -> Dict[str, Any]:
     """
     Return new *kwargs* for *widget*.
 
@@ -138,15 +138,15 @@ def parsley_kwargs(field, kwargs, extend=True):
     return new_kwargs
 
 
-def _email_kwargs(kwargs, vali):
+def _email_kwargs(kwargs, vali) -> None:
     kwargs['data-parsley-type'] = 'email'
 
 
-def _equal_to_kwargs(kwargs, vali):
+def _equal_to_kwargs(kwargs, vali) -> None:
     kwargs['data-parsley-equalto'] = '#' + vali.fieldname
 
 
-def _ip_address_kwargs(kwargs, vali):
+def _ip_address_kwargs(kwargs, vali) -> None:
     # Regexp from http://stackoverflow.com/a/4460645
     kwargs['data-parsley-regexp'] = (
         r'^\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.'
@@ -156,10 +156,10 @@ def _ip_address_kwargs(kwargs, vali):
     )
 
 
-def _length_kwargs(kwargs, vali):
+def _length_kwargs(kwargs, vali) -> None:
     default_number = -1
 
-    if vali.max != default_number and vali.min != default_number:
+    if default_number not in (vali.min, vali.max):
         kwargs['minlength'] = str(vali.min)
         kwargs['maxlength'] = str(vali.max)
         kwargs['data-parsley-length'] = '[' + str(vali.min) + ',' + str(vali.max) + ']'
@@ -172,17 +172,17 @@ def _length_kwargs(kwargs, vali):
             kwargs['data-parsley-maxlength'] = str(vali.max)
 
 
-def _number_range_kwargs(kwargs, vali):
+def _number_range_kwargs(kwargs, vali) -> None:
     kwargs['data-parsley-range'] = '[' + str(vali.min) + ',' + str(vali.max) + ']'
 
 
-def _input_required_kwargs(kwargs, vali):
+def _input_required_kwargs(kwargs, vali) -> None:
     kwargs['data-parsley-required'] = 'true'
     if vali.message:
         kwargs['data-parsley-required-message'] = vali.message
 
 
-def _regexp_kwargs(kwargs, vali):
+def _regexp_kwargs(kwargs, vali) -> None:
     # Apparently, this is the best way to check for RegexObject Type
     # It's needed because WTForms allows compiled regexps to be passed to the validator
     RegexObject = type(re.compile(''))  # NOQA: N806
@@ -193,11 +193,11 @@ def _regexp_kwargs(kwargs, vali):
     kwargs['data-parsley-regexp'] = regex_string
 
 
-def _url_kwargs(kwargs, vali):
+def _url_kwargs(kwargs, vali) -> None:
     kwargs['data-parsley-type'] = 'url'
 
 
-def _string_seq_delimiter(kwargs, vali):
+def _string_seq_delimiter(kwargs, vali) -> str:
     # We normally use a comma as the delimiter - looks clean and it's parsley's default.
     # If the strings for which we check contain a comma, we cannot use it as a delimiter.
     default_delimiter = ','
@@ -212,23 +212,23 @@ def _string_seq_delimiter(kwargs, vali):
     return delimiter
 
 
-def _anyof_kwargs(kwargs, vali):
+def _anyof_kwargs(kwargs, vali) -> None:
     delimiter = _string_seq_delimiter(kwargs, vali)
     kwargs['data-parsley-inlist'] = delimiter.join(vali.values)
 
 
-def _trigger_kwargs(kwargs, trigger='change focusout'):
+def _trigger_kwargs(kwargs, trigger='change focusout') -> None:
     kwargs['data-parsley-trigger'] = trigger
 
 
-def _message_kwargs(kwargs, message):
+def _message_kwargs(kwargs, message) -> None:
     kwargs['data-parsley-error-message'] = message
 
 
-class ParsleyInputMixin(object):
-    def __call__(self, field, **kwargs):
+class ParsleyInputMixin:
+    def __call__(self, field, **kwargs) -> str:
         kwargs = parsley_kwargs(field, kwargs)
-        return super(ParsleyInputMixin, self).__call__(field, **kwargs)
+        return super().__call__(field, **kwargs)  # type: ignore[misc]
 
 
 class TextInput(ParsleyInputMixin, _TextInput):
@@ -276,7 +276,7 @@ class Select(ParsleyInputMixin, _Select):
 
 
 class ListWidget(_ListWidget):
-    def __call__(self, field, **kwargs):
+    def __call__(self, field, **kwargs) -> str:
         sub_kwargs = parsley_kwargs(field, kwargs, extend=False)
         kwargs.setdefault('id', field.id)
         html = ['<%s %s>' % (self.html_tag, html_params(**kwargs))]

@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
-
 import re
 import unittest
 
@@ -28,10 +24,10 @@ class TestCaseBaseframe(unittest.TestCase):
         baseframe.init_app(self.app, requires=['baseframe'])
 
 
-class UserTest(object):
+class UserTest:
     def __init__(self, avatar=None, email=None):
-        self.avatar = self.set_avatar(avatar)
-        self.email = self.set_email(email)
+        self.set_avatar(avatar)
+        self.set_email(email)
 
     def set_avatar(self, avatar):
         self.avatar = avatar
@@ -44,7 +40,7 @@ class FormTest(forms.Form):
     test_field = forms.IntegerField("Test label", default=1)
 
 
-class DocumentTest(object):
+class DocumentTest:
     def __init__(self, url=None, content=None):
         self.url = url
         self.content = content
