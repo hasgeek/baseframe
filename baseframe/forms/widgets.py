@@ -242,8 +242,8 @@ class InlineListWidget:
     checkboxes.
     """
 
-    def __init__(  # skipcq: PYL-W0613
-        self, html_tag='div', class_='', class_prefix=''
+    def __init__(
+        self, html_tag='div', class_='', class_prefix=''  # skipcq: PYL-W0613
     ) -> None:
         self.html_tag = html_tag
         self.class_ = ''
