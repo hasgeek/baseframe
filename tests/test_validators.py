@@ -166,7 +166,7 @@ class TestValidators(TestCaseBaseframe):
             assert not self.all_urls_form.validate()
 
     def test_nonce_form_on_success(self):
-        """A form with a nonce cannot be submitted twice"""
+        """A form with a nonce cannot be submitted twice."""
         formdata = MultiDict({field.name: field.data for field in self.nonce_form})
         nonce = self.nonce_form.form_nonce.data
         assert nonce
@@ -181,7 +181,7 @@ class TestValidators(TestCaseBaseframe):
         assert self.nonce_form.form_nonce.errors
 
     def test_nonce_form_on_failure(self):
-        """Form resubmission is not blocked (via the nonce) when validation fails"""
+        """Form resubmission is not blocked (via the nonce) when validation fails."""
         self.emoji_form.process(
             formdata=MultiDict(
                 {'emoji': 'not-emoji', 'form_nonce': self.emoji_form.form_nonce.data}
@@ -202,7 +202,7 @@ class TestValidators(TestCaseBaseframe):
 
 
 class TestValidUrl(TestCaseBaseframe):
-    """Additional tests for the ValidUrl validator"""
+    """Additional tests for the ValidUrl validator."""
 
     def setUp(self):
         super().setUp()
@@ -298,7 +298,7 @@ class TestValidUrl(TestCaseBaseframe):
         assert form.validate() is False
 
     def test_static_domains_misconfigured(self):
-        """Domains must be exact matches including subdomains"""
+        """Domains must be exact matches including subdomains."""
 
         class UrlForm(forms.Form):
             url = forms.StringField(
@@ -460,6 +460,8 @@ class TestFormBase(TestCaseBaseframe):
 
 class TestForEach(TestFormBase):
     class Form(forms.Form):
+        """Test form."""
+
         textlist = forms.TextListField(
             validators=[forms.validators.ForEach([forms.validators.URL()])]
         )
@@ -511,6 +513,8 @@ class TestForEach(TestFormBase):
 
 class TestForEachChained(TestFormBase):
     class Form(forms.Form):
+        """Test form."""
+
         textlist = forms.TextListField(
             validators=[
                 forms.validators.ForEach(
@@ -532,6 +536,8 @@ class TestForEachChained(TestFormBase):
 
 class TestForEachFiltered(TestFormBase):
     class Form(forms.Form):
+        """Test form."""
+
         textlist = forms.TextListField(
             validators=[forms.validators.ForEach([forms.validators.URL()])],
             filters=[forms.filters.strip_each()],
@@ -546,6 +552,8 @@ class TestForEachFiltered(TestFormBase):
 
 class TestAllowedIf(TestFormBase):
     class Form(forms.Form):
+        """Test form."""
+
         other = forms.StringField("Other")
         field = forms.StringField(
             "Field", validators=[forms.validators.AllowedIf('other')]
@@ -576,6 +584,8 @@ class TestAllowedIf(TestFormBase):
 
 class TestAllowedIfInteger(TestAllowedIf):
     class Form(forms.Form):
+        """Test form."""
+
         other = forms.IntegerField("Other")
         field = forms.StringField(
             "Field", validators=[forms.validators.AllowedIf('other')]
@@ -586,6 +596,8 @@ class TestAllowedIfInteger(TestAllowedIf):
 
 class TestOptionalIf(TestFormBase):
     class Form(forms.Form):
+        """Test form."""
+
         other = forms.StringField("Other")
         field = forms.StringField(
             "Field",
@@ -625,6 +637,8 @@ class TestOptionalIf(TestFormBase):
 
 class TestOptionalIfInteger(TestOptionalIf):
     class Form(forms.Form):
+        """Test form."""
+
         other = forms.IntegerField("Other")
         field = forms.StringField(
             "Field",
@@ -640,6 +654,8 @@ class TestOptionalIfInteger(TestOptionalIf):
 
 class TestRequiredIf(TestFormBase):
     class Form(forms.Form):
+        """Test form."""
+
         other = forms.StringField("Other")
         field = forms.StringField(
             "Field",
@@ -675,6 +691,8 @@ class TestRequiredIf(TestFormBase):
 
 class TestRequiredIfInteger(TestRequiredIf):
     class Form(forms.Form):
+        """Test form."""
+
         other = forms.IntegerField("Other")
         field = forms.StringField(
             "Field",
