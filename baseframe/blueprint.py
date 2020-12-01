@@ -7,6 +7,7 @@ import os.path
 from flask import Blueprint, Flask
 from flask_assets import Bundle, Environment
 from flask_babelhg import get_locale
+from flask_wtf.csrf import generate_csrf
 
 from pytz import timezone
 from sentry_sdk.integrations.flask import FlaskIntegration
@@ -147,6 +148,7 @@ class BaseframeBlueprint(Blueprint):
         app.jinja_env.autoescape = _select_jinja_autoescape
         app.jinja_env.globals['request_is_xhr'] = request_is_xhr
         app.jinja_env.globals['get_locale'] = get_locale
+        app.jinja_env.globals['csrf_token'] = generate_csrf
         if app.subdomain_matching:
             # Does this app want a static subdomain? (Default: yes, 'static').
             # Apps can disable this by setting STATIC_SUBDOMAIN = None.

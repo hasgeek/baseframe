@@ -148,7 +148,6 @@ def baseframe_context() -> Dict[str, Any]:
     """Add Baseframe helper functions to Jinja2 template context."""
     return {
         'networkbar_links': networkbar_links,
-        'csrf_token': generate_csrf,
         'asset_path': asset_path,
     }
 
