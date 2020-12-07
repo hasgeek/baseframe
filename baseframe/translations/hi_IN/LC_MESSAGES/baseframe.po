@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-12-01 22:58+0530\n"
-"PO-Revision-Date: 2020-11-18 12:37+0530\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2020-12-08 04:58+0530\n"
+"PO-Revision-Date: 2020-12-08 04:56+0530\n"
+"Last-Translator: \n"
 "Language: hi_IN\n"
 "Language-Team: hi_IN <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -38,7 +38,7 @@ msgstr "एक मिनट पहले"
 #: baseframe/filters.py:40
 #, python-format
 msgid "%(num)s minutes ago"
-msgstr "%(num)s मिनट पहले"
+msgstr "%(num)s मिनटों पहले"
 
 #: baseframe/filters.py:42
 msgid "an hour ago"
@@ -47,7 +47,7 @@ msgstr "एक घंटा पहले"
 #: baseframe/filters.py:43
 #, python-format
 msgid "%(num)s hours ago"
-msgstr "%(num)s घंटा पहले"
+msgstr "%(num)s घंटो पहले"
 
 #: baseframe/filters.py:45
 msgid "a day ago"
@@ -56,7 +56,7 @@ msgstr "एक दिन पहले"
 #: baseframe/filters.py:47
 #, python-format
 msgid "%(num)s days ago"
-msgstr "%(num)s दिन पहले"
+msgstr "%(num)s दिनों पहले"
 
 #: baseframe/filters.py:49
 msgid "a month ago"
@@ -65,7 +65,7 @@ msgstr "एक महीने पहले"
 #: baseframe/filters.py:51
 #, python-format
 msgid "%(num)s months ago"
-msgstr "%(num)s महीने पहले"
+msgstr "%(num)s महीनों पहले"
 
 #: baseframe/filters.py:53
 msgid "a year ago"
@@ -74,13 +74,13 @@ msgstr "एक साल पहले"
 #: baseframe/filters.py:54
 #, python-format
 msgid "%(num)s years ago"
-msgstr "%(num)s साल पहले"
+msgstr "%(num)s सालों पहले"
 
 #: baseframe/forms/auto.py:31
 #: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:11
 #: baseframe/templates/baseframe/mui/delete.html.jinja2:13
 msgid "Delete"
-msgstr ""
+msgstr "मिटाएं"
 
 #: baseframe/forms/auto.py:32
 #: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:12
@@ -88,17 +88,17 @@ msgstr ""
 #: baseframe/templates/baseframe/mui/delete.html.jinja2:14
 #: baseframe/templates/baseframe/mui/forms.html.jinja2:95
 msgid "Cancel"
-msgstr ""
+msgstr "रद्द करें"
 
 #: baseframe/forms/auto.py:40
 #: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:76
 #: baseframe/templates/baseframe/mui/forms.html.jinja2:118
 msgid "Submit"
-msgstr ""
+msgstr "जमा करें"
 
 #: baseframe/forms/fields.py:169
 msgid "Not a valid choice!"
-msgstr ""
+msgstr "यह मान्य विकल्प नहीं हैं!"
 
 #: baseframe/forms/fields.py:936
 msgid "Value not in LabeledEnum"
@@ -110,7 +110,7 @@ msgstr ""
 
 #: baseframe/forms/fields.py:950
 msgid "Not a valid choice"
-msgstr ""
+msgstr "यह मान्य विकल्प नहीं हैं"
 
 #: baseframe/forms/fields.py:1006
 msgid "Field value must be a dictionary"
@@ -118,31 +118,31 @@ msgstr ""
 
 #: baseframe/forms/fields.py:1024
 msgid "Invalid JSON: {0!r}"
-msgstr ""
+msgstr "अमान्य JSON: {0!r}"
 
 #: baseframe/forms/fields.py:1027
 msgid "The JSON root must be a hash object"
 msgstr ""
 
-#: baseframe/forms/form.py:116
+#: baseframe/forms/form.py:124
 msgid "This form has already been submitted"
 msgstr ""
 
 #: baseframe/forms/sqlalchemy.py:20
 msgid "This {attr} is already in use"
-msgstr ""
+msgstr "यह {attr} पहले से इस्तेमाल में हैं"
 
 #: baseframe/forms/sqlalchemy.py:48
 msgid "This URL name is already in use"
-msgstr ""
+msgstr "यह URL नाम पहले से इस्तेमाल में हैं"
 
 #: baseframe/forms/validators.py:72
 msgid "The secret parameter is missing"
-msgstr ""
+msgstr "सीक्रेट पैरामीटर मौजूद नहीं हैं"
 
 #: baseframe/forms/validators.py:73
 msgid "The secret parameter is invalid or malformed"
-msgstr ""
+msgstr "सीक्रेट पैरामीटर गलत या असामान्य है"
 
 #: baseframe/forms/validators.py:74
 msgid "The response parameter is missing"
@@ -158,11 +158,11 @@ msgstr ""
 
 #: baseframe/forms/validators.py:158 baseframe/forms/validators.py:187
 msgid "This is required"
-msgstr ""
+msgstr "यह आवश्यक है"
 
 #: baseframe/forms/validators.py:204
 msgid "Comparison failed"
-msgstr ""
+msgstr "तुलना असफल रही"
 
 #: baseframe/forms/validators.py:222
 msgid "Subclasses must define ``compare``"
@@ -194,25 +194,27 @@ msgstr ""
 
 #: baseframe/forms/validators.py:344
 msgid "This domain is not a public email domain"
-msgstr ""
+msgstr "यह डोमेन सार्वजनिक ईमेल डोमेन नहीं है"
 
 #: baseframe/forms/validators.py:367
 msgid "This domain is a public email domain"
-msgstr ""
+msgstr "यह डोमेन सार्वजनिक ईमेल डोमेन है"
 
 #: baseframe/forms/validators.py:388
 msgid "This email address does not appear to be valid"
-msgstr ""
+msgstr "लगता है की यह ईमेल पता मान्य नहीं है"
 
 #: baseframe/forms/validators.py:434
 msgid "The URL “{url}” is not valid or is currently inaccessible"
-msgstr ""
+msgstr "यह URL “{url}” या तो मान्य नहीं है या फिर इस वक्त पहुँचा नहीं जा सकता"
 
 #: baseframe/forms/validators.py:436
 msgid ""
 "The URL “{url}” linked from “{text}” is not valid or is currently "
 "inaccessible"
 msgstr ""
+"“{text}” से लिंक किया गया URL “{url}” या तो मान्य नहीं है या फिर इस वक्त "
+"पहुँचा नहीं जा सकता"
 
 #: baseframe/forms/validators.py:440
 msgid "This URL’s protocol is not allowed"
@@ -242,11 +244,11 @@ msgstr ""
 
 #: baseframe/forms/validators.py:689
 msgid "Latitude must be within ± 90 degrees"
-msgstr ""
+msgstr "अक्षांश ± 90 डिग्री के अंदर होना चाहिए"
 
 #: baseframe/forms/validators.py:690
 msgid "Longitude must be within ± 180 degrees"
-msgstr ""
+msgstr "देशांतर ± 180 डिग्री के अंदर होना चाहिए"
 
 #: baseframe/forms/validators.py:714
 msgid "The server was temporarily unreachable. Try again"
@@ -254,15 +256,15 @@ msgstr ""
 
 #: baseframe/forms/widgets.py:185
 msgid "Latitude"
-msgstr ""
+msgstr "अक्षांश"
 
 #: baseframe/forms/widgets.py:192
 msgid "Longitude"
-msgstr ""
+msgstr "देशांतर"
 
 #: baseframe/forms/widgets.py:311
 msgid "Image URL"
-msgstr ""
+msgstr "इमेज URL"
 
 #: baseframe/templates/400.html.jinja2:2
 msgid "Bad Request"
@@ -282,11 +284,11 @@ msgstr ""
 
 #: baseframe/templates/404.html.jinja2:2
 msgid "Not Found"
-msgstr ""
+msgstr "नहीं मिल पाया"
 
 #: baseframe/templates/404.html.jinja2:5
 msgid "The page you were looking for does not exist."
-msgstr ""
+msgstr "जिस पेज की आप तलाश कर रहे थे वह मौजूद नहीं है."
 
 #: baseframe/templates/422.html.jinja2:2
 msgid "Unprocessable Entity"
@@ -302,7 +304,7 @@ msgstr ""
 
 #: baseframe/templates/500.html.jinja2:2
 msgid "Internal Server Error"
-msgstr ""
+msgstr "आंतरिक सर्वर त्रुटि"
 
 #: baseframe/templates/500.html.jinja2:5
 msgid ""
@@ -317,24 +319,24 @@ msgstr ""
 
 #: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:63
 msgid "Please review the indicated issues"
-msgstr ""
+msgstr "कृपया चिन्हांकित किये गए गलतियों का आलोच करें"
 
 #: baseframe/templates/baseframe/bootstrap3/redirect.html.jinja2:1
 #: baseframe/templates/baseframe/mui/redirect.html.jinja2:1
-msgid "Loading..."
-msgstr ""
+msgid "Loading…"
+msgstr "लोडिंग…"
 
 #: baseframe/templates/baseframe/mui/imgeefield.html.jinja2:5
 msgid "Select or upload image"
-msgstr ""
+msgstr "इमेज को चुने या फिर अपलोड करें"
 
 #: baseframe/templates/baseframe/mui/imgeefield.html.jinja2:8
 msgid "Close"
-msgstr ""
+msgstr "बंद करें"
 
 #: tests/fixtures.py:54
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: tests/fixtures.py:65
 msgid "Emoji"
@@ -379,3 +381,6 @@ msgstr ""
 #: tests/test_sqlalchemy.py:26
 msgid "Title"
 msgstr ""
+
+#~ msgid "Loading..."
+#~ msgstr ""
