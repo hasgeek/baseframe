@@ -186,6 +186,86 @@ class TestDatetimeFilters(TestCaseBaseframe):
         with self.app.test_request_context('/'):
             assert filters.timestamp_filter(self.datetime) == 1580428800.0
 
+    def test_timestamp_filter(self):
+        with self.app.test_request_context('/'):
+            assert filters.timedelta_filter(self.now) == "1 second ago"
+            assert filters.timedelta_filter(1) == "1 second"
+            assert filters.timedelta_filter(1, format='short') == "1 sec"
+            assert filters.timedelta_filter(timedelta(seconds=1)) == "1 second"
+            assert filters.timedelta_filter(timedelta(days=1, hours=2)) == "1 day"
+            assert filters.timedelta_filter(timedelta(days=1), format='narrow') == "1d"
+            assert (
+                filters.timedelta_filter(timedelta(seconds=1), add_direction=True)
+                == "in 1 second"
+            )
+            assert (
+                filters.timedelta_filter(timedelta(days=1), add_direction=True)
+                == "in 1 day"
+            )
+            # Narrow format doesn't work for add_direction
+            assert (
+                filters.timedelta_filter(
+                    timedelta(days=1), format='narrow', add_direction=True
+                )
+                == "in 1 day"
+            )
+            assert (
+                filters.timedelta_filter(-timedelta(seconds=1), add_direction=True)
+                == "1 second ago"
+            )
+            assert (
+                filters.timedelta_filter(-timedelta(days=1), add_direction=True)
+                == "1 day ago"
+            )
+            # Narrow format doesn't work for add_direction
+            assert (
+                filters.timedelta_filter(
+                    -timedelta(days=1), format='narrow', add_direction=True
+                )
+                == "1 day ago"
+            )
+
+    def test_timestamp_filter_hi(self):
+        with self.app.test_request_context('/', headers={'Accept-Language': 'hi'}):
+            assert filters.timedelta_filter(self.now) == "1 सेकंड पहले"
+            assert filters.timedelta_filter(1) == "1 सेकंड"
+            assert filters.timedelta_filter(1, format='short') == "1 से॰"
+            assert filters.timedelta_filter(timedelta(seconds=1)) == "1 सेकंड"
+            assert filters.timedelta_filter(timedelta(days=1, hours=2)) == "1 दिन"
+            assert (
+                filters.timedelta_filter(timedelta(days=1), format='narrow') == "1दिन"
+            )
+            assert (
+                filters.timedelta_filter(timedelta(seconds=1), add_direction=True)
+                == "1 सेकंड में"
+            )
+            assert (
+                filters.timedelta_filter(timedelta(days=1), add_direction=True)
+                == "1 दिन में"
+            )
+            # Narrow format doesn't work for add_direction
+            assert (
+                filters.timedelta_filter(
+                    timedelta(days=1), format='narrow', add_direction=True
+                )
+                == "1 दिन में"
+            )
+            assert (
+                filters.timedelta_filter(-timedelta(seconds=1), add_direction=True)
+                == "1 सेकंड पहले"
+            )
+            assert (
+                filters.timedelta_filter(-timedelta(days=1), add_direction=True)
+                == "1 दिन पहले"
+            )
+            # Narrow format doesn't work for add_direction
+            assert (
+                filters.timedelta_filter(
+                    -timedelta(days=1), format='narrow', add_direction=True
+                )
+                == "1 दिन पहले"
+            )
+
 
 class TestNaiveDatetimeFilters(TestDatetimeFilters):
     def setUp(self):

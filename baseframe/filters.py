@@ -4,10 +4,9 @@ from urllib.parse import urlsplit, urlunsplit
 import os.path
 
 from flask import Markup, current_app, request
-from flask_babelhg import get_locale
+from flask_babelhg import Locale, get_locale
 
-from babel import Locale
-from babel.dates import format_date, format_datetime, format_time
+from babel.dates import format_date, format_datetime, format_time, format_timedelta
 from furl import furl
 from pytz import utc
 
@@ -15,7 +14,7 @@ from coaster.gfm import markdown
 from coaster.utils import md5sum, text_blocks
 
 from .blueprint import baseframe
-from .extensions import _, cache
+from .extensions import DEFAULT_LOCALE, _, cache
 from .utils import get_timezone, request_timestamp
 from .views import ext_assets
 
@@ -231,7 +230,7 @@ def longdate(value: Union[datetime, date]) -> str:
 def date_filter(
     value: Union[datetime, date],
     format: str = 'medium',  # NOQA: A002  # skipcq: PYL-W0622
-    locale: Locale = None,
+    locale: Union[Locale, str] = None,
     usertz: bool = True,
 ) -> str:
     """Render a localized date."""
@@ -243,14 +242,16 @@ def date_filter(
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    return format_date(dt, format=format, locale=locale if locale else get_locale())
+    return format_date(
+        dt, format=format, locale=locale if locale else get_locale() or DEFAULT_LOCALE
+    )
 
 
 @baseframe.app_template_filter('time')
 def time_filter(
     value: Union[datetime, time],
     format: str = 'short',  # NOQA: A002  # skipcq: PYL-W0622
-    locale: Locale = None,
+    locale: Union[Locale, str] = None,
     usertz: bool = True,
 ) -> str:
     """Render a localized time."""
@@ -263,14 +264,16 @@ def time_filter(
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    return format_time(dt, format=format, locale=locale if locale else get_locale())
+    return format_time(
+        dt, format=format, locale=locale if locale else get_locale() or DEFAULT_LOCALE
+    )
 
 
 @baseframe.app_template_filter('datetime')
 def datetime_filter(
     value: Union[datetime, date, time],
     format: str = 'medium',  # NOQA: A002  # skipcq: PYL-W0622
-    locale: Locale = None,
+    locale: Union[Locale, str] = None,
     usertz: bool = True,
 ) -> str:
     """Render a localized date and time."""
@@ -282,7 +285,9 @@ def datetime_filter(
             dt = value.astimezone(get_timezone())
     else:
         dt = value
-    return format_datetime(dt, format=format, locale=locale if locale else get_locale())
+    return format_datetime(
+        dt, format=format, locale=locale if locale else get_locale() or DEFAULT_LOCALE
+    )
 
 
 @baseframe.app_template_filter('timestamp')
@@ -291,6 +296,48 @@ def timestamp_filter(value: datetime) -> float:
     if not value.tzinfo:
         return utc.localize(value).timestamp()
     return value.timestamp()
+
+
+@baseframe.app_template_filter('timedelta')
+def timedelta_filter(
+    delta: Union[int, timedelta, datetime],
+    granularity: str = 'second',
+    threshold: float = 0.85,
+    add_direction: bool = False,
+    format: str = 'long',  # NOQA: A002  # skipcq: PYL-W0622
+    locale: Union[Locale, str] = None,
+) -> str:
+    """
+    Render a timedelta or int (representing seconds) as a duration.
+
+    :param delta: A timedelta object representing the time difference to format, or the
+        delta in seconds as an int value
+    :param granularity: Determines the smallest unit that should be displayed, the value
+        can be one of “year”, “month”, “week”, “day”, “hour”, “minute” or “second”
+    :param threshold: Factor that determines at which point the presentation switches to
+        the next higher unit
+    :param add_direction: If this flag is set to True the return value will include
+        directional information. For instance a positive timedelta will include the
+        information about it being in the future, a negative will be information about
+        the value being in the past. If a datetime is provided for delta, add_direction
+        will be forced to True
+    :param format: The format, can be “narrow”, “short” or “long”
+    :param locale: A Locale object or a locale identifier (defaults to current locale)
+    """
+    if isinstance(delta, datetime):
+        # Convert datetimes into a timedelta from present and turn on add_direction
+        if not delta.tzinfo:
+            delta = utc.localize(delta)
+        delta = delta - request_timestamp()
+        add_direction = True
+    return format_timedelta(
+        delta,
+        granularity=granularity,
+        threshold=threshold,
+        add_direction=add_direction,
+        format=format,
+        locale=locale if locale else get_locale() or DEFAULT_LOCALE,
+    )
 
 
 @baseframe.app_template_filter('cleanurl')
