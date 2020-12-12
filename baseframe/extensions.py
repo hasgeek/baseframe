@@ -22,6 +22,9 @@ except ImportError:
 
 __all__ = ['networkbar_cache', 'asset_cache', 'cache', 'babel', 'statsd']
 
+
+DEFAULT_LOCALE = 'en'
+
 networkbar_cache = Cache(with_jinja2_ext=False)
 asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
@@ -54,7 +57,7 @@ def get_user_locale() -> str:
     # need to be explicitly added in the future.
     return (
         request.accept_languages.best_match(['hi', 'en']) if request else None
-    ) or 'en'
+    ) or DEFAULT_LOCALE
 
 
 @babel.timezoneselector
