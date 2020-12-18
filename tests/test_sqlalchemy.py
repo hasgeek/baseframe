@@ -2,7 +2,7 @@ import unittest
 
 from sqlalchemy import Column, Unicode
 
-from baseframe import __, baseframe
+from baseframe import baseframe
 from coaster.db import SQLAlchemy
 from coaster.sqlalchemy import BaseMixin
 import baseframe.forms as forms
@@ -21,11 +21,11 @@ class Container(BaseMixin, db.Model):  # type: ignore[name-defined]
 
 
 class ContainerForm(forms.Form):
-    name = forms.StringField(__("Name"), validators=[forms_sqlachemy.AvailableName()])
+    name = forms.StringField("Name", validators=[forms_sqlachemy.AvailableName()])
     title = forms.StringField(
-        __("Title"), validators=[forms_sqlachemy.AvailableAttr('title')]
+        "Title", validators=[forms_sqlachemy.AvailableAttr('title')]
     )
-    content = forms.TextAreaField(__("Content"))
+    content = forms.TextAreaField("Content")
 
 
 class TestFormSQLAlchemy(unittest.TestCase):

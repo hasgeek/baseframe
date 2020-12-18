@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-12-17 17:58+0530\n"
+"POT-Creation-Date: 2020-12-18 12:31+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -329,52 +329,4 @@ msgstr ""
 
 #: baseframe/templates/baseframe/mui/imgeefield.html.jinja2:8
 msgid "Close"
-msgstr ""
-
-#: tests/fixtures.py:54
-msgid "URL"
-msgstr ""
-
-#: tests/fixtures.py:65
-msgid "Emoji"
-msgstr ""
-
-#: tests/fixtures.py:70 tests/test_sqlalchemy.py:28
-msgid "Content"
-msgstr ""
-
-#: tests/fixtures.py:77
-msgid "Webmail Domain"
-msgstr ""
-
-#: tests/fixtures.py:80
-msgid "Not Webmail Domain"
-msgstr ""
-
-#: tests/test_fields.py:15
-msgid "First"
-msgstr ""
-
-#: tests/test_fields.py:16
-msgid "Second"
-msgstr ""
-
-#: tests/test_fields.py:17
-msgid "Third"
-msgstr ""
-
-#: tests/test_fields.py:27
-msgid "Position"
-msgstr ""
-
-#: tests/test_fields.py:30
-msgid "Position Without Default"
-msgstr ""
-
-#: tests/test_sqlalchemy.py:24
-msgid "Name"
-msgstr ""
-
-#: tests/test_sqlalchemy.py:26
-msgid "Title"
 msgstr ""

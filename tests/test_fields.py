@@ -4,7 +4,6 @@ import unittest
 
 from werkzeug.datastructures import MultiDict
 
-from baseframe import __
 from coaster.utils import LabeledEnum
 import baseframe.forms as forms
 
@@ -12,9 +11,9 @@ from .fixtures import app1 as app
 
 
 class MY_ENUM(LabeledEnum):  # NOQA: N801
-    FIRST = (1, 'first', __("First"))
-    SECOND = (2, 'second', __("Second"))
-    THIRD = (3, 'third', __("Third"))
+    FIRST = (1, 'first', "First")
+    SECOND = (2, 'second', "Second")
+    THIRD = (3, 'third', "Third")
 
     __order__ = (FIRST, SECOND, THIRD)
 
@@ -23,11 +22,9 @@ DEFAULT_JSONDATA = {'key': "val"}
 
 
 class EnumForm(forms.Form):
-    position = forms.EnumSelectField(
-        __("Position"), lenum=MY_ENUM, default=MY_ENUM.THIRD
-    )
+    position = forms.EnumSelectField("Position", lenum=MY_ENUM, default=MY_ENUM.THIRD)
     position_no_default = forms.EnumSelectField(
-        __("Position Without Default"), lenum=MY_ENUM
+        "Position Without Default", lenum=MY_ENUM
     )
 
 
