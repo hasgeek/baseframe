@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-12-18 12:31+0530\n"
-"PO-Revision-Date: 2020-12-18 12:22+0530\n"
+"POT-Creation-Date: 2020-12-18 17:52+0530\n"
+"PO-Revision-Date: 2020-12-18 17:52+0530\n"
 "Last-Translator: \n"
 "Language: hi_IN\n"
 "Language-Team: hi_IN <LL@li.org>\n"
@@ -102,7 +102,7 @@ msgstr "यह मान्य विकल्प नहीं हैं!"
 
 #: baseframe/forms/fields.py:936
 msgid "Value not in LabeledEnum"
-msgstr "वैल्यू LabeledEnum में नहीं"
+msgstr ""
 
 #: baseframe/forms/fields.py:946
 msgid "Invalid Choice: could not coerce"
@@ -270,23 +270,23 @@ msgstr "इमेज URL"
 
 #: baseframe/templates/400.html.jinja2:2
 msgid "Bad Request"
-msgstr ""
+msgstr "अमान्य रिक्वेस्ट"
 
 #: baseframe/templates/400.html.jinja2:5 baseframe/templates/422.html.jinja2:5
 msgid "This request was malformed and could not be processed."
-msgstr ""
+msgstr "यह रिक्वेस्ट विकृत होने के कारण प्रोसेस नहीं हो पायी"
 
 #: baseframe/templates/403.html.jinja2:2
 msgid "Access denied"
-msgstr ""
+msgstr "पहुँच निषेध"
 
 #: baseframe/templates/403.html.jinja2:5
 msgid "You do not have access to that page."
-msgstr ""
+msgstr "आपके पास उस पेज को खोलने की पहुंच नहीं है."
 
 #: baseframe/templates/404.html.jinja2:2
 msgid "Not Found"
-msgstr ""
+msgstr "नहीं मिला"
 
 #: baseframe/templates/404.html.jinja2:5
 msgid "The page you were looking for does not exist."
@@ -298,11 +298,11 @@ msgstr ""
 
 #: baseframe/templates/429.html.jinja2:2
 msgid "Too Many Requests"
-msgstr ""
+msgstr "बहुत अधिक अनुरोध"
 
 #: baseframe/templates/429.html.jinja2:5
 msgid "You have exceeded the rate limit and must try after some time."
-msgstr ""
+msgstr "आपने दर सीमा पार कर दी है और आपको थोड़ी देर बाद कोशिश करनी होगी."
 
 #: baseframe/templates/500.html.jinja2:2
 msgid "Internal Server Error"
