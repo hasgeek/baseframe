@@ -3,7 +3,7 @@ import unittest
 
 from flask import Flask
 
-from baseframe import __, baseframe, forms
+from baseframe import baseframe, forms
 
 app1 = Flask(__name__)
 app1.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
@@ -51,7 +51,7 @@ reject_list = [(['example.com', re.compile(r'example.in')], 'This URL is not all
 
 class UrlFormTest(forms.Form):
     url = forms.URLField(
-        __("URL"),
+        "URL",
         validators=[
             forms.validators.DataRequired(),
             forms.validators.Length(max=255),
@@ -62,20 +62,20 @@ class UrlFormTest(forms.Form):
 
 
 class EmojiFormTest(forms.Form):
-    emoji = forms.StringField(__("Emoji"), validators=[forms.validators.IsEmoji()])
+    emoji = forms.StringField("Emoji", validators=[forms.validators.IsEmoji()])
 
 
 class AllUrlsFormTest(forms.Form):
     content_with_urls = forms.TextAreaField(
-        __("Content"),
+        "Content",
         validators=[forms.validators.DataRequired(), forms.validators.AllUrlsValid()],
     )
 
 
 class PublicEmailDomainFormTest(forms.Form):
     webmail_domain = forms.StringField(
-        __("Webmail Domain"), validators=[forms.validators.IsPublicEmailDomain()]
+        "Webmail Domain", validators=[forms.validators.IsPublicEmailDomain()]
     )
     not_webmail_domain = forms.StringField(
-        __("Not Webmail Domain"), validators=[forms.validators.IsNotPublicEmailDomain()]
+        "Not Webmail Domain", validators=[forms.validators.IsNotPublicEmailDomain()]
     )

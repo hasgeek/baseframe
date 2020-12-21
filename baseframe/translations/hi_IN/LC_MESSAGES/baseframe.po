@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-12-08 04:58+0530\n"
-"PO-Revision-Date: 2020-12-08 04:56+0530\n"
+"POT-Creation-Date: 2020-12-18 17:52+0530\n"
+"PO-Revision-Date: 2020-12-18 17:52+0530\n"
 "Last-Translator: \n"
 "Language: hi_IN\n"
 "Language-Team: hi_IN <LL@li.org>\n"
@@ -18,60 +18,60 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: baseframe/filters.py:32
+#: baseframe/filters.py:31
 msgid "now"
 msgstr "अभी"
 
-#: baseframe/filters.py:34
+#: baseframe/filters.py:33
 msgid "seconds ago"
 msgstr "कुछ सेकंड पहले"
 
-#: baseframe/filters.py:36
+#: baseframe/filters.py:35
 #, python-format
 msgid "%(num)s seconds ago"
 msgstr "%(num)s सेकंड पहले"
 
-#: baseframe/filters.py:38
+#: baseframe/filters.py:37
 msgid "a minute ago"
 msgstr "एक मिनट पहले"
 
-#: baseframe/filters.py:40
+#: baseframe/filters.py:39
 #, python-format
 msgid "%(num)s minutes ago"
 msgstr "%(num)s मिनटों पहले"
 
-#: baseframe/filters.py:42
+#: baseframe/filters.py:41
 msgid "an hour ago"
 msgstr "एक घंटा पहले"
 
-#: baseframe/filters.py:43
+#: baseframe/filters.py:42
 #, python-format
 msgid "%(num)s hours ago"
 msgstr "%(num)s घंटो पहले"
 
-#: baseframe/filters.py:45
+#: baseframe/filters.py:44
 msgid "a day ago"
 msgstr "एक दिन पहले"
 
-#: baseframe/filters.py:47
+#: baseframe/filters.py:46
 #, python-format
 msgid "%(num)s days ago"
 msgstr "%(num)s दिनों पहले"
 
-#: baseframe/filters.py:49
+#: baseframe/filters.py:48
 msgid "a month ago"
 msgstr "एक महीने पहले"
 
-#: baseframe/filters.py:51
+#: baseframe/filters.py:50
 #, python-format
 msgid "%(num)s months ago"
 msgstr "%(num)s महीनों पहले"
 
-#: baseframe/filters.py:53
+#: baseframe/filters.py:52
 msgid "a year ago"
 msgstr "एक साल पहले"
 
-#: baseframe/filters.py:54
+#: baseframe/filters.py:53
 #, python-format
 msgid "%(num)s years ago"
 msgstr "%(num)s सालों पहले"
@@ -86,13 +86,13 @@ msgstr "मिटाएं"
 #: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:12
 #: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:53
 #: baseframe/templates/baseframe/mui/delete.html.jinja2:14
-#: baseframe/templates/baseframe/mui/forms.html.jinja2:95
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:96
 msgid "Cancel"
 msgstr "रद्द करें"
 
 #: baseframe/forms/auto.py:40
 #: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:76
-#: baseframe/templates/baseframe/mui/forms.html.jinja2:118
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:119
 msgid "Submit"
 msgstr "जमा करें"
 
@@ -114,7 +114,7 @@ msgstr "यह मान्य विकल्प नहीं हैं"
 
 #: baseframe/forms/fields.py:1006
 msgid "Field value must be a dictionary"
-msgstr ""
+msgstr "फील्ड वैल्यू एक डिक्शनरी होनी चाहिए"
 
 #: baseframe/forms/fields.py:1024
 msgid "Invalid JSON: {0!r}"
@@ -122,11 +122,11 @@ msgstr "अमान्य JSON: {0!r}"
 
 #: baseframe/forms/fields.py:1027
 msgid "The JSON root must be a hash object"
-msgstr ""
+msgstr "JSON का रूट हैश ऑब्जेक्ट होना चाहिए"
 
 #: baseframe/forms/form.py:124
 msgid "This form has already been submitted"
-msgstr ""
+msgstr "ये फॉर्म पहले ही जमा किया जा चुका है"
 
 #: baseframe/forms/sqlalchemy.py:20
 msgid "This {attr} is already in use"
@@ -190,7 +190,7 @@ msgstr ""
 
 #: baseframe/forms/validators.py:323
 msgid "This is not a valid emoji"
-msgstr ""
+msgstr "यह मान्य इमोजी नहीं है"
 
 #: baseframe/forms/validators.py:344
 msgid "This domain is not a public email domain"
@@ -218,11 +218,11 @@ msgstr ""
 
 #: baseframe/forms/validators.py:440
 msgid "This URL’s protocol is not allowed"
-msgstr ""
+msgstr "इस URL के प्रोटोकॉल अस्वीकृत है"
 
 #: baseframe/forms/validators.py:442
 msgid "This URL’s domain is not allowed"
-msgstr ""
+msgstr "इस URL के डोमेन अस्वीकृत है"
 
 #: baseframe/forms/validators.py:489 baseframe/forms/validators.py:494
 msgid ", "
@@ -230,17 +230,19 @@ msgstr ""
 
 #: baseframe/forms/validators.py:655
 msgid "Email address identified"
-msgstr ""
+msgstr "ईमेल पता पहचाना गया"
 
 #: baseframe/forms/validators.py:673
 msgid ""
 "This name contains unsupported characters. It should have letters, "
 "numbers and non-terminal hyphens only"
 msgstr ""
+"इस नाम में असमर्थित पात्र हैं। इसमें केवल पत्र, संख्या और हाइफेन होने "
+"चाहिए"
 
 #: baseframe/forms/validators.py:688
 msgid "Valid latitude and longitude expected"
-msgstr ""
+msgstr "मान्य अक्षांश और देशांतर की जरूरत है"
 
 #: baseframe/forms/validators.py:689
 msgid "Latitude must be within ± 90 degrees"
@@ -252,7 +254,7 @@ msgstr "देशांतर ± 180 डिग्री के अंदर ह�
 
 #: baseframe/forms/validators.py:714
 msgid "The server was temporarily unreachable. Try again"
-msgstr ""
+msgstr "सर्वर थोड़ी देर के लिए पहुँच से बाहर था. फिर से कोशिश करें"
 
 #: baseframe/forms/widgets.py:185
 msgid "Latitude"
@@ -268,23 +270,23 @@ msgstr "इमेज URL"
 
 #: baseframe/templates/400.html.jinja2:2
 msgid "Bad Request"
-msgstr ""
+msgstr "अमान्य रिक्वेस्ट"
 
 #: baseframe/templates/400.html.jinja2:5 baseframe/templates/422.html.jinja2:5
 msgid "This request was malformed and could not be processed."
-msgstr ""
+msgstr "यह रिक्वेस्ट विकृत होने के कारण प्रोसेस नहीं हो पायी"
 
 #: baseframe/templates/403.html.jinja2:2
 msgid "Access denied"
-msgstr ""
+msgstr "पहुँच निषेध"
 
 #: baseframe/templates/403.html.jinja2:5
 msgid "You do not have access to that page."
-msgstr ""
+msgstr "आपके पास उस पेज को खोलने की पहुंच नहीं है."
 
 #: baseframe/templates/404.html.jinja2:2
 msgid "Not Found"
-msgstr "नहीं मिल पाया"
+msgstr "नहीं मिला"
 
 #: baseframe/templates/404.html.jinja2:5
 msgid "The page you were looking for does not exist."
@@ -296,11 +298,11 @@ msgstr ""
 
 #: baseframe/templates/429.html.jinja2:2
 msgid "Too Many Requests"
-msgstr ""
+msgstr "बहुत अधिक अनुरोध"
 
 #: baseframe/templates/429.html.jinja2:5
 msgid "You have exceeded the rate limit and must try after some time."
-msgstr ""
+msgstr "आपने दर सीमा पार कर दी है और आपको थोड़ी देर बाद कोशिश करनी होगी."
 
 #: baseframe/templates/500.html.jinja2:2
 msgid "Internal Server Error"
@@ -313,9 +315,11 @@ msgid ""
 msgstr ""
 
 #: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:56
-#: baseframe/templates/baseframe/mui/forms.html.jinja2:98
+#: baseframe/templates/baseframe/mui/forms.html.jinja2:99
 msgid "This form has timed out. Please submit again to confirm"
 msgstr ""
+"इस फॉर्म को जमा करने का समय खत्म हो चुका है. पुष्टि के लिए कृपयाफिर से "
+"जमा करें"
 
 #: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:63
 msgid "Please review the indicated issues"
@@ -333,54 +337,3 @@ msgstr "इमेज को चुने या फिर अपलोड कर
 #: baseframe/templates/baseframe/mui/imgeefield.html.jinja2:8
 msgid "Close"
 msgstr "बंद करें"
-
-#: tests/fixtures.py:54
-msgid "URL"
-msgstr "URL"
-
-#: tests/fixtures.py:65
-msgid "Emoji"
-msgstr ""
-
-#: tests/fixtures.py:70 tests/test_sqlalchemy.py:28
-msgid "Content"
-msgstr ""
-
-#: tests/fixtures.py:77
-msgid "Webmail Domain"
-msgstr ""
-
-#: tests/fixtures.py:80
-msgid "Not Webmail Domain"
-msgstr ""
-
-#: tests/test_fields.py:15
-msgid "First"
-msgstr ""
-
-#: tests/test_fields.py:16
-msgid "Second"
-msgstr ""
-
-#: tests/test_fields.py:17
-msgid "Third"
-msgstr ""
-
-#: tests/test_fields.py:27
-msgid "Position"
-msgstr ""
-
-#: tests/test_fields.py:30
-msgid "Position Without Default"
-msgstr ""
-
-#: tests/test_sqlalchemy.py:24
-msgid "Name"
-msgstr ""
-
-#: tests/test_sqlalchemy.py:26
-msgid "Title"
-msgstr ""
-
-#~ msgid "Loading..."
-#~ msgstr ""
