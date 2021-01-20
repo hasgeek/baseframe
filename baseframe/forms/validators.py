@@ -547,6 +547,7 @@ class ValidUrl:
             207,
             208,
             226,
+            403,
             999,
         ):
             # 999 is a non-standard too-many-requests error. We can't look past it to
