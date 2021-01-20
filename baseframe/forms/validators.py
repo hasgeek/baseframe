@@ -550,6 +550,10 @@ class ValidUrl:
             403,
             999,
         ):
+            # Cloudflare now return HTTP 403 for urls behind it's bot protection.
+            # We have to accept 403 as an acceptable code now.
+            # As long as it's not 404 or 410, it should be fine.
+            #
             # 999 is a non-standard too-many-requests error. We can't look past it to
             # check a URL, so we let it pass
 
