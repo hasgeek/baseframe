@@ -112,11 +112,11 @@ class BaseframeBlueprint(Blueprint):
             # With `traces_sample_rate` option set, every transaction created will
             # have that percentage chance of being sent to Sentry. (So, for example,
             # if you set traces_sample_rate to 0.2, approximately 20% of your
-            # transactions will get recorded and sent.) We're keeping it 100% by
-            # default, but we can reduce it from app.config if needed.
+            # transactions will get recorded and sent.) We're keeping it 50% by
+            # default, but we can change it from app.config if needed.
             sentry_sdk.init(
                 dsn=app.config['SENTRY_URL'],
-                traces_sample_rate=app.config.get('SENTRY_SAMPLE_RATE', 1),
+                traces_sample_rate=app.config.get('SENTRY_SAMPLE_RATE', 0.5),
                 integrations=[
                     FlaskIntegration(),
                     RqIntegration(),
