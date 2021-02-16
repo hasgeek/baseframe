@@ -8,8 +8,7 @@
   border-bottom: 1px solid #c0ccda;
   box-shadow: none;
   border-radius: 0;
-  height: auto;
-  min-height: 6em;
+  height: 12em;
 }
 
 .CodeMirror-focused {
