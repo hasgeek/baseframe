@@ -326,7 +326,7 @@ class IsEmoji:
         self.message = message or self.default_message
 
     def __call__(self, form, field) -> None:
-        if field.data not in emoji.UNICODE_EMOJI:  # type: ignore[attr-defined]
+        if field.data not in emoji.UNICODE_EMOJI_ENGLISH:  # type: ignore[attr-defined]
             raise ValidationError(self.message)
 
 
