@@ -4615,9 +4615,13 @@ li p + ol {
 }
 .jquery-modal.blocker.current .modal .modal__close {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 16px;
+  right: 16px;
   display: block;
+  line-height: 1;
+}
+.jquery-modal.blocker.current .modal .modal__header {
+  line-height: 1;
 }
 .jquery-modal.blocker.current .modal .modal__body__btn {
   margin-top: 16px;

@@ -19,12 +19,14 @@
 
     .modal__close {
       position: absolute;
-      top: $mui-grid-padding/2;
-      right: $mui-grid-padding/2;
+      top: $mui-grid-padding;
+      right: $mui-grid-padding;
       display: block;
+      line-height: 1;
     }
     .modal__header {
       @extend .mui--text-title;
+      line-height: 1;
     }
     .modal__body__btn {
       margin-top: $mui-grid-padding;
