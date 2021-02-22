@@ -3616,6 +3616,7 @@ h6 {
   box-shadow: none;
   height: auto;
   border: none;
+  line-height: 1;
 }
 
 .mui-btn.mui-btn--nostyle:hover,
