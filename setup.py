@@ -20,7 +20,7 @@ requires = [
     'coaster',
     'cssmin',
     'dnspython',
-    'emoji',
+    'emoji>=1.0.0',
     'Flask-Assets',
     'Flask-Babelhg',
     'Flask-Caching',
