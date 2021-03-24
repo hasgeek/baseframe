@@ -178,6 +178,31 @@ def firstline(html: str) -> str:
     return ''
 
 
+@baseframe.app_template_filter('preview')
+@cache.memoize(timeout=600)
+def preview(html: str, min: int = 50, max: int = 158) -> str:  # NOQA: A002
+    """
+    Return a preview of a HTML blob as plain text, for use as a description tag.
+
+    This function will attempt to return a HTML paragraph at a time, to avoid truncating
+    sentences. Multiple paragraphs will be used if they are under min characters.
+
+    :param str html: HTML text to generate a preview from
+    :param int min: Minimum number of characters in the preview (default 50)
+    :param int max: Maximum number of characters in the preview (default 158,
+        recommended for Google)
+    """
+    blocks = text_blocks(html)
+    if blocks:
+        text = blocks.pop(0).strip()
+        while blocks and len(text) < min:
+            text += ' ' + blocks.pop(0).strip()
+        if len(text) > max:
+            text = text[: max - 1] + '…'
+        return text
+    return ''
+
+
 @baseframe.app_template_filter('cdata')
 def cdata(text: str) -> str:
     """Convert text to a CDATA sequence."""
