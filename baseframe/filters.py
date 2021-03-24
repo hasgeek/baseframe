@@ -171,7 +171,12 @@ def ext_asset_url(asset: Union[str, List[str]]) -> str:
 @baseframe.app_template_filter('firstline')
 @cache.memoize(timeout=600)
 def firstline(html: str) -> str:
-    """Return the first line from a HTML blob as plain text."""
+    """
+    Return the first line from a HTML blob as plain text.
+
+    .. deprecated: 2021-03-25
+        Use :func:`preview` instead.
+    """
     result = text_blocks(html)
     if result:
         return compress_whitespace(result[0])
