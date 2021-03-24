@@ -11,7 +11,7 @@ from furl import furl
 from pytz import utc
 
 from coaster.gfm import markdown
-from coaster.utils import md5sum, text_blocks
+from coaster.utils import compress_whitespace, md5sum, text_blocks
 
 from .blueprint import baseframe
 from .extensions import DEFAULT_LOCALE, _, cache
@@ -174,7 +174,7 @@ def firstline(html: str) -> str:
     """Return the first line from a HTML blob as plain text."""
     result = text_blocks(html)
     if result:
-        return result[0]
+        return compress_whitespace(result[0])
     return ''
 
 
@@ -194,9 +194,9 @@ def preview(html: str, min: int = 50, max: int = 158) -> str:  # NOQA: A002
     """
     blocks = text_blocks(html)
     if blocks:
-        text = blocks.pop(0).strip()
+        text = compress_whitespace(blocks.pop(0))
         while blocks and len(text) < min:
-            text += ' ' + blocks.pop(0).strip()
+            text += ' ' + compress_whitespace(blocks.pop(0))
         if len(text) > max:
             text = text[: max - 1] + '…'
         return text

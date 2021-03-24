@@ -408,6 +408,23 @@ class TestFilters(TestCaseBaseframe):
             )
             == "Hello all, Here is …"
         )
+        assert (
+            filters.preview(
+                """
+                <p>
+                  <a href="https://example.org">Example.org</a> is a reserved TLD
+                  for tests.
+                </p>
+                <p>
+                  Anyone may use it for any example use case.
+                </p>
+                """
+            )
+            == (
+                "Example.org is a reserved TLD for tests."
+                " Anyone may use it for any example use case."
+            )
+        )
 
     def test_cdata(self):
         text = "foo bar"
