@@ -568,7 +568,7 @@ class UserSelectFieldBase:
                             )
                         users.append(user)
             else:
-                users = self.usermodel.all(userids=userids)
+                users = self.usermodel.all(buids=userids)
         self.data = users
 
 
