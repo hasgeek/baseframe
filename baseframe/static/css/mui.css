@@ -3503,7 +3503,6 @@ h6 {
 }
 
 .mui--text-display1,
-h1,
 h1 {
   font-weight: 400;
   font-size: 32px;
@@ -3514,10 +3513,17 @@ h1 {
 h2,
 .header__site-title,
 .header__site-title__item,
-h2 {
+h1 {
   font-weight: 400;
   font-size: 24px;
-  line-height: 36px;
+  line-height: 31px;
+}
+
+.mui--text-heading,
+h2 {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 27px;
 }
 
 .mui--text-title,
