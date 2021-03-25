@@ -383,6 +383,49 @@ class TestFilters(TestCaseBaseframe):
         firstline = filters.firstline(html)
         self.assertEqual(firstline, "this is the first line")
 
+    def test_preview(self):
+        assert filters.preview("This is plain text") == "This is plain text"
+        assert (
+            filters.preview("<p>Hello all,</p><p>Here is the Zoom link.")
+            == "Hello all, Here is the Zoom link."
+        )
+        assert (
+            filters.preview(
+                """
+                <p>Hello all,</p>
+                <p>Here is the Zoom link.
+                """
+            )
+            == "Hello all, Here is the Zoom link."
+        )
+        assert (
+            filters.preview("<p>Hello all,</p><p>Here is the Zoom link.", min=5)
+            == "Hello all,"
+        )
+        assert (
+            filters.preview(
+                "<p>Hello all,</p><p>Here is the Zoom link.", min=15, max=20
+            )
+            == "Hello all, Here is …"
+        )
+        assert (
+            filters.preview(
+                """
+                <p>
+                  <a href="https://example.org">Example.org</a> is a reserved TLD
+                  for tests.
+                </p>
+                <p>
+                  Anyone may use it for any example use case.
+                </p>
+                """
+            )
+            == (
+                "Example.org is a reserved TLD for tests."
+                " Anyone may use it for any example use case."
+            )
+        )
+
     def test_cdata(self):
         text = "foo bar"
         result = filters.cdata(text)

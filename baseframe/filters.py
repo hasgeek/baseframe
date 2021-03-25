@@ -11,7 +11,7 @@ from furl import furl
 from pytz import utc
 
 from coaster.gfm import markdown
-from coaster.utils import md5sum, text_blocks
+from coaster.utils import compress_whitespace, md5sum, text_blocks
 
 from .blueprint import baseframe
 from .extensions import DEFAULT_LOCALE, _, cache
@@ -171,10 +171,40 @@ def ext_asset_url(asset: Union[str, List[str]]) -> str:
 @baseframe.app_template_filter('firstline')
 @cache.memoize(timeout=600)
 def firstline(html: str) -> str:
-    """Return the first line from a HTML blob as plain text."""
+    """
+    Return the first line from a HTML blob as plain text.
+
+    .. deprecated: 2021-03-25
+        Use :func:`preview` instead.
+    """
     result = text_blocks(html)
     if result:
-        return result[0]
+        return compress_whitespace(result[0])
+    return ''
+
+
+@baseframe.app_template_filter('preview')
+@cache.memoize(timeout=600)
+def preview(html: str, min: int = 50, max: int = 158) -> str:  # NOQA: A002
+    """
+    Return a preview of a HTML blob as plain text, for use as a description tag.
+
+    This function will attempt to return a HTML paragraph at a time, to avoid truncating
+    sentences. Multiple paragraphs will be used if they are under min characters.
+
+    :param str html: HTML text to generate a preview from
+    :param int min: Minimum number of characters in the preview (default 50)
+    :param int max: Maximum number of characters in the preview (default 158,
+        recommended for Google)
+    """
+    blocks = text_blocks(html)
+    if blocks:
+        text = compress_whitespace(blocks.pop(0))
+        while blocks and len(text) < min:
+            text += ' ' + compress_whitespace(blocks.pop(0))
+        if len(text) > max:
+            text = text[: max - 1] + '…'
+        return text
     return ''
 
 
