@@ -50,18 +50,24 @@
   line-height: 64px;
 }
 
-.mui--text-display1,
-h1 {
+.mui--text-display1 {
   font-weight: 400;
   font-size: 32px;
   line-height: 42px;
 }
 
 .mui--text-headline,
-h2 {
+h1 {
   font-weight: 400;
   font-size: 24px;
-  line-height: 36px;
+  line-height: 31px;
+}
+
+.mui--text-heading,
+h2 {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 27px;
 }
 
 .mui--text-title,
