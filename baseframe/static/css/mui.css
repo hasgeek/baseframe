@@ -4111,7 +4111,20 @@ li p + ol {
 .mui-form .mui-textfield,
 .mui-form .mui-radio,
 .mui-form .mui-checkbox {
-  margin-bottom: 5px;
+  margin-bottom: 4px;
+}
+.mui-form .mui-radio > label,
+.mui-form .mui-checkbox > label {
+  display: flex;
+  align-items: baseline;
+  padding: 0;
+}
+.mui-form .mui-radio > label > input[type='radio'],
+.mui-form .mui-radio > label > input[type='checkbox'],
+.mui-form .mui-checkbox > label > input[type='radio'],
+.mui-form .mui-checkbox > label > input[type='checkbox'] {
+  position: relative;
+  margin: 0 8px 0 0;
 }
 .mui-form .mui-textfield--float-label > label {
   position: absolute;
