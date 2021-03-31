@@ -4118,6 +4118,7 @@ li p + ol {
   display: flex;
   align-items: baseline;
   padding: 0;
+  cursor: default;
 }
 .mui-form .mui-radio > label > input[type='radio'],
 .mui-form .mui-radio > label > input[type='checkbox'],
