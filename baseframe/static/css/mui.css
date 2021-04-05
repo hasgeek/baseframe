@@ -4525,6 +4525,7 @@ li p + ol {
 }
 .alert .alert__text {
   margin-bottom: 0;
+  color: inherit;
 }
 .alert .alert__close {
   float: right;
