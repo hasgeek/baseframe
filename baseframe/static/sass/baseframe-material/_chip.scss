@@ -1,11 +1,13 @@
 .chip {
-  padding: 0 5px 5px;
+  padding: 4px 8px;
   border: 0;
-  border-radius: $mui-border-radius-default;
-  background-color: #f7e2c5;
+  border-radius: 16px;
   display: inline-block;
-  color: #906b37;
   white-space: nowrap;
+  background-color: $mui-info-color;
+  border-color: transparentize($mui-text-info, 0.8);
+  color: $mui-text-info;
+  line-height: 1;
 }
 
 .chip--bg-primary {

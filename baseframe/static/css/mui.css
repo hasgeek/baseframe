@@ -4411,13 +4411,15 @@ li p + ol {
 }
 
 .chip {
-  padding: 0 5px 5px;
+  padding: 4px 8px;
   border: 0;
-  border-radius: 2px;
-  background-color: #f7e2c5;
+  border-radius: 16px;
   display: inline-block;
-  color: #906b37;
   white-space: nowrap;
+  background-color: #cfefff;
+  border-color: rgba(93, 169, 232, 0.2);
+  color: #5da9e8;
+  line-height: 1;
 }
 
 .chip--bg-primary {
