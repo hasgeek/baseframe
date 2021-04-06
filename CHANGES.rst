@@ -2,6 +2,7 @@
 -----
 
 * Dropped Python 2.7 support
+* Added a paragraph and grapheme-aware text preview filter
 
 0.3.2
 -----

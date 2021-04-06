@@ -9,6 +9,7 @@ from flask_babelhg import Locale, get_locale
 from babel.dates import format_date, format_datetime, format_time, format_timedelta
 from furl import furl
 from pytz import utc
+import grapheme
 
 from coaster.gfm import markdown
 from coaster.utils import compress_whitespace, md5sum, text_blocks
@@ -200,10 +201,12 @@ def preview(html: str, min: int = 50, max: int = 158) -> str:  # NOQA: A002
     blocks = text_blocks(html)
     if blocks:
         text = compress_whitespace(blocks.pop(0))
-        while blocks and len(text) < min:
+        length = grapheme.length(text)
+        while blocks and length < min:
             text += ' ' + compress_whitespace(blocks.pop(0))
-        if len(text) > max:
-            text = text[: max - 1] + '…'
+            length = grapheme.length(text)
+        if length > max:
+            text = grapheme.slice(text, 0, max - 1) + '…'
         return text
     return ''
 

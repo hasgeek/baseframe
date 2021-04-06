@@ -425,6 +425,7 @@ class TestFilters(TestCaseBaseframe):
                 " Anyone may use it for any example use case."
             )
         )
+        assert filters.preview('हिंदी टायपिंग', min=1, max=3) == 'हिंदी…'
 
     def test_cdata(self):
         text = "foo bar"
