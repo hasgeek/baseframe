@@ -159,8 +159,15 @@ li p + ol {
 }
 
 .footnote {
+  @extend .mui--text-body2;
+  p,
+  span,
+  li {
+    @extend .mui--text-body2;
+  }
   hr {
     width: 25%;
+    margin-left: 0;
   }
   ul {
     padding-left: $mui-grid-padding;
@@ -176,7 +183,7 @@ li p + ol {
       content: counter(item);
       @extend .mui--text-caption;
       position: absolute;
-      margin-left: -16px;
+      margin-left: -12px;
       margin-top: -1px;
     }
   }

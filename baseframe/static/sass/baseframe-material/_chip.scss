@@ -4,9 +4,9 @@
   border-radius: 16px;
   display: inline-block;
   white-space: nowrap;
-  background-color: $mui-info-color;
-  border-color: transparentize($mui-text-info, 0.8);
-  color: $mui-text-info;
+  background: transparentize($mui-primary-color, 0.9);
+  border: 1px solid transparentize($mui-primary-color, 0.8);
+  color: $mui-primary-color;
 }
 
 .chip--bg-primary {

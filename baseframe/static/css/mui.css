@@ -3547,7 +3547,9 @@ h4 {
 
 p.mui--text-body2,
 p.header__dropdown-app-title,
-.header__side-nav-list p.header__side-nav-list__item {
+.header__side-nav-list p.header__side-nav-list__item,
+p.footnote,
+.footnote p {
   margin-bottom: 16px;
 }
 
@@ -3555,6 +3557,10 @@ p.header__dropdown-app-title,
 h5,
 .header__dropdown-app-title,
 .header__side-nav-list .header__side-nav-list__item,
+.footnote,
+.footnote p,
+.footnote span,
+.footnote li,
 h5 {
   font-weight: 400;
   font-size: 14px;
@@ -3563,7 +3569,9 @@ h5 {
 
 p.mui--text-body2,
 p.header__dropdown-app-title,
-.header__side-nav-list p.header__side-nav-list__item {
+.header__side-nav-list p.header__side-nav-list__item,
+p.footnote,
+.footnote p {
   margin-bottom: 14px;
 }
 
@@ -4087,6 +4095,7 @@ li p + ol {
 
 .footnote hr {
   width: 25%;
+  margin-left: 0;
 }
 .footnote ul {
   padding-left: 16px;
@@ -4102,7 +4111,7 @@ li p + ol {
 .footnote ol li:before {
   content: counter(item);
   position: absolute;
-  margin-left: -16px;
+  margin-left: -12px;
   margin-top: -1px;
 }
 
@@ -4446,9 +4455,9 @@ li p + ol {
   border-radius: 16px;
   display: inline-block;
   white-space: nowrap;
-  background-color: #cfefff;
-  border-color: rgba(93, 169, 232, 0.2);
-  color: #5da9e8;
+  background: rgba(15, 115, 237, 0.1);
+  border: 1px solid rgba(15, 115, 237, 0.2);
+  color: #0f73ed;
 }
 
 .chip--bg-primary {
