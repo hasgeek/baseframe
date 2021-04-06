@@ -148,3 +148,32 @@ li p + ol {
 .mui-btn--accent.mui-btn--flat {
   border: none !important;
 }
+
+.language-placeholder {
+  display: none;
+}
+
+.footnote-ref {
+  @extend .mui--text-caption;
+  color: $mui-text-light;
+}
+
+.footnote {
+  hr {
+    width: 25%;
+  }
+  ol {
+    list-style: none;
+    counter-reset: item;
+    li {
+      counter-increment: item;
+    }
+    li:before {
+      content: counter(item);
+      @extend .mui--text-caption;
+      position: absolute;
+      margin-left: -16px;
+      margin-top: -4px;
+    }
+  }
+}

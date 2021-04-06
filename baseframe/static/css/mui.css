@@ -1755,7 +1755,6 @@ strong {
 
 abbr[title] {
   cursor: help;
-  border-bottom: 1px dotted #0f73ed;
 }
 
 h1,
@@ -3575,6 +3574,8 @@ h6 {
 }
 
 .mui--text-caption,
+.footnote-ref,
+.footnote ol li:before,
 .footer .footer__container,
 .mui-form .mui-form__sidetext,
 .mui-form .mui-form__helptext,
@@ -4076,6 +4077,31 @@ li p + ol {
   border: none !important;
 }
 
+.language-placeholder {
+  display: none;
+}
+
+.footnote-ref {
+  color: #4d5763;
+}
+
+.footnote hr {
+  width: 25%;
+}
+.footnote ol {
+  list-style: none;
+  counter-reset: item;
+}
+.footnote ol li {
+  counter-increment: item;
+}
+.footnote ol li:before {
+  content: counter(item);
+  position: absolute;
+  margin-left: -16px;
+  margin-top: -4px;
+}
+
 #root {
   clear: both;
   min-height: 100%;
@@ -4419,7 +4445,6 @@ li p + ol {
   background-color: #cfefff;
   border-color: rgba(93, 169, 232, 0.2);
   color: #5da9e8;
-  line-height: 1;
 }
 
 .chip--bg-primary {
