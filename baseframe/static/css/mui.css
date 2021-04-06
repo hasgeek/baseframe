@@ -1755,7 +1755,6 @@ strong {
 
 abbr[title] {
   cursor: help;
-  border-bottom: 1px dotted #0f73ed;
 }
 
 h1,
@@ -3548,7 +3547,9 @@ h4 {
 
 p.mui--text-body2,
 p.header__dropdown-app-title,
-.header__side-nav-list p.header__side-nav-list__item {
+.header__side-nav-list p.header__side-nav-list__item,
+p.footnote,
+.footnote p {
   margin-bottom: 16px;
 }
 
@@ -3556,6 +3557,10 @@ p.header__dropdown-app-title,
 h5,
 .header__dropdown-app-title,
 .header__side-nav-list .header__side-nav-list__item,
+.footnote,
+.footnote p,
+.footnote span,
+.footnote li,
 h5 {
   font-weight: 400;
   font-size: 14px;
@@ -3564,7 +3569,9 @@ h5 {
 
 p.mui--text-body2,
 p.header__dropdown-app-title,
-.header__side-nav-list p.header__side-nav-list__item {
+.header__side-nav-list p.header__side-nav-list__item,
+p.footnote,
+.footnote p {
   margin-bottom: 14px;
 }
 
@@ -3575,6 +3582,8 @@ h6 {
 }
 
 .mui--text-caption,
+.footnote-ref,
+.footnote ol li:before,
 .footer .footer__container,
 .mui-form .mui-form__sidetext,
 .mui-form .mui-form__helptext,
@@ -3668,6 +3677,11 @@ h6 {
 .fa5-icon--title {
   width: 18px;
   height: 18px;
+}
+
+.fa5-icon--heading {
+  width: 20px;
+  height: 20px;
 }
 
 .fa5-icon--headline {
@@ -3865,7 +3879,7 @@ h6 {
 .content-wrapper {
   position: relative;
   z-index: 1;
-  padding-top: 50px;
+  padding-top: 52px;
 }
 
 .sidebar {
@@ -4071,6 +4085,36 @@ li p + ol {
   border: none !important;
 }
 
+.language-placeholder {
+  display: none;
+}
+
+.footnote-ref {
+  color: #4d5763;
+}
+
+.footnote hr {
+  width: 25%;
+  margin-left: 0;
+}
+.footnote ul {
+  padding-left: 16px;
+}
+.footnote ol {
+  list-style: none;
+  counter-reset: item;
+  padding-left: 16px;
+}
+.footnote ol li {
+  counter-increment: item;
+}
+.footnote ol li:before {
+  content: counter(item);
+  position: absolute;
+  margin-left: -12px;
+  margin-top: -1px;
+}
+
 #root {
   clear: both;
   min-height: 100%;
@@ -4111,7 +4155,21 @@ li p + ol {
 .mui-form .mui-textfield,
 .mui-form .mui-radio,
 .mui-form .mui-checkbox {
-  margin-bottom: 5px;
+  margin-bottom: 4px;
+}
+.mui-form .mui-radio > label,
+.mui-form .mui-checkbox > label {
+  display: flex;
+  align-items: baseline;
+  padding: 0;
+  cursor: default;
+}
+.mui-form .mui-radio > label > input[type='radio'],
+.mui-form .mui-radio > label > input[type='checkbox'],
+.mui-form .mui-checkbox > label > input[type='radio'],
+.mui-form .mui-checkbox > label > input[type='checkbox'] {
+  position: relative;
+  margin: 0 8px 0 0;
 }
 .mui-form .mui-textfield--float-label > label {
   position: absolute;
@@ -4392,13 +4450,14 @@ li p + ol {
 }
 
 .chip {
-  padding: 0 5px 5px;
-  border: 0;
-  border-radius: 2px;
-  background-color: #f7e2c5;
+  padding: 0 8px 2px;
+  border-radius: 16px;
   display: inline-block;
-  color: #906b37;
   white-space: nowrap;
+  background: rgba(15, 115, 237, 0.1);
+  border: 1px solid rgba(15, 115, 237, 0.2);
+  color: #0f73ed;
+  line-height: 1;
 }
 
 .chip--bg-primary {
@@ -4506,6 +4565,7 @@ li p + ol {
 }
 .alert .alert__text {
   margin-bottom: 0;
+  color: inherit;
 }
 .alert .alert__close {
   float: right;
@@ -4694,26 +4754,27 @@ li p + ol {
 }
 
 .mui-tabs__bar--pills li {
-  border: 1px solid rgba(132, 146, 166, 0.3);
-  border-radius: 30px;
+  border-radius: 16px;
   margin-right: 8px;
-  background: #f9f9f9;
+  color: #4d5763;
+  border: 1px solid #f1f1f1;
+  background: #ffffff;
 }
 .mui-tabs__bar--pills li a {
-  height: 30px;
-  line-height: 30px;
-  padding-left: 16px;
-  padding-right: 16px;
+  height: auto;
+  line-height: inherit;
+  padding: 4px 16px;
   cursor: pointer;
   color: #4d5763;
   text-decoration: none !important;
   text-transform: inherit;
 }
 .mui-tabs__bar--pills li.mui--is-active {
-  border: 1px solid rgba(93, 169, 232, 0.2);
-  background: #cfefff;
+  background: rgba(15, 115, 237, 0.1);
+  border: 1px solid rgba(15, 115, 237, 0.2);
 }
 .mui-tabs__bar--pills li.mui--is-active a {
+  color: #4d5763;
   text-decoration: none !important;
 }
 
@@ -4732,23 +4793,26 @@ li p + ol {
   margin: 8px 0;
 }
 .tabs .tabs__item {
-  padding: 8px 16px;
+  padding: 4px 16px;
   cursor: pointer;
   position: relative;
   min-width: 32px;
-  border: none;
   margin: 0 8px 0 0;
   text-align: center;
   cursor: pointer;
   flex: 0 0 auto;
   background: none;
-  border-radius: 24px;
+  border-radius: 16px;
   font-weight: 500;
-  color: #1f2d3d;
-  background: #f1f1f1;
+  color: #4d5763;
+  border: 1px solid #f1f1f1;
+  background: #ffffff;
 }
 .tabs .tabs__item--width {
   min-width: auto;
+}
+.tabs .tabs__item--badge {
+  padding: 4px 0 4px 16px;
 }
 .tabs .tabs__item:hover,
 .tabs .tabs__item:focus {
@@ -4756,8 +4820,8 @@ li p + ol {
   outline: none;
 }
 .tabs .tabs__item--active {
-  color: #0f73ed;
   background: rgba(15, 115, 237, 0.1);
+  border: 1px solid rgba(15, 115, 237, 0.2);
 }
 .tabs .tabs__item-control {
   position: fixed;
@@ -4777,6 +4841,49 @@ li p + ol {
 }
 .tabs .tabs__item-control--next {
   right: 0;
+}
+
+.badge {
+  position: relative;
+  color: #4d5763;
+  min-width: 16px;
+  line-height: 16px;
+  min-height: 16px;
+  text-align: center;
+  display: inline-block;
+  background-color: #f06a5e;
+  border-radius: 3px;
+  padding: 2px;
+  font-size: 12px;
+}
+
+.badge--round {
+  border-radius: 50%;
+  width: 25px;
+  line-height: 25px;
+  padding: 0;
+}
+
+.badge--round-smaller {
+  width: 16px;
+  line-height: 16px;
+}
+
+.badge--tab {
+  margin-right: 4px;
+  margin-left: 4px;
+  border-radius: 16px;
+  padding: 0 4px;
+  width: auto;
+  line-height: inherit;
+  background: #ffffff;
+  border: 1px solid #f1f1f1;
+  background: #ffffff;
+}
+
+.badge--primary {
+  border: 1px solid transparent;
+  background: rgba(15, 115, 237, 0.1);
 }
 
 .mui-table.mui-table--hover > tbody > tr > td:hover {

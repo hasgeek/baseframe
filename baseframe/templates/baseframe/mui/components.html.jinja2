@@ -2,11 +2,13 @@
   {% assets "fa5-sprite" %}<svg class="fa5-icon {%- if icon_size %} fa5-icon--{{icon_size}} {%- endif -%} {%- if baseline %} fa5--align-baseline {%- endif -%} {%- if css_class %} {{ css_class }} {%- endif -%}" aria-hidden="true" role="img"><use xlink:href="{{ ASSET_URL|make_relative_url }}#{{icon}}"></use></svg>{% endassets %}
 {%- endmacro %}
 
-{%- macro alertbox(category, message="") %}
-  <div class="alert alert--{{category}} alert--dismissable">
-    <a class="alert__close" href="javascript:void(0);" aria-label="{% trans %}Close{% endtrans %}">
-    {{ faicon(icon='times', icon_size='title', baseline=true) }}
-    </a>
+{%- macro alertbox(category, message="", dismissable=true, css_class='') %}
+  <div class="alert alert--{{category}} {% if dismissable %}alert--dismissable{%- endif -%} {%- if css_class %} {{ css_class }} {%- endif -%}">
+    {%- if dismissable %}
+      <a class="alert__close" href="javascript:void(0);" aria-label="{% trans %}Close{% endtrans %}">
+      {{ faicon(icon='times', icon_size='title', baseline=true) }}
+      </a>
+    {%- endif -%}
     <p class="alert__text">{{ message }}</p>
   </div>
 {%- endmacro %}

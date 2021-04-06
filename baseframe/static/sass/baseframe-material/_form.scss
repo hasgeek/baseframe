@@ -10,7 +10,22 @@
   .mui-textfield,
   .mui-radio,
   .mui-checkbox {
-    margin-bottom: 5px;
+    margin-bottom: $mui-grid-padding/4;
+  }
+
+  .mui-radio,
+  .mui-checkbox {
+    > label {
+      display: flex;
+      align-items: baseline;
+      padding: 0;
+      cursor: default;
+      > input[type='radio'],
+      > input[type='checkbox'] {
+        position: relative;
+        margin: 0 $mui-grid-padding/2 0 0;
+      }
+    }
   }
 
   .mui-textfield--float-label {
@@ -27,7 +42,7 @@
   .mui-form__sidetext,
   .mui-form__helptext {
     color: $mui-text-light;
-    margin: 8px 0 0;
+    margin: $mui-grid-padding/2 0 0;
     @extend .mui--text-caption;
   }
 

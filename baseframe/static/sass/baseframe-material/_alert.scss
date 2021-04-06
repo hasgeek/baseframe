@@ -19,6 +19,7 @@
   .alert__text {
     @extend .mui--text-subhead;
     margin-bottom: 0;
+    color: inherit;
   }
 
   .alert__close {
