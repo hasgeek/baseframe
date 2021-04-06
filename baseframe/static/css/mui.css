@@ -4450,14 +4450,14 @@ li p + ol {
 }
 
 .chip {
-  padding: 4px 8px;
-  border: 0;
+  padding: 0 8px 2px;
   border-radius: 16px;
   display: inline-block;
   white-space: nowrap;
   background: rgba(15, 115, 237, 0.1);
   border: 1px solid rgba(15, 115, 237, 0.2);
   color: #0f73ed;
+  line-height: 1;
 }
 
 .chip--bg-primary {
