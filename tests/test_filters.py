@@ -384,11 +384,14 @@ class TestFilters(TestCaseBaseframe):
         self.assertEqual(firstline, "this is the first line")
 
     def test_preview(self):
+        # Works with plain text
         assert filters.preview("This is plain text") == "This is plain text"
+        # Works with HTML
         assert (
             filters.preview("<p>Hello all,</p><p>Here is the Zoom link.")
             == "Hello all, Here is the Zoom link."
         )
+        # Removes whitespace from this indented block
         assert (
             filters.preview(
                 """
@@ -398,16 +401,19 @@ class TestFilters(TestCaseBaseframe):
             )
             == "Hello all, Here is the Zoom link."
         )
+        # Truncates at a paragraph boundary if it falls between min and max
         assert (
             filters.preview("<p>Hello all,</p><p>Here is the Zoom link.", min=5)
             == "Hello all,"
         )
+        # Truncates text when the paragraph is not between min and max boundaries
         assert (
             filters.preview(
                 "<p>Hello all,</p><p>Here is the Zoom link.", min=15, max=20
             )
             == "Hello all, Here is …"
         )
+        # Strips HTML tags and attributes when returning text
         assert (
             filters.preview(
                 """
@@ -425,6 +431,7 @@ class TestFilters(TestCaseBaseframe):
                 " Anyone may use it for any example use case."
             )
         )
+        # Counts by Unicode graphemes, not code points, to avoid mangling letters
         assert filters.preview('हिंदी टायपिंग', min=1, max=3) == 'हिंदी…'
 
     def test_cdata(self):
