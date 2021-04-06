@@ -162,9 +162,13 @@ li p + ol {
   hr {
     width: 25%;
   }
+  ul {
+    padding-left: $mui-grid-padding;
+  }
   ol {
     list-style: none;
     counter-reset: item;
+    padding-left: $mui-grid-padding;
     li {
       counter-increment: item;
     }
@@ -173,7 +177,7 @@ li p + ol {
       @extend .mui--text-caption;
       position: absolute;
       margin-left: -16px;
-      margin-top: -4px;
+      margin-top: -1px;
     }
   }
 }

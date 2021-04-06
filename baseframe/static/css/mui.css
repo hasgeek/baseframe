@@ -4088,9 +4088,13 @@ li p + ol {
 .footnote hr {
   width: 25%;
 }
+.footnote ul {
+  padding-left: 16px;
+}
 .footnote ol {
   list-style: none;
   counter-reset: item;
+  padding-left: 16px;
 }
 .footnote ol li {
   counter-increment: item;
@@ -4099,7 +4103,7 @@ li p + ol {
   content: counter(item);
   position: absolute;
   margin-left: -16px;
-  margin-top: -4px;
+  margin-top: -1px;
 }
 
 #root {
