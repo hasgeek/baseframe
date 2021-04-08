@@ -9,6 +9,7 @@ from flask_babelhg import Locale, get_locale
 from babel.dates import format_date, format_datetime, format_time, format_timedelta
 from furl import furl
 from pytz import utc
+import grapheme
 
 from coaster.gfm import markdown
 from coaster.utils import compress_whitespace, md5sum, text_blocks
@@ -197,13 +198,19 @@ def preview(html: str, min: int = 50, max: int = 158) -> str:  # NOQA: A002
     :param int max: Maximum number of characters in the preview (default 158,
         recommended for Google)
     """
+    # Get the max length we're interested in, for efficiency in grapheme counts. A large
+    # blob of text can impair performance if we're only interested in a small preview.
+    # `max` can be < `min` when the caller specifies a custom `max` without `min`
+    max_length = (max if max > min else min) + 1
     blocks = text_blocks(html)
     if blocks:
         text = compress_whitespace(blocks.pop(0))
-        while blocks and len(text) < min:
+        length = grapheme.length(text, max_length)
+        while blocks and length < min:
             text += ' ' + compress_whitespace(blocks.pop(0))
-        if len(text) > max:
-            text = text[: max - 1] + '…'
+            length = grapheme.length(text, max_length)
+        if length > max:
+            text = grapheme.slice(text, 0, max - 1) + '…'
         return text
     return ''
 
