@@ -1733,6 +1733,7 @@ ul,
 ol {
   margin-top: 0;
   margin-bottom: 14px;
+  padding-left: 16px;
 }
 
 @media (min-width: 1200px) {
@@ -4083,6 +4084,12 @@ li p + ol {
 
 .mui-btn--accent.mui-btn--flat {
   border: none !important;
+}
+
+blockquote {
+  border-left: 3px solid #c0ccda;
+  margin: 0;
+  padding: 8px 0 0 8px;
 }
 
 .language-placeholder {
