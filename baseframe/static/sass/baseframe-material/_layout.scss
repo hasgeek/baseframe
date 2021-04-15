@@ -149,6 +149,12 @@ li p + ol {
   border: none !important;
 }
 
+blockquote {
+  border-left: 3px solid $mui-text-accent;
+  margin: 0;
+  padding: 0 0 0 $mui-grid-padding/2;
+}
+
 .language-placeholder {
   display: none;
 }
