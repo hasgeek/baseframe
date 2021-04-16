@@ -8,12 +8,15 @@
   border-bottom: 1px solid #c0ccda;
   box-shadow: none;
   border-radius: 0;
-  height: 12em;
+  height: auto;
+}
+
+.CodeMirror-sizer {
+  min-height: 6em !important;
 }
 
 .CodeMirror-focused {
   border-color: #4a90e2;
-  border-width: 2px;
 }
 
 .CodeMirror-wrap pre.CodeMirror-line,
