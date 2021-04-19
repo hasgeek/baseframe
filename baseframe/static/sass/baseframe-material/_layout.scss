@@ -194,3 +194,78 @@ blockquote {
     }
   }
 }
+
+.markdown {
+  word-break: break-word;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-weight: 400;
+  }
+
+  h1 {
+    @extend .mui--text-title;
+  }
+
+  h2 {
+    @extend .mui--text-subhead;
+  }
+
+  h3,
+  h4 {
+    @extend .mui--text-body2;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  table {
+    border-collapse: separate;
+    width: 100%;
+    border-spacing: 0;
+    table-layout: fixed;
+    white-space: nowrap;
+    margin: $mui-grid-padding/4 0;
+
+    th,
+    td {
+      padding: $mui-grid-padding/2;
+      text-align: center;
+      color: $mui-text-dark;
+      border: 1px solid $mui-bg-color-dark;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    th {
+      font-weight: bold;
+      background-color: transparentize($mui-primary-color, 0.8);
+    }
+
+    th:first-child {
+      border-radius: 16px 0 0 0;
+    }
+
+    th:last-child {
+      border-radius: 0 16px 0 0;
+    }
+
+    tr:last-child td:first-child {
+      border-radius: 0 0 0 16px;
+    }
+
+    tr:last-child td:last-child {
+      border-radius: 0 0 16px 0;
+    }
+
+    tr:nth-child(even) {
+      background-color: $mui-bg-color-accent;
+    }
+  }
+}
