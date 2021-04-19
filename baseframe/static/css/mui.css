@@ -4146,7 +4146,7 @@ blockquote {
   border-spacing: 0;
   table-layout: fixed;
   white-space: nowrap;
-  margin: 4px 0;
+  margin: 0 0 14px;
 }
 .markdown table th,
 .markdown table td {
@@ -4178,6 +4178,11 @@ blockquote {
   background-color: #f9f9f9;
 }
 
+@media (min-width: 1200px) {
+  .markdown table {
+    margin-bottom: 16px;
+  }
+}
 #root {
   clear: both;
   min-height: 100%;

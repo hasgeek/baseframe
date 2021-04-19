@@ -230,7 +230,7 @@ blockquote {
     border-spacing: 0;
     table-layout: fixed;
     white-space: nowrap;
-    margin: $mui-grid-padding/4 0;
+    margin: 0 0 14px;
 
     th,
     td {
@@ -266,6 +266,14 @@ blockquote {
 
     tr:nth-child(even) {
       background-color: $mui-bg-color-accent;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .markdown {
+    table {
+      margin-bottom: 16px;
     }
   }
 }
