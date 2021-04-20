@@ -4128,6 +4128,7 @@ blockquote {
 
 .markdown {
   word-break: break-word;
+  overflow: scroll;
 }
 .markdown h1,
 .markdown h2,
@@ -4139,14 +4140,14 @@ blockquote {
 .markdown img {
   max-width: 100%;
   display: block;
+  cursor: zoom-in;
 }
 .markdown table {
   border-collapse: separate;
-  width: 100%;
+  width: auto;
   border-spacing: 0;
-  table-layout: fixed;
-  white-space: nowrap;
   margin: 0 0 14px;
+  cursor: zoom-in;
 }
 .markdown table th,
 .markdown table td {
@@ -4154,9 +4155,6 @@ blockquote {
   text-align: center;
   color: #1f2d3d;
   border: 1px solid #f1f1f1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .markdown table th {
   font-weight: bold;
@@ -4791,6 +4789,11 @@ blockquote {
     height: auto;
   }
 }
+.jquery-modal.blocker.current .modal.markdown-modal {
+  width: 100%;
+  max-width: 100%;
+}
+
 .tab-container {
   display: flex;
   padding: 0;

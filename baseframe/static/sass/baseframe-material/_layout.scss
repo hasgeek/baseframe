@@ -197,6 +197,7 @@ blockquote {
 
 .markdown {
   word-break: break-word;
+  overflow: scroll;
 
   h1,
   h2,
@@ -222,15 +223,15 @@ blockquote {
   img {
     max-width: 100%;
     display: block;
+    cursor: zoom-in;
   }
 
   table {
     border-collapse: separate;
-    width: 100%;
+    width: auto;
     border-spacing: 0;
-    table-layout: fixed;
-    white-space: nowrap;
     margin: 0 0 14px;
+    cursor: zoom-in;
 
     th,
     td {
@@ -238,9 +239,6 @@ blockquote {
       text-align: center;
       color: $mui-text-dark;
       border: 1px solid $mui-bg-color-dark;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     th {
