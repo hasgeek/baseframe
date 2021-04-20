@@ -4184,6 +4184,7 @@ blockquote {
 .markdown-modal.markdown table {
   width: max-content;
   margin: 0;
+  padding-right: 16px;
 }
 
 #root {
@@ -4796,7 +4797,6 @@ blockquote {
 }
 .jquery-modal.blocker.current .modal.markdown-modal {
   width: 100%;
-  max-width: 100%;
   overflow: scroll;
 }
 
