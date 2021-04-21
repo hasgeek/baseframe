@@ -64,3 +64,8 @@
     }
   }
 }
+
+.jquery-modal.blocker.current .modal.markdown-modal {
+  max-width: calc(100% - 32px);
+  overflow: scroll;
+}

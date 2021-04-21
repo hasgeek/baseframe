@@ -194,3 +194,92 @@ blockquote {
     }
   }
 }
+
+.markdown {
+  word-break: break-word;
+  overflow: scroll;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-weight: 400;
+  }
+
+  h1 {
+    @extend .mui--text-title;
+  }
+
+  h2 {
+    @extend .mui--text-subhead;
+  }
+
+  h3,
+  h4 {
+    @extend .mui--text-body2;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+    cursor: zoom-in;
+  }
+
+  table {
+    border-collapse: separate;
+    width: auto;
+    border-spacing: 0;
+    margin: 0 0 14px;
+    cursor: zoom-in;
+
+    th,
+    td {
+      padding: $mui-grid-padding/2;
+      text-align: center;
+      color: $mui-text-dark;
+      border: 1px solid $mui-bg-color-dark;
+    }
+
+    th {
+      font-weight: bold;
+      background-color: transparentize($mui-primary-color, 0.8);
+    }
+
+    th:first-child {
+      border-radius: 16px 0 0 0;
+    }
+
+    th:last-child {
+      border-radius: 0 16px 0 0;
+    }
+
+    tr:last-child td:first-child {
+      border-radius: 0 0 0 16px;
+    }
+
+    tr:last-child td:last-child {
+      border-radius: 0 0 16px 0;
+    }
+
+    tr:nth-child(even) {
+      background-color: $mui-bg-color-accent;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .markdown {
+    table {
+      margin-bottom: 16px;
+    }
+  }
+}
+
+.markdown-modal.markdown {
+  table {
+    width: max-content;
+    margin: 0;
+    padding-right: $mui-grid-padding;
+  }
+}

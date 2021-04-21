@@ -148,6 +148,18 @@ function activate_geoname_autocomplete(
   }
 }
 
+function activateZoomPopup() {
+  if ($('.markdown').length > 0) {
+    $('body').append('<div class="markdown-modal markdown"></div>');
+  }
+
+  $('body').on('click', '.markdown table, .markdown img', function (event) {
+    event.preventDefault();
+    $('.markdown-modal').html($(this)[0].outerHTML);
+    $('.markdown-modal').modal();
+  });
+}
+
 $(function () {
   // activate all widgets
   activate_widgets();
@@ -540,4 +552,6 @@ $(function () {
   $('body').on('click', '.alert__close', function () {
     $(this).parents('.alert').fadeOut();
   });
+
+  activateZoomPopup();
 });

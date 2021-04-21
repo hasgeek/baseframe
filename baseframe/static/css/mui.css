@@ -3529,6 +3529,7 @@ h2 {
 .mui--text-title,
 h3,
 .header__side-nav-list .header__side-nav-list__item__icon,
+.markdown h1,
 .form-message,
 .jquery-modal.blocker.current .modal .modal__header,
 h3 {
@@ -3539,6 +3540,7 @@ h3 {
 
 .mui--text-subhead,
 h4,
+.markdown h2,
 .alert .alert__text,
 h4 {
   font-weight: 400;
@@ -3562,6 +3564,8 @@ h5,
 .footnote p,
 .footnote span,
 .footnote li,
+.markdown h3,
+.markdown h4,
 h5 {
   font-weight: 400;
   font-size: 14px;
@@ -4120,6 +4124,67 @@ blockquote {
   position: absolute;
   margin-left: -12px;
   margin-top: -1px;
+}
+
+.markdown {
+  word-break: break-word;
+  overflow: scroll;
+}
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5 {
+  font-weight: 400;
+}
+.markdown img {
+  max-width: 100%;
+  display: block;
+  cursor: zoom-in;
+}
+.markdown table {
+  border-collapse: separate;
+  width: auto;
+  border-spacing: 0;
+  margin: 0 0 14px;
+  cursor: zoom-in;
+}
+.markdown table th,
+.markdown table td {
+  padding: 8px;
+  text-align: center;
+  color: #1f2d3d;
+  border: 1px solid #f1f1f1;
+}
+.markdown table th {
+  font-weight: bold;
+  background-color: rgba(15, 115, 237, 0.2);
+}
+.markdown table th:first-child {
+  border-radius: 16px 0 0 0;
+}
+.markdown table th:last-child {
+  border-radius: 0 16px 0 0;
+}
+.markdown table tr:last-child td:first-child {
+  border-radius: 0 0 0 16px;
+}
+.markdown table tr:last-child td:last-child {
+  border-radius: 0 0 16px 0;
+}
+.markdown table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+@media (min-width: 1200px) {
+  .markdown table {
+    margin-bottom: 16px;
+  }
+}
+.markdown-modal.markdown table {
+  width: max-content;
+  margin: 0;
+  padding-right: 16px;
 }
 
 #root {
@@ -4730,6 +4795,11 @@ blockquote {
     height: auto;
   }
 }
+.jquery-modal.blocker.current .modal.markdown-modal {
+  max-width: calc(100% - 32px);
+  overflow: scroll;
+}
+
 .tab-container {
   display: flex;
   padding: 0;
