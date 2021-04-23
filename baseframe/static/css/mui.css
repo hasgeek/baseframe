@@ -1756,6 +1756,23 @@ strong {
 
 abbr[title] {
   cursor: help;
+  position: relative;
+}
+
+abbr[title]:focus::after {
+  content: attr(title);
+  position: absolute;
+  left: 0;
+  bottom: -30px;
+  width: auto;
+  white-space: nowrap;
+  background-color: #f1f1f1;
+  color: #1f2d3d;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+  font-size: 14px;
+  padding: 4px;
+  z-index: 10000;
 }
 
 h1,
@@ -4185,6 +4202,7 @@ blockquote {
   width: max-content;
   margin: 0;
   padding-right: 16px;
+  cursor: default;
 }
 
 #root {

@@ -85,6 +85,23 @@
   // Abbreviations
   abbr[title] {
     cursor: help;
+    position: relative;
+  }
+
+  abbr[title]:focus::after {
+    content: attr(title);
+    position: absolute;
+    left: 0;
+    bottom: -30px;
+    width: auto;
+    white-space: nowrap;
+    background-color: $mui-bg-color-dark;
+    color: $mui-text-dark;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+    font-size: 14px;
+    padding: 4px;
+    z-index: 10000;
   }
 
   // headers
