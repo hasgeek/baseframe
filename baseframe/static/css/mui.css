@@ -1759,23 +1759,25 @@ abbr[title] {
   position: relative;
 }
 
-abbr[title]:hover::after,
-abbr[title]:focus::after {
-  content: attr(title);
-  position: absolute;
-  left: 0;
-  bottom: -30px;
-  width: auto;
-  white-space: nowrap;
-  background-color: #f1f1f1;
-  color: #1f2d3d;
-  border-radius: 2px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
-  font-size: 14px;
-  padding: 4px;
-  z-index: 10000;
+@media (hover: none) {
+  abbr[title]:hover::after,
+  abbr[title]:focus::after {
+    content: attr(title);
+    position: absolute;
+    left: 50%;
+    bottom: -30px;
+    background-color: #f1f1f1;
+    color: #1f2d3d;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+    font-size: 14px;
+    padding: 4px;
+    z-index: 10000;
+    max-width: 50vw;
+    width: max-content;
+    white-space: normal;
+  }
 }
-
 h1,
 h2,
 h3 {
