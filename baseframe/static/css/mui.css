@@ -1759,6 +1759,7 @@ abbr[title] {
   position: relative;
 }
 
+abbr[title]:hover::after,
 abbr[title]:focus::after {
   content: attr(title);
   position: absolute;
