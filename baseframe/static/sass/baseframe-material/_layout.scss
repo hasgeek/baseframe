@@ -235,8 +235,7 @@ blockquote {
 
     th,
     td {
-      padding: $mui-grid-padding/2;
-      text-align: center;
+      padding: 3px 6px;
       color: $mui-text-dark;
       border: 1px solid $mui-bg-color-dark;
     }
@@ -247,19 +246,19 @@ blockquote {
     }
 
     th:first-child {
-      border-radius: 16px 0 0 0;
+      border-radius: 8px 0 0 0;
     }
 
     th:last-child {
-      border-radius: 0 16px 0 0;
+      border-radius: 0 8px 0 0;
     }
 
     tr:last-child td:first-child {
-      border-radius: 0 0 0 16px;
+      border-radius: 0 0 0 8px;
     }
 
     tr:last-child td:last-child {
-      border-radius: 0 0 16px 0;
+      border-radius: 0 0 8px 0;
     }
 
     tr:nth-child(even) {

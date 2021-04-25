@@ -4151,8 +4151,7 @@ blockquote {
 }
 .markdown table th,
 .markdown table td {
-  padding: 8px;
-  text-align: center;
+  padding: 3px 6px;
   color: #1f2d3d;
   border: 1px solid #f1f1f1;
 }
@@ -4161,16 +4160,16 @@ blockquote {
   background-color: rgba(15, 115, 237, 0.2);
 }
 .markdown table th:first-child {
-  border-radius: 16px 0 0 0;
+  border-radius: 8px 0 0 0;
 }
 .markdown table th:last-child {
-  border-radius: 0 16px 0 0;
+  border-radius: 0 8px 0 0;
 }
 .markdown table tr:last-child td:first-child {
-  border-radius: 0 0 0 16px;
+  border-radius: 0 0 0 8px;
 }
 .markdown table tr:last-child td:last-child {
-  border-radius: 0 0 16px 0;
+  border-radius: 0 0 8px 0;
 }
 .markdown table tr:nth-child(even) {
   background-color: #f9f9f9;
