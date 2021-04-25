@@ -196,8 +196,8 @@ blockquote {
 }
 
 .markdown {
-  word-break: break-word;
-  overflow: scroll;
+  overflow: auto;
+  overflow-wrap: break-word;
 
   h1,
   h2,
@@ -237,12 +237,22 @@ blockquote {
     td {
       padding: 3px 6px;
       color: $mui-text-dark;
-      border: 1px solid $mui-bg-color-dark;
+      border-right: 1px solid $mui-bg-color-dark;
+    }
+
+    th:first-child {
+      border-left: 1px solid transparentize($mui-primary-color, 0.9);
+    }
+
+    td:first-child {
+      border-left: 1px solid $mui-bg-color-dark;
     }
 
     th {
       font-weight: bold;
       background-color: transparentize($mui-primary-color, 0.8);
+      border-color: transparentize($mui-primary-color, 0.9);
+      border-top: 1px solid transparentize($mui-primary-color, 0.9);
     }
 
     th:first-child {
@@ -253,12 +263,16 @@ blockquote {
       border-radius: 0 8px 0 0;
     }
 
-    tr:last-child td:first-child {
-      border-radius: 0 0 0 8px;
-    }
-
-    tr:last-child td:last-child {
-      border-radius: 0 0 8px 0;
+    tr:last-child {
+      td {
+        border-bottom: 1px solid $mui-bg-color-dark;
+      }
+      td:first-child {
+        border-radius: 0 0 0 8px;
+      }
+      td:last-child {
+        border-radius: 0 0 8px 0;
+      }
     }
 
     tr:nth-child(even) {

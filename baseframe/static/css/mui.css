@@ -4127,8 +4127,8 @@ blockquote {
 }
 
 .markdown {
-  word-break: break-word;
-  overflow: scroll;
+  overflow: auto;
+  overflow-wrap: break-word;
 }
 .markdown h1,
 .markdown h2,
@@ -4153,17 +4153,28 @@ blockquote {
 .markdown table td {
   padding: 3px 6px;
   color: #1f2d3d;
-  border: 1px solid #f1f1f1;
+  border-right: 1px solid #f1f1f1;
+}
+.markdown table th:first-child {
+  border-left: 1px solid rgba(15, 115, 237, 0.1);
+}
+.markdown table td:first-child {
+  border-left: 1px solid #f1f1f1;
 }
 .markdown table th {
   font-weight: bold;
   background-color: rgba(15, 115, 237, 0.2);
+  border-color: rgba(15, 115, 237, 0.1);
+  border-top: 1px solid rgba(15, 115, 237, 0.1);
 }
 .markdown table th:first-child {
   border-radius: 8px 0 0 0;
 }
 .markdown table th:last-child {
   border-radius: 0 8px 0 0;
+}
+.markdown table tr:last-child td {
+  border-bottom: 1px solid #f1f1f1;
 }
 .markdown table tr:last-child td:first-child {
   border-radius: 0 0 0 8px;
@@ -4767,7 +4778,7 @@ blockquote {
 .jquery-modal.blocker.current .modal--form {
   width: 100%;
   border-radius: 0;
-  overflow: auto;
+  overflow: auto !important;
   min-height: 100%;
 }
 .jquery-modal.blocker.current .modal--fullscreen {
@@ -4796,7 +4807,7 @@ blockquote {
 }
 .jquery-modal.blocker.current .modal.markdown-modal {
   max-width: calc(100% - 32px);
-  overflow: scroll;
+  overflow: auto !important;
 }
 
 .tab-container {
