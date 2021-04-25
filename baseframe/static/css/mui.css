@@ -4183,7 +4183,7 @@ blockquote {
 .markdown-modal.markdown table {
   width: max-content;
   margin: 0;
-  padding-right: 16px;
+  min-width: 100%;
 }
 
 #root {

@@ -279,6 +279,6 @@ blockquote {
   table {
     width: max-content;
     margin: 0;
-    padding-right: $mui-grid-padding;
+    min-width: 100%;
   }
 }
