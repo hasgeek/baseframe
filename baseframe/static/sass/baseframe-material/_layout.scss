@@ -196,8 +196,16 @@ blockquote {
 }
 
 .markdown {
-  word-break: break-word;
-  overflow: scroll;
+  overflow: auto;
+  overflow-wrap: break-word;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-weight: 700;
+  }
 
   h1 a,
   h2 a,
@@ -215,38 +223,51 @@ blockquote {
 
   table {
     border-collapse: separate;
-    width: auto;
+    width: 100%;
     border-spacing: 0;
     margin: 0 0 14px;
     cursor: zoom-in;
 
     th,
     td {
-      padding: $mui-grid-padding/2;
-      text-align: center;
+      padding: 3px 6px;
       color: $mui-text-dark;
-      border: 1px solid $mui-bg-color-dark;
+      border-right: 1px solid $mui-bg-color-dark;
+    }
+
+    th:first-child {
+      border-left: 1px solid transparentize($mui-primary-color, 0.9);
+    }
+
+    td:first-child {
+      border-left: 1px solid $mui-bg-color-dark;
     }
 
     th {
       font-weight: bold;
       background-color: transparentize($mui-primary-color, 0.8);
+      border-color: transparentize($mui-primary-color, 0.9);
+      border-top: 1px solid transparentize($mui-primary-color, 0.9);
     }
 
     th:first-child {
-      border-radius: 16px 0 0 0;
+      border-radius: 8px 0 0 0;
     }
 
     th:last-child {
-      border-radius: 0 16px 0 0;
+      border-radius: 0 8px 0 0;
     }
 
-    tr:last-child td:first-child {
-      border-radius: 0 0 0 16px;
-    }
-
-    tr:last-child td:last-child {
-      border-radius: 0 0 16px 0;
+    tr:last-child {
+      td {
+        border-bottom: 1px solid $mui-bg-color-dark;
+      }
+      td:first-child {
+        border-radius: 0 0 0 8px;
+      }
+      td:last-child {
+        border-radius: 0 0 8px 0;
+      }
     }
 
     tr:nth-child(even) {
@@ -267,7 +288,7 @@ blockquote {
   table {
     width: max-content;
     margin: 0;
-    padding-right: $mui-grid-padding;
     cursor: default;
+    min-width: 100%;
   }
 }
