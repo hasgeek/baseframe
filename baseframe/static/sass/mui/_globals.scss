@@ -58,7 +58,7 @@
   ol {
     margin-top: 0;
     margin-bottom: 14px;
-    padding-left: $mui-grid-padding;
+    padding-left: 20px;
   }
 
   @media (min-width: 1200px) {
@@ -85,6 +85,30 @@
   // Abbreviations
   abbr[title] {
     cursor: help;
+    position: relative;
+  }
+
+  @media (hover: none) {
+    abbr[title]:hover::after,
+    abbr[title]:focus::after {
+      content: attr(title);
+      position: absolute;
+      left: 0;
+      bottom: -30px;
+      background-color: $mui-bg-color-dark;
+      color: $mui-text-dark;
+      border-radius: 2px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+      font-size: 14px;
+      padding: 4px;
+      z-index: 10000;
+      min-width: 100px;
+    }
+    abbr[title].tooltip-right:hover::after,
+    abbr[title].tooltip-right:focus::after {
+      left: auto;
+      right: 0;
+    }
   }
 
   // headers

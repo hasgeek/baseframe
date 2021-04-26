@@ -196,7 +196,6 @@ blockquote {
 }
 
 .markdown {
-  overflow: auto;
   overflow-wrap: break-word;
 
   h1,
@@ -207,17 +206,12 @@ blockquote {
     font-weight: 700;
   }
 
-  h1 {
-    @extend .mui--text-title;
-  }
-
-  h2 {
-    @extend .mui--text-subhead;
-  }
-
-  h3,
-  h4 {
-    @extend .mui--text-body2;
+  h1 a,
+  h2 a,
+  h3 a,
+  h4 a,
+  h5 a {
+    color: inherit;
   }
 
   img {
@@ -293,6 +287,7 @@ blockquote {
   table {
     width: max-content;
     margin: 0;
+    cursor: default;
     min-width: 100%;
   }
 }

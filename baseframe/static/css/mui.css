@@ -1733,7 +1733,7 @@ ul,
 ol {
   margin-top: 0;
   margin-bottom: 14px;
-  padding-left: 16px;
+  padding-left: 20px;
 }
 
 @media (min-width: 1200px) {
@@ -1756,8 +1756,32 @@ strong {
 
 abbr[title] {
   cursor: help;
+  position: relative;
 }
 
+@media (hover: none) {
+  abbr[title]:hover::after,
+  abbr[title]:focus::after {
+    content: attr(title);
+    position: absolute;
+    left: 0;
+    bottom: -30px;
+    background-color: #f1f1f1;
+    color: #1f2d3d;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+    font-size: 14px;
+    padding: 4px;
+    z-index: 10000;
+    min-width: 100px;
+  }
+
+  abbr[title].tooltip-right:hover::after,
+  abbr[title].tooltip-right:focus::after {
+    left: auto;
+    right: 0;
+  }
+}
 h1,
 h2,
 h3 {
@@ -3120,7 +3144,6 @@ h6 {
 .mui--z1,
 .mui-dropdown__menu,
 .mui-select__menu,
-.card,
 .thumbnail,
 .control-icon,
 .jquery-modal.blocker.current .modal {
@@ -3529,7 +3552,6 @@ h2 {
 .mui--text-title,
 h3,
 .header__side-nav-list .header__side-nav-list__item__icon,
-.markdown h1,
 .form-message,
 .jquery-modal.blocker.current .modal .modal__header,
 h3 {
@@ -3540,7 +3562,6 @@ h3 {
 
 .mui--text-subhead,
 h4,
-.markdown h2,
 .alert .alert__text,
 h4 {
   font-weight: 400;
@@ -3564,8 +3585,6 @@ h5,
 .footnote p,
 .footnote span,
 .footnote li,
-.markdown h3,
-.markdown h4,
 h5 {
   font-weight: 400;
   font-size: 14px;
@@ -4127,7 +4146,6 @@ blockquote {
 }
 
 .markdown {
-  overflow: auto;
   overflow-wrap: break-word;
 }
 .markdown h1,
@@ -4136,6 +4154,13 @@ blockquote {
 .markdown h4,
 .markdown h5 {
   font-weight: 700;
+}
+.markdown h1 a,
+.markdown h2 a,
+.markdown h3 a,
+.markdown h4 a,
+.markdown h5 a {
+  color: inherit;
 }
 .markdown img {
   max-width: 100%;
@@ -4194,6 +4219,7 @@ blockquote {
 .markdown-modal.markdown table {
   width: max-content;
   margin: 0;
+  cursor: default;
   min-width: 100%;
 }
 
@@ -4213,7 +4239,7 @@ blockquote {
   clear: both;
   position: relative;
   margin-top: 16px;
-  background: whiteSmoke url('/_baseframe/img/shadow.png?1457696304') no-repeat
+  background: whiteSmoke url('/_baseframe/img/shadow.png?1460092674') no-repeat
     top center;
 }
 .footer .footer__container {
@@ -4575,6 +4601,7 @@ blockquote {
   position: relative;
   background: #fff;
   margin-bottom: 32px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
 }
 .card .card__image {
   width: 100%;
@@ -4778,7 +4805,7 @@ blockquote {
 .jquery-modal.blocker.current .modal--form {
   width: 100%;
   border-radius: 0;
-  overflow: auto !important;
+  overflow: auto;
   min-height: 100%;
 }
 .jquery-modal.blocker.current .modal--fullscreen {
