@@ -3144,7 +3144,6 @@ h6 {
 .mui--z1,
 .mui-dropdown__menu,
 .mui-select__menu,
-.card,
 .thumbnail,
 .control-icon,
 .jquery-modal.blocker.current .modal {
@@ -4602,6 +4601,7 @@ blockquote {
   position: relative;
   background: #fff;
   margin-bottom: 32px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
 }
 .card .card__image {
   width: 100%;
