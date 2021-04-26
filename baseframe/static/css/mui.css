@@ -1764,7 +1764,7 @@ abbr[title] {
   abbr[title]:focus::after {
     content: attr(title);
     position: absolute;
-    left: 50%;
+    left: 0;
     bottom: -30px;
     background-color: #f1f1f1;
     color: #1f2d3d;
@@ -1773,9 +1773,13 @@ abbr[title] {
     font-size: 14px;
     padding: 4px;
     z-index: 10000;
-    max-width: 50vw;
-    width: max-content;
-    white-space: normal;
+    min-width: 100px;
+  }
+
+  abbr[title].tooltip-right:hover::after,
+  abbr[title].tooltip-right:focus::after {
+    left: auto;
+    right: 0;
   }
 }
 h1,
