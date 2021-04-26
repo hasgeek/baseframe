@@ -1733,7 +1733,6 @@ ul,
 ol {
   margin-top: 0;
   margin-bottom: 14px;
-  padding-left: 16px;
 }
 
 @media (min-width: 1200px) {
@@ -1742,6 +1741,28 @@ ol {
     margin-bottom: 16px;
   }
 }
+ul {
+  padding-left: 16px;
+}
+
+ol {
+  counter-reset: list-counter;
+  display: table;
+  padding-left: 0;
+}
+
+ol > li {
+  counter-increment: list-counter;
+  display: table-row;
+}
+
+ol > li::before {
+  content: counter(list-counter) '.';
+  display: table-cell;
+  text-align: right;
+  padding-right: 4px;
+}
+
 hr {
   margin-top: 21px;
   margin-bottom: 21px;
@@ -3549,7 +3570,6 @@ h2 {
 .mui--text-title,
 h3,
 .header__side-nav-list .header__side-nav-list__item__icon,
-.markdown h1,
 .form-message,
 .jquery-modal.blocker.current .modal .modal__header,
 h3 {
@@ -3560,7 +3580,6 @@ h3 {
 
 .mui--text-subhead,
 h4,
-.markdown h2,
 .alert .alert__text,
 h4 {
   font-weight: 400;
@@ -3584,8 +3603,6 @@ h5,
 .footnote p,
 .footnote span,
 .footnote li,
-.markdown h3,
-.markdown h4,
 h5 {
   font-weight: 400;
   font-size: 14px;
@@ -4150,12 +4167,12 @@ blockquote {
   word-break: break-word;
   overflow: scroll;
 }
-.markdown h1,
-.markdown h2,
-.markdown h3,
-.markdown h4,
-.markdown h5 {
-  font-weight: 400;
+.markdown h1 a,
+.markdown h2 a,
+.markdown h3 a,
+.markdown h4 a,
+.markdown h5 a {
+  color: inherit;
 }
 .markdown img {
   max-width: 100%;
