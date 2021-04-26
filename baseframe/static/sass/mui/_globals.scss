@@ -58,6 +58,7 @@
   ol {
     margin-top: 0;
     margin-bottom: 14px;
+    padding-left: 30px;
   }
 
   @media (min-width: 1200px) {
@@ -65,28 +66,6 @@
     ol {
       margin-bottom: 16px;
     }
-  }
-
-  ul {
-    padding-left: 20px;
-  }
-
-  ol {
-    counter-reset: list-counter;
-    display: table;
-    padding-left: 0;
-  }
-
-  ol > li {
-    counter-increment: list-counter;
-    display: table-row;
-  }
-
-  ol > li::before {
-    content: counter(list-counter) '.';
-    display: table-cell;
-    text-align: right;
-    padding-right: $mui-grid-padding/4;
   }
 
   // Horizontal rules
