@@ -1733,7 +1733,7 @@ ul,
 ol {
   margin-top: 0;
   margin-bottom: 14px;
-  padding-left: 30px;
+  padding-left: 20px;
 }
 
 @media (min-width: 1200px) {
@@ -4147,7 +4147,6 @@ blockquote {
 }
 
 .markdown {
-  overflow: auto;
   overflow-wrap: break-word;
 }
 .markdown h1,
