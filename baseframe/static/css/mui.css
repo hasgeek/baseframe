@@ -4178,6 +4178,7 @@ blockquote {
   margin: 0 0 14px;
   cursor: zoom-in;
   word-break: break-word;
+  hyphens: auto;
 }
 .markdown table th,
 .markdown table td {
