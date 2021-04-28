@@ -1736,6 +1736,10 @@ ol {
   padding-left: 20px;
 }
 
+ol {
+  padding-left: 25px;
+}
+
 @media (min-width: 1200px) {
   ul,
   ol {
@@ -4173,6 +4177,7 @@ blockquote {
   border-spacing: 0;
   margin: 0 0 14px;
   cursor: zoom-in;
+  word-break: break-word;
 }
 .markdown table th,
 .markdown table td {
