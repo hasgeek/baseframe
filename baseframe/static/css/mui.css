@@ -1736,6 +1736,10 @@ ol {
   padding-left: 20px;
 }
 
+ol {
+  padding-left: 25px;
+}
+
 @media (min-width: 1200px) {
   ul,
   ol {
@@ -1757,6 +1761,9 @@ strong {
 abbr[title] {
   cursor: help;
   position: relative;
+  text-decoration: underline dotted;
+  -webkit-text-decoration: underline;
+  -webkit-text-decoration-style: dotted;
 }
 
 @media (hover: none) {
@@ -4147,6 +4154,7 @@ blockquote {
 
 .markdown {
   overflow-wrap: break-word;
+  overflow: auto;
 }
 .markdown h1,
 .markdown h2,
@@ -4162,6 +4170,10 @@ blockquote {
 .markdown h5 a {
   color: inherit;
 }
+.markdown ul,
+.markdown ol {
+  padding-left: 30px;
+}
 .markdown img {
   max-width: 100%;
   display: block;
@@ -4173,6 +4185,7 @@ blockquote {
   border-spacing: 0;
   margin: 0 0 14px;
   cursor: zoom-in;
+  background: inherit;
 }
 .markdown table th,
 .markdown table td {
@@ -4221,6 +4234,7 @@ blockquote {
   margin: 0;
   cursor: default;
   min-width: 100%;
+  padding-right: 16px;
 }
 
 #root {

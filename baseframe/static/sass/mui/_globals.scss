@@ -61,6 +61,10 @@
     padding-left: 20px;
   }
 
+  ol {
+    padding-left: 25px;
+  }
+
   @media (min-width: 1200px) {
     ul,
     ol {
@@ -86,6 +90,9 @@
   abbr[title] {
     cursor: help;
     position: relative;
+    text-decoration: underline dotted;
+    -webkit-text-decoration: underline;
+    -webkit-text-decoration-style: dotted;
   }
 
   @media (hover: none) {
