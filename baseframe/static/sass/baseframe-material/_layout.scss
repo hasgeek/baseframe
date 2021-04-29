@@ -197,6 +197,7 @@ blockquote {
 
 .markdown {
   overflow-wrap: break-word;
+  overflow: auto;
 
   h1,
   h2,
@@ -214,6 +215,11 @@ blockquote {
     color: inherit;
   }
 
+  ul,
+  ol {
+    padding-left: 30px;
+  }
+
   img {
     max-width: 100%;
     display: block;
@@ -226,7 +232,6 @@ blockquote {
     border-spacing: 0;
     margin: 0 0 14px;
     cursor: zoom-in;
-    hyphens: auto;
     background: inherit;
 
     th,
