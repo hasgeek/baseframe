@@ -4181,6 +4181,7 @@ blockquote {
   margin: 0 0 14px;
   cursor: zoom-in;
   hyphens: auto;
+  background: inherit;
 }
 .markdown table th,
 .markdown table td {
