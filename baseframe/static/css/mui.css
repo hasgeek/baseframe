@@ -1761,6 +1761,9 @@ strong {
 abbr[title] {
   cursor: help;
   position: relative;
+  text-decoration: underline dotted;
+  -webkit-text-decoration: underline;
+  -webkit-text-decoration-style: dotted;
 }
 
 @media (hover: none) {
