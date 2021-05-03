@@ -4982,7 +4982,9 @@ blockquote {
   background-color: rgba(15, 115, 237, 0.15);
   border-radius: 2px;
   padding: 4px 8px;
-  font-size: 12px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
 .badge--round {

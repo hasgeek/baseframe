@@ -141,7 +141,9 @@
   background-color: transparentize($mui-primary-color, 0.85);
   border-radius: 2px;
   padding: $mui-grid-padding/4 $mui-grid-padding/2;
-  font-size: 12px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
 .badge--round {
