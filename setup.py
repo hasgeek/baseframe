@@ -13,7 +13,7 @@ mo = re.search(r"^__version__\s*=\s*['\"]([^'\"]*)['\"]", versionfile, re.M)
 if mo:
     version = mo.group(1)
 else:
-    raise RuntimeError("Unable to find version string in baseframe/_version.py.")
+    raise RuntimeError("Unable to find version string in baseframe/_version.py")
 
 requires = [
     'bleach',

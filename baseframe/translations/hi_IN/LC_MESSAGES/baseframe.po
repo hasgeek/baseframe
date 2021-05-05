@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-12-18 17:52+0530\n"
+"POT-Creation-Date: 2021-05-06 02:01+0530\n"
 "PO-Revision-Date: 2020-12-18 17:52+0530\n"
 "Last-Translator: \n"
 "Language: hi_IN\n"
@@ -16,62 +16,62 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.9.1\n"
 
-#: baseframe/filters.py:31
+#: baseframe/filters.py:32
 msgid "now"
 msgstr "अभी"
 
-#: baseframe/filters.py:33
+#: baseframe/filters.py:34
 msgid "seconds ago"
 msgstr "कुछ सेकंड पहले"
 
-#: baseframe/filters.py:35
+#: baseframe/filters.py:36
 #, python-format
 msgid "%(num)s seconds ago"
 msgstr "%(num)s सेकंड पहले"
 
-#: baseframe/filters.py:37
+#: baseframe/filters.py:38
 msgid "a minute ago"
 msgstr "एक मिनट पहले"
 
-#: baseframe/filters.py:39
+#: baseframe/filters.py:40
 #, python-format
 msgid "%(num)s minutes ago"
 msgstr "%(num)s मिनटों पहले"
 
-#: baseframe/filters.py:41
+#: baseframe/filters.py:42
 msgid "an hour ago"
 msgstr "एक घंटा पहले"
 
-#: baseframe/filters.py:42
+#: baseframe/filters.py:43
 #, python-format
 msgid "%(num)s hours ago"
 msgstr "%(num)s घंटो पहले"
 
-#: baseframe/filters.py:44
+#: baseframe/filters.py:45
 msgid "a day ago"
 msgstr "एक दिन पहले"
 
-#: baseframe/filters.py:46
+#: baseframe/filters.py:47
 #, python-format
 msgid "%(num)s days ago"
 msgstr "%(num)s दिनों पहले"
 
-#: baseframe/filters.py:48
+#: baseframe/filters.py:49
 msgid "a month ago"
 msgstr "एक महीने पहले"
 
-#: baseframe/filters.py:50
+#: baseframe/filters.py:51
 #, python-format
 msgid "%(num)s months ago"
 msgstr "%(num)s महीनों पहले"
 
-#: baseframe/filters.py:52
+#: baseframe/filters.py:53
 msgid "a year ago"
 msgstr "एक साल पहले"
 
-#: baseframe/filters.py:53
+#: baseframe/filters.py:54
 #, python-format
 msgid "%(num)s years ago"
 msgstr "%(num)s सालों पहले"
@@ -228,11 +228,11 @@ msgstr "इस URL के डोमेन अस्वीकृत है"
 msgid ", "
 msgstr ""
 
-#: baseframe/forms/validators.py:655
+#: baseframe/forms/validators.py:659
 msgid "Email address identified"
 msgstr "ईमेल पता पहचाना गया"
 
-#: baseframe/forms/validators.py:673
+#: baseframe/forms/validators.py:677
 msgid ""
 "This name contains unsupported characters. It should have letters, "
 "numbers and non-terminal hyphens only"
@@ -240,19 +240,19 @@ msgstr ""
 "इस नाम में असमर्थित पात्र हैं। इसमें केवल पत्र, संख्या और हाइफेन होने "
 "चाहिए"
 
-#: baseframe/forms/validators.py:688
+#: baseframe/forms/validators.py:692
 msgid "Valid latitude and longitude expected"
 msgstr "मान्य अक्षांश और देशांतर की जरूरत है"
 
-#: baseframe/forms/validators.py:689
+#: baseframe/forms/validators.py:693
 msgid "Latitude must be within ± 90 degrees"
 msgstr "अक्षांश ± 90 डिग्री के अंदर होना चाहिए"
 
-#: baseframe/forms/validators.py:690
+#: baseframe/forms/validators.py:694
 msgid "Longitude must be within ± 180 degrees"
 msgstr "देशांतर ± 180 डिग्री के अंदर होना चाहिए"
 
-#: baseframe/forms/validators.py:714
+#: baseframe/forms/validators.py:718
 msgid "The server was temporarily unreachable. Try again"
 msgstr "सर्वर थोड़ी देर के लिए पहुँच से बाहर था. फिर से कोशिश करें"
 
@@ -273,7 +273,7 @@ msgid "Bad Request"
 msgstr "अमान्य रिक्वेस्ट"
 
 #: baseframe/templates/400.html.jinja2:5 baseframe/templates/422.html.jinja2:5
-msgid "This request was malformed and could not be processed."
+msgid "This request was malformed and could not be processed"
 msgstr "यह रिक्वेस्ट विकृत होने के कारण प्रोसेस नहीं हो पायी"
 
 #: baseframe/templates/403.html.jinja2:2
@@ -281,16 +281,16 @@ msgid "Access denied"
 msgstr "पहुँच निषेध"
 
 #: baseframe/templates/403.html.jinja2:5
-msgid "You do not have access to that page."
-msgstr "आपके पास उस पेज को खोलने की पहुंच नहीं है."
+msgid "You do not have access to that page"
+msgstr "आपके पास उस पेज को खोलने की पहुंच नहीं है"
 
 #: baseframe/templates/404.html.jinja2:2
 msgid "Not Found"
 msgstr "नहीं मिला"
 
 #: baseframe/templates/404.html.jinja2:5
-msgid "The page you were looking for does not exist."
-msgstr "जिस पेज की आप तलाश कर रहे थे वह मौजूद नहीं है."
+msgid "The page you were looking for does not exist"
+msgstr "जिस पेज की आप तलाश कर रहे थे वह मौजूद नहीं है"
 
 #: baseframe/templates/422.html.jinja2:2
 msgid "Unprocessable Entity"
@@ -301,8 +301,8 @@ msgid "Too Many Requests"
 msgstr "बहुत अधिक अनुरोध"
 
 #: baseframe/templates/429.html.jinja2:5
-msgid "You have exceeded the rate limit and must try after some time."
-msgstr "आपने दर सीमा पार कर दी है और आपको थोड़ी देर बाद कोशिश करनी होगी."
+msgid "You have exceeded the rate limit and must try after some time"
+msgstr "आपने दर सीमा पार कर दी है और आपको थोड़ी देर बाद कोशिश करनी होगी"
 
 #: baseframe/templates/500.html.jinja2:2
 msgid "Internal Server Error"
@@ -311,7 +311,7 @@ msgstr "आंतरिक सर्वर त्रुटि"
 #: baseframe/templates/500.html.jinja2:5
 msgid ""
 "Something broke inside. A report has been sent to the server’s "
-"administrator. Our apologies for the inconvenience."
+"administrator. Our apologies for the inconvenience"
 msgstr ""
 
 #: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:56
