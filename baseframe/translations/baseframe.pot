@@ -1,76 +1,76 @@
 # Translations template for PROJECT.
-# Copyright (C) 2020 ORGANIZATION
+# Copyright (C) 2021 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-12-18 17:52+0530\n"
+"POT-Creation-Date: 2021-05-06 02:01+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.9.1\n"
 
-#: baseframe/filters.py:31
+#: baseframe/filters.py:32
 msgid "now"
 msgstr ""
 
-#: baseframe/filters.py:33
+#: baseframe/filters.py:34
 msgid "seconds ago"
 msgstr ""
 
-#: baseframe/filters.py:35
+#: baseframe/filters.py:36
 #, python-format
 msgid "%(num)s seconds ago"
 msgstr ""
 
-#: baseframe/filters.py:37
+#: baseframe/filters.py:38
 msgid "a minute ago"
 msgstr ""
 
-#: baseframe/filters.py:39
+#: baseframe/filters.py:40
 #, python-format
 msgid "%(num)s minutes ago"
 msgstr ""
 
-#: baseframe/filters.py:41
+#: baseframe/filters.py:42
 msgid "an hour ago"
 msgstr ""
 
-#: baseframe/filters.py:42
+#: baseframe/filters.py:43
 #, python-format
 msgid "%(num)s hours ago"
 msgstr ""
 
-#: baseframe/filters.py:44
+#: baseframe/filters.py:45
 msgid "a day ago"
 msgstr ""
 
-#: baseframe/filters.py:46
+#: baseframe/filters.py:47
 #, python-format
 msgid "%(num)s days ago"
 msgstr ""
 
-#: baseframe/filters.py:48
+#: baseframe/filters.py:49
 msgid "a month ago"
 msgstr ""
 
-#: baseframe/filters.py:50
+#: baseframe/filters.py:51
 #, python-format
 msgid "%(num)s months ago"
 msgstr ""
 
-#: baseframe/filters.py:52
+#: baseframe/filters.py:53
 msgid "a year ago"
 msgstr ""
 
-#: baseframe/filters.py:53
+#: baseframe/filters.py:54
 #, python-format
 msgid "%(num)s years ago"
 msgstr ""
@@ -225,29 +225,29 @@ msgstr ""
 msgid ", "
 msgstr ""
 
-#: baseframe/forms/validators.py:655
+#: baseframe/forms/validators.py:659
 msgid "Email address identified"
 msgstr ""
 
-#: baseframe/forms/validators.py:673
+#: baseframe/forms/validators.py:677
 msgid ""
 "This name contains unsupported characters. It should have letters, "
 "numbers and non-terminal hyphens only"
 msgstr ""
 
-#: baseframe/forms/validators.py:688
+#: baseframe/forms/validators.py:692
 msgid "Valid latitude and longitude expected"
 msgstr ""
 
-#: baseframe/forms/validators.py:689
+#: baseframe/forms/validators.py:693
 msgid "Latitude must be within ± 90 degrees"
 msgstr ""
 
-#: baseframe/forms/validators.py:690
+#: baseframe/forms/validators.py:694
 msgid "Longitude must be within ± 180 degrees"
 msgstr ""
 
-#: baseframe/forms/validators.py:714
+#: baseframe/forms/validators.py:718
 msgid "The server was temporarily unreachable. Try again"
 msgstr ""
 
@@ -268,7 +268,7 @@ msgid "Bad Request"
 msgstr ""
 
 #: baseframe/templates/400.html.jinja2:5 baseframe/templates/422.html.jinja2:5
-msgid "This request was malformed and could not be processed."
+msgid "This request was malformed and could not be processed"
 msgstr ""
 
 #: baseframe/templates/403.html.jinja2:2
@@ -276,7 +276,7 @@ msgid "Access denied"
 msgstr ""
 
 #: baseframe/templates/403.html.jinja2:5
-msgid "You do not have access to that page."
+msgid "You do not have access to that page"
 msgstr ""
 
 #: baseframe/templates/404.html.jinja2:2
@@ -284,7 +284,7 @@ msgid "Not Found"
 msgstr ""
 
 #: baseframe/templates/404.html.jinja2:5
-msgid "The page you were looking for does not exist."
+msgid "The page you were looking for does not exist"
 msgstr ""
 
 #: baseframe/templates/422.html.jinja2:2
@@ -296,7 +296,7 @@ msgid "Too Many Requests"
 msgstr ""
 
 #: baseframe/templates/429.html.jinja2:5
-msgid "You have exceeded the rate limit and must try after some time."
+msgid "You have exceeded the rate limit and must try after some time"
 msgstr ""
 
 #: baseframe/templates/500.html.jinja2:2
@@ -306,7 +306,7 @@ msgstr ""
 #: baseframe/templates/500.html.jinja2:5
 msgid ""
 "Something broke inside. A report has been sent to the server’s "
-"administrator. Our apologies for the inconvenience."
+"administrator. Our apologies for the inconvenience"
 msgstr ""
 
 #: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:56
