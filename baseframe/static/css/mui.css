@@ -4898,7 +4898,7 @@ blockquote {
   text-transform: inherit;
 }
 .mui-tabs__bar--pills li.mui--is-active {
-  background: rgba(15, 115, 237, 0.1);
+  background: rgba(15, 115, 237, 0.15);
   border: 1px solid rgba(15, 115, 237, 0.2);
 }
 .mui-tabs__bar--pills li.mui--is-active a {
@@ -4948,7 +4948,7 @@ blockquote {
   outline: none;
 }
 .tabs .tabs__item--active {
-  background: rgba(15, 115, 237, 0.1);
+  background: rgba(15, 115, 237, 0.15);
   border: 1px solid rgba(15, 115, 237, 0.2);
 }
 .tabs .tabs__item-control {
@@ -4973,16 +4973,18 @@ blockquote {
 
 .badge {
   position: relative;
-  color: #4d5763;
+  color: #0f73ed;
   min-width: 16px;
   line-height: 16px;
   min-height: 16px;
   text-align: center;
   display: inline-block;
-  background-color: #f06a5e;
-  border-radius: 3px;
-  padding: 2px;
-  font-size: 12px;
+  background-color: rgba(15, 115, 237, 0.15);
+  border-radius: 2px;
+  padding: 0 8px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 .badge--round {
@@ -5011,7 +5013,7 @@ blockquote {
 
 .badge--primary {
   border: 1px solid transparent;
-  background: rgba(15, 115, 237, 0.1);
+  background: rgba(15, 115, 237, 0.15);
 }
 
 .mui-table.mui-table--hover > tbody > tr > td:hover {

@@ -49,7 +49,7 @@
     text-transform: inherit;
   }
   li.mui--is-active {
-    background: transparentize($mui-primary-color, 0.9);
+    background: transparentize($mui-primary-color, 0.85);
     border: 1px solid transparentize($mui-primary-color, 0.8);
     a {
       color: $mui-text-light;
@@ -104,7 +104,7 @@
   }
 
   .tabs__item--active {
-    background: transparentize($mui-primary-color, 0.9);
+    background: transparentize($mui-primary-color, 0.85);
     border: 1px solid transparentize($mui-primary-color, 0.8);
   }
 
@@ -132,16 +132,18 @@
 
 .badge {
   position: relative;
-  color: $mui-text-light;
+  color: $mui-text-hyperlink;
   min-width: $mui-grid-padding;
   line-height: $mui-grid-padding;
   min-height: $mui-grid-padding;
   text-align: center;
   display: inline-block;
-  background-color: $mui-accent-color;
-  border-radius: 3px;
-  padding: 2px;
-  font-size: 12px;
+  background-color: transparentize($mui-primary-color, 0.85);
+  border-radius: 2px;
+  padding: 0 $mui-grid-padding/2;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 .badge--round {
@@ -170,5 +172,5 @@
 
 .badge--primary {
   border: 1px solid transparent;
-  background: transparentize($mui-primary-color, 0.9);
+  background: transparentize($mui-primary-color, 0.85);
 }
