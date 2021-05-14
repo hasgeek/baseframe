@@ -186,7 +186,6 @@ function trapFocusWithinModal(modal) {
   var focusableItems = children.filter(focusableElems).filter(':visible');
   var numberOfFocusableItems = focusableItems.length;
   var focusedItem, focusedItemIndex;
-  $this.click();
   $this.find('.modal__close').focus();
 
   $this.on('keydown', function (event) {
