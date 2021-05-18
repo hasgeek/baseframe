@@ -326,10 +326,10 @@ window.Baseframe.Forms = {
      'errors' is the WTForm validation errors expected in the following format
       {
         "title": [
-          "This field is required."
+          "This field is required"
         ]
         "email": [
-          "Not a valid email."
+          "Not a valid email"
         ]
       }
     For each error, a 'p' tag is created if not present and
