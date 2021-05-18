@@ -166,6 +166,43 @@ function activateZoomPopup() {
   });
 }
 
+function addFocusOnModalShow() {
+  var focussedElem;
+  $('body').on($.modal.OPEN, '.modal', function () {
+    focussedElem = document.activeElement;
+    trapFocusWithinModal(this);
+  });
+
+  $('body').on($.modal.CLOSE, '.modal', function () {
+    focussedElem.focus();
+  });
+}
+
+function trapFocusWithinModal(modal) {
+  var $this = $(modal);
+  var focusableElems =
+    'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]';
+  var children = $this.find('*');
+  var focusableItems = children.filter(focusableElems).filter(':visible');
+  var numberOfFocusableItems = focusableItems.length;
+  var focusedItem, focusedItemIndex;
+  $this.find('.modal__close').focus();
+
+  $this.on('keydown', function (event) {
+    if (event.keyCode != 9) return;
+    focusedItem = $(document.activeElement);
+    focusedItemIndex = focusableItems.index(focusedItem);
+    if (!event.shiftKey && focusedItemIndex == numberOfFocusableItems - 1) {
+      focusableItems.get(0).focus();
+      event.preventDefault();
+    }
+    if (event.shiftKey && focusedItemIndex == 0) {
+      focusableItems.get(numberOfFocusableItems - 1).focus();
+      event.preventDefault();
+    }
+  });
+}
+
 $(function () {
   // activate all widgets
   activate_widgets();
@@ -560,4 +597,5 @@ $(function () {
   });
 
   activateZoomPopup();
+  addFocusOnModalShow();
 });
