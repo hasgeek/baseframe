@@ -2844,6 +2844,11 @@ h6 {
   opacity: 1;
 }
 
+.mui-textfield > input[type='datetime-local'] {
+  width: auto;
+  display: inline;
+}
+
 .mui-textfield > input {
   height: 32px;
 }
@@ -4254,7 +4259,7 @@ blockquote {
   clear: both;
   position: relative;
   margin-top: 16px;
-  background: whiteSmoke url('/_baseframe/img/shadow.png?1460092674') no-repeat
+  background: whiteSmoke url('/_baseframe/img/shadow.png?1457696304') no-repeat
     top center;
 }
 .footer .footer__container {
