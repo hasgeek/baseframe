@@ -1,3 +1,4 @@
+from typing import Union
 import os.path
 
 from flask import current_app, request
@@ -61,7 +62,8 @@ def get_user_locale() -> str:
 
 
 @babel.timezoneselector
-def get_timezone() -> BaseTzInfo:
+def get_timezone(default: Union[None, BaseTzInfo, str] = None) -> BaseTzInfo:
+    """Return a timezone suitable for the current context."""
     # If this app and request have a user, return user's timezone,
     # else return app default timezone
     if (
@@ -74,4 +76,9 @@ def get_timezone() -> BaseTzInfo:
             if isinstance(user.timezone, str):
                 return timezone(user.timezone)
             return user.timezone
+
+    if default is not None:
+        if isinstance(default, str):
+            return timezone(default)
+        return default
     return current_app.config.get('tz') or utc

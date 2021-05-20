@@ -33,10 +33,17 @@ use_parentheses = true
 from_first = true
 known_future_library = ['__future__']
 known_first_party = ['baseframe', 'coaster', 'flask_lastuser']
-known_sqlalchemy = ['alembic', 'sqlalchemy', 'sqlalchemy_utils', 'flask_sqlalchemy', 'psycopg2']
+known_sqlalchemy = [
+  'alembic',
+  'sqlalchemy',
+  'sqlalchemy_utils',
+  'flask_sqlalchemy',
+  'psycopg2'
+]
 known_flask = [
   'flask',
   'werkzeug',
+  'markupsafe',
   'itsdangerous',
   'speaklater',
   'wtforms',
@@ -50,4 +57,12 @@ known_flask = [
   'flask_wtf',
   ]
 default_section = 'THIRDPARTY'
-sections = ['FUTURE', 'STDLIB', 'SQLALCHEMY', 'FLASK', 'THIRDPARTY', 'FIRSTPARTY', 'LOCALFOLDER']
+sections = [
+  'FUTURE',
+  'STDLIB',
+  'SQLALCHEMY',
+  'FLASK',
+  'THIRDPARTY',
+  'FIRSTPARTY',
+  'LOCALFOLDER'
+]

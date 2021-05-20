@@ -4,6 +4,9 @@ import unittest
 
 from werkzeug.datastructures import MultiDict
 
+from pytz import utc
+import pytest
+
 from coaster.utils import LabeledEnum
 import baseframe.forms as forms
 
@@ -34,6 +37,11 @@ class JsonForm(forms.Form):
     jsondata_no_default = forms.JsonField("JSON No Default")
     jsondata_no_dict = forms.JsonField("JSON No Dict", require_dict=False)
     jsondata_no_decimal = forms.JsonField("JSON No Decimal", use_decimal=False)
+
+
+class DateTimeForm(forms.Form):
+    naive = forms.DateTimeField("Date/time Field", naive=True, timezone='Asia/Kolkata')
+    aware = forms.DateTimeField("Date/time Field", naive=False, timezone='Asia/Kolkata')
 
 
 class BaseTestCase(unittest.TestCase):
@@ -192,3 +200,93 @@ class TestJsonField(BaseTestCase):
             label(**{'for': 'bar'}),
             """<label for="bar">&lt;script&gt;alert(&#34;test&#34;);&lt;/script&gt;</label>""",
         )
+
+
+class TestDateTimeField(BaseTestCase):
+    def setUp(self):
+        super().setUp()
+        self.form = DateTimeForm(meta={'csrf': False})
+
+    def test_empty(self):
+        self.form.process(formdata=MultiDict())
+        assert self.form.naive.data is None
+        assert self.form.aware.data is None
+
+
+# The fields are marked as timezone Asia/Kolkata, so local timestamps will be cast to
+# UTC with 5:30 hours removed
+@pytest.mark.parametrize(
+    'test_input,expected_naive,expected_aware',
+    [
+        # Blank input
+        ([], None, None),
+        ([''], None, None),
+        (['', ''], None, None),
+        (
+            ['2010-12-15'],
+            datetime(2010, 12, 14, 18, 30),
+            datetime(2010, 12, 14, 18, 30, tzinfo=utc),
+        ),
+        (
+            ['2010-12-15T10:00'],
+            datetime(2010, 12, 15, 4, 30),
+            datetime(2010, 12, 15, 4, 30, tzinfo=utc),
+        ),
+        (
+            ['2010-12-15', ''],
+            datetime(2010, 12, 14, 18, 30),
+            datetime(2010, 12, 14, 18, 30, tzinfo=utc),
+        ),
+        (
+            ['2010-12-15 10:00'],
+            datetime(2010, 12, 15, 4, 30),
+            datetime(2010, 12, 15, 4, 30, tzinfo=utc),
+        ),
+        (
+            ['2010-12-15', '10:00'],
+            datetime(2010, 12, 15, 4, 30),
+            datetime(2010, 12, 15, 4, 30, tzinfo=utc),
+        ),
+        (
+            ['2010-12-15 ', ' 10:00 '],
+            datetime(2010, 12, 15, 4, 30),
+            datetime(2010, 12, 15, 4, 30, tzinfo=utc),
+        ),
+        (
+            ['15/12/2010', '10:00'],
+            datetime(2010, 12, 15, 4, 30),
+            datetime(2010, 12, 15, 4, 30, tzinfo=utc),
+        ),
+        (
+            ['12/15/2010', '10:00'],
+            datetime(2010, 12, 15, 4, 30),
+            datetime(2010, 12, 15, 4, 30, tzinfo=utc),
+        ),
+        (
+            ['Dec 15 2010', '10:00'],
+            datetime(2010, 12, 15, 4, 30),
+            datetime(2010, 12, 15, 4, 30, tzinfo=utc),
+        ),
+        (
+            ['Dec 15 2010', '10:00 UTC'],
+            datetime(2010, 12, 15, 10, 0),
+            datetime(2010, 12, 15, 10, 0, tzinfo=utc),
+        ),
+        (
+            ['15 Dec 2010', '10:00 UTC'],
+            datetime(2010, 12, 15, 10, 0),
+            datetime(2010, 12, 15, 10, 0, tzinfo=utc),
+        ),
+    ],
+)
+def test_date_time_field(test_input, expected_naive, expected_aware):
+    with app.app_context():
+        form = DateTimeForm(meta={'csrf': False})
+        form.process(
+            formdata=MultiDict(
+                [('naive', _v) for _v in test_input]
+                + [('aware', _v) for _v in test_input],
+            )
+        )
+        assert form.naive.data == expected_naive
+        assert form.aware.data == expected_aware

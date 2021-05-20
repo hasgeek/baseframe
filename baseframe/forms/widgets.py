@@ -1,4 +1,5 @@
-from flask import Markup, current_app, render_template
+from flask import current_app, render_template
+from markupsafe import Markup
 from wtforms.widgets import RadioInput, Select, html_params
 import wtforms
 
@@ -117,40 +118,22 @@ class SubmitInput(wtforms.widgets.SubmitInput):
 class DateTimeInput(wtforms.widgets.Input):
     """Render date and time inputs."""
 
-    input_type = 'datetime'
+    input_type = 'datetime-local'
 
     def __call__(self, field, **kwargs) -> str:
         kwargs.setdefault('id', field.id)
         field_id = kwargs.pop('id')
         kwargs.pop('type', None)
         value = kwargs.pop('value', None)
-        if value is None:
-            value = field._value()
         if not value:
-            value = ' '
+            value = field._value() or ''
         class_ = kwargs.pop('class', kwargs.pop('class_', ''))
-        date_value, time_value = value.split(' ', 1)
+        input_attrs = wtforms.widgets.html_params(
+            name=field.name, id=field_id, value=value, **kwargs
+        )
         return Markup(
-            '<input type="date" class="datetime-date %s" %s /> <input type="time" class="datetime-time %s" %s /> %s'
-            % (
-                class_,
-                wtforms.widgets.html_params(
-                    name=field.name,
-                    id=field_id + '-date',
-                    value=date_value,
-                    placeholder="yyy-mm-dd",
-                    **kwargs,
-                ),
-                class_,
-                wtforms.widgets.html_params(
-                    name=field.name,
-                    id=field_id + '-time',
-                    value=time_value,
-                    placeholder="--:--",
-                    **kwargs,
-                ),
-                field.tzname,
-            )
+            f'<input type="datetime-local" class="{class_}"'
+            f' {input_attrs} /> {field.tzname}'
         )
 
 
