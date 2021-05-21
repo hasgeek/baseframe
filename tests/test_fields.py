@@ -269,6 +269,7 @@ class TestJsonField(BaseTestCase):
     ],
 )
 def test_date_time_field(test_input, expected_naive, expected_aware):
+    """Assert various datetime inputs are recogized and processed accurately."""
     with app.app_context():
         form = DateTimeForm(meta={'csrf': False})
         form.process(
@@ -301,6 +302,7 @@ def test_date_time_field(test_input, expected_naive, expected_aware):
     ],
 )
 def test_date_time_field_badvalue(test_input):
+    """Assert bad datetime input is recorded as a ValidationError."""
     with app.app_context():
         form = DateTimeForm(meta={'csrf': False})
         form.process(formdata=MultiDict({'naive': test_input, 'aware': test_input}))
@@ -310,6 +312,7 @@ def test_date_time_field_badvalue(test_input):
 
 
 def test_date_time_field_timezone():
+    """Assert timezone in DateTimeField is an object."""
     with app.app_context():
         form = DateTimeForm(meta={'csrf': False})
         assert form.naive.timezone == timezone('Asia/Kolkata')
