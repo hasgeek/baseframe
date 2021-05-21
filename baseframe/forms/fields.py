@@ -12,6 +12,7 @@ from typing import (
     Tuple,
     Type,
     Union,
+    cast,
 )
 from urllib.parse import urljoin
 
@@ -24,16 +25,17 @@ from wtforms.utils import unset_value
 from wtforms.widgets import Select as OriginalSelectWidget
 import wtforms
 
+from dateutil import parser
 from pytz import timezone as pytz_timezone
 from pytz import utc
 from pytz.tzinfo import BaseTzInfo
 import bleach
 import simplejson as json
 
-from ..extensions import _, get_timezone
+from ..extensions import _, __, get_timezone
 from ..utils import request_timestamp
 from .parsleyjs import HiddenField, StringField, TextAreaField, URLField
-from .validators import Recaptcha
+from .validators import Recaptcha, ValidationError
 from .widgets import (
     CoordinatesInput,
     DateTimeInput,
@@ -400,35 +402,41 @@ class DateTimeField(wtforms.fields.DateTimeField):
     """
     A text field which stores a `datetime.datetime` matching a format.
 
+    This field only handles UTC timestamps, but renders to UI in the user's timezone,
+    as specified in the timezone parameter. If not specified, the timezone is guessed
+    from the runtime environment.
+
     :param str label: Label to display against the field
     :param list validators: List of validators
-    :param str format: Datetime format string
+    :param str display_format: Datetime format string
     :param str timezone: Timezone used for user input
-    :param bool naive: If `True` (default), timezone info is stripped from the return data
+    :param str message: Message for when the date/time could not be parsed
+    :param bool naive: If `True` (default), timezone info is stripped from the return
+        data
     """
 
     widget = DateTimeInput()
     data: Optional[datetime]
+    default_message = __("This date/time could not be recognized")
 
     def __init__(
         self,
         label: str = None,
         validators: ValidatorList = None,
-        format: str = '%Y-%m-%d %H:%M',  # NOQA: A002  # skipcq: PYL-W0622
-        timezone: Union[
-            BaseTzInfo, str, Callable[[], Union[BaseTzInfo, str]], None
-        ] = None,
+        display_format: str = '%Y-%m-%dT%H:%M',
+        timezone: Union[str, BaseTzInfo, None] = None,
+        message: Optional[str] = None,
         naive: bool = True,
         **kwargs,
     ):
         super().__init__(label, validators, **kwargs)
-        self.format = format
-        self.timezone = timezone() if callable(timezone) else timezone  # type: ignore[assignment]
+        self.display_format = display_format
+        self.timezone = timezone  # type: ignore[assignment]
+        self.message = message if message is not None else self.default_message
         self.naive = naive
-        self._timezone_converted: Optional[bool] = None
 
     @property
-    def timezone(self) -> str:
+    def timezone(self) -> BaseTzInfo:
         return self._timezone
 
     @timezone.setter
@@ -436,11 +444,9 @@ class DateTimeField(wtforms.fields.DateTimeField):
         if value is None:
             value = get_timezone()
         if isinstance(value, str):
-            self.tz = pytz_timezone(value)
-            self._timezone = value
+            self._timezone = pytz_timezone(value)
         else:
-            self.tz = value
-            self._timezone = self.tz.zone
+            self._timezone = value
 
         # A note on DST:
 
@@ -465,7 +471,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
         # Using 'tzname' instead of 'zone' optimises for Indian users, but we will have
         # to revisit this as we expand to a global footprint.
 
-        now = request_timestamp().astimezone(self.tz)
+        now = request_timestamp().astimezone(self.timezone)
         self.tzname = now.tzname()
         self.is_dst = bool(now.dst())
 
@@ -473,29 +479,48 @@ class DateTimeField(wtforms.fields.DateTimeField):
         if self.data:
             if self.data.tzinfo is None:
                 # We got a naive datetime from the calling app. Assume UTC
-                data = utc.localize(self.data).astimezone(self.tz)
+                data = utc.localize(self.data).astimezone(self.timezone)
             else:
                 # We got a tz-aware datetime. Cast into the required timezone
-                data = self.data.astimezone(self.tz)
-            value = data.strftime(self.format)
+                data = self.data.astimezone(self.timezone)
+            value = data.strftime(self.display_format)
         else:
             value = ''
         return value
 
-    def process_formdata(self, valuelist) -> None:
-        # We received a naive timestamp from the browser. Save it
-        super().process_formdata(valuelist)
-        # The received timestamp hasn't been localized to the expected timezone yet
-        self._timezone_converted = False
-
-    def pre_validate(self, form) -> None:
-        if self.data and self._timezone_converted is False:
-            # Convert from user timezone back to UTC
-            self.data = self.tz.localize(self.data, is_dst=self.is_dst).astimezone(utc)
-            # If the app wanted a naive datetime, strip the timezone info
-            if self.naive:
-                self.data = self.data.replace(tzinfo=None)
-            self._timezone_converted = True
+    def process_formdata(self, valuelist: List[str]) -> None:
+        if valuelist:
+            # We received a timestamp from the browser. Parse and save it
+            data: Optional[datetime] = None
+            # Valuelist will contain `date` and `time` as two separate values
+            # if the widget is rendered as two parts. If so, parse each at a time
+            # and use it as a default to replace values from the next value.  If the
+            # front-end renders a single widget, the entire content will be parsed once.
+            for value in valuelist:
+                if value.strip():
+                    try:
+                        data = parser.parse(
+                            value, default=data, ignoretz=False, dayfirst=True
+                        )
+                    except (ValueError, OverflowError, TypeError):
+                        # TypeError is not a documented error for `parser.parse`, but the
+                        # DateTimeField implementation in wtforms.ext.dateutil says it can
+                        # happen due to a known bug
+                        raise ValidationError(self.message)
+            if data is not None:
+                if data.tzinfo is None:
+                    data = self.timezone.localize(data, is_dst=self.is_dst).astimezone(
+                        utc
+                    )
+                else:
+                    data = data.astimezone(utc)
+                # If the app wanted a naive datetime, strip the timezone info
+                if self.naive:
+                    # XXX: cast required because mypy misses the `not None` test above
+                    data = cast(datetime, data).replace(tzinfo=None)
+            self.data = data
+        else:
+            self.data = None
 
 
 class TextListField(wtforms.fields.TextAreaField):

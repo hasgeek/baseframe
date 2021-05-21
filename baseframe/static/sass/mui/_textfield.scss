@@ -4,8 +4,6 @@
 
 $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 
-
-
 // ============================================================================
 // TEXTFIELD
 // ============================================================================
@@ -48,7 +46,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     text-overflow: clip;
 
     // Cursor
-    cursor: text;  // for ie10
+    cursor: text; // for ie10
     pointer-events: none;
   }
 
@@ -63,7 +61,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 
     &:not(:focus) {
       &.mui--is-not-empty,
-      &[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+      &[value]:not([value='']):not(.mui--is-empty):not(.mui--is-not-empty),
       &:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
         ~ label {
           color: $mui-label-font-color;
@@ -107,7 +105,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   // Typography
   font-size: $mui-input-font-size;
   font-family: inherit;
-  line-height: inherit; 
+  line-height: inherit;
 
   // Bugfix for firefox-android
   background-image: none;
@@ -121,13 +119,18 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   &:read-only {
     cursor: $mui-cursor-disabled;
     background-color: $mui-input-bg-color-disabled;
-    opacity: 1;  // iOS fix for unreadable disabled content
+    opacity: 1; // iOS fix for unreadable disabled content
   }
 
   &::placeholder {
     color: $mui-input-placeholder-color;
-    opacity: 1;  // Normalize firefox
+    opacity: 1; // Normalize firefox
   }
+}
+
+.mui-textfield > input[type='datetime-local'] {
+  width: auto;
+  display: inline;
 }
 
 .mui-textfield > input {
@@ -144,7 +147,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   min-height: $mui-textarea-height;
 
   // Compensate for height change on focus
-  &[rows]:not([rows="2"]):focus {
+  &[rows]:not([rows='2']):focus {
     margin-bottom: -1px;
   }
 }
@@ -154,9 +157,6 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   height: $mui-input-height + 1px;
   margin-bottom: -1px;
 }
-
-
-
 
 // ============================================================================
 // FORM VALIDATION
@@ -169,7 +169,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   &:not(:required),
   &:required.mui--is-not-empty,
   &:required.mui--is-empty.mui--is-touched,
-  &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+  &:required[value]:not([value='']):not(.mui--is-empty):not(.mui--is-not-empty),
   &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
     border-color: $mui-danger-color;
     border-width: 2px;
@@ -182,7 +182,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   &:not(:required),
   &:required.mui--is-not-empty,
   &:required.mui--is-empty.mui--is-touched,
-  &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+  &:required[value]:not([value='']):not(.mui--is-empty):not(.mui--is-not-empty),
   &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
     height: $mui-input-height + 1px;
     margin-bottom: -1px;
@@ -197,7 +197,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     > textarea:invalid:not(:focus) {
       &:not(:required),
       &:required.mui--is-not-empty,
-      &:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty),
+      &:required[value]:not([value='']):not(.mui--is-empty):not(.mui--is-not-empty),
       &:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty) {
         ~ label {
           color: $mui-danger-color;
@@ -220,7 +220,6 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     }
   }
 }
-
 
 // set label color for force class (mui--is-invalid)
 .mui-textfield {

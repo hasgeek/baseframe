@@ -1,5 +1,6 @@
-pytest
 coverage
 coveralls
 psycopg2
+pytest
+pytest-cov
 urllib3

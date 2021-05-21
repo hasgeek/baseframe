@@ -1,6 +1,6 @@
 """Patches WTForms to add additional functionality as required by Baseframe."""
 
-from flask import Markup, escape
+from markupsafe import Markup, escape
 import wtforms
 
 

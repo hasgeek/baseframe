@@ -3,8 +3,9 @@ from typing import Any, List, Tuple, Union
 from urllib.parse import urlsplit, urlunsplit
 import os.path
 
-from flask import Markup, current_app, request
+from flask import current_app, request
 from flask_babelhg import Locale, get_locale
+from markupsafe import Markup
 
 from babel.dates import format_date, format_datetime, format_time, format_timedelta
 from furl import furl

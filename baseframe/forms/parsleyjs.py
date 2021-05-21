@@ -16,7 +16,7 @@ from typing import Any, Dict
 import copy
 import re
 
-from flask import Markup
+from markupsafe import Markup
 from wtforms.fields import BooleanField as _BooleanField
 from wtforms.fields import DecimalField as _DecimalField
 from wtforms.fields import FloatField as _FloatField

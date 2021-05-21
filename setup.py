@@ -29,12 +29,14 @@ requires = [
     'furl',
     'grapheme>=0.6.0',
     'html5lib>=1.0.1',
+    'markupsafe',
     'mxsniff',
     'ndg-httpsclient',
     'pyasn1',
     'pycountry',
     'pyIsEmail',
     'pyOpenSSL',
+    'python-dateutil',
     'pytz',
     'redis',
     'requests',
@@ -44,7 +46,7 @@ requires = [
     'speaklater',
     'statsd',
     'werkzeug',
-    'WTForms>=2.2',
+    'WTForms>=2.2,<3.0',
 ]
 
 
@@ -65,9 +67,9 @@ setup(
     long_description=README,
     classifiers=[
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Intended Audience :: Developers",
