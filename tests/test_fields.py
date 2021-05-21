@@ -4,7 +4,7 @@ import unittest
 
 from werkzeug.datastructures import MultiDict
 
-from pytz import utc
+from pytz import timezone, utc
 import pytest
 
 from coaster.utils import LabeledEnum
@@ -202,21 +202,10 @@ class TestJsonField(BaseTestCase):
         )
 
 
-class TestDateTimeField(BaseTestCase):
-    def setUp(self):
-        super().setUp()
-        self.form = DateTimeForm(meta={'csrf': False})
-
-    def test_empty(self):
-        self.form.process(formdata=MultiDict())
-        assert self.form.naive.data is None
-        assert self.form.aware.data is None
-
-
 # The fields are marked as timezone Asia/Kolkata, so local timestamps will be cast to
 # UTC with 5:30 hours removed
 @pytest.mark.parametrize(
-    'test_input,expected_naive,expected_aware',
+    ['test_input', 'expected_naive', 'expected_aware'],
     [
         # Blank input
         ([], None, None),
@@ -290,3 +279,40 @@ def test_date_time_field(test_input, expected_naive, expected_aware):
         )
         assert form.naive.data == expected_naive
         assert form.aware.data == expected_aware
+        if expected_naive is not None:
+            assert form.naive._value() == utc.localize(expected_naive).astimezone(
+                form.naive.timezone
+            ).strftime(form.naive.display_format)
+        else:
+            assert form.naive._value() == ''
+        if expected_aware is not None:
+            assert form.aware._value() == expected_aware.astimezone(
+                form.aware.timezone
+            ).strftime(form.aware.display_format)
+        else:
+            assert form.aware._value() == ''
+
+
+@pytest.mark.parametrize(
+    'test_input',
+    [
+        '2020-2020-2020',
+        '100000-01-01',
+    ],
+)
+def test_date_time_field_badvalue(test_input):
+    with app.app_context():
+        form = DateTimeForm(meta={'csrf': False})
+        form.process(formdata=MultiDict({'naive': test_input, 'aware': test_input}))
+        form.validate()
+        assert form.naive.errors == [form.naive.message]
+        assert form.aware.errors == [form.aware.message]
+
+
+def test_date_time_field_timezone():
+    with app.app_context():
+        form = DateTimeForm(meta={'csrf': False})
+        assert form.naive.timezone == timezone('Asia/Kolkata')
+        assert form.aware.timezone == timezone('Asia/Kolkata')
+        form.naive.timezone = None
+        assert form.naive.timezone is not None  # Picked up from get_timezone

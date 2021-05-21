@@ -12,6 +12,7 @@ from typing import (
     Tuple,
     Type,
     Union,
+    cast,
 )
 from urllib.parse import urljoin
 
@@ -31,7 +32,7 @@ from pytz.tzinfo import BaseTzInfo
 import bleach
 import simplejson as json
 
-from ..extensions import _, get_timezone
+from ..extensions import _, __, get_timezone
 from ..utils import request_timestamp
 from .parsleyjs import HiddenField, StringField, TextAreaField, URLField
 from .validators import Recaptcha, ValidationError
@@ -409,31 +410,33 @@ class DateTimeField(wtforms.fields.DateTimeField):
     :param list validators: List of validators
     :param str display_format: Datetime format string
     :param str timezone: Timezone used for user input
+    :param str message: Message for when the date/time could not be parsed
     :param bool naive: If `True` (default), timezone info is stripped from the return
         data
     """
 
     widget = DateTimeInput()
     data: Optional[datetime]
+    default_message = __("This date/time could not be recognized")
 
     def __init__(
         self,
         label: str = None,
         validators: ValidatorList = None,
         display_format: str = '%Y-%m-%dT%H:%M',
-        timezone: Union[
-            BaseTzInfo, str, Callable[[], Union[BaseTzInfo, str]], None
-        ] = None,
+        timezone: Union[str, BaseTzInfo, None] = None,
+        message: Optional[str] = None,
         naive: bool = True,
         **kwargs,
     ):
         super().__init__(label, validators, **kwargs)
         self.display_format = display_format
-        self.timezone = timezone() if callable(timezone) else timezone  # type: ignore[assignment]
+        self.timezone = timezone  # type: ignore[assignment]
+        self.message = message if message is not None else self.default_message
         self.naive = naive
 
     @property
-    def timezone(self) -> str:
+    def timezone(self) -> BaseTzInfo:
         return self._timezone
 
     @timezone.setter
@@ -441,11 +444,9 @@ class DateTimeField(wtforms.fields.DateTimeField):
         if value is None:
             value = get_timezone()
         if isinstance(value, str):
-            self.tz = pytz_timezone(value)
-            self._timezone = value
+            self._timezone = pytz_timezone(value)
         else:
-            self.tz = value
-            self._timezone = self.tz.zone
+            self._timezone = value
 
         # A note on DST:
 
@@ -470,7 +471,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
         # Using 'tzname' instead of 'zone' optimises for Indian users, but we will have
         # to revisit this as we expand to a global footprint.
 
-        now = request_timestamp().astimezone(self.tz)
+        now = request_timestamp().astimezone(self.timezone)
         self.tzname = now.tzname()
         self.is_dst = bool(now.dst())
 
@@ -478,10 +479,10 @@ class DateTimeField(wtforms.fields.DateTimeField):
         if self.data:
             if self.data.tzinfo is None:
                 # We got a naive datetime from the calling app. Assume UTC
-                data = utc.localize(self.data).astimezone(self.tz)
+                data = utc.localize(self.data).astimezone(self.timezone)
             else:
                 # We got a tz-aware datetime. Cast into the required timezone
-                data = self.data.astimezone(self.tz)
+                data = self.data.astimezone(self.timezone)
             value = data.strftime(self.display_format)
         else:
             value = ''
@@ -505,17 +506,18 @@ class DateTimeField(wtforms.fields.DateTimeField):
                         # TypeError is not a documented error for `parser.parse`, but the
                         # DateTimeField implementation in wtforms.ext.dateutil says it can
                         # happen due to a known bug
-                        raise ValidationError(
-                            _("This date/time could not be recognized")
-                        )
+                        raise ValidationError(self.message)
             if data is not None:
                 if data.tzinfo is None:
-                    data = self.tz.localize(data, is_dst=self.is_dst).astimezone(utc)
+                    data = self.timezone.localize(data, is_dst=self.is_dst).astimezone(
+                        utc
+                    )
                 else:
                     data = data.astimezone(utc)
                 # If the app wanted a naive datetime, strip the timezone info
                 if self.naive:
-                    data = data.replace(tzinfo=None)
+                    # XXX: cast required because mypy misses the `not None` test above
+                    data = cast(datetime, data).replace(tzinfo=None)
             self.data = data
         else:
             self.data = None

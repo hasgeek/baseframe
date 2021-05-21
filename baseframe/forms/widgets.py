@@ -125,7 +125,7 @@ class DateTimeInput(wtforms.widgets.Input):
         field_id = kwargs.pop('id')
         kwargs.pop('type', None)
         value = kwargs.pop('value', None)
-        if not value:
+        if value is None:  # Allow blank value to override field data
             value = field._value() or ''
         class_ = kwargs.pop('class', kwargs.pop('class_', ''))
         input_attrs = wtforms.widgets.html_params(

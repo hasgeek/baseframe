@@ -1,7 +1,6 @@
 from typing import Optional, Tuple, Union
 
 from flask import (
-    Markup,
     abort,
     current_app,
     escape,
@@ -12,6 +11,7 @@ from flask import (
     request,
     url_for,
 )
+from markupsafe import Markup
 from werkzeug.wrappers import Response
 import wtforms
 
