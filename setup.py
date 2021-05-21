@@ -46,7 +46,7 @@ requires = [
     'speaklater',
     'statsd',
     'werkzeug',
-    'WTForms>=2.2',
+    'WTForms>=2.2<3',
 ]
 
 
