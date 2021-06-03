@@ -503,26 +503,49 @@ class ValidUrl:
             cache_check = asset_cache.get(cache_key)
         except ValueError:  # Possible error from a broken pickle
             cache_check = None
-        # Read from cache, but assume cache may be broken
-        # since Flask-Cache stores data as a pickle,
-        # which is version-specific
+        # Read from cache, but assume cache may be broken since Flask-Cache stores data
+        # as a pickle, which is version-specific
         if cache_check and isinstance(cache_check, dict):
             rurl = cache_check.get('url')
             code = cache_check.get('code')
         else:
             rurl = None  # rurl is the response URL after following redirects
+            code = None
 
+        # This validator is meant to catch typos, but bot protection tools make that
+        # fairly hard to do, so we only aim to be helpful, not thorough. Cloudflare's
+        # implementation issues a 301 redirect to self. The `allow_redirects` option
+        # in `requests` does not recognise this, and will go into a loop fetching the
+        # same URL. We therefore have our own implementation of `allow_redirects` that
+        # stops as soon as it encounters a 3xx redirect to self.
+
+        # TODO: Also honour the robots.txt protocol and stay off URLs that aren't meant
+        # to be checked. https://docs.python.org/3/library/urllib.robotparser.html
         if not rurl or not code:
             try:
-                r = requests.get(
-                    url,
-                    timeout=30,
-                    allow_redirects=True,
-                    verify=False,
-                    headers={'User-Agent': self.user_agent},
-                )
-                code = r.status_code
-                rurl = r.url
+                rurl = url
+                # 30 is the default redirect limit in `requests`
+                for _count in range(30):
+                    r = requests.get(
+                        rurl,
+                        timeout=30,
+                        allow_redirects=False,
+                        verify=False,  # skipcq: BAN-B501
+                        headers={'User-Agent': self.user_agent},
+                    )
+                    code = r.status_code
+                    if 300 <= code < 400:
+                        # Redirect. What kind?
+                        if rurl == r.url:
+                            # Redirect to self in a loop, break immediately
+                            rurl = r.url
+                            break
+                        # Not a loop, continue following redirects
+                        rurl = r.url
+                        continue
+                    # Not a redirect, break iterations and check the response
+                    rurl = r.url
+                    break
             except (
                 # Still a relative URL? Must be broken
                 requests.exceptions.MissingSchema,
@@ -532,29 +555,34 @@ class ValidUrl:
                 requests.exceptions.Timeout,
             ):
                 code = None
-            except Exception as e:
+            except Exception as e:  # NOQA: B902
                 exception_catchall.send(e)
                 code = None
 
-        if rurl is not None and code in (
-            200,
-            201,
-            202,
-            203,
-            204,
-            205,
-            206,
-            207,
-            208,
-            226,
-            403,
-            999,
+        if (
+            rurl is not None
+            and code is not None
+            and code
+            in (
+                200,
+                201,
+                202,
+                203,
+                204,
+                205,
+                206,
+                207,
+                208,
+                226,
+                301,  # For Cloudflare
+                403,  # Previously for Cloudflare
+                999,  # For LinkedIn
+            )
         ):
-            # Cloudflare now returns HTTP 403 for urls behind its bot protection.
-            # Hence we're accepting 403 as an acceptable code.
-            #
-            # 999 is a non-standard too-many-requests error. We can't look past it to
-            # check a URL, so we let it pass
+            # Cloudflare now returns HTTP 301 (previously 403) for urls behind its bot
+            # protection. 301 and 403 are both considered acceptable codes. 999 is a
+            # non-standard too-many-requests error used by LinkedIn. We can't look past
+            # it to check a URL, so we let it pass.
 
             # The URL works, so now we check if it's in a reject list. This part
             # runs _after_ attempting to load the URL as we want to catch redirects.
