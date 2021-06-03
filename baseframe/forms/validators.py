@@ -511,18 +511,31 @@ class ValidUrl:
             code = cache_check.get('code')
         else:
             rurl = None  # rurl is the response URL after following redirects
+            code = None
 
         if not rurl or not code:
             try:
-                r = requests.get(
-                    url,
-                    timeout=30,
-                    allow_redirects=True,
-                    verify=False,
-                    headers={'User-Agent': self.user_agent},
-                )
-                code = r.status_code
-                rurl = r.url
+                rurl = url
+                for limit in range(30):
+                    r = requests.get(
+                        rurl,
+                        timeout=30,
+                        allow_redirects=False,
+                        verify=False,
+                        headers={'User-Agent': self.user_agent},
+                    )
+                    code = r.status_code
+                    rurl = r.url
+                    if code >= 300 and code < 400:
+                        # Redirect?
+                        if rurl == url:
+                            # Loop, break immediately
+                            break
+                        # Not a loop, continue following redirects
+                        continue
+                    else:
+                        # Not a redirect, break iterations and check the response
+                        break
             except (
                 # Still a relative URL? Must be broken
                 requests.exceptions.MissingSchema,
@@ -532,26 +545,35 @@ class ValidUrl:
                 requests.exceptions.Timeout,
             ):
                 code = None
-            except Exception as e:
+            except Exception as e:  # NOQA: B902
                 exception_catchall.send(e)
                 code = None
 
-        if rurl is not None and code in (
-            200,
-            201,
-            202,
-            203,
-            204,
-            205,
-            206,
-            207,
-            208,
-            226,
-            403,
-            999,
+        if (
+            rurl is not None
+            and code is not None
+            and (
+                code
+                in (
+                    200,
+                    201,
+                    202,
+                    203,
+                    204,
+                    205,
+                    206,
+                    207,
+                    208,
+                    226,
+                    403,  # Previously for Cloudflare
+                    999,  # For LinkedIn
+                )
+                or (code == 301 and rurl == url)  # For Cloudflare
+            )
         ):
-            # Cloudflare now returns HTTP 403 for urls behind its bot protection.
-            # Hence we're accepting 403 as an acceptable code.
+            # Cloudflare now returns HTTP 301 (previously 403) for urls behind its bot
+            # protection. Hence 301 and 403 are both considered acceptable codes, but
+            # 301 only when the URL does not change
             #
             # 999 is a non-standard too-many-requests error. We can't look past it to
             # check a URL, so we let it pass
