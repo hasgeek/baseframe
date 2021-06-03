@@ -530,11 +530,11 @@ class ValidUrl:
                         rurl,
                         timeout=30,
                         allow_redirects=False,
-                        verify=False,
+                        verify=False,  # skipcq: BAN-B501
                         headers={'User-Agent': self.user_agent},
                     )
                     code = r.status_code
-                    if code >= 300 and code < 400:
+                    if 300 <= code < 400:
                         # Redirect. What kind?
                         if rurl == r.url:
                             # Redirect to self in a loop, break immediately
@@ -543,10 +543,9 @@ class ValidUrl:
                         # Not a loop, continue following redirects
                         rurl = r.url
                         continue
-                    else:
-                        # Not a redirect, break iterations and check the response
-                        rurl = r.url
-                        break
+                    # Not a redirect, break iterations and check the response
+                    rurl = r.url
+                    break
             except (
                 # Still a relative URL? Must be broken
                 requests.exceptions.MissingSchema,
