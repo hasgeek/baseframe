@@ -15,10 +15,10 @@ h3 {
   margin-bottom: $mui-grid-padding/2;
 }
 
-ul ul,
-ul ol,
-ol ol,
-ol ul {
+ul > ul,
+ul > ol,
+ol > ol,
+ol > ul {
   margin-bottom: 0;
 }
 
