@@ -13,17 +13,17 @@ repos:
             '--remove-unused-variable',
           ]
   - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.6.4
+    rev: v5.8.0
     hooks:
       - id: isort
         additional_dependencies:
           - toml
   - repo: https://github.com/ambv/black
-    rev: 20.8b1
+    rev: 21.5b2
     hooks:
       - id: black
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.3.0
+    rev: v4.0.1
     hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -49,12 +49,12 @@ repos:
       - id: requirements-txt-fixer
       - id: trailing-whitespace
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.790
+    rev: v0.812
     hooks:
       - id: mypy
         additional_dependencies: [sqlalchemy-stubs==0.3]
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.4
+    rev: 3.9.2
     hooks:
       - id: flake8
         additional_dependencies:
@@ -70,7 +70,7 @@ repos:
           - flake8-print
           - pep8-naming
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.1.2
+    rev: v2.3.1
     hooks:
       - id: prettier
         args: ['--single-quote', '--trailing-comma', 'es5']
