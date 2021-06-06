@@ -25,7 +25,7 @@ requires = [
     'Flask-Babelhg',
     'Flask-Caching',
     'Flask-WTF>=0.14',
-    'Flask>=1.0',
+    'Flask>=2.0',
     'furl',
     'grapheme>=0.6.0',
     'html5lib>=1.0.1',

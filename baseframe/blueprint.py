@@ -344,35 +344,6 @@ class BaseframeBlueprint(Blueprint):
                 "Did not find New Relic settings file newrelic.ini, skipping it"
             )
 
-    def register(self, app: Flask, options: dict, first_registration: bool = False):
-        """
-        Register blueprint on the app (internal method).
-
-        Called by :meth:`Flask.register_blueprint` to register all views
-        and callbacks registered on the blueprint with the application. Creates
-        a :class:`.BlueprintSetupState` and calls each :meth:`record` callback
-        with it.
-
-        :param app: The application this blueprint is being registered with.
-        :param options: Keyword arguments forwarded from
-            :meth:`~Flask.register_blueprint`.
-        :param first_registration: Whether this is the first time this
-            blueprint has been registered on the application.
-        """
-        self._got_registered_once = True
-        state = self.make_setup_state(app, options, first_registration)
-
-        if self.has_static_folder:
-            state.add_url_rule(
-                self.static_url_path + '/<path:filename>',  # type: ignore[operator]
-                view_func=self.send_static_file,
-                endpoint='static',
-                subdomain=options.get('static_subdomain'),
-            )
-
-        for deferred in self.deferred_functions:
-            deferred(state)
-
 
 baseframe: BaseframeBlueprint = BaseframeBlueprint(
     'baseframe',
