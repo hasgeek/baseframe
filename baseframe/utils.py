@@ -41,6 +41,8 @@ class JSONEncoder(JSONEncoderBase):
     def default(self, o: Any) -> Union[int, str, float, Decimal, list, dict, None]:
         if is_lazy_string(o):
             return str(o)
+        if isinstance(o, Decimal):
+            return str(o)
         if isinstance(o, BaseTzInfo):
             return o.zone
         if isinstance(o, (date, datetime, time)):
