@@ -499,8 +499,12 @@ class DateTimeField(wtforms.fields.DateTimeField):
             for value in valuelist:
                 if value.strip():
                     try:
+                        # dateutil cannot handle ISO and European-style dates at the
+                        # same time, so `dayfirst` MUST be False. Setting it to True
+                        # will interpret YYYY-DD-MM instead of YYYY-MM-DD. Bug report:
+                        # https://github.com/dateutil/dateutil/issues/402
                         data = parser.parse(
-                            value, default=data, ignoretz=False, dayfirst=True
+                            value, default=data, ignoretz=False, dayfirst=False
                         )
                     except (ValueError, OverflowError, TypeError):
                         # TypeError is not a documented error for `parser.parse`, but the
