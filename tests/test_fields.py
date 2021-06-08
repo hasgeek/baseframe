@@ -266,6 +266,16 @@ class TestJsonField(BaseTestCase):
             datetime(2010, 12, 15, 10, 0),
             datetime(2010, 12, 15, 10, 0, tzinfo=utc),
         ),
+        (
+            ['2021-06-08T10:00'],
+            datetime(2021, 6, 8, 4, 30),
+            datetime(2021, 6, 8, 4, 30, tzinfo=utc),
+        ),
+        (
+            ['06/08/2021', '10:00'],  # MDY order
+            datetime(2021, 6, 8, 4, 30),
+            datetime(2021, 6, 8, 4, 30, tzinfo=utc),
+        ),
     ],
 )
 def test_date_time_field(test_input, expected_naive, expected_aware):
