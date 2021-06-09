@@ -1,7 +1,6 @@
 from collections import namedtuple
 from decimal import Decimal
 from fractions import Fraction
-import pdb
 from typing import Callable, Iterable, Set, Tuple, Union
 from urllib.parse import urljoin, urlparse
 import datetime
@@ -528,7 +527,7 @@ class ValidUrl:
                 # 30 is the default redirect limit in `requests`
                 for _count in range(30):
                     r = requests.get(
-                        rurl,
+                        str(rurl),
                         timeout=30,
                         allow_redirects=False,
                         verify=False,  # skipcq: BAN-B501
@@ -537,12 +536,13 @@ class ValidUrl:
                     code = r.status_code
                     if 300 <= code < 400:
                         # Redirect. What kind?
-                        if rurl == r.next.url:
+                        next_url = r.next.url if r.next is not None else r.url
+                        if rurl == next_url:
                             # Redirect to self in a loop, break immediately
-                            rurl = r.next.url
+                            rurl = next_url
                             break
                         # Not a loop, continue following redirects
-                        rurl = r.next.url
+                        rurl = next_url
                         continue
                     # Not a redirect, break iterations and check the response
                     rurl = r.url
