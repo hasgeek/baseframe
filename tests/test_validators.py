@@ -444,6 +444,21 @@ class TestValidUrl(TestCaseBaseframe):
             "Allowed domains for 'http://example.com': example.net, example.org"
         ]
 
+    def test_redirect_url(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[
+                    forms.validators.ValidUrl(
+                        allowed_domains=('youtu.be'),
+                    )
+                ],
+            )
+
+        form = UrlForm(meta={'csrf': False})
+        form.url.data = 'https://youtu.be/brxr3h54LLI'
+        assert form.validate() is True
+
 
 class TestFormBase(TestCaseBaseframe):
     # Subclasses must define a `Form`

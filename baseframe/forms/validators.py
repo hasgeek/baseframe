@@ -1,6 +1,7 @@
 from collections import namedtuple
 from decimal import Decimal
 from fractions import Fraction
+import pdb
 from typing import Callable, Iterable, Set, Tuple, Union
 from urllib.parse import urljoin, urlparse
 import datetime
@@ -536,12 +537,12 @@ class ValidUrl:
                     code = r.status_code
                     if 300 <= code < 400:
                         # Redirect. What kind?
-                        if rurl == r.url:
+                        if rurl == r.next.url:
                             # Redirect to self in a loop, break immediately
-                            rurl = r.url
+                            rurl = r.next.url
                             break
                         # Not a loop, continue following redirects
-                        rurl = r.url
+                        rurl = r.next.url
                         continue
                     # Not a redirect, break iterations and check the response
                     rurl = r.url
