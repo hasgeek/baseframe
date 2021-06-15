@@ -467,6 +467,22 @@ class TestValidUrl(TestCaseBaseframe):
             form.url.data = url
             assert form.validate() is True
 
+    def test_cloudflare_protected_url(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[forms.validators.ValidUrl()],
+            )
+
+        url = 'https://important-domain.com'
+
+        with requests_mock.Mocker() as m:
+            m.get(url, status_code=403)
+
+            form = UrlForm(meta={'csrf': False})
+            form.url.data = url
+            assert form.validate() is True
+
 
 class TestFormBase(TestCaseBaseframe):
     # Subclasses must define a `Form`

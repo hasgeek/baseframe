@@ -523,38 +523,14 @@ class ValidUrl:
         # to be checked. https://docs.python.org/3/library/urllib.robotparser.html
         if not rurl or not code:
             try:
-                rurl = url
-                # 30 is the default redirect limit in `requests`
-                for _count in range(30):
-                    if not rurl:
-                        # The url to check is None. Break and consider the last url
-                        # for validation. This is unlikely to happen unless response.url
-                        # is None, which is not supposed to be. This block is here to
-                        # please mypy, which complains because it thinks rurl can become
-                        # None inside the loop.
-                        break
-
-                    r = requests.get(
-                        rurl,
-                        timeout=30,
-                        allow_redirects=False,
-                        verify=False,  # skipcq: BAN-B501
-                        headers={'User-Agent': self.user_agent},
-                    )
-                    code = r.status_code
-                    if 300 <= code < 400:
-                        # Redirect. What kind?
-                        next_url = r.next.url if r.next is not None else r.url
-                        if rurl == next_url:
-                            # Redirect to self in a loop, break immediately
-                            rurl = next_url
-                            break
-                        # Not a loop, continue following redirects
-                        rurl = next_url
-                        continue
-                    # Not a redirect, break iterations and check the response
-                    rurl = r.url
-                    break
+                r = requests.get(
+                    url,
+                    timeout=30,
+                    verify=False,  # skipcq: BAN-B501
+                    headers={'User-Agent': self.user_agent},
+                )
+                code = r.status_code
+                rurl = r.url
             except (
                 # Still a relative URL? Must be broken
                 requests.exceptions.MissingSchema,
@@ -583,15 +559,15 @@ class ValidUrl:
                 207,
                 208,
                 226,
-                301,  # For Cloudflare
-                403,  # Previously for Cloudflare
+                403,  # For Cloudflare
                 999,  # For LinkedIn
             )
         ):
-            # Cloudflare now returns HTTP 301 (previously 403) for urls behind its bot
-            # protection. 301 and 403 are both considered acceptable codes. 999 is a
-            # non-standard too-many-requests error used by LinkedIn. We can't look past
-            # it to check a URL, so we let it pass.
+            # Cloudflare returns HTTP 403 for urls behind its bot protection.
+            # Hence we're accepting 403 as an acceptable code.
+            #
+            # 999 is a non-standard too-many-requests error. We can't look past it to
+            # check a URL, so we let it pass
 
             # The URL works, so now we check if it's in a reject list. This part
             # runs _after_ attempting to load the URL as we want to catch redirects.
