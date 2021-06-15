@@ -512,13 +512,6 @@ class ValidUrl:
             rurl = None  # rurl is the response URL after following redirects
             code = None
 
-        # This validator is meant to catch typos, but bot protection tools make that
-        # fairly hard to do, so we only aim to be helpful, not thorough. Cloudflare's
-        # implementation issues a 301 redirect to self. The `allow_redirects` option
-        # in `requests` does not recognise this, and will go into a loop fetching the
-        # same URL. We therefore have our own implementation of `allow_redirects` that
-        # stops as soon as it encounters a 3xx redirect to self.
-
         # TODO: Also honour the robots.txt protocol and stay off URLs that aren't meant
         # to be checked. https://docs.python.org/3/library/urllib.robotparser.html
         if not rurl or not code:
