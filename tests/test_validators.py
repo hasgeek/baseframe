@@ -4,6 +4,7 @@ import warnings
 from werkzeug.datastructures import MultiDict
 
 from mxsniff import MXLookupException
+import requests_mock
 import urllib3
 
 from baseframe import forms
@@ -455,9 +456,16 @@ class TestValidUrl(TestCaseBaseframe):
                 ],
             )
 
-        form = UrlForm(meta={'csrf': False})
-        form.url.data = 'https://youtu.be/brxr3h54LLI'
-        assert form.validate() is True
+        url = 'https://youtu.be/shorturl'
+        longurl = 'https://www.youtube.com/watch?v=longurl'
+
+        with requests_mock.Mocker() as m:
+            m.get(url, status_code=303, headers={'Location': longurl})
+            m.get(longurl, status_code=200)
+
+            form = UrlForm(meta={'csrf': False})
+            form.url.data = url
+            assert form.validate() is True
 
 
 class TestFormBase(TestCaseBaseframe):
