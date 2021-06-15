@@ -526,8 +526,16 @@ class ValidUrl:
                 rurl = url
                 # 30 is the default redirect limit in `requests`
                 for _count in range(30):
+                    if not rurl:
+                        # The url to check is None. Break and consider the last url
+                        # for validation. This is unlikely to happen unless response.url
+                        # is None, which is not supposed to be. This block is here to
+                        # please mypy, which complains because it thinks rurl can become
+                        # None inside the loop.
+                        break
+
                     r = requests.get(
-                        str(rurl),
+                        rurl,
                         timeout=30,
                         allow_redirects=False,
                         verify=False,  # skipcq: BAN-B501
