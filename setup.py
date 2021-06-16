@@ -47,6 +47,7 @@ requires = [
     'statsd',
     'werkzeug',
     'WTForms>=2.2,<3.0',
+    'requests-mock>=1.9.3',
 ]
 
 

@@ -4,6 +4,7 @@ import warnings
 from werkzeug.datastructures import MultiDict
 
 from mxsniff import MXLookupException
+import requests_mock
 import urllib3
 
 from baseframe import forms
@@ -443,6 +444,44 @@ class TestValidUrl(TestCaseBaseframe):
         assert form.url.errors == [
             "Allowed domains for 'http://example.com': example.net, example.org"
         ]
+
+    def test_redirect_url(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[
+                    forms.validators.ValidUrl(
+                        allowed_domains=('youtu.be'),
+                    )
+                ],
+            )
+
+        url = 'https://youtu.be/shorturl'
+        longurl = 'https://www.youtube.com/watch?v=longurl'
+
+        with requests_mock.Mocker() as m:
+            m.get(url, status_code=303, headers={'Location': longurl})
+            m.get(longurl, status_code=200)
+
+            form = UrlForm(meta={'csrf': False})
+            form.url.data = url
+            assert form.validate() is True
+
+    def test_cloudflare_protected_url(self):
+        class UrlForm(forms.Form):
+            url = forms.StringField(
+                "URL",
+                validators=[forms.validators.ValidUrl()],
+            )
+
+        url = 'https://important-domain.com'
+
+        with requests_mock.Mocker() as m:
+            m.get(url, status_code=403)
+
+            form = UrlForm(meta={'csrf': False})
+            form.url.data = url
+            assert form.validate() is True
 
 
 class TestFormBase(TestCaseBaseframe):
