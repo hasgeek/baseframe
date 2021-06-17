@@ -43,7 +43,11 @@ class JSONEncoder(JSONEncoderBase):
         if is_lazy_string(o):
             return str(o)
         if isinstance(o, Decimal):
-            return str(o)
+            # FIXME: Returning a float is unsafe. Decimal values can only safely be
+            # transmitted as string values. https://stackoverflow.com/q/35709595/78903
+            # We use float here -- temporarily -- because Boxoffice hasn't been updated
+            # to parse decimal values as strings.
+            return float(o)
         if isinstance(o, BaseTzInfo):
             return o.zone
         if isinstance(o, (date, datetime, time)):
