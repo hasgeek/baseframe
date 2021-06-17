@@ -26,7 +26,7 @@ from coaster.views import render_with
 from .assets import assets as assets_repo
 from .blueprint import baseframe
 from .extensions import asset_cache, networkbar_cache
-from .utils import request_timestamp
+from .utils import request_checked_xhr, request_timestamp
 
 
 @networkbar_cache.cached(key_prefix='networkbar_links')
@@ -289,6 +289,10 @@ def process_response(response: Response) -> Response:
     # cookie
     if request_has_auth():
         response.vary.add('Cookie')  # type: ignore[union-attr]
+
+    # If request_is_xhr() was called, add a Vary header for that
+    if request_checked_xhr():
+        response.vary.add('X-Requested-With')  # type: ignore[union-attr]
 
     # Prevent pages from being placed in an iframe. If the response already
     # set has a value for this option, let it pass through

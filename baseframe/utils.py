@@ -5,7 +5,7 @@ import collections.abc as abc
 import gettext
 import types
 
-from flask import g, request
+from flask import _request_ctx_stack, g, request  # type: ignore[attr-defined]
 from flask.json import JSONEncoder as JSONEncoderBase
 from flask_babelhg.speaklater import is_lazy_string as is_lazy_string_hg
 from speaklater import is_lazy_string as is_lazy_string_sl
@@ -28,6 +28,7 @@ __all__ = [
     'localized_country_list',
     'localize_timezone',
     'request_is_xhr',
+    'request_checked_xhr',
 ]
 
 
@@ -170,4 +171,9 @@ def request_is_xhr() -> bool:
     ported from Werkzeug after being removed from there, as legacy apps may still be
     using jQuery.
     """
+    _request_ctx_stack.top.request_checked_xhr = True
     return request.environ.get('HTTP_X_REQUESTED_WITH', '').lower() == 'xmlhttprequest'
+
+
+def request_checked_xhr() -> bool:
+    return getattr(_request_ctx_stack.top, 'request_checked_xhr', False)

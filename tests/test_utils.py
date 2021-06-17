@@ -1,4 +1,9 @@
-from baseframe.utils import _localized_country_list_inner, localized_country_list
+from baseframe.utils import (
+    _localized_country_list_inner,
+    localized_country_list,
+    request_checked_xhr,
+    request_is_xhr,
+)
 
 from .fixtures import TestCaseBaseframe
 from .fixtures import app1 as app
@@ -57,3 +62,14 @@ class TestUtils(TestCaseBaseframe):
         assert dict(countries)['DZ'] == "अल्जीरिया"
         # index(DE) < index(DZ), but index(जर्मनी) > index(अल्जीरिया)
         assert countries.index(('DE', 'जर्मनी')) > countries.index(('DZ', 'अल्जीरिया'))
+
+
+def test_request_has_xhr():
+    """Verify request_checked_xhr() returns True if request_is_xhr() was called."""
+    with app.test_request_context():
+        assert request_checked_xhr() is False
+        request_is_xhr()
+        assert request_checked_xhr() is True
+
+    with app.test_request_context():
+        assert request_checked_xhr() is False
