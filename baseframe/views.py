@@ -25,7 +25,7 @@ from coaster.views import render_with
 
 from .assets import assets as assets_repo
 from .blueprint import baseframe
-from .extensions import asset_cache, networkbar_cache
+from .extensions import networkbar_cache
 from .utils import request_checked_xhr, request_timestamp
 
 
@@ -98,13 +98,8 @@ def gen_assets_url(assets: List[str]) -> str:
 
 def ext_assets(assets: List[str]) -> str:
     """Return a URL to the required external assets."""
-    key = asset_key(assets)
-    try:
-        url = asset_cache.get('assets/' + key)
-    except ValueError:  # Can happen due to Py2 vs Py3 pickle mismatch
-        url = None
-    if url:
-        return url
+    # XXX: External assets are deprecated, so this function serves them as internal
+    # assets
     return gen_assets_url(assets)
 
 
