@@ -1,6 +1,6 @@
 from datetime import timedelta
 from typing import Any, Dict, List, Optional, Tuple
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urlparse
 import os
 import os.path
 
@@ -105,27 +105,7 @@ def ext_assets(assets: List[str]) -> str:
         url = None
     if url:
         return url
-    if current_app.config.get('ASSET_SERVER'):
-        try:
-            r = requests.get(
-                urljoin(current_app.config['ASSET_SERVER'], 'asset'),
-                params={'a': assets},
-                allow_redirects=False,
-            )
-            if r.status_code in (301, 302, 303, 307):
-                url = r.headers['location']
-            else:  # XXX: What broke and failed to do a 3xx?
-                url = r.url
-            asset_cache.set(
-                'assets/' + key,
-                url,
-                timeout=current_app.config.get('ASSET_TIMEOUT', 60),
-            )
-            return url
-        except requests.exceptions.ConnectionError:
-            return gen_assets_url(assets)
-    else:
-        return gen_assets_url(assets)
+    return gen_assets_url(assets)
 
 
 def asset_path(bundle_key: str) -> str:
