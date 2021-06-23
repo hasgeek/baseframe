@@ -95,11 +95,9 @@ class BaseframeBlueprint(Blueprint):
             Loaded assets will be minified and concatenated into the app's
             ``static/js`` and ``static/css`` folders. If an asset has problems
             with either of these, it should be loaded pre-bundled via the
-            ``bundle_js`` and ``bundle_css`` parameters.
-        :param ext_requires: Same as requires, but will be loaded from
-            an external cookiefree server if ``ASSET_SERVER`` is in config,
-            before the reqular requires list. Assets are loaded as part of
-            ``requires`` if there is no asset server
+            ``bundle_js`` and ``bundle_css`` parameters
+        :param ext_requires: Extended requirements, will be loaded first. These used to
+            be served from a separate asset server, but that is deprecated
         :param bundle_js: Bundle of additional JavaScript
         :param bundle_css: Bundle of additional CSS
         :param theme: CSS theme, one of 'bootstrap3' (default) or 'mui'
@@ -177,33 +175,13 @@ class BaseframeBlueprint(Blueprint):
         ignore_css: List[str] = []
         ext_js: List[List[str]] = []
         ext_css: List[List[str]] = []
-        if app.config.get('ASSET_SERVER'):
-            for itemgroup in ext_requires:
-                sub_js: List[str] = []
-                sub_css: List[str] = []
-                if not isinstance(itemgroup, (list, tuple)):
-                    itemgroup = [itemgroup]
-                for item in itemgroup:
-                    name, spec = split_namespec(item)
-                    for alist, ilist, ext in [
-                        (sub_js, ignore_js, '.js'),
-                        (sub_css, ignore_css, '.css'),
-                    ]:
-                        if name + ext in assets:
-                            alist.append(name + ext + str(spec))
-                            ilist.append('!' + name + ext)
-                if sub_js:
-                    ext_js.append(sub_js)
-                if sub_css:
-                    ext_css.append(sub_css)
-        else:
-            requires = [
-                item
-                for itemgroup in ext_requires
-                for item in (
-                    itemgroup if isinstance(itemgroup, (list, tuple)) else [itemgroup]
-                )
-            ] + list(requires)
+        requires = [
+            item
+            for itemgroup in ext_requires
+            for item in (
+                itemgroup if isinstance(itemgroup, (list, tuple)) else [itemgroup]
+            )
+        ] + list(requires)
 
         app.config['ext_js'] = ext_js
         app.config['ext_css'] = ext_css
