@@ -61,7 +61,7 @@
   {% endblock %}
 </head>
 
-{% block bodytag %}<body>{% endblock %}
+<body {% block bodyattrs %}{% endblock %}>
   {% block root -%}
     <div id="root">
       <!-- headerbox -->
