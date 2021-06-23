@@ -1,7 +1,6 @@
 // BUTTON STYLES
 // -------------
 
-
 // Base styles
 // --------------------------------------------------
 
@@ -14,13 +13,13 @@
   line-height: @baseLineHeight;
   color: @grayDark;
   text-align: center;
-  text-shadow: 0 1px 1px rgba(255,255,255,.75);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   vertical-align: middle;
   .buttonBackground(@white, darken(@white, 10%));
   border: 1px solid #ccc;
   border-bottom-color: #bbb;
   .border-radius(4px);
-  @shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+  @shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
   .box-shadow(@shadow);
   cursor: pointer;
 
@@ -38,7 +37,7 @@
 
   // transition is only when going to hover, otherwise the background
   // behind the gradient (there for IE<=9 fallback) gets mismatched
-  .transition(background-position .1s linear);
+  .transition(background-position 0.1s linear);
 }
 
 // Focus state for keyboard and accessibility
@@ -50,10 +49,10 @@
 .btn.active,
 .btn:active {
   background-image: none;
-  @shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
+  @shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
   .box-shadow(@shadow);
   background-color: darken(@white, 10%);
-  background-color: darken(@white, 15%) e("\9");
+  background-color: darken(@white, 15%) e('\9');
   outline: 0;
 }
 
@@ -67,7 +66,6 @@
   .box-shadow(none);
 }
 
-
 // Button Sizes
 // --------------------------------------------------
 
@@ -78,7 +76,7 @@
   line-height: normal;
   .border-radius(5px);
 }
-.btn-large [class^="icon-"] {
+.btn-large [class^='icon-'] {
   margin-top: 1px;
 }
 
@@ -88,7 +86,7 @@
   font-size: @baseFontSize - 2px;
   line-height: @baseLineHeight - 2px;
 }
-.btn-small [class^="icon-"] {
+.btn-small [class^='icon-'] {
   margin-top: -1px;
 }
 
@@ -98,7 +96,6 @@
   font-size: @baseFontSize - 2px;
   line-height: @baseLineHeight - 4px;
 }
-
 
 // Alternate buttons
 // --------------------------------------------------
@@ -117,7 +114,7 @@
 .btn-info:hover,
 .btn-inverse,
 .btn-inverse:hover {
-  text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   color: @white;
 }
 // Provide *some* extra contrast for those who can get it
@@ -127,7 +124,7 @@
 .btn-success.active,
 .btn-info.active,
 .btn-dark.active {
-  color: rgba(255,255,255,.75);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 // Set the backgrounds
@@ -156,13 +153,11 @@
   .buttonBackground(#454545, #262626);
 }
 
-
 // Cross-browser Jank
 // --------------------------------------------------
 
 button.btn,
-input[type="submit"].btn {
-
+input[type='submit'].btn {
   // Firefox 3.6 only I believe
   &::-moz-focus-inner {
     padding: 0;

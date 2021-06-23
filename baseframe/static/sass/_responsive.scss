@@ -2,8 +2,6 @@
 /* = Media Queries = */
 /* ================= */
 
-
-
 // UP TO LANDSCAPE PHONE
 // ---------------------
 
@@ -26,15 +24,16 @@
       line-height: 1;
       &:hover {
         text-decoration: none;
-        background-color: #EEE;
+        background-color: #eee;
         border: 0;
       }
     }
   }
-  .nav-tabs > .active > a, .nav-tabs > .active > a:hover {
+  .nav-tabs > .active > a,
+  .nav-tabs > .active > a:hover {
     border: 0;
     color: white;
-    background-color: #08C;
+    background-color: #08c;
   }
 }
 

@@ -12,14 +12,12 @@
 // For phone and tablet devices
 // -------------------------------------------------------------
 
-
 // REPEAT VARIABLES & MIXINS
 // -------------------------
 // Required since we compile the responsive stuff separately
 
-@import "variables.less"; // Modify this for custom colors, font-sizes, etc
-@import "mixins.less";
-
+@import 'variables.less'; // Modify this for custom colors, font-sizes, etc
+@import 'mixins.less';
 
 // RESPONSIVE CLASSES
 // ------------------
@@ -31,13 +29,10 @@
   visibility: hidden;
 }
 
-
-
 // UP TO LANDSCAPE PHONE
 // ---------------------
 
 @media screen and (max-width: 480px) {
-
   // Smooth out the collapsing/expanding nav
   .nav-collapse {
     -webkit-transform: translate3d(0, 0, 0); // activate the GPU
@@ -50,28 +45,28 @@
   }
 
   // Make span* classes full width
-  input[class*="span"],
-  select[class*="span"],
-  textarea[class*="span"],
+  input[class*='span'],
+  select[class*='span'],
+  textarea[class*='span'],
   .uneditable-input {
     display: block;
     width: 100%;
     min-height: 28px; /* Make inputs at least the height of their button counterpart */
     /* Makes inputs behave like true block-level elements */
     -webkit-box-sizing: border-box; /* Older Webkit */
-       -moz-box-sizing: border-box; /* Older FF */
-        -ms-box-sizing: border-box; /* IE8 */
-            box-sizing: border-box; /* CSS3 spec*/
+    -moz-box-sizing: border-box; /* Older FF */
+    -ms-box-sizing: border-box; /* IE8 */
+    box-sizing: border-box; /* CSS3 spec*/
   }
   // But don't let it screw up prepend/append inputs
-  .input-prepend input[class*="span"],
-  .input-append input[class*="span"] {
+  .input-prepend input[class*='span'],
+  .input-append input[class*='span'] {
     width: auto;
   }
 
   // Update checkboxes for iOS
-  input[type="checkbox"],
-  input[type="radio"] {
+  input[type='checkbox'],
+  input[type='radio'] {
     border: 1px solid #ccc;
   }
 
@@ -99,12 +94,14 @@
   // Modals
   .modal {
     position: absolute;
-    top:   10px;
-    left:  10px;
+    top: 10px;
+    left: 10px;
     right: 10px;
     width: auto;
     margin: 0;
-    &.fade.in { top: auto; }
+    &.fade.in {
+      top: auto;
+    }
   }
   .modal-header .close {
     padding: 10px;
@@ -115,10 +112,7 @@
   .carousel-caption {
     position: static;
   }
-
 }
-
-
 
 // LANDSCAPE PHONE TO SMALL DESKTOP & PORTRAIT TABLET
 // --------------------------------------------------
@@ -140,25 +134,24 @@
     margin-left: 0;
   }
   // Make all columns even
-  .row > [class*="span"],
-  .row-fluid > [class*="span"] {
+  .row > [class*='span'],
+  .row-fluid > [class*='span'] {
     float: none;
     display: block;
     width: auto;
     margin: 0;
   }
-  input[class*="span"], textarea[class*="span"], .uneditable-input[class*="span"] {
+  input[class*='span'],
+  textarea[class*='span'],
+  .uneditable-input[class*='span'] {
     width: 98%;
   }
 }
-
-
 
 // PORTRAIT TABLET TO DEFAULT DESKTOP
 // ----------------------------------
 
 @media screen and (min-width: 768px) and (max-width: 979px) {
-
   // Fixed grid
   #gridSystem > .generate(12, 42px, 20px);
 
@@ -167,16 +160,12 @@
 
   // Input grid
   #inputGridSystem > .generate(12, 42px, 20px);
-
 }
-
-
 
 // PRINT
 // ----------------------------------
 
 @media print {
-
   // Fixed grid
   #gridSystem > .generate(12, 42px, 20px);
 
@@ -185,15 +174,11 @@
 
   // Input grid
   #inputGridSystem > .generate(12, 42px, 20px);
-
 }
-
-
 
 // TABLETS AND BELOW
 // -----------------
 @media screen and (max-width: 979px) {
-
   // UNFIX THE TOPBAR
   // ----------------
   // Remove any padding from the body
@@ -285,7 +270,8 @@
     margin: (@baseLineHeight / 2) 0;
     border-top: 1px solid @navbarBackground;
     border-bottom: 1px solid @navbarBackground;
-    @shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.1);
+    @shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 1px 0 rgba(255, 255, 255, 0.1);
     .box-shadow(@shadow);
   }
   // Pull right (secondary) nav content
@@ -295,7 +281,7 @@
   }
   // Static navbar
   .navbar-static .navbar-inner {
-    padding-left:  10px;
+    padding-left: 10px;
     padding-right: 10px;
   }
   // Navbar button
@@ -310,8 +296,6 @@
   }
 }
 
-
-
 // DEFAULT DESKTOP
 // ---------------
 
@@ -321,13 +305,10 @@
   }
 }
 
-
-
 // LARGE DESKTOP & UP
 // ------------------
 
 @media screen and (min-width: 1200px) {
-
   // Fixed grid
   #gridSystem > .generate(12, 70px, 30px);
 
@@ -344,5 +325,4 @@
   .thumbnails > li {
     margin-left: 30px;
   }
-
 }

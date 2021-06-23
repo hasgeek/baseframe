@@ -7,7 +7,7 @@
  *
  * Date: September 26, 2012
  */
-!(function(t) {
+!(function (t) {
   function e(e) {
     (this.$element = t(e)),
       (this.original_text = this.$element.html().trim()),
@@ -26,7 +26,8 @@
       var e,
         i,
         a = [],
-        s = /<([a-z]+)([^<]*)(?:>(.*?(?!<\1>)*)<\/\1>|\s+\/>)(['.?!,]*)|((?:[^<>\s])+['.?!,]*\w?|<br\s?\/?>)/gi,
+        s =
+          /<([a-z]+)([^<]*)(?:>(.*?(?!<\1>)*)<\/\1>|\s+\/>)(['.?!,]*)|((?:[^<>\s])+['.?!,]*\w?|<br\s?\/?>)/gi,
         o = s.exec(t);
       o && e !== s.lastIndex;
 
@@ -45,7 +46,7 @@
   }
   function i(e, n, r) {
     e = e.replace(r, '');
-    var i = function(n, a) {
+    var i = function (n, a) {
         var s,
           o,
           l,
@@ -128,12 +129,12 @@
     o,
     l = { center: 'center', left: 'left', right: 'right' },
     h = { auto: 'auto' };
-  (e.prototype.updateSettings = function(e) {
+  (e.prototype.updateSettings = function (e) {
     this.settings = t.extend(this.settings, e);
   }),
     (s = {
-      init: function(n) {
-        return this.each(function() {
+      init: function (n) {
+        return this.each(function () {
           var r = t(this),
             i = r.data('trunk8');
           i || r.data('trunk8', (i = new e(this))),
@@ -141,24 +142,24 @@
             a.call(r);
         });
       },
-      update: function(e) {
-        return this.each(function() {
+      update: function (e) {
+        return this.each(function () {
           var n = t(this);
           e && (n.data('trunk8').original_text = e), a.call(n);
         });
       },
-      revert: function() {
-        return this.each(function() {
+      revert: function () {
+        return this.each(function () {
           var e = t(this).data('trunk8').original_text;
           t(this).html(e);
         });
       },
-      getSettings: function() {
+      getSettings: function () {
         return t(this.get(0)).data('trunk8').settings;
       },
     }),
     (o = {
-      eatStr: function(e, n, r, i) {
+      eatStr: function (e, n, r, i) {
         var a,
           s,
           h = e.length,
@@ -193,7 +194,7 @@
             t.error('Invalid side "' + n + '".');
         }
       },
-      getLineHeight: function(e) {
+      getLineHeight: function (e) {
         var n = t(e).css('float');
         'none' !== n && t(e).css('float', 'none');
         var r = t(e).css('position');
@@ -206,19 +207,16 @@
             .html('i')
             .wrap('<div id="' + s + '" />'),
           (i = t('#' + s).innerHeight()),
-          t(e)
-            .html(a)
-            .css({ float: n, position: r })
-            .unwrap(),
+          t(e).html(a).css({ float: n, position: r }).unwrap(),
           i
         );
       },
     }),
     (o.eatStr.cache = {}),
-    (o.eatStr.generateKey = function() {
+    (o.eatStr.generateKey = function () {
       return Array.prototype.join.call(arguments, '');
     }),
-    (t.fn.trunk8 = function(e) {
+    (t.fn.trunk8 = function (e) {
       return s[e]
         ? s[e].apply(this, Array.prototype.slice.call(arguments, 1))
         : 'object' != typeof e && e
@@ -232,6 +230,6 @@
       tooltip: !0,
       width: h.auto,
       parseHTML: !1,
-      onTruncate: function() {},
+      onTruncate: function () {},
     });
 })(jQuery);
