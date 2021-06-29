@@ -150,8 +150,6 @@ function activate_geoname_autocomplete(
 
 function activateZoomPopup() {
   if ($('.markdown').length > 0) {
-    $('body').append('<div class="markdown-modal markdown"></div>');
-
     $('abbr').each(function () {
       if ($(this).offset().left > $(window).width() * 0.7) {
         $(this).addClass('tooltip-right');
@@ -161,8 +159,14 @@ function activateZoomPopup() {
 
   $('body').on('click', '.markdown table, .markdown img', function (event) {
     event.preventDefault();
+    $('body').append('<div class="markdown-modal markdown"></div>');
     $('.markdown-modal').html($(this)[0].outerHTML);
     $('.markdown-modal').modal();
+  });
+
+  $('body').on($.modal.AFTER_CLOSE, '.markdown-modal', function (event) {
+    event.preventDefault();
+    $('.markdown-modal').remove();
   });
 }
 

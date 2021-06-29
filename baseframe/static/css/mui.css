@@ -1695,17 +1695,11 @@ body {
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   font-size: 14px;
   font-weight: 400;
-  line-height: 21px;
+  line-height: 1.5;
   color: #1f2d3d;
   background-color: #f9f9f9;
 }
 
-@media (min-width: 1200px) {
-  body {
-    font-size: 16px;
-    line-height: 24px;
-  }
-}
 a {
   color: #0f73ed;
   text-decoration: none;
@@ -1721,31 +1715,15 @@ a:focus {
 }
 
 p {
-  margin: 0 0 14px;
+  margin: 0 0 10.5px;
 }
 
-@media (min-width: 1200px) {
-  p {
-    margin-bottom: 16px;
-  }
-}
 ul,
 ol {
   margin-top: 0;
-  margin-bottom: 14px;
-  padding-left: 20px;
+  margin-bottom: 10.5px;
 }
 
-ol {
-  padding-left: 25px;
-}
-
-@media (min-width: 1200px) {
-  ul,
-  ol {
-    margin-bottom: 16px;
-  }
-}
 hr {
   margin-top: 21px;
   margin-bottom: 21px;
@@ -1760,35 +1738,9 @@ strong {
 
 abbr[title] {
   cursor: help;
-  position: relative;
-  text-decoration: underline dotted;
-  -webkit-text-decoration: underline;
-  -webkit-text-decoration-style: dotted;
+  border-bottom: 1px dotted #0f73ed;
 }
 
-@media (hover: none) {
-  abbr[title]:hover::after,
-  abbr[title]:focus::after {
-    content: attr(title);
-    position: absolute;
-    left: 0;
-    bottom: -30px;
-    background-color: #f1f1f1;
-    color: #1f2d3d;
-    border-radius: 2px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
-    font-size: 14px;
-    padding: 4px;
-    z-index: 10000;
-    min-width: 100px;
-  }
-
-  abbr[title].tooltip-right:hover::after,
-  abbr[title].tooltip-right:focus::after {
-    left: auto;
-    right: 0;
-  }
-}
 h1,
 h2,
 h3 {
@@ -3983,13 +3935,63 @@ body {
   padding-bottom: 0;
 }
 
-h1,
-h2,
-h3 {
-  margin-top: 8px;
-  margin-bottom: 8px;
+body {
+  font-size: 14px;
+  line-height: 21px;
 }
 
+@media (min-width: 1200px) {
+  body {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 8px;
+  margin-bottom: 14px;
+}
+
+@media (min-width: 1200px) {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 16px;
+  }
+}
+p {
+  margin: 0 0 14px;
+}
+
+@media (min-width: 1200px) {
+  p {
+    margin-bottom: 16px;
+  }
+}
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: 14px;
+  padding-left: 20px;
+}
+
+ol {
+  padding-left: 25px;
+}
+
+@media (min-width: 1200px) {
+  ul,
+  ol {
+    margin-bottom: 16px;
+  }
+}
 ul > ul,
 ul > ol,
 ol > ol,
@@ -3997,11 +3999,53 @@ ol > ul {
   margin-bottom: 0;
 }
 
-li p + ul,
-li p + ol {
-  margin-bottom: 8px;
+abbr[title] {
+  cursor: help;
+  position: relative;
+  text-decoration: underline dotted;
+  -webkit-text-decoration: underline;
+  -webkit-text-decoration-style: dotted;
+  border-bottom: none;
 }
 
+@media (hover: none) {
+  abbr[title]:hover::after,
+  abbr[title]:focus::after {
+    content: attr(title);
+    position: absolute;
+    left: 0;
+    bottom: -30px;
+    background-color: #f1f1f1;
+    color: #1f2d3d;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+    font-size: 14px;
+    padding: 4px;
+    z-index: 10000;
+    min-width: 100px;
+  }
+
+  abbr[title].tooltip-right:hover::after,
+  abbr[title].tooltip-right:focus::after {
+    left: auto;
+    right: 0;
+  }
+}
+code,
+kbd,
+samp {
+  font-size: 14px;
+  line-height: 21px;
+}
+
+@media (min-width: 1200px) {
+  code,
+  kbd,
+  samp {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
 .mui-container {
   padding: 0;
 }
@@ -4157,6 +4201,9 @@ blockquote {
   margin-left: -12px;
   margin-top: -1px;
 }
+.footnote ol li:nth-child(n + 10):before {
+  margin-left: -17px;
+}
 
 .markdown {
   overflow-wrap: break-word;
@@ -4259,7 +4306,7 @@ blockquote {
   clear: both;
   position: relative;
   margin-top: 16px;
-  background: whiteSmoke url('/_baseframe/img/shadow.png?1457696304') no-repeat
+  background: whiteSmoke url('/_baseframe/img/shadow.png?1460092674') no-repeat
     top center;
 }
 .footer .footer__container {
