@@ -15,16 +15,9 @@
     font-family: $mui-base-font-family;
     font-size: $mui-base-font-size;
     font-weight: $mui-base-font-weight;
-    line-height: $mui-base-line-height-px;
+    line-height: $mui-base-line-height;
     color: $mui-base-font-color;
     background-color: $mui-body-bg-color;
-  }
-
-  @media (min-width: 1200px) {
-    body {
-      font-size: $mui-base-font-size-desktop;
-      line-height: $mui-base-line-height-px-desktop;
-    }
   }
 
   // Links
@@ -44,32 +37,14 @@
 
   // paragraphs
   p {
-    margin: 0 0 14px;
-  }
-
-  @media (min-width: 1200px) {
-    p {
-      margin-bottom: 16px;
-    }
+    margin: 0 0 ($mui-base-line-height-computed / 2);
   }
 
   // lists
   ul,
   ol {
     margin-top: 0;
-    margin-bottom: 14px;
-    padding-left: 20px;
-  }
-
-  ol {
-    padding-left: 25px;
-  }
-
-  @media (min-width: 1200px) {
-    ul,
-    ol {
-      margin-bottom: 16px;
-    }
+    margin-bottom: ($mui-base-line-height-computed / 2);
   }
 
   // Horizontal rules
@@ -89,33 +64,7 @@
   // Abbreviations
   abbr[title] {
     cursor: help;
-    position: relative;
-    text-decoration: underline dotted;
-    -webkit-text-decoration: underline;
-    -webkit-text-decoration-style: dotted;
-  }
-
-  @media (hover: none) {
-    abbr[title]:hover::after,
-    abbr[title]:focus::after {
-      content: attr(title);
-      position: absolute;
-      left: 0;
-      bottom: -30px;
-      background-color: $mui-bg-color-dark;
-      color: $mui-text-dark;
-      border-radius: 2px;
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19);
-      font-size: 14px;
-      padding: 4px;
-      z-index: 10000;
-      min-width: 100px;
-    }
-    abbr[title].tooltip-right:hover::after,
-    abbr[title].tooltip-right:focus::after {
-      left: auto;
-      right: 0;
-    }
+    border-bottom: 1px dotted $mui-abbr-border-color;
   }
 
   // headers
