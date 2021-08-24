@@ -499,6 +499,8 @@ class TestFilters(TestCaseBaseframe):
             == "example.com/some/path"
         )
         assert filters.cleanurl_filter("http://www.example.com/") == "example.com"
+        assert filters.cleanurl_filter("https://example.com/") == "example.com"
+        assert filters.cleanurl_filter("https://windows.com/") == "windows.com"
         assert filters.cleanurl_filter("//www.example.com/") == "example.com"
         assert filters.cleanurl_filter("//test/") == "test"
         # cannot process if scheme is missing and no // to begin with

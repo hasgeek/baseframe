@@ -384,7 +384,10 @@ def cleanurl_filter(url: Union[str, furl]) -> str:
     if not isinstance(url, furl):
         url = furl(url)
     url.path.normalize()
-    netloc = url.netloc.lstrip('www.') if url.netloc else url.netloc
+    if url.netloc is not None and url.netloc.startswith('www.'):
+        netloc = url.netloc[4:]
+    else:
+        netloc = url.netloc
     return furl().set(netloc=netloc, path=url.path).url.lstrip('//').rstrip('/')
 
 
