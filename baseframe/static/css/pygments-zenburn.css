@@ -1,70 +1,222 @@
-.syntax code, .syntax pre { color: #fdce93; background-color: #3f3f3f; border: 0;}
-.syntax .hll { background-color: #222; }
-.syntax .c { color: #7f9f7f; }
-.syntax .err { color: #e37170; background-color: #3d3535; }
-.syntax .g { color: #7f9f7f; }
-.syntax .k { color: #f0dfaf; }
-.syntax .l { color: #ccc; }
-.syntax .n { color: #dcdccc; }
-.syntax .o { color: #f0efd0; }
-.syntax .x { color: #ccc; }
-.syntax .p { color: #41706f; }
-.syntax .cm { color: #7f9f7f; }
-.syntax .cp { color: #7f9f7f; }
-.syntax .c1 { color: #7f9f7f; }
-.syntax .cs { color: #cd0000; font-weight: bold; }
-.syntax .gd { color: #cd0000; }
-.syntax .ge { color: #ccc; font-style: italic; }
-.syntax .gr { color: red; }
-.syntax .gh { color: #dcdccc; font-weight: bold; }
-.syntax .gi { color: #00cd00; }
-.syntax .go { color: gray; }
-.syntax .gp { color: #dcdccc; font-weight: bold; }
-.syntax .gs { color: #ccc; font-weight: bold; }
-.syntax .gu { color: purple; font-weight: bold; }
-.syntax .gt { color: #0040D0; }
-.syntax .kc { color: #dca3a3; }
-.syntax .kd { color: #ffff86; }
-.syntax .kn { color: #dfaf8f; font-weight: bold; }
-.syntax .kp { color: #cdcf99; }
-.syntax .kr { color: #cdcd00; }
-.syntax .kt { color: #00cd00; }
-.syntax .ld { color: #cc9393; }
-.syntax .m { color: #8cd0d3; }
-.syntax .s { color: #cc9393; }
-.syntax .na { color: #9ac39f; }
-.syntax .nb { color: #efef8f; }
-.syntax .nc { color: #efef8f; }
-.syntax .no { color: #ccc; }
-.syntax .nd { color: #ccc; }
-.syntax .ni { color: #c28182; }
-.syntax .ne { color: #c3bf9f; font-weight: bold; }
-.syntax .nf { color: #efef8f; }
-.syntax .nl { color: #ccc; }
-.syntax .nn { color: #8fbede; }
-.syntax .nx { color: #ccc; }
-.syntax .py { color: #ccc; }
-.syntax .nt { color: #9ac39f; }
-.syntax .nv { color: #dcdccc; }
-.syntax .ow { color: #f0efd0; }
-.syntax .w { color: #ccc; }
-.syntax .mf { color: #8cd0d3; }
-.syntax .mh { color: #8cd0d3; }
-.syntax .mi { color: #8cd0d3; }
-.syntax .mo { color: #8cd0d3; }
-.syntax .sb { color: #cc9393; }
-.syntax .sc { color: #cc9393; }
-.syntax .sd { color: #cc9393; }
-.syntax .s2 { color: #cc9393; }
-.syntax .se { color: #cc9393; }
-.syntax .sh { color: #cc9393; }
-.syntax .si { color: #cc9393; }
-.syntax .sx { color: #cc9393; }
-.syntax .sr { color: #cc9393; }
-.syntax .s1 { color: #cc9393; }
-.syntax .ss { color: #cc9393; }
-.syntax .bp { color: #efef8f; }
-.syntax .vc { color: #efef8f; }
-.syntax .vg { color: #dcdccc; }
-.syntax .vi { color: #ffffc7; }
-.syntax .il { color: #8cd0d3; }
+.syntax code,
+.syntax pre {
+  color: #fdce93;
+  background-color: #3f3f3f;
+  border: 0;
+}
+.syntax .hll {
+  background-color: #222;
+}
+.syntax .c {
+  color: #7f9f7f;
+}
+.syntax .err {
+  color: #e37170;
+  background-color: #3d3535;
+}
+.syntax .g {
+  color: #7f9f7f;
+}
+.syntax .k {
+  color: #f0dfaf;
+}
+.syntax .l {
+  color: #ccc;
+}
+.syntax .n {
+  color: #dcdccc;
+}
+.syntax .o {
+  color: #f0efd0;
+}
+.syntax .x {
+  color: #ccc;
+}
+.syntax .p {
+  color: #41706f;
+}
+.syntax .cm {
+  color: #7f9f7f;
+}
+.syntax .cp {
+  color: #7f9f7f;
+}
+.syntax .c1 {
+  color: #7f9f7f;
+}
+.syntax .cs {
+  color: #cd0000;
+  font-weight: bold;
+}
+.syntax .gd {
+  color: #cd0000;
+}
+.syntax .ge {
+  color: #ccc;
+  font-style: italic;
+}
+.syntax .gr {
+  color: red;
+}
+.syntax .gh {
+  color: #dcdccc;
+  font-weight: bold;
+}
+.syntax .gi {
+  color: #00cd00;
+}
+.syntax .go {
+  color: gray;
+}
+.syntax .gp {
+  color: #dcdccc;
+  font-weight: bold;
+}
+.syntax .gs {
+  color: #ccc;
+  font-weight: bold;
+}
+.syntax .gu {
+  color: purple;
+  font-weight: bold;
+}
+.syntax .gt {
+  color: #0040d0;
+}
+.syntax .kc {
+  color: #dca3a3;
+}
+.syntax .kd {
+  color: #ffff86;
+}
+.syntax .kn {
+  color: #dfaf8f;
+  font-weight: bold;
+}
+.syntax .kp {
+  color: #cdcf99;
+}
+.syntax .kr {
+  color: #cdcd00;
+}
+.syntax .kt {
+  color: #00cd00;
+}
+.syntax .ld {
+  color: #cc9393;
+}
+.syntax .m {
+  color: #8cd0d3;
+}
+.syntax .s {
+  color: #cc9393;
+}
+.syntax .na {
+  color: #9ac39f;
+}
+.syntax .nb {
+  color: #efef8f;
+}
+.syntax .nc {
+  color: #efef8f;
+}
+.syntax .no {
+  color: #ccc;
+}
+.syntax .nd {
+  color: #ccc;
+}
+.syntax .ni {
+  color: #c28182;
+}
+.syntax .ne {
+  color: #c3bf9f;
+  font-weight: bold;
+}
+.syntax .nf {
+  color: #efef8f;
+}
+.syntax .nl {
+  color: #ccc;
+}
+.syntax .nn {
+  color: #8fbede;
+}
+.syntax .nx {
+  color: #ccc;
+}
+.syntax .py {
+  color: #ccc;
+}
+.syntax .nt {
+  color: #9ac39f;
+}
+.syntax .nv {
+  color: #dcdccc;
+}
+.syntax .ow {
+  color: #f0efd0;
+}
+.syntax .w {
+  color: #ccc;
+}
+.syntax .mf {
+  color: #8cd0d3;
+}
+.syntax .mh {
+  color: #8cd0d3;
+}
+.syntax .mi {
+  color: #8cd0d3;
+}
+.syntax .mo {
+  color: #8cd0d3;
+}
+.syntax .sb {
+  color: #cc9393;
+}
+.syntax .sc {
+  color: #cc9393;
+}
+.syntax .sd {
+  color: #cc9393;
+}
+.syntax .s2 {
+  color: #cc9393;
+}
+.syntax .se {
+  color: #cc9393;
+}
+.syntax .sh {
+  color: #cc9393;
+}
+.syntax .si {
+  color: #cc9393;
+}
+.syntax .sx {
+  color: #cc9393;
+}
+.syntax .sr {
+  color: #cc9393;
+}
+.syntax .s1 {
+  color: #cc9393;
+}
+.syntax .ss {
+  color: #cc9393;
+}
+.syntax .bp {
+  color: #efef8f;
+}
+.syntax .vc {
+  color: #efef8f;
+}
+.syntax .vg {
+  color: #dcdccc;
+}
+.syntax .vi {
+  color: #ffffc7;
+}
+.syntax .il {
+  color: #8cd0d3;
+}

@@ -3,10 +3,18 @@
 
 // Recalculate z-index where appropriate
 .modal-open {
-  .dropdown-menu {  z-index: @zindexDropdown + @zindexModal; }
-  .dropdown.open { *z-index: @zindexDropdown + @zindexModal; }
-  .popover       {  z-index: @zindexPopover  + @zindexModal; }
-  .tooltip       {  z-index: @zindexTooltip  + @zindexModal; }
+  .dropdown-menu {
+    z-index: @zindexDropdown + @zindexModal;
+  }
+  .dropdown.open {
+    *z-index: @zindexDropdown + @zindexModal;
+  }
+  .popover {
+    z-index: @zindexPopover + @zindexModal;
+  }
+  .tooltip {
+    z-index: @zindexTooltip + @zindexModal;
+  }
 }
 
 // Background
@@ -19,7 +27,9 @@
   z-index: @zindexModalBackdrop;
   background-color: @black;
   // Fade for backdrop
-  &.fade { opacity: 0; }
+  &.fade {
+    opacity: 0;
+  }
 }
 
 .modal-backdrop,
@@ -39,7 +49,7 @@
   margin: -250px 0 0 -280px;
   background-color: @white;
   border: 1px solid #999;
-  border: 1px solid rgba(0,0,0,.3);
+  border: 1px solid rgba(0, 0, 0, 0.3);
   *border: 1px solid #999; /* IE6-7 */
   .border-radius(6px);
   .box-shadow(0 3px 7px rgba(0,0,0,0.3));
@@ -48,13 +58,17 @@
     .transition(e('opacity .3s linear, top .3s ease-out'));
     top: -50%;
   }
-  &.fade.in { top: 50%; }
+  &.fade.in {
+    top: 50%;
+  }
 }
 .modal-header {
   padding: 9px 15px;
   border-bottom: 1px solid #eee;
   // Close icon
-  .close { margin-top: 2px; }
+  .close {
+    margin-top: 2px;
+  }
 }
 
 // Body (where all modal content resises)

@@ -31,73 +31,68 @@
  *     The textarea will use an appropriate height between 50 and 200 pixels.
  */
 
-(function($) {
+(function ($) {
+  // jQuery plugin definition
+  $.fn.TextAreaExpander = function (minHeight, maxHeight) {
+    var hCheck = !($.browser.msie || $.browser.opera);
 
-	// jQuery plugin definition
-	$.fn.TextAreaExpander = function(minHeight, maxHeight) {
+    // resize a textarea
+    function ResizeTextarea(e) {
+      // event or initialize element?
+      e = e.target || e;
 
-		var hCheck = !($.browser.msie || $.browser.opera);
+      // find content length and box width
+      var vlen = e.value.length,
+        ewidth = e.offsetWidth;
+      if (vlen != e.valLength || ewidth != e.boxWidth) {
+        if (hCheck && (vlen < e.valLength || ewidth != e.boxWidth))
+          e.style.height = '0px';
+        var h = Math.max(e.expandMin, Math.min(e.scrollHeight, e.expandMax));
 
-		// resize a textarea
-		function ResizeTextarea(e) {
+        e.style.overflow = e.scrollHeight > h ? 'auto' : 'hidden';
+        e.style.height = h + 'px';
 
-			// event or initialize element?
-			e = e.target || e;
+        e.valLength = vlen;
+        e.boxWidth = ewidth;
+      }
 
-			// find content length and box width
-			var vlen = e.value.length, ewidth = e.offsetWidth;
-			if (vlen != e.valLength || ewidth != e.boxWidth) {
+      return true;
+    }
 
-				if (hCheck && (vlen < e.valLength || ewidth != e.boxWidth)) e.style.height = "0px";
-				var h = Math.max(e.expandMin, Math.min(e.scrollHeight, e.expandMax));
+    // initialize
+    this.each(function () {
+      // is a textarea?
+      if (this.nodeName.toLowerCase() != 'textarea') return;
 
-				e.style.overflow = (e.scrollHeight > h ? "auto" : "hidden");
-				e.style.height = h + "px";
+      // set height restrictions
+      var p = this.className.match(/expand(\d+)\-*(\d+)*/i);
+      this.expandMin = minHeight || (p ? parseInt('0' + p[1], 10) : 0);
+      this.expandMax = maxHeight || (p ? parseInt('0' + p[2], 10) : 99999);
 
-				e.valLength = vlen;
-				e.boxWidth = ewidth;
-			}
+      // initial resize
+      ResizeTextarea(this);
 
-			return true;
-		};
+      // zero vertical padding and add events
+      if (!this.Initialized) {
+        this.Initialized = true;
+        $(this).css('padding-top', 0).css('padding-bottom', 0);
+        $(this).bind('keyup', ResizeTextarea).bind('focus', ResizeTextarea);
+      }
+    });
 
-		// initialize
-		this.each(function() {
-
-			// is a textarea?
-			if (this.nodeName.toLowerCase() != "textarea") return;
-
-			// set height restrictions
-			var p = this.className.match(/expand(\d+)\-*(\d+)*/i);
-			this.expandMin = minHeight || (p ? parseInt('0'+p[1], 10) : 0);
-			this.expandMax = maxHeight || (p ? parseInt('0'+p[2], 10) : 99999);
-
-			// initial resize
-			ResizeTextarea(this);
-
-			// zero vertical padding and add events
-			if (!this.Initialized) {
-				this.Initialized = true;
-				$(this).css("padding-top", 0).css("padding-bottom", 0);
-				$(this).bind("keyup", ResizeTextarea).bind("focus", ResizeTextarea);
-			}
-		});
-
-		return this;
-	};
-
+    return this;
+  };
 })(jQuery);
-
 
 // Initialize all expanding textareas.
 // Activate on page load for Mozilla and on DOM-ready
 // for other browsers. Yucky, but what to do?
 if (jQuery.browser.mozilla) {
-    jQuery(window).load(function() {
-    	jQuery("textarea[class*=expand]").TextAreaExpander();
-    });
+  jQuery(window).load(function () {
+    jQuery('textarea[class*=expand]').TextAreaExpander();
+  });
 } else {
-    jQuery(function() {
-    	jQuery("textarea[class*=expand]").TextAreaExpander();
-    });
+  jQuery(function () {
+    jQuery('textarea[class*=expand]').TextAreaExpander();
+  });
 }

@@ -31,9 +31,10 @@
   // box-shadow: inset 0 1px 0 #ffffff;
   zoom: 1;
 }
-.datepicker .nav:before, .datepicker .nav:after {
+.datepicker .nav:before,
+.datepicker .nav:after {
   display: table;
-  content: "";
+  content: '';
   zoom: 1;
   *display: inline;
 }
@@ -92,7 +93,8 @@
   width: 36px;
   padding: 0;
 }
-.datepicker .dow, .datepicker .days div {
+.datepicker .dow,
+.datepicker .days div {
   float: left;
   width: 30px;
   line-height: 25px;

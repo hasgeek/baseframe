@@ -230,14 +230,14 @@
 .dropzone.dz-drag-hover .dz-message {
   opacity: 0.15;
   filter: alpha(opacity=15);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=15)";
+  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=15)';
 }
 
 .dropzone.dz-started .dz-message {
   display: block;
   opacity: 0;
   filter: alpha(opacity=0);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
 }
 
 .dropzone .dz-preview,
@@ -252,7 +252,7 @@
   display: block;
   opacity: 0.1;
   filter: alpha(opacity=10);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=10)";
+  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=10)';
 }
 
 .dropzone .dz-preview.dz-success .dz-success-mark,
@@ -281,7 +281,7 @@
   display: block;
   opacity: 0;
   filter: alpha(opacity=0);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
   -webkit-transition: opacity 0.4s ease-in-out;
   -moz-transition: opacity 0.4s ease-in-out;
   -o-transition: opacity 0.4s ease-in-out;
@@ -357,7 +357,7 @@
   display: block;
   opacity: 0;
   filter: alpha(opacity=0);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
   -webkit-transition: opacity 0.4s ease-in-out;
   -moz-transition: opacity 0.4s ease-in-out;
   -o-transition: opacity 0.4s ease-in-out;
@@ -370,7 +370,7 @@
   display: block;
   opacity: 0;
   filter: alpha(opacity=0);
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=0)';
   -webkit-transition: opacity 0.3s ease-in-out;
   -moz-transition: opacity 0.3s ease-in-out;
   -o-transition: opacity 0.3s ease-in-out;

@@ -1,4 +1,3 @@
-
 // --------------------------------------------------
 // grid modifiers
 // --------------------------------------------------
@@ -7,9 +6,9 @@
 // grid full bleed (no internal padding)
 // --------------------------------------------------
 .#{$reflex-prefix}grid--bleed {
-    [class*="#{$reflex-prefix}grid__col-"] {
-        padding: 0;
-    }
+  [class*='#{$reflex-prefix}grid__col-'] {
+    padding: 0;
+  }
 }
 
 // --------------------------------------------------
@@ -17,15 +16,15 @@
 // --------------------------------------------------
 
 .#{$reflex-prefix}grid--wrap {
-    @include flex-wrap(wrap);
+  @include flex-wrap(wrap);
 }
 
 .#{$reflex-prefix}grid--no-wrap {
-    @include flex-wrap(nowrap);
+  @include flex-wrap(nowrap);
 }
 
 .#{$reflex-prefix}grid--wrap-reverse {
-    @include flex-wrap(wrap-reverse);
+  @include flex-wrap(wrap-reverse);
 }
 
 // --------------------------------------------------
@@ -33,19 +32,19 @@
 // --------------------------------------------------
 
 .#{$reflex-prefix}grid--direction-row {
-    @include flex-direction(row);
+  @include flex-direction(row);
 }
 
 .#{$reflex-prefix}grid--direction-row-reverse {
-    @include flex-direction(row-reverse);
+  @include flex-direction(row-reverse);
 }
 
 .#{$reflex-prefix}grid--direction-column {
-    @include flex-direction(column);
+  @include flex-direction(column);
 }
 
 .#{$reflex-prefix}grid--direction-column-reverse {
-    @include flex-direction(column-reverse);
+  @include flex-direction(column-reverse);
 }
 
 // --------------------------------------------------
@@ -53,34 +52,34 @@
 // --------------------------------------------------
 
 .#{$reflex-prefix}grid--align-start {
-    @include align-items(flex-start);
+  @include align-items(flex-start);
 }
 
 .#{$reflex-prefix}grid--align-end {
-    @include align-items(flex-end);
+  @include align-items(flex-end);
 
-    // fallback to legacy vertical-align
-    [class*="#{$reflex-prefix}grid__col-"] {
-        vertical-align: bottom;
-    }
+  // fallback to legacy vertical-align
+  [class*='#{$reflex-prefix}grid__col-'] {
+    vertical-align: bottom;
+  }
 }
 
 .#{$reflex-prefix}grid--align-center {
-    @include align-items(center);
+  @include align-items(center);
 
-    // fallback to legacy vertical-align
-    [class*="#{$reflex-prefix}grid__col-"] {
-        vertical-align: middle;
-    }
+  // fallback to legacy vertical-align
+  [class*='#{$reflex-prefix}grid__col-'] {
+    vertical-align: middle;
+  }
 }
 
 .#{$reflex-prefix}grid--align-baseline {
-    @include align-items(baseline);
+  @include align-items(baseline);
 
-    // fallback to legacy vertical-align
-    [class*="#{$reflex-prefix}grid__col-"] {
-        vertical-align: baseline;
-    }
+  // fallback to legacy vertical-align
+  [class*='#{$reflex-prefix}grid__col-'] {
+    vertical-align: baseline;
+  }
 }
 
 // --------------------------------------------------
@@ -88,57 +87,55 @@
 // --------------------------------------------------
 
 .#{$reflex-prefix}grid--align-content-start {
-    @include align-content(flex-start);
+  @include align-content(flex-start);
 }
 
 .#{$reflex-prefix}grid--align-content-end {
-    @include align-content(flex-end);
+  @include align-content(flex-end);
 
-    // fallback to legacy vertical-align
-    [class*="#{$reflex-prefix}grid__col-"] {
-        vertical-align: bottom;
-    }
+  // fallback to legacy vertical-align
+  [class*='#{$reflex-prefix}grid__col-'] {
+    vertical-align: bottom;
+  }
 }
 
 .#{$reflex-prefix}grid--align-content-center {
-    @include align-content(center);
+  @include align-content(center);
 }
 
 .#{$reflex-prefix}grid--align-content-space-between {
-    @include align-content(space-between);
+  @include align-content(space-between);
 }
 
 .#{$reflex-prefix}grid--align-content-space-around {
-    @include align-content(space-around);
+  @include align-content(space-around);
 }
-
-
 
 // --------------------------------------------------
 // align-self
 // --------------------------------------------------
 
 .#{$reflex-prefix}grid--align-self-stretch {
-    @include align-self(stretch);
+  @include align-self(stretch);
 }
 
 .#{$reflex-prefix}grid--align-self-start {
-    @include align-self(flex-start);
+  @include align-self(flex-start);
 }
 
 .#{$reflex-prefix}grid--align-self-end {
-    @include align-self(flex-end);
-    vertical-align: bottom;
+  @include align-self(flex-end);
+  vertical-align: bottom;
 }
 
 .#{$reflex-prefix}grid--align-self-center {
-    @include align-self(center);
-    vertical-align: middle;
+  @include align-self(center);
+  vertical-align: middle;
 }
 
 .#{$reflex-prefix}grid--align-self-baseline {
-    @include align-self(baseline);
-    vertical-align: baseline;
+  @include align-self(baseline);
+  vertical-align: baseline;
 }
 
 // --------------------------------------------------
@@ -146,43 +143,43 @@
 // --------------------------------------------------
 
 .#{$reflex-prefix}grid--justify-start {
-    @include justify-content-start();
+  @include justify-content-start();
 }
 
 .#{$reflex-prefix}grid--justify-end {
-    @include justify-content-end();
+  @include justify-content-end();
 
-    .#{$reflex-prefix}grid__cell,
-    [class*="#{$reflex-prefix}grid__col-"] {
-        @include resetTextAlign();
-    }
+  .#{$reflex-prefix}grid__cell,
+  [class*='#{$reflex-prefix}grid__col-'] {
+    @include resetTextAlign();
+  }
 }
 
 .#{$reflex-prefix}grid--justify-center {
-    @include justify-content-center();
+  @include justify-content-center();
 
-    .#{$reflex-prefix}grid__cell,
-    [class*="#{$reflex-prefix}grid__col-"] {
-        @include resetTextAlign();
-    }
+  .#{$reflex-prefix}grid__cell,
+  [class*='#{$reflex-prefix}grid__col-'] {
+    @include resetTextAlign();
+  }
 }
 
 .#{$reflex-prefix}grid--justify-space-between {
-    @include justify-content-space-between();
+  @include justify-content-space-between();
 
-    .#{$reflex-prefix}grid__cell,
-    [class*="#{$reflex-prefix}grid__col-"] {
-        @include resetTextAlign();
-    }
+  .#{$reflex-prefix}grid__cell,
+  [class*='#{$reflex-prefix}grid__col-'] {
+    @include resetTextAlign();
+  }
 }
 
 .#{$reflex-prefix}grid--justify-space-around {
-    @include justify-content-space-around();
+  @include justify-content-space-around();
 
-    .#{$reflex-prefix}grid__cell,
-    [class*="#{$reflex-prefix}grid__col-"] {
-        @include resetTextAlign();
-    }
+  .#{$reflex-prefix}grid__cell,
+  [class*='#{$reflex-prefix}grid__col-'] {
+    @include resetTextAlign();
+  }
 }
 
 // --------------------------------------------------
@@ -190,22 +187,22 @@
 // --------------------------------------------------
 
 .#{$reflex-prefix}grid__col--bleed {
-    padding: 0;
+  padding: 0;
 }
 
 .#{$reflex-prefix}grid__col--bleed-x {
-    padding: $reflex-cell-spacing 0;
+  padding: $reflex-cell-spacing 0;
 }
 
 .#{$reflex-prefix}grid__col--bleed-y {
-    padding: 0 $reflex-cell-spacing;
+  padding: 0 $reflex-cell-spacing;
 }
 
 .#{$reflex-prefix}grid__col--bg {
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    padding-bottom: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding-bottom: 50%;
 }
 
 // --------------------------------------------------
@@ -213,32 +210,32 @@
 // --------------------------------------------------
 
 .#{$reflex-prefix}grid__cell--padding-sm {
-    padding: $reflex-cell-spacing-sm;
+  padding: $reflex-cell-spacing-sm;
 }
 
 .#{$reflex-prefix}grid__cell--padding-md {
-    padding: $reflex-cell-spacing-md;
+  padding: $reflex-cell-spacing-md;
 }
 
 .#{$reflex-prefix}grid__cell--padding-lg {
-    padding: $reflex-cell-spacing-lg;
+  padding: $reflex-cell-spacing-lg;
 }
 
 .#{$reflex-prefix}grid__cell-img {
-    display: block;
-    @include display-flex-only();
-    @include flex(0, 0, auto);
-    margin-left: 0;
-    margin-right: 0;
-    max-width: 100%;
-    width: 100%;
-    height: auto;
+  display: block;
+  @include display-flex-only();
+  @include flex(0, 0, auto);
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+  width: 100%;
+  height: auto;
 }
 
 .#{$reflex-prefix}grid__cell-footer {
-    @include display-flex();
-    width: 100%;
-    margin-top: auto;
+  @include display-flex();
+  width: 100%;
+  margin-top: auto;
 }
 
 // --------------------------------------------------
