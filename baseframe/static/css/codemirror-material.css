@@ -37,3 +37,7 @@
 .CodeMirror-line > span > span::-moz-selection {
   background: Highlight;
 }
+
+.CodeMirror.CodeMirror-empty pre.CodeMirror-placeholder {
+  color: rgba(0, 0, 0, 0.26);
+}
