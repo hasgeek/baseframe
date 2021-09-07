@@ -1,11 +1,11 @@
-@font-face{
-    font-family: 'Fira Sans';
-    src: url('eot/FiraSans-BoldItalic.eot');
-    src: local('Fira Sans Bold Italic'),
-         url('eot/FiraSans-BoldItalic.eot') format('embedded-opentype'),
-         url('woff2/FiraSans-BoldItalic.woff2') format('woff2'),
-         url('woff/FiraSans-BoldItalic.woff') format('woff'),
-         url('ttf/FiraSans-BoldItalic.ttf') format('truetype');
-    font-weight: 700;
-    font-style: italic;
+@font-face {
+  font-family: 'Fira Sans';
+  src: url('eot/FiraSans-BoldItalic.eot');
+  src: local('Fira Sans Bold Italic'),
+    url('eot/FiraSans-BoldItalic.eot') format('embedded-opentype'),
+    url('woff2/FiraSans-BoldItalic.woff2') format('woff2'),
+    url('woff/FiraSans-BoldItalic.woff') format('woff'),
+    url('ttf/FiraSans-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
 }

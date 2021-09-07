@@ -1,118 +1,133 @@
 @media print {
-    // No printing
-    .no-print {
-        display: none !important;
+  // No printing
+  .no-print {
+    display: none !important;
+  }
+  // Only show when printing
+  .print-only {
+    display: block;
+  }
+  img.print-only {
+    display: inline-block;
+  }
+  span.print-only {
+    display: inline;
+  }
+  table.print-only {
+    display: table;
+  }
+  // Make logo plain text when printing
+  #logo {
+    background: none !important;
+    text-indent: 0 !important;
+    width: auto !important;
+    height: 1.5em !important;
+    line-height: 1.5em;
+    padding-top: 0.5em;
+    font-size: 30px;
+    font-weight: 600;
+    a {
+      color: black;
     }
-    // Only show when printing
-    .print-only {
-        display: block;
+  }
+  // Reset colors
+  body,
+  code,
+  pre,
+  legend,
+  label,
+  h1,
+  h2,
+  h3 {
+    color: black;
+  }
+  footer .footer-inner {
+    background: none !important;
+  }
+  .well {
+    border: 1px solid $color-outline;
+    @include box-shadow(none);
+  }
+  .table,
+  .table-bordered {
+    &,
+    th,
+    td,
+    th + th,
+    td + td,
+    th + td,
+    td + th {
+      border-color: $color-outline;
     }
-    img.print-only {
-        display: inline-block;
-    }
-    span.print-only {
-        display: inline;
-    }
-    table.print-only {
-        display: table;
-    }
-    // Make logo plain text when printing
-    #logo {
-        background: none !important;
-        text-indent: 0 !important;
-        width: auto !important;
-        height: 1.5em !important;
-        line-height: 1.5em;
-        padding-top: 0.5em;
-        font-size: 30px;
-        font-weight: 600;
-        a {
-            color: black;
-        }
-    }
-    // Reset colors
-    body, code, pre, legend, label, h1, h2, h3 {
-        color: black;
-    }
-    footer .footer-inner {
-        background: none !important;
-    }
-    .well {
-        border: 1px solid $color-outline;
-        @include box-shadow(none);
-    }
-    .table, .table-bordered {
-        &, th, td, th + th, td + td, th + td, td + th {
-            border-color: $color-outline;
-        }
-    }
-    .print-span1 {
-        width: 42px;
-    }
-    .print-span2 {
-        width: 104px;
-    }
-    .print-span3 {
-        width: 166px;
-    }
-    .print-span4 {
-        width: 228px;
-    }
-    .print-span5 {
-        width: 290px;
-    }
-    .print-span6 {
-        width: 352px;
-    }
-    .print-span7 {
-        width: 414px;
-    }
-    .print-span8 {
-        width: 476px;
-    }
-    .print-span9 {
-        width: 538px;
-    }
-    .print-span10 {
-        width: 600px;
-    }
-    .print-span11 {
-        width: 662px;
-    }
-    .print-span12, .container {
-        width: 724px;
-    }
-    .print-offset1 {
-        margin-left: 82px;
-    }
-    .print-offset2 {
-        margin-left: 144px;
-    }
-    .print-offset3 {
-        margin-left: 206px;
-    }
-    .print-offset4 {
-        margin-left: 268px;
-    }
-    .print-offset5 {
-        margin-left: 330px;
-    }
-    .print-offset6 {
-        margin-left: 392px;
-    }
-    .print-offset7 {
-        margin-left: 454px;
-    }
-    .print-offset8 {
-        margin-left: 516px;
-    }
-    .print-offset9 {
-        margin-left: 578px;
-    }
-    .print-offset10 {
-        margin-left: 640px;
-    }
-    .print-offset11 {
-        margin-left: 702px;
-    }
+  }
+  .print-span1 {
+    width: 42px;
+  }
+  .print-span2 {
+    width: 104px;
+  }
+  .print-span3 {
+    width: 166px;
+  }
+  .print-span4 {
+    width: 228px;
+  }
+  .print-span5 {
+    width: 290px;
+  }
+  .print-span6 {
+    width: 352px;
+  }
+  .print-span7 {
+    width: 414px;
+  }
+  .print-span8 {
+    width: 476px;
+  }
+  .print-span9 {
+    width: 538px;
+  }
+  .print-span10 {
+    width: 600px;
+  }
+  .print-span11 {
+    width: 662px;
+  }
+  .print-span12,
+  .container {
+    width: 724px;
+  }
+  .print-offset1 {
+    margin-left: 82px;
+  }
+  .print-offset2 {
+    margin-left: 144px;
+  }
+  .print-offset3 {
+    margin-left: 206px;
+  }
+  .print-offset4 {
+    margin-left: 268px;
+  }
+  .print-offset5 {
+    margin-left: 330px;
+  }
+  .print-offset6 {
+    margin-left: 392px;
+  }
+  .print-offset7 {
+    margin-left: 454px;
+  }
+  .print-offset8 {
+    margin-left: 516px;
+  }
+  .print-offset9 {
+    margin-left: 578px;
+  }
+  .print-offset10 {
+    margin-left: 640px;
+  }
+  .print-offset11 {
+    margin-left: 702px;
+  }
 }
