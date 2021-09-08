@@ -1,7 +1,11 @@
 @font-face {
   font-family: 'Fira Sans';
   src: url('/_baseframe/fonts/fira/eot/FiraSans-Bold.eot');
-  src: local("Fira Sans Bold"), url('/_baseframe/fonts/fira/eot/FiraSans-Bold.eot') format("embedded-opentype"), url('/_baseframe/fonts/fira/woff/FiraSans-Bold.woff') format("woff"), url('/_baseframe/fonts/fira/ttf/FiraSans-Bold.ttf') format("truetype");
+  src: local('Fira Sans Bold'),
+    url('/_baseframe/fonts/fira/eot/FiraSans-Bold.eot')
+      format('embedded-opentype'),
+    url('/_baseframe/fonts/fira/woff/FiraSans-Bold.woff') format('woff'),
+    url('/_baseframe/fonts/fira/ttf/FiraSans-Bold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
 }

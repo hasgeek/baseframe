@@ -17,255 +17,258 @@
  * limitations under the License.
  * ============================================================ */
 
-!function( $ ){
+!(function ($) {
+  'use strict';
 
-  "use strict"
-
-  var Typeahead = function ( element, options ) {
-    this.$element = $(element)
-    this.options = $.extend({}, $.fn.typeahead.defaults, options)
-    this.matcher = this.options.matcher || this.matcher
-    this.sorter = this.options.sorter || this.sorter
-    this.highlighter = this.options.highlighter || this.highlighter
-    this.$menu = $(this.options.menu).appendTo('body')
-    this.source = this.options.source
-    this.shown = false
-    this.listen()
-  }
+  var Typeahead = function (element, options) {
+    this.$element = $(element);
+    this.options = $.extend({}, $.fn.typeahead.defaults, options);
+    this.matcher = this.options.matcher || this.matcher;
+    this.sorter = this.options.sorter || this.sorter;
+    this.highlighter = this.options.highlighter || this.highlighter;
+    this.$menu = $(this.options.menu).appendTo('body');
+    this.source = this.options.source;
+    this.shown = false;
+    this.listen();
+  };
 
   Typeahead.prototype = {
+    constructor: Typeahead,
 
-    constructor: Typeahead
+    select: function () {
+      var val = this.$menu.find('.active').attr('data-value');
+      this.$element.val(val);
+      return this.hide();
+    },
 
-  , select: function () {
-      var val = this.$menu.find('.active').attr('data-value')
-      this.$element.val(val)
-      return this.hide()
-    }
-
-  , show: function () {
+    show: function () {
       var pos = $.extend({}, this.$element.offset(), {
-        height: this.$element[0].offsetHeight
-      })
+        height: this.$element[0].offsetHeight,
+      });
 
       this.$menu.css({
-        top: pos.top + pos.height
-      , left: pos.left
-      })
+        top: pos.top + pos.height,
+        left: pos.left,
+      });
 
-      this.$menu.show()
-      this.shown = true
-      return this
-    }
+      this.$menu.show();
+      this.shown = true;
+      return this;
+    },
 
-  , hide: function () {
-      this.$menu.hide()
-      this.shown = false
-      return this
-    }
+    hide: function () {
+      this.$menu.hide();
+      this.shown = false;
+      return this;
+    },
 
-  , lookup: function (event) {
-      var that = this
-        , items
-        , q
+    lookup: function (event) {
+      var that = this,
+        items,
+        q;
 
-      this.query = this.$element.val()
+      this.query = this.$element.val();
 
       if (!this.query) {
-        return this.shown ? this.hide() : this
+        return this.shown ? this.hide() : this;
       }
 
       items = $.grep(this.source, function (item) {
-        if (that.matcher(item)) return item
-      })
+        if (that.matcher(item)) return item;
+      });
 
-      items = this.sorter(items)
+      items = this.sorter(items);
 
       if (!items.length) {
-        return this.shown ? this.hide() : this
+        return this.shown ? this.hide() : this;
       }
 
-      return this.render(items.slice(0, this.options.items)).show()
-    }
+      return this.render(items.slice(0, this.options.items)).show();
+    },
 
-  , matcher: function (item) {
-      return ~item.toLowerCase().indexOf(this.query.toLowerCase())
-    }
+    matcher: function (item) {
+      return ~item.toLowerCase().indexOf(this.query.toLowerCase());
+    },
 
-  , sorter: function (items) {
-      var beginswith = []
-        , caseSensitive = []
-        , caseInsensitive = []
-        , item
+    sorter: function (items) {
+      var beginswith = [],
+        caseSensitive = [],
+        caseInsensitive = [],
+        item;
 
-      while (item = items.shift()) {
-        if (!item.toLowerCase().indexOf(this.query.toLowerCase())) beginswith.push(item)
-        else if (~item.indexOf(this.query)) caseSensitive.push(item)
-        else caseInsensitive.push(item)
+      while ((item = items.shift())) {
+        if (!item.toLowerCase().indexOf(this.query.toLowerCase()))
+          beginswith.push(item);
+        else if (~item.indexOf(this.query)) caseSensitive.push(item);
+        else caseInsensitive.push(item);
       }
 
-      return beginswith.concat(caseSensitive, caseInsensitive)
-    }
+      return beginswith.concat(caseSensitive, caseInsensitive);
+    },
 
-  , highlighter: function (item) {
-      return item.replace(new RegExp('(' + this.query + ')', 'ig'), function ($1, match) {
-        return '<strong>' + match + '</strong>'
-      })
-    }
+    highlighter: function (item) {
+      return item.replace(
+        new RegExp('(' + this.query + ')', 'ig'),
+        function ($1, match) {
+          return '<strong>' + match + '</strong>';
+        }
+      );
+    },
 
-  , render: function (items) {
-      var that = this
+    render: function (items) {
+      var that = this;
 
       items = $(items).map(function (i, item) {
-        i = $(that.options.item).attr('data-value', item)
-        i.find('a').html(that.highlighter(item))
-        return i[0]
-      })
+        i = $(that.options.item).attr('data-value', item);
+        i.find('a').html(that.highlighter(item));
+        return i[0];
+      });
 
-      items.first().addClass('active')
-      this.$menu.html(items)
-      return this
-    }
+      items.first().addClass('active');
+      this.$menu.html(items);
+      return this;
+    },
 
-  , next: function (event) {
-      var active = this.$menu.find('.active').removeClass('active')
-        , next = active.next()
+    next: function (event) {
+      var active = this.$menu.find('.active').removeClass('active'),
+        next = active.next();
 
       if (!next.length) {
-        next = $(this.$menu.find('li')[0])
+        next = $(this.$menu.find('li')[0]);
       }
 
-      next.addClass('active')
-    }
+      next.addClass('active');
+    },
 
-  , prev: function (event) {
-      var active = this.$menu.find('.active').removeClass('active')
-        , prev = active.prev()
+    prev: function (event) {
+      var active = this.$menu.find('.active').removeClass('active'),
+        prev = active.prev();
 
       if (!prev.length) {
-        prev = this.$menu.find('li').last()
+        prev = this.$menu.find('li').last();
       }
 
-      prev.addClass('active')
-    }
+      prev.addClass('active');
+    },
 
-  , listen: function () {
+    listen: function () {
       this.$element
-        .on('blur',     $.proxy(this.blur, this))
+        .on('blur', $.proxy(this.blur, this))
         .on('keypress', $.proxy(this.keypress, this))
-        .on('keyup',    $.proxy(this.keyup, this))
+        .on('keyup', $.proxy(this.keyup, this));
 
       if ($.browser.webkit || $.browser.msie) {
-        this.$element.on('keydown', $.proxy(this.keypress, this))
+        this.$element.on('keydown', $.proxy(this.keypress, this));
       }
 
       this.$menu
         .on('click', $.proxy(this.click, this))
-        .on('mouseenter', 'li', $.proxy(this.mouseenter, this))
-    }
+        .on('mouseenter', 'li', $.proxy(this.mouseenter, this));
+    },
 
-  , keyup: function (e) {
-      e.stopPropagation()
-      e.preventDefault()
+    keyup: function (e) {
+      e.stopPropagation();
+      e.preventDefault();
 
-      switch(e.keyCode) {
+      switch (e.keyCode) {
         case 40: // down arrow
         case 38: // up arrow
-          break
+          break;
 
         case 9: // tab
         case 13: // enter
-          if (!this.shown) return
-          this.select()
-          break
+          if (!this.shown) return;
+          this.select();
+          break;
 
         case 27: // escape
-          this.hide()
-          break
+          this.hide();
+          break;
 
         default:
-          this.lookup()
+          this.lookup();
       }
+    },
 
-  }
+    keypress: function (e) {
+      e.stopPropagation();
+      if (!this.shown) return;
 
-  , keypress: function (e) {
-      e.stopPropagation()
-      if (!this.shown) return
-
-      switch(e.keyCode) {
+      switch (e.keyCode) {
         case 9: // tab
         case 13: // enter
         case 27: // escape
-          e.preventDefault()
-          break
+          e.preventDefault();
+          break;
 
         case 38: // up arrow
-          e.preventDefault()
-          this.prev()
-          break
+          e.preventDefault();
+          this.prev();
+          break;
 
         case 40: // down arrow
-          e.preventDefault()
-          this.next()
-          break
+          e.preventDefault();
+          this.next();
+          break;
       }
-    }
+    },
 
-  , blur: function (e) {
-      var that = this
-      e.stopPropagation()
-      e.preventDefault()
-      setTimeout(function () { that.hide() }, 150)
-    }
+    blur: function (e) {
+      var that = this;
+      e.stopPropagation();
+      e.preventDefault();
+      setTimeout(function () {
+        that.hide();
+      }, 150);
+    },
 
-  , click: function (e) {
-      e.stopPropagation()
-      e.preventDefault()
-      this.select()
-    }
+    click: function (e) {
+      e.stopPropagation();
+      e.preventDefault();
+      this.select();
+    },
 
-  , mouseenter: function (e) {
-      this.$menu.find('.active').removeClass('active')
-      $(e.currentTarget).addClass('active')
-    }
-
-  }
-
+    mouseenter: function (e) {
+      this.$menu.find('.active').removeClass('active');
+      $(e.currentTarget).addClass('active');
+    },
+  };
 
   /* TYPEAHEAD PLUGIN DEFINITION
    * =========================== */
 
-  $.fn.typeahead = function ( option ) {
+  $.fn.typeahead = function (option) {
     return this.each(function () {
-      var $this = $(this)
-        , data = $this.data('typeahead')
-        , options = typeof option == 'object' && option
-      if (!data) $this.data('typeahead', (data = new Typeahead(this, options)))
-      if (typeof option == 'string') data[option]()
-    })
-  }
+      var $this = $(this),
+        data = $this.data('typeahead'),
+        options = typeof option == 'object' && option;
+      if (!data) $this.data('typeahead', (data = new Typeahead(this, options)));
+      if (typeof option == 'string') data[option]();
+    });
+  };
 
   $.fn.typeahead.defaults = {
-    source: []
-  , items: 8
-  , menu: '<ul class="typeahead dropdown-menu"></ul>'
-  , item: '<li><a href="#"></a></li>'
-  }
+    source: [],
+    items: 8,
+    menu: '<ul class="typeahead dropdown-menu"></ul>',
+    item: '<li><a href="#"></a></li>',
+  };
 
-  $.fn.typeahead.Constructor = Typeahead
+  $.fn.typeahead.Constructor = Typeahead;
 
-
- /* TYPEAHEAD DATA-API
-  * ================== */
+  /* TYPEAHEAD DATA-API
+   * ================== */
 
   $(function () {
-    $('body').on('focus.typeahead.data-api', '[data-provide="typeahead"]', function (e) {
-      var $this = $(this)
-      if ($this.data('typeahead')) return
-      e.preventDefault()
-      $this.typeahead($this.data())
-    })
-  })
-
-}( window.jQuery );
+    $('body').on(
+      'focus.typeahead.data-api',
+      '[data-provide="typeahead"]',
+      function (e) {
+        var $this = $(this);
+        if ($this.data('typeahead')) return;
+        e.preventDefault();
+        $this.typeahead($this.data());
+      }
+    );
+  });
+})(window.jQuery);

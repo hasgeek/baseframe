@@ -4,7 +4,6 @@
 
 $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
 
-
 .mui-select {
   display: block;
   padding-top: $xFormLabelLineHeight;
@@ -38,7 +37,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     border-radius: 0px;
     box-shadow: none;
     background-color: $mui-input-bg-color;
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==");
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNiIgd2lkdGg9IjEwIj48cG9seWdvbiBwb2ludHM9IjAsMCAxMCwwIDUsNiIgc3R5bGU9ImZpbGw6cmdiYSgwLDAsMCwuMjQpOyIvPjwvc3ZnPg==');
     background-repeat: no-repeat;
     background-position: right center;
     cursor: pointer;
@@ -52,7 +51,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
     padding: 0 25px 0 0;
 
     &::-ms-expand {
-      display: none;  // For IE
+      display: none; // For IE
     }
 
     &:focus {
@@ -67,7 +66,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
       color: mui-color('black-alpha-38');
       cursor: $mui-cursor-disabled;
       background-color: $mui-input-bg-color-disabled;
-      opacity: 1;  // iOS fix for unreadable disabled content
+      opacity: 1; // iOS fix for unreadable disabled content
     }
 
     // disable focus ring in Firefox
@@ -117,7 +116,7 @@ $xFormLabelLineHeight: floor($mui-label-font-size * 1.25);
   }
 
   // Edge bugfix
-  @supports (-ms-ime-align:auto) {
+  @supports (-ms-ime-align: auto) {
     border-left: 1px solid mui-color('black-alpha-12');
     border-top: 1px solid mui-color('black-alpha-12');
   }

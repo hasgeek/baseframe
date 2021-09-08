@@ -12,9 +12,9 @@
  *
  *
  *
-*/
+ */
 
-(function($) {
+(function ($) {
   $.expander = {
     version: '1.4.5',
     defaults: {
@@ -61,18 +61,17 @@
       userCollapseText: 'read less',
       userCollapsePrefix: ' ',
 
-
       // all callback functions have the this keyword mapped to the element in the jQuery set when .expander() is called
 
       onSlice: null, // function() {}
       beforeExpand: null, // function() {},
       afterExpand: null, // function() {},
       onCollapse: null, // function(byUser) {}
-      afterCollapse: null // function() {}
-    }
+      afterCollapse: null, // function() {}
+    },
   };
 
-  $.fn.expander = function(options) {
+  $.fn.expander = function (options) {
     var meth = 'init';
 
     if (typeof options == 'string') {
@@ -81,56 +80,80 @@
     }
 
     var opts = $.extend({}, $.expander.defaults, options),
-        rSelfClose = /^<(?:area|br|col|embed|hr|img|input|link|meta|param).*>$/i,
-        rAmpWordEnd = opts.wordEnd || /(&(?:[^;]+;)?|[a-zA-Z\u00C0-\u0100]+)$/,
-        rOpenCloseTag = /<\/?(\w+)[^>]*>/g,
-        rOpenTag = /<(\w+)[^>]*>/g,
-        rCloseTag = /<\/(\w+)>/g,
-        rLastCloseTag = /(<\/[^>]+>)\s*$/,
-        rTagPlus = /^(<[^>]+>)+.?/,
-        delayedCollapse;
+      rSelfClose = /^<(?:area|br|col|embed|hr|img|input|link|meta|param).*>$/i,
+      rAmpWordEnd = opts.wordEnd || /(&(?:[^;]+;)?|[a-zA-Z\u00C0-\u0100]+)$/,
+      rOpenCloseTag = /<\/?(\w+)[^>]*>/g,
+      rOpenTag = /<(\w+)[^>]*>/g,
+      rCloseTag = /<\/(\w+)>/g,
+      rLastCloseTag = /(<\/[^>]+>)\s*$/,
+      rTagPlus = /^(<[^>]+>)+.?/,
+      delayedCollapse;
 
     var methods = {
-      init: function() {
-        this.each(function() {
-          var i, l, tmp, newChar, summTagless, summOpens, summCloses,
-              lastCloseTag, detailText, detailTagless, html, expand,
-              $thisDetails, $readMore,
-              openTagsForDetails = [],
-              closeTagsForsummaryText = [],
-              defined = {},
-              thisEl = this,
-              $this = $(this),
-              $summEl = $([]),
-              o = $.extend({}, opts, $this.data('expander') || $.meta && $this.data() || {}),
-              hasDetails = !!$this.find('.' + o.detailClass).length,
-              hasBlocks = !!$this.find('*').filter(function() {
-                var display = $(this).css('display');
-                return (/^block|table|list/).test(display);
-              }).length,
-              el = hasBlocks ? 'div' : 'span',
-              detailSelector = el + '.' + o.detailClass,
-              moreClass = o.moreClass + '',
-              lessClass = o.lessClass + '',
-              expandSpeed = o.expandSpeed || 0,
-              allHtml = $.trim( $this.html() ),
-              allText = $.trim( $this.text() ),
-              summaryText = allHtml.slice(0, o.slicePoint);
+      init: function () {
+        this.each(function () {
+          var i,
+            l,
+            tmp,
+            newChar,
+            summTagless,
+            summOpens,
+            summCloses,
+            lastCloseTag,
+            detailText,
+            detailTagless,
+            html,
+            expand,
+            $thisDetails,
+            $readMore,
+            openTagsForDetails = [],
+            closeTagsForsummaryText = [],
+            defined = {},
+            thisEl = this,
+            $this = $(this),
+            $summEl = $([]),
+            o = $.extend(
+              {},
+              opts,
+              $this.data('expander') || ($.meta && $this.data()) || {}
+            ),
+            hasDetails = !!$this.find('.' + o.detailClass).length,
+            hasBlocks = !!$this.find('*').filter(function () {
+              var display = $(this).css('display');
+              return /^block|table|list/.test(display);
+            }).length,
+            el = hasBlocks ? 'div' : 'span',
+            detailSelector = el + '.' + o.detailClass,
+            moreClass = o.moreClass + '',
+            lessClass = o.lessClass + '',
+            expandSpeed = o.expandSpeed || 0,
+            allHtml = $.trim($this.html()),
+            allText = $.trim($this.text()),
+            summaryText = allHtml.slice(0, o.slicePoint);
 
           // allow multiple classes for more/less links
           o.moreSelector = 'span.' + moreClass.split(' ').join('.');
           o.lessSelector = 'span.' + lessClass.split(' ').join('.');
           // bail out if we've already set up the expander on this element
-          if ( $.data(this, 'expanderInit') ) {
+          if ($.data(this, 'expanderInit')) {
             return;
           }
 
           $.data(this, 'expanderInit', true);
           $.data(this, 'expander', o);
           // determine which callback functions are defined
-          $.each(['onSlice','beforeExpand', 'afterExpand', 'onCollapse', 'afterCollapse'], function(index, val) {
-            defined[val] = $.isFunction(o[val]);
-          });
+          $.each(
+            [
+              'onSlice',
+              'beforeExpand',
+              'afterExpand',
+              'onCollapse',
+              'afterCollapse',
+            ],
+            function (index, val) {
+              defined[val] = $.isFunction(o[val]);
+            }
+          );
 
           // back up if we're in the middle of a tag or word
           summaryText = backup(summaryText);
@@ -156,8 +179,8 @@
 
           // filter out self-closing tags
           tmp = [];
-          $.each(summOpens, function(index, val) {
-            if ( !rSelfClose.test(val) ) {
+          $.each(summOpens, function (index, val) {
+            if (!rSelfClose.test(val)) {
               tmp.push(val);
             }
           });
@@ -172,13 +195,12 @@
           // tags that start in summary and end in detail need:
           // a). close tag at end of summary
           // b). open tag at beginning of detail
-          $.each(summOpens, function(index, val) {
+          $.each(summOpens, function (index, val) {
             var thisTagName = val.replace(rOpenTag, '$1');
             var closePosition = $.inArray(thisTagName, summCloses);
             if (closePosition === -1) {
               openTagsForDetails.push(val);
               closeTagsForsummaryText.push('</' + thisTagName + '>');
-
             } else {
               summCloses.splice(closePosition, 1);
             }
@@ -188,20 +210,21 @@
           closeTagsForsummaryText.reverse();
 
           // create necessary summary and detail elements if they don't already exist
-          if ( !hasDetails ) {
-
+          if (!hasDetails) {
             // end script if there is no detail text or if detail has fewer words than widow option
             detailText = allHtml.slice(summaryText.length);
-            detailTagless = $.trim( detailText.replace(rOpenCloseTag, '') );
+            detailTagless = $.trim(detailText.replace(rOpenCloseTag, ''));
 
-            if ( detailTagless === '' || detailTagless.split(/\s+/).length < o.widow ) {
+            if (
+              detailTagless === '' ||
+              detailTagless.split(/\s+/).length < o.widow
+            ) {
               return;
             }
             // otherwise, continue...
             lastCloseTag = closeTagsForsummaryText.pop() || '';
             summaryText += closeTagsForsummaryText.join('');
             detailText = openTagsForDetails.join('') + detailText;
-
           } else {
             // assume that even if there are details, we still need readMore/readLess/summary elements
             // (we already bailed out earlier when readMore el was found)
@@ -218,7 +241,9 @@
 
             lastCloseTag = '';
           }
-          o.moreLabel = $this.find(o.moreSelector).length ? '' : buildMoreLabel(o);
+          o.moreLabel = $this.find(o.moreSelector).length
+            ? ''
+            : buildMoreLabel(o);
 
           if (hasBlocks) {
             detailText = allHtml;
@@ -236,14 +261,14 @@
             // but could be tricky so use at your own risk.
             tmp = o.onSlice.call(thisEl, o);
 
-          // so, if the returned value from the onSlice function is an object with a details property, we'll use that!
+            // so, if the returned value from the onSlice function is an object with a details property, we'll use that!
             o = tmp && tmp.details ? tmp : o;
           }
 
           // build the html with summary and detail and use it to replace old contents
           html = buildHTML(o, hasBlocks);
 
-          $this.html( html );
+          $this.html(html);
 
           // set up details and summary for expanding/collapsing
           $thisDetails = $this.find(detailSelector);
@@ -255,15 +280,19 @@
           // inline-block. This is necessary for slideDown, but
           // problematic for other "showing" animations.
           // Fixes #46
-          if (o.collapseEffect === 'slideUp' && o.expandEffect !== 'slideDown' || $this.is(':hidden')) {
-            $thisDetails.css({display: 'none'});
+          if (
+            (o.collapseEffect === 'slideUp' &&
+              o.expandEffect !== 'slideDown') ||
+            $this.is(':hidden')
+          ) {
+            $thisDetails.css({ display: 'none' });
           } else {
             $thisDetails[o.collapseEffect](0);
           }
 
           $summEl = $this.find('div.' + o.summaryClass);
 
-          expand = function(event) {
+          expand = function (event) {
             event.preventDefault();
             $readMore.hide();
             $summEl.hide();
@@ -271,78 +300,94 @@
               o.beforeExpand.call(thisEl);
             }
 
-            $thisDetails.stop(false, true)[o.expandEffect](expandSpeed, function() {
-              $thisDetails.css({zoom: ''});
-              if (defined.afterExpand) {o.afterExpand.call(thisEl);}
-              delayCollapse(o, $thisDetails, thisEl);
-            });
+            $thisDetails
+              .stop(false, true)
+              [o.expandEffect](expandSpeed, function () {
+                $thisDetails.css({ zoom: '' });
+                if (defined.afterExpand) {
+                  o.afterExpand.call(thisEl);
+                }
+                delayCollapse(o, $thisDetails, thisEl);
+              });
           };
 
-          $readMore.find('a').unbind('click.expander').bind('click.expander', expand);
+          $readMore
+            .find('a')
+            .unbind('click.expander')
+            .bind('click.expander', expand);
 
-          if ( o.userCollapse && !$this.find(o.lessSelector).length ) {
+          if (o.userCollapse && !$this.find(o.lessSelector).length) {
             $this
-            .find(detailSelector)
-            .append('<span class="' + o.lessClass + '">' + o.userCollapsePrefix + '<a href="#">' + o.userCollapseText + '</a></span>');
+              .find(detailSelector)
+              .append(
+                '<span class="' +
+                  o.lessClass +
+                  '">' +
+                  o.userCollapsePrefix +
+                  '<a href="#">' +
+                  o.userCollapseText +
+                  '</a></span>'
+              );
           }
 
           $this
-          .find(o.lessSelector + ' a')
-          .unbind('click.expander')
-          .bind('click.expander', function(event) {
-            event.preventDefault();
-            clearTimeout(delayedCollapse);
-            var $detailsCollapsed = $(this).closest(detailSelector);
-            reCollapse(o, $detailsCollapsed);
-            if (defined.onCollapse) {
-              o.onCollapse.call(thisEl, true);
-            }
-          });
-
+            .find(o.lessSelector + ' a')
+            .unbind('click.expander')
+            .bind('click.expander', function (event) {
+              event.preventDefault();
+              clearTimeout(delayedCollapse);
+              var $detailsCollapsed = $(this).closest(detailSelector);
+              reCollapse(o, $detailsCollapsed);
+              if (defined.onCollapse) {
+                o.onCollapse.call(thisEl, true);
+              }
+            });
         }); // this.each
       },
-      destroy: function() {
+      destroy: function () {
+        this.each(function () {
+          var o,
+            details,
+            $this = $(this);
 
-        this.each(function() {
-          var o, details,
-              $this = $(this);
-
-          if ( !$this.data('expanderInit') ) {
+          if (!$this.data('expanderInit')) {
             return;
           }
 
-          o = $.extend({}, $this.data('expander') || {}, opts),
-          details = $this.find('.' + o.detailClass).contents();
+          (o = $.extend({}, $this.data('expander') || {}, opts)),
+            (details = $this.find('.' + o.detailClass).contents());
 
           $this.removeData('expanderInit');
           $this.removeData('expander');
 
           $this.find(o.moreSelector).remove();
           $this.find('.' + o.summaryClass).remove();
-          $this.find('.' + o.detailClass).after(details).remove();
+          $this
+            .find('.' + o.detailClass)
+            .after(details)
+            .remove();
           $this.find(o.lessSelector).remove();
-
         });
-      }
+      },
     };
 
     // run the methods (almost always "init")
-    if ( methods[meth] ) {
-      methods[ meth ].call(this);
+    if (methods[meth]) {
+      methods[meth].call(this);
     }
 
     // utility functions
     function buildHTML(o, blocks) {
       var el = 'span',
-          summary = o.summary;
-      if ( blocks ) {
+        summary = o.summary;
+      if (blocks) {
         el = 'div';
         // if summary ends with a close tag, tuck the moreLabel inside it
-        if ( rLastCloseTag.test(summary) && !o.expandAfterSummary) {
+        if (rLastCloseTag.test(summary) && !o.expandAfterSummary) {
           summary = summary.replace(rLastCloseTag, o.moreLabel + '$1');
         } else {
-        // otherwise (e.g. if ends with self-closing tag) just add moreLabel after summary
-        // fixes #19
+          // otherwise (e.g. if ends with self-closing tag) just add moreLabel after summary
+          // fixes #19
           summary += o.moreLabel;
         }
 
@@ -355,11 +400,11 @@
       return [
         summary,
         '<',
-          el + ' class="' + o.detailClass + '"',
+        el + ' class="' + o.detailClass + '"',
         '>',
-          o.details,
-        '</' + el + '>'
-        ].join('');
+        o.details,
+        '</' + el + '>',
+      ].join('');
     }
 
     function buildMoreLabel(o) {
@@ -369,32 +414,37 @@
     }
 
     function backup(txt, preserveWords) {
-      if ( txt.lastIndexOf('<') > txt.lastIndexOf('>') ) {
-        txt = txt.slice( 0, txt.lastIndexOf('<') );
+      if (txt.lastIndexOf('<') > txt.lastIndexOf('>')) {
+        txt = txt.slice(0, txt.lastIndexOf('<'));
       }
       if (preserveWords) {
-        txt = txt.replace(rAmpWordEnd,'');
+        txt = txt.replace(rAmpWordEnd, '');
       }
 
       return $.trim(txt);
     }
 
     function reCollapse(o, el) {
-      el.stop(true, true)[o.collapseEffect](o.collapseSpeed, function() {
+      el.stop(true, true)[o.collapseEffect](o.collapseSpeed, function () {
         var prevMore = el.prev('span.' + o.moreClass).show();
         if (!prevMore.length) {
-          el.parent().children('div.' + o.summaryClass).show()
-            .find('span.' + o.moreClass).show();
+          el.parent()
+            .children('div.' + o.summaryClass)
+            .show()
+            .find('span.' + o.moreClass)
+            .show();
         }
-        if (o.afterCollapse) {o.afterCollapse.call(el);}
+        if (o.afterCollapse) {
+          o.afterCollapse.call(el);
+        }
       });
     }
 
     function delayCollapse(option, $collapseEl, thisEl) {
       if (option.collapseTimer) {
-        delayedCollapse = setTimeout(function() {
+        delayedCollapse = setTimeout(function () {
           reCollapse(option, $collapseEl);
-          if ( $.isFunction(option.onCollapse) ) {
+          if ($.isFunction(option.onCollapse)) {
             option.onCollapse.call(thisEl, false);
           }
         }, option.collapseTimer);

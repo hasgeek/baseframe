@@ -20,16 +20,16 @@
   input:disabled {
     cursor: $mui-cursor-disabled;
   }
-  
+
   input:focus {
     @include mui-tab-focus();
   }
 }
 
-.mui-radio > label > input[type="radio"],
-.mui-radio--inline > label > input[type="radio"],
-.mui-checkbox > label> input[type="checkbox"],
-.mui-checkbox--inline > label > input[type="checkbox"] {
+.mui-radio > label > input[type='radio'],
+.mui-radio--inline > label > input[type='radio'],
+.mui-checkbox > label > input[type='checkbox'],
+.mui-checkbox--inline > label > input[type='checkbox'] {
   position: absolute;
   margin-left: -20px;
   margin-top: 4px;
@@ -51,10 +51,10 @@
   font-weight: normal;
   cursor: pointer;
 
-  > input[type="radio"],
-  > input[type="checkbox"],
-  > label > input[type="radio"],
-  > label > input[type="checkbox"] {
+  > input[type='radio'],
+  > input[type='checkbox'],
+  > label > input[type='radio'],
+  > label > input[type='checkbox'] {
     margin: 4px 0 0;
     line-height: normal;
   }

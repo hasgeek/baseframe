@@ -1,6 +1,7 @@
 .rrssb-buttons {
   box-sizing: border-box;
-  font-family: "Source Sans Pro", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: 'Source Sans Pro', 'HelveticaNeue', 'Helvetica Neue', Helvetica,
+    Arial, 'Lucida Grande', sans-serif;
   height: 36px;
   margin: 0;
   margin-bottom: 12px;
@@ -10,7 +11,8 @@
 .rrssb-buttons:after {
   clear: both;
 }
-.rrssb-buttons:before, .rrssb-buttons:after {
+.rrssb-buttons:before,
+.rrssb-buttons:after {
   content: ' ';
   display: table;
 }
@@ -96,7 +98,7 @@
   background-color: #406582;
 }
 .rrssb-buttons li.rrssb-delicious a {
-  background-color: #0B79E5;
+  background-color: #0b79e5;
 }
 .rrssb-buttons li.rrssb-delicious a:hover {
   background-color: #095fb4;
@@ -128,7 +130,7 @@
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
-  transition: background-color .2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
   width: 100%;
 }
 .rrssb-buttons li a .rrssb-icon {
@@ -176,49 +178,59 @@
   font-size: 20px;
   font-size: 4vw;
 }
-.rrssb-buttons.large-format li:first-child:nth-last-child(2) a, .rrssb-buttons.large-format li:first-child:nth-last-child(2) ~ li a {
+.rrssb-buttons.large-format li:first-child:nth-last-child(2) a,
+.rrssb-buttons.large-format li:first-child:nth-last-child(2) ~ li a {
   font-size: 16px;
   font-size: 2vw;
 }
-.rrssb-buttons.large-format li:first-child:nth-last-child(3) a, .rrssb-buttons.large-format li:first-child:nth-last-child(3) ~ li a {
+.rrssb-buttons.large-format li:first-child:nth-last-child(3) a,
+.rrssb-buttons.large-format li:first-child:nth-last-child(3) ~ li a {
   font-size: 14px;
   font-size: 1.7vw;
 }
-.rrssb-buttons.large-format li:first-child:nth-last-child(4) a, .rrssb-buttons.large-format li:first-child:nth-last-child(4) ~ li a {
+.rrssb-buttons.large-format li:first-child:nth-last-child(4) a,
+.rrssb-buttons.large-format li:first-child:nth-last-child(4) ~ li a {
   font-size: 13px;
   font-size: 1.4vw;
 }
-.rrssb-buttons.large-format li:first-child:nth-last-child(5) a, .rrssb-buttons.large-format li:first-child:nth-last-child(5) ~ li a {
+.rrssb-buttons.large-format li:first-child:nth-last-child(5) a,
+.rrssb-buttons.large-format li:first-child:nth-last-child(5) ~ li a {
   font-size: 13px;
   font-size: 1.2vw;
 }
-.rrssb-buttons.large-format li:first-child:nth-last-child(6) a, .rrssb-buttons.large-format li:first-child:nth-last-child(6) ~ li a {
+.rrssb-buttons.large-format li:first-child:nth-last-child(6) a,
+.rrssb-buttons.large-format li:first-child:nth-last-child(6) ~ li a {
   font-size: 12px;
   font-size: 1.05vw;
 }
-.rrssb-buttons.large-format li:first-child:nth-last-child(7) a, .rrssb-buttons.large-format li:first-child:nth-last-child(7) ~ li a {
+.rrssb-buttons.large-format li:first-child:nth-last-child(7) a,
+.rrssb-buttons.large-format li:first-child:nth-last-child(7) ~ li a {
   font-size: 11px;
-  font-size: .9vw;
+  font-size: 0.9vw;
 }
-.rrssb-buttons.large-format li:first-child:nth-last-child(8) a, .rrssb-buttons.large-format li:first-child:nth-last-child(8) ~ li a {
+.rrssb-buttons.large-format li:first-child:nth-last-child(8) a,
+.rrssb-buttons.large-format li:first-child:nth-last-child(8) ~ li a {
   font-size: 11px;
-  font-size: .8vw;
+  font-size: 0.8vw;
 }
-.rrssb-buttons.large-format li:first-child:nth-last-child(9) a, .rrssb-buttons.large-format li:first-child:nth-last-child(9) ~ li a {
+.rrssb-buttons.large-format li:first-child:nth-last-child(9) a,
+.rrssb-buttons.large-format li:first-child:nth-last-child(9) ~ li a {
   font-size: 11px;
-  font-size: .7vw;
+  font-size: 0.7vw;
 }
-.rrssb-buttons.large-format li:first-child:nth-last-child(10) a, .rrssb-buttons.large-format li:first-child:nth-last-child(10) ~ li a {
+.rrssb-buttons.large-format li:first-child:nth-last-child(10) a,
+.rrssb-buttons.large-format li:first-child:nth-last-child(10) ~ li a {
   font-size: 11px;
-  font-size: .6vw;
+  font-size: 0.6vw;
 }
-.rrssb-buttons.large-format li:first-child:nth-last-child(11) a, .rrssb-buttons.large-format li:first-child:nth-last-child(11) ~ li a {
+.rrssb-buttons.large-format li:first-child:nth-last-child(11) a,
+.rrssb-buttons.large-format li:first-child:nth-last-child(11) ~ li a {
   font-size: 11px;
-  font-size: .5vw;
+  font-size: 0.5vw;
 }
 .rrssb-buttons.large-format li a {
   backface-visibility: hidden;
-  border-radius: .2em;
+  border-radius: 0.2em;
   padding: 8.5% 0 8.5% 12%;
 }
 .rrssb-buttons.large-format li a .rrssb-icon {
@@ -268,96 +280,187 @@
   height: 70%;
   width: 100%;
 }
-.rrssb-buttons.tiny-format li a:hover, .rrssb-buttons.tiny-format li a:active {
+.rrssb-buttons.tiny-format li a:hover,
+.rrssb-buttons.tiny-format li a:active {
   background-color: transparent;
 }
 .rrssb-buttons.tiny-format li.rrssb-email a .rrssb-icon svg path {
   fill: #0a88ff;
 }
-.rrssb-buttons.tiny-format li.rrssb-email a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-email
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #0054a3;
 }
 .rrssb-buttons.tiny-format li.rrssb-facebook a .rrssb-icon svg path {
   fill: #306199;
 }
-.rrssb-buttons.tiny-format li.rrssb-facebook a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-facebook
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #18304b;
 }
 .rrssb-buttons.tiny-format li.rrssb-tumblr a .rrssb-icon svg path {
   fill: #32506d;
 }
-.rrssb-buttons.tiny-format li.rrssb-tumblr a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-tumblr
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #121d27;
 }
 .rrssb-buttons.tiny-format li.rrssb-linkedin a .rrssb-icon svg path {
   fill: #007bb6;
 }
-.rrssb-buttons.tiny-format li.rrssb-linkedin a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-linkedin
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #003650;
 }
 .rrssb-buttons.tiny-format li.rrssb-twitter a .rrssb-icon svg path {
   fill: #26c4f1;
 }
-.rrssb-buttons.tiny-format li.rrssb-twitter a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-twitter
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #0b84a6;
 }
 .rrssb-buttons.tiny-format li.rrssb-googleplus a .rrssb-icon svg path {
   fill: #e93f2e;
 }
-.rrssb-buttons.tiny-format li.rrssb-googleplus a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-googleplus
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #a01e11;
 }
 .rrssb-buttons.tiny-format li.rrssb-youtube a .rrssb-icon svg path {
   fill: #df1c31;
 }
-.rrssb-buttons.tiny-format li.rrssb-youtube a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-youtube
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #84111d;
 }
 .rrssb-buttons.tiny-format li.rrssb-reddit a .rrssb-icon svg path {
   fill: #8bbbe3;
 }
-.rrssb-buttons.tiny-format li.rrssb-reddit a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-reddit
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #398bcf;
 }
 .rrssb-buttons.tiny-format li.rrssb-pinterest a .rrssb-icon svg path {
   fill: #b81621;
 }
-.rrssb-buttons.tiny-format li.rrssb-pinterest a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-pinterest
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #5d0b11;
 }
 .rrssb-buttons.tiny-format li.rrssb-pocket a .rrssb-icon svg path {
   fill: #ed4054;
 }
-.rrssb-buttons.tiny-format li.rrssb-pocket a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-pocket
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #b61124;
 }
 .rrssb-buttons.tiny-format li.rrssb-github a .rrssb-icon svg path {
   fill: #444;
 }
-.rrssb-buttons.tiny-format li.rrssb-github a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-github
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #111111;
 }
 .rrssb-buttons.tiny-format li.rrssb-instagram a .rrssb-icon svg path {
   fill: #517fa4;
 }
-.rrssb-buttons.tiny-format li.rrssb-instagram a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-instagram
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #2f4a60;
 }
 .rrssb-buttons.tiny-format li.rrssb-delicious a .rrssb-icon svg path {
-  fill: #0B79E5;
+  fill: #0b79e5;
 }
-.rrssb-buttons.tiny-format li.rrssb-delicious a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-delicious
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #064684;
 }
 .rrssb-buttons.tiny-format li.rrssb-vk a .rrssb-icon svg path {
   fill: #4d71a9;
 }
-.rrssb-buttons.tiny-format li.rrssb-vk a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-vk
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #2d4263;
 }
 .rrssb-buttons.tiny-format li.rrssb-hackernews a .rrssb-icon svg path {
   fill: #ff6600;
 }
-.rrssb-buttons.tiny-format li.rrssb-hackernews a .rrssb-icon:hover .rrssb-icon svg path {
+.rrssb-buttons.tiny-format
+  li.rrssb-hackernews
+  a
+  .rrssb-icon:hover
+  .rrssb-icon
+  svg
+  path {
   fill: #993d00;
 }
