@@ -402,6 +402,9 @@ assets['codemirror.addon.hint.css-hint.js'][
 assets['codemirror.addon.lint.css-lint.js'][
     Version('5.53.2')
 ] = 'baseframe/js/codemirror-5.53.2/addon/lint/css-lint.min.js'
+assets['codemirror.addon.display.placeholder.js'][
+    Version('5.53.2')
+] = 'baseframe/js/codemirror-5.53.2/addon/display/placeholder.js'
 
 assets['codemirror-markdown.js'][Version('5.53.2')] = {
     'requires': [
@@ -412,6 +415,7 @@ assets['codemirror-markdown.js'][Version('5.53.2')] = {
         'codemirror.addon.mode.overlay.js==5.53.2',
         'codemirror.addon.edit.continuelist.js==5.53.2',
         'codemirror.addon.edit.closebrackets.js==5.53.2',
+        'codemirror.addon.display.placeholder.js==5.53.2',
     ]
 }
 assets['codemirror-markdown.css'][Version('5.53.2')] = (
