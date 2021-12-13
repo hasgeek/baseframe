@@ -35,7 +35,7 @@ import simplejson as json
 from ..extensions import _, __, get_timezone
 from ..utils import request_timestamp
 from .parsleyjs import HiddenField, StringField, TextAreaField, URLField
-from .validators import Recaptcha, ValidationError
+from .validators import Recaptcha, StopValidation, ValidationError
 from .widgets import (
     CoordinatesInput,
     DateTimeInput,
@@ -168,7 +168,7 @@ class SelectField(SelectFieldBase):
                 # label = item2
                 if val == self.data:
                     return
-        raise ValueError(_("Not a valid choice!"))
+        raise StopValidation(_("Not a valid choice"))
 
 
 class TinyMce3Field(TextAreaField):
@@ -186,9 +186,12 @@ class TinyMce3Field(TextAreaField):
         id: Optional[str] = None,  # NOQA: A002
         default: Optional[str] = None,
         widget=None,
+        render_kw=None,
+        name=None,
         _form=None,
-        _name=None,
         _prefix='',
+        _translations=None,
+        _meta=None,
         # Additional fields
         content_css: Union[str, Callable[[], str]] = None,
         linkify: bool = True,
@@ -207,9 +210,12 @@ class TinyMce3Field(TextAreaField):
             id=id,
             default=default,
             widget=widget,
+            render_kw=render_kw,
+            name=name,
             _form=_form,
-            _name=_name,
             _prefix=_prefix,
+            _translations=_translations,
+            _meta=_meta,
             **kwargs,
         )
 
@@ -298,9 +304,12 @@ class TinyMce4Field(TextAreaField):
         id: Optional[str] = None,  # NOQA: A002
         default: Optional[str] = None,
         widget=None,
+        render_kw=None,
+        name=None,
         _form=None,
-        _name=None,
         _prefix='',
+        _translations=None,
+        _meta=None,
         # Additional fields
         content_css: Union[str, Callable[[], str]] = None,
         linkify: bool = True,
@@ -319,9 +328,12 @@ class TinyMce4Field(TextAreaField):
             id=id,
             default=default,
             widget=widget,
+            render_kw=render_kw,
+            name=name,
             _form=_form,
-            _name=_name,
             _prefix=_prefix,
+            _translations=_translations,
+            _meta=_meta,
             **kwargs,
         )
 
@@ -446,7 +458,9 @@ class DateTimeField(wtforms.fields.DateTimeField):
         if isinstance(value, str):
             self._timezone = pytz_timezone(value)
         else:
-            self._timezone = value
+            # NOTE: types-pytz has a more specific definition than BaseTzInfo, but
+            # we can't import that here as types-pytz is not a runtime dependency
+            self._timezone = value  # type: ignore[assignment]
 
         # A note on DST:
 
@@ -507,15 +521,19 @@ class DateTimeField(wtforms.fields.DateTimeField):
                             value, default=data, ignoretz=False, dayfirst=False
                         )
                     except (ValueError, OverflowError, TypeError):
-                        # TypeError is not a documented error for `parser.parse`, but the
-                        # DateTimeField implementation in wtforms.ext.dateutil says it can
-                        # happen due to a known bug
+                        # TypeError is not a documented error for `parser.parse`, but
+                        # the DateTimeField implementation in wtforms_dateutil says
+                        # it can happen due to a known bug
                         raise ValidationError(self.message)
             if data is not None:
                 if data.tzinfo is None:
-                    data = self.timezone.localize(data, is_dst=self.is_dst).astimezone(
-                        utc
-                    )
+                    # NOTE: localize is implemented separately in the sub-classes of
+                    # BaseTzInfo: in UTC, StaticTzInfo and DstTzInfo. We've told mypy
+                    # we take the base type, so we need to ask it to ignore the missing
+                    # function there
+                    data = self.timezone.localize(  # type: ignore[attr-defined]
+                        data, is_dst=self.is_dst
+                    ).astimezone(utc)
                 else:
                     data = data.astimezone(utc)
                 # If the app wanted a naive datetime, strip the timezone info
@@ -976,7 +994,7 @@ class EnumSelectField(SelectField):
 
     def pre_validate(self, form) -> None:
         if self.data is _invalid_marker:
-            raise ValueError(self.gettext('Not a valid choice'))
+            raise StopValidation(self.gettext('Not a valid choice'))
 
 
 class JsonField(wtforms.TextAreaField):

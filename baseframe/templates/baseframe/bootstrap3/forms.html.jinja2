@@ -105,10 +105,19 @@
 
 {%- macro renderform_inner(form, formid, style='horiz', autosave=False, draft_revision=None) -%}
   {%- if form.errors %}
-    <div class="alert alert-error alert-danger">
-      <a class="close" data-dismiss="alert">×</a>
-      {% trans %}Please review the indicated issues{% endtrans %}
-    </div>
+    {%- if none in form.errors and form.errors[none] %}
+      {%- for error_message in form.errors[none] -%}
+        <div class="alert alert-error alert-danger">
+          <a class="close" data-dismiss="alert">×</a>
+          {{ error_message }}
+        </div>
+      {%- endfor %}
+    {%- else %}
+      <div class="alert alert-error alert-danger">
+        <a class="close" data-dismiss="alert">×</a>
+        {% trans %}Please review the indicated issues{% endtrans %}
+      </div>
+    {%- endif %}
   {%- endif %}
   {% if message %}<p>{{ message }}</p>{% endif %}
   <div style="display:none;"><input type="hidden" name="form.id" value="{{ formid }}" /></div>

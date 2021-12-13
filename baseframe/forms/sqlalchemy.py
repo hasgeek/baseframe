@@ -2,7 +2,7 @@
 
 from typing import Optional
 
-from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
+from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 
 from ..extensions import __
 from .validators import StopValidation

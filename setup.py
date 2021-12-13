@@ -46,7 +46,8 @@ requires = [
     'speaklater',
     'statsd',
     'werkzeug',
-    'WTForms>=2.2,<3.0',
+    'WTForms>=3.0',
+    'WTForms-SQLAlchemy',
     'requests-mock>=1.9.3',
 ]
 

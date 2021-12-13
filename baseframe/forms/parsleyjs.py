@@ -18,18 +18,18 @@ import re
 
 from markupsafe import Markup
 from wtforms.fields import BooleanField as _BooleanField
+from wtforms.fields import DateField as _DateField
 from wtforms.fields import DecimalField as _DecimalField
+from wtforms.fields import EmailField as _EmailField
 from wtforms.fields import FloatField as _FloatField
 from wtforms.fields import IntegerField as _IntegerField
 from wtforms.fields import PasswordField as _PasswordField
 from wtforms.fields import RadioField as _RadioField
 from wtforms.fields import SelectField as _SelectField
 from wtforms.fields import StringField as _StringField
+from wtforms.fields import TelField as _TelField
 from wtforms.fields import TextAreaField as _TextAreaField
-from wtforms.fields.html5 import DateField as _DateField
-from wtforms.fields.html5 import EmailField as _EmailField
-from wtforms.fields.html5 import TelField as _TelField
-from wtforms.fields.html5 import URLField as _URLField
+from wtforms.fields import URLField as _URLField
 from wtforms.validators import (
     URL,
     AnyOf,
@@ -43,18 +43,18 @@ from wtforms.validators import (
     Regexp,
 )
 from wtforms.widgets import CheckboxInput as _CheckboxInput
+from wtforms.widgets import DateInput as _DateInput
+from wtforms.widgets import EmailInput as _EmailInput
 from wtforms.widgets import HiddenInput as _HiddenInput
 from wtforms.widgets import ListWidget as _ListWidget
+from wtforms.widgets import NumberInput as _NumberInput
 from wtforms.widgets import PasswordInput as _PasswordInput
 from wtforms.widgets import Select as _Select
+from wtforms.widgets import TelInput as _TelInput
 from wtforms.widgets import TextArea as _TextArea
 from wtforms.widgets import TextInput as _TextInput
+from wtforms.widgets import URLInput as _URLInput
 from wtforms.widgets import html_params
-from wtforms.widgets.html5 import DateInput as _DateInput
-from wtforms.widgets.html5 import EmailInput as _EmailInput
-from wtforms.widgets.html5 import NumberInput as _NumberInput
-from wtforms.widgets.html5 import TelInput as _TelInput
-from wtforms.widgets.html5 import URLInput as _URLInput
 
 __author__ = 'Johannes Gehrs (jgehrs@gmail.com)'
 
