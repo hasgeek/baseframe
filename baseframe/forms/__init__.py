@@ -10,7 +10,6 @@ from .filters import *
 from .form import *
 from .parsleyjs import *
 from .patch_wtforms import *
+from .sqlalchemy import *
 from .validators import *
 from .widgets import *
-
-# SQLAlchemy-based fields/widgets/validators are not automatically imported here
