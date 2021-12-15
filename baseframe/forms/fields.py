@@ -18,7 +18,7 @@ from urllib.parse import urljoin
 
 from flask import current_app
 from flask_wtf import RecaptchaField as RecaptchaFieldBase
-from wtforms.fields import FileField, Label
+from wtforms.fields import Field, FieldList, FileField, Label
 from wtforms.fields import SelectField as SelectFieldBase
 from wtforms.fields import SelectMultipleField, SubmitField
 from wtforms.utils import unset_value
@@ -49,12 +49,14 @@ from .widgets import (
 
 __all__ = [
     # Imported from WTForms
+    'Field',
+    'FieldList',
+    'FileField',
     'Label',
     'NonceField',
-    'FileField',
+    'RecaptchaField',
     'SelectMultipleField',
     'SubmitField',
-    'RecaptchaField',
     # Baseframe fields (many of these are extensions of WTForms fields)
     'AnnotatedTextField',
     'AutocompleteField',
