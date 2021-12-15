@@ -279,16 +279,16 @@ class TinyMce3Field(TextAreaField):
         super().process_formdata(valuelist)
         # Sanitize data
         self.data = bleach.clean(
-            self.data,
+            self.data or '',
             strip=True,
             tags=self.sanitize_tags,
             attributes=self.sanitize_attributes,
         )
         if self.linkify:
             if self.nofollow:
-                self.data = bleach.linkify(self.data)
+                self.data = bleach.linkify(self.data or '')
             else:
-                self.data = bleach.linkify(self.data, callbacks=[])
+                self.data = bleach.linkify(self.data or '', callbacks=[])
 
 
 class TinyMce4Field(TextAreaField):
@@ -396,16 +396,16 @@ class TinyMce4Field(TextAreaField):
         super().process_formdata(valuelist)
         # Sanitize data
         self.data = bleach.clean(
-            self.data,
+            self.data or '',
             strip=True,
             tags=self.sanitize_tags,
             attributes=self.sanitize_attributes,
         )
         if self.linkify:
             if self.nofollow:
-                self.data = bleach.linkify(self.data)
+                self.data = bleach.linkify(self.data or '')
             else:
-                self.data = bleach.linkify(self.data, callbacks=[])
+                self.data = bleach.linkify(self.data or '', callbacks=[])
 
 
 #: Compatibility name
