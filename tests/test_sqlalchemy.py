@@ -6,7 +6,6 @@ from baseframe import baseframe
 from coaster.db import SQLAlchemy
 from coaster.sqlalchemy import BaseMixin
 import baseframe.forms as forms
-import baseframe.forms.sqlalchemy as forms_sqlachemy
 
 from .fixtures import app1, app2
 
@@ -21,10 +20,8 @@ class Container(BaseMixin, db.Model):  # type: ignore[name-defined]
 
 
 class ContainerForm(forms.Form):
-    name = forms.StringField("Name", validators=[forms_sqlachemy.AvailableName()])
-    title = forms.StringField(
-        "Title", validators=[forms_sqlachemy.AvailableAttr('title')]
-    )
+    name = forms.StringField("Name", validators=[forms.AvailableName()])
+    title = forms.StringField("Title", validators=[forms.AvailableAttr('title')])
     content = forms.TextAreaField("Content")
 
 

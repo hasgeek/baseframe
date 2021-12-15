@@ -257,5 +257,5 @@ def _statsd_form_validation_error(form: FlaskForm) -> None:
         for field in form.errors:
             current_app.extensions['statsd'].incr(
                 'form_validation_error',
-                tags={'form': form.__class__.__name__, 'field': field},
+                tags={'form': form.__class__.__name__, 'field': str(field)},
             )

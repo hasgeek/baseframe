@@ -1,16 +1,20 @@
 """Patches WTForms to add additional functionality as required by Baseframe."""
 
+from typing import Any, Dict, Optional
+
 from markupsafe import Markup, escape
 import wtforms
 
+from .fields import FilterList, ValidatorList
+
 
 def _patch_wtforms_add_flags() -> None:
-    def add_flags(validator, flags):
-        validator.field_flags = tuple(flags) + tuple(
-            getattr(validator, 'field_flags', ())
-        )
+    def add_flags(validator, flags: Dict[str, Any]):
+        validator_flags = dict(getattr(validator, 'field_flags', {}))  # Make a copy
+        validator_flags.update(flags)  # Add new flags
+        validator.field_flags = validator_flags  # Add back into validator
 
-    add_flags(wtforms.validators.EqualTo, ('not_solo',))
+    add_flags(wtforms.validators.EqualTo, {'not_solo': True})
 
 
 _patch_wtforms_add_flags()
@@ -18,26 +22,33 @@ del _patch_wtforms_add_flags
 
 
 def _patch_wtforms_field_init() -> None:
-    original_field_init = None
+    original_field_init = wtforms.fields.Field.__init__
 
     def field_init(
         self,
-        label=None,
-        validators=None,
-        filters=(),
-        description='',
-        id=None,  # NOQA: A002
-        default=None,
+        label: str = None,
+        validators: ValidatorList = None,
+        filters: FilterList = (),
+        description: str = '',
+        id: Optional[str] = None,  # NOQA: A002
+        default: Optional[str] = None,
         widget=None,
+        render_kw: Optional[Dict[str, Optional[str]]] = None,
+        name=None,
         _form=None,
-        _name=None,
         _prefix='',
         _translations=None,
         _meta=None,
-        widget_attrs=None,
+        widget_attrs: Optional[
+            Dict[str, Optional[str]]
+        ] = None,  # Deprecated by render_kw in WTForms 3.0
         **kwargs,
     ):
-
+        if widget_attrs:
+            if render_kw:
+                render_kw.update(widget_attrs)
+            else:
+                render_kw = widget_attrs
         original_field_init(
             self,
             escape(label),  # wtforms<3.0 doesn't escape label text
@@ -47,18 +58,16 @@ def _patch_wtforms_field_init() -> None:
             id=id,
             default=default,
             widget=widget,
+            render_kw=render_kw,
+            name=name,
             _form=_form,
-            _name=_name,
             _prefix=_prefix,
             _translations=_translations,
             _meta=_meta,
             **kwargs,
         )
-        self.widget_attrs = widget_attrs or {}
 
-    if wtforms.fields.Field.__init__ is not field_init:
-        original_field_init = wtforms.fields.Field.__init__
-        wtforms.fields.Field.__init__ = field_init
+    wtforms.fields.Field.__init__ = field_init
 
 
 _patch_wtforms_field_init()

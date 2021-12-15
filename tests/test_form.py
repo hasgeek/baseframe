@@ -2,6 +2,7 @@ from werkzeug.datastructures import MultiDict
 
 import pytest
 
+import baseframe.filters as filters
 import baseframe.forms as forms
 
 # Fake password hasher, only suitable for re-use within a single process
@@ -70,6 +71,10 @@ class InitOrderForm(forms.Form):
 
     def get_has_context(self, obj):
         return self.expected_item
+
+
+class FieldRenderForm(forms.Form):
+    string_field = forms.StringField("String")
 
 
 @pytest.fixture
@@ -168,3 +173,20 @@ def test_init_order(test_client):
     # get_<fieldname> has context when it is called
     form = InitOrderForm(expected_item='probe', obj=object(), meta={'csrf': False})
     assert form.has_context.data == 'probe'
+
+
+def test_render_field_options(test_client):
+    form = FieldRenderForm(meta={'csrf': False})
+    test_attrs = {
+        'attrone': 'test',
+        'attrtwo': False,
+        'attrthree': None,
+        'attrfour': '',
+    }
+    render = filters.render_field_options(form.string_field, **test_attrs)
+    # This expicit rendering is based on dictionary key order stability in Python 3.7+
+    assert render == (
+        '<input'
+        ' attrfour="" attrone="test"'
+        ' id="string_field" name="string_field" type="text" value="">'
+    )

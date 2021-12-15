@@ -27,10 +27,6 @@ try:
 except ImportError:
     DebugToolbarExtension = None
 try:
-    from flask_debugtoolbar_lineprofilerpanel.profile import line_profile
-except ImportError:
-    line_profile = None
-try:
     import newrelic.agent
 except ImportError:
     newrelic = None
@@ -280,10 +276,6 @@ class BaseframeBlueprint(Blueprint):
                     'flask_debugtoolbar.panels.route_list.RouteListDebugPanel',
                     'flask_debugtoolbar.panels.profiler.ProfilerDebugPanel',
                 ]
-                if line_profile is not None:
-                    app.config['DEBUG_TB_PANELS'].append(
-                        'flask_debugtoolbar_lineprofilerpanel.panels.LineProfilerPanel'
-                    )
             toolbar.init_app(app)
 
         app.json_encoder = JSONEncoder

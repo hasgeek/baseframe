@@ -4,7 +4,6 @@ import uuid
 
 from flask import current_app
 from flask_wtf import FlaskForm as BaseForm
-from wtforms.compat import iteritems
 import wtforms
 
 from ..extensions import __, asset_cache
@@ -179,7 +178,7 @@ class Form(BaseForm):
         This method overrides the default implementation in WTForms to support custom
         set methods.
         """
-        for name, field in iteritems(self._fields):
+        for name, field in self._fields.items():
             if hasattr(self, 'set_' + name):
                 getattr(self, 'set_' + name)(obj)
             else:
@@ -217,7 +216,7 @@ class Form(BaseForm):
             #     Temporarily, this can simply be merged with kwargs.
             kwargs = dict(data, **kwargs)
 
-        for (name, field) in iteritems(self._fields):
+        for name, field in self._fields.items():
             # This `if` condition is the only change from the WTForms source. It must be
             # synced with the `process` method in future WTForms releases.
             if obj is not None and hasattr(self, 'get_' + name):
@@ -254,7 +253,7 @@ class Form(BaseForm):
                 'data': f.data,
                 'errors': [str(e) if is_lazy_string(e) else e for e in f.errors],
             }
-            for name, f in iteritems(self._fields)
+            for name, f in self._fields.items()
             if f.errors
         }
 

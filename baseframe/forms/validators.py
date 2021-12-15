@@ -1,7 +1,7 @@
 from collections import namedtuple
 from decimal import Decimal
 from fractions import Fraction
-from typing import Callable, Iterable, Set, Tuple, Union
+from typing import Callable, Iterable, Tuple, Union
 from urllib.parse import urljoin, urlparse
 import datetime
 import re
@@ -186,12 +186,11 @@ class RequiredIf(DataRequired):
 
     default_message = __("This is required")
 
-    field_flags: Set[str] = set()
-
     def __init__(self, fieldname: str, message: str = None) -> None:
         message = message or self.default_message
         super().__init__(message=message)
         self.fieldname = fieldname
+        self.field_flags.pop('required')
 
     def __call__(self, form, field) -> None:
         if not is_empty(form[self.fieldname].data):

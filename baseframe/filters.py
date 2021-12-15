@@ -129,8 +129,8 @@ def avatar_url(user: Any, size: Union[str, List[int], Tuple[int, int]] = None) -
 def render_field_options(field, **kwargs) -> str:
     """Remove HTML attributes with falsy values before rendering a field."""
     d = {k: v for k, v in kwargs.items() if v is not None and v is not False}
-    if hasattr(field, 'widget_attrs'):
-        d.update(field.widget_attrs)
+    if field.render_kw:
+        d.update(field.render_kw)
     return field(**d)
 
 

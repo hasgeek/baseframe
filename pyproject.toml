@@ -47,6 +47,7 @@ known_flask = [
   'itsdangerous',
   'speaklater',
   'wtforms',
+  'wtforms_sqlalchemy',
   'webassets',
   'flask_assets',
   'flask_babelhg',
