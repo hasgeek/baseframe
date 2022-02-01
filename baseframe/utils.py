@@ -12,7 +12,7 @@ from speaklater import is_lazy_string as is_lazy_string_sl
 
 from babel import Locale
 from furl import furl
-from mxsniff import MXLookupException, mxsniff
+from mxsniff import MxLookupError, mxsniff
 from pytz import timezone, utc
 from pytz.tzinfo import BaseTzInfo
 import pycountry
@@ -91,7 +91,7 @@ def is_public_email_domain(
     :param email_or_domain: Email address or domain name to check
     :param default: Default value to return in case domain lookup fails
     :param timeout: Lookup timeout in seconds
-    :raises MXLookupException: If a DNS lookup error happens and no default is specified
+    :raises MxLookupError: If a DNS lookup error happens and no default is specified
     """
     cache_key = 'mxrecord/' + md5sum(email_or_domain)
 
@@ -105,7 +105,7 @@ def is_public_email_domain(
         try:
             sniffedmx = mxsniff(email_or_domain, timeout=timeout)
             asset_cache.set(cache_key, sniffedmx, timeout=86400)  # cache for a day
-        except MXLookupException as e:
+        except MxLookupError as e:
             # Domain lookup failed
             if default is None:
                 raise e
