@@ -7,7 +7,7 @@ import datetime
 import re
 
 from flask import current_app, request
-from wtforms.validators import (  # NOQA
+from wtforms.validators import (  # NOQA  # skipcq: PY-W2000
     URL,
     DataRequired,
     EqualTo,
@@ -333,7 +333,7 @@ class IsPublicEmailDomain:
     """
     Validate that field.data belongs to a public email domain.
 
-    If the domain lookup fails and mxsniff raises ``MXLookupException``, this validator
+    If the domain lookup fails and mxsniff raises ``MxLookupError``, this validator
     will fail.
 
     :param message:
@@ -356,7 +356,7 @@ class IsNotPublicEmailDomain:
     """
     Validate that field.data does not belong to a public email domain.
 
-    If the domain lookup fails and mxsniff raises ``MXLookupException``, this validator
+    If the domain lookup fails and mxsniff raises ``MxLookupError``, this validator
     will still pass, as we expect that most domains are not public email domains.
 
     :param message:

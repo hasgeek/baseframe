@@ -3,7 +3,7 @@ import warnings
 
 from werkzeug.datastructures import MultiDict
 
-from mxsniff import MXLookupException
+from mxsniff import MxLookupError
 import requests_mock
 import urllib3
 
@@ -93,7 +93,7 @@ class TestValidators(TestCaseBaseframe):
             # these domain lookups will fail because of the DNS label length limit.
             # (abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks is 64 characters,
             # the maximum length of a DNS label is 63 characters)
-            # ``mxsniff`` will raise ``MXLookupException`` for these domains.
+            # ``mxsniff`` will raise ``MxLookupError`` for these domains.
             # So, webmail_domain should fail, and not_webmail_domain should pass.
             self.webmail_form.process(
                 webmail_domain='www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com',
@@ -110,7 +110,7 @@ class TestValidators(TestCaseBaseframe):
 
             # Intentionally trigger a DNS lookup failure using an invalid domain name.
             # Since no default is provided, we will receive an exception.
-            with self.assertRaises(MXLookupException):
+            with self.assertRaises(MxLookupError):
                 is_public_email_domain(
                     'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com'
                 )
