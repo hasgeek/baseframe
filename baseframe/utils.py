@@ -130,7 +130,6 @@ def localized_country_list() -> List[Tuple[str, str]]:
 @cache.memoize(timeout=86400)
 def _localized_country_list_inner(locale: str) -> List[Tuple[str, str]]:
     """Return localized country list (helper for :func:`localized_country_list`)."""
-    # TODO: Accept Locale object as parameter
     if locale == 'en':
         countries = [(country.name, country.alpha_2) for country in pycountry.countries]
     else:

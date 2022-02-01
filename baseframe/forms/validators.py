@@ -7,7 +7,7 @@ import datetime
 import re
 
 from flask import current_app, request
-from wtforms.validators import (  # NOQA
+from wtforms.validators import (  # NOQA  # skipcq: PY-W2000
     URL,
     DataRequired,
     EqualTo,
