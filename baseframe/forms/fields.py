@@ -533,9 +533,11 @@ class DateTimeField(wtforms.fields.DateTimeField):
                     # BaseTzInfo: in UTC, StaticTzInfo and DstTzInfo. We've told mypy
                     # we take the base type, so we need to ask it to ignore the missing
                     # function there
-                    data = self.timezone.localize(  # type: ignore[attr-defined]
+                    data = self.timezone.localize(  # type: ignore[attr-defined,call-arg]
                         data, is_dst=self.is_dst
-                    ).astimezone(utc)
+                    ).astimezone(
+                        utc
+                    )
                 else:
                     data = data.astimezone(utc)
                 # If the app wanted a naive datetime, strip the timezone info
@@ -627,12 +629,12 @@ class UserSelectField(UserSelectFieldBase, StringField):
     data: Optional[Type]
     multiple = False
     widget = Select2Widget()
+    widget_autocomplete = True
 
     def _value(self) -> str:
         if self.data:
             return self.data.userid
-        else:
-            return ''
+        return ''
 
     def iter_choices(self) -> ReturnIterChoices:
         if self.data:
@@ -652,6 +654,7 @@ class UserSelectMultiField(UserSelectFieldBase, StringField):
     data = List[Type]
     multiple = True
     widget = Select2Widget()
+    widget_autocomplete = True
 
 
 class AutocompleteFieldBase:
@@ -688,6 +691,7 @@ class AutocompleteField(AutocompleteFieldBase, StringField):
 
     multiple = False
     widget = Select2Widget()
+    widget_autocomplete = True
 
     def _value(self) -> str:
         if self.data:
@@ -712,6 +716,7 @@ class AutocompleteMultipleField(AutocompleteFieldBase, StringField):
 
     multiple = True
     widget = Select2Widget()
+    widget_autocomplete = True
 
 
 class GeonameSelectFieldBase:
@@ -741,6 +746,7 @@ class GeonameSelectField(GeonameSelectFieldBase, StringField):
 
     multiple = False
     widget = Select2Widget()
+    widget_autocomplete = True
 
     def _value(self) -> str:
         if self.data:
@@ -761,6 +767,7 @@ class GeonameSelectMultiField(GeonameSelectFieldBase, StringField):
 
     multiple = True
     widget = Select2Widget()
+    widget_autocomplete = True
 
 
 class AnnotatedTextField(StringField):
