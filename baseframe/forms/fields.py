@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, tzinfo
 from decimal import Decimal
 from decimal import InvalidOperation as DecimalError
 from typing import (
@@ -28,7 +28,6 @@ import wtforms
 from dateutil import parser
 from pytz import timezone as pytz_timezone
 from pytz import utc
-from pytz.tzinfo import BaseTzInfo
 import bleach
 import simplejson as json
 
@@ -432,13 +431,14 @@ class DateTimeField(wtforms.fields.DateTimeField):
     widget = DateTimeInput()
     data: Optional[datetime]
     default_message = __("This date/time could not be recognized")
+    _timezone: tzinfo
 
     def __init__(
         self,
         label: str = None,
         validators: ValidatorList = None,
         display_format: str = '%Y-%m-%dT%H:%M',
-        timezone: Union[str, BaseTzInfo, None] = None,
+        timezone: Union[str, tzinfo, None] = None,
         message: Optional[str] = None,
         naive: bool = True,
         **kwargs,
@@ -450,19 +450,17 @@ class DateTimeField(wtforms.fields.DateTimeField):
         self.naive = naive
 
     @property
-    def timezone(self) -> BaseTzInfo:
+    def timezone(self) -> tzinfo:
         return self._timezone
 
     @timezone.setter
-    def timezone(self, value: Union[str, BaseTzInfo, None]) -> None:
+    def timezone(self, value: Union[str, tzinfo, None]) -> None:
         if value is None:
             value = get_timezone()
         if isinstance(value, str):
             self._timezone = pytz_timezone(value)
         else:
-            # NOTE: types-pytz has a more specific definition than BaseTzInfo, but
-            # we can't import that here as types-pytz is not a runtime dependency
-            self._timezone = value  # type: ignore[assignment]
+            self._timezone = value
 
         # A note on DST:
 
@@ -530,14 +528,12 @@ class DateTimeField(wtforms.fields.DateTimeField):
             if data is not None:
                 if data.tzinfo is None:
                     # NOTE: localize is implemented separately in the sub-classes of
-                    # BaseTzInfo: in UTC, StaticTzInfo and DstTzInfo. We've told mypy
+                    # tzinfo: in UTC, StaticTzInfo and DstTzInfo. We've told mypy
                     # we take the base type, so we need to ask it to ignore the missing
                     # function there
-                    data = self.timezone.localize(  # type: ignore[attr-defined,call-arg]
+                    data = self.timezone.localize(  # type: ignore[attr-defined]
                         data, is_dst=self.is_dst
-                    ).astimezone(
-                        utc
-                    )
+                    ).astimezone(utc)
                 else:
                     data = data.astimezone(utc)
                 # If the app wanted a naive datetime, strip the timezone info

@@ -167,6 +167,10 @@ class Form(BaseForm):
         # Finally, populate the ``choices`` attr of selection fields
         self.set_queries()
 
+    def __json__(self):
+        """Render this form as JSON."""
+        return [field.__json__() for field in self._fields.values()]
+
     def populate_obj(self, obj) -> None:
         """
         Populate the attributes of the passed `obj` with data from the form's fields.
@@ -351,6 +355,8 @@ class FormGenerator:
 
 
 class RecaptchaForm(Form):
+    """Base class for forms that use Recaptcha."""
+
     recaptcha = bfields.RecaptchaField()
 
     def __init__(self, *args, **kwargs) -> None:

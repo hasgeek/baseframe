@@ -92,3 +92,18 @@ def _patch_label_call() -> None:
 
 _patch_label_call()
 del _patch_label_call
+
+
+def _patch_json_output() -> None:
+    def field_json(self):
+        return {
+            'name': self.name,
+            'type': self.type,
+            'data': self._value(),
+        }
+
+    wtforms.fields.Field.__json__ = field_json
+
+
+_patch_json_output()
+del _patch_json_output

@@ -39,6 +39,7 @@ requires = [
     'python-dateutil',
     'pytz',
     'redis',
+    'requests-mock>=1.9.3',
     'requests',
     'rq',
     'semantic_version',
@@ -46,9 +47,8 @@ requires = [
     'speaklater',
     'statsd',
     'werkzeug',
-    'WTForms>=3.0',
     'WTForms-SQLAlchemy',
-    'requests-mock>=1.9.3',
+    'WTForms>=3.0',
 ]
 
 

@@ -1,4 +1,4 @@
-from datetime import date, datetime, time
+from datetime import date, datetime, time, tzinfo
 from decimal import Decimal
 from typing import Any, List, Optional, Tuple, Union
 import collections.abc as abc
@@ -14,7 +14,6 @@ from babel import Locale
 from furl import furl
 from mxsniff import MxLookupError, mxsniff
 from pytz import timezone, utc
-from pytz.tzinfo import BaseTzInfo
 import pycountry
 
 from coaster.sqlalchemy import MarkdownComposite
@@ -40,6 +39,8 @@ class JSONEncoder(JSONEncoderBase):
     """
 
     def default(self, o: Any) -> Union[int, str, float, Decimal, list, dict, None]:
+        if hasattr(o, '__json__'):
+            return super().default(o.__json__())
         if is_lazy_string(o):
             return str(o)
         if isinstance(o, Decimal):
@@ -48,8 +49,8 @@ class JSONEncoder(JSONEncoderBase):
             # We use float here -- temporarily -- because Boxoffice hasn't been updated
             # to parse decimal values as strings.
             return float(o)
-        if isinstance(o, BaseTzInfo):
-            return o.zone
+        if isinstance(o, tzinfo):
+            return str(o)
         if isinstance(o, (date, datetime, time)):
             return o.isoformat()
         if isinstance(o, Locale):
@@ -144,7 +145,7 @@ def _localized_country_list_inner(locale: str) -> List[Tuple[str, str]]:
     return [(code, name) for (name, code) in countries]
 
 
-def localize_timezone(dt: datetime, tz: Union[str, BaseTzInfo] = None) -> datetime:
+def localize_timezone(dt: datetime, tz: Union[None, str, tzinfo] = None) -> datetime:
     """
     Convert a datetime into the specified timezone, defaulting to user's timezone.
 
