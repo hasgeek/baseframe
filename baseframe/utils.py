@@ -114,8 +114,7 @@ def is_public_email_domain(
 
     if any(p['public'] for p in sniffedmx['providers']):
         return True
-    else:
-        return False
+    return False
 
 
 def localized_country_list() -> List[Tuple[str, str]]:

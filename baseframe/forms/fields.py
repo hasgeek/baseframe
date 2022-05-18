@@ -111,9 +111,9 @@ ReturnIterChoices = Generator[Tuple[str, str, bool], None, None]
 class NonceField(HiddenField):
     """Customized HiddenField for nonce values that ignores the form target object."""
 
-    def process(self, formdata, data=None) -> None:
+    def process(self, formdata, data=None, extra_filters=None) -> None:
         """Discard data coming from an object."""
-        super().process(formdata)
+        super().process(formdata, extra_filters=extra_filters)
 
     def populate_obj(self, *args) -> None:
         """Override populate_obj to not attempting setting nonce on the object."""
@@ -271,8 +271,7 @@ class TinyMce3Field(TextAreaField):
     def content_css(self):
         if callable(self._content_css):
             return self._content_css()
-        else:
-            return self._content_css
+        return self._content_css
 
     def process_formdata(self, valuelist):
         super().process_formdata(valuelist)
@@ -388,8 +387,7 @@ class TinyMce4Field(TextAreaField):
     def content_css(self):
         if callable(self._content_css):
             return self._content_css()
-        else:
-            return self._content_css
+        return self._content_css
 
     def process_formdata(self, valuelist):
         super().process_formdata(valuelist)
@@ -551,8 +549,7 @@ class TextListField(wtforms.fields.TextAreaField):
     def _value(self) -> str:
         if self.data:
             return '\r\n'.join(self.data)
-        else:
-            return ''
+        return ''
 
     def process_formdata(self, valuelist) -> None:
         if valuelist and valuelist[0]:
@@ -692,8 +689,7 @@ class AutocompleteField(AutocompleteFieldBase, StringField):
     def _value(self) -> str:
         if self.data:
             return self.data
-        else:
-            return ''
+        return ''
 
     def process_formdata(self, valuelist) -> None:
         super().process_formdata(valuelist)
@@ -747,8 +743,7 @@ class GeonameSelectField(GeonameSelectFieldBase, StringField):
     def _value(self) -> str:
         if self.data:
             return self.data.geonameid
-        else:
-            return ''
+        return ''
 
     def process_formdata(self, valuelist) -> None:
         super().process_formdata(valuelist)
@@ -873,8 +868,7 @@ class CoordinatesField(wtforms.Field):
     def _value(self) -> Tuple[str, str]:
         if self.data is not None and self.data != (None, None):
             return str(self.data[0]), str(self.data[1])
-        else:
-            return '', ''
+        return '', ''
 
 
 class RadioMatrixField(wtforms.Field):
@@ -902,7 +896,8 @@ class RadioMatrixField(wtforms.Field):
         self.choices = choices
         self._obj = None
 
-    def process(self, formdata, data=unset_value) -> None:
+    def process(self, formdata, data=unset_value, extra_filters=None) -> None:
+        # TODO: Apply extra_filters
         self.process_errors = []
         if data is unset_value:
             try:
