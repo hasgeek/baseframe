@@ -13,6 +13,7 @@ from babel import Locale
 from furl import furl
 from mxsniff import MxLookupError, mxsniff
 from pytz import timezone, utc
+from pytz.tzinfo import BaseTzInfo
 import pycountry
 
 from coaster.sqlalchemy import MarkdownComposite
@@ -48,6 +49,8 @@ class JSONEncoder(json.JSONEncoder):
             # We use float here -- temporarily -- because Boxoffice hasn't been updated
             # to parse decimal values as strings.
             return float(o)
+        if isinstance(o, BaseTzInfo):
+            return o.zone
         if isinstance(o, tzinfo):
             return str(o)
         if isinstance(o, (date, datetime, time)):
