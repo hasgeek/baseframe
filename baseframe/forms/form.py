@@ -140,7 +140,7 @@ class Form(BaseForm):
     def __init__(self, *args, **kwargs) -> None:
         for attr in self.__expects__:
             if attr not in kwargs:
-                raise TypeError("Expected parameter %s was not supplied" % attr)
+                raise TypeError(f"Expected parameter {attr} was not supplied")
             setattr(self, attr, kwargs.pop(attr))
 
         # TODO: These fields predate the `__expects__` protocol and are pending

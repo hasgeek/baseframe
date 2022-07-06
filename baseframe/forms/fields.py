@@ -15,6 +15,7 @@ from typing import (
     cast,
 )
 from urllib.parse import urljoin
+import itertools
 
 from flask import current_app
 from flask_wtf import RecaptchaField as RecaptchaFieldBase
@@ -775,7 +776,7 @@ class MarkdownField(TextAreaField):
 
     def __call__(self, **kwargs) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = "%s %s" % (c, 'markdown') if c else 'markdown'
+        kwargs['class'] = (c + ' markdown').strip()
         return super().__call__(**kwargs)
 
 
@@ -784,7 +785,7 @@ class StylesheetField(wtforms.TextAreaField):
 
     def __call__(self, **kwargs) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = "%s %s" % (c, 'stylesheet') if c else 'stylesheet'
+        kwargs['class'] = (c + ' stylesheet').strip()
         return super().__call__(**kwargs)
 
 
@@ -818,9 +819,7 @@ class ImgeeField(URLField):
 
     def __call__(self, **kwargs) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = (
-            "%s %s" % (c.strip(), 'imgee__url-holder') if c else 'imgee__url-holder'
-        ).strip()
+        kwargs['class'] = (c + ' imgee__url-holder').strip()
         if self.profile:
             kwargs['data-profile'] = (
                 self.profile() if callable(self.profile) else self.profile
@@ -897,7 +896,6 @@ class RadioMatrixField(wtforms.Field):
         self._obj = None
 
     def process(self, formdata, data=unset_value, extra_filters=None) -> None:
-        # TODO: Apply extra_filters
         self.process_errors = []
         if data is unset_value:
             try:
@@ -921,7 +919,7 @@ class RadioMatrixField(wtforms.Field):
             self.process_formdata(raw_data)
 
         try:
-            for filt in self.filters:
+            for filt in itertools.chain(self.filters, extra_filters or []):
                 self.data = filt(self.data)
         except ValueError as e:
             self.process_errors.append(e.args[0])

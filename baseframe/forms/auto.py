@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, Union
+from typing import Optional, Union
 
 from flask import (
     Markup,
@@ -45,7 +45,7 @@ def render_form(
     autosave: bool = False,
     draft_revision: Optional[int] = None,
     template: str = '',
-) -> Union[str, Tuple[str, int], Response]:  # TODO: Use ReturnView
+) -> Response:
     """Render a form."""
     multipart = False
     ref_id = 'form-' + (formid or buid())
@@ -57,21 +57,23 @@ def render_form(
     if not with_chrome:
         if not template:
             template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
-        return render_template(
-            template,
-            form=form,
-            title=title,
-            message=message,
-            formid=formid,
-            ref_id=ref_id,
-            action=action,
-            submit=submit,
-            cancel_url=cancel_url,
-            ajax=ajax,
-            multipart=multipart,
-            with_chrome=with_chrome,
-            autosave=autosave,
-            draft_revision=draft_revision,
+        return make_response(
+            render_template(
+                template,
+                form=form,
+                title=title,
+                message=message,
+                formid=formid,
+                ref_id=ref_id,
+                action=action,
+                submit=submit,
+                cancel_url=cancel_url,
+                ajax=ajax,
+                multipart=multipart,
+                with_chrome=with_chrome,
+                autosave=autosave,
+                draft_revision=draft_revision,
+            )
         )
     if not template and request_is_xhr() and ajax:
         template = THEME_FILES[current_app.config['theme']]['ajaxform.html.jinja2']
@@ -92,8 +94,7 @@ def render_form(
             multipart=multipart,
             autosave=autosave,
             draft_revision=draft_revision,
-        ),
-        200,
+        )
     )
 
 
@@ -101,11 +102,8 @@ def render_message(title: str, message: str, code: int = 200) -> Response:
     """Render a message."""
     template = THEME_FILES[current_app.config['theme']]['message.html.jinja2']
     if request_is_xhr():
-        return make_response(Markup("<p>%s</p>" % escape(message)), code)
-    else:
-        return make_response(
-            render_template(template, title=title, message=message), code
-        )
+        return make_response(Markup(f'<p>{escape(message)}</p>'), code)
+    return make_response(render_template(template, title=title, message=message), code)
 
 
 def render_redirect(url: str, code: int = 302) -> Response:
@@ -113,8 +111,7 @@ def render_redirect(url: str, code: int = 302) -> Response:
     template = THEME_FILES[current_app.config['theme']]['redirect.html.jinja2']
     if request_is_xhr():
         return make_response(render_template(template, url=url))
-    else:
-        return redirect(url, code=code)
+    return redirect(url, code=code)
 
 
 def render_delete_sqla(
