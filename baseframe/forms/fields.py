@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, tzinfo
 from decimal import Decimal
 from decimal import InvalidOperation as DecimalError
 from typing import (
@@ -15,6 +15,7 @@ from typing import (
     cast,
 )
 from urllib.parse import urljoin
+import itertools
 
 from flask import current_app
 from flask_wtf import RecaptchaField as RecaptchaFieldBase
@@ -28,7 +29,6 @@ import wtforms
 from dateutil import parser
 from pytz import timezone as pytz_timezone
 from pytz import utc
-from pytz.tzinfo import BaseTzInfo
 import bleach
 import simplejson as json
 
@@ -112,9 +112,9 @@ ReturnIterChoices = Generator[Tuple[str, str, bool], None, None]
 class NonceField(HiddenField):
     """Customized HiddenField for nonce values that ignores the form target object."""
 
-    def process(self, formdata, data=None) -> None:
+    def process(self, formdata, data=None, extra_filters=None) -> None:
         """Discard data coming from an object."""
-        super().process(formdata)
+        super().process(formdata, extra_filters=extra_filters)
 
     def populate_obj(self, *args) -> None:
         """Override populate_obj to not attempting setting nonce on the object."""
@@ -272,8 +272,7 @@ class TinyMce3Field(TextAreaField):
     def content_css(self):
         if callable(self._content_css):
             return self._content_css()
-        else:
-            return self._content_css
+        return self._content_css
 
     def process_formdata(self, valuelist):
         super().process_formdata(valuelist)
@@ -389,8 +388,7 @@ class TinyMce4Field(TextAreaField):
     def content_css(self):
         if callable(self._content_css):
             return self._content_css()
-        else:
-            return self._content_css
+        return self._content_css
 
     def process_formdata(self, valuelist):
         super().process_formdata(valuelist)
@@ -432,13 +430,14 @@ class DateTimeField(wtforms.fields.DateTimeField):
     widget = DateTimeInput()
     data: Optional[datetime]
     default_message = __("This date/time could not be recognized")
+    _timezone: tzinfo
 
     def __init__(
         self,
         label: str = None,
         validators: ValidatorList = None,
         display_format: str = '%Y-%m-%dT%H:%M',
-        timezone: Union[str, BaseTzInfo, None] = None,
+        timezone: Union[str, tzinfo, None] = None,
         message: Optional[str] = None,
         naive: bool = True,
         **kwargs,
@@ -450,19 +449,17 @@ class DateTimeField(wtforms.fields.DateTimeField):
         self.naive = naive
 
     @property
-    def timezone(self) -> BaseTzInfo:
+    def timezone(self) -> tzinfo:
         return self._timezone
 
     @timezone.setter
-    def timezone(self, value: Union[str, BaseTzInfo, None]) -> None:
+    def timezone(self, value: Union[str, tzinfo, None]) -> None:
         if value is None:
             value = get_timezone()
         if isinstance(value, str):
             self._timezone = pytz_timezone(value)
         else:
-            # NOTE: types-pytz has a more specific definition than BaseTzInfo, but
-            # we can't import that here as types-pytz is not a runtime dependency
-            self._timezone = value  # type: ignore[assignment]
+            self._timezone = value
 
         # A note on DST:
 
@@ -530,14 +527,12 @@ class DateTimeField(wtforms.fields.DateTimeField):
             if data is not None:
                 if data.tzinfo is None:
                     # NOTE: localize is implemented separately in the sub-classes of
-                    # BaseTzInfo: in UTC, StaticTzInfo and DstTzInfo. We've told mypy
+                    # tzinfo: in UTC, StaticTzInfo and DstTzInfo. We've told mypy
                     # we take the base type, so we need to ask it to ignore the missing
                     # function there
-                    data = self.timezone.localize(  # type: ignore[attr-defined,call-arg]
+                    data = self.timezone.localize(  # type: ignore[attr-defined]
                         data, is_dst=self.is_dst
-                    ).astimezone(
-                        utc
-                    )
+                    ).astimezone(utc)
                 else:
                     data = data.astimezone(utc)
                 # If the app wanted a naive datetime, strip the timezone info
@@ -555,8 +550,7 @@ class TextListField(wtforms.fields.TextAreaField):
     def _value(self) -> str:
         if self.data:
             return '\r\n'.join(self.data)
-        else:
-            return ''
+        return ''
 
     def process_formdata(self, valuelist) -> None:
         if valuelist and valuelist[0]:
@@ -696,8 +690,7 @@ class AutocompleteField(AutocompleteFieldBase, StringField):
     def _value(self) -> str:
         if self.data:
             return self.data
-        else:
-            return ''
+        return ''
 
     def process_formdata(self, valuelist) -> None:
         super().process_formdata(valuelist)
@@ -751,8 +744,7 @@ class GeonameSelectField(GeonameSelectFieldBase, StringField):
     def _value(self) -> str:
         if self.data:
             return self.data.geonameid
-        else:
-            return ''
+        return ''
 
     def process_formdata(self, valuelist) -> None:
         super().process_formdata(valuelist)
@@ -784,7 +776,7 @@ class MarkdownField(TextAreaField):
 
     def __call__(self, **kwargs) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = "%s %s" % (c, 'markdown') if c else 'markdown'
+        kwargs['class'] = (c + ' markdown').strip()
         return super().__call__(**kwargs)
 
 
@@ -793,7 +785,7 @@ class StylesheetField(wtforms.TextAreaField):
 
     def __call__(self, **kwargs) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = "%s %s" % (c, 'stylesheet') if c else 'stylesheet'
+        kwargs['class'] = (c + ' stylesheet').strip()
         return super().__call__(**kwargs)
 
 
@@ -827,9 +819,7 @@ class ImgeeField(URLField):
 
     def __call__(self, **kwargs) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = (
-            "%s %s" % (c.strip(), 'imgee__url-holder') if c else 'imgee__url-holder'
-        ).strip()
+        kwargs['class'] = (c + ' imgee__url-holder').strip()
         if self.profile:
             kwargs['data-profile'] = (
                 self.profile() if callable(self.profile) else self.profile
@@ -877,8 +867,7 @@ class CoordinatesField(wtforms.Field):
     def _value(self) -> Tuple[str, str]:
         if self.data is not None and self.data != (None, None):
             return str(self.data[0]), str(self.data[1])
-        else:
-            return '', ''
+        return '', ''
 
 
 class RadioMatrixField(wtforms.Field):
@@ -906,7 +895,7 @@ class RadioMatrixField(wtforms.Field):
         self.choices = choices
         self._obj = None
 
-    def process(self, formdata, data=unset_value) -> None:
+    def process(self, formdata, data=unset_value, extra_filters=None) -> None:
         self.process_errors = []
         if data is unset_value:
             try:
@@ -930,7 +919,7 @@ class RadioMatrixField(wtforms.Field):
             self.process_formdata(raw_data)
 
         try:
-            for filt in self.filters:
+            for filt in itertools.chain(self.filters, extra_filters or []):
                 self.data = filt(self.data)
         except ValueError as e:
             self.process_errors.append(e.args[0])

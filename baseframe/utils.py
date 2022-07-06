@@ -1,12 +1,11 @@
-from datetime import date, datetime, time
+from datetime import date, datetime, time, tzinfo
 from decimal import Decimal
 from typing import Any, List, Optional, Tuple, Union
 import collections.abc as abc
 import gettext
 import types
 
-from flask import _request_ctx_stack, g, request  # type: ignore[attr-defined]
-from flask.json import JSONEncoder as JSONEncoderBase
+from flask import _request_ctx_stack, g, json, request  # type: ignore[attr-defined]
 from flask_babelhg.speaklater import is_lazy_string as is_lazy_string_hg
 from speaklater import is_lazy_string as is_lazy_string_sl
 
@@ -32,7 +31,7 @@ __all__ = [
 ]
 
 
-class JSONEncoder(JSONEncoderBase):
+class JSONEncoder(json.JSONEncoder):
     """
     Custom JSON encoder.
 
@@ -40,6 +39,8 @@ class JSONEncoder(JSONEncoderBase):
     """
 
     def default(self, o: Any) -> Union[int, str, float, Decimal, list, dict, None]:
+        if hasattr(o, '__json__'):
+            return o.__json__()
         if is_lazy_string(o):
             return str(o)
         if isinstance(o, Decimal):
@@ -50,6 +51,8 @@ class JSONEncoder(JSONEncoderBase):
             return float(o)
         if isinstance(o, BaseTzInfo):
             return o.zone
+        if isinstance(o, tzinfo):
+            return str(o)
         if isinstance(o, (date, datetime, time)):
             return o.isoformat()
         if isinstance(o, Locale):
@@ -113,8 +116,7 @@ def is_public_email_domain(
 
     if any(p['public'] for p in sniffedmx['providers']):
         return True
-    else:
-        return False
+    return False
 
 
 def localized_country_list() -> List[Tuple[str, str]]:
@@ -144,7 +146,7 @@ def _localized_country_list_inner(locale: str) -> List[Tuple[str, str]]:
     return [(code, name) for (name, code) in countries]
 
 
-def localize_timezone(dt: datetime, tz: Union[str, BaseTzInfo] = None) -> datetime:
+def localize_timezone(dt: datetime, tz: Union[None, str, tzinfo] = None) -> datetime:
     """
     Convert a datetime into the specified timezone, defaulting to user's timezone.
 

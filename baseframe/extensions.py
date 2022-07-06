@@ -1,3 +1,4 @@
+from datetime import tzinfo
 from typing import Union
 import os.path
 
@@ -6,7 +7,6 @@ from flask_babelhg import Babel, Domain
 
 from flask_caching import Cache
 from pytz import timezone, utc
-from pytz.tzinfo import BaseTzInfo
 
 from coaster.auth import current_auth
 
@@ -62,7 +62,7 @@ def get_user_locale() -> str:
 
 
 @babel.timezoneselector
-def get_timezone(default: Union[None, BaseTzInfo, str] = None) -> BaseTzInfo:
+def get_timezone(default: Union[None, tzinfo, str] = None) -> tzinfo:
     """Return a timezone suitable for the current context."""
     # If this app and request have a user, return user's timezone,
     # else return app default timezone

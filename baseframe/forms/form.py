@@ -4,6 +4,7 @@ import uuid
 
 from flask import current_app
 from flask_wtf import FlaskForm as BaseForm
+from wtforms.utils import unset_value
 import wtforms
 
 from ..extensions import __, asset_cache
@@ -139,7 +140,7 @@ class Form(BaseForm):
     def __init__(self, *args, **kwargs) -> None:
         for attr in self.__expects__:
             if attr not in kwargs:
-                raise TypeError("Expected parameter %s was not supplied" % attr)
+                raise TypeError(f"Expected parameter {attr} was not supplied")
             setattr(self, attr, kwargs.pop(attr))
 
         # TODO: These fields predate the `__expects__` protocol and are pending
@@ -167,6 +168,10 @@ class Form(BaseForm):
         # Finally, populate the ``choices`` attr of selection fields
         self.set_queries()
 
+    def __json__(self):
+        """Render this form as JSON."""
+        return [field.__json__() for field in self._fields.values()]
+
     def populate_obj(self, obj) -> None:
         """
         Populate the attributes of the passed `obj` with data from the form's fields.
@@ -184,26 +189,28 @@ class Form(BaseForm):
             else:
                 field.populate_obj(obj, name)
 
-    def process(self, formdata=None, obj=None, data=None, **kwargs) -> None:
+    def process(
+        self, formdata=None, obj=None, data=None, extra_filters=None, **kwargs
+    ) -> None:
         """
         Take form, object data, and keyword arg input and have the fields process them.
 
-        :param formdata:
-            Used to pass data coming from the enduser, usually `request.POST` or
-            equivalent.
-        :param obj:
-            If `formdata` is empty or not provided, this object is checked for
-            attributes matching form field names, which will be used for field
-            values. If the form has a ``get_<fieldname>`` method, it will be called
-            with the object as an attribute and is expected to return the value
-        :param data:
-            If provided, must be a dictionary of data. This is only used if
-            `formdata` is empty or not provided and `obj` does not contain
-            an attribute named the same as the field.
-        :param `**kwargs`:
-            If `formdata` is empty or not provided and `obj` does not contain
-            an attribute named the same as a field, form will assign the value
-            of a matching keyword argument to the field, if one exists.
+        :param formdata: Used to pass data coming from the enduser, usually
+            `request.POST` or equivalent.
+        :param obj: If `formdata` is empty or not provided, this object is checked for
+            attributes matching form field names, which will be used for field values.
+            If the form has a ``get_<fieldname>`` method, it will be called with the
+            object as an attribute and is expected to return the value
+        :param data: If provided, must be a dictionary of data. This is only used if
+            `formdata` is empty or not provided and `obj` does not contain an attribute
+            named the same as the field.
+        :param extra_filters: A dict mapping field attribute names to lists of extra
+            filter functions to run. Extra filters run after filters passed when
+            creating the field. If the form has ``filter_<fieldname>``, it is the last
+            extra filter.
+        :param kwargs: If `formdata` is empty or not provided and `obj` does not contain
+            an attribute named the same as a field, form will assign the value of a
+            matching keyword argument to the field, if one exists.
 
         This method overrides the default implementation in WTForms to support custom
         load methods.
@@ -211,25 +218,38 @@ class Form(BaseForm):
         formdata = self.meta.wrap_formdata(self, formdata)
 
         if data is not None:
-            # Preserved comment from WTForms source:
-            # XXX we want to eventually process 'data' as a new entity.
-            #     Temporarily, this can simply be merged with kwargs.
             kwargs = dict(data, **kwargs)
 
+        filters = extra_filters.copy() if extra_filters is not None else {}
+
         for name, field in self._fields.items():
+            field_extra_filters = filters.get(name, [])
+
+            inline_filter = getattr(self, f'filter_{name}', None)
+            if inline_filter is not None:
+                field_extra_filters.append(inline_filter)
+
             # This `if` condition is the only change from the WTForms source. It must be
             # synced with the `process` method in future WTForms releases.
-            if obj is not None and hasattr(self, 'get_' + name):
-                field.process(formdata, getattr(self, 'get_' + name)(obj))
+            if obj is not None and hasattr(self, f'get_{name}'):
+                data = getattr(self, f'get_{name}')(obj)
             elif obj is not None and hasattr(obj, name):
-                field.process(formdata, getattr(obj, name))
+                data = getattr(obj, name)
             elif name in kwargs:
-                field.process(formdata, kwargs[name])
+                data = kwargs[name]
             else:
-                field.process(formdata)
+                data = unset_value
 
-    def validate(self, send_signals: bool = True) -> bool:
-        success = super().validate()
+            field.process(formdata, data, extra_filters=field_extra_filters)
+
+    def validate(
+        self,
+        extra_validators: Optional[
+            Dict[str, Callable[[wtforms.Form, wtforms.Field], None]]
+        ] = None,
+        send_signals: bool = True,
+    ) -> bool:
+        success = super().validate(extra_validators)
         for attr in self.__returns__:
             if not hasattr(self, attr):
                 setattr(self, attr, None)
@@ -351,6 +371,8 @@ class FormGenerator:
 
 
 class RecaptchaForm(Form):
+    """Base class for forms that use Recaptcha."""
+
     recaptcha = bfields.RecaptchaField()
 
     def __init__(self, *args, **kwargs) -> None:
