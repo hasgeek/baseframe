@@ -242,8 +242,14 @@ class Form(BaseForm):
 
             field.process(formdata, data, extra_filters=field_extra_filters)
 
-    def validate(self, send_signals: bool = True) -> bool:
-        success = super().validate()
+    def validate(
+        self,
+        extra_validators: Optional[
+            Dict[str, Callable[[wtforms.Form, wtforms.Field], None]]
+        ] = None,
+        send_signals: bool = True,
+    ) -> bool:
+        success = super().validate(extra_validators)
         for attr in self.__returns__:
             if not hasattr(self, attr):
                 setattr(self, attr, None)

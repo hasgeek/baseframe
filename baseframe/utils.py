@@ -5,8 +5,7 @@ import collections.abc as abc
 import gettext
 import types
 
-from flask import _request_ctx_stack, g, request  # type: ignore[attr-defined]
-from flask.json import JSONEncoder as JSONEncoderBase
+from flask import _request_ctx_stack, g, json, request  # type: ignore[attr-defined]
 from flask_babelhg.speaklater import is_lazy_string as is_lazy_string_hg
 from speaklater import is_lazy_string as is_lazy_string_sl
 
@@ -31,7 +30,7 @@ __all__ = [
 ]
 
 
-class JSONEncoder(JSONEncoderBase):
+class JSONEncoder(json.JSONEncoder):
     """
     Custom JSON encoder.
 
@@ -40,7 +39,7 @@ class JSONEncoder(JSONEncoderBase):
 
     def default(self, o: Any) -> Union[int, str, float, Decimal, list, dict, None]:
         if hasattr(o, '__json__'):
-            return super().default(o.__json__())
+            return o.__json__()
         if is_lazy_string(o):
             return str(o)
         if isinstance(o, Decimal):

@@ -1,6 +1,7 @@
 from typing import Optional, Tuple, Union
 
 from flask import (
+    Markup,
     abort,
     current_app,
     escape,
@@ -11,7 +12,6 @@ from flask import (
     request,
     url_for,
 )
-from markupsafe import Markup
 from werkzeug.wrappers import Response
 import wtforms
 
@@ -35,7 +35,7 @@ class ConfirmDeleteForm(Form):
 def render_form(
     form: Form,
     title: str,
-    message: str = '',
+    message: Optional[Union[str, Markup]] = None,
     formid: Optional[str] = None,
     submit: str = __("Submit"),
     cancel_url: Optional[str] = None,
@@ -43,7 +43,7 @@ def render_form(
     with_chrome: bool = True,
     action: Optional[str] = None,
     autosave: bool = False,
-    draft_revision: bool = None,
+    draft_revision: Optional[int] = None,
     template: str = '',
 ) -> Union[str, Tuple[str, int], Response]:  # TODO: Use ReturnView
     """Render a form."""
