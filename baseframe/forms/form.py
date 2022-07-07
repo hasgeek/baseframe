@@ -9,7 +9,6 @@ import wtforms
 
 from ..extensions import __, asset_cache
 from ..signals import form_validation_error, form_validation_success
-from ..utils import is_lazy_string
 from . import fields as bfields
 from . import filters as bfilters
 from . import parsleyjs as bparsleyjs
@@ -266,12 +265,10 @@ class Form(BaseForm):
             form_validation_error.send(self)
 
     def errors_with_data(self) -> dict:
-        # Convert lazy_gettext error strings into unicode so they don't cause problems
-        # downstream (like when pickling)
         return {
             name: {
                 'data': f.data,
-                'errors': [str(e) if is_lazy_string(e) else e for e in f.errors],
+                'errors': [str(e) for e in f.errors],  # str(lazy_gettext) needed
             }
             for name, f in self._fields.items()
             if f.errors
