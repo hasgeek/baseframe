@@ -59,7 +59,6 @@ repos:
           - types-python-dateutil
           - types-pytz
           - types-requests
-          - types-simplejson
   - repo: https://gitlab.com/PyCQA/flake8
     rev: 3.9.2
     hooks:

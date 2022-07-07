@@ -3,7 +3,7 @@ from typing import Union
 import os.path
 
 from flask import current_app, request
-from flask_babelhg import Babel, Domain
+from flask_babel import Babel, Domain
 
 from flask_caching import Cache
 from pytz import timezone, utc

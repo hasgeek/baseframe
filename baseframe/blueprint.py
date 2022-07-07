@@ -6,7 +6,7 @@ import os.path
 
 from flask import Blueprint, Flask
 from flask_assets import Bundle, Environment
-from flask_babelhg import get_locale
+from flask_babel import get_locale
 from flask_wtf.csrf import generate_csrf
 
 from pytz import timezone

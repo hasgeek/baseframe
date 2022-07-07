@@ -1,3 +1,5 @@
+"""Baseframe views and view support helpers."""
+
 from datetime import timedelta
 from typing import Any, Dict, List, Optional, Tuple
 from urllib.parse import urlparse
@@ -13,7 +15,7 @@ from flask import (
     send_from_directory,
 )
 from flask_assets import Bundle
-from flask_babelhg import ctx_has_locale
+from flask_babel import _get_current_context
 from flask_wtf.csrf import generate_csrf
 
 import requests
@@ -29,13 +31,25 @@ from .extensions import networkbar_cache
 from .utils import request_checked_xhr, request_timestamp
 
 
+def ctx_has_locale() -> bool:
+    """
+    Report if Babel was used in the current context.
+
+    For setting a ``Vary: Accept-Language`` header in the response.
+    """
+    ctx = _get_current_context()
+    if ctx is None:
+        return False
+    return hasattr(ctx, 'babel_locale')
+
+
 @networkbar_cache.cached(key_prefix='networkbar_links')
 def networkbar_links_fetcher() -> list:
     """Fetch networkbar links (helper for :func:`networkbar_links`)."""
     try:
         r = requests.get(current_app.config['NETWORKBAR_DATA'])
         return r.json().get('links', [])
-    except:  # Catch all exceptions  # NOQA: E722
+    except requests.exceptions.RequestException:
         return []
 
 

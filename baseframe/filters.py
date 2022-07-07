@@ -4,7 +4,7 @@ from urllib.parse import urlsplit, urlunsplit
 import os.path
 
 from flask import current_app, request
-from flask_babelhg import Locale, get_locale
+from flask_babel import Locale, get_locale
 from markupsafe import Markup
 
 from babel.dates import format_date, format_datetime, format_time, format_timedelta

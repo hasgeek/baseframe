@@ -17,7 +17,7 @@ from typing import (
 from urllib.parse import urljoin
 import itertools
 
-from flask import current_app
+from flask import current_app, json
 from flask_wtf import RecaptchaField as RecaptchaFieldBase
 from wtforms.fields import Field, FieldList, FileField, Label
 from wtforms.fields import SelectField as SelectFieldBase
@@ -30,7 +30,6 @@ from dateutil import parser
 from pytz import timezone as pytz_timezone
 from pytz import utc
 import bleach
-import simplejson as json
 
 from ..extensions import _, __, get_timezone
 from ..utils import request_timestamp
