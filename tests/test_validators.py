@@ -3,12 +3,11 @@ import warnings
 
 from werkzeug.datastructures import MultiDict
 
-from mxsniff import MxLookupError
 import requests_mock
 import urllib3
 
 from baseframe import forms
-from baseframe.utils import is_public_email_domain
+from baseframe.utils import MxLookupError, is_public_email_domain
 
 from .fixtures import (
     AllUrlsFormTest,

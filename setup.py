@@ -1,3 +1,5 @@
+"""Setup Baseframe."""
+
 import os
 import re
 
@@ -5,9 +7,12 @@ from setuptools import setup
 from setuptools.command.build_py import build_py
 
 here = os.path.abspath(os.path.dirname(__file__))
-README = open(os.path.join(here, 'README.rst')).read()
-CHANGES = open(os.path.join(here, 'CHANGES.rst')).read()
-versionfile = open(os.path.join(here, "baseframe", "_version.py")).read()
+with open(os.path.join(here, 'README.rst'), encoding='utf-8') as fd:
+    README = fd.read()
+with open(os.path.join(here, 'CHANGES.rst'), encoding='utf-8') as fd:
+    CHANGES = fd.read()
+with open(os.path.join(here, "baseframe", "_version.py"), encoding='utf-8') as fd:
+    versionfile = fd.read()
 
 mo = re.search(r"^__version__\s*=\s*['\"]([^'\"]*)['\"]", versionfile, re.M)
 if mo:
@@ -22,7 +27,7 @@ requires = [
     'dnspython',
     'emoji>=1.0.0',
     'Flask-Assets',
-    'Flask-Babelhg',
+    'Flask-Babel>=2.0.0',
     'Flask-Caching',
     'Flask-WTF>=0.14',
     'Flask>=2.0',
@@ -91,6 +96,5 @@ setup(
     cmdclass={'build_py': BaseframeBuildPy},
     dependency_links=[
         "https://github.com/hasgeek/coaster/archive/master.zip#egg=coaster",
-        "https://github.com/hasgeek/flask-babelhg/archive/master.zip#egg=Flask-Babelhg-0.12.3",
     ],
 )

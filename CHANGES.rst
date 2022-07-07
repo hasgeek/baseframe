@@ -4,6 +4,7 @@
 * Dropped Python 2.7 support
 * Added a paragraph and grapheme-aware text preview filter
 * Fixed DateTimeField to handle a variety of date and time specifications
+* Switched back to Flask-Babel
 
 0.3.2
 -----

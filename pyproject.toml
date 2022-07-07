@@ -50,7 +50,7 @@ known_flask = [
   'wtforms_sqlalchemy',
   'webassets',
   'flask_assets',
-  'flask_babelhg',
+  'flask_babel',
   'flask_flatpages',
   'flask_mail',
   'flask_migrate',

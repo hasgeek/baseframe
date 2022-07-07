@@ -1,4 +1,4 @@
-from datetime import date, datetime, time, tzinfo
+from datetime import datetime, time, tzinfo
 from decimal import Decimal
 from typing import Any, List, Optional, Tuple, Union
 import collections.abc as abc
@@ -6,12 +6,18 @@ import gettext
 import types
 
 from flask import _request_ctx_stack, g, json, request  # type: ignore[attr-defined]
-from flask_babelhg.speaklater import is_lazy_string as is_lazy_string_hg
+from flask_babel.speaklater import LazyString
 from speaklater import is_lazy_string as is_lazy_string_sl
 
 from babel import Locale
 from furl import furl
-from mxsniff import MxLookupError, mxsniff
+from mxsniff import mxsniff
+
+try:
+    from mxsniff import MxLookupError
+except ImportError:
+    from mxsniff import MXLookupException as MxLookupError
+
 from pytz import timezone, utc
 from pytz.tzinfo import BaseTzInfo
 import pycountry
@@ -41,26 +47,16 @@ class JSONEncoder(json.JSONEncoder):
     def default(self, o: Any) -> Union[int, str, float, Decimal, list, dict, None]:
         if hasattr(o, '__json__'):
             return o.__json__()
-        if is_lazy_string(o):
+        if is_lazy_string(o) or isinstance(o, (furl, Locale)):
             return str(o)
-        if isinstance(o, Decimal):
-            # FIXME: Returning a float is unsafe. Decimal values can only safely be
-            # transmitted as string values. https://stackoverflow.com/q/35709595/78903
-            # We use float here -- temporarily -- because Boxoffice hasn't been updated
-            # to parse decimal values as strings.
-            return float(o)
         if isinstance(o, BaseTzInfo):
             return o.zone
-        if isinstance(o, tzinfo):
+        if isinstance(o, tzinfo):  # Check after BaseTzInfo as that is a subclass
             return str(o)
-        if isinstance(o, (date, datetime, time)):
+        if isinstance(o, (datetime, time)):  # date is processed by Flask's default
             return o.isoformat()
-        if isinstance(o, Locale):
-            return str(o)
         if isinstance(o, abc.Mapping):
             return dict(o)
-        if isinstance(o, furl):
-            return o.url
         if isinstance(o, (types.GeneratorType, abc.Set)):
             return list(o)
         if isinstance(o, MarkdownComposite):
@@ -108,10 +104,10 @@ def is_public_email_domain(
         try:
             sniffedmx = mxsniff(email_or_domain, timeout=timeout)
             asset_cache.set(cache_key, sniffedmx, timeout=86400)  # cache for a day
-        except MxLookupError as e:
+        except MxLookupError:
             # Domain lookup failed
             if default is None:
-                raise e
+                raise
             return default
 
     if any(p['public'] for p in sniffedmx['providers']):
@@ -163,8 +159,8 @@ def localize_timezone(dt: datetime, tz: Union[None, str, tzinfo] = None) -> date
 
 def is_lazy_string(string: Any) -> bool:
     """Return True if the given string is lazy, using two upstream lazy string types."""
-    # Some lazy strings are from the speaklater library, some from Flask-Babelhg's fork
-    return is_lazy_string_hg(string) or is_lazy_string_sl(string)
+    # Some lazy strings are from the speaklater library, some from Flask-Babel's fork
+    return isinstance(string, LazyString) or is_lazy_string_sl(string)
 
 
 def request_is_xhr() -> bool:
