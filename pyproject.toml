@@ -45,7 +45,6 @@ known_flask = [
   'werkzeug',
   'markupsafe',
   'itsdangerous',
-  'speaklater',
   'wtforms',
   'wtforms_sqlalchemy',
   'webassets',

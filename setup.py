@@ -49,7 +49,6 @@ requires = [
     'rq',
     'semantic_version',
     'sentry-sdk',
-    'speaklater',
     'statsd',
     'werkzeug',
     'WTForms-SQLAlchemy',

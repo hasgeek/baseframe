@@ -6,8 +6,6 @@ import gettext
 import types
 
 from flask import _request_ctx_stack, g, json, request  # type: ignore[attr-defined]
-from flask_babel.speaklater import LazyString
-from speaklater import is_lazy_string as is_lazy_string_sl
 
 from babel import Locale
 from furl import furl
@@ -47,7 +45,7 @@ class JSONEncoder(json.JSONEncoder):
     def default(self, o: Any) -> Union[int, str, float, Decimal, list, dict, None]:
         if hasattr(o, '__json__'):
             return o.__json__()
-        if is_lazy_string(o) or isinstance(o, (furl, Locale)):
+        if isinstance(o, (furl, Locale)):
             return str(o)
         if isinstance(o, BaseTzInfo):
             return o.zone
@@ -155,12 +153,6 @@ def localize_timezone(dt: datetime, tz: Union[None, str, tzinfo] = None) -> date
     if isinstance(tz, str):
         tz = timezone(tz)
     return dt.astimezone(tz)
-
-
-def is_lazy_string(string: Any) -> bool:
-    """Return True if the given string is lazy, using two upstream lazy string types."""
-    # Some lazy strings are from the speaklater library, some from Flask-Babel's fork
-    return isinstance(string, LazyString) or is_lazy_string_sl(string)
 
 
 def request_is_xhr() -> bool:
