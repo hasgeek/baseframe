@@ -68,6 +68,17 @@ def initials(text: str) -> str:
     return ''
 
 
+@baseframe.app_template_filter('avatar_type')
+def avatar_type(text: str, types: int = 6) -> str:
+    """Return an int from 1 to types based on initials from the given string"""
+    initial = initials(text)
+    parts = initial.split()
+    stringTotal = ord(parts[0][0])
+    if len(parts) > 1:
+        stringTotal += ord(parts[0][1])
+    return stringTotal % types or types
+
+
 @baseframe.app_template_filter('usessl')
 def usessl(url: str) -> str:
     """Convert a URL to https:// if SSL is enabled in site config."""
