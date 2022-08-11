@@ -5,7 +5,7 @@ import collections.abc as abc
 import gettext
 import types
 
-from flask import _request_ctx_stack, g, json, request  # type: ignore[attr-defined]
+from flask import g, json, request
 
 from babel import Locale
 from furl import furl
@@ -155,6 +155,7 @@ def localize_timezone(dt: datetime, tz: Union[None, str, tzinfo] = None) -> date
     return dt.astimezone(tz)
 
 
+# pylint: disable=protected-access
 def request_is_xhr() -> bool:
     """
     Return True if the request was triggered via a JavaScript XMLHttpRequest.
@@ -164,9 +165,10 @@ def request_is_xhr() -> bool:
     ported from Werkzeug after being removed from there, as legacy apps may still be
     using jQuery.
     """
-    _request_ctx_stack.top.request_checked_xhr = True
+    request._checked_xhr = True  # type: ignore[attr-defined]
     return request.environ.get('HTTP_X_REQUESTED_WITH', '').lower() == 'xmlhttprequest'
 
 
 def request_checked_xhr() -> bool:
-    return getattr(_request_ctx_stack.top, 'request_checked_xhr', False)
+    """Confirm if XHR header was checked for during this request."""
+    return getattr(request, '_checked_xhr', False)
