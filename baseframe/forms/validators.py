@@ -109,8 +109,8 @@ class ForEach:
             for validator in self.validators:
                 try:
                     validator(form, fake_field)
-                except StopValidation as e:
-                    if str(e):
+                except StopValidation as exc:
+                    if exc.args:
                         raise
                     break
 
@@ -518,7 +518,7 @@ class ValidUrl:
                 r = requests.get(
                     url,
                     timeout=30,
-                    verify=False,  # skipcq: BAN-B501
+                    verify=False,  # nosec  # skipcq: BAN-B501
                     headers={'User-Agent': self.user_agent},
                 )
                 code = r.status_code
@@ -532,8 +532,8 @@ class ValidUrl:
                 requests.exceptions.Timeout,
             ):
                 code = None
-            except Exception as e:  # NOQA: B902
-                exception_catchall.send(e)
+            except Exception as exc:  # noqa: B902  # pylint: disable=broad-except
+                exception_catchall.send(exc)
                 code = None
 
         if (
@@ -733,7 +733,7 @@ class Recaptcha:
         if current_app.testing:
             return
 
-        if request.json:
+        if request.is_json:
             response = request.json.get('g-recaptcha-response', '')
         else:
             response = request.form.get('g-recaptcha-response', '')
@@ -751,7 +751,7 @@ class Recaptcha:
         try:
             private_key = current_app.config['RECAPTCHA_PRIVATE_KEY']
         except KeyError:
-            raise RuntimeError("No RECAPTCHA_PRIVATE_KEY config set")
+            raise RuntimeError("No RECAPTCHA_PRIVATE_KEY config set") from None
 
         data = {
             'secret': private_key,
@@ -765,17 +765,17 @@ class Recaptcha:
             requests.exceptions.ConnectionError,
             requests.exceptions.Timeout,
         ):
-            raise ValidationError(self.message_network)
+            raise ValidationError(self.message_network) from None
 
         if http_response.status_code != 200:
             return False
 
         json_resp = http_response.json()
 
-        if json_resp["success"]:
+        if json_resp['success']:
             return True
 
-        for error in json_resp.get("error-codes", []):
+        for error in json_resp.get('error-codes', []):
             if error in RECAPTCHA_ERROR_CODES:
                 raise ValidationError(RECAPTCHA_ERROR_CODES[error])
 
