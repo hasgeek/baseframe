@@ -1008,7 +1008,6 @@ class JsonField(wtforms.TextAreaField):
     :param str label: Field label
     :param list validators: List of field validators, passed on to WTForms
     :param bool require_dict: Require a dictionary as the data value (default `True`)
-    :param book use_decimal: Use decimals instead of floats (default `True`)
     :param kwargs: Additional field arguments, passed on to WTForms
     """
 
@@ -1019,11 +1018,9 @@ class JsonField(wtforms.TextAreaField):
         label: str = '',
         validators: ValidatorList = None,
         require_dict: bool = True,
-        use_decimal: bool = True,
         **kwargs,
     ):
         self.require_dict = require_dict
-        self.use_decimal = use_decimal
         super().__init__(label, validators, **kwargs)
 
     def _value(self) -> str:
@@ -1039,7 +1036,6 @@ class JsonField(wtforms.TextAreaField):
         if self.data is not None:
             return json.dumps(
                 self.data,
-                use_decimal=self.use_decimal,
                 ensure_ascii=False,
                 **self.prettyprint_args,
             )
@@ -1063,7 +1059,7 @@ class JsonField(wtforms.TextAreaField):
                 self.data = self.default
                 return
             try:
-                data = json.loads(value, use_decimal=self.use_decimal)
+                data = json.loads(value)
             except ValueError as e:
                 raise ValueError(_("Invalid JSON: {0!r}").format(e))
             if self.require_dict:

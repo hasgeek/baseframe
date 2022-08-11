@@ -1,3 +1,5 @@
+"""Test statsd logging."""
+
 # Tests adapted from https://github.com/bbelyeu/flask-statsdclient
 
 from datetime import timedelta
@@ -9,14 +11,15 @@ from statsd.client.timer import Timer
 from statsd.client.udp import Pipeline
 import pytest
 
+from baseframe.extensions import Babel
 from baseframe.statsd import Statsd
 import baseframe.forms as forms
 
 
 @pytest.fixture()
 def app():
-    app = Flask(__name__)
-    return app
+    """Redefine app without Baseframe for statsd tests."""
+    return Flask(__name__)
 
 
 @pytest.fixture()
@@ -24,14 +27,6 @@ def statsd(app):
     statsd = Statsd()
     statsd.init_app(app)
     return statsd
-
-
-@pytest.fixture()
-def ctx(app):
-    ctx = app.app_context()
-    ctx.push()
-    yield ctx
-    ctx.pop()
 
 
 @pytest.fixture()
@@ -44,7 +39,9 @@ def view(app):
 
 
 @pytest.fixture()
-def form():
+def form(app):
+    Babel(app)  # Needed for form validator message translations
+
     class SimpleForm(forms.Form):
         field = forms.StringField(
             "Required", validators=[forms.validators.DataRequired()]
