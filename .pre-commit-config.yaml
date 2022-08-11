@@ -52,13 +52,14 @@ repos:
     rev: v0.961
     hooks:
       - id: mypy
+        # warn-unused-ignores is unsafe with pre-commit, see
+        # https://github.com/python/mypy/issues/2960
+        args: ['--no-warn-unused-ignores', '--ignore-missing-imports']
         additional_dependencies:
           - sqlalchemy-stubs
-          - types-bleach
-          - types-emoji
-          - types-python-dateutil
-          - types-pytz
-          - types-requests
+          - toml
+          - types-all
+          - typing-extensions
   - repo: https://gitlab.com/PyCQA/flake8
     rev: 3.9.2
     hooks:
@@ -75,6 +76,14 @@ repos:
           - flake8-mutable
           - flake8-print
           - pep8-naming
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.4
+    hooks:
+      - id: bandit
+        language_version: python3
+        args: ['-c', 'pyproject.toml']
+        additional_dependencies:
+          - toml
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.7.1
     hooks:
