@@ -24,7 +24,18 @@ try:
 except ImportError:
     line_profile = None
 
-__all__ = ['networkbar_cache', 'asset_cache', 'cache', 'babel', 'statsd']
+__all__ = [
+    '_',
+    '__',
+    'asset_cache',
+    'babel',
+    'baseframe_translations',
+    'cache',
+    'get_timezone',
+    'get_user_locale',
+    'networkbar_cache',
+    'statsd',
+]
 
 
 DEFAULT_LOCALE = 'en'
