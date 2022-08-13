@@ -78,6 +78,41 @@ warn_unused_ignores = true
 warn_redundant_casts = false
 check_untyped_defs = false
 
+[tool.pylint.master]
+load-plugins = ['pylint_pytest', 'pylint_flask_sqlalchemy']
+# max-parents = 10
+init-hook = """
+import os, astroid.bases, pathlib
+# Tell Pylint where to find packages from within tests
+for path in pathlib.Path.cwd().parents:
+    if (path / 'pyproject.toml').is_file():
+      sys.path.append(str(path))
+"""
+
+[tool.pylint.message_control]
+max-line-length = 88
+disable = [
+  'cyclic-import',  # We have tail imports all over
+  'fixme',  # Our workflow is to tag for future fixes
+  'invalid-name',  # Flake8 covers our naming convention requirements
+  'missing-class-docstring',  # Backlog
+  'missing-function-docstring',  # Backlog
+  'no-member',  # Pylint doesn't understand mixins referring to main class members
+  'redefined-builtin',  # Covered by Flake8 already
+  'too-few-public-methods',  # Data classes and validator classes have few methods
+  'too-many-arguments',
+  'too-many-branches',
+  'too-many-locals',
+  'too-many-instance-attributes',  # Some instances are just bags of attributes
+  'too-many-lines',
+  'too-many-nested-blocks',
+  'too-many-return-statements',
+  'too-many-statements',
+  'unused-argument',  # Arguments required for spec compatibility aren't always used
+  'wrong-import-position',  # Imports after code are sometimes required
+  'wrong-import-order',  # Let black and isort handle this
+]
+
 [tool.bandit]
 exclude_dirs = ['node_modules']
 

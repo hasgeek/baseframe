@@ -1,15 +1,15 @@
 """
 WTForms fields and widgets with ParsleyJS headers.
 
-This is a fork of wtforms-parsleyjs
-based on https://github.com/johannes-gehrs/wtforms-parsleyjs and
+This is a fork of wtforms-parsleyjs based on
+https://github.com/johannes-gehrs/wtforms-parsleyjs and
 https://github.com/fuhrysteve/wtforms-parsleyjs. We've forked it into Baseframe because
-the upstream repositories appear unmaintained, and from past experience, we'll have trouble
-getting patches accepted every time WTForms or ParsleyJS has an update. This works best for
-us if we maintain our own fork.
+the upstream repositories appear unmaintained, and from past experience, we'll have
+trouble getting patches accepted every time WTForms or ParsleyJS has an update. This
+works best for us if we maintain our own fork.
 
-wtforms-parsleysj is MIT licensed, while the rest of Baseframe is either BSD (our code) or
-various other open source licenses (other third party code).
+wtforms-parsleysj is MIT licensed, while the rest of Baseframe is either BSD (our code)
+or various other open source licenses (other third party code).
 """
 
 from typing import Any, Dict
@@ -199,7 +199,8 @@ def _url_kwargs(kwargs, vali) -> None:
 
 def _string_seq_delimiter(kwargs, vali) -> str:
     # We normally use a comma as the delimiter - looks clean and it's parsley's default.
-    # If the strings for which we check contain a comma, we cannot use it as a delimiter.
+    # If the strings for which we check contain a comma, we cannot use it as a
+    # delimiter.
     default_delimiter = ','
     fallback_delimiter = ';;;'
     delimiter = default_delimiter
@@ -279,13 +280,13 @@ class ListWidget(_ListWidget):
     def __call__(self, field, **kwargs) -> str:
         sub_kwargs = parsley_kwargs(field, kwargs, extend=False)
         kwargs.setdefault('id', field.id)
-        html = ['<%s %s>' % (self.html_tag, html_params(**kwargs))]
+        html = [f'<{self.html_tag} {html_params(**kwargs)}>']
         for subfield in field:
             if self.prefix_label:
-                html.append('<li>%s %s</li>' % (subfield.label, subfield(**sub_kwargs)))
+                html.append(f'<li>{subfield.label} {subfield(**sub_kwargs)}</li>')
             else:
-                html.append('<li>%s %s</li>' % (subfield(**sub_kwargs), subfield.label))
-        html.append('</%s>' % self.html_tag)
+                html.append(f'<li>{subfield(**sub_kwargs)} {subfield.label}</li>')
+        html.append(f'</{self.html_tag}>')
         return Markup(''.join(html))
 
 

@@ -26,7 +26,7 @@ def _patch_json_output() -> None:
         return {
             'name': self.name,
             'type': self.type,
-            'data': self._value(),  # skipcq: PYL-W0212
+            'data': self._value(),  # pylint: disable=W0212
         }
 
     wtforms.fields.Field.__json__ = field_json

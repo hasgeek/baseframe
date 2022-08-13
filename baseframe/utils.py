@@ -1,7 +1,9 @@
+"""Baseframe utilities."""
+
+from collections import abc
 from datetime import datetime, time, tzinfo
 from decimal import Decimal
 from typing import Any, List, Optional, Tuple, Union
-import collections.abc as abc
 import gettext
 import types
 

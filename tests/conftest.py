@@ -1,3 +1,4 @@
+"""Test configuration."""
 from flask import Flask
 
 import pytest
@@ -17,8 +18,8 @@ def app():
 
 @pytest.fixture()
 def ctx(app):
-    with app.app_context() as ctx:
-        yield ctx
+    with app.app_context() as context:
+        yield context
 
 
 @pytest.fixture()

@@ -22,7 +22,7 @@ class AvailableAttr:
         self.model = model
         self.attr = attr
         if not message:
-            message = __("This {attr} is already in use".format(attr=attr))
+            message = __(f"This {attr} is already in use")
         self.message = message
 
     def __call__(self, form, field) -> None:
@@ -31,10 +31,7 @@ class AvailableAttr:
             raise TypeError(
                 "Either the validator or the form MUST be linked to a model"
             )
-        if hasattr(model, 'parent'):
-            scoped = True
-        else:
-            scoped = False
+        scoped = hasattr(model, 'parent')
         if model:
             query = model.query.filter(getattr(model, self.attr) == field.data)
             if form.edit_id:

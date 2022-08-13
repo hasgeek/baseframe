@@ -200,9 +200,12 @@ def test_html_snippet_valid_urls(app, tforms):
     url1 = 'https://hasgeek.com/'
     url2 = 'https://hasjob.co/'
     with app.test_request_context('/'):
-        snippet = '<ul><li><a href="{url1}">url1</a></li><li><a href="{url2}">url2</a></li></ul>'.format(
-            url1=url1, url2=url2
-        )
+        snippet = f'''
+            <ul>
+              <li><a href="{url1}">url1</a></li>
+              <li><a href="{url2}">url2</a></li>
+            </ul>
+            '''
         tforms.all_urls_form.process(content_with_urls=snippet)
         assert tforms.all_urls_form.validate()
 
@@ -211,9 +214,12 @@ def test_html_snippet_invalid_urls(app, tforms):
     url1 = 'https://hasgeek.com/'
     url2 = 'https://hasjob'
     with app.test_request_context('/'):
-        snippet = '<ul><li><a href="{url1}">url1</a></li><li><a href="{url2}">url2</a></li></ul>'.format(
-            url1=url1, url2=url2
-        )
+        snippet = f'''
+            <ul>
+              <li><a href="{url1}">url1</a></li>
+              <li><a href="{url2}">url2</a></li>
+            </ul>
+        '''
         tforms.all_urls_form.process(content_with_urls=snippet)
         assert not tforms.all_urls_form.validate()
 

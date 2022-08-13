@@ -1,3 +1,5 @@
+"""Statsd logger."""
+
 from datetime import timedelta
 from typing import Dict, Optional, Union
 import time
@@ -97,7 +99,7 @@ class Statsd:
             tag_sep = current_app.config['STATSD_TAGS']
             tag_join = '='
         else:
-            prefix = 'flask_app.{}'.format(current_app.config['SITE_ID'])
+            prefix = f'flask_app.{current_app.config["SITE_ID"]}'
             tag_sep = '.'
             tag_join = '_'
         if tags:
@@ -105,7 +107,7 @@ class Statsd:
                 tag_join.join((str(t), str(v))) if v is not None else str(t)
                 for t, v in tags.items()
             )
-        return '{}.{}'.format(prefix, name)
+        return f'{prefix}.{name}'
 
     def timer(
         self, stat: str, rate: Union[int, float] = None, tags: TagsType = None

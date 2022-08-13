@@ -11,9 +11,9 @@ from statsd.client.timer import Timer
 from statsd.client.udp import Pipeline
 import pytest
 
+from baseframe import forms
 from baseframe.extensions import Babel
 from baseframe.statsd import Statsd
-import baseframe.forms as forms
 
 
 @pytest.fixture()
@@ -24,9 +24,9 @@ def app():
 
 @pytest.fixture()
 def statsd(app):
-    statsd = Statsd()
-    statsd.init_app(app)
-    return statsd
+    s = Statsd()
+    s.init_app(app)
+    return s
 
 
 @pytest.fixture()
@@ -47,16 +47,18 @@ def form(app):
             "Required", validators=[forms.validators.DataRequired()]
         )
 
-    form = SimpleForm(meta={'csrf': False})
-    del form.form_nonce
-    return form
+    f = SimpleForm(meta={'csrf': False})
+    del f.form_nonce
+    return f
 
 
 def test_default_config(app, statsd):
+    # pylint: disable=protected-access
     assert app.extensions['statsd_core']._addr == ('127.0.0.1', 8125)
 
 
 def test_custom_config(app):
+    # pylint: disable=protected-access
     app.config['STATSD_HOST'] = '1.2.3.4'
     app.config['STATSD_PORT'] = 12345
 
@@ -238,13 +240,15 @@ def test_request_handler_notags(app, statsd, view):
                 client.get('/')
                 # First call
                 mock_incr.assert_any_call(
-                    'flask_app.tests.test_statsd.request_handlers.endpoint_index.status_code_200',
+                    'flask_app.tests.test_statsd.request_handlers.endpoint_index'
+                    '.status_code_200',
                     1,
                     rate=1,
                 )
                 # Second and last call
                 mock_incr.assert_called_with(
-                    'flask_app.tests.test_statsd.request_handlers.endpoint__overall.status_code_200',
+                    'flask_app.tests.test_statsd.request_handlers.endpoint__overall'
+                    '.status_code_200',
                     1,
                     rate=1,
                 )
@@ -258,7 +262,8 @@ def test_request_handler_tags(app, statsd, view):
             with app.test_client() as client:
                 client.get('/')
                 mock_incr.assert_called_once_with(
-                    'flask_app.request_handlers,endpoint=index,status_code=200,app=tests.test_statsd',
+                    'flask_app.request_handlers,endpoint=index,status_code=200'
+                    ',app=tests.test_statsd',
                     1,
                     rate=1,
                 )
@@ -294,7 +299,8 @@ def test_form_error(ctx, app, statsd, form):
         form.field.data = None
         assert form.validate() is False
         mock_incr.assert_called_once_with(
-            'flask_app.form_validation_error,form=SimpleForm,field=field,app=tests.test_statsd',
+            'flask_app.form_validation_error,form=SimpleForm,field=field,app=tests'
+            '.test_statsd',
             1,
             rate=1,
         )
