@@ -1,3 +1,5 @@
+"""Baseframe's Blueprint is the main entry point."""
+
 from __future__ import annotations
 
 from typing import Iterable, List, Optional, Tuple, Union
@@ -19,13 +21,10 @@ from coaster.app import RotatingKeySecureCookieSessionInterface
 from coaster.assets import split_namespec
 
 from .assets import assets
+from .errors import error_handlers as available_error_handlers
 from .extensions import asset_cache, babel, cache, networkbar_cache, statsd, toolbar
 from .utils import JSONEncoder, request_is_xhr
 
-try:
-    from flask_debugtoolbar import DebugToolbarExtension
-except ImportError:
-    DebugToolbarExtension = None
 try:
     import newrelic.agent
 except ImportError:
@@ -82,6 +81,7 @@ class BaseframeBlueprint(Blueprint):
         assetenv=None,
         theme: str = 'bootstrap3',
         asset_modules=(),
+        error_handlers=True,
     ):
         """
         Initialize an app with Baseframe and load necessary assets.
@@ -100,7 +100,11 @@ class BaseframeBlueprint(Blueprint):
         :param assetenv: Environment for assets (in case your app needs a custom
             environment)
         :param asset_modules: Modules providing additional assets
+        :param error_handlers: Register app error handlers (will override any from app)
         """
+        if error_handlers:
+            for _error_code, _error_handler in available_error_handlers.items():
+                app.register_error_handler(_error_code, _error_handler)
         # Initialize Sentry logging
         if app.config.get('SENTRY_URL'):
             # With `traces_sample_rate` option set, every transaction created will
@@ -240,7 +244,8 @@ class BaseframeBlueprint(Blueprint):
                 asset_bundles = json.loads(f.read())
                 if app.config.get('assets'):
                     raise ValueError(
-                        "Loading assets via a manifest file needs the `ASSETS` config key to be unused"
+                        "Loading assets via a manifest file needs the ``assets`` config"
+                        " key to be unused"
                     )
                 app.config['assets'] = {}
                 for _asset_key, _asset_path in asset_bundles['assets'].items():
@@ -287,7 +292,7 @@ class BaseframeBlueprint(Blueprint):
         app.config['tz'] = timezone(app.config.get('TIMEZONE', 'UTC'))
 
         if theme not in THEME_FILES:
-            raise ValueError("Unrecognised theme: %s" % theme)
+            raise ValueError(f"Unrecognised theme: {theme}")
         app.config['theme'] = theme
 
         if 'NETWORKBAR_DATA' not in app.config:

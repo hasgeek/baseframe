@@ -1,3 +1,5 @@
+"""Form base class and redefined fields with ParsleyJS support."""
+
 from threading import Lock
 from typing import Callable, Dict, Iterable, Optional, Tuple, Type, Union
 import uuid
@@ -234,10 +236,8 @@ class Form(BaseForm):
                 data = getattr(self, f'get_{name}')(obj)
             elif obj is not None and hasattr(obj, name):
                 data = getattr(obj, name)
-            elif name in kwargs:
-                data = kwargs[name]
             else:
-                data = unset_value
+                data = kwargs.get(name, unset_value)
 
             field.process(formdata, data, extra_filters=field_extra_filters)
 

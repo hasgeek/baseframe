@@ -1,7 +1,11 @@
+"""WTForms validators."""
+
+from __future__ import annotations
+
 from collections import namedtuple
 from decimal import Decimal
 from fractions import Fraction
-from typing import Callable, Iterable, Tuple, Union
+from typing import Any, Callable, Iterable, Tuple, Union
 from urllib.parse import urljoin, urlparse
 import datetime
 import re
@@ -75,9 +79,7 @@ RECAPTCHA_ERROR_CODES = {
     'invalid-input-response': __("The response parameter is invalid or malformed"),
 }
 
-# XXX: This should use `Iterable[Union[str, Pattern]]` instead of `Iterable[object]`,
-# but mypy doesn't recognise the output of re.compile as being an instance of Pattern
-InvalidUrlPatterns = Iterable[Tuple[Iterable[object], str]]
+InvalidUrlPatterns = Iterable[Tuple[Iterable[Any], str]]
 AllowedListInit = Union[Iterable[str], Callable[[], Iterable[str]], None]
 AllowedList = Union[Iterable[str], None]
 
@@ -110,8 +112,8 @@ class ForEach:
                 try:
                     validator(form, fake_field)
                 except StopValidation as exc:
-                    if exc.args:
-                        raise
+                    if exc.args and exc.args[0]:
+                        field.errors.append(exc.args[0])
                     break
 
 
@@ -164,7 +166,7 @@ class OptionalIf(Optional):
 
     def __call__(self, form, field) -> None:
         if not is_empty(form[self.fieldname].data):
-            return super().__call__(form, field)
+            super().__call__(form, field)
 
 
 class RequiredIf(DataRequired):
@@ -467,7 +469,7 @@ class ValidUrl:
         allowed_domains: AllowedList,
         invalid_urls: InvalidUrlPatterns,
         text: Union[str, None] = None,
-    ):
+    ) -> Optional[str]:
         """
         Inner method to actually check the URL.
 
@@ -495,7 +497,7 @@ class ValidUrl:
 
         if urlparts.scheme not in ('http', 'https') or not self.visit_url:
             # The rest of this function only validates HTTP urls.
-            return
+            return None
 
         cache_key = 'linkchecker/' + md5sum(url)
         try:
@@ -572,18 +574,16 @@ class ValidUrl:
                     if (
                         pattern in rurl
                         if isinstance(pattern, str)
-                        else pattern.search(rurl) is not None  # type: ignore[attr-defined]
+                        else pattern.search(rurl) is not None
                     ):
                         return message.format(url=url, text=text)
             # All good. The URL works and isn't invalid, so save to cache and return
             # without an error message
             asset_cache.set(cache_key, {'url': rurl, 'code': code}, timeout=86400)
-            return
-        else:
-            if text is not None and url != text:
-                return self.message_urltext.format(url=url, text=text)
-            else:
-                return self.message.format(url=url)
+            return None
+        if text is not None and url != text:
+            return self.message_urltext.format(url=url, text=text)
+        return self.message.format(url=url)
 
     def call_inner(
         self,
@@ -624,6 +624,7 @@ class ValidUrl:
             return self.call_inner(
                 field, current_url, allowed_schemes, allowed_domains, invalid_urls
             )
+        return None
 
 
 class AllUrlsValid(ValidUrl):

@@ -50,6 +50,7 @@ requires = [
     'semantic_version',
     'sentry-sdk',
     'statsd',
+    'typing_extensions',
     'werkzeug',
     'WTForms-SQLAlchemy',
     'WTForms>=3.0',
@@ -62,7 +63,7 @@ class BaseframeBuildPy(build_py):
         if not self._dry_run:
             curdir = os.getcwd()
             os.chdir(os.path.join(self.build_lib, 'baseframe'))
-            os.system("make")
+            os.system('make')  # nosec
             os.chdir(curdir)
 
 
