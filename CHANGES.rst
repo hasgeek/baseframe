@@ -11,8 +11,10 @@
 
 * Added a custom JSON encoder for lazy_gettext objects
 * New AvailableAttr to check if a value can be assigned to a model's attribute
-* Removed CsrfProtect support as it was user hostile and had been discoutinued in all apps
-* Changelog updates have been discontinued as this is now a living repo with no releases
+* Removed CsrfProtect support as it was user hostile and had been discontinued
+  in all apps
+* Changelog updates have been discontinued as this is now a living repo with no
+  releases
 
 0.3.1
 -----
@@ -26,7 +28,8 @@
 * ValidEmailDomain validator is now ValidEmail and does syntax checks
 * New NoObfuscatedEmail validator looks for obfuscated emails
 * New FormGenerator constructs forms from field definitions
-* New CoordinatesField renders a map marker drag widget, falling back to lat/lon text fields
+* New CoordinatesField renders a map marker drag widget, falling back to
+  lat/lon text fields
 * Codemirror is now an external dependency installed via Makefile
 * New RadioMatrixField for a table of fields and choices
 * New InlineListWidget to list radio options inline
@@ -35,11 +38,12 @@
 * Added ``firstline`` filter to extract first line of text from a HTML block
 * ``OptionalIf`` and ``OptionalIfNot`` validators
 * Added new networkbar for use in Hasjob and Funnel
-* Replace ``csrf_form`` in template context with ``csrf_token``, regardless of whether
-  global CSRF is enabled
+* Replace ``csrf_form`` in template context with ``csrf_token``, regardless of
+  whether global CSRF is enabled
 * Optional support for Flask-DebugToolbar and LineProfiler extension
 * SelectField now supports optgroup grouping
-* Comparison validators to complement ``EqualTo`` with ``>``, ``>=``, ``<``, ``<=``, ``!=``
+* Comparison validators to complement ``EqualTo`` with ``>``, ``>=``, ``<``,
+  ``<=``, ``!=``
 * DateTimeField's timezone parameter now defaults to user timezone, not UTC
 * New form filters to replace the (overloaded) use of validators to filter
 
@@ -57,7 +61,8 @@
 * Fixed timezone handling in DateTimeField
 * Support for external assets via the cookiefree server
 * Removed local copies of Lato and Source Sans Pro fonts
-* Upgraded to TinyMCE 4 and Font Awesome 4.2, with older versions stil in assets
+* Upgraded to TinyMCE 4 and Font Awesome 4.2, with older versions stil in
+  assets
 
 0.2.16
 ------
@@ -98,18 +103,20 @@
 * Added root block to baseframe.html that can be overriden by templates
 * Upgraded to FontAwesome 3.0 with many new icons
 * Switched to Google Closure JS minifier for better compression than JSMin
-* Semantically versioned assets, with unversioned assets moved into deprecated.py
+* Semantically versioned assets, with unversioned assets moved into
+  deprecated.py
 
 0.2.13
 ------
 
-* Incompatible API change for RichTextField to allow setting any TinyMCE option.
+* Incompatible API change for RichTextField to allow setting any TinyMCE
+  option
 
 0.2.12
 ------
 
-* Optional baseframe.sqlalchemy provides a Flask-SQLALchemy SQLAlchemy() object
-  for use by blueprint-based apps
+* Optional baseframe.sqlalchemy provides a Flask-SQLALchemy SQLAlchemy()
+  object for use by blueprint-based apps
 
 0.2.11
 ------
@@ -125,8 +132,9 @@
 0.2.9
 -----
 
-* Giving up on having a perfect typographic grid. It's not possible on the web
-* New <span class="icon-*"> for use in menus with long lines that may wrap
+* Giving up on having a perfect typographic grid. It's not possible on the
+  web
+* New ``<span class="icon-*">`` for use in menus with long lines that may wrap
 
 0.2.8
 -----

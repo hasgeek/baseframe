@@ -1,3 +1,5 @@
+"""Standard extensions to add to the Flask app."""
+
 from datetime import tzinfo
 from typing import Union
 import os.path
@@ -17,11 +19,23 @@ try:
 except ImportError:
     DebugToolbarExtension = None
 try:
+    # pylint: disable=unused-import
     from flask_debugtoolbar_lineprofilerpanel.profile import line_profile
 except ImportError:
     line_profile = None
 
-__all__ = ['networkbar_cache', 'asset_cache', 'cache', 'babel', 'statsd']
+__all__ = [
+    '_',
+    '__',
+    'asset_cache',
+    'babel',
+    'baseframe_translations',
+    'cache',
+    'get_timezone',
+    'get_user_locale',
+    'networkbar_cache',
+    'statsd',
+]
 
 
 DEFAULT_LOCALE = 'en'
@@ -45,6 +59,7 @@ __ = baseframe_translations.lazy_gettext
 
 @babel.localeselector
 def get_user_locale() -> str:
+    """Get user's locale if available on the user object, else from the request."""
     # If this app and request have a user that specifies a locale, use it
     user = current_auth.actor  # Use 'actor' instead of 'user' to support anon users
     if user is not None and hasattr(user, 'locale') and user.locale:
@@ -70,12 +85,12 @@ def get_timezone(default: Union[None, tzinfo, str] = None) -> tzinfo:
         current_auth.actor is not None
     ):  # Use 'actor' instead of 'user' to support anon users
         user = current_auth.actor
-        if hasattr(user, 'tz'):
-            return user.tz
-        if hasattr(user, 'timezone') and user.timezone:
-            if isinstance(user.timezone, str):
-                return timezone(user.timezone)
-            return user.timezone
+        for attr in ('tz', 'timezone'):
+            tz = getattr(user, attr, None)
+            if tz:
+                if isinstance(tz, str):
+                    return timezone(tz)
+                return tz
 
     if default is not None:
         if isinstance(default, str):

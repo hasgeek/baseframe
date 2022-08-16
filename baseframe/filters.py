@@ -1,3 +1,5 @@
+"""Jinja2 filters."""
+
 from datetime import date, datetime, time, timedelta
 from typing import Any, List, Tuple, Union
 from urllib.parse import urlsplit, urlunsplit
@@ -105,10 +107,8 @@ def avatar_url(user: Any, size: Union[str, List[int], Tuple[int, int]] = None) -
             # TODO: Use a URL parser
             if '?' in user.avatar:
                 return user.avatar + '&size=' + str(size)
-            else:
-                return user.avatar + '?size=' + str(size)
-        else:
-            return user.avatar
+            return user.avatar + '?size=' + str(size)
+        return user.avatar
     email = user.email
     if email:
         if isinstance(email, str):
@@ -166,8 +166,7 @@ def ext_asset_url(asset: Union[str, List[str]]) -> str:
     """Return external asset URL for use in templates."""
     if isinstance(asset, str):
         return ext_assets([asset])
-    else:
-        return ext_assets(asset)
+    return ext_assets(asset)
 
 
 @baseframe.app_template_filter('firstline')
@@ -243,10 +242,9 @@ def shortdate(value: Union[datetime, date]) -> str:
         - timedelta(days=int(current_app.config.get('SHORTDATE_THRESHOLD_DAYS', 0)))
     ):
         return dt.strftime('%e %b')
-    else:
-        # The string replace hack is to deal with inconsistencies in the underlying
-        # implementation of strftime. See https://bugs.python.org/issue8304
-        return str(dt.strftime("%e %b '%y")).replace("'", "’")
+    # The string replace hack is to deal with inconsistencies in the underlying
+    # implementation of strftime. See https://bugs.python.org/issue8304
+    return str(dt.strftime("%e %b '%y")).replace("'", "’")
 
 
 # TODO: Only used in Hasjob. Move there?
@@ -267,7 +265,7 @@ def longdate(value: Union[datetime, date]) -> str:
 @baseframe.app_template_filter('date')
 def date_filter(
     value: Union[datetime, date],
-    format: str = 'medium',  # NOQA: A002  # skipcq: PYL-W0622
+    format: str = 'medium',  # NOQA: A002  # pylint: disable=W0622
     locale: Union[Locale, str] = None,
     usertz: bool = True,
 ) -> str:
@@ -288,7 +286,7 @@ def date_filter(
 @baseframe.app_template_filter('time')
 def time_filter(
     value: Union[datetime, time],
-    format: str = 'short',  # NOQA: A002  # skipcq: PYL-W0622
+    format: str = 'short',  # NOQA: A002  # pylint: disable=W0622
     locale: Union[Locale, str] = None,
     usertz: bool = True,
 ) -> str:
@@ -310,7 +308,7 @@ def time_filter(
 @baseframe.app_template_filter('datetime')
 def datetime_filter(
     value: Union[datetime, date, time],
-    format: str = 'medium',  # NOQA: A002  # skipcq: PYL-W0622
+    format: str = 'medium',  # NOQA: A002  # pylint: disable=W0622
     locale: Union[Locale, str] = None,
     usertz: bool = True,
 ) -> str:
@@ -342,7 +340,7 @@ def timedelta_filter(
     granularity: str = 'second',
     threshold: float = 0.85,
     add_direction: bool = False,
-    format: str = 'long',  # NOQA: A002  # skipcq: PYL-W0622
+    format: str = 'long',  # NOQA: A002  # pylint: disable=W0622
     locale: Union[Locale, str] = None,
 ) -> str:
     """
@@ -388,7 +386,7 @@ def cleanurl_filter(url: Union[str, furl]) -> str:
         netloc = url.netloc[4:]
     else:
         netloc = url.netloc
-    return furl().set(netloc=netloc, path=url.path).url.lstrip('//').rstrip('/')
+    return furl().set(netloc=netloc, path=url.path).url.lstrip('/').rstrip('/')
 
 
 @baseframe.app_template_filter('make_relative_url')

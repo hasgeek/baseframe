@@ -1,3 +1,5 @@
+"""Test forms."""
+
 from werkzeug.datastructures import MultiDict
 
 import pytest
@@ -79,10 +81,13 @@ class FieldRenderForm(forms.Form):
 
 @pytest.fixture
 def user():
-    return SimpleUser(fullname="Test user", company="Test company", password="test")
+    return SimpleUser(  # nosec
+        fullname="Test user", company="Test company", password="test"
+    )
 
 
-def test_no_obj(test_client):
+@pytest.mark.usefixtures('ctx')
+def test_no_obj():
     """Test that the form can be initialized without an object."""
     form = GetSetForm(meta={'csrf': False})
 
@@ -94,7 +99,8 @@ def test_no_obj(test_client):
     assert form.confirm_password.data is None
 
 
-def test_get(test_client, user):
+@pytest.mark.usefixtures('ctx')
+def test_get(user):
     """Test that the form loads values from the provided object."""
     form = GetSetForm(obj=user, meta={'csrf': False})
 
@@ -106,7 +112,8 @@ def test_get(test_client, user):
     assert form.confirm_password.data == ''
 
 
-def test_get_formdata(test_client, user):
+@pytest.mark.usefixtures('ctx')
+def test_get_formdata(user):
     """Test that the form preferentially loads from form data."""
     form = GetSetForm(
         formdata=MultiDict(
@@ -130,7 +137,8 @@ def test_get_formdata(test_client, user):
     assert form.confirm_password.data == "Mismatched"
 
 
-def test_set(test_client, user):
+@pytest.mark.usefixtures('ctx')
+def test_set(user):
     """Test that the form populates an object with or without set methods."""
     form = GetSetForm(
         formdata=MultiDict(
@@ -160,7 +168,8 @@ def test_set(test_client, user):
     assert not hasattr(user, 'confirm_password')
 
 
-def test_init_order(test_client):
+@pytest.mark.usefixtures('ctx')
+def test_init_order():
     """Test that get_<fieldname> methods have proper context."""
     with pytest.raises(TypeError):
         # A parameter named `expected_item` is expected
@@ -175,7 +184,8 @@ def test_init_order(test_client):
     assert form.has_context.data == 'probe'
 
 
-def test_render_field_options(test_client):
+@pytest.mark.usefixtures('ctx')
+def test_render_field_options():
     form = FieldRenderForm(meta={'csrf': False})
     test_attrs = {
         'attrone': 'test',

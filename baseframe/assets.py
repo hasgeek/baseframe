@@ -1,3 +1,5 @@
+"""Static assets (deprecated)."""
+
 from coaster.assets import Version, VersionedAssets
 
 from . import __version__

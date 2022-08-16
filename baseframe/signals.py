@@ -1,3 +1,5 @@
+"""Baseframe signals."""
+
 from flask.signals import Namespace
 
 baseframe_signals = Namespace()

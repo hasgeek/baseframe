@@ -1,3 +1,5 @@
+"""Redefined WTForms widgets and some extra widgets."""
+
 from flask import current_app, render_template
 from markupsafe import Markup
 from wtforms.widgets import RadioInput, Select, html_params
@@ -30,12 +32,12 @@ class SelectWidget(Select):
         kwargs.setdefault('id', field.id)
         if self.multiple:
             kwargs['multiple'] = True
-        html = ['<select %s>' % html_params(name=field.name, **kwargs)]
+        html = [f'<select {html_params(name=field.name, **kwargs)}>']
         for item1, item2 in field.choices:
             if isinstance(item2, (list, tuple)):
                 group_label = item1
                 group_items = item2
-                html.append('<optgroup %s>' % html_params(label=group_label))
+                html.append(f'<optgroup {html_params(label=group_label)}>')
                 for inner_val, inner_label in group_items:
                     html.append(
                         self.render_option(
@@ -63,10 +65,10 @@ class Select2Widget(Select):
             kwargs['multiple'] = 'multiple'
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         if c:
-            kwargs['class'] = '%s %s' % ('select2', c)
+            kwargs['class'] = f'select2 {c}'
         else:
             kwargs['class'] = 'select2'
-        html = ['<select %s>' % html_params(name=field.name, **kwargs)]
+        html = [f'<select {html_params(name=field.name, **kwargs)}>']
         if field.iter_choices():
             for val, label, selected in field.iter_choices():
                 html.append(self.render_option(val, label, selected))
@@ -82,7 +84,7 @@ class TinyMce3(wtforms.widgets.TextArea):
     def __call__(self, field, **kwargs) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         if c:
-            kwargs['class'] = '%s %s' % ('richtext', c)
+            kwargs['class'] = f'richtext {c}'
         else:
             kwargs['class'] = 'richtext'
         return super().__call__(field, **kwargs)
@@ -96,7 +98,7 @@ class TinyMce4(wtforms.widgets.TextArea):
     def __call__(self, field, **kwargs) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         if c:
-            kwargs['class'] = '%s %s' % ('richtext', c)
+            kwargs['class'] = f'richtext {c}'
         else:
             kwargs['class'] = 'richtext'
         return super().__call__(field, **kwargs)
@@ -111,7 +113,7 @@ class SubmitInput(wtforms.widgets.SubmitInput):
 
     def __call__(self, field, **kwargs) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        kwargs['class'] = '%s %s' % (self.css_class, c)
+        kwargs['class'] = f'{self.css_class} {c}'
         return super().__call__(field, **kwargs)
 
 
@@ -160,8 +162,8 @@ class CoordinatesInput(wtforms.widgets.core.Input):
             value.append('')
 
         return Markup(
-            '<input %s> <input %s>'
-            % (
+            # pylint: disable=consider-using-f-string
+            '<input {}> <input {}>'.format(
                 self.html_params(
                     id=id_ + '_latitude',
                     name=field.name,
@@ -185,25 +187,26 @@ class RadioMatrixInput:
 
     def __call__(self, field, **kwargs) -> str:
         rendered = []
-        rendered.append('<table class="%s">' % kwargs.pop('table_class', 'table'))
+        table_class = kwargs.pop('table_class', 'table')
+        rendered.append(f'<table class="{table_class}">')
         rendered.append('<thead>')
         rendered.append('<tr>')
-        rendered.append('<th>%s</th>' % field.label)
+        rendered.append(f'<th>{field.label}</th>')
         for value, label in field.choices:
-            rendered.append('<th>%s</th>' % label)
+            rendered.append(f'<th>{label}</th>')
         rendered.append('</th>')
         rendered.append('</thead>')
         rendered.append('<tbody>')
         for name, title in field.fields:
             rendered.append('<tr>')
-            rendered.append('<td>%s</td>' % title)
+            rendered.append(f'<td>{title}</td>')
             selected = field.data.get(name)
             for value, label in field.choices:
                 params = {'type': 'radio', 'name': name, 'value': value}
                 if str(selected) == str(value):
                     params['checked'] = True
                 rendered.append(
-                    '<td><input %s/></td>' % wtforms.widgets.html_params(**params)
+                    f'<td><input {wtforms.widgets.html_params(**params)}/></td>'
                 )
             rendered.append('</tr>')
         rendered.append('</tbody>')
@@ -226,7 +229,7 @@ class InlineListWidget:
     """
 
     def __init__(
-        self, html_tag='div', class_='', class_prefix=''  # skipcq: PYL-W0613
+        self, html_tag='div', class_='', class_prefix=''  # pylint: disable=W0613
     ) -> None:
         self.html_tag = html_tag
         self.class_ = ''
@@ -237,19 +240,13 @@ class InlineListWidget:
         kwargs['class_'] = (
             kwargs.pop('class_', kwargs.pop('class', '')).strip() + ' ' + self.class_
         ).strip()
-        html = ['<%s %s>' % (self.html_tag, wtforms.widgets.html_params(**kwargs))]
+        html = [f'<{self.html_tag} {wtforms.widgets.html_params(**kwargs)}>']
         for subfield in field:
             html.append(
-                '<label for="%s" class="%s%s">%s %s</label>'
-                % (
-                    subfield.id,
-                    self.class_prefix,
-                    subfield.data,
-                    subfield(),
-                    subfield.label.text,
-                )
+                f'<label for="{subfield.id}" class="{self.class_prefix}{subfield.data}'
+                f'">{subfield()} {subfield.label.text}</label>'
             )
-        html.append('</%s>' % self.html_tag)
+        html.append(f'</{self.html_tag}>')
         return Markup('\n'.join(html))
 
 
@@ -273,9 +270,9 @@ class ImgeeWidget(wtforms.widgets.Input):
         elif isinstance(value, furl):
             value = furl.url
 
+        # pylint: disable=consider-using-f-string
         iframe_html = Markup(
-            '<iframe %s class="imgee-upload"></iframe>'
-            % (
+            '<iframe {} class="imgee-upload"></iframe>'.format(
                 self.html_params(
                     id='iframe_' + id_ + '_upload',
                     input_id=id_,
@@ -285,8 +282,7 @@ class ImgeeWidget(wtforms.widgets.Input):
         )
 
         field_html = Markup(
-            '<img %s> <input %s>'
-            % (
+            '<img {}> <input {}>'.format(
                 self.html_params(id='img_' + id_, src=value, width='200', **kwargs),
                 self.html_params(
                     id=id_,
