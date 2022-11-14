@@ -18,26 +18,26 @@ of these have a "value.operation if value else value" construct. The original
 value is returned if it's falsy.
 """
 
-from typing import Any, Callable, Iterable, Optional
+import typing as t
 
 from coaster.utils import unicode_extended_whitespace
 
 __all__ = ['lower', 'upper', 'strip', 'lstrip', 'rstrip', 'strip_each', 'none_if_empty']
 
 
-def lower() -> Callable[[Optional[str]], Optional[str]]:
+def lower() -> t.Callable[[t.Optional[str]], t.Optional[str]]:
     """Convert data to lower case."""
 
-    def lower_inner(value: Optional[str]) -> Optional[str]:
+    def lower_inner(value: t.Optional[str]) -> t.Optional[str]:
         return value.lower() if value else value
 
     return lower_inner
 
 
-def upper() -> Callable[[Optional[str]], Optional[str]]:
+def upper() -> t.Callable[[t.Optional[str]], t.Optional[str]]:
     """Convert data to upper case."""
 
-    def upper_inner(value: Optional[str]) -> Optional[str]:
+    def upper_inner(value: t.Optional[str]) -> t.Optional[str]:
         return value.upper() if value else value
 
     return upper_inner
@@ -45,14 +45,14 @@ def upper() -> Callable[[Optional[str]], Optional[str]]:
 
 def strip(
     chars: str = unicode_extended_whitespace,
-) -> Callable[[Optional[str]], Optional[str]]:
+) -> t.Callable[[t.Optional[str]], t.Optional[str]]:
     """
     Strip whitespace from both ends.
 
     :param chars: If specified, strip these characters instead of whitespace
     """
 
-    def strip_inner(value: Optional[str]) -> Optional[str]:
+    def strip_inner(value: t.Optional[str]) -> t.Optional[str]:
         return value.strip(chars) if value else value
 
     return strip_inner
@@ -60,14 +60,14 @@ def strip(
 
 def lstrip(
     chars=unicode_extended_whitespace,
-) -> Callable[[Optional[str]], Optional[str]]:
+) -> t.Callable[[t.Optional[str]], t.Optional[str]]:
     """
     Strip whitespace from beginning of data.
 
     :param chars: If specified, strip these characters instead of whitespace
     """
 
-    def lstrip_inner(value: Optional[str]) -> Optional[str]:
+    def lstrip_inner(value: t.Optional[str]) -> t.Optional[str]:
         return value.lstrip(chars) if value else value
 
     return lstrip_inner
@@ -75,14 +75,14 @@ def lstrip(
 
 def rstrip(
     chars=unicode_extended_whitespace,
-) -> Callable[[Optional[str]], Optional[str]]:
+) -> t.Callable[[t.Optional[str]], t.Optional[str]]:
     """
     Strip whitespace from end of data.
 
     :param chars: If specified, strip these characters instead of whitespace
     """
 
-    def rstrip_inner(value: Optional[str]) -> Optional[str]:
+    def rstrip_inner(value: t.Optional[str]) -> t.Optional[str]:
         return value.rstrip(chars) if value else value
 
     return rstrip_inner
@@ -90,7 +90,7 @@ def rstrip(
 
 def strip_each(
     chars=unicode_extended_whitespace,
-) -> Callable[[Iterable[str]], Optional[Iterable[str]]]:
+) -> t.Callable[[t.Iterable[str]], t.Optional[t.Iterable[str]]]:
     """
     Strip whitespace and remove blank elements from each element in an iterable.
 
@@ -99,7 +99,7 @@ def strip_each(
     :param chars: If specified, strip these characters instead of whitespace
     """
 
-    def strip_each_inner(value: Iterable[str]) -> Optional[Iterable[str]]:
+    def strip_each_inner(value: t.Iterable[str]) -> t.Optional[t.Iterable[str]]:
         if value:
             return [sline for sline in [line.strip(chars) for line in value] if sline]
         return value
@@ -107,10 +107,10 @@ def strip_each(
     return strip_each_inner
 
 
-def none_if_empty() -> Callable[[Any], Optional[Any]]:
+def none_if_empty() -> t.Callable[[t.Any], t.Optional[t.Any]]:
     """If data is empty or evalues to boolean false, replace with None."""
 
-    def none_if_empty_inner(value: Any) -> Optional[Any]:
+    def none_if_empty_inner(value: t.Any) -> t.Optional[t.Any]:
         return value if value else None
 
     return none_if_empty_inner

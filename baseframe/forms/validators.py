@@ -5,10 +5,10 @@ from __future__ import annotations
 from collections import namedtuple
 from decimal import Decimal
 from fractions import Fraction
-from typing import Any, Callable, Iterable, Tuple, Union
 from urllib.parse import urljoin, urlparse
 import datetime
 import re
+import typing as t
 
 from flask import current_app, request
 from wtforms.validators import (  # NOQA  # skipcq: PY-W2000
@@ -79,9 +79,9 @@ RECAPTCHA_ERROR_CODES = {
     'invalid-input-response': __("The response parameter is invalid or malformed"),
 }
 
-InvalidUrlPatterns = Iterable[Tuple[Iterable[Any], str]]
-AllowedListInit = Union[Iterable[str], Callable[[], Iterable[str]], None]
-AllowedList = Union[Iterable[str], None]
+InvalidUrlPatterns = t.Iterable[t.Tuple[t.Iterable[t.Any], str]]
+AllowedListInit = t.Union[t.Iterable[str], t.Callable[[], t.Iterable[str]], None]
+AllowedList = t.Union[t.Iterable[str], None]
 
 
 def is_empty(value) -> bool:
@@ -128,7 +128,7 @@ class AllowedIf:
 
     default_message = __("This requires ‘{field}’ to be specified")
 
-    def __init__(self, fieldname: str, message: str = None) -> None:
+    def __init__(self, fieldname: str, message: t.Optional[str] = None) -> None:
         self.fieldname = fieldname
         self.message = message or self.default_message
 
@@ -159,7 +159,7 @@ class OptionalIf(Optional):
 
     default_message = __("This is required")
 
-    def __init__(self, fieldname: str, message: str = None) -> None:
+    def __init__(self, fieldname: str, message: t.Optional[str] = None) -> None:
         super().__init__()
         self.fieldname = fieldname
         self.message = message or self.default_message
@@ -188,7 +188,7 @@ class RequiredIf(DataRequired):
 
     default_message = __("This is required")
 
-    def __init__(self, fieldname: str, message: str = None) -> None:
+    def __init__(self, fieldname: str, message: t.Optional[str] = None) -> None:
         message = message or self.default_message
         super().__init__(message=message)
         self.fieldname = fieldname
@@ -204,7 +204,7 @@ class _Comparison:
 
     default_message = __("Comparison failed")
 
-    def __init__(self, fieldname: str, message: str = None) -> None:
+    def __init__(self, fieldname: str, message: t.Optional[str] = None) -> None:
         self.fieldname = fieldname
         self.message = message or self.default_message
 
@@ -323,7 +323,7 @@ class IsEmoji:
 
     default_message = __("This is not a valid emoji")
 
-    def __init__(self, message: str = None) -> None:
+    def __init__(self, message: t.Optional[str] = None) -> None:
         self.message = message or self.default_message
 
     def __call__(self, form, field) -> None:
@@ -344,7 +344,7 @@ class IsPublicEmailDomain:
 
     default_message = __("This domain is not a public email domain")
 
-    def __init__(self, message: str = None, timeout: int = 30) -> None:
+    def __init__(self, message: t.Optional[str] = None, timeout: int = 30) -> None:
         self.message = message or self.default_message
         self.timeout = timeout
 
@@ -367,7 +367,7 @@ class IsNotPublicEmailDomain:
 
     default_message = __("This domain is a public email domain")
 
-    def __init__(self, message: str = None, timeout: int = 30) -> None:
+    def __init__(self, message: t.Optional[str] = None, timeout: int = 30) -> None:
         self.message = message or self.default_message
         self.timeout = timeout
 
@@ -388,7 +388,7 @@ class ValidEmail:
 
     default_message = __("This email address does not appear to be valid")
 
-    def __init__(self, message: str = None) -> None:
+    def __init__(self, message: t.Optional[str] = None) -> None:
         self.message = message
 
     def __call__(self, form, field) -> None:
@@ -444,13 +444,13 @@ class ValidUrl:
 
     def __init__(
         self,
-        message: str = None,
-        message_urltext: str = None,
-        message_schemes: str = None,
-        message_domains: str = None,
+        message: t.Optional[str] = None,
+        message_urltext: t.Optional[str] = None,
+        message_schemes: t.Optional[str] = None,
+        message_domains: t.Optional[str] = None,
         invalid_urls: InvalidUrlPatterns = (),
-        allowed_schemes: AllowedListInit = None,
-        allowed_domains: AllowedListInit = None,
+        allowed_schemes: t.Optional[AllowedListInit] = None,
+        allowed_domains: t.Optional[AllowedListInit] = None,
         visit_url: bool = True,
     ):
         self.message = message or self.default_message
@@ -468,8 +468,8 @@ class ValidUrl:
         allowed_schemes: AllowedList,
         allowed_domains: AllowedList,
         invalid_urls: InvalidUrlPatterns,
-        text: Union[str, None] = None,
-    ) -> Optional[str]:
+        text: t.Union[str, None] = None,
+    ) -> t.Optional[str]:
         """
         Inner method to actually check the URL.
 
@@ -519,7 +519,7 @@ class ValidUrl:
             try:
                 r = requests.get(
                     url,
-                    timeout=30,
+                    timeout=5,
                     verify=False,  # nosec  # skipcq: BAN-B501
                     headers={'User-Agent': self.user_agent},
                 )
@@ -664,7 +664,7 @@ class NoObfuscatedEmail:
 
     default_message = __("Email address identified")
 
-    def __init__(self, message: str = None) -> None:
+    def __init__(self, message: t.Optional[str] = None) -> None:
         self.message = message or self.default_message
 
     def __call__(self, form, field) -> None:
@@ -685,7 +685,7 @@ class ValidName:
         "It should have letters, numbers and non-terminal hyphens only"
     )
 
-    def __init__(self, message: str = None) -> None:
+    def __init__(self, message: t.Optional[str] = None) -> None:
         self.message = message or self.default_message
 
     def __call__(self, form, field) -> None:
@@ -701,9 +701,9 @@ class ValidCoordinates:
 
     def __init__(
         self,
-        message: str = None,
-        message_latitude: str = None,
-        message_longitude: str = None,
+        message: t.Optional[str] = None,
+        message_latitude: t.Optional[str] = None,
+        message_longitude: t.Optional[str] = None,
     ) -> None:
         self.message = message or self.default_message
         self.message_latitude = message_latitude or self.default_message_latitude
@@ -723,7 +723,9 @@ class Recaptcha:
 
     default_message_network = __("The server was temporarily unreachable. Try again")
 
-    def __init__(self, message: str = None, message_network: str = None) -> None:
+    def __init__(
+        self, message: t.Optional[str] = None, message_network: t.Optional[str] = None
+    ) -> None:
         if message is None:
             message = RECAPTCHA_ERROR_CODES['missing-input-response']
 
@@ -761,7 +763,9 @@ class Recaptcha:
         }
 
         try:
-            http_response = requests.post(RECAPTCHA_VERIFY_SERVER, data=data)
+            http_response = requests.post(
+                RECAPTCHA_VERIFY_SERVER, data=data, timeout=30
+            )
         except (
             requests.exceptions.ConnectionError,
             requests.exceptions.Timeout,

@@ -11,9 +11,9 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-from typing import Dict
 import os
 import sys
+import typing as t
 
 sys.path.append(os.path.abspath('../baseframe/'))
 from baseframe import _version  # isort:skip
@@ -51,7 +51,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'baseframe'
-copyright = '2012-21, Hasgeek'
+copyright = '2012-22, Hasgeek'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -179,7 +179,7 @@ htmlhelp_basename = 'baseframedoc'
 
 # -- Options for LaTeX output --------------------------------------------------
 
-latex_elements: Dict[str, str] = {
+latex_elements: t.Dict[str, str] = {
     # The paper size ('letterpaper' or 'a4paper').
     #'papersize': 'letterpaper',
     # The font size ('10pt', '11pt' or '12pt').

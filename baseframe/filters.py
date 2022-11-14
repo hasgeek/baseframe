@@ -1,9 +1,9 @@
 """Jinja2 filters."""
 
 from datetime import date, datetime, time, timedelta
-from typing import Any, List, Tuple, Union
 from urllib.parse import urlsplit, urlunsplit
 import os.path
+import typing as t
 
 from flask import current_app, request
 from flask_babel import Locale, get_locale
@@ -98,7 +98,9 @@ def nossl(url: str) -> str:
 
 # TODO: Move this into Hasjob as it's not used elsewhere
 @baseframe.app_template_filter('avatar_url')
-def avatar_url(user: Any, size: Union[str, List[int], Tuple[int, int]] = None) -> str:
+def avatar_url(
+    user: t.Any, size: t.Optional[t.Union[str, t.List[int], t.Tuple[int, int]]] = None
+) -> str:
     """Generate an avatar for the given user."""
     if isinstance(size, (list, tuple)):
         size = 'x'.join(str(s) for s in size)
@@ -162,7 +164,7 @@ def field_markdown(text: str) -> Markup:
 
 
 @baseframe.app_template_filter('ext_asset_url')
-def ext_asset_url(asset: Union[str, List[str]]) -> str:
+def ext_asset_url(asset: t.Union[str, t.List[str]]) -> str:
     """Return external asset URL for use in templates."""
     if isinstance(asset, str):
         return ext_assets([asset])
@@ -223,10 +225,10 @@ def cdata(text: str) -> str:
 
 # TODO: Used only in Hasjob. Move there?
 @baseframe.app_template_filter('shortdate')
-def shortdate(value: Union[datetime, date]) -> str:
+def shortdate(value: t.Union[datetime, date]) -> str:
     """Render a date in short form (deprecated for lack of i18n support)."""
-    dt: Union[datetime, date]
-    utc_now: Union[datetime, date]
+    dt: t.Union[datetime, date]
+    utc_now: t.Union[datetime, date]
     if isinstance(value, datetime):
         tz = get_timezone()
         if value.tzinfo is None:
@@ -249,9 +251,9 @@ def shortdate(value: Union[datetime, date]) -> str:
 
 # TODO: Only used in Hasjob. Move there?
 @baseframe.app_template_filter('longdate')
-def longdate(value: Union[datetime, date]) -> str:
+def longdate(value: t.Union[datetime, date]) -> str:
     """Render a date in long form (deprecated for lack of i18n support)."""
-    dt: Union[datetime, date]
+    dt: t.Union[datetime, date]
     if isinstance(value, datetime):
         if value.tzinfo is None:
             dt = utc.localize(value).astimezone(get_timezone())
@@ -264,13 +266,13 @@ def longdate(value: Union[datetime, date]) -> str:
 
 @baseframe.app_template_filter('date')
 def date_filter(
-    value: Union[datetime, date],
+    value: t.Union[datetime, date],
     format: str = 'medium',  # NOQA: A002  # pylint: disable=W0622
-    locale: Union[Locale, str] = None,
+    locale: t.Optional[t.Union[Locale, str]] = None,
     usertz: bool = True,
 ) -> str:
     """Render a localized date."""
-    dt: Union[datetime, date]
+    dt: t.Union[datetime, date]
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
             dt = utc.localize(value).astimezone(get_timezone())
@@ -285,14 +287,14 @@ def date_filter(
 
 @baseframe.app_template_filter('time')
 def time_filter(
-    value: Union[datetime, time],
+    value: t.Union[datetime, time],
     format: str = 'short',  # NOQA: A002  # pylint: disable=W0622
-    locale: Union[Locale, str] = None,
+    locale: t.Optional[t.Union[Locale, str]] = None,
     usertz: bool = True,
 ) -> str:
     """Render a localized time."""
     # Default format = hh:mm
-    dt: Union[datetime, time]
+    dt: t.Union[datetime, time]
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
             dt = utc.localize(value).astimezone(get_timezone())
@@ -307,13 +309,13 @@ def time_filter(
 
 @baseframe.app_template_filter('datetime')
 def datetime_filter(
-    value: Union[datetime, date, time],
+    value: t.Union[datetime, date, time],
     format: str = 'medium',  # NOQA: A002  # pylint: disable=W0622
-    locale: Union[Locale, str] = None,
+    locale: t.Optional[t.Union[Locale, str]] = None,
     usertz: bool = True,
 ) -> str:
     """Render a localized date and time."""
-    dt: Union[datetime, date, time]
+    dt: t.Union[datetime, date, time]
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
             dt = utc.localize(value).astimezone(get_timezone())
@@ -336,12 +338,12 @@ def timestamp_filter(value: datetime) -> float:
 
 @baseframe.app_template_filter('timedelta')
 def timedelta_filter(
-    delta: Union[int, timedelta, datetime],
+    delta: t.Union[int, timedelta, datetime],
     granularity: str = 'second',
     threshold: float = 0.85,
     add_direction: bool = False,
     format: str = 'long',  # NOQA: A002  # pylint: disable=W0622
-    locale: Union[Locale, str] = None,
+    locale: t.Optional[t.Union[Locale, str]] = None,
 ) -> str:
     """
     Render a timedelta or int (representing seconds) as a duration.
@@ -377,7 +379,7 @@ def timedelta_filter(
 
 
 @baseframe.app_template_filter('cleanurl')
-def cleanurl_filter(url: Union[str, furl]) -> str:
+def cleanurl_filter(url: t.Union[str, furl]) -> str:
     """Clean a URL visually by removing defaults like scheme and the ``www`` prefix."""
     if not isinstance(url, furl):
         url = furl(url)

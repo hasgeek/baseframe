@@ -1,6 +1,6 @@
 """SQLAlchemy-based form fields and widgets."""
 
-from typing import Optional
+import typing as t
 
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 
@@ -45,7 +45,7 @@ class AvailableAttr:
 class AvailableName(AvailableAttr):
     """Check whether the specified name is available for the model being edited."""
 
-    def __init__(self, message: Optional[str] = None, model=None) -> None:
+    def __init__(self, message: t.Optional[str] = None, model=None) -> None:
         if not message:
             message = __("This URL name is already in use")
         super().__init__('name', message, model)

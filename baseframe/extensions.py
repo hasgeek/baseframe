@@ -1,8 +1,8 @@
 """Standard extensions to add to the Flask app."""
 
 from datetime import tzinfo
-from typing import Union
 import os.path
+import typing as t
 
 from flask import current_app, request
 from flask_babel import Babel, Domain
@@ -77,7 +77,7 @@ def get_user_locale() -> str:
 
 
 @babel.timezoneselector
-def get_timezone(default: Union[None, tzinfo, str] = None) -> tzinfo:
+def get_timezone(default: t.Union[None, tzinfo, str] = None) -> tzinfo:
     """Return a timezone suitable for the current context."""
     # If this app and request have a user, return user's timezone,
     # else return app default timezone

@@ -1,8 +1,8 @@
 """Statsd logger."""
 
 from datetime import timedelta
-from typing import Dict, Optional, Union
 import time
+import typing as t
 
 from flask import Flask, current_app, request, request_finished, request_started
 from flask_wtf import FlaskForm
@@ -18,7 +18,7 @@ __all__ = ['Statsd']
 
 START_TIME_ATTR = 'statsd_start_time'
 
-TagsType = Dict[str, Union[int, str, None]]
+TagsType = t.Dict[str, t.Union[int, str, None]]
 
 
 class Statsd:
@@ -65,7 +65,7 @@ class Statsd:
     The Datadog and SignalFx tag formats are not supported at this time.
     """
 
-    def __init__(self, app: Optional[Flask] = None) -> None:
+    def __init__(self, app: t.Optional[Flask] = None) -> None:
         if app is not None:
             self.init_app(app)
 
@@ -90,7 +90,7 @@ class Statsd:
             request_started.connect(self._request_started, app)
             request_finished.connect(self._request_finished, app)
 
-    def _metric_name(self, name: str, tags: TagsType = None) -> str:
+    def _metric_name(self, name: str, tags: t.Optional[TagsType] = None) -> str:
         if tags is None:
             tags = {}
         if current_app.config['STATSD_TAGS']:
@@ -110,7 +110,10 @@ class Statsd:
         return f'{prefix}.{name}'
 
     def timer(
-        self, stat: str, rate: Union[int, float] = None, tags: TagsType = None
+        self,
+        stat: str,
+        rate: t.Optional[t.Union[int, float]] = None,
+        tags: t.Optional[TagsType] = None,
     ) -> Timer:
         """Return a Timer."""
         stat = self._metric_name(stat, tags)
@@ -121,9 +124,9 @@ class Statsd:
     def timing(
         self,
         stat: str,
-        delta: Union[int, timedelta],
-        rate: Union[int, float] = None,
-        tags: TagsType = None,
+        delta: t.Union[int, timedelta],
+        rate: t.Optional[t.Union[int, float]] = None,
+        tags: t.Optional[TagsType] = None,
     ) -> None:
         """
         Send new timing information.
@@ -141,8 +144,8 @@ class Statsd:
         self,
         stat: str,
         count: int = 1,
-        rate: Union[int, float] = None,
-        tags: TagsType = None,
+        rate: t.Optional[t.Union[int, float]] = None,
+        tags: t.Optional[TagsType] = None,
     ) -> None:
         """Increment a stat by `count`."""
         stat = self._metric_name(stat, tags)
@@ -156,8 +159,8 @@ class Statsd:
         self,
         stat: str,
         count: int = 1,
-        rate: Union[int, float] = None,
-        tags: TagsType = None,
+        rate: t.Optional[t.Union[int, float]] = None,
+        tags: t.Optional[TagsType] = None,
     ) -> None:
         """Decrement a stat by `count`."""
         stat = self._metric_name(stat, tags)
@@ -171,9 +174,9 @@ class Statsd:
         self,
         stat: str,
         value: int,
-        rate: Union[int, float] = None,
+        rate: t.Optional[t.Union[int, float]] = None,
         delta: bool = False,
-        tags: TagsType = None,
+        tags: t.Optional[TagsType] = None,
     ) -> None:
         """Set a gauge value."""
         stat = self._metric_name(stat, tags)
@@ -188,8 +191,8 @@ class Statsd:
         self,
         stat: str,
         value: str,
-        rate: Union[int, float] = None,
-        tags: TagsType = None,
+        rate: t.Optional[t.Union[int, float]] = None,
+        tags: t.Optional[TagsType] = None,
     ) -> None:
         """Set a set value."""
         stat = self._metric_name(stat, tags)

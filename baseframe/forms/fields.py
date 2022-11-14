@@ -6,21 +6,9 @@ from __future__ import annotations
 from datetime import datetime, tzinfo
 from decimal import Decimal
 from decimal import InvalidOperation as DecimalError
-from typing import (
-    Any,
-    Callable,
-    Dict,
-    Generator,
-    Iterable,
-    List,
-    Optional,
-    Tuple,
-    Type,
-    Union,
-    cast,
-)
 from urllib.parse import urljoin
 import itertools
+import typing as t
 
 from flask import current_app, json
 from flask_wtf import RecaptchaField as RecaptchaFieldBase
@@ -34,8 +22,8 @@ import wtforms
 from dateutil import parser
 from pytz import timezone as pytz_timezone
 from pytz import utc
-from typing_extensions import Protocol, runtime_checkable
 import bleach
+import typing_extensions as te
 
 from ..extensions import _, __, get_timezone
 from ..utils import request_timestamp
@@ -109,13 +97,13 @@ SANITIZE_TAGS = [
 ]
 SANITIZE_ATTRIBUTES = {'a': ['href', 'title', 'target']}
 
-ValidatorList = Iterable[Callable[[Type, Type], None]]
-FilterList = Iterable[Callable[[Any], Any]]
-ReturnIterChoices = Generator[Tuple[str, str, bool], None, None]
+ValidatorList = t.Iterable[t.Callable[[t.Type, t.Type], None]]
+FilterList = t.Iterable[t.Callable[[t.Any], t.Any]]
+ReturnIterChoices = t.Generator[t.Tuple[str, str, bool], None, None]
 
 
-@runtime_checkable
-class GeonameidProtocol(Protocol):
+@te.runtime_checkable
+class GeonameidProtocol(te.Protocol):
     geonameid: str
 
 
@@ -133,7 +121,9 @@ class NonceField(HiddenField):
 class RecaptchaField(RecaptchaFieldBase):
     """RecaptchaField with an improved validator."""
 
-    def __init__(self, label: str = '', validators: ValidatorList = None, **kwargs):
+    def __init__(
+        self, label: str = '', validators: t.Optional[ValidatorList] = None, **kwargs
+    ):
         validators = validators or [Recaptcha()]
         super().__init__(label, validators, **kwargs)
 
@@ -186,18 +176,18 @@ class SelectField(SelectFieldBase):
 class TinyMce3Field(TextAreaField):
     """Rich text field using TinyMCE 3."""
 
-    data: Optional[str]
+    data: t.Optional[str]
     widget = TinyMce3()
 
     def __init__(
         self,
         # WTForms fields
         label: str = '',
-        validators: ValidatorList = None,
+        validators: t.Optional[ValidatorList] = None,
         filters: FilterList = (),
         description: str = '',
-        id: Optional[str] = None,  # NOQA: A002  # pylint: disable=redefined-builtin
-        default: Optional[str] = None,
+        id: t.Optional[str] = None,  # NOQA: A002  # pylint: disable=redefined-builtin
+        default: t.Optional[str] = None,
         widget=None,
         render_kw=None,
         name=None,
@@ -206,12 +196,12 @@ class TinyMce3Field(TextAreaField):
         _translations=None,
         _meta=None,
         # Additional fields
-        content_css: Union[str, Callable[[], str]] = None,
+        content_css: t.Optional[t.Union[str, t.Callable[[], str]]] = None,
         linkify: bool = True,
         nofollow: bool = True,
-        tinymce_options: dict = None,
-        sanitize_tags: Optional[List] = None,
-        sanitize_attributes: Optional[Dict[str, List[str]]] = None,
+        tinymce_options: t.Optional[dict] = None,
+        sanitize_tags: t.Optional[t.List] = None,
+        sanitize_attributes: t.Optional[t.Dict[str, t.List[str]]] = None,
         **kwargs,
     ):
 
@@ -287,7 +277,7 @@ class TinyMce3Field(TextAreaField):
             return self._content_css()
         return self._content_css
 
-    def process_formdata(self, valuelist: List[str]) -> None:
+    def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
         super().process_formdata(valuelist)
         # Sanitize data
@@ -307,18 +297,18 @@ class TinyMce3Field(TextAreaField):
 class TinyMce4Field(TextAreaField):
     """Rich text field using TinyMCE 4."""
 
-    data: Optional[str]
+    data: t.Optional[str]
     widget = TinyMce4()
 
     def __init__(
         self,
         # WTForms fields
         label: str = '',
-        validators: ValidatorList = None,
+        validators: t.Optional[ValidatorList] = None,
         filters: FilterList = (),
         description: str = '',
-        id: Optional[str] = None,  # NOQA: A002  # pylint: disable=redefined-builtin
-        default: Optional[str] = None,
+        id: t.Optional[str] = None,  # NOQA: A002  # pylint: disable=redefined-builtin
+        default: t.Optional[str] = None,
         widget=None,
         render_kw=None,
         name=None,
@@ -327,12 +317,12 @@ class TinyMce4Field(TextAreaField):
         _translations=None,
         _meta=None,
         # Additional fields
-        content_css: Union[str, Callable[[], str]] = None,
+        content_css: t.Optional[t.Union[str, t.Callable[[], str]]] = None,
         linkify: bool = True,
         nofollow: bool = True,
-        tinymce_options: dict = None,
-        sanitize_tags: Optional[List] = None,
-        sanitize_attributes: Optional[Dict[str, List[str]]] = None,
+        tinymce_options: t.Optional[dict] = None,
+        sanitize_tags: t.Optional[t.List] = None,
+        sanitize_attributes: t.Optional[t.Dict[str, t.List[str]]] = None,
         **kwargs,
     ):
 
@@ -406,7 +396,7 @@ class TinyMce4Field(TextAreaField):
             return self._content_css()
         return self._content_css
 
-    def process_formdata(self, valuelist: List[str]) -> None:
+    def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
         super().process_formdata(valuelist)
         # Sanitize data
@@ -445,17 +435,17 @@ class DateTimeField(wtforms.fields.DateTimeField):
     """
 
     widget = DateTimeInput()
-    data: Optional[datetime]
+    data: t.Optional[datetime]
     default_message = __("This date/time could not be recognized")
     _timezone: tzinfo
 
     def __init__(
         self,
-        label: str = None,
-        validators: ValidatorList = None,
+        label: t.Optional[str] = None,
+        validators: t.Optional[ValidatorList] = None,
         display_format: str = '%Y-%m-%dT%H:%M',
-        timezone: Union[str, tzinfo, None] = None,
-        message: Optional[str] = None,
+        timezone: t.Union[str, tzinfo, None] = None,
+        message: t.Optional[str] = None,
         naive: bool = True,
         **kwargs,
     ):
@@ -470,7 +460,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
         return self._timezone
 
     @timezone.setter
-    def timezone(self, value: Union[str, tzinfo, None]) -> None:
+    def timezone(self, value: t.Union[str, tzinfo, None]) -> None:
         if value is None:
             value = get_timezone()
         if isinstance(value, str):
@@ -518,11 +508,11 @@ class DateTimeField(wtforms.fields.DateTimeField):
             value = ''
         return value
 
-    def process_formdata(self, valuelist: List[str]) -> None:
+    def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
         if valuelist:
             # We received a timestamp from the browser. Parse and save it
-            data: Optional[datetime] = None
+            data: t.Optional[datetime] = None
             # Valuelist will contain `date` and `time` as two separate values
             # if the widget is rendered as two parts. If so, parse each at a time
             # and use it as a default to replace values from the next value.  If the
@@ -556,7 +546,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
                 # If the app wanted a naive datetime, strip the timezone info
                 if self.naive:
                     # XXX: cast required because mypy misses the `not None` test above
-                    data = cast(datetime, data).replace(tzinfo=None)
+                    data = t.cast(datetime, data).replace(tzinfo=None)
             self.data = data
         else:
             self.data = None
@@ -570,7 +560,7 @@ class TextListField(wtforms.fields.TextAreaField):
             return '\r\n'.join(self.data)
         return ''
 
-    def process_formdata(self, valuelist: List[str]) -> None:
+    def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
         if valuelist and valuelist[0]:
             self.data = (
@@ -583,7 +573,7 @@ class TextListField(wtforms.fields.TextAreaField):
 class UserSelectFieldBase:
     """Select a user."""
 
-    data: Union[Type, List[Type], None]
+    data: t.Union[t.Type, t.List[t.Type], None]
 
     def __init__(self, *args, **kwargs) -> None:
         self.lastuser = kwargs.pop('lastuser', current_app.login_manager)
@@ -605,7 +595,7 @@ class UserSelectFieldBase:
             for user in self.data:
                 yield (user.userid, user.pickername, True)
 
-    def process_formdata(self, valuelist: List[str]) -> None:
+    def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
         super().process_formdata(valuelist)  # type: ignore[misc]
         userids = valuelist
@@ -641,7 +631,7 @@ class UserSelectFieldBase:
 class UserSelectField(UserSelectFieldBase, StringField):
     """Render a user select field that allows one user to be selected."""
 
-    data: Optional[Type]
+    data: t.Optional[t.Type]
     multiple = False
     widget = Select2Widget()
     widget_autocomplete = True
@@ -657,7 +647,7 @@ class UserSelectField(UserSelectFieldBase, StringField):
         if self.data:
             yield (self.data.userid, self.data.pickername, True)
 
-    def process_formdata(self, valuelist: List[str]) -> None:
+    def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
         super().process_formdata(valuelist)
         if self.data:
@@ -669,7 +659,7 @@ class UserSelectField(UserSelectFieldBase, StringField):
 class UserSelectMultiField(UserSelectFieldBase, StringField):
     """Render a user select field that allows multiple users to be selected."""
 
-    data = List[Type]
+    data = t.List[t.Type]
     multiple = True
     widget = Select2Widget()
     widget_autocomplete = True
@@ -678,7 +668,7 @@ class UserSelectMultiField(UserSelectFieldBase, StringField):
 class AutocompleteFieldBase:
     """Autocomplete a field."""
 
-    data: Optional[Union[str, List[str]]]
+    data: t.Optional[t.Union[str, t.List[str]]]
 
     def __init__(self, *args, **kwargs) -> None:
         self.autocomplete_endpoint = kwargs.pop('autocomplete_endpoint')
@@ -693,7 +683,7 @@ class AutocompleteFieldBase:
             for user in self.data:
                 yield (str(user), str(user), True)
 
-    def process_formdata(self, valuelist: List[str]) -> None:
+    def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
         super().process_formdata(valuelist)  # type: ignore[misc]
         # Convert strings into Tag objects
@@ -711,7 +701,7 @@ class AutocompleteField(AutocompleteFieldBase, StringField):
     Does not validate choices server-side.
     """
 
-    data: Optional[str]
+    data: t.Optional[str]
     multiple = False
     widget = Select2Widget()
     widget_autocomplete = True
@@ -721,7 +711,7 @@ class AutocompleteField(AutocompleteFieldBase, StringField):
             return self.data
         return ''
 
-    def process_formdata(self, valuelist: List[str]) -> None:
+    def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
         super().process_formdata(valuelist)
         if self.data:
@@ -737,7 +727,7 @@ class AutocompleteMultipleField(AutocompleteFieldBase, StringField):
     Does not validate choices server-side.
     """
 
-    data: Optional[List[str]]
+    data: t.Optional[t.List[str]]
     multiple = True
     widget = Select2Widget()
     widget_autocomplete = True
@@ -746,7 +736,9 @@ class AutocompleteMultipleField(AutocompleteFieldBase, StringField):
 class GeonameSelectFieldBase:
     """Select a geoname location."""
 
-    data: Optional[Union[str, List[str], GeonameidProtocol, List[GeonameidProtocol]]]
+    data: t.Optional[
+        t.Union[str, t.List[str], GeonameidProtocol, t.List[GeonameidProtocol]]
+    ]
 
     def __init__(self, *args, **kwargs) -> None:
         self.separator = kwargs.pop('separator', ',')
@@ -765,7 +757,7 @@ class GeonameSelectFieldBase:
                 for item in self.data:
                     yield (str(item), str(item), True)
 
-    def process_formdata(self, valuelist: List[str]) -> None:
+    def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
         super().process_formdata(valuelist)  # type: ignore[misc]
         # TODO: Convert strings into GeoName objects
@@ -775,7 +767,7 @@ class GeonameSelectFieldBase:
 class GeonameSelectField(GeonameSelectFieldBase, StringField):
     """Render a geoname select field that allows one geoname to be selected."""
 
-    data: Optional[Union[str, GeonameidProtocol]]
+    data: t.Optional[t.Union[str, GeonameidProtocol]]
     multiple = False
     widget = Select2Widget()
     widget_autocomplete = True
@@ -787,7 +779,7 @@ class GeonameSelectField(GeonameSelectFieldBase, StringField):
             return self.data
         return ''
 
-    def process_formdata(self, valuelist: List[str]) -> None:
+    def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
         super().process_formdata(valuelist)
         if self.data:
@@ -800,7 +792,7 @@ class GeonameSelectField(GeonameSelectFieldBase, StringField):
 class GeonameSelectMultiField(GeonameSelectFieldBase, StringField):
     """Render a geoname select field that allows multiple geonames to be selected."""
 
-    data: Optional[Union[List[str], List[GeonameidProtocol]]]
+    data: t.Optional[t.Union[t.List[str], t.List[GeonameidProtocol]]]
     multiple = True
     widget = Select2Widget()
     widget_autocomplete = True
@@ -850,10 +842,10 @@ class ImgeeField(URLField):
     def __init__(
         self,
         label: str = '',
-        validators: ValidatorList = None,
-        profile: Optional[str] = None,
-        img_label: Optional[str] = None,
-        img_size: Optional[str] = None,
+        validators: t.Optional[ValidatorList] = None,
+        profile: t.Optional[str] = None,
+        img_label: t.Optional[str] = None,
+        img_size: t.Optional[str] = None,
         **kwargs,
     ):
         super().__init__(label, validators, **kwargs)
@@ -887,13 +879,13 @@ class FormField(wtforms.FormField):
 class CoordinatesField(wtforms.Field):
     """Adds latitude and longitude fields and returns them as a tuple."""
 
-    data: Optional[Tuple[Optional[Decimal], Optional[Decimal]]]
+    data: t.Optional[t.Tuple[t.Optional[Decimal], t.Optional[Decimal]]]
     widget = CoordinatesInput()
 
-    def process_formdata(self, valuelist: List[str]) -> None:
+    def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
-        latitude: Optional[Decimal]
-        longitude: Optional[Decimal]
+        latitude: t.Optional[Decimal]
+        longitude: t.Optional[Decimal]
 
         if valuelist and len(valuelist) == 2:
             try:
@@ -909,7 +901,7 @@ class CoordinatesField(wtforms.Field):
         else:
             self.data = None, None
 
-    def _value(self) -> Tuple[str, str]:
+    def _value(self) -> t.Tuple[str, str]:
         if self.data is not None and self.data != (None, None):
             return str(self.data[0]), str(self.data[1])
         return '', ''
@@ -922,14 +914,14 @@ class RadioMatrixField(wtforms.Field):
     Saves each row as either an attr or a dict key on the target field in the object.
     """
 
-    data: Dict[str, Any]
+    data: t.Dict[str, t.Any]
     widget = RadioMatrixInput()
 
     def __init__(
         self,
-        label: str = None,
-        validators: ValidatorList = None,
-        coerce: Callable[[Any], Any] = str,
+        label: t.Optional[str] = None,
+        validators: t.Optional[ValidatorList] = None,
+        coerce: t.Callable[[t.Any], t.Any] = str,
         fields=(),
         choices=(),
         **kwargs,
@@ -1029,7 +1021,7 @@ class EnumSelectField(SelectField):
         else:
             raise KeyError(_("Value not in LabeledEnum"))
 
-    def process_formdata(self, valuelist: List[str]) -> None:
+    def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
         if valuelist:
             try:
@@ -1069,7 +1061,7 @@ class JsonField(wtforms.TextAreaField):
     def __init__(
         self,
         label: str = '',
-        validators: ValidatorList = None,
+        validators: t.Optional[ValidatorList] = None,
         require_dict: bool = True,
         **kwargs,
     ):
@@ -1106,7 +1098,7 @@ class JsonField(wtforms.TextAreaField):
 
         self.data = value
 
-    def process_formdata(self, valuelist: List[str]) -> None:
+    def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
         if valuelist:
             value = valuelist[0]

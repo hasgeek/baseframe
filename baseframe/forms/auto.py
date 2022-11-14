@@ -1,6 +1,6 @@
 """Automatic form rendering."""
 
-from typing import Optional, Union
+import typing as t
 
 from flask import (
     Markup,
@@ -37,15 +37,15 @@ class ConfirmDeleteForm(Form):
 def render_form(
     form: Form,
     title: str,
-    message: Optional[Union[str, Markup]] = None,
-    formid: Optional[str] = None,
+    message: t.Optional[t.Union[str, Markup]] = None,
+    formid: t.Optional[str] = None,
     submit: str = __("Submit"),
-    cancel_url: Optional[str] = None,
+    cancel_url: t.Optional[str] = None,
     ajax: bool = False,
     with_chrome: bool = True,
-    action: Optional[str] = None,
+    action: t.Optional[str] = None,
     autosave: bool = False,
-    draft_revision: Optional[int] = None,
+    draft_revision: t.Optional[int] = None,
     template: str = '',
 ) -> Response:
     """Render a form."""
@@ -122,10 +122,10 @@ def render_delete_sqla(
     title: str,
     message: str,
     success: str = '',
-    next: Optional[str] = None,  # NOQA: A002  # pylint: disable=W0622
-    cancel_url: Optional[str] = None,
-    delete_text: Optional[str] = None,
-    cancel_text: Optional[str] = None,
+    next: t.Optional[str] = None,  # NOQA: A002  # pylint: disable=W0622
+    cancel_url: t.Optional[str] = None,
+    delete_text: t.Optional[str] = None,
+    cancel_text: t.Optional[str] = None,
 ) -> Response:
     """Render a delete page for SQLAlchemy objects."""
     if not obj:

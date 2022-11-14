@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Iterable, List, Optional, Tuple, Union
 import json
 import os.path
+import typing as t
 
 from flask import Blueprint, Flask
 from flask_assets import Bundle, Environment
@@ -50,7 +50,7 @@ THEME_FILES = {
 }
 
 
-def _select_jinja_autoescape(filename: Optional[str]) -> bool:
+def _select_jinja_autoescape(filename: t.Optional[str]) -> bool:
     """Return `True` if autoescaping should be active for the given template name."""
     if filename is None:
         return False
@@ -74,8 +74,8 @@ class BaseframeBlueprint(Blueprint):
     def init_app(
         self,
         app: Flask,
-        requires: Iterable[str] = (),
-        ext_requires: Iterable[Union[str, List[str], Tuple[str, ...]]] = (),
+        requires: t.Iterable[str] = (),
+        ext_requires: t.Iterable[t.Union[str, t.List[str], t.Tuple[str, ...]]] = (),
         bundle_js=None,
         bundle_css=None,
         assetenv=None,
@@ -171,10 +171,10 @@ class BaseframeBlueprint(Blueprint):
         else:
             subdomain = None
 
-        ignore_js: List[str] = ['!jquery.js']
-        ignore_css: List[str] = []
-        ext_js: List[List[str]] = []
-        ext_css: List[List[str]] = []
+        ignore_js: t.List[str] = ['!jquery.js']
+        ignore_css: t.List[str] = []
+        ext_js: t.List[t.List[str]] = []
+        ext_css: t.List[t.List[str]] = []
         requires = [
             item
             for itemgroup in ext_requires
@@ -186,8 +186,8 @@ class BaseframeBlueprint(Blueprint):
         app.config['ext_js'] = ext_js
         app.config['ext_css'] = ext_css
 
-        assets_js: List[str] = []
-        assets_css: List[str] = []
+        assets_js: t.List[str] = []
+        assets_css: t.List[str] = []
         for item in requires:
             name, spec = split_namespec(item)
             for alist, ext in [(assets_js, '.js'), (assets_css, '.css')]:

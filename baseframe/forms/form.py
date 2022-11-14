@@ -1,7 +1,7 @@
 """Form base class and redefined fields with ParsleyJS support."""
 
 from threading import Lock
-from typing import Callable, Dict, Iterable, Optional, Tuple, Type, Union
+import typing as t
 import uuid
 
 from flask import current_app
@@ -26,7 +26,7 @@ __all__ = [
 ]
 
 # Use a hardcoded list to control what is available to user-facing apps
-field_registry: Dict[str, Type] = {
+field_registry: t.Dict[str, t.Type] = {
     'SelectField': bparsleyjs.SelectField,
     'SelectMultipleField': bfields.SelectMultipleField,
     'RadioField': bparsleyjs.RadioField,
@@ -54,15 +54,15 @@ field_registry: Dict[str, Type] = {
     'ImageField': bfields.ImgeeField,
 }
 
-widget_registry: Dict[str, Tuple] = {}
+widget_registry: t.Dict[str, t.Tuple] = {}
 
-validator_registry: Dict[
+validator_registry: t.Dict[
     str,
-    Union[
-        Tuple[Callable],
-        Tuple[Callable, str],
-        Tuple[Callable, str, str],
-        Tuple[Callable, str, str, str],
+    t.Union[
+        t.Tuple[t.Callable],
+        t.Tuple[t.Callable, str],
+        t.Tuple[t.Callable, str, str],
+        t.Tuple[t.Callable, str, str, str],
     ],
 ] = {
     'Length': (wtforms.validators.Length, 'min', 'max', 'message'),
@@ -76,7 +76,7 @@ validator_registry: Dict[
     'AllUrlsValid': (bvalidators.AllUrlsValid,),
 }
 
-filter_registry: Dict[str, Union[Tuple[Callable], Tuple[Callable, str]]] = {
+filter_registry: t.Dict[str, t.Union[t.Tuple[t.Callable], t.Tuple[t.Callable, str]]] = {
     'lower': (bfilters.lower,),
     'upper': (bfilters.upper,),
     'strip': (bfilters.strip, 'chars'),
@@ -116,8 +116,8 @@ def _nonce_validator(form, field) -> None:
 class Form(BaseForm):
     """Form with additional methods."""
 
-    __expects__: Iterable[str] = ()
-    __returns__: Iterable[str] = ()
+    __expects__: t.Iterable[str] = ()
+    __returns__: t.Iterable[str] = ()
 
     form_nonce = bfields.NonceField(
         "Nonce", validators=[_nonce_validator], default=lambda: uuid.uuid4().hex
@@ -243,8 +243,8 @@ class Form(BaseForm):
 
     def validate(
         self,
-        extra_validators: Optional[
-            Dict[str, Callable[[wtforms.Form, wtforms.Field], None]]
+        extra_validators: t.Optional[
+            t.Dict[str, t.Callable[[wtforms.Form, wtforms.Field], None]]
         ] = None,
         send_signals: bool = True,
     ) -> bool:
@@ -256,7 +256,7 @@ class Form(BaseForm):
             self.send_signals(success)
         return success
 
-    def send_signals(self, success: Optional[bool] = None) -> None:
+    def send_signals(self, success: t.Optional[bool] = None) -> None:
         if success is None:
             success = not self.errors
         if success:
@@ -308,7 +308,7 @@ class FormGenerator:
 
         self.default_field = default_field
 
-    def generate(self, formstruct: dict) -> Type[Form]:
+    def generate(self, formstruct: dict) -> t.Type[Form]:
         """Generate a dynamic form from the given data structure."""
 
         class DynamicForm(Form):
