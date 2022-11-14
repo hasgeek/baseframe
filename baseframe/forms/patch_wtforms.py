@@ -1,12 +1,12 @@
 """Patches WTForms to add additional functionality as required by Baseframe."""
 
-from typing import Any, Dict
+import typing as t
 
 import wtforms
 
 
 def _patch_wtforms_add_flags() -> None:
-    def add_flags(validator, flags: Dict[str, Any]):
+    def add_flags(validator, flags: t.Dict[str, t.Any]):
         validator_flags = dict(getattr(validator, 'field_flags', {}))  # Make a copy
         validator_flags.update(flags)  # Add new flags
         validator.field_flags = validator_flags  # Add back into validator

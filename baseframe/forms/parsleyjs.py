@@ -12,9 +12,9 @@ wtforms-parsleysj is MIT licensed, while the rest of Baseframe is either BSD (ou
 or various other open source licenses (other third party code).
 """
 
-from typing import Any, Dict
 import copy
 import re
+import typing as t
 
 from markupsafe import Markup
 from wtforms.fields import BooleanField as _BooleanField
@@ -93,7 +93,7 @@ __all__ = [
 ]
 
 
-def parsley_kwargs(field, kwargs, extend=True) -> Dict[str, Any]:
+def parsley_kwargs(field, kwargs, extend=True) -> t.Dict[str, t.Any]:
     """
     Return new *kwargs* for *widget*.
 

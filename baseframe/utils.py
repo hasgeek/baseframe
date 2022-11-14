@@ -3,9 +3,9 @@
 from collections import abc
 from datetime import datetime, time, tzinfo
 from decimal import Decimal
-from typing import Any, List, Optional, Tuple, Union
 import gettext
 import types
+import typing as t
 
 from flask import g, json, request
 
@@ -44,7 +44,7 @@ class JSONEncoder(json.JSONEncoder):
     Adds support for additional types not covered by Flask's JSON encoder.
     """
 
-    def default(self, o: Any) -> Union[int, str, float, Decimal, list, dict, None]:
+    def default(self, o: t.Any) -> t.Union[int, str, float, Decimal, list, dict, None]:
         if hasattr(o, '__json__'):
             return o.__json__()
         if isinstance(o, (furl, Locale)):
@@ -76,7 +76,7 @@ def request_timestamp() -> datetime:
 
 
 def is_public_email_domain(
-    email_or_domain: str, default: Optional[bool] = None, timeout: int = 30
+    email_or_domain: str, default: t.Optional[bool] = None, timeout: int = 30
 ) -> bool:
     """
     Return True if the given email domain is known to offer public email accounts.
@@ -92,10 +92,11 @@ def is_public_email_domain(
     :param timeout: Lookup timeout in seconds
     :raises MxLookupError: If a DNS lookup error happens and no default is specified
     """
+    sniffedmx: t.Optional[dict]
     cache_key = 'mxrecord/' + md5sum(email_or_domain)
 
     try:
-        sniffedmx = asset_cache.get(cache_key)
+        sniffedmx = t.cast(t.Optional[dict], asset_cache.get(cache_key))
     except ValueError:  # Possible error from Py2 vs Py3 pickle mismatch
         sniffedmx = None
 
@@ -115,7 +116,7 @@ def is_public_email_domain(
     return False
 
 
-def localized_country_list() -> List[Tuple[str, str]]:
+def localized_country_list() -> t.List[t.Tuple[str, str]]:
     """
     Return a list of countries localized to the current user's locale.
 
@@ -126,7 +127,7 @@ def localized_country_list() -> List[Tuple[str, str]]:
 
 
 @cache.memoize(timeout=86400)
-def _localized_country_list_inner(locale: str) -> List[Tuple[str, str]]:
+def _localized_country_list_inner(locale: str) -> t.List[t.Tuple[str, str]]:
     """Return localized country list (helper for :func:`localized_country_list`)."""
     if locale == 'en':
         countries = [(country.name, country.alpha_2) for country in pycountry.countries]
@@ -142,7 +143,7 @@ def _localized_country_list_inner(locale: str) -> List[Tuple[str, str]]:
     return [(code, name) for (name, code) in countries]
 
 
-def localize_timezone(dt: datetime, tz: Union[None, str, tzinfo] = None) -> datetime:
+def localize_timezone(dt: datetime, tz: t.Union[None, str, tzinfo] = None) -> datetime:
     """
     Convert a datetime into the specified timezone, defaulting to user's timezone.
 

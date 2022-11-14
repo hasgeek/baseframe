@@ -1,6 +1,6 @@
 from types import SimpleNamespace
-from typing import Any
 import re
+import typing as t
 import warnings
 
 from werkzeug.datastructures import MultiDict
@@ -670,7 +670,7 @@ class TestAllowedIf(TestFormBase):
             "Field", validators=[forms.validators.AllowedIf('other')]
         )
 
-    other_not_empty: Any = "Not empty"
+    other_not_empty: t.Any = "Not empty"
 
     def test_is_allowed(self):
         self.form.process(other=self.other_not_empty, field="Also not empty")
@@ -718,8 +718,8 @@ class TestOptionalIf(TestFormBase):
             ],
         )
 
-    other_empty: Any = ''
-    other_not_empty: Any = "Not empty"
+    other_empty: t.Any = ''
+    other_not_empty: t.Any = "Not empty"
 
     def test_is_optional(self):
         self.form.process(other=self.other_not_empty)
@@ -776,8 +776,8 @@ class TestRequiredIf(TestFormBase):
             ],
         )
 
-    other_empty: Any = ''
-    other_not_empty: Any = "Not empty"
+    other_empty: t.Any = ''
+    other_not_empty: t.Any = "Not empty"
 
     def test_is_required(self):
         self.form.process(other=self.other_not_empty)
