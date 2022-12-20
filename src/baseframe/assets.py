@@ -519,8 +519,6 @@ assets['validate.js'][Version('2.0.1')] = 'baseframe/js/validate.js'
 # Hammer
 assets['hammer.js'][Version('2.0.6')] = 'baseframe/js/hammer.min.js'
 
-assets['animate.css'][Version('0.0.0')] = 'baseframe/css/animate.css'
-
 assets['matchmedia.js'][Version('0.0.0')] = 'baseframe/js/matchmedia.js'
 assets['picturefill.js'][Version('0.1.0')] = (
     'matchmedia.js',

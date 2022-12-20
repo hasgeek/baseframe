@@ -80,4 +80,3 @@ baseframe_css = Bundle(  # bootstrap_less,
 
 # Optional extras
 toastr_css = Bundle('baseframe/css/toastr.css')
-animate_css = Bundle('baseframe/css/animate.css')
