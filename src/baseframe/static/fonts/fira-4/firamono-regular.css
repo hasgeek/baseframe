@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'Fira Mono';
+  src: url('eot/FiraMono-Regular.eot');
+  src: local('Fira Mono'),
+    url('eot/FiraMono-Regular.eot') format('embedded-opentype'),
+    url('woff2/FiraMono-Regular.woff2') format('woff2'),
+    url('woff/FiraMono-Regular.woff') format('woff'),
+    url('ttf/FiraMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
