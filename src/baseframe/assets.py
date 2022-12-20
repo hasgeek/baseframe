@@ -553,7 +553,6 @@ assets['leaflet-search.css'][Version('2.9.7')] = 'baseframe/css/leaflet-search.c
 assets['leaflet-search.js'][Version('2.9.7')] = 'baseframe/js/leaflet-search.js'
 
 # Font Awesome
-assets['fontawesome.css'][Version('3.1.0')] = 'baseframe/css/fontawesome-3.1.css'
 assets['fontawesome.css'][Version('4.7.0')] = 'baseframe/css/fontawesome-4.7.css'
 
 # Social icons
@@ -652,7 +651,7 @@ assets['baseframe.css'][Version(__version__)] = {
         'bootstrap.css==2.0.1',
         'bootstrap-responsive.css==2.0.1',
         'select2-baseframe.css',
-        'fontawesome.css==3.1.0',
+        'fontawesome.css>=4.0.0',
         'baseframe-base.css==' + __version__,
         'baseframe-networkbar.css==' + __version__,
     ]
