@@ -4,13 +4,6 @@ from webassets import Bundle
 
 # --- Legacy asset declarations below will be dropped in baseframe 0.3 --------
 
-jquery_js = Bundle(
-    'baseframe/js/jquery-1.7.1.js',
-    filters='closure_js',
-    output='js/baseframe-jquery.min.js',
-)
-
-
 bootstrap_js = Bundle(
     'baseframe/js/bootstrap/bootstrap-alert.js',
     'baseframe/js/bootstrap/bootstrap-button.js',
@@ -39,7 +32,6 @@ extra_js = Bundle(
 networkbar_js = Bundle('baseframe/js/networkbar.js')
 
 baseframe_js = Bundle(
-    # jquery_js,  # Not required since baseframe.html now loads from CDN
     bootstrap_js,
     extra_js,
     networkbar_js,

@@ -7,10 +7,6 @@ from . import __version__
 #: Semantic-versioned assets
 assets = VersionedAssets()
 
-assets['jquery.js'][Version('1.7.1')] = 'baseframe/js/jquery-1.7.1.js'
-assets['jquery.js'][Version('1.8.3')] = 'baseframe/js/jquery-1.8.3.js'
-assets['jquery.js'][Version('1.9.1')] = 'baseframe/js/jquery-1.9.1.js'
-
 assets['baseframe-networkbar.js'][Version(__version__)] = 'baseframe/js/networkbar.js'
 assets['baseframe-networkbar.css'][
     Version(__version__)
@@ -27,102 +23,68 @@ assets['baseframe-base-bs3.css'][
 assets['bootstrap.css'][Version('2.0.1')] = 'baseframe/css/bootstrap.css'
 assets['bootstrap-responsive.css'][Version('2.0.1')] = 'baseframe/css/responsive.css'
 assets['bootstrap-alert.js'][Version('2.0.1')] = (
-    'jquery.js',
     'baseframe/js/bootstrap/bootstrap-alert.js',
 )
 assets['bootstrap-button.js'][Version('2.0.1')] = (
-    'jquery.js',
     'baseframe/js/bootstrap/bootstrap-button.js',
 )
 assets['bootstrap-carousel.js'][Version('2.0.1')] = (
-    'jquery.js',
     'baseframe/js/bootstrap/bootstrap-carousel.js',
 )
 assets['bootstrap-collapse.js'][Version('2.0.1')] = (
-    'jquery.js',
     'baseframe/js/bootstrap/bootstrap-collapse.js',
 )
 assets['bootstrap-dropdown.js'][Version('2.0.1')] = (
-    'jquery.js',
     'baseframe/js/bootstrap/bootstrap-dropdown.js',
 )
 assets['bootstrap-modal.js'][Version('2.0.1')] = (
-    'jquery.js',
     'baseframe/js/bootstrap/bootstrap-modal.js',
 )
 assets['bootstrap-tooltip.js'][Version('2.0.1')] = (
-    'jquery.js',
     'baseframe/js/bootstrap/bootstrap-tooltip.js',
 )
 assets['bootstrap-popover.js'][Version('2.0.1')] = (
-    'jquery.js',
     'baseframe/js/bootstrap/bootstrap-popover.js',
 )
 assets['bootstrap-scrollspy.js'][Version('2.0.1')] = (
-    'jquery.js',
     'baseframe/js/bootstrap/bootstrap-scrollspy.js',
 )
 assets['bootstrap-tab.js'][Version('2.0.1')] = (
-    'jquery.js',
     'baseframe/js/bootstrap/bootstrap-tab.js',
 )
 assets['bootstrap-transition.js'][Version('2.0.1')] = (
-    'jquery.js',
     'baseframe/js/bootstrap/bootstrap-transition.js',
 )
 assets['bootstrap-typeahead.js'][Version('2.0.1')] = (
-    'jquery.js',
     'baseframe/js/bootstrap/bootstrap-typeahead.js',
 )
 
 # Bootstrap 3.3.1
 assets['bootstrap.css'][Version('3.3.1')] = 'baseframe/css/bootstrap3/bootstrap.css'
-assets['bootstrap-affix.js'][Version('3.3.1')] = (
-    'jquery.js>=1.9.0',
-    'baseframe/js/bootstrap3/affix.js',
-)
-assets['bootstrap-alert.js'][Version('3.3.1')] = (
-    'jquery.js>=1.9.0',
-    'baseframe/js/bootstrap3/alert.js',
-)
-assets['bootstrap-button.js'][Version('3.3.1')] = (
-    'jquery.js>=1.9.0',
-    'baseframe/js/bootstrap3/button.js',
-)
+assets['bootstrap-affix.js'][Version('3.3.1')] = 'baseframe/js/bootstrap3/affix.js'
+assets['bootstrap-alert.js'][Version('3.3.1')] = 'baseframe/js/bootstrap3/alert.js'
+assets['bootstrap-button.js'][Version('3.3.1')] = 'baseframe/js/bootstrap3/button.js'
 assets['bootstrap-carousel.js'][Version('3.3.1')] = (
-    'jquery.js>=1.9.0',
     'baseframe/js/bootstrap3/carousel.js',
 )
 assets['bootstrap-collapse.js'][Version('3.3.1')] = (
-    'jquery.js>=1.9.0',
     'baseframe/js/bootstrap3/collapse.js',
 )
 assets['bootstrap-dropdown.js'][Version('3.3.1')] = (
-    'jquery.js>=1.9.0',
     'baseframe/js/bootstrap3/dropdown.js',
 )
-assets['bootstrap-modal.js'][Version('3.3.1')] = (
-    'jquery.js>=1.9.0',
-    'baseframe/js/bootstrap3/modal.js',
-)
+assets['bootstrap-modal.js'][Version('3.3.1')] = 'baseframe/js/bootstrap3/modal.js'
 assets['bootstrap-popover.js'][Version('3.3.1')] = (
-    'jquery.js>=1.9.0',
     'baseframe/js/bootstrap3/popover.js',
 )
 assets['bootstrap-scrollspy.js'][Version('3.3.1')] = (
-    'jquery.js>=1.9.0',
     'baseframe/js/bootstrap3/scrollspy.js',
 )
-assets['bootstrap-tab.js'][Version('3.3.1')] = (
-    'jquery.js>=1.9.0',
-    'baseframe/js/bootstrap3/tab.js',
-)
+assets['bootstrap-tab.js'][Version('3.3.1')] = 'baseframe/js/bootstrap3/tab.js'
 assets['bootstrap-tooltip.js'][Version('3.3.1')] = (
-    'jquery.js>=1.9.0',
     'baseframe/js/bootstrap3/tooltip.js',
 )
 assets['bootstrap-transition.js'][Version('3.3.1')] = (
-    'jquery.js>=1.9.0',
     'baseframe/js/bootstrap3/transition.js',
 )
 
@@ -132,42 +94,31 @@ assets['bootstrap-social.css'][Version('1.0.0')] = (
     'baseframe/css/bootstrap-social.css',
 )
 
-assets['jquery.form.js'][Version('2.96.0')] = (
-    'jquery.js',
-    'baseframe/js/jquery.form.js',
-)
+assets['jquery.form.js'][Version('2.96.0')] = 'baseframe/js/jquery.form.js'
 assets['jquery.tinymce.js'][Version('3.5.10')] = (
-    'jquery.js',
     'baseframe/js/tinymce3/jquery.tinymce.js',
 )
 assets['tinymce.js'][Version('3.5.10')] = 'baseframe/js/tinymce3/tiny_mce.js'
 assets['tiny_mce.js'][Version('3.5.10')] = {'requires': ['tinymce.js==3.5.10']}
 assets['jquery.tinymce.js'][Version('4.1.7')] = (
-    'jquery.js',
     'baseframe/js/tinymce4/jquery.tinymce.min.js',
 )
 assets['tinymce.js'][Version('4.1.7')] = 'baseframe/js/tinymce4/tinymce.min.js'
 assets['bootstrap-datepicker.js'][Version('1.3.0')] = (
-    'jquery.js',
     'baseframe/js/bootstrap-datepicker.js',
 )
 
-assets['jquery.ui.js'][Version('1.10.3')] = ('jquery.js', 'baseframe/js/jquery-ui.js')
+assets['jquery.ui.js'][Version('1.10.3')] = 'baseframe/js/jquery-ui.js'
 assets['jquery.ui.css'][Version('1.10.3')] = 'baseframe/css/jquery-ui.css'
-assets['jquery.ui.js'][Version('1.12.1')] = (
-    'jquery.js',
-    'baseframe/js/jquery-ui-1.12.1.js',
-)
+assets['jquery.ui.js'][Version('1.12.1')] = 'baseframe/js/jquery-ui-1.12.1.js'
 assets['jquery.ui.css'][Version('1.12.1')] = 'baseframe/css/jquery-ui-1.12.1.css'
 assets['jquery.ui.sortable.js'][Version('1.12.1')] = (
-    'jquery.js',
     'baseframe/js/jquery-ui-sortable-1.12.1.js',
 )
 assets['jquery.ui.sortable.css'][
     Version('1.12.1')
 ] = 'baseframe/css/jquery-ui-sortable-1.12.1.css'
 assets['jquery.ui.touch-punch.js'][Version('0.2.3')] = (
-    'jquery.js',
     'baseframe/js/jquery.ui.touch-punch.js',
 )
 assets['jquery.ui.sortable.touch.js'][Version('1.12.1')] = {
@@ -177,16 +128,9 @@ assets['jquery.ui.sortable.touch.css'][Version('1.12.1')] = {
     'requires': ['jquery.ui.sortable.css==1.12.1']
 }
 
-assets['jquery.liblink.js'][Version('0.0.0')] = (
-    'jquery.js',
-    'baseframe/js/jquery.liblink.js',
-)
-assets['jquery.wnumb.js'][Version('0.0.0')] = (
-    'jquery.js',
-    'baseframe/js/jquery.wnumb.js',
-)
+assets['jquery.liblink.js'][Version('0.0.0')] = 'baseframe/js/jquery.liblink.js'
+assets['jquery.wnumb.js'][Version('0.0.0')] = 'baseframe/js/jquery.wnumb.js'
 assets['jquery.range-slider.js'][Version('5.3.0')] = (
-    'jquery.js',
     'jquery.ui.js',
     'baseframe/js/jQRangeSlider-min.js',
 )
@@ -195,7 +139,6 @@ assets['jquery.range-slider.css'][Version('5.3.0')] = (
     'baseframe/css/jQRangeSlider.css',
 )
 assets['jquery.nouislider.js'][Version('7.0.10')] = (
-    'jquery.js',
     'baseframe/js/jquery.nouislider.min.js',
 )
 assets['jquery.nouislider.css'][
@@ -204,22 +147,14 @@ assets['jquery.nouislider.css'][
 
 # textarea-expander is deprecated. Use autosize instead
 assets['jquery.textarea-expander.js'][Version('1.0.0')] = (
-    'jquery.js',
     'baseframe/js/jquery.textarea-expander.js',
 )
-assets['jquery.autosize.js'][Version('1.18.17')] = (
-    'jquery.js',
-    'baseframe/js/jquery.autosize.js',
-)
+assets['jquery.autosize.js'][Version('1.18.17')] = 'baseframe/js/jquery.autosize.js'
 
-assets['jquery.oembed.js'][Version('1.0.1')] = (
-    'jquery.js',
-    'baseframe/js/jquery.oembed.js',
-)
+assets['jquery.oembed.js'][Version('1.0.1')] = 'baseframe/js/jquery.oembed.js'
 assets['jquery.oembed.css'][Version('1.0.1')] = 'baseframe/css/jquery.oembed.css'
 
 assets['jquery.fullcalendar.js'][Version('1.6.4')] = (
-    'jquery.js',
     'jquery.ui.js',
     'baseframe/js/fullcalendar/fullcalendar.js',
 )
@@ -233,39 +168,20 @@ assets['jquery.fullcalendar.gcal.js'][Version('1.6.4')] = (
 )
 
 assets['jquery.locationpicker.js'][Version('0.1.12')] = (
-    'jquery.js',
     'baseframe/js/jquery.locationpicker.js',
 )
-assets['jquery.appear.js'][Version('0.3.3')] = (
-    'jquery.js',
-    'baseframe/js/jquery.appear.js',
-)
+assets['jquery.appear.js'][Version('0.3.3')] = 'baseframe/js/jquery.appear.js'
 
-assets['jquery-modal.js'][Version('0.8.2')] = (
-    'jquery.js',
-    'baseframe/js/jquery-modal.js',
-)
+assets['jquery-modal.js'][Version('0.8.2')] = 'baseframe/js/jquery-modal.js'
 assets['jquery-modal.css'][Version('0.8.2')] = 'baseframe/css/jquery-modal.css'
 
-assets['jquery-easytabs.js'][Version('3.2.0')] = (
-    'jquery.js',
-    'baseframe/js/jquery-easytabs.js',
-)
+assets['jquery-easytabs.js'][Version('3.2.0')] = 'baseframe/js/jquery-easytabs.js'
 
 # jQuery plugin for truncating multiple lines of text
-assets['jquery.succinct.js'][Version('1.1.0')] = (
-    'jquery.js',
-    'baseframe/js/jquery.succinct.js',
-)
-assets['jquery.truncate8.js'][Version('1.3.3')] = (
-    'jquery.js',
-    'baseframe/js/jquery.truncate8.js',
-)
+assets['jquery.succinct.js'][Version('1.1.0')] = 'baseframe/js/jquery.succinct.js'
+assets['jquery.truncate8.js'][Version('1.3.3')] = 'baseframe/js/jquery.truncate8.js'
 
-assets['jquery_jeditable.js'][Version('2.0.14')] = (
-    'jquery.js',
-    'baseframe/js/jquery_jeditable.js',
-)
+assets['jquery_jeditable.js'][Version('2.0.14')] = 'baseframe/js/jquery_jeditable.js'
 
 # jQuery emoji picker
 assets['emojionearea.css'][Version('3.4.1')] = 'baseframe/css/emojionearea.css'
@@ -273,15 +189,12 @@ assets['emojionearea-material.css'][Version('3.4.1')] = (
     'emojionearea.css',
     'baseframe/css/emojionearea-material.css',
 )
-assets['emojionearea.js'][Version('3.4.1')] = (
-    'jquery.js',
-    'baseframe/js/emojionearea.js',
-)
+assets['emojionearea.js'][Version('3.4.1')] = 'baseframe/js/emojionearea.js'
 assets['emojionearea-material.js'][Version('3.4.1')] = {
     'requires': ['emojionearea.js==3.4.1']
 }
 
-assets['select2.js'][Version('4.0.3')] = ('jquery.js>=1.7.2', 'baseframe/js/select2.js')
+assets['select2.js'][Version('4.0.3')] = 'baseframe/js/select2.js'
 assets['select2.css'][Version('4.0.3')] = 'baseframe/css/select2.css'
 assets['select2-bootstrap.css'][Version('0.1.0')] = (
     'select2.css',
@@ -447,22 +360,13 @@ assets['mousetrap.js'][Version('1.1.2')] = 'baseframe/js/mousetrap.js'
 assets['toastr.js'][Version('1.2.2')] = 'baseframe/js/toastr.js'
 assets['toastr.css'][Version('1.2.2')] = 'baseframe/css/toastr.css'
 
-assets['jquery.expander.js'][Version('1.4.5')] = (
-    'jquery.js',
-    'baseframe/js/jquery.expander.js',
-)
-assets['jquery.cookie.js'][Version('1.3.0')] = (
-    'jquery.js',
-    'baseframe/js/jquery.cookie.js',
-)
-assets['jquery.sparkline.js'][Version('2.1.2')] = (
-    'jquery.js',
-    'baseframe/js/jquery.sparkline.js',
-)
+assets['jquery.expander.js'][Version('1.4.5')] = 'baseframe/js/jquery.expander.js'
+assets['jquery.cookie.js'][Version('1.3.0')] = 'baseframe/js/jquery.cookie.js'
+assets['jquery.sparkline.js'][Version('2.1.2')] = 'baseframe/js/jquery.sparkline.js'
 assets['timezone.js'][Version('0.0.0')] = 'baseframe/js/detect_timezone.js'
 assets['socialite.js'][Version('2.0.0')] = 'baseframe/js/socialite.js'
 assets['swfobject.js'][Version('2.2.0')] = 'baseframe/js/swfobject.js'
-assets['parsley.js'][Version('2.0.7')] = ('jquery.js', 'baseframe/js/parsley.js')
+assets['parsley.js'][Version('2.0.7')] = 'baseframe/js/parsley.js'
 assets['parsley.remote.js'][Version('2.0.7')] = {
     'provides': 'parsley.js',
     'bundle': 'baseframe/js/parsley.remote.js',
@@ -470,19 +374,16 @@ assets['parsley.remote.js'][Version('2.0.7')] = {
 assets['fingerprint2.js'][Version('1.1.4')] = 'baseframe/js/fingerprint2.js'
 
 # FooTable
-assets['footable.js'][Version('2.0.3')] = ('jquery.js', 'baseframe/js/footable.js')
+assets['footable.js'][Version('2.0.3')] = 'baseframe/js/footable.js'
 assets['footable-paginate.js'][Version('2.0.3')] = (
-    'jquery.js',
     'footable.js',
     'baseframe/js/footable-paginate.js',
 )
 assets['footable-filter.js'][Version('2.0.3')] = (
-    'jquery.js',
     'footable.js',
     'baseframe/js/footable-filter.js',
 )
 assets['footable-sort.js'][Version('2.0.3')] = (
-    'jquery.js',
     'footable.js',
     'baseframe/js/footable-sort.js',
 )
@@ -635,7 +536,6 @@ assets['extra-material.js'][Version('0.0.0')] = {
 
 assets['baseframe.js'][Version(__version__)] = {
     'requires': [
-        'jquery.js<1.9.0',
         'bootstrap.js==2.0.1',
         'extra.js',
         'jquery.tinymce.js>=3.0.0,<4.0.0',
@@ -657,7 +557,6 @@ assets['baseframe.css'][Version(__version__)] = {
 
 assets['baseframe-bs3.js'][Version(__version__)] = {
     'requires': [
-        'jquery.js>=1.9.0',
         'bootstrap.js>=3.0.0',
         'extra.js',
         'baseframe-base.js==' + __version__,

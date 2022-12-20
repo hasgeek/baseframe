@@ -91,9 +91,8 @@ def gen_assets_url(assets: t.List[str]) -> str:
         os.mkdir(gendir)
     # File extensions are for upstream servers to serve the correct content type:
     if is_js:
-        # TODO: Move this !jquery.js to somewhere more relevant
         bundle = Bundle(
-            assets_repo.require(*(['!jquery.js'] + assets)),
+            assets_repo.require(*assets),
             output='gen/' + output_name + '.js',
             filters='uglipyjs',
         )

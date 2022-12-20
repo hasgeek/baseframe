@@ -171,7 +171,7 @@ class BaseframeBlueprint(Blueprint):
         else:
             subdomain = None
 
-        ignore_js: t.List[str] = ['!jquery.js']
+        ignore_js: t.List[str] = []
         ignore_css: t.List[str] = []
         ext_js: t.List[t.List[str]] = []
         ext_css: t.List[t.List[str]] = []
@@ -212,7 +212,6 @@ class BaseframeBlueprint(Blueprint):
             app.assets = Environment(app)
         else:
             app.assets = assetenv
-        app.assets.register('js_jquery', assets.require('jquery.js'))
         app.assets.register('js_all', js_all)
         app.assets.register('css_all', css_all)
         app.register_blueprint(self, static_subdomain=subdomain)
