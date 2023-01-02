@@ -19,46 +19,6 @@ assets['baseframe-base-bs3.css'][
     Version(__version__)
 ] = 'baseframe/css/baseframe-bs3.css'
 
-# Bootstrap 2.0.1
-assets['bootstrap.css'][Version('2.0.1')] = 'baseframe/css/bootstrap.css'
-assets['bootstrap-responsive.css'][Version('2.0.1')] = 'baseframe/css/responsive.css'
-assets['bootstrap-alert.js'][Version('2.0.1')] = (
-    'baseframe/js/bootstrap/bootstrap-alert.js',
-)
-assets['bootstrap-button.js'][Version('2.0.1')] = (
-    'baseframe/js/bootstrap/bootstrap-button.js',
-)
-assets['bootstrap-carousel.js'][Version('2.0.1')] = (
-    'baseframe/js/bootstrap/bootstrap-carousel.js',
-)
-assets['bootstrap-collapse.js'][Version('2.0.1')] = (
-    'baseframe/js/bootstrap/bootstrap-collapse.js',
-)
-assets['bootstrap-dropdown.js'][Version('2.0.1')] = (
-    'baseframe/js/bootstrap/bootstrap-dropdown.js',
-)
-assets['bootstrap-modal.js'][Version('2.0.1')] = (
-    'baseframe/js/bootstrap/bootstrap-modal.js',
-)
-assets['bootstrap-tooltip.js'][Version('2.0.1')] = (
-    'baseframe/js/bootstrap/bootstrap-tooltip.js',
-)
-assets['bootstrap-popover.js'][Version('2.0.1')] = (
-    'baseframe/js/bootstrap/bootstrap-popover.js',
-)
-assets['bootstrap-scrollspy.js'][Version('2.0.1')] = (
-    'baseframe/js/bootstrap/bootstrap-scrollspy.js',
-)
-assets['bootstrap-tab.js'][Version('2.0.1')] = (
-    'baseframe/js/bootstrap/bootstrap-tab.js',
-)
-assets['bootstrap-transition.js'][Version('2.0.1')] = (
-    'baseframe/js/bootstrap/bootstrap-transition.js',
-)
-assets['bootstrap-typeahead.js'][Version('2.0.1')] = (
-    'baseframe/js/bootstrap/bootstrap-typeahead.js',
-)
-
 # Bootstrap 3.3.1
 assets['bootstrap.css'][Version('3.3.1')] = 'baseframe/css/bootstrap3/bootstrap.css'
 assets['bootstrap-affix.js'][Version('3.3.1')] = 'baseframe/js/bootstrap3/affix.js'
