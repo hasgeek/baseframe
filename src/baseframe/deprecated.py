@@ -61,7 +61,7 @@ networkbar_css = Bundle('baseframe/css/networkbar.css')
 baseframe_css = Bundle(  # bootstrap_less,
     'baseframe/css/bootstrap.css',  # Externally compiled with Less
     'baseframe/css/responsive.css',  # Externally compiled with Less
-    # 'baseframe/css/chosen.css',      # Companion to chosen.jquery.js
+    # 'baseframe/css/chosen.css',  # Companion to chosen.jquery.js
     'baseframe/css/select2.css',  # Companion to select2.js
     'baseframe/css/jquery.timepicker.css',  # For timepicker
     'baseframe/css/baseframe.css',  # Externally compiled with Compass

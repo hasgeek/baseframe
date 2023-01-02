@@ -431,13 +431,6 @@ assets['dropzone.css'][Version('3.2.0')] = 'baseframe/css/dropzone.css'
 assets['dropzone.js'][Version('5.5.0')] = 'baseframe/js/dropzone-5.5.0.js'
 assets['dropzone.css'][Version('5.5.0')] = 'baseframe/css/dropzone-5.5.0.css'
 
-assets['mustache-hogan.js'][
-    Version('2.0.0')
-] = 'baseframe/js/mustache-hogan/hogan-2.0.0.min.mustache.js'
-assets['mustache-loader.js'][
-    Version('0.5.1')
-] = 'baseframe/js/mustache-hogan/mustache-loader.js'
-
 assets['marked.js'][Version('0.3.0')] = 'baseframe/js/marked.js'
 
 assets['moment.js'][Version('2.24.0')] = 'baseframe/js/moment.js'
@@ -511,10 +504,6 @@ assets['bootstrap3-editable.css'][Version('1.5.1')] = (
     'bootstrap.css>=3.0.0',
     'baseframe/js/bootstrap3-editable/css/bootstrap-editable.css',
 )
-
-assets['mustache.js'][Version('2.0.0')] = {
-    'requires': ['mustache-loader.js==0.5.1', 'mustache-hogan.js==2.0.0']
-}
 
 assets['extra.js'][Version('0.0.0')] = {
     'requires': [
