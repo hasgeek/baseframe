@@ -10,7 +10,6 @@ from furl import furl
 from ..extensions import _
 
 __all__ = [
-    'TinyMce3',
     'TinyMce4',
     'SubmitInput',
     'DateTimeInput',
@@ -74,20 +73,6 @@ class Select2Widget(Select):
                 html.append(self.render_option(val, label, selected))
         html.append('</select>')
         return Markup(''.join(html))
-
-
-class TinyMce3(wtforms.widgets.TextArea):
-    """Rich text widget with Tiny MCE 3."""
-
-    input_type = 'tinymce3'
-
-    def __call__(self, field, **kwargs) -> str:
-        c = kwargs.pop('class', '') or kwargs.pop('class_', '')
-        if c:
-            kwargs['class'] = f'richtext {c}'
-        else:
-            kwargs['class'] = 'richtext'
-        return super().__call__(field, **kwargs)
 
 
 class TinyMce4(wtforms.widgets.TextArea):

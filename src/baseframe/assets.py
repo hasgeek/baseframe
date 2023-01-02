@@ -55,11 +55,6 @@ assets['bootstrap-social.css'][Version('1.0.0')] = (
 )
 
 assets['jquery.form.js'][Version('2.96.0')] = 'baseframe/js/jquery.form.js'
-assets['jquery.tinymce.js'][Version('3.5.10')] = (
-    'baseframe/js/tinymce3/jquery.tinymce.js',
-)
-assets['tinymce.js'][Version('3.5.10')] = 'baseframe/js/tinymce3/tiny_mce.js'
-assets['tiny_mce.js'][Version('3.5.10')] = {'requires': ['tinymce.js==3.5.10']}
 assets['jquery.tinymce.js'][Version('4.1.7')] = (
     'baseframe/js/tinymce4/jquery.tinymce.min.js',
 )
@@ -422,23 +417,6 @@ assets['getdevicepixelratio.js'][
 assets['pace.js'][Version('1.0.0')] = 'baseframe/js/pace.js'
 
 # Asset packages
-assets['bootstrap.js'][Version('2.0.1')] = {
-    'requires': [
-        'bootstrap-alert.js==2.0.1',
-        'bootstrap-button.js==2.0.1',
-        # 'bootstrap-carousel.js==2.0.1',
-        # 'bootstrap-collapse.js==2.0.1',
-        'bootstrap-dropdown.js==2.0.1',
-        'bootstrap-modal.js==2.0.1',
-        'bootstrap-tooltip.js==2.0.1',
-        # 'bootstrap-popover.js==2.0.1',
-        # 'bootstrap-scrollspy.js==2.0.1',
-        'bootstrap-tab.js==2.0.1',
-        'bootstrap-transition.js==2.0.1',
-        # 'bootstrap-typeahead.js==2.0.1',
-    ]
-}
-
 assets['bootstrap.js'][Version('3.3.1')] = {
     'requires': [
         'bootstrap-transition.js==3.3.1',
@@ -480,27 +458,6 @@ assets['extra-material.js'][Version('0.0.0')] = {
         'jquery.form.js',
         'select2-material.js',
         'getdevicepixelratio.js',
-    ]
-}
-
-assets['baseframe.js'][Version(__version__)] = {
-    'requires': [
-        'bootstrap.js==2.0.1',
-        'extra.js',
-        'jquery.tinymce.js>=3.0.0,<4.0.0',
-        'baseframe-base.js==' + __version__,
-        'baseframe-networkbar.js==' + __version__,
-    ]
-}
-
-assets['baseframe.css'][Version(__version__)] = {
-    'requires': [
-        'bootstrap.css==2.0.1',
-        'bootstrap-responsive.css==2.0.1',
-        'select2-baseframe.css',
-        'fontawesome.css>=4.0.0',
-        'baseframe-base.css==' + __version__,
-        'baseframe-networkbar.css==' + __version__,
     ]
 }
 

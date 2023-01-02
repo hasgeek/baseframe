@@ -36,7 +36,6 @@ from .widgets import (
     RadioMatrixInput,
     Select2Widget,
     SelectWidget,
-    TinyMce3,
     TinyMce4,
 )
 
@@ -64,13 +63,11 @@ __all__ = [
     'JsonField',
     'MarkdownField',
     'RadioMatrixField',
-    'RichTextField',
     'SANITIZE_ATTRIBUTES',
     'SANITIZE_TAGS',
     'SelectField',
     'StylesheetField',
     'TextListField',
-    'TinyMce3Field',
     'TinyMce4Field',
     'UserSelectField',
     'UserSelectMultiField',
@@ -171,127 +168,6 @@ class SelectField(SelectFieldBase):
                 if val == self.data:
                     return
         raise StopValidation(_("Not a valid choice"))
-
-
-class TinyMce3Field(TextAreaField):
-    """Rich text field using TinyMCE 3."""
-
-    data: t.Optional[str]
-    widget = TinyMce3()
-
-    def __init__(
-        self,
-        # WTForms fields
-        label: str = '',
-        validators: t.Optional[ValidatorList] = None,
-        filters: FilterList = (),
-        description: str = '',
-        id: t.Optional[str] = None,  # NOQA: A002  # pylint: disable=redefined-builtin
-        default: t.Optional[str] = None,
-        widget=None,
-        render_kw=None,
-        name=None,
-        _form=None,
-        _prefix='',
-        _translations=None,
-        _meta=None,
-        # Additional fields
-        content_css: t.Optional[t.Union[str, t.Callable[[], str]]] = None,
-        linkify: bool = True,
-        nofollow: bool = True,
-        tinymce_options: t.Optional[dict] = None,
-        sanitize_tags: t.Optional[t.List] = None,
-        sanitize_attributes: t.Optional[t.Dict[str, t.List[str]]] = None,
-        **kwargs,
-    ):
-
-        super().__init__(
-            label=label,
-            validators=validators,
-            filters=filters,
-            description=description,
-            id=id,
-            default=default,
-            widget=widget,
-            render_kw=render_kw,
-            name=name,
-            _form=_form,
-            _prefix=_prefix,
-            _translations=_translations,
-            _meta=_meta,
-            **kwargs,
-        )
-
-        if tinymce_options is None:
-            tinymce_options = {}
-        else:
-            # Clone the dict to preserve local edits
-            tinymce_options = dict(tinymce_options)
-
-        # Set defaults for TinyMCE
-        tinymce_options.setdefault('theme', 'advanced')
-        tinymce_options.setdefault('plugins', '')
-        tinymce_options.setdefault(
-            'theme_advanced_buttons1',
-            'bold,italic,|,sup,sub,|,bullist,numlist,|,link,unlink,|,blockquote'
-            ',|,removeformat,code',
-        )
-        tinymce_options.setdefault('theme_advanced_buttons2', '')
-        tinymce_options.setdefault('theme_advanced_buttons3', '')
-        tinymce_options.setdefault('blockformats', 'p,h3,h4,h5,h6,blockquote,dt,dd')
-        tinymce_options.setdefault('width', '100%')
-        tinymce_options.setdefault('height', '159')
-        tinymce_options.setdefault(
-            'valid_elements',
-            'p,br,strong/b,em/i,sup,sub,h3,h4,h5,h6,ul,ol,li,a[!href|title|target]'
-            ',blockquote,code',
-        )
-        tinymce_options.setdefault('theme_advanced_toolbar_location', 'top')
-        tinymce_options.setdefault('theme_advanced_toolbar_align', 'left')
-        tinymce_options.setdefault('theme_advanced_statusbar_location', 'bottom')
-        tinymce_options.setdefault('theme_advanced_resizing', True)
-        tinymce_options.setdefault('theme_advanced_path', False)
-        tinymce_options.setdefault('relative_urls', False)
-
-        # Remove options that cannot be set by callers
-        tinymce_options.pop('content_css', None)
-        tinymce_options.pop('script_url', None)
-        tinymce_options.pop('setup', None)
-
-        if sanitize_tags is None:
-            sanitize_tags = SANITIZE_TAGS
-        if sanitize_attributes is None:
-            sanitize_attributes = SANITIZE_ATTRIBUTES
-
-        self.linkify = linkify
-        self.nofollow = nofollow
-        self.tinymce_options = tinymce_options
-
-        self._content_css = content_css
-        self.sanitize_tags = sanitize_tags
-        self.sanitize_attributes = sanitize_attributes
-
-    @property
-    def content_css(self):
-        if callable(self._content_css):
-            return self._content_css()
-        return self._content_css
-
-    def process_formdata(self, valuelist: t.List[str]) -> None:
-        """Process incoming data from request form."""
-        super().process_formdata(valuelist)
-        # Sanitize data
-        self.data = bleach.clean(
-            self.data or '',
-            strip=True,
-            tags=self.sanitize_tags,
-            attributes=self.sanitize_attributes,
-        )
-        if self.linkify:
-            if self.nofollow:
-                self.data = bleach.linkify(self.data or '')
-            else:
-                self.data = bleach.linkify(self.data or '', callbacks=[])
 
 
 class TinyMce4Field(TextAreaField):
@@ -411,10 +287,6 @@ class TinyMce4Field(TextAreaField):
                 self.data = bleach.linkify(self.data or '')
             else:
                 self.data = bleach.linkify(self.data or '', callbacks=[])
-
-
-#: Compatibility name
-RichTextField = TinyMce3Field
 
 
 class DateTimeField(wtforms.fields.DateTimeField):
