@@ -1,10 +1,10 @@
 # Require any additional compass plugins here.
 # Set this to the root of your project when deployed:
-css_dir = "baseframe/static/css"
-sass_dir = "baseframe/static/sass"
-images_dir = "baseframe/static/img"
-javascripts_dir = "baseframe/static/js"
-fonts_dir = "baseframe/static/css/fonts"
+css_dir = "src/baseframe/static/css"
+sass_dir = "src/baseframe/static/sass"
+images_dir = "src/baseframe/static/img"
+javascripts_dir = "src/baseframe/static/js"
+fonts_dir = "src/baseframe/static/css/fonts"
 
 http_path = "/"
 http_stylesheets_path='/_baseframe/css'

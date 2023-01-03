@@ -1,9 +1,8 @@
-global-include *.pyi
 global-include *.typed
 include README.rst
 include CHANGES.rst
 include Makefile
 include babel.cfg
 include i18n.sh
-include baseframe/Makefile
-recursive-include baseframe *
+include src/baseframe/Makefile
+recursive-include src/baseframe *
