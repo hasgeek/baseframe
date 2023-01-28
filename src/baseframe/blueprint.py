@@ -22,7 +22,16 @@ from coaster.assets import split_namespec
 
 from .assets import assets
 from .errors import error_handlers as available_error_handlers
-from .extensions import asset_cache, babel, cache, networkbar_cache, statsd, toolbar
+from .extensions import (
+    asset_cache,
+    babel,
+    cache,
+    get_timezone,
+    get_user_locale,
+    networkbar_cache,
+    statsd,
+    toolbar,
+)
 from .utils import JSONEncoder, request_is_xhr
 
 try:
@@ -265,7 +274,9 @@ class BaseframeBlueprint(Blueprint):
         asset_cache.init_app(app, config=acacheconfig)
         cache.init_app(app)
 
-        babel.init_app(app)
+        babel.init_app(
+            app, locale_selector=get_user_locale, timezone_selector=get_timezone
+        )
         if toolbar is not None:
             if 'DEBUG_TB_PANELS' not in app.config:
                 app.config['DEBUG_TB_PANELS'] = [

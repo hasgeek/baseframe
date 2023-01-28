@@ -57,7 +57,6 @@ _ = baseframe_translations.gettext
 __ = baseframe_translations.lazy_gettext
 
 
-@babel.localeselector
 def get_user_locale() -> str:
     """Get user's locale if available on the user object, else from the request."""
     # If this app and request have a user that specifies a locale, use it
@@ -76,7 +75,6 @@ def get_user_locale() -> str:
     ) or DEFAULT_LOCALE
 
 
-@babel.timezoneselector
 def get_timezone(default: t.Union[None, tzinfo, str] = None) -> tzinfo:
     """Return a timezone suitable for the current context."""
     # If this app and request have a user, return user's timezone,

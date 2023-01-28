@@ -41,7 +41,7 @@ dependencies = [
   'dnspython',
   'emoji>=1.0.0',
   'Flask-Assets',
-  'Flask-Babel>=2.0.0',
+  'Flask-Babel>=3.0.0',
   'Flask-Caching',
   'Flask-WTF>=0.14',
   'Flask>=2.0',
