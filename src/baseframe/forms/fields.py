@@ -201,7 +201,6 @@ class TinyMce4Field(TextAreaField):
         sanitize_attributes: t.Optional[t.Dict[str, t.List[str]]] = None,
         **kwargs,
     ):
-
         super().__init__(
             label=label,
             validators=validators,
