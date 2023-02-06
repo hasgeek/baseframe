@@ -679,7 +679,6 @@ class NoObfuscatedEmail:
 
 
 class ValidName:
-
     default_message = __(
         "This name contains unsupported characters. "
         "It should have letters, numbers and non-terminal hyphens only"
@@ -694,7 +693,6 @@ class ValidName:
 
 
 class ValidCoordinates:
-
     default_message = __("Valid latitude and longitude expected")
     default_message_latitude = __("Latitude must be within ± 90 degrees")
     default_message_longitude = __("Longitude must be within ± 180 degrees")
