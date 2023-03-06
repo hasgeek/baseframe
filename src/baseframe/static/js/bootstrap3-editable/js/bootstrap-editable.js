@@ -5201,7 +5201,7 @@ Editableform based on Twitter Bootstrap 3
         );
 
         this.applyPlacement(calculatedOffset, placement);
-      }.call(this.container()));
+      }).call(this.container());
       /*jshint laxcomma: false, eqeqeq: true*/
     },
   });

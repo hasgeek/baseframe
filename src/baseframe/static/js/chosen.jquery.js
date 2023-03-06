@@ -90,7 +90,7 @@
   };
 
   this.SelectParser = SelectParser;
-}.call(this));
+}).call(this);
 
 /*
 Chosen source: generate output using 'cake build'
@@ -272,7 +272,7 @@ Copyright (c) 2011 by Harvest
   })();
 
   root.AbstractChosen = AbstractChosen;
-}.call(this));
+}).call(this);
 
 /*
 Chosen source: generate output using 'cake build'
@@ -1119,4 +1119,4 @@ Copyright (c) 2011 by Harvest
   };
 
   root.get_side_border_padding = get_side_border_padding;
-}.call(this));
+}).call(this);
