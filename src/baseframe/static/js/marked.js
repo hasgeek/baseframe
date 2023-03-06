@@ -1218,8 +1218,8 @@
   } else {
     this.marked = marked;
   }
-}.call(
+}).call(
   (function () {
     return this || (typeof window !== 'undefined' ? window : global);
   })()
-));
+);

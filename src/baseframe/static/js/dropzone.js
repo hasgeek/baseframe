@@ -1629,7 +1629,7 @@
         };
 
         contentLoaded(window, Dropzone.discover);
-      }.call(this));
+      }).call(this);
     }
   );
   require.alias('component-emitter/index.js', 'dropzone/deps/emitter/index.js');

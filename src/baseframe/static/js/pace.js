@@ -844,4 +844,4 @@
       : 'object' == typeof exports
       ? (module.exports = j)
       : D.startOnPageLoad && j.start();
-}.call(this));
+}).call(this);
