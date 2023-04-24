@@ -6,7 +6,8 @@
  */
 @media (min-width: 1200px) {
   body {
-    background: -webkit-linear-gradient(
+    background:
+      -webkit-linear-gradient(
         90deg,
         rgba(0, 0, 0, 0.05),
         rgba(0, 0, 0, 0.05) 4.545%,
@@ -28,13 +29,18 @@
             )
             66%, rgba(0, 0, 0, 0) 100%);
     //background-size: 1.692em 1.692em, 7.692em 7.692em; /* 7.692 - 2.308 = 5.384 */
-    background-size: 18px 18px, 7.692em 7.692em;
-    background-position: left top, center top;
+    background-size:
+      18px 18px,
+      7.692em 7.692em;
+    background-position:
+      left top,
+      center top;
   }
 }
 @media (max-width: 1199px) and (min-width: 980px) {
   body {
-    background: -webkit-linear-gradient(
+    background:
+      -webkit-linear-gradient(
         90deg,
         rgba(0, 0, 0, 0.05),
         rgba(0, 0, 0, 0.05) 4.545%,
@@ -60,13 +66,18 @@
               0
             )
             63.75%, rgba(0, 0, 0, 0) 100%);
-    background-size: 1.692em 1.692em, 6.154em 6.154em;
-    background-position: left top, center top;
+    background-size:
+      1.692em 1.692em,
+      6.154em 6.154em;
+    background-position:
+      left top,
+      center top;
   }
 }
 @media (max-width: 979px) and (min-width: 761px) {
   body {
-    background: -webkit-linear-gradient(
+    background:
+      -webkit-linear-gradient(
         90deg,
         rgba(0, 0, 0, 0.05),
         rgba(0, 0, 0, 0.05) 4.545%,
@@ -92,8 +103,12 @@
               0
             )
             66.13%, rgba(0, 0, 0, 0) 100%);
-    background-size: 1.692em 1.692em, 4.769em 4.769em;
-    background-position: left top, center top;
+    background-size:
+      1.692em 1.692em,
+      4.769em 4.769em;
+    background-position:
+      left top,
+      center top;
   }
 }
 @media (max-width: 760px) {

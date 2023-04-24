@@ -4,7 +4,12 @@ div.oembedall-githubrepos {
   list-style-type: none;
   margin: 0 0 10px;
   padding: 8px 10px 0;
-  font: 13.34px/1.4 helvetica, arial, freesans, clean, sans-serif;
+  font:
+    13.34px/1.4 helvetica,
+    arial,
+    freesans,
+    clean,
+    sans-serif;
   /*background: url("http://github.com/images/icons/public.png") no-repeat scroll 6px 9px transparent;*/
   width: 452px;
   background-color: #fff;
@@ -136,7 +141,11 @@ div.oembedall-container {
   line-height: 1;
   background: none repeat scroll 0 0 #ffffff;
   color: #000000;
-  font-family: Arial, Liberation Sans, DejaVu Sans, sans-serif;
+  font-family:
+    Arial,
+    Liberation Sans,
+    DejaVu Sans,
+    sans-serif;
   font-size: 80%;
   text-align: left;
   margin: 0;
@@ -157,7 +166,11 @@ div.oembedall-container {
 }
 
 .oembedall-stoqembed h3 {
-  font-family: Trebuchet MS, Liberation Sans, DejaVu Sans, sans-serif;
+  font-family:
+    Trebuchet MS,
+    Liberation Sans,
+    DejaVu Sans,
+    sans-serif;
   font-size: 130%;
   font-weight: bold;
   margin: 0;
