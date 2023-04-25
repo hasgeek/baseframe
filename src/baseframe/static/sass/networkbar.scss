@@ -30,9 +30,13 @@ $color-hg-bar-selected: #000;
 $networkbar-font-size: 14px;
 $networkbar-xs-font-size: 14px;
 $networkbar-line-height: 18px;
-$networkbar-font: #{$networkbar-font-size}/#{$networkbar-line-height}
-    'Source Sans Pro',
-  'Lucida Grande', 'DejaVu Sans', 'Bitstream Vera Sans', Arial, sans-serif !default;
+$networkbar-font:
+  #{$networkbar-font-size}/#{$networkbar-line-height} 'Source Sans Pro',
+  'Lucida Grande',
+  'DejaVu Sans',
+  'Bitstream Vera Sans',
+  Arial,
+  sans-serif !default;
 
 #hg-bar {
   @include pie-clearfix;

@@ -54,10 +54,18 @@
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -moz-transition: border 0.2s linear, box-shadow 0.2s linear;
-  -o-transition: border 0.2s linear, box-shadow 0.2s linear;
-  -webkit-transition: border 0.2s linear, box-shadow 0.2s linear;
-  transition: border 0.2s linear, box-shadow 0.2s linear;
+  -moz-transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
+  -o-transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
+  -webkit-transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
+  transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
   display: block;
   overflow: hidden;
   white-space: nowrap;
@@ -162,10 +170,18 @@
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -moz-transition: border 0.2s linear, box-shadow 0.2s linear;
-  -o-transition: border 0.2s linear, box-shadow 0.2s linear;
-  -webkit-transition: border 0.2s linear, box-shadow 0.2s linear;
-  transition: border 0.2s linear, box-shadow 0.2s linear;
+  -moz-transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
+  -o-transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
+  -webkit-transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
+  transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
 }
 
 .chzn-container-multi .chzn-choices li {
@@ -250,9 +266,15 @@
     #e8e8e8 52%,
     #eeeeee 100%
   );
-  -webkit-box-shadow: 0 0 2px #ffffff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: 0 0 2px #ffffff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
-  box-shadow: 0 0 2px #ffffff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow:
+    0 0 2px #ffffff inset,
+    0 1px 0 rgba(0, 0, 0, 0.05);
+  -moz-box-shadow:
+    0 0 2px #ffffff inset,
+    0 1px 0 rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 0 2px #ffffff inset,
+    0 1px 0 rgba(0, 0, 0, 0.05);
   color: #333;
   border: 1px solid #aaaaaa;
   line-height: 13px;
@@ -394,16 +416,27 @@
 /* @group Active  */
 .chzn-container-active .chzn-single {
   border: 1px solid rgba(82, 168, 236, 0.8);
-  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+  -moz-box-shadow:
+    inset 0 1px 1px rgba(0, 0, 0, 0.075),
     0 0 8px rgba(82, 168, 236, 0.6);
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+  -webkit-box-shadow:
+    inset 0 1px 1px rgba(0, 0, 0, 0.075),
     0 0 8px rgba(82, 168, 236, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+  box-shadow:
+    inset 0 1px 1px rgba(0, 0, 0, 0.075),
     0 0 8px rgba(82, 168, 236, 0.6);
-  -moz-transition: border 0.2s linear, box-shadow 0.2s linear;
-  -o-transition: border 0.2s linear, box-shadow 0.2s linear;
-  -webkit-transition: border 0.2s linear, box-shadow 0.2s linear;
-  transition: border 0.2s linear, box-shadow 0.2s linear;
+  -moz-transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
+  -o-transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
+  -webkit-transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
+  transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
 }
 
 .chzn-container-active .chzn-single-with-drop {
@@ -444,16 +477,27 @@
 
 .chzn-container-active .chzn-choices {
   border: 1px solid rgba(82, 168, 236, 0.8) !important;
-  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+  -moz-box-shadow:
+    inset 0 1px 1px rgba(0, 0, 0, 0.075),
     0 0 8px rgba(82, 168, 236, 0.6);
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+  -webkit-box-shadow:
+    inset 0 1px 1px rgba(0, 0, 0, 0.075),
     0 0 8px rgba(82, 168, 236, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+  box-shadow:
+    inset 0 1px 1px rgba(0, 0, 0, 0.075),
     0 0 8px rgba(82, 168, 236, 0.6);
-  -moz-transition: border 0.2s linear, box-shadow 0.2s linear;
-  -o-transition: border 0.2s linear, box-shadow 0.2s linear;
-  -webkit-transition: border 0.2s linear, box-shadow 0.2s linear;
-  transition: border 0.2s linear, box-shadow 0.2s linear;
+  -moz-transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
+  -o-transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
+  -webkit-transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
+  transition:
+    border 0.2s linear,
+    box-shadow 0.2s linear;
 }
 
 .chzn-container-active .chzn-choices .search-field input {
