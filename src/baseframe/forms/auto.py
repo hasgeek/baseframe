@@ -3,10 +3,8 @@
 import typing as t
 
 from flask import (
-    Markup,
     abort,
     current_app,
-    escape,
     flash,
     make_response,
     redirect,
@@ -14,6 +12,7 @@ from flask import (
     request,
     url_for,
 )
+from markupsafe import Markup, escape
 from werkzeug.wrappers import Response
 import wtforms
 
