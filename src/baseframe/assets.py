@@ -496,3 +496,7 @@ assets['mui.css'][Version('0.9.21')] = 'baseframe/css/mui.css'
 assets['baseframe-mui.css'][Version(__version__)] = {
     'requires': ['jquery-modal.css', 'select2-material.css', 'mui.css']
 }
+
+assets['font-awesome5-sprite.svg'][
+    Version('5.10.2')
+] = 'baseframe/img/font-awesome5-sprite.svg'

@@ -223,19 +223,17 @@ class BaseframeBlueprint(Blueprint):
             app.assets = assetenv
         app.assets.register('js_all', js_all)
         app.assets.register('css_all', css_all)
+        app.assets.register(
+            'fa5-sprite',
+            Bundle(
+                assets.require('font-awesome5-sprite.svg'),
+                output='img/fa5-packed.svg',
+            ),
+        )
         app.register_blueprint(self, static_subdomain=subdomain)
 
-        for module_name in asset_modules:
-            try:
-                module = __import__(module_name)
-                module.blueprint.init_app(app)
-                app.register_blueprint(
-                    module.blueprint,
-                    url_prefix="/_baseframe",
-                    static_subdomain=subdomain,
-                )
-            except ImportError:
-                app.logger.warning("Unable to import asset module: %s", module_name)
+        if asset_modules:
+            app.logger.warning("Baseframe no longer supports asset modules")
 
         # Optional config for a client app to use a manifest file
         # to load fingerprinted assets
