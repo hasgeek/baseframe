@@ -257,6 +257,10 @@ class BaseframeBlueprint(Blueprint):
                 if isinstance(asset_bundles.get('assets'), dict):
                     # Legacy Webpack manifest.json uses an 'assets' subkey
                     asset_source = asset_bundles['assets']
+                    app.logger.warning(
+                        "Asset manifest file is using legacy format: %s",
+                        app.config['ASSET_MANIFEST_PATH'],
+                    )
                 else:
                     # Current Webpack manifest.json lists all assets top-level
                     asset_source = asset_bundles
