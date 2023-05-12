@@ -254,7 +254,13 @@ class BaseframeBlueprint(Blueprint):
                         " key to be unused"
                     )
                 app.config['assets'] = {}
-                for _asset_key, _asset_path in asset_bundles['assets'].items():
+                if isinstance(asset_bundles.get('assets'), dict):
+                    # Legacy Webpack manifest.json uses an 'assets' subkey
+                    asset_source = asset_bundles['assets']
+                else:
+                    # Current Webpack manifest.json lists all assets top-level
+                    asset_source = asset_bundles
+                for _asset_key, _asset_path in asset_source.items():
                     app.config['assets'][_asset_key] = _asset_path
 
         app.config.setdefault('CACHE_KEY_PREFIX', 'flask_cache_' + app.name + '/')
