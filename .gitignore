@@ -15,7 +15,6 @@ dist/
 src/baseframe/static/css/packed.css
 src/baseframe/static/js/packed.js
 src/baseframe/static/js/tinymce3
-src/baseframe/static/js/tinymce4
 src/baseframe/static/js/codemirror
 .cache
 .pytest_cache

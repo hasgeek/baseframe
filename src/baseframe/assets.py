@@ -487,7 +487,6 @@ assets['baseframe-mui.js'][Version(__version__)] = {
     'requires': [
         'extra-material.js',
         'mui.js',
-        'jquery.tinymce.js>=4.0.0',
         'baseframe-material.js',
     ]
 }
