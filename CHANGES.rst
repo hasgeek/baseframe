@@ -6,6 +6,8 @@
 * Fixed DateTimeField to handle a variety of date and time specifications
 * Switched back to Flask-Babel
 * Baseframe now uses ``src`` folder layout and ``pyproject.toml``
+* TinyMCE4 is now part of the repository as it's no longer available for
+  download; other obsolete static files have been removed
 
 0.3.2
 -----
