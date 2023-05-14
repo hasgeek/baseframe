@@ -1,20 +1,21 @@
 """Test form fields."""
+# pylint: disable=redefined-outer-name
 
 from datetime import datetime
 from decimal import Decimal
 
-from werkzeug.datastructures import MultiDict
-
 from pytz import timezone, utc
+from werkzeug.datastructures import MultiDict
 import pytest
 
-from baseframe import forms
 from coaster.utils import LabeledEnum
+
+from baseframe import forms
 
 # --- Fixtures -------------------------------------------------------------------------
 
 
-class MY_ENUM(LabeledEnum):  # NOQA: N801
+class MY_ENUM(LabeledEnum):  # noqa: N801
     FIRST = (1, 'first', "First")
     SECOND = (2, 'second', "Second")
     THIRD = (3, 'third', "Third")
@@ -210,7 +211,7 @@ def test_escaped_label_text():
 # UTC with 5:30 hours removed
 @pytest.mark.usefixtures('ctx')
 @pytest.mark.parametrize(
-    ['test_input', 'expected_naive', 'expected_aware'],
+    ('test_input', 'expected_naive', 'expected_aware'),
     [
         # Blank input
         ([], None, None),

@@ -5,12 +5,11 @@ from urllib.parse import urlsplit, urlunsplit
 import os.path
 import typing as t
 
+from babel.dates import format_date, format_datetime, format_time, format_timedelta
 from flask import current_app, request
 from flask_babel import Locale, get_locale
-from markupsafe import Markup
-
-from babel.dates import format_date, format_datetime, format_time, format_timedelta
 from furl import furl
+from markupsafe import Markup
 from pytz import utc
 import grapheme
 
@@ -188,7 +187,7 @@ def firstline(html: str) -> str:
 
 @baseframe.app_template_filter('preview')
 @cache.memoize(timeout=600)
-def preview(html: str, min: int = 50, max: int = 158) -> str:  # NOQA: A002
+def preview(html: str, min: int = 50, max: int = 158) -> str:  # noqa: A002
     """
     Return a preview of a HTML blob as plain text, for use as a description tag.
 
@@ -267,7 +266,7 @@ def longdate(value: t.Union[datetime, date]) -> str:
 @baseframe.app_template_filter('date')
 def date_filter(
     value: t.Union[datetime, date],
-    format: str = 'medium',  # NOQA: A002  # pylint: disable=W0622
+    format: str = 'medium',  # noqa: A002  # pylint: disable=W0622
     locale: t.Optional[t.Union[Locale, str]] = None,
     usertz: bool = True,
 ) -> str:
@@ -288,7 +287,7 @@ def date_filter(
 @baseframe.app_template_filter('time')
 def time_filter(
     value: t.Union[datetime, time],
-    format: str = 'short',  # NOQA: A002  # pylint: disable=W0622
+    format: str = 'short',  # noqa: A002  # pylint: disable=W0622
     locale: t.Optional[t.Union[Locale, str]] = None,
     usertz: bool = True,
 ) -> str:
@@ -310,7 +309,7 @@ def time_filter(
 @baseframe.app_template_filter('datetime')
 def datetime_filter(
     value: t.Union[datetime, date, time],
-    format: str = 'medium',  # NOQA: A002  # pylint: disable=W0622
+    format: str = 'medium',  # noqa: A002  # pylint: disable=W0622
     locale: t.Optional[t.Union[Locale, str]] = None,
     usertz: bool = True,
 ) -> str:
@@ -342,7 +341,7 @@ def timedelta_filter(
     granularity: str = 'second',
     threshold: float = 0.85,
     add_direction: bool = False,
-    format: str = 'long',  # NOQA: A002  # pylint: disable=W0622
+    format: str = 'long',  # noqa: A002  # pylint: disable=W0622
     locale: t.Optional[t.Union[Locale, str]] = None,
 ) -> str:
     """

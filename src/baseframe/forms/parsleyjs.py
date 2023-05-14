@@ -183,10 +183,9 @@ def _input_required_kwargs(kwargs, vali) -> None:
 
 
 def _regexp_kwargs(kwargs, vali) -> None:
-    # Apparently, this is the best way to check for RegexObject Type
-    # It's needed because WTForms allows compiled regexps to be passed to the validator
-    RegexObject = type(re.compile(''))  # NOQA: N806
-    if isinstance(vali.regex, RegexObject):
+    if isinstance(vali.regex, re.Pattern):
+        # WTForms allows compiled regexps to be passed to the validator, but we need
+        # the pattern text
         regex_string = vali.regex.pattern
     else:
         regex_string = vali.regex

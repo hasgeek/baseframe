@@ -12,11 +12,11 @@ from .filters import *  # NOQA
 from .utils import *  # NOQA
 from .views import *  # NOQA
 
-from . import forms  # isort:skip  # NOQA
+from . import forms  # isort:skip
 
 # TODO: baseframe_js and baseframe_css are defined in deprecated.py
 # and pending removal after an audit of all apps
-__all__ = [  # NOQA: F405
+__all__ = [  # noqa: F405
     '_',
     '__',
     '__version__',

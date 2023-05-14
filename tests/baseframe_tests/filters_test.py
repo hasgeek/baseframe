@@ -1,4 +1,5 @@
 """Test form filters."""
+# pylint: disable=redefined-outer-name
 
 from datetime import date, datetime, time, timedelta
 from types import SimpleNamespace
@@ -6,8 +7,9 @@ from types import SimpleNamespace
 from pytz import UTC, timezone
 import pytest
 
-from baseframe import filters
 from coaster.utils import md5sum
+
+from baseframe import filters
 
 
 @pytest.fixture(params=[True, False])
@@ -170,25 +172,29 @@ def test_dt_filters_time_localized_hi_full(app, times):
 
 def test_dt_filters_time_localized_en_full(app, times):
     with app.test_request_context('/', headers={'Accept-Language': 'en'}):
-        assert (
-            filters.time_filter(times.time, format='full')
-            == '11:59:59 PM Coordinated Universal Time'
+        assert filters.time_filter(times.time, format='full') in (
+            '11:59:59 PM Coordinated Universal Time',
+            '11:59:59\u202fPM Coordinated Universal Time',
         )
 
 
 def test_dt_filters_datetime_with_usertz(app, times):
     with app.test_request_context('/'):
-        assert (
-            filters.datetime_filter(times.datetimeEST, format='full', usertz=False)
-            == 'Friday, January 31, 2020 at 12:00:00 AM Eastern Standard Time'
+        assert filters.datetime_filter(
+            times.datetimeEST, format='full', usertz=False
+        ) in (
+            'Friday, January 31, 2020 at 12:00:00 AM Eastern Standard Time',
+            'Friday, January 31, 2020, 12:00:00\u202fAM Eastern Standard Time',
         )
 
 
 def test_dt_filters_datetime_without_usertz(app, times):
     with app.test_request_context('/'):
-        assert (
-            filters.datetime_filter(times.datetimeEST, format='full', usertz=True)
-            == 'Friday, January 31, 2020 at 4:56:00 AM Coordinated Universal Time'
+        assert filters.datetime_filter(
+            times.datetimeEST, format='full', usertz=True
+        ) in (
+            'Friday, January 31, 2020 at 4:56:00 AM Coordinated Universal Time',
+            'Friday, January 31, 2020, 4:56:00\u202fAM Coordinated Universal Time',
         )
 
 
@@ -260,7 +266,10 @@ def test_dt_filters_timestamp_filter_hi(app, times):
         assert filters.timedelta_filter(1, format='short') == "1 से॰"
         assert filters.timedelta_filter(timedelta(seconds=1)) == "1 सेकंड"
         assert filters.timedelta_filter(timedelta(days=1, hours=2)) == "1 दिन"
-        assert filters.timedelta_filter(timedelta(days=1), format='narrow') == "1दिन"
+        assert filters.timedelta_filter(timedelta(days=1), format='narrow') in (
+            "1दिन",
+            '1 द\u093f',
+        )
         assert (
             filters.timedelta_filter(timedelta(seconds=1), add_direction=True)
             == "1 सेकंड में"

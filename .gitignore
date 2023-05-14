@@ -11,6 +11,7 @@ test.db
 .sass-cache
 docs/baseframe/_build
 build/
+coverage/
 dist/
 src/baseframe/static/css/packed.css
 src/baseframe/static/js/packed.js

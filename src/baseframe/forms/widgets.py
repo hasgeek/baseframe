@@ -1,11 +1,10 @@
 """Redefined WTForms widgets and some extra widgets."""
 
 from flask import current_app, render_template
+from furl import furl
 from markupsafe import Markup
 from wtforms.widgets import RadioInput, Select, html_params
 import wtforms
-
-from furl import furl
 
 from ..extensions import _
 
@@ -177,7 +176,7 @@ class RadioMatrixInput:
         rendered.append('<thead>')
         rendered.append('<tr>')
         rendered.append(f'<th>{field.label}</th>')
-        for value, label in field.choices:
+        for _value, label in field.choices:
             rendered.append(f'<th>{label}</th>')
         rendered.append('</th>')
         rendered.append('</thead>')
@@ -186,7 +185,7 @@ class RadioMatrixInput:
             rendered.append('<tr>')
             rendered.append(f'<td>{title}</td>')
             selected = field.data.get(name)
-            for value, label in field.choices:
+            for value, _label in field.choices:
                 params = {'type': 'radio', 'name': name, 'value': value}
                 if str(selected) == str(value):
                     params['checked'] = True

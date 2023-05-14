@@ -1,10 +1,12 @@
+"""Test form validators."""
+# pylint: disable=redefined-outer-name
+
 from types import SimpleNamespace
 import re
 import typing as t
 import warnings
 
 from werkzeug.datastructures import MultiDict
-
 import pytest
 import requests_mock
 import urllib3

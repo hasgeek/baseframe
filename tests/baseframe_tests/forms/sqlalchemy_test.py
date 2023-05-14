@@ -1,10 +1,11 @@
 """Test SQLAlchemy fields."""
+# pylint: disable=redefined-outer-name
 
 from flask_sqlalchemy import SQLAlchemy
-
 import pytest
 
 from coaster.sqlalchemy import Query
+
 import baseframe.forms as forms
 
 # --- Fixtures -------------------------------------------------------------------------

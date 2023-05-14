@@ -11,6 +11,7 @@ import re
 import typing as t
 
 from flask import current_app, request
+from pyisemail import is_email
 from wtforms.validators import (  # NOQA  # skipcq: PY-W2000
     URL,
     DataRequired,
@@ -22,8 +23,6 @@ from wtforms.validators import (  # NOQA  # skipcq: PY-W2000
     StopValidation,
     ValidationError,
 )
-
-from pyisemail import is_email
 import dns.resolver
 import emoji
 import html5lib

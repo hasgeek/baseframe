@@ -6,11 +6,10 @@ import typing as t
 
 from flask import Flask, current_app, request, request_finished, request_started
 from flask_wtf import FlaskForm
-from werkzeug.wrappers import Response
-
 from statsd import StatsClient
 from statsd.client.timer import Timer
 from statsd.client.udp import Pipeline
+from werkzeug.wrappers import Response
 
 from .signals import form_validation_error, form_validation_success
 
@@ -191,7 +190,7 @@ class Statsd:
             delta=delta,
         )
 
-    def set(  # NOQA: A003
+    def set(  # noqa: A003
         self,
         stat: str,
         value: str,

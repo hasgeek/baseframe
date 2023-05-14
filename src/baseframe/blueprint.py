@@ -10,7 +10,6 @@ from flask import Blueprint, Flask
 from flask_assets import Bundle, Environment
 from flask_babel import get_locale
 from flask_wtf.csrf import generate_csrf
-
 from pytz import timezone
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.rq import RqIntegration
@@ -32,7 +31,7 @@ from .extensions import (
     statsd,
     toolbar,
 )
-from .utils import JSONEncoder, request_is_xhr
+from .utils import JSONProvider, request_is_xhr
 
 try:
     import newrelic.agent
@@ -301,7 +300,8 @@ class BaseframeBlueprint(Blueprint):
                 ]
             toolbar.init_app(app)
 
-        app.json_encoder = JSONEncoder
+        app.json_provider_class = JSONProvider
+        app.json = JSONProvider(app)
         # If this app has a Lastuser extension registered, give it a cache
         lastuser = getattr(app, 'extensions', {}).get('lastuser')
         if lastuser and hasattr(lastuser, 'init_cache'):

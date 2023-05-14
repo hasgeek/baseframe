@@ -8,6 +8,7 @@
 * Baseframe now uses ``src`` folder layout and ``pyproject.toml``
 * TinyMCE4 is now part of the repository as it's no longer available for
   download; other obsolete static files have been removed
+* The JSON encoder has been replaced with a JSON provider for Flask >= 2.2
 
 0.3.2
 -----

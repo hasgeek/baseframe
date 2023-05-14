@@ -1,6 +1,7 @@
 """Test configuration."""
-from flask import Flask
+# pylint: disable=redefined-outer-name
 
+from flask import Flask
 import pytest
 
 from baseframe import baseframe

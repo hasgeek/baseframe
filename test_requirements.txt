@@ -3,4 +3,7 @@ coveralls
 psycopg2
 pytest
 pytest-cov
+pyyaml
+toml
+tomli
 urllib3
