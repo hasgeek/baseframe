@@ -302,6 +302,7 @@ class BaseframeBlueprint(Blueprint):
 
         app.json_provider_class = JSONProvider
         app.json = JSONProvider(app)
+        app.jinja_env.policies['json.dumps_function'] = app.json.dumps
         # If this app has a Lastuser extension registered, give it a cache
         lastuser = getattr(app, 'extensions', {}).get('lastuser')
         if lastuser and hasattr(lastuser, 'init_cache'):
