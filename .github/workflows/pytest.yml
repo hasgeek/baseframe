@@ -55,7 +55,7 @@ jobs:
         run: pip install pytest-github-actions-annotate-failures
       - name: Test with pytest
         run: |
-          pytest --ignore-flaky --showlocals --cov=baseframe
+          pytest --showlocals --cov=baseframe
       - name: Prepare coverage report
         run: |
           mkdir -p coverage
