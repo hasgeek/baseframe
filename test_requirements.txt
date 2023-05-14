@@ -3,7 +3,7 @@ coveralls
 psycopg2
 pytest
 pytest-cov
-urllib3
 pyyaml
 toml
 tomli
+urllib3
