@@ -2,27 +2,25 @@
 
 from collections import abc
 from datetime import datetime, time, tzinfo
-from decimal import Decimal
 import gettext
 import types
 import typing as t
 
-from flask import g, json, request
-
 from babel import Locale
+from flask import g, request
+from flask_babel import LazyString
 from furl import furl
 from mxsniff import mxsniff
-
-try:
-    from mxsniff import MxLookupError
-except ImportError:
-    from mxsniff import MXLookupException as MxLookupError
-
 from pytz import timezone, utc
 from pytz.tzinfo import BaseTzInfo
 import pycountry
 
-from coaster.sqlalchemy import MarkdownComposite
+try:
+    from mxsniff import MxLookupError  # pylint: disable=ungrouped-imports
+except ImportError:
+    from mxsniff import MXLookupException as MxLookupError
+
+from coaster.app import JSONProvider as JSONProviderBase
 from coaster.utils import md5sum, utcnow
 
 from .extensions import asset_cache, cache, get_timezone, get_user_locale
@@ -37,31 +35,26 @@ __all__ = [
 ]
 
 
-class JSONEncoder(json.JSONEncoder):
+class JSONProvider(JSONProviderBase):
     """
-    Custom JSON encoder.
+    Custom JSON provider.
 
     Adds support for additional types not covered by Flask's JSON encoder.
     """
 
-    def default(self, o: t.Any) -> t.Union[int, str, float, Decimal, list, dict, None]:
-        if hasattr(o, '__json__'):
-            return o.__json__()
-        if isinstance(o, (furl, Locale)):
-            return str(o)
+    @staticmethod
+    def default(o: t.Any) -> t.Any:
         if isinstance(o, BaseTzInfo):
+            # BaseTzInfo is a subclass of tzinfo, so it must be checked first
             return o.zone
-        if isinstance(o, tzinfo):  # Check after BaseTzInfo as that is a subclass
+        if isinstance(o, (furl, Locale, LazyString, tzinfo)):
             return str(o)
-        if isinstance(o, (datetime, time)):  # date is processed by Flask's default
+        if isinstance(o, (datetime, time)):  # type: ignore[unreachable]
+            # date is processed by Flask's default
             return o.isoformat()
-        if isinstance(o, abc.Mapping):
-            return dict(o)
         if isinstance(o, (types.GeneratorType, abc.Set)):
             return list(o)
-        if isinstance(o, MarkdownComposite):
-            return {'text': o.text, 'html': o.html}
-        return super().default(o)
+        return JSONProviderBase.default(o)
 
 
 def request_timestamp() -> datetime:

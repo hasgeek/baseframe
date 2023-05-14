@@ -1,4 +1,5 @@
 """Test utils."""
+# pylint: disable=redefined-outer-name
 
 import pytest
 

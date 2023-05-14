@@ -1,4 +1,5 @@
 """Test statsd logging."""
+# pylint: disable=redefined-outer-name
 
 # Tests adapted from https://github.com/bbelyeu/flask-statsdclient
 
@@ -6,7 +7,6 @@ from datetime import timedelta
 from unittest.mock import patch
 
 from flask import Flask
-
 from statsd.client.timer import Timer
 from statsd.client.udp import Pipeline
 import pytest
@@ -76,17 +76,17 @@ def test_incr(ctx, statsd):
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter')
         mock_incr.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.counter', 1, rate=1
+            'flask_app.baseframe_tests.statsd_test.test.counter', 1, rate=1
         )
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter', rate=0.5)
         mock_incr.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.counter', 1, rate=0.5
+            'flask_app.baseframe_tests.statsd_test.test.counter', 1, rate=0.5
         )
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter', 2, rate=0.5)
         mock_incr.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.counter', 2, rate=0.5
+            'flask_app.baseframe_tests.statsd_test.test.counter', 2, rate=0.5
         )
 
 
@@ -94,17 +94,17 @@ def test_decr(ctx, statsd):
     with patch('statsd.StatsClient.decr') as mock_decr:
         statsd.decr('test.counter')
         mock_decr.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.counter', 1, rate=1
+            'flask_app.baseframe_tests.statsd_test.test.counter', 1, rate=1
         )
     with patch('statsd.StatsClient.decr') as mock_decr:
         statsd.decr('test.counter', rate=0.5)
         mock_decr.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.counter', 1, rate=0.5
+            'flask_app.baseframe_tests.statsd_test.test.counter', 1, rate=0.5
         )
     with patch('statsd.StatsClient.decr') as mock_decr:
         statsd.decr('test.counter', 2, rate=0.5)
         mock_decr.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.counter', 2, rate=0.5
+            'flask_app.baseframe_tests.statsd_test.test.counter', 2, rate=0.5
         )
 
 
@@ -112,17 +112,17 @@ def test_gauge(ctx, statsd):
     with patch('statsd.StatsClient.gauge') as mock_gauge:
         statsd.gauge('test.gauge', 5)
         mock_gauge.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.gauge', 5, rate=1, delta=False
+            'flask_app.baseframe_tests.statsd_test.test.gauge', 5, rate=1, delta=False
         )
     with patch('statsd.StatsClient.gauge') as mock_gauge:
         statsd.gauge('test.gauge', 5, rate=0.5)
         mock_gauge.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.gauge', 5, rate=0.5, delta=False
+            'flask_app.baseframe_tests.statsd_test.test.gauge', 5, rate=0.5, delta=False
         )
     with patch('statsd.StatsClient.gauge') as mock_gauge:
         statsd.gauge('test.gauge', 10, rate=0.5, delta=True)
         mock_gauge.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.gauge', 10, rate=0.5, delta=True
+            'flask_app.baseframe_tests.statsd_test.test.gauge', 10, rate=0.5, delta=True
         )
 
 
@@ -130,12 +130,12 @@ def test_set(ctx, statsd):
     with patch('statsd.StatsClient.set') as mock_set:
         statsd.set('test.set', 'item')
         mock_set.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.set', 'item', rate=1
+            'flask_app.baseframe_tests.statsd_test.test.set', 'item', rate=1
         )
     with patch('statsd.StatsClient.set') as mock_set:
         statsd.set('test.set', 'item', rate=0.5)
         mock_set.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.set', 'item', rate=0.5
+            'flask_app.baseframe_tests.statsd_test.test.set', 'item', rate=0.5
         )
 
 
@@ -143,12 +143,12 @@ def test_timing(ctx, statsd):
     with patch('statsd.StatsClient.timing') as mock_timing:
         statsd.timing('test.timing', 10)
         mock_timing.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.timing', 10, rate=1
+            'flask_app.baseframe_tests.statsd_test.test.timing', 10, rate=1
         )
     with patch('statsd.StatsClient.timing') as mock_timing:
         statsd.timing('test.timing', timedelta(seconds=5), rate=0.5)
         mock_timing.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.timing',
+            'flask_app.baseframe_tests.statsd_test.test.timing',
             timedelta(seconds=5),
             rate=0.5,
         )
@@ -157,12 +157,12 @@ def test_timing(ctx, statsd):
 def test_timer(ctx, statsd):
     timer = statsd.timer('test.timer', rate=1)
     assert isinstance(timer, Timer)
-    assert timer.stat == 'flask_app.baseframe_tests.test_statsd.test.timer'
+    assert timer.stat == 'flask_app.baseframe_tests.statsd_test.test.timer'
     assert timer.rate == 1
 
     timer = statsd.timer('test.timer', rate=0.5)
     assert isinstance(timer, Timer)
-    assert timer.stat == 'flask_app.baseframe_tests.test_statsd.test.timer'
+    assert timer.stat == 'flask_app.baseframe_tests.statsd_test.test.timer'
     assert timer.rate == 0.5
 
 
@@ -176,12 +176,12 @@ def test_custom_rate(app, ctx, statsd):
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter')
         mock_incr.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.counter', 1, rate=0.3
+            'flask_app.baseframe_tests.statsd_test.test.counter', 1, rate=0.3
         )
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter', rate=0.5)
         mock_incr.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.counter', 1, rate=0.5
+            'flask_app.baseframe_tests.statsd_test.test.counter', 1, rate=0.5
         )
 
 
@@ -190,7 +190,7 @@ def test_tags(app, ctx, statsd):
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter', tags={'tag': 'value'})
         mock_incr.assert_called_once_with(
-            'flask_app.baseframe_tests.test_statsd.test.counter.tag_value', 1, rate=1
+            'flask_app.baseframe_tests.statsd_test.test.counter.tag_value', 1, rate=1
         )
 
     # Tags are enabled if a separator character is specified in config.
@@ -200,28 +200,28 @@ def test_tags(app, ctx, statsd):
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter', tags={'tag': 'value'})
         mock_incr.assert_called_once_with(
-            'flask_app.test.counter;tag=value;app=baseframe_tests.test_statsd',
+            'flask_app.test.counter;tag=value;app=baseframe_tests.statsd_test',
             1,
             rate=1,
         )
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter', tags={'tag': 'value', 't2': 'v2'})
         mock_incr.assert_called_once_with(
-            'flask_app.test.counter;tag=value;t2=v2;app=baseframe_tests.test_statsd',
+            'flask_app.test.counter;tag=value;t2=v2;app=baseframe_tests.statsd_test',
             1,
             rate=1,
         )
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter', tags={'tag': 'val', 't2': 'v2', 't3': None})
         mock_incr.assert_called_once_with(
-            'flask_app.test.counter;tag=val;t2=v2;t3;app=baseframe_tests.test_statsd',
+            'flask_app.test.counter;tag=val;t2=v2;t3;app=baseframe_tests.statsd_test',
             1,
             rate=1,
         )
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter', tags={'tag': 'val', 't2': None, 't3': 'v3'})
         mock_incr.assert_called_once_with(
-            'flask_app.test.counter;tag=val;t2;t3=v3;app=baseframe_tests.test_statsd',
+            'flask_app.test.counter;tag=val;t2;t3=v3;app=baseframe_tests.statsd_test',
             1,
             rate=1,
         )
@@ -231,7 +231,7 @@ def test_tags(app, ctx, statsd):
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter', tags={'tag': 'value', 't2': 'v2'})
         mock_incr.assert_called_once_with(
-            'flask_app.test.counter,tag=value,t2=v2,app=baseframe_tests.test_statsd',
+            'flask_app.test.counter,tag=value,t2=v2,app=baseframe_tests.statsd_test',
             1,
             rate=1,
         )
@@ -244,14 +244,14 @@ def test_request_handler_notags(app, statsd, view):
                 client.get('/')
                 # First call
                 mock_incr.assert_any_call(
-                    'flask_app.baseframe_tests.test_statsd.request_handlers'
+                    'flask_app.baseframe_tests.statsd_test.request_handlers'
                     '.endpoint_index.status_code_200',
                     1,
                     rate=1,
                 )
                 # Second and last call
                 mock_incr.assert_called_with(
-                    'flask_app.baseframe_tests.test_statsd.request_handlers'
+                    'flask_app.baseframe_tests.statsd_test.request_handlers'
                     '.endpoint__overall.status_code_200',
                     1,
                     rate=1,
@@ -267,7 +267,7 @@ def test_request_handler_tags(app, statsd, view):
                 client.get('/')
                 mock_incr.assert_called_once_with(
                     'flask_app.request_handlers,endpoint=index,status_code=200'
-                    ',app=baseframe_tests.test_statsd',
+                    ',app=baseframe_tests.statsd_test',
                     1,
                     rate=1,
                 )
@@ -292,7 +292,7 @@ def test_form_success(ctx, app, statsd, form):
         assert form.validate() is True
         mock_incr.assert_called_once_with(
             'flask_app.form_validation_success,form=SimpleForm'
-            ',app=baseframe_tests.test_statsd',
+            ',app=baseframe_tests.statsd_test',
             1,
             rate=1,
         )
@@ -305,7 +305,7 @@ def test_form_error(ctx, app, statsd, form):
         assert form.validate() is False
         mock_incr.assert_called_once_with(
             'flask_app.form_validation_error,form=SimpleForm,field=field'
-            ',app=baseframe_tests.test_statsd',
+            ',app=baseframe_tests.statsd_test',
             1,
             rate=1,
         )

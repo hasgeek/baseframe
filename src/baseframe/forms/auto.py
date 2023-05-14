@@ -24,6 +24,8 @@ from ..utils import request_is_xhr
 from .fields import SubmitField
 from .form import Form
 
+_submit_str = __("Submit")
+
 
 class ConfirmDeleteForm(Form):
     """Confirm a delete operation."""
@@ -38,7 +40,7 @@ def render_form(
     title: str,
     message: t.Optional[t.Union[str, Markup]] = None,
     formid: t.Optional[str] = None,
-    submit: str = __("Submit"),
+    submit: str = _submit_str,
     cancel_url: t.Optional[str] = None,
     ajax: bool = False,
     with_chrome: bool = True,
@@ -121,7 +123,7 @@ def render_delete_sqla(
     title: str,
     message: str,
     success: str = '',
-    next: t.Optional[str] = None,  # NOQA: A002  # pylint: disable=W0622
+    next: t.Optional[str] = None,  # noqa: A002  # pylint: disable=W0622
     cancel_url: t.Optional[str] = None,
     delete_text: t.Optional[str] = None,
     cancel_text: t.Optional[str] = None,

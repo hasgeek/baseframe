@@ -10,20 +10,19 @@ from urllib.parse import urljoin
 import itertools
 import typing as t
 
+from dateutil import parser
 from flask import current_app, json
 from flask_wtf import RecaptchaField as RecaptchaFieldBase
+from pytz import timezone as pytz_timezone
+from pytz import utc
 from wtforms.fields import Field, FieldList, FileField, Label
 from wtforms.fields import SelectField as SelectFieldBase
 from wtforms.fields import SelectMultipleField, SubmitField
 from wtforms.utils import unset_value
 from wtforms.widgets import Select as OriginalSelectWidget
-import wtforms
-
-from dateutil import parser
-from pytz import timezone as pytz_timezone
-from pytz import utc
 import bleach
 import typing_extensions as te
+import wtforms
 
 from ..extensions import _, __, get_timezone
 from ..utils import request_timestamp
@@ -183,7 +182,7 @@ class TinyMce4Field(TextAreaField):
         validators: t.Optional[ValidatorList] = None,
         filters: FilterList = (),
         description: str = '',
-        id: t.Optional[str] = None,  # NOQA: A002  # pylint: disable=redefined-builtin
+        id: t.Optional[str] = None,  # noqa: A002  # pylint: disable=redefined-builtin
         default: t.Optional[str] = None,
         widget=None,
         render_kw=None,

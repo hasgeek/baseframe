@@ -1,7 +1,7 @@
 """Test forms."""
+# pylint: disable=redefined-outer-name
 
 from werkzeug.datastructures import MultiDict
-
 import pytest
 
 import baseframe.filters as filters
@@ -79,7 +79,7 @@ class FieldRenderForm(forms.Form):
     string_field = forms.StringField("String")
 
 
-@pytest.fixture
+@pytest.fixture()
 def user():
     return SimpleUser(  # nosec
         fullname="Test user", company="Test company", password="test"
