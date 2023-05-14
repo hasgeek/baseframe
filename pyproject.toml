@@ -36,7 +36,7 @@ classifiers = [
 ]
 dependencies = [
   'bleach',
-  'coaster@git+https://github.com/hasgeek/coaster.git',
+  'coaster',
   'cssmin',
   'dnspython',
   'emoji>=1.0.0',

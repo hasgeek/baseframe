@@ -140,6 +140,5 @@ repos:
         args: ['--pytest']
       - id: no-commit-to-branch
       - id: requirements-txt-fixer
-        files: requirements/.*\.in
       - id: trailing-whitespace
         args: ['--markdown-linebreak-ext=md']
