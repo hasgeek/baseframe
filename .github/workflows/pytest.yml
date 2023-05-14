@@ -48,7 +48,7 @@ jobs:
       - name: Prepare coverage report
         run: |
           mkdir -p coverage
-          coverage lcov -o coverage/vaseframe.lcov
+          coverage lcov -o coverage/baseframe.lcov
       - name: Upload coverage report to Coveralls
         uses: coverallsapp/github-action@master
         with:
