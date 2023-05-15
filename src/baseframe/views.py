@@ -93,7 +93,7 @@ def gen_assets_url(assets: t.List[str]) -> str:
         bundle = Bundle(
             assets_repo.require(*assets),
             output='gen/' + output_name + '.js',
-            filters='uglipyjs',
+            filters='rjsmin',
         )
     elif is_css:
         bundle = Bundle(
