@@ -203,7 +203,7 @@ class BaseframeBlueprint(Blueprint):
                     alist.append(name + ext + str(spec))
         js_all = Bundle(
             assets.require(*(ignore_js + assets_js)),
-            filters='uglipyjs',
+            filters='rjsmin',
             output='js/baseframe-packed.js',
         )
         css_all = Bundle(
