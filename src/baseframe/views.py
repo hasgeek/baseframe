@@ -226,7 +226,7 @@ def editorcss(subdomain: t.Optional[str] = None) -> Response:
 
 @baseframe.route('/api/baseframe/1/csrf/refresh', subdomain='<subdomain>')
 @baseframe.route('/api/baseframe/1/csrf/refresh', defaults={'subdomain': None})
-@render_with({'text/plain': lambda r: r['csrf_token']}, json=True, jsonp=False)
+@render_with({'text/plain': lambda r: r['csrf_token']}, json=True)
 def csrf_refresh(  # TODO: Need ReturnRenderWith here
     subdomain: t.Optional[str] = None,
 ) -> t.Tuple[t.Dict[str, t.Any], int, t.Dict[str, str]]:
