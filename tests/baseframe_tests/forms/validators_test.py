@@ -77,7 +77,7 @@ def tforms(ctx):
 # --- Tests ----------------------------------------------------------------------------
 
 
-def test_is_empty():
+def test_is_empty() -> None:
     assert forms.validators.is_empty(0) is False
     assert forms.validators.is_empty('0') is False
     assert forms.validators.is_empty('') is True
@@ -85,35 +85,35 @@ def test_is_empty():
     assert forms.validators.is_empty(None) is True
 
 
-def test_valid_url(app, tforms):
+def test_valid_url(app, tforms) -> None:
     with app.test_request_context('/'):
         url = 'https://hasgeek.com/'
         tforms.url_form.process(url=url)
         assert tforms.url_form.validate()
 
 
-def test_invalid_url(app, tforms):
+def test_invalid_url(app, tforms) -> None:
     with app.test_request_context('/'):
         url = 'https://hasgeek'
         tforms.url_form.process(url=url)
         assert not tforms.url_form.validate()
 
 
-def test_valid_emoji(app, tforms):
+def test_valid_emoji(app, tforms) -> None:
     with app.test_request_context('/'):
         dat = '👍'
         tforms.emoji_form.process(emoji=dat)
         assert tforms.emoji_form.validate() is True
 
 
-def test_invalid_emoji(app, tforms):
+def test_invalid_emoji(app, tforms) -> None:
     with app.test_request_context('/'):
         dat = 'eviltext'
         tforms.emoji_form.process(emoji=dat)
         assert tforms.emoji_form.validate() is False
 
 
-def test_public_email_domain(app, tforms):
+def test_public_email_domain(app, tforms) -> None:
     with app.test_request_context('/'):
         # both valid
         tforms.webmail_form.process(
@@ -153,7 +153,7 @@ def test_public_email_domain(app, tforms):
         assert 'not_webmail_domain' not in tforms.webmail_form.errors
 
 
-def test_public_email_domain_helper(app):
+def test_public_email_domain_helper(app) -> None:
     with app.test_request_context('/'):
         assert is_public_email_domain('gmail.com', default=False)
         assert not is_public_email_domain('google.com', default=False)
@@ -178,21 +178,21 @@ def test_public_email_domain_helper(app):
         )
 
 
-def test_url_without_protocol(app, tforms):
+def test_url_without_protocol(app, tforms) -> None:
     with app.test_request_context('/'):
         url = 'hasgeek.com'
         tforms.url_form.process(url=url)
         assert not tforms.url_form.validate()
 
 
-def test_inaccessible_url(app, tforms):
+def test_inaccessible_url(app, tforms) -> None:
     with app.test_request_context('/'):
         url = 'http://4dc1f6f0e7bc44f2b5b44f00abea4eae.com/'
         tforms.url_form.process(url=url)
         assert not tforms.url_form.validate()
 
 
-def test_disallowed_url(app, tforms):
+def test_disallowed_url(app, tforms) -> None:
     with app.test_request_context('/'):
         url = 'https://example.com/'
         tforms.url_form.process(url=url)
@@ -202,7 +202,7 @@ def test_disallowed_url(app, tforms):
         assert not tforms.url_form.validate()
 
 
-def test_html_snippet_valid_urls(app, tforms):
+def test_html_snippet_valid_urls(app, tforms) -> None:
     url1 = 'https://hasgeek.com/'
     url2 = 'https://hasjob.co/'
     with app.test_request_context('/'):
@@ -216,7 +216,7 @@ def test_html_snippet_valid_urls(app, tforms):
         assert tforms.all_urls_form.validate()
 
 
-def test_html_snippet_invalid_urls(app, tforms):
+def test_html_snippet_invalid_urls(app, tforms) -> None:
     url1 = 'https://hasgeek.com/'
     url2 = 'https://hasjob'
     with app.test_request_context('/'):
@@ -231,7 +231,7 @@ def test_html_snippet_invalid_urls(app, tforms):
 
 
 @pytest.mark.usefixtures('ctx')
-def test_nonce_form_on_success(tforms):
+def test_nonce_form_on_success(tforms) -> None:
     """A form with a nonce cannot be submitted twice."""
     formdata = MultiDict({field.name: field.data for field in tforms.nonce_form})
     nonce = tforms.nonce_form.form_nonce.data
@@ -248,7 +248,7 @@ def test_nonce_form_on_success(tforms):
 
 
 @pytest.mark.usefixtures('ctx')
-def test_nonce_form_on_failure(tforms):
+def test_nonce_form_on_failure(tforms) -> None:
     """Form resubmission is not blocked (via the nonce) when validation fails."""
     tforms.emoji_form.process(
         formdata=MultiDict(
@@ -270,7 +270,7 @@ def test_nonce_form_on_failure(tforms):
 
 
 @pytest.mark.usefixtures('ctx')
-def test_no_schemes():
+def test_no_schemes() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField("URL", validators=[forms.validators.ValidUrl()])
 
@@ -280,7 +280,7 @@ def test_no_schemes():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_static_schemes():
+def test_static_schemes() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL",
@@ -293,7 +293,7 @@ def test_static_schemes():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_static_schemes_allowed():
+def test_static_schemes_allowed() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL",
@@ -308,7 +308,7 @@ def test_static_schemes_allowed():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_callable_schemes():
+def test_callable_schemes() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL",
@@ -323,7 +323,7 @@ def test_callable_schemes():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_callable_schemes_allowed():
+def test_callable_schemes_allowed() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL",
@@ -340,7 +340,7 @@ def test_callable_schemes_allowed():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_no_domains():
+def test_no_domains() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField("URL", validators=[forms.validators.ValidUrl()])
 
@@ -350,7 +350,7 @@ def test_no_domains():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_static_domains():
+def test_static_domains() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL",
@@ -363,7 +363,7 @@ def test_static_domains():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_static_domains_misconfigured():
+def test_static_domains_misconfigured() -> None:
     """Domains must be exact matches including subdomains."""
 
     class UrlForm(forms.Form):
@@ -382,7 +382,7 @@ def test_static_domains_misconfigured():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_static_domains_allowed():
+def test_static_domains_allowed() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL",
@@ -403,7 +403,7 @@ def test_static_domains_allowed():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_static_domains_case():
+def test_static_domains_case() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL",
@@ -424,7 +424,7 @@ def test_static_domains_case():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_callable_domains():
+def test_callable_domains() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL",
@@ -439,7 +439,7 @@ def test_callable_domains():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_callable_domains_allowed():
+def test_callable_domains_allowed() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL",
@@ -460,7 +460,7 @@ def test_callable_domains_allowed():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_visit_url_true():
+def test_visit_url_true() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL", validators=[forms.validators.ValidUrl(visit_url=True)]
@@ -473,7 +473,7 @@ def test_visit_url_true():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_visit_url_false():
+def test_visit_url_false() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL", validators=[forms.validators.ValidUrl(visit_url=False)]
@@ -486,7 +486,7 @@ def test_visit_url_false():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_message_schemes():
+def test_message_schemes() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL",
@@ -505,7 +505,7 @@ def test_message_schemes():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_message_domains():
+def test_message_domains() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL",
@@ -526,7 +526,7 @@ def test_message_domains():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_redirect_url():
+def test_redirect_url() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL",
@@ -550,7 +550,7 @@ def test_redirect_url():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_cloudflare_protected_url():
+def test_cloudflare_protected_url() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField(
             "URL",
@@ -586,11 +586,11 @@ class TestForEach(TestFormBase):
             validators=[forms.validators.ForEach([forms.validators.URL()])]
         )
 
-    def test_passes_single(self):
+    def test_passes_single(self) -> None:
         self.form.process(formdata=MultiDict({'textlist': "http://www.example.com/"}))
         assert self.form.validate() is True
 
-    def test_passes_list(self):
+    def test_passes_list(self) -> None:
         self.form.process(
             formdata=MultiDict(
                 {'textlist': "http://www.example.com\r\nhttp://www.example.org/"}
@@ -598,17 +598,17 @@ class TestForEach(TestFormBase):
         )
         assert self.form.validate() is True
 
-    def test_fails_single(self):
+    def test_fails_single(self) -> None:
         self.form.process(formdata=MultiDict({'textlist': "example"}))
         assert self.form.validate() is False
 
-    def test_fails_list(self):
+    def test_fails_list(self) -> None:
         self.form.process(
             formdata=MultiDict({'textlist': "www.example.com\r\nwww.example.org"})
         )
         assert self.form.validate() is False
 
-    def test_fails_mixed1(self):
+    def test_fails_mixed1(self) -> None:
         self.form.process(
             formdata=MultiDict(
                 {'textlist': "http://www.example.com/\r\nwww.example.org"}
@@ -616,7 +616,7 @@ class TestForEach(TestFormBase):
         )
         assert self.form.validate() is False
 
-    def test_fails_mixed2(self):
+    def test_fails_mixed2(self) -> None:
         self.form.process(
             formdata=MultiDict(
                 {'textlist': "www.example.com\r\nhttp://www.example.org/"}
@@ -624,7 +624,7 @@ class TestForEach(TestFormBase):
         )
         assert self.form.validate() is False
 
-    def test_fails_blanklines(self):
+    def test_fails_blanklines(self) -> None:
         self.form.process(
             formdata=MultiDict({'textlist': "http://www.example.com\r\n"})
         )
@@ -643,11 +643,11 @@ class TestForEachChained(TestFormBase):
             ]
         )
 
-    def test_skips_blanklines_and_fails(self):
+    def test_skips_blanklines_and_fails(self) -> None:
         self.form.process(formdata=MultiDict({'textlist': "\r\nwww.example.com"}))
         assert self.form.validate() is False
 
-    def test_skips_blanklines_and_passes(self):
+    def test_skips_blanklines_and_passes(self) -> None:
         self.form.process(
             formdata=MultiDict({'textlist': "\r\nhttp://www.example.com/"})
         )
@@ -663,7 +663,7 @@ class TestForEachFiltered(TestFormBase):
             filters=[forms.filters.strip_each()],
         )
 
-    def test_passes_blanklines(self):
+    def test_passes_blanklines(self) -> None:
         self.form.process(
             formdata=MultiDict({'textlist': "http://www.example.com\r\n"})
         )
@@ -681,23 +681,23 @@ class TestAllowedIf(TestFormBase):
 
     other_not_empty: t.Any = "Not empty"
 
-    def test_is_allowed(self):
+    def test_is_allowed(self) -> None:
         self.form.process(other=self.other_not_empty, field="Also not empty")
         assert self.form.validate() is True
 
-    def test_is_untested_when_empty(self):
+    def test_is_untested_when_empty(self) -> None:
         self.form.process(other=self.other_not_empty)
         assert self.form.validate() is True
 
-    def test_is_untested_when_all_empty(self):
+    def test_is_untested_when_all_empty(self) -> None:
         self.form.process()
         assert self.form.validate() is True
 
-    def test_not_allowed(self):
+    def test_not_allowed(self) -> None:
         self.form.process(field="Not empty")
         assert self.form.validate() is False
 
-    def test_not_allowed2(self):
+    def test_not_allowed2(self) -> None:
         self.form.process(other="", field="Not empty")
         assert self.form.validate() is False
 
@@ -730,27 +730,27 @@ class TestOptionalIf(TestFormBase):
     other_empty: t.Any = ''
     other_not_empty: t.Any = "Not empty"
 
-    def test_is_optional(self):
+    def test_is_optional(self) -> None:
         self.form.process(other=self.other_not_empty)
         assert self.form.validate() is True
 
-    def test_is_required_with_none(self):
+    def test_is_required_with_none(self) -> None:
         self.form.process(other=None)
         assert self.form.validate() is False
 
-    def test_is_required_with_empty(self):
+    def test_is_required_with_empty(self) -> None:
         self.form.process(other='')
         assert self.form.validate() is False
 
-    def test_is_optional_but_value_accepted(self):
+    def test_is_optional_but_value_accepted(self) -> None:
         self.form.process(other=self.other_not_empty, field="Not empty")
         assert self.form.validate() is True
 
-    def test_is_required_with_none_and_accepted(self):
+    def test_is_required_with_none_and_accepted(self) -> None:
         self.form.process(other=None, field="Not empty")
         assert self.form.validate() is True
 
-    def test_is_required_with_empty_and_accepted(self):
+    def test_is_required_with_empty_and_accepted(self) -> None:
         self.form.process(other=self.other_empty, field="Not empty")
         assert self.form.validate() is True
 
@@ -788,23 +788,23 @@ class TestRequiredIf(TestFormBase):
     other_empty: t.Any = ''
     other_not_empty: t.Any = "Not empty"
 
-    def test_is_required(self):
+    def test_is_required(self) -> None:
         self.form.process(other=self.other_not_empty)
         assert self.form.validate() is False
 
-    def test_is_required2(self):
+    def test_is_required2(self) -> None:
         self.form.process(other=self.other_not_empty, field="")
         assert self.form.validate() is False
 
-    def test_is_required_and_valid(self):
+    def test_is_required_and_valid(self) -> None:
         self.form.process(other=self.other_not_empty, field="Also not empty")
         assert self.form.validate() is True
 
-    def test_is_not_required(self):
+    def test_is_not_required(self) -> None:
         self.form.process()
         assert self.form.validate() is True
 
-    def test_is_not_required2(self):
+    def test_is_not_required2(self) -> None:
         self.form.process(other=self.other_empty)
         assert self.form.validate() is True
 

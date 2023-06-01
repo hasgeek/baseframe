@@ -90,7 +90,7 @@ def rstrip(
 
 def strip_each(
     chars=unicode_extended_whitespace,
-) -> t.Callable[[t.Iterable[str]], t.Optional[t.Iterable[str]]]:
+) -> t.Callable[[t.Optional[t.Iterable[str]]], t.Optional[t.Iterable[str]]]:
     """
     Strip whitespace and remove blank elements from each element in an iterable.
 
@@ -99,7 +99,9 @@ def strip_each(
     :param chars: If specified, strip these characters instead of whitespace
     """
 
-    def strip_each_inner(value: t.Iterable[str]) -> t.Optional[t.Iterable[str]]:
+    def strip_each_inner(
+        value: t.Optional[t.Iterable[str]],
+    ) -> t.Optional[t.Iterable[str]]:
         if value:
             return [sline for sline in [line.strip(chars) for line in value] if sline]
         return value

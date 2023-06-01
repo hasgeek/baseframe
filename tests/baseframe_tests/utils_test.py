@@ -29,7 +29,7 @@ def testview(app):
 
 
 @pytest.mark.usefixtures('app')  # localized country list needs cache
-def test_localized_country_list():
+def test_localized_country_list() -> None:
     countries = _localized_country_list_inner('en')
     assert dict(countries)['DE'] == "Germany"
     countries = _localized_country_list_inner('hi')
@@ -37,7 +37,7 @@ def test_localized_country_list():
 
 
 @pytest.mark.usefixtures('testview')
-def test_localized_country_inrequest(client):
+def test_localized_country_inrequest(client) -> None:
     rv = client.get('/localetest', headers={'Accept-Language': 'en;q=0.8, *;q=0.5'})
     assert rv.data.decode('utf-8') == "Germany"
 
@@ -48,7 +48,7 @@ def test_localized_country_inrequest(client):
     assert rv.data.decode('utf-8') == "जर्मनी"
 
 
-def test_localized_country_order():
+def test_localized_country_order() -> None:
     # Ordering is done by name. So even though index(DE) < index(DZ),
     # the order will vary because of their localized names.
     countries = _localized_country_list_inner('en')
@@ -76,7 +76,7 @@ def test_localized_country_order():
     assert countries.index(('DE', 'जर्मनी')) > countries.index(('DZ', 'अल्जीरिया'))
 
 
-def test_request_has_xhr(app):
+def test_request_has_xhr(app) -> None:
     """Verify request_checked_xhr() returns True if request_is_xhr() was called."""
     with app.test_request_context():
         assert request_checked_xhr() is False

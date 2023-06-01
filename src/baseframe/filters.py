@@ -58,7 +58,7 @@ def age(dt: datetime) -> str:
 
 
 @baseframe.app_template_filter('initials')
-def initials(text: str) -> str:
+def initials(text: t.Optional[str]) -> str:
     """Return up to two initials from the given string, for a default avatar image."""
     if not text:
         return ''
@@ -99,7 +99,10 @@ def nossl(url: str) -> str:
 # TODO: Move this into Hasjob as it's not used elsewhere
 @baseframe.app_template_filter('avatar_url')
 def avatar_url(
-    user: t.Any, size: t.Optional[t.Union[str, t.List[int], t.Tuple[int, int]]] = None
+    user: t.Any,
+    size: t.Optional[
+        t.Union[str, t.List[int], t.Tuple[int, int], t.Tuple[str, str]]
+    ] = None,
 ) -> str:
     """Generate an avatar for the given user."""
     if isinstance(size, (list, tuple)):

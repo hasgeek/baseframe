@@ -52,12 +52,12 @@ def form(app):
     return f
 
 
-def test_default_config(app, statsd):
+def test_default_config(app, statsd) -> None:
     # pylint: disable=protected-access
     assert app.extensions['statsd_core']._addr == ('127.0.0.1', 8125)
 
 
-def test_custom_config(app):
+def test_custom_config(app) -> None:
     # pylint: disable=protected-access
     app.config['STATSD_HOST'] = '1.2.3.4'
     app.config['STATSD_PORT'] = 12345
@@ -72,7 +72,7 @@ def test_custom_config(app):
 # 3. Insert tags if tags are enabled and specified
 
 
-def test_incr(ctx, statsd):
+def test_incr(ctx, statsd) -> None:
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter')
         mock_incr.assert_called_once_with(
@@ -90,7 +90,7 @@ def test_incr(ctx, statsd):
         )
 
 
-def test_decr(ctx, statsd):
+def test_decr(ctx, statsd) -> None:
     with patch('statsd.StatsClient.decr') as mock_decr:
         statsd.decr('test.counter')
         mock_decr.assert_called_once_with(
@@ -108,7 +108,7 @@ def test_decr(ctx, statsd):
         )
 
 
-def test_gauge(ctx, statsd):
+def test_gauge(ctx, statsd) -> None:
     with patch('statsd.StatsClient.gauge') as mock_gauge:
         statsd.gauge('test.gauge', 5)
         mock_gauge.assert_called_once_with(
@@ -126,7 +126,7 @@ def test_gauge(ctx, statsd):
         )
 
 
-def test_set(ctx, statsd):
+def test_set(ctx, statsd) -> None:
     with patch('statsd.StatsClient.set') as mock_set:
         statsd.set('test.set', 'item')
         mock_set.assert_called_once_with(
@@ -139,7 +139,7 @@ def test_set(ctx, statsd):
         )
 
 
-def test_timing(ctx, statsd):
+def test_timing(ctx, statsd) -> None:
     with patch('statsd.StatsClient.timing') as mock_timing:
         statsd.timing('test.timing', 10)
         mock_timing.assert_called_once_with(
@@ -154,7 +154,7 @@ def test_timing(ctx, statsd):
         )
 
 
-def test_timer(ctx, statsd):
+def test_timer(ctx, statsd) -> None:
     timer = statsd.timer('test.timer', rate=1)
     assert isinstance(timer, Timer)
     assert timer.stat == 'flask_app.baseframe_tests.statsd_test.test.timer'
@@ -166,12 +166,12 @@ def test_timer(ctx, statsd):
     assert timer.rate == 0.5
 
 
-def test_pipeline(ctx, statsd):
+def test_pipeline(ctx, statsd) -> None:
     pipeline = statsd.pipeline()
     assert isinstance(pipeline, Pipeline)
 
 
-def test_custom_rate(app, ctx, statsd):
+def test_custom_rate(app, ctx, statsd) -> None:
     app.config['STATSD_RATE'] = 0.3
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter')
@@ -185,7 +185,7 @@ def test_custom_rate(app, ctx, statsd):
         )
 
 
-def test_tags(app, ctx, statsd):
+def test_tags(app, ctx, statsd) -> None:
     # Tags are converted into buckets if statsd doesn't support them
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter', tags={'tag': 'value'})
@@ -237,7 +237,7 @@ def test_tags(app, ctx, statsd):
         )
 
 
-def test_request_handler_notags(app, statsd, view):
+def test_request_handler_notags(app, statsd, view) -> None:
     with patch('statsd.StatsClient.incr') as mock_incr:
         with patch('statsd.StatsClient.timing') as mock_timing:
             with app.test_client() as client:
@@ -259,7 +259,7 @@ def test_request_handler_notags(app, statsd, view):
                 mock_timing.assert_called()
 
 
-def test_request_handler_tags(app, statsd, view):
+def test_request_handler_tags(app, statsd, view) -> None:
     app.config['STATSD_TAGS'] = ','
     with patch('statsd.StatsClient.incr') as mock_incr:
         with patch('statsd.StatsClient.timing') as mock_timing:
@@ -274,7 +274,7 @@ def test_request_handler_tags(app, statsd, view):
                 mock_timing.assert_called_once()
 
 
-def test_request_handler_disabled(app, view):
+def test_request_handler_disabled(app, view) -> None:
     app.config['STATSD_REQUEST_LOG'] = False
     Statsd(app)
     with patch('statsd.StatsClient.incr') as mock_incr:
@@ -285,7 +285,7 @@ def test_request_handler_disabled(app, view):
                 mock_timing.assert_not_called()
 
 
-def test_form_success(ctx, app, statsd, form):
+def test_form_success(ctx, app, statsd, form) -> None:
     app.config['STATSD_TAGS'] = ','
     with patch('statsd.StatsClient.incr') as mock_incr:
         form.field.data = "test"
@@ -298,7 +298,7 @@ def test_form_success(ctx, app, statsd, form):
         )
 
 
-def test_form_error(ctx, app, statsd, form):
+def test_form_error(ctx, app, statsd, form) -> None:
     app.config['STATSD_TAGS'] = ','
     with patch('statsd.StatsClient.incr') as mock_incr:
         form.field.data = None
@@ -311,7 +311,7 @@ def test_form_error(ctx, app, statsd, form):
         )
 
 
-def test_form_nolog(ctx, app, statsd, form):
+def test_form_nolog(ctx, app, statsd, form) -> None:
     app.config['STATSD_TAGS'] = ','
     app.config['STATSD_FORM_LOG'] = False
     with patch('statsd.StatsClient.incr') as mock_incr:
@@ -323,7 +323,7 @@ def test_form_nolog(ctx, app, statsd, form):
         mock_incr.assert_not_called()
 
 
-def test_form_signals_off(ctx, app, statsd, form):
+def test_form_signals_off(ctx, app, statsd, form) -> None:
     app.config['STATSD_TAGS'] = ','
     app.config['STATSD_FORM_LOG'] = True
     with patch('statsd.StatsClient.incr') as mock_incr:

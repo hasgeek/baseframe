@@ -86,7 +86,7 @@ def user():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_no_obj():
+def test_no_obj() -> None:
     """Test that the form can be initialized without an object."""
     form = GetSetForm(meta={'csrf': False})
 
@@ -99,7 +99,7 @@ def test_no_obj():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_get(user):
+def test_get(user) -> None:
     """Test that the form loads values from the provided object."""
     form = GetSetForm(obj=user, meta={'csrf': False})
 
@@ -112,7 +112,7 @@ def test_get(user):
 
 
 @pytest.mark.usefixtures('ctx')
-def test_get_formdata(user):
+def test_get_formdata(user) -> None:
     """Test that the form preferentially loads from form data."""
     form = GetSetForm(
         formdata=MultiDict(
@@ -137,7 +137,7 @@ def test_get_formdata(user):
 
 
 @pytest.mark.usefixtures('ctx')
-def test_set(user):
+def test_set(user) -> None:
     """Test that the form populates an object with or without set methods."""
     form = GetSetForm(
         formdata=MultiDict(
@@ -168,7 +168,7 @@ def test_set(user):
 
 
 @pytest.mark.usefixtures('ctx')
-def test_init_order():
+def test_init_order() -> None:
     """Test that get_<fieldname> methods have proper context."""
     with pytest.raises(TypeError):
         # A parameter named `expected_item` is expected
@@ -184,7 +184,7 @@ def test_init_order():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_render_field_options():
+def test_render_field_options() -> None:
     form = FieldRenderForm(meta={'csrf': False})
     test_attrs = {
         'attrone': 'test',

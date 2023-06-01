@@ -58,7 +58,7 @@ def form(ctx):
     return DocumentForm(model=Document, meta={'csrf': False})
 
 
-def test_available_attr(form, db_session):
+def test_available_attr(form, db_session) -> None:
     """Test AvailableAttr SQLAlchemy validator."""
     d1 = Document()
     form.process(name='d1', title='t1')
