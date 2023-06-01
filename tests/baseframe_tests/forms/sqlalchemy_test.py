@@ -6,7 +6,7 @@ import pytest
 
 from coaster.sqlalchemy import Query
 
-import baseframe.forms as forms
+from baseframe import forms
 
 # --- Fixtures -------------------------------------------------------------------------
 

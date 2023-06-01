@@ -12,6 +12,7 @@ from furl import furl
 from markupsafe import Markup
 from pytz import utc
 import grapheme
+import typing_extensions as te
 
 from coaster.gfm import markdown
 from coaster.utils import compress_whitespace, md5sum, text_blocks
@@ -338,10 +339,14 @@ def timestamp_filter(value: datetime) -> float:
 @baseframe.app_template_filter('timedelta')
 def timedelta_filter(
     delta: t.Union[int, timedelta, datetime],
-    granularity: str = 'second',
+    granularity: te.Literal[
+        'year', 'month', 'week', 'day', 'hour', 'minute', 'second'
+    ] = 'second',
     threshold: float = 0.85,
     add_direction: bool = False,
-    format: str = 'long',  # noqa: A002  # pylint: disable=W0622
+    format: te.Literal[  # noqa: A002  # pylint: disable=W0622
+        'narrow', 'short', 'medium', 'long'
+    ] = 'long',
     locale: t.Optional[t.Union[Locale, str]] = None,
 ) -> str:
     """

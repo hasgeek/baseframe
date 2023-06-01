@@ -2,6 +2,8 @@
 
 import typing as t
 
+from wtforms import Field as WTField
+from wtforms import Form as WTForm
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 
 from ..extensions import __
@@ -25,7 +27,7 @@ class AvailableAttr:
             message = __(f"This {attr} is already in use")
         self.message = message
 
-    def __call__(self, form, field) -> None:
+    def __call__(self, form: WTForm, field: WTField) -> None:
         model = self.model or form.edit_model
         if not model:
             raise TypeError(

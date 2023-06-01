@@ -138,13 +138,15 @@ def test_public_email_domain(app, tforms):
         assert 'not_webmail_domain' in tforms.webmail_form.errors
 
         # these domain lookups will fail because of the DNS label length limit.
-        # (abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks is 64 characters,
-        # the maximum length of a DNS label is 63 characters)
-        # ``mxsniff`` will raise ``MxLookupError`` for these domains.
-        # So, webmail_domain should fail, and not_webmail_domain should pass.
+        # (abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks is 64
+        # characters, the maximum length of a DNS label is 63 characters) ``mxsniff``
+        # will raise ``MxLookupError`` for these domains. So, webmail_domain should
+        # fail, and not_webmail_domain should pass.
         tforms.webmail_form.process(
-            webmail_domain='www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com',
-            not_webmail_domain='www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com',
+            webmail_domain='www'
+            '.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com',
+            not_webmail_domain='www'
+            '.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com',
         )
         assert not tforms.webmail_form.validate()
         assert 'webmail_domain' in tforms.webmail_form.errors
@@ -160,10 +162,12 @@ def test_public_email_domain_helper(app):
         # Since no default is provided, we will receive an exception.
         with pytest.raises(MxLookupError):
             is_public_email_domain(
-                'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com'
+                'www'
+                '.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com'
             )
 
-        # If default value is provided, it'll return default is case of DNS lookup failure.
+        # If default value is provided, it'll return default is case of DNS lookup
+        # failure.
         assert not is_public_email_domain(
             'www.abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijks.com',
             default=False,
@@ -564,6 +568,9 @@ def test_cloudflare_protected_url():
 
 
 class TestFormBase:
+    Form: t.Type[forms.Form]
+    form: forms.Form
+
     @pytest.fixture(autouse=True)
     def _setup(self, app):
         with app.app_context():

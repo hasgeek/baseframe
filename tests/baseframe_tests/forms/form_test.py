@@ -4,18 +4,17 @@
 from werkzeug.datastructures import MultiDict
 import pytest
 
-import baseframe.filters as filters
-import baseframe.forms as forms
+from baseframe import forms
+from baseframe.filters import render_field_options
 
 # Fake password hasher, only suitable for re-use within a single process
 password_hash = hash
 
 
 class SimpleUser:
-    # Fields:
-    # fullname: Name of the user
-    # company: Name of user's company
-    # pw_hash: User's hashed password
+    fullname: str
+    company: str
+    pw_hash: str
 
     def _set_password(self, value):
         self.pw_hash = password_hash(value)
@@ -193,7 +192,7 @@ def test_render_field_options():
         'attrthree': None,
         'attrfour': '',
     }
-    render = filters.render_field_options(form.string_field, **test_attrs)
+    render = render_field_options(form.string_field, **test_attrs)
     # This expicit rendering is based on dictionary key order stability in Python 3.7+
     assert render == (
         '<input'

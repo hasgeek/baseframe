@@ -1,3 +1,5 @@
+"""Tests for form filters."""
+
 from baseframe import forms
 
 

@@ -15,6 +15,8 @@ from flask import current_app, json
 from flask_wtf import RecaptchaField as RecaptchaFieldBase
 from pytz import timezone as pytz_timezone
 from pytz import utc
+from wtforms import Field as WTField
+from wtforms import Form as WTForm
 from wtforms.fields import Field, FieldList, FileField, Label
 from wtforms.fields import SelectField as SelectFieldBase
 from wtforms.fields import SelectMultipleField, SubmitField
@@ -93,7 +95,7 @@ SANITIZE_TAGS = [
 ]
 SANITIZE_ATTRIBUTES = {'a': ['href', 'title', 'target']}
 
-ValidatorList = t.Iterable[t.Callable[[t.Type, t.Type], None]]
+ValidatorList = t.Iterable[t.Callable[[WTForm, WTField], None]]
 FilterList = t.Iterable[t.Callable[[t.Any], t.Any]]
 ReturnIterChoices = t.Generator[t.Tuple[str, str, bool], None, None]
 
@@ -446,7 +448,13 @@ class UserSelectFieldBase:
     data: t.Union[t.Type, t.List[t.Type], None]
 
     def __init__(self, *args, **kwargs) -> None:
-        self.lastuser = kwargs.pop('lastuser', current_app.login_manager)
+        self.lastuser = kwargs.pop('lastuser', None)
+        if self.lastuser is None:
+            if hasattr(current_app, 'login_manager'):
+                self.lastuser = current_app.login_manager
+            else:
+                raise RuntimeError("App does not have Lastuser as .login_manager")
+
         self.usermodel = kwargs.pop(
             'usermodel', self.lastuser.usermanager.usermodel if self.lastuser else None
         )
@@ -457,7 +465,7 @@ class UserSelectFieldBase:
         else:
             self.autocomplete_endpoint = kwargs.pop('autocomplete_endpoint')()
             self.getuser_endpoint = kwargs.pop('getuser_endpoint')()
-        super().__init__(*args, **kwargs)  # type: ignore[call-arg]
+        super().__init__(*args, **kwargs)
 
     def iter_choices(self) -> ReturnIterChoices:
         """Iterate over choices."""
@@ -544,7 +552,7 @@ class AutocompleteFieldBase:
         self.autocomplete_endpoint = kwargs.pop('autocomplete_endpoint')
         self.results_key = kwargs.pop('results_key', 'results')
         self.separator = kwargs.pop('separator', ',')
-        super().__init__(*args, **kwargs)  # type: ignore[call-arg]
+        super().__init__(*args, **kwargs)
         self.choices = ()  # Disregard server-side choices
 
     def iter_choices(self) -> ReturnIterChoices:
@@ -616,7 +624,7 @@ class GeonameSelectFieldBase:
         self.autocomplete_endpoint = urljoin(server, '/1/geo/autocomplete')
         self.getname_endpoint = urljoin(server, '/1/geo/get_by_names')
 
-        super().__init__(*args, **kwargs)  # type: ignore[call-arg]
+        super().__init__(*args, **kwargs)
 
     def iter_choices(self) -> ReturnIterChoices:
         """Iterate over choices."""
@@ -653,7 +661,7 @@ class GeonameSelectField(GeonameSelectFieldBase, StringField):
         """Process incoming data from request form."""
         super().process_formdata(valuelist)
         if self.data:
-            if isinstance(self.data, (list, tuple)):  # type: ignore[unreachable]
+            if isinstance(self.data, (list, tuple)):
                 self.data = self.data[0]
         else:
             self.data = None
@@ -952,6 +960,7 @@ class JsonField(wtforms.TextAreaField):
             return json.dumps(
                 self.data,
                 ensure_ascii=False,
+                app=current_app,
                 **self.prettyprint_args,
             )
         return ''

@@ -12,7 +12,9 @@ import typing as t
 
 from flask import current_app, request
 from pyisemail import is_email
-from wtforms.validators import (  # NOQA  # skipcq: PY-W2000
+from wtforms import Field as WTField
+from wtforms import Form as WTForm
+from wtforms.validators import (  # skipcq: PY-W2000
     URL,
     DataRequired,
     EqualTo,
@@ -34,7 +36,7 @@ from ..extensions import _, __, asset_cache
 from ..signals import exception_catchall
 from ..utils import is_public_email_domain
 
-__local = [
+__all__ = [
     'AllUrlsValid',
     'IsEmoji',
     'IsNotPublicEmailDomain',
@@ -50,8 +52,7 @@ __local = [
     'ValidUrl',
     'ForEach',
     'Recaptcha',
-]
-__imported = [  # WTForms validators
+    # WTForms validators
     'DataRequired',
     'EqualTo',
     'InputRequired',
@@ -62,7 +63,6 @@ __imported = [  # WTForms validators
     'URL',
     'ValidationError',
 ]
-__all__ = __local + __imported
 
 
 EMAIL_RE = re.compile(r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b', re.I)
@@ -104,7 +104,7 @@ class ForEach:
     def __init__(self, validators) -> None:
         self.validators = validators
 
-    def __call__(self, form, field) -> None:
+    def __call__(self, form: WTForm, field: WTField) -> None:
         for element in field.data:
             fake_field = FakeField(element, element, [], field.gettext, field.ngettext)
             for validator in self.validators:
@@ -131,7 +131,7 @@ class AllowedIf:
         self.fieldname = fieldname
         self.message = message or self.default_message
 
-    def __call__(self, form, field) -> None:
+    def __call__(self, form: WTForm, field: WTField) -> None:
         if field.data:
             if is_empty(form[self.fieldname].data):
                 raise StopValidation(
@@ -163,7 +163,7 @@ class OptionalIf(Optional):
         self.fieldname = fieldname
         self.message = message or self.default_message
 
-    def __call__(self, form, field) -> None:
+    def __call__(self, form: WTForm, field: WTField) -> None:
         if not is_empty(form[self.fieldname].data):
             super().__call__(form, field)
 
@@ -193,7 +193,7 @@ class RequiredIf(DataRequired):
         self.fieldname = fieldname
         self.field_flags.pop('required')
 
-    def __call__(self, form, field) -> None:
+    def __call__(self, form: WTForm, field: WTField) -> None:
         if not is_empty(form[self.fieldname].data):
             super().__call__(form, field)
 
@@ -207,7 +207,7 @@ class _Comparison:
         self.fieldname = fieldname
         self.message = message or self.default_message
 
-    def __call__(self, form, field) -> None:
+    def __call__(self, form: WTForm, field: WTField) -> None:
         other = form[self.fieldname]
         if not self.compare(field.data, other.data):
             d = {
@@ -325,8 +325,8 @@ class IsEmoji:
     def __init__(self, message: t.Optional[str] = None) -> None:
         self.message = message or self.default_message
 
-    def __call__(self, form, field) -> None:
-        if not emoji.is_emoji(field.data):  # type: ignore[attr-defined]
+    def __call__(self, form: WTForm, field: WTField) -> None:
+        if not emoji.is_emoji(field.data):
             raise ValidationError(self.message)
 
 
@@ -347,7 +347,7 @@ class IsPublicEmailDomain:
         self.message = message or self.default_message
         self.timeout = timeout
 
-    def __call__(self, form, field) -> None:
+    def __call__(self, form: WTForm, field: WTField) -> None:
         if is_public_email_domain(field.data, default=False, timeout=self.timeout):
             return
         raise ValidationError(self.message)
@@ -370,7 +370,7 @@ class IsNotPublicEmailDomain:
         self.message = message or self.default_message
         self.timeout = timeout
 
-    def __call__(self, form, field) -> None:
+    def __call__(self, form: WTForm, field: WTField) -> None:
         if not is_public_email_domain(field.data, default=False, timeout=self.timeout):
             return
         raise ValidationError(self.message)
@@ -390,7 +390,7 @@ class ValidEmail:
     def __init__(self, message: t.Optional[str] = None) -> None:
         self.message = message
 
-    def __call__(self, form, field) -> None:
+    def __call__(self, form: WTForm, field: WTField) -> None:
         try:
             diagnosis = is_email(field.data, check_dns=True, diagnose=True)
         except (dns.resolver.Timeout, dns.resolver.NoNameservers):
@@ -601,7 +601,7 @@ class ValidUrl:
         if error:
             raise StopValidation(error)
 
-    def __call__(self, form, field) -> None:
+    def __call__(self, form: WTForm, field: WTField) -> None:
         if field.data:
             current_url = request.url if request else ''
             invalid_urls = (
@@ -666,7 +666,7 @@ class NoObfuscatedEmail:
     def __init__(self, message: t.Optional[str] = None) -> None:
         self.message = message or self.default_message
 
-    def __call__(self, form, field) -> None:
+    def __call__(self, form: WTForm, field: WTField) -> None:
         emails = EMAIL_RE.findall(deobfuscate_email(field.data or ''))
         for email in emails:
             try:
@@ -686,7 +686,7 @@ class ValidName:
     def __init__(self, message: t.Optional[str] = None) -> None:
         self.message = message or self.default_message
 
-    def __call__(self, form, field) -> None:
+    def __call__(self, form: WTForm, field: WTField) -> None:
         if make_name(field.data) != field.data:
             raise StopValidation(self.message)
 
@@ -706,7 +706,7 @@ class ValidCoordinates:
         self.message_latitude = message_latitude or self.default_message_latitude
         self.message_longitude = message_longitude or self.default_message_longitude
 
-    def __call__(self, form, field) -> None:
+    def __call__(self, form: WTForm, field: WTField) -> None:
         if len(field.data) != 2:
             raise StopValidation(self.message)
         if not -90 <= field.data[0] <= 90:
@@ -729,15 +729,19 @@ class Recaptcha:
         self.message = message
         self.message_network = message_network or self.default_message_network
 
-    def __call__(self, form, field) -> None:
+    def __call__(self, form: WTForm, field: WTField) -> None:
         if current_app.testing:
             return
 
         if request.is_json:
-            response = request.json.get('g-recaptcha-response', '')
+            jsondata = request.json
+            if isinstance(jsondata, dict):
+                response = jsondata.get('g-recaptcha-response', '')
+            else:
+                response = ''
         else:
             response = request.form.get('g-recaptcha-response', '')
-        remote_ip = request.remote_addr
+        remote_ip = request.remote_addr or ''
 
         if not response:
             raise ValidationError(self.message)

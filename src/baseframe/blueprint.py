@@ -217,12 +217,12 @@ class BaseframeBlueprint(Blueprint):
             css_all = Bundle(css_all, bundle_css)
 
         if assetenv is None:
-            app.assets = Environment(app)
+            app.assets = Environment(app)  # type: ignore[attr-defined]
         else:
-            app.assets = assetenv
-        app.assets.register('js_all', js_all)
-        app.assets.register('css_all', css_all)
-        app.assets.register(
+            app.assets = assetenv  # type: ignore[attr-defined]
+        app.assets.register('js_all', js_all)  # type: ignore[attr-defined]
+        app.assets.register('css_all', css_all)  # type: ignore[attr-defined]
+        app.assets.register(  # type: ignore[attr-defined]
             'fa5-sprite',
             Bundle(
                 assets.require('font-awesome5-sprite.svg'),

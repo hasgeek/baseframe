@@ -1,5 +1,7 @@
 """Form base class and redefined fields with ParsleyJS support."""
 
+from __future__ import annotations
+
 from threading import Lock
 import typing as t
 import uuid
@@ -93,7 +95,7 @@ def _nonce_cache_key(nonce: str) -> str:
     return 'form_nonce/' + nonce
 
 
-def _nonce_validator(form, field) -> None:
+def _nonce_validator(form: Form, field: bfields.Field) -> None:
     # Check for already-used form nonce
     if field.data:
         with _nonce_lock:

@@ -104,7 +104,7 @@ def gen_assets_url(assets: t.List[str]) -> str:
     else:
         abort(400)
 
-    bundle.env = current_app.assets
+    bundle.env = current_app.assets  # type: ignore[attr-defined]
     return bundle.urls()[0]
 
 
@@ -265,15 +265,15 @@ def process_response(response: Response) -> Response:
     # If Babel was accessed in this request, the response's contents will vary with
     # the accepted language
     if ctx_has_locale():
-        response.vary.add('Accept-Language')  # type: ignore[union-attr]
+        response.vary.add('Accept-Language')
     # If current_auth was accessed during this request, it is sensitive to the lastuser
     # cookie
     if request_has_auth():
-        response.vary.add('Cookie')  # type: ignore[union-attr]
+        response.vary.add('Cookie')
 
     # If request_is_xhr() was called, add a Vary header for that
     if request_checked_xhr():
-        response.vary.add('X-Requested-With')  # type: ignore[union-attr]
+        response.vary.add('X-Requested-With')
 
     # Prevent pages from being placed in an iframe. If the response already
     # set has a value for this option, let it pass through
@@ -282,7 +282,7 @@ def process_response(response: Response) -> Response:
         if not frameoptions or frameoptions == 'ALLOW':
             # 'ALLOW' is an unofficial signal from the app to Baseframe.
             # It signals us to remove the header and not set a default
-            response.headers.pop('X-Frame-Options')  # type: ignore[call-arg]
+            response.headers.pop('X-Frame-Options')
     else:
         if request_has_auth() and getattr(current_auth, 'login_required', False):
             # Protect only login_required pages from appearing in frames

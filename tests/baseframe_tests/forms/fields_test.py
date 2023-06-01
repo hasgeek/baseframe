@@ -1,5 +1,5 @@
 """Test form fields."""
-# pylint: disable=redefined-outer-name
+# pylint: disable=redefined-outer-name,protected-access
 
 from datetime import datetime
 from decimal import Decimal
@@ -77,11 +77,15 @@ def test_enum_process_invalid(enum_form):
 def test_enum_render(enum_form):
     assert (
         enum_form.position()
-        == '<select id="position" name="position"><option value="first">First</option><option value="second">Second</option><option selected value="third">Third</option></select>'
+        == '<select id="position" name="position"><option value="first">First</option>'
+        '<option value="second">Second</option><option selected value="third">Third'
+        '</option></select>'
     )
     assert (
         enum_form.position_no_default()
-        == '<select id="position_no_default" name="position_no_default"><option value="first">First</option><option value="second">Second</option><option value="third">Third</option></select>'
+        == '<select id="position_no_default" name="position_no_default"><option'
+        ' value="first">First</option><option value="second">Second</option><option'
+        ' value="third">Third</option></select>'
     )
 
 
@@ -199,11 +203,13 @@ def test_escaped_label_text():
     label = forms.Label('test', '<script>alert("test");</script>')
     assert (
         label(for_='foo')
-        == """<label for="foo">&lt;script&gt;alert(&#34;test&#34;);&lt;/script&gt;</label>"""
+        == '<label for="foo">&lt;script&gt;alert(&#34;test&#34;);&lt;/script&gt;'
+        '</label>'
     )
     assert (
         label(**{'for': 'bar'})
-        == """<label for="bar">&lt;script&gt;alert(&#34;test&#34;);&lt;/script&gt;</label>"""
+        == '<label for="bar">&lt;script&gt;alert(&#34;test&#34;);&lt;/script&gt;'
+        '</label>'
     )
 
 
