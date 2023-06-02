@@ -72,7 +72,7 @@ class Statsd:
         if app is not None:
             self.init_app(app)
 
-    def init_app(self, app: Flask):
+    def init_app(self, app: Flask) -> None:
         app.config.setdefault('STATSD_RATE', 1)
         app.config.setdefault('SITE_ID', app.name)
         app.config.setdefault('STATSD_TAGS', False)

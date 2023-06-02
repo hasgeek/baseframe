@@ -2,18 +2,25 @@
 # pylint: disable=redefined-outer-name
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase
 import pytest
 
-from coaster.sqlalchemy import Query
+from coaster.sqlalchemy import ModelBase, Query
 
-import baseframe.forms as forms
+from baseframe import forms
 
 # --- Fixtures -------------------------------------------------------------------------
 
-db = SQLAlchemy()
+
+class Model(ModelBase, DeclarativeBase):
+    """Model base class."""
 
 
-class Document(db.Model):  # type: ignore[name-defined]
+db = SQLAlchemy(metadata=Model.metadata)
+Model.init_flask_sqlalchemy(db)
+
+
+class Document(Model):
     """Document model."""
 
     # pylint: disable=no-member
@@ -58,7 +65,7 @@ def form(ctx):
     return DocumentForm(model=Document, meta={'csrf': False})
 
 
-def test_available_attr(form, db_session):
+def test_available_attr(form, db_session) -> None:
     """Test AvailableAttr SQLAlchemy validator."""
     d1 = Document()
     form.process(name='d1', title='t1')

@@ -4,6 +4,8 @@ from coaster.assets import Version, VersionedAssets
 
 from . import __version__
 
+__all__ = ['Version', 'assets']
+
 #: Semantic-versioned assets
 assets = VersionedAssets()
 
@@ -191,6 +193,18 @@ assets['codemirror.mode.htmlmixed.js'][
 assets['codemirror.mode.css.js'][
     Version('4.11.0')
 ] = 'baseframe/js/codemirror/mode/css/css.js'
+assets['codemirror.mode.javascript.js'][
+    Version('4.11.0')
+] = 'baseframe/js/codemirror/mode/javascript/javascript.js'
+assets['codemirror.addon.display.fullscreen.js'][
+    Version('4.11.0')
+] = 'baseframe/js/codemirror/addon/display/fullscreen.js'
+assets['codemirror.addon.display.fullscreen.css'][
+    Version('4.11.0')
+] = 'baseframe/js/codemirror/addon/display/fullscreen.css'
+assets['codemirror.addon.display.rulers.js'][
+    Version('4.11.0')
+] = 'baseframe/js/codemirror/addon/display/rulers.js'
 assets['codemirror.addon.mode.overlay.js'][
     Version('4.11.0')
 ] = 'baseframe/js/codemirror/addon/mode/overlay.js'
@@ -203,12 +217,36 @@ assets['codemirror.addon.edit.closebrackets.js'][
 assets['codemirror.addon.edit.matchbrackets.js'][
     Version('4.11.0')
 ] = 'baseframe/js/codemirror/addon/edit/matchbrackets.js'
+assets['codemirror.addon.hint.show-hint.js'][
+    Version('4.11.0')
+] = 'baseframe/js/codemirror/addon/hint/show-hint.js'
+assets['codemirror.addon.hint.show-hint.css'][
+    Version('4.11.0')
+] = 'baseframe/js/codemirror/addon/hint/show-hint.css'
 assets['codemirror.addon.hint.css-hint.js'][
     Version('4.11.0')
 ] = 'baseframe/js/codemirror/addon/hint/css-hint.js'
+assets['codemirror.addon.hint.javascript-hint.js'][
+    Version('4.11.0')
+] = 'baseframe/js/codemirror/addon/hint/javascript-hint.js'
 assets['codemirror.addon.lint.css-lint.js'][
     Version('4.11.0')
 ] = 'baseframe/js/codemirror/addon/lint/css-lint.js'
+assets['codemirror.addon.lint.json-lint.js'][
+    Version('4.11.0')
+] = 'baseframe/js/codemirror/addon/lint/json-lint.js'
+assets['codemirror.addon.fold.brace-fold.js'][
+    Version('4.11.0')
+] = 'baseframe/js/codemirror/addon/fold/brace-fold.js'
+assets['codemirror.addon.fold.foldcode.js'][
+    Version('4.11.0')
+] = 'baseframe/js/codemirror/addon/fold/foldcode.js'
+assets['codemirror.addon.fold.foldgutter.js'][
+    Version('4.11.0')
+] = 'baseframe/js/codemirror/addon/fold/foldgutter.js'
+assets['codemirror.addon.fold.foldgutter.css'][
+    Version('4.11.0')
+] = 'baseframe/js/codemirror/addon/fold/foldgutter.css'
 
 assets['codemirror-markdown.js'][Version('4.11.0')] = {
     'requires': [
@@ -229,9 +267,41 @@ assets['codemirror-css.js'][Version('4.11.0')] = {
     'requires': [
         'codemirror.js==4.11.0',
         'codemirror.mode.css.js==4.11.0',
+        'codemirror.addon.hint.show-hint.js==4.11.0',
         'codemirror.addon.hint.css-hint.js==4.11.0',
         'codemirror.addon.lint.css-lint.js==4.11.0',
+        'codemirror.addon.edit.matchbrackets.js==4.11.0',
         'codemirror.addon.edit.closebrackets.js==4.11.0',
+    ]
+}
+assets['codemirror-css.css'][Version('4.11.0')] = {
+    'requires': [
+        'codemirror.css==4.11.0',
+        'codemirror.addon.hint.show-hint.css==4.11.0',
+    ]
+}
+assets['codemirror-json.js'][Version('4.11.0')] = {
+    'requires': [
+        'codemirror.js==4.11.0',
+        'codemirror.mode.javascript.js==4.11.0',
+        'codemirror.addon.display.rulers.js==4.11.0',
+        'codemirror.addon.display.fullscreen.js==4.11.0',
+        'codemirror.addon.hint.show-hint.js==4.11.0',
+        'codemirror.addon.hint.javascript-hint.js==4.11.0',
+        'codemirror.addon.lint.json-lint.js==4.11.0',
+        'codemirror.addon.fold.foldcode.js==4.11.0',
+        'codemirror.addon.fold.foldgutter.js==4.11.0',
+        'codemirror.addon.fold.brace-fold.js==4.11.0',
+        'codemirror.addon.edit.matchbrackets.js==4.11.0',
+        'codemirror.addon.edit.closebrackets.js==4.11.0',
+    ]
+}
+assets['codemirror-json.css'][Version('4.11.0')] = {
+    'requires': [
+        'codemirror.css==4.11.0',
+        'codemirror.addon.fold.foldgutter.css==4.11.0',
+        'codemirror.addon.display.fullscreen.css==4.11.0',
+        'codemirror.addon.hint.show-hint.css==4.11.0',
     ]
 }
 

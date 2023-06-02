@@ -26,6 +26,7 @@ from coaster.utils import md5sum, utcnow
 from .extensions import asset_cache, cache, get_timezone, get_user_locale
 
 __all__ = [
+    'MxLookupError',
     'request_timestamp',
     'is_public_email_domain',
     'localized_country_list',

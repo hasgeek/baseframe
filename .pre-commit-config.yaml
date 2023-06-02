@@ -70,9 +70,13 @@ repos:
         # https://github.com/python/mypy/issues/2960
         args: ['--no-warn-unused-ignores', '--ignore-missing-imports']
         additional_dependencies:
+          - flask
           - sqlalchemy
           - toml
-          - types-all
+          - types-bleach
+          - types-python-dateutil
+          - types-pytz
+          - types-requests
           - typing-extensions
   - repo: https://github.com/PyCQA/flake8
     rev: 6.0.0
@@ -87,7 +91,6 @@ repos:
             '--disable=import-error',
             '-rn', # Disable full report
             '-sn', # Disable evaluation score
-            '--ignore-paths=tests,migrations',
           ]
         additional_dependencies:
           - tomli

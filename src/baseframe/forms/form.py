@@ -1,12 +1,17 @@
 """Form base class and redefined fields with ParsleyJS support."""
 
+from __future__ import annotations
+
 from threading import Lock
 import typing as t
 import uuid
 
 from flask import current_app
 from flask_wtf import FlaskForm as BaseForm
+from werkzeug.datastructures import MultiDict
+from wtforms import Field as WTField
 from wtforms.utils import unset_value
+import typing_extensions as te
 import wtforms
 
 from ..extensions import __, asset_cache
@@ -15,6 +20,7 @@ from . import fields as bfields
 from . import filters as bfilters
 from . import parsleyjs as bparsleyjs
 from . import validators as bvalidators
+from .typing import FilterCallable, ValidatorCallable, ValidatorList, WidgetProtocol
 
 __all__ = [
     'field_registry',
@@ -26,7 +32,7 @@ __all__ = [
 ]
 
 # Use a hardcoded list to control what is available to user-facing apps
-field_registry: t.Dict[str, t.Type] = {
+field_registry: t.Dict[str, WTField] = {
     'SelectField': bparsleyjs.SelectField,
     'SelectMultipleField': bfields.SelectMultipleField,
     'RadioField': bparsleyjs.RadioField,
@@ -54,17 +60,16 @@ field_registry: t.Dict[str, t.Type] = {
     'ImageField': bfields.ImgeeField,
 }
 
-widget_registry: t.Dict[str, t.Tuple] = {}
+WidgetRegistryEntry: te.TypeAlias = t.Tuple[t.Callable[..., WidgetProtocol]]
+widget_registry: t.Dict[str, WidgetRegistryEntry] = {}
 
-validator_registry: t.Dict[
-    str,
-    t.Union[
-        t.Tuple[t.Callable],
-        t.Tuple[t.Callable, str],
-        t.Tuple[t.Callable, str, str],
-        t.Tuple[t.Callable, str, str, str],
-    ],
-] = {
+ValidatorRegistryEntry: te.TypeAlias = t.Union[
+    t.Tuple[t.Callable[..., ValidatorCallable]],
+    t.Tuple[t.Callable[..., ValidatorCallable], str],
+    t.Tuple[t.Callable[..., ValidatorCallable], str, str],
+    t.Tuple[t.Callable[..., ValidatorCallable], str, str, str],
+]
+validator_registry: t.Dict[str, ValidatorRegistryEntry] = {
     'Length': (wtforms.validators.Length, 'min', 'max', 'message'),
     'NumberRange': (wtforms.validators.NumberRange, 'min', 'max', 'message'),
     'Optional': (wtforms.validators.Optional, 'strip_whitespace'),
@@ -76,7 +81,11 @@ validator_registry: t.Dict[
     'AllUrlsValid': (bvalidators.AllUrlsValid,),
 }
 
-filter_registry: t.Dict[str, t.Union[t.Tuple[t.Callable], t.Tuple[t.Callable, str]]] = {
+FilterRegistryEntry: te.TypeAlias = t.Union[
+    t.Tuple[t.Callable[..., FilterCallable]],
+    t.Tuple[t.Callable[..., FilterCallable], str],
+]
+filter_registry: t.Dict[str, FilterRegistryEntry] = {
     'lower': (bfilters.lower,),
     'upper': (bfilters.upper,),
     'strip': (bfilters.strip, 'chars'),
@@ -93,7 +102,7 @@ def _nonce_cache_key(nonce: str) -> str:
     return 'form_nonce/' + nonce
 
 
-def _nonce_validator(form, field) -> None:
+def _nonce_validator(form: Form, field: bfields.Field) -> None:
     # Check for already-used form nonce
     if field.data:
         with _nonce_lock:
@@ -124,7 +133,7 @@ class Form(BaseForm):
     )
     form_nonce_error = __("This form has already been submitted")
 
-    def __init_subclass__(cls, **kwargs) -> None:
+    def __init_subclass__(cls, **kwargs: t.Any) -> None:
         """Validate :attr:`__expects__` and :attr:`__returns__` in sub-classes."""
         super().__init_subclass__(**kwargs)
         if {'edit_obj', 'edit_model', 'edit_parent', 'edit_id'} & set(cls.__expects__):
@@ -138,7 +147,7 @@ class Form(BaseForm):
                 "This form has __expects__ parameters that clash with field names"
             )
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: t.Any, **kwargs: t.Any) -> None:
         for attr in self.__expects__:
             if attr not in kwargs:
                 raise TypeError(f"Expected parameter {attr} was not supplied")
@@ -169,11 +178,11 @@ class Form(BaseForm):
         # Finally, populate the ``choices`` attr of selection fields
         self.set_queries()
 
-    def __json__(self):
+    def __json__(self) -> t.List[t.Any]:
         """Render this form as JSON."""
         return [field.__json__() for field in self._fields.values()]
 
-    def populate_obj(self, obj) -> None:
+    def populate_obj(self, obj: t.Any) -> None:
         """
         Populate the attributes of the passed `obj` with data from the form's fields.
 
@@ -191,7 +200,14 @@ class Form(BaseForm):
                 field.populate_obj(obj, name)
 
     def process(
-        self, formdata=None, obj=None, data=None, extra_filters=None, **kwargs
+        self,
+        formdata: t.Optional[MultiDict] = None,
+        obj: t.Any = None,
+        data: t.Optional[t.Dict[str, t.Any]] = None,
+        extra_filters: t.Optional[
+            t.Dict[str, t.Iterable[t.Callable[[t.Any], t.Any]]]
+        ] = None,
+        **kwargs: t.Any,
     ) -> None:
         """
         Take form, object data, and keyword arg input and have the fields process them.
@@ -224,7 +240,7 @@ class Form(BaseForm):
         filters = extra_filters.copy() if extra_filters is not None else {}
 
         for name, field in self._fields.items():
-            field_extra_filters = filters.get(name, [])
+            field_extra_filters = list(filters.get(name, []))
 
             inline_filter = getattr(self, f'filter_{name}', None)
             if inline_filter is not None:
@@ -243,11 +259,20 @@ class Form(BaseForm):
 
     def validate(
         self,
-        extra_validators: t.Optional[
-            t.Dict[str, t.Callable[[wtforms.Form, wtforms.Field], None]]
-        ] = None,
+        extra_validators: t.Optional[t.Dict[str, ValidatorList]] = None,
         send_signals: bool = True,
     ) -> bool:
+        """
+        Validate a form.
+
+        :param extra_validators: A dict of field name to list of extra validators
+        :param send_signals: Raise :attr:`~baseframe.signals.form_validation_success` or
+            :attr:`~baseframe.signals.form_validation_error` after validation
+
+        Signal handlers may be used to record analytics. Baseframe provides default
+        handlers that log to :class:`~baseframe.statsd.Statsd` if enabled for the app,
+        tagging the names of erroring fields in case of errors.
+        """
         success = super().validate(extra_validators)
         for attr in self.__returns__:
             if not hasattr(self, attr):
@@ -293,11 +318,11 @@ class FormGenerator:
 
     def __init__(
         self,
-        fields=None,
-        widgets=None,
-        validators=None,
-        filters=None,
-        default_field='StringField',
+        fields: t.Optional[t.Dict[str, WTField]] = None,
+        widgets: t.Optional[t.Dict[str, WidgetRegistryEntry]] = None,
+        validators: t.Optional[t.Dict[str, ValidatorRegistryEntry]] = None,
+        filters: t.Optional[t.Dict[str, FilterRegistryEntry]] = None,
+        default_field: str = 'StringField',
     ) -> None:
         # If using global defaults, make a copy in this class so that
         # they can be customised post-init without clobbering the globals
@@ -308,6 +333,7 @@ class FormGenerator:
 
         self.default_field = default_field
 
+    # TODO: Make formstruct a TypedDict
     def generate(self, formstruct: dict) -> t.Type[Form]:
         """Generate a dynamic form from the given data structure."""
 
@@ -372,7 +398,7 @@ class RecaptchaForm(Form):
 
     recaptcha = bfields.RecaptchaField()
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: t.Any, **kwargs: t.Any) -> None:
         super().__init__(*args, **kwargs)
         if not (
             current_app.config.get('RECAPTCHA_PUBLIC_KEY')

@@ -1,6 +1,7 @@
 """Jinja2 filters."""
 
 from datetime import date, datetime, time, timedelta
+from typing import TYPE_CHECKING, cast
 from urllib.parse import urlsplit, urlunsplit
 import os.path
 import typing as t
@@ -11,14 +12,16 @@ from flask_babel import Locale, get_locale
 from furl import furl
 from markupsafe import Markup
 from pytz import utc
+from wtforms import Field as WTField
 import grapheme
+import typing_extensions as te
 
 from coaster.gfm import markdown
 from coaster.utils import compress_whitespace, md5sum, text_blocks
 
 from .blueprint import baseframe
-from .extensions import DEFAULT_LOCALE, _, cache
-from .utils import get_timezone, request_timestamp
+from .extensions import DEFAULT_LOCALE, _, cache, get_timezone
+from .utils import request_timestamp
 from .views import ext_assets
 
 
@@ -57,7 +60,7 @@ def age(dt: datetime) -> str:
 
 
 @baseframe.app_template_filter('initials')
-def initials(text: str) -> str:
+def initials(text: t.Optional[str]) -> str:
     """Return up to two initials from the given string, for a default avatar image."""
     if not text:
         return ''
@@ -98,12 +101,17 @@ def nossl(url: str) -> str:
 # TODO: Move this into Hasjob as it's not used elsewhere
 @baseframe.app_template_filter('avatar_url')
 def avatar_url(
-    user: t.Any, size: t.Optional[t.Union[str, t.List[int], t.Tuple[int, int]]] = None
+    user: t.Any,
+    size: t.Optional[
+        t.Union[str, t.List[int], t.Tuple[int, int], t.Tuple[str, str]]
+    ] = None,
 ) -> str:
     """Generate an avatar for the given user."""
     if isinstance(size, (list, tuple)):
         size = 'x'.join(str(s) for s in size)
-    if user.avatar:
+    if hasattr(user, 'avatar') and user.avatar:
+        if TYPE_CHECKING:
+            assert isinstance(user.avatar, str)  # nosec B101
         if size:
             # TODO: Use a URL parser
             if '?' in user.avatar:
@@ -127,19 +135,19 @@ def avatar_url(
 
 
 @baseframe.app_template_filter('render_field_options')
-def render_field_options(field, **kwargs) -> str:
+def render_field_options(field: WTField, **kwargs: t.Any) -> str:
     """Remove HTML attributes with falsy values before rendering a field."""
     d = {k: v for k, v in kwargs.items() if v is not None and v is not False}
     if field.render_kw:
         d.update(field.render_kw)
-    return field(**d)
+    return cast(str, field(**d))
 
 
 # TODO: Only used in renderfield.mustache. Re-check whether this is necessary at all.
 @baseframe.app_template_filter('to_json')
-def form_field_to_json(field, **kwargs) -> dict:
+def form_field_to_json(field: WTField, **kwargs: t.Any) -> t.Dict[str, t.Any]:
     """Render a form field as JSON."""
-    d = {}
+    d: t.Dict[str, t.Any] = {}
     d['id'] = field.id
     d['label'] = field.label.text
     d['has_errors'] = bool(field.errors)
@@ -338,10 +346,14 @@ def timestamp_filter(value: datetime) -> float:
 @baseframe.app_template_filter('timedelta')
 def timedelta_filter(
     delta: t.Union[int, timedelta, datetime],
-    granularity: str = 'second',
+    granularity: te.Literal[
+        'year', 'month', 'week', 'day', 'hour', 'minute', 'second'
+    ] = 'second',
     threshold: float = 0.85,
     add_direction: bool = False,
-    format: str = 'long',  # noqa: A002  # pylint: disable=W0622
+    format: te.Literal[  # noqa: A002  # pylint: disable=W0622
+        'narrow', 'short', 'medium', 'long'
+    ] = 'long',
     locale: t.Optional[t.Union[Locale, str]] = None,
 ) -> str:
     """
@@ -378,7 +390,7 @@ def timedelta_filter(
 
 
 @baseframe.app_template_filter('cleanurl')
-def cleanurl_filter(url: t.Union[str, furl]) -> str:
+def cleanurl_filter(url: t.Union[str, furl]) -> furl:
     """Clean a URL visually by removing defaults like scheme and the ``www`` prefix."""
     if not isinstance(url, furl):
         url = furl(url)

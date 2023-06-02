@@ -1,6 +1,5 @@
 coverage
 coveralls
-psycopg2
 pytest
 pytest-cov
 pyyaml

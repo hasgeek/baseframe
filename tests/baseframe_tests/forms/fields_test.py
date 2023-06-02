@@ -1,5 +1,5 @@
 """Test form fields."""
-# pylint: disable=redefined-outer-name
+# pylint: disable=redefined-outer-name,protected-access
 
 from datetime import datetime
 from decimal import Decimal
@@ -54,12 +54,12 @@ def enum_form(ctx):
     return EnumForm(meta={'csrf': False})
 
 
-def test_enum_default(enum_form):
+def test_enum_default(enum_form) -> None:
     assert enum_form.position.data == 3
     assert enum_form.position_no_default.data is None
 
 
-def test_enum_process_valid(enum_form):
+def test_enum_process_valid(enum_form) -> None:
     enum_form.process(
         formdata=MultiDict({'position': 'second', 'position_no_default': 'third'})
     )
@@ -69,19 +69,23 @@ def test_enum_process_valid(enum_form):
     assert enum_form.position_no_default.data == 3
 
 
-def test_enum_process_invalid(enum_form):
+def test_enum_process_invalid(enum_form) -> None:
     enum_form.process(formdata=MultiDict({'position': 'fourth'}))
     assert enum_form.validate() is False
 
 
-def test_enum_render(enum_form):
+def test_enum_render(enum_form) -> None:
     assert (
         enum_form.position()
-        == '<select id="position" name="position"><option value="first">First</option><option value="second">Second</option><option selected value="third">Third</option></select>'
+        == '<select id="position" name="position"><option value="first">First</option>'
+        '<option value="second">Second</option><option selected value="third">Third'
+        '</option></select>'
     )
     assert (
         enum_form.position_no_default()
-        == '<select id="position_no_default" name="position_no_default"><option value="first">First</option><option value="second">Second</option><option value="third">Third</option></select>'
+        == '<select id="position_no_default" name="position_no_default"><option'
+        ' value="first">First</option><option value="second">Second</option><option'
+        ' value="third">Third</option></select>'
     )
 
 
@@ -91,25 +95,25 @@ def json_form(ctx):
     return JsonForm(meta={'csrf': False})
 
 
-def test_json_default(json_form):
+def test_json_default(json_form) -> None:
     assert json_form.jsondata.data == DEFAULT_JSONDATA
     assert json_form.jsondata_empty_default.data == {}
     assert json_form.jsondata_no_default.data is None
 
 
-def test_json_valid(json_form):
+def test_json_valid(json_form) -> None:
     json_form.process(formdata=MultiDict({'jsondata': '{"key": "val"}'}))
     assert json_form.validate() is True
 
 
-def test_json_invalid(json_form):
+def test_json_invalid(json_form) -> None:
     json_form.process(
         formdata=MultiDict({'jsondata': '{"key"; "val"}'})
     )  # invalid JSON
     assert json_form.validate() is False
 
 
-def test_json_empty_default(json_form):
+def test_json_empty_default(json_form) -> None:
     json_form.process(
         formdata=MultiDict(
             {
@@ -124,7 +128,7 @@ def test_json_empty_default(json_form):
     assert json_form.jsondata_no_default.data is None
 
 
-def test_json_nondict(json_form):
+def test_json_nondict(json_form) -> None:
     json_form.process(formdata=MultiDict({'jsondata': '43'}))
     assert json_form.validate() is False
     json_form.process(formdata=MultiDict({'jsondata': 'true'}))
@@ -136,18 +140,18 @@ def test_json_nondict(json_form):
     assert json_form.validate() is True
 
 
-def test_json_unicode(json_form):
+def test_json_unicode(json_form) -> None:
     json_form.process(formdata=MultiDict({'jsondata': '{"key": "val😡"}'}))
     assert json_form.validate() is True
     assert json_form.jsondata.data == {"key": "val😡"}
 
 
-def test_json_unicode_dumps(json_form):
+def test_json_unicode_dumps(json_form) -> None:
     json_form.jsondata.data = {"key": "val😡"}
     assert json_form.jsondata._value() == '{\n  "key": "val😡"\n}'
 
 
-def test_json_decimal(json_form):
+def test_json_decimal(json_form) -> None:
     json_form.jsondata.data = {"key": Decimal('1.2')}
     assert json_form.validate() is True
     assert json_form.jsondata._value() == '{\n  "key": "1.2"\n}'
@@ -161,7 +165,7 @@ def test_json_decimal(json_form):
     assert json_form.jsondata.data == {"key": 1.2}
 
 
-def test_json_array(json_form):
+def test_json_array(json_form) -> None:
     json_form.process(
         formdata=MultiDict({'jsondata': '[{"key": "val"}, {"key2": "val2"}]'})
     )
@@ -174,36 +178,38 @@ def test_json_array(json_form):
     assert json_form.jsondata_no_dict.data == [{"key": "val"}, {"key2": "val2"}]
 
 
-def test_json_comment(json_form):
+def test_json_comment(json_form) -> None:
     json_form.process(
         formdata=MultiDict(
             {
                 'jsondata': """
-        {
-            "key": "val" # test comment
-        }
-        """
+                {
+                    "key": "val" # test comment
+                }
+                """
             }
         )
     )
     assert json_form.validate() is False
 
 
-def test_json_non_serializable(json_form):
+def test_json_non_serializable(json_form) -> None:
     json_form.jsondata.data = {"key": complex(1, 2)}
     with pytest.raises(TypeError):
         json_form.jsondata._value()
 
 
-def test_escaped_label_text():
+def test_escaped_label_text() -> None:
     label = forms.Label('test', '<script>alert("test");</script>')
     assert (
         label(for_='foo')
-        == """<label for="foo">&lt;script&gt;alert(&#34;test&#34;);&lt;/script&gt;</label>"""
+        == '<label for="foo">&lt;script&gt;alert(&#34;test&#34;);&lt;/script&gt;'
+        '</label>'
     )
     assert (
         label(**{'for': 'bar'})
-        == """<label for="bar">&lt;script&gt;alert(&#34;test&#34;);&lt;/script&gt;</label>"""
+        == '<label for="bar">&lt;script&gt;alert(&#34;test&#34;);&lt;/script&gt;'
+        '</label>'
     )
 
 
@@ -284,7 +290,7 @@ def test_escaped_label_text():
         ),
     ],
 )
-def test_date_time_field(test_input, expected_naive, expected_aware):
+def test_date_time_field(test_input, expected_naive, expected_aware) -> None:
     """Assert various datetime inputs are recogized and processed accurately."""
     form = DateTimeForm(meta={'csrf': False})
     form.process(
@@ -316,7 +322,7 @@ def test_date_time_field(test_input, expected_naive, expected_aware):
         '100000-01-01',
     ],
 )
-def test_date_time_field_badvalue(test_input):
+def test_date_time_field_badvalue(test_input) -> None:
     """Assert bad datetime input is recorded as a ValidationError."""
     form = DateTimeForm(meta={'csrf': False})
     form.process(formdata=MultiDict({'naive': test_input, 'aware': test_input}))
@@ -326,7 +332,7 @@ def test_date_time_field_badvalue(test_input):
 
 
 @pytest.mark.usefixtures('ctx')
-def test_date_time_field_timezone():
+def test_date_time_field_timezone() -> None:
     """Assert timezone in DateTimeField is an object."""
     form = DateTimeForm(meta={'csrf': False})
     assert form.naive.timezone == timezone('Asia/Kolkata')

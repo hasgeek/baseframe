@@ -3,6 +3,7 @@
 
 from datetime import date, datetime, time, timedelta
 from types import SimpleNamespace
+import typing as t
 
 from pytz import UTC, timezone
 import pytest
@@ -25,7 +26,7 @@ def times(request):
     )
 
 
-def test_dt_filters_age(times):
+def test_dt_filters_age(times) -> None:
     age = filters.age(times.now)
     assert age == 'now'
 
@@ -50,14 +51,14 @@ def test_dt_filters_age(times):
     assert age == '2 years ago'
 
 
-def test_dt_filters_shortdate_date_with_threshold(app, times):
+def test_dt_filters_shortdate_date_with_threshold(app, times) -> None:
     app.config['SHORTDATE_THRESHOLD_DAYS'] = 10
     testdate = times.now.date() - timedelta(days=5)
     with app.test_request_context('/'):
         assert filters.shortdate(testdate) == testdate.strftime('%e %b')
 
 
-def test_dt_filters_shortdate_date_without_threshold(app, times):
+def test_dt_filters_shortdate_date_without_threshold(app, times) -> None:
     app.config['SHORTDATE_THRESHOLD_DAYS'] = 0
     testdate = times.now.date() - timedelta(days=5)
     with app.test_request_context('/'):
@@ -66,14 +67,14 @@ def test_dt_filters_shortdate_date_without_threshold(app, times):
         )
 
 
-def test_dt_filters_shortdate_datetime_with_threshold(app, times):
+def test_dt_filters_shortdate_datetime_with_threshold(app, times) -> None:
     app.config['SHORTDATE_THRESHOLD_DAYS'] = 10
     testdate = times.now - timedelta(days=5)
     with app.test_request_context('/'):
         assert filters.shortdate(testdate) == testdate.strftime('%e %b')
 
 
-def test_dt_filters_shortdate_datetime_without_threshold(app, times):
+def test_dt_filters_shortdate_datetime_without_threshold(app, times) -> None:
     testdate = times.now - timedelta(days=5)
     with app.test_request_context('/'):
         assert filters.shortdate(testdate).replace("’", "'") == testdate.strftime(
@@ -81,7 +82,7 @@ def test_dt_filters_shortdate_datetime_without_threshold(app, times):
         )
 
 
-def test_dt_filters_shortdate_datetime_with_tz(app, times):
+def test_dt_filters_shortdate_datetime_with_tz(app, times) -> None:
     testdate = times.now
     with app.test_request_context('/'):
         assert filters.shortdate(testdate).replace("’", "'") == testdate.strftime(
@@ -89,47 +90,47 @@ def test_dt_filters_shortdate_datetime_with_tz(app, times):
         )
 
 
-def test_dt_filters_longdate_date(app, times):
+def test_dt_filters_longdate_date(app, times) -> None:
     testdate = times.now.date()
     with app.test_request_context('/'):
         assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
 
 
-def test_dt_filters_longdate_datetime(app, times):
+def test_dt_filters_longdate_datetime(app, times) -> None:
     testdate = times.now
     with app.test_request_context('/'):
         assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
 
 
-def test_dt_filters_longdate_datetime_with_tz(app, times):
+def test_dt_filters_longdate_datetime_with_tz(app, times) -> None:
     testdate = times.now
     with app.test_request_context('/'):
         assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
 
 
-def test_dt_filters_date_filter(app, times):
+def test_dt_filters_date_filter(app, times) -> None:
     with app.test_request_context('/'):
         assert (
             filters.date_filter(times.date, 'yyyy-MM-dd', usertz=False) == '2020-01-31'
         )
 
 
-def test_dt_filters_date_localized_short_hi(app, times):
+def test_dt_filters_date_localized_short_hi(app, times) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.date_filter(times.date, format='short') == '31/1/20'
 
 
-def test_dt_filters_date_localized_medium_hi(app, times):
+def test_dt_filters_date_localized_medium_hi(app, times) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.date_filter(times.date, format='medium') == '31 जन॰ 2020'
 
 
-def test_dt_filters_date_localized_long_hi(app, times):
+def test_dt_filters_date_localized_long_hi(app, times) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.date_filter(times.date, format='long') == '31 जनवरी 2020'
 
 
-def test_dt_filters_time_localized_hi_medium(app, times):
+def test_dt_filters_time_localized_hi_medium(app, times) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert (
             filters.datetime_filter(times.datetime, format='medium')
@@ -137,32 +138,32 @@ def test_dt_filters_time_localized_hi_medium(app, times):
         )
 
 
-def test_dt_filters_month_localized_hi(app, times):
+def test_dt_filters_month_localized_hi(app, times) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.date_filter(times.date, "MMMM") == 'जनवरी'
 
 
-def test_dt_filters_month_localized_en(app, times):
+def test_dt_filters_month_localized_en(app, times) -> None:
     with app.test_request_context('/'):
         assert filters.date_filter(times.date, "MMMM") == 'January'
 
 
-def test_dt_filters_time_localized_short(app, times):
+def test_dt_filters_time_localized_short(app, times) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.time_filter(times.datetime, format='short') == '12:00 am'
 
 
-def test_dt_filters_time_localized_medium(app, times):
+def test_dt_filters_time_localized_medium(app, times) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.time_filter(times.datetime, format='medium') == '12:00:00 am'
 
 
-def test_dt_filters_time_localized_long(app, times):
+def test_dt_filters_time_localized_long(app, times) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.time_filter(times.datetime, format='long') == '12:00:00 am UTC'
 
 
-def test_dt_filters_time_localized_hi_full(app, times):
+def test_dt_filters_time_localized_hi_full(app, times) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert (
             filters.time_filter(times.time, format='full')
@@ -170,7 +171,7 @@ def test_dt_filters_time_localized_hi_full(app, times):
         )
 
 
-def test_dt_filters_time_localized_en_full(app, times):
+def test_dt_filters_time_localized_en_full(app, times) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'en'}):
         assert filters.time_filter(times.time, format='full') in (
             '11:59:59 PM Coordinated Universal Time',
@@ -178,7 +179,7 @@ def test_dt_filters_time_localized_en_full(app, times):
         )
 
 
-def test_dt_filters_datetime_with_usertz(app, times):
+def test_dt_filters_datetime_with_usertz(app, times) -> None:
     with app.test_request_context('/'):
         assert filters.datetime_filter(
             times.datetimeEST, format='full', usertz=False
@@ -188,7 +189,7 @@ def test_dt_filters_datetime_with_usertz(app, times):
         )
 
 
-def test_dt_filters_datetime_without_usertz(app, times):
+def test_dt_filters_datetime_without_usertz(app, times) -> None:
     with app.test_request_context('/'):
         assert filters.datetime_filter(
             times.datetimeEST, format='full', usertz=True
@@ -198,7 +199,7 @@ def test_dt_filters_datetime_without_usertz(app, times):
         )
 
 
-def test_dt_filters_date_dmy(app, times):
+def test_dt_filters_date_dmy(app, times) -> None:
     with app.test_request_context('/'):
         assert (
             filters.date_filter(times.datetime, format='short', locale='en_GB')
@@ -206,7 +207,7 @@ def test_dt_filters_date_dmy(app, times):
         )
 
 
-def test_dt_filters_date_mdy(app, times):
+def test_dt_filters_date_mdy(app, times) -> None:
     with app.test_request_context('/'):
         assert (
             filters.date_filter(times.datetime, format='short', locale='en_US')
@@ -214,12 +215,12 @@ def test_dt_filters_date_mdy(app, times):
         )
 
 
-def test_dt_filters_timestamp(app, times):
+def test_dt_filters_timestamp(app, times) -> None:
     with app.test_request_context('/'):
         assert filters.timestamp_filter(times.datetime) == 1580428800.0
 
 
-def test_dt_filters_timestamp_filter(app, times):
+def test_dt_filters_timestamp_filter(app, times) -> None:
     with app.test_request_context('/'):
         assert filters.timedelta_filter(times.now) == "1 second ago"
         assert filters.timedelta_filter(1) == "1 second"
@@ -259,7 +260,7 @@ def test_dt_filters_timestamp_filter(app, times):
         )
 
 
-def test_dt_filters_timestamp_filter_hi(app, times):
+def test_dt_filters_timestamp_filter_hi(app, times) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.timedelta_filter(times.now) == "1 सेकंड पहले"
         assert filters.timedelta_filter(1) == "1 सेकंड"
@@ -302,7 +303,7 @@ def test_dt_filters_timestamp_filter_hi(app, times):
         )
 
 
-def test_initials():
+def test_initials() -> None:
     initial = filters.initials('A Named Example')
     assert initial == 'AE'
 
@@ -328,7 +329,7 @@ def test_initials():
     assert initial == ''
 
 
-def test_usessl(app):
+def test_usessl(app) -> None:
     with app.test_request_context('/'):
         app.config['USE_SSL'] = False
         ssled = filters.usessl('http://hasgeek.com')
@@ -345,7 +346,7 @@ def test_usessl(app):
         assert ssled == 'https://localhost/static/test'
 
 
-def test_nossl(app):
+def test_nossl(app) -> None:
     with app.test_request_context('/'):
         nossled = filters.nossl('https://hasgeek.com')
         assert nossled == 'http://hasgeek.com'
@@ -360,18 +361,21 @@ def test_nossl(app):
 class UserTest:
     """Fixture user with an "avatar" URL column and an email address for Gravatar."""
 
-    def __init__(self, avatar=None, email=None):
+    avatar: t.Optional[str]
+    email: str
+
+    def __init__(self, avatar=None, email=None) -> None:
         self.set_avatar(avatar)
         self.set_email(email)
 
-    def set_avatar(self, avatar):
+    def set_avatar(self, avatar: t.Optional[str]) -> None:
         self.avatar = avatar
 
-    def set_email(self, email):
+    def set_email(self, email: str) -> None:
         self.email = email
 
 
-def test_avatar_url():
+def test_avatar_url() -> None:
     user = UserTest()
     avatar_size = ('100', '100')
     avatar_url = '//images.hasgeek.com/embed/test'
@@ -399,13 +403,13 @@ def test_avatar_url():
     )
 
 
-def test_firstline():
+def test_firstline() -> None:
     html = "<div>this is the first line</div><div>and second line</div>"
     firstline = filters.firstline(html)
     assert firstline == "this is the first line"
 
 
-def test_preview():
+def test_preview() -> None:
     # Works with plain text
     assert filters.preview("This is plain text") == "This is plain text"
     # Works with HTML
@@ -455,7 +459,7 @@ def test_preview():
     assert filters.preview('हिंदी टायपिंग', min=1, max=3) == 'हिंदी…'
 
 
-def test_cdata():
+def test_cdata() -> None:
     text = "foo bar"
     result = filters.cdata(text)
     assert result == "<![CDATA[foo bar]]>"
@@ -465,7 +469,7 @@ def test_cdata():
     assert result == "<![CDATA[<![CDATA[foo bar]]]]><![CDATA[>]]>"
 
 
-def test_cleanurl():
+def test_cleanurl() -> None:
     assert (
         filters.cleanurl_filter("https://www.example.com/some/path/?query=value")
         == "example.com/some/path"

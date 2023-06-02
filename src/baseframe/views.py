@@ -22,7 +22,7 @@ import requests
 from coaster.assets import split_namespec
 from coaster.auth import current_auth, request_has_auth
 from coaster.utils import make_name
-from coaster.views import render_with
+from coaster.views import ReturnRenderWith, render_with
 
 from .assets import assets as assets_repo
 from .blueprint import baseframe
@@ -104,7 +104,7 @@ def gen_assets_url(assets: t.List[str]) -> str:
     else:
         abort(400)
 
-    bundle.env = current_app.assets
+    bundle.env = current_app.assets  # type: ignore[attr-defined]
     return bundle.urls()[0]
 
 
@@ -227,9 +227,7 @@ def editorcss(subdomain: t.Optional[str] = None) -> Response:
 @baseframe.route('/api/baseframe/1/csrf/refresh', subdomain='<subdomain>')
 @baseframe.route('/api/baseframe/1/csrf/refresh', defaults={'subdomain': None})
 @render_with({'text/plain': lambda r: r['csrf_token']}, json=True)
-def csrf_refresh(  # TODO: Need ReturnRenderWith here
-    subdomain: t.Optional[str] = None,
-) -> t.Tuple[t.Dict[str, t.Any], int, t.Dict[str, str]]:
+def csrf_refresh(subdomain: t.Optional[str] = None) -> ReturnRenderWith:
     """Serve a refreshed CSRF token to ensure HTML forms never expire."""
     parsed_host = urlparse(request.url_root)
     origin = parsed_host.scheme + '://' + parsed_host.netloc
@@ -265,15 +263,15 @@ def process_response(response: Response) -> Response:
     # If Babel was accessed in this request, the response's contents will vary with
     # the accepted language
     if ctx_has_locale():
-        response.vary.add('Accept-Language')  # type: ignore[union-attr]
+        response.vary.add('Accept-Language')
     # If current_auth was accessed during this request, it is sensitive to the lastuser
     # cookie
     if request_has_auth():
-        response.vary.add('Cookie')  # type: ignore[union-attr]
+        response.vary.add('Cookie')
 
     # If request_is_xhr() was called, add a Vary header for that
     if request_checked_xhr():
-        response.vary.add('X-Requested-With')  # type: ignore[union-attr]
+        response.vary.add('X-Requested-With')
 
     # Prevent pages from being placed in an iframe. If the response already
     # set has a value for this option, let it pass through
@@ -282,7 +280,7 @@ def process_response(response: Response) -> Response:
         if not frameoptions or frameoptions == 'ALLOW':
             # 'ALLOW' is an unofficial signal from the app to Baseframe.
             # It signals us to remove the header and not set a default
-            response.headers.pop('X-Frame-Options')  # type: ignore[call-arg]
+            response.headers.pop('X-Frame-Options')
     else:
         if request_has_auth() and getattr(current_auth, 'login_required', False):
             # Protect only login_required pages from appearing in frames

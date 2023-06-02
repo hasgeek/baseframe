@@ -4,31 +4,30 @@
 from werkzeug.datastructures import MultiDict
 import pytest
 
-import baseframe.filters as filters
-import baseframe.forms as forms
+from baseframe import forms
+from baseframe.filters import render_field_options
 
 # Fake password hasher, only suitable for re-use within a single process
 password_hash = hash
 
 
 class SimpleUser:
-    # Fields:
-    # fullname: Name of the user
-    # company: Name of user's company
-    # pw_hash: User's hashed password
+    fullname: str
+    company: str
+    pw_hash: str
 
-    def _set_password(self, value):
-        self.pw_hash = password_hash(value)
+    def _set_password(self, value: str):
+        self.pw_hash = str(password_hash(value))
 
     password = property(fset=_set_password)
 
-    def __init__(self, fullname, company, password):
+    def __init__(self, fullname: str, company: str, password: str) -> None:
         self.fullname = fullname
         self.company = company
         self.password = password
 
-    def password_is(self, candidate):
-        return self.pw_hash == password_hash(candidate)
+    def password_is(self, candidate: str) -> bool:
+        return self.pw_hash == str(password_hash(candidate))
 
 
 class GetSetForm(forms.Form):
@@ -80,14 +79,14 @@ class FieldRenderForm(forms.Form):
 
 
 @pytest.fixture()
-def user():
+def user() -> SimpleUser:
     return SimpleUser(  # nosec
         fullname="Test user", company="Test company", password="test"
     )
 
 
 @pytest.mark.usefixtures('ctx')
-def test_no_obj():
+def test_no_obj() -> None:
     """Test that the form can be initialized without an object."""
     form = GetSetForm(meta={'csrf': False})
 
@@ -100,7 +99,7 @@ def test_no_obj():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_get(user):
+def test_get(user) -> None:
     """Test that the form loads values from the provided object."""
     form = GetSetForm(obj=user, meta={'csrf': False})
 
@@ -113,7 +112,7 @@ def test_get(user):
 
 
 @pytest.mark.usefixtures('ctx')
-def test_get_formdata(user):
+def test_get_formdata(user) -> None:
     """Test that the form preferentially loads from form data."""
     form = GetSetForm(
         formdata=MultiDict(
@@ -138,7 +137,7 @@ def test_get_formdata(user):
 
 
 @pytest.mark.usefixtures('ctx')
-def test_set(user):
+def test_set(user) -> None:
     """Test that the form populates an object with or without set methods."""
     form = GetSetForm(
         formdata=MultiDict(
@@ -169,7 +168,7 @@ def test_set(user):
 
 
 @pytest.mark.usefixtures('ctx')
-def test_init_order():
+def test_init_order() -> None:
     """Test that get_<fieldname> methods have proper context."""
     with pytest.raises(TypeError):
         # A parameter named `expected_item` is expected
@@ -185,7 +184,7 @@ def test_init_order():
 
 
 @pytest.mark.usefixtures('ctx')
-def test_render_field_options():
+def test_render_field_options() -> None:
     form = FieldRenderForm(meta={'csrf': False})
     test_attrs = {
         'attrone': 'test',
@@ -193,7 +192,7 @@ def test_render_field_options():
         'attrthree': None,
         'attrfour': '',
     }
-    render = filters.render_field_options(form.string_field, **test_attrs)
+    render = render_field_options(form.string_field, **test_attrs)
     # This expicit rendering is based on dictionary key order stability in Python 3.7+
     assert render == (
         '<input'
