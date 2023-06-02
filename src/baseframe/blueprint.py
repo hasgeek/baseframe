@@ -15,6 +15,7 @@ from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.rq import RqIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 import sentry_sdk
+import typing_extensions as te
 
 from coaster.app import RotatingKeySecureCookieSessionInterface
 from coaster.assets import split_namespec
@@ -84,13 +85,12 @@ class BaseframeBlueprint(Blueprint):
         app: Flask,
         requires: t.Iterable[str] = (),
         ext_requires: t.Iterable[t.Union[str, t.List[str], t.Tuple[str, ...]]] = (),
-        bundle_js=None,
-        bundle_css=None,
-        assetenv=None,
-        theme: str = 'bootstrap3',
-        asset_modules=(),
-        error_handlers=True,
-    ):
+        bundle_js: t.Optional[Bundle] = None,
+        bundle_css: t.Optional[Bundle] = None,
+        assetenv: t.Optional[Environment] = None,
+        theme: te.Literal['bootstrap3', 'mui'] = 'bootstrap3',
+        error_handlers: bool = True,
+    ) -> None:
         """
         Initialize an app with Baseframe and load necessary assets.
 
@@ -230,9 +230,6 @@ class BaseframeBlueprint(Blueprint):
             ),
         )
         app.register_blueprint(self, static_subdomain=subdomain)
-
-        if asset_modules:
-            app.logger.warning("Baseframe no longer supports asset modules")
 
         # Optional config for a client app to use a manifest file
         # to load fingerprinted assets

@@ -183,10 +183,10 @@ def test_json_comment(json_form) -> None:
         formdata=MultiDict(
             {
                 'jsondata': """
-        {
-            "key": "val" # test comment
-        }
-        """
+                {
+                    "key": "val" # test comment
+                }
+                """
             }
         )
     )

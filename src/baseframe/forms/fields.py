@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from datetime import datetime, tzinfo
 from decimal import Decimal
 from decimal import InvalidOperation as DecimalError
@@ -15,7 +16,7 @@ from flask import current_app, json
 from flask_wtf import RecaptchaField as RecaptchaFieldBase
 from pytz import timezone as pytz_timezone
 from pytz import utc
-from wtforms import Field as WTField
+from werkzeug.datastructures import MultiDict
 from wtforms import Form as WTForm
 from wtforms.fields import Field, FieldList, FileField, Label
 from wtforms.fields import SelectField as SelectFieldBase
@@ -29,6 +30,7 @@ import wtforms
 from ..extensions import _, __, get_timezone
 from ..utils import request_timestamp
 from .parsleyjs import HiddenField, StringField, TextAreaField, URLField
+from .typing import ReturnIterChoices, ValidatorList
 from .validators import Recaptcha, StopValidation, ValidationError
 from .widgets import (
     CoordinatesInput,
@@ -95,10 +97,6 @@ SANITIZE_TAGS = [
 ]
 SANITIZE_ATTRIBUTES = {'a': ['href', 'title', 'target']}
 
-ValidatorList = t.Iterable[t.Callable[[WTForm, WTField], None]]
-FilterList = t.Iterable[t.Callable[[t.Any], t.Any]]
-ReturnIterChoices = t.Generator[t.Tuple[str, str, bool], None, None]
-
 
 @te.runtime_checkable
 class GeonameidProtocol(te.Protocol):
@@ -108,20 +106,28 @@ class GeonameidProtocol(te.Protocol):
 class NonceField(HiddenField):
     """Customized HiddenField for nonce values that ignores the form target object."""
 
-    def process(self, formdata, data=None, extra_filters=None) -> None:
+    def process(
+        self,
+        formdata: MultiDict,
+        data: t.Optional[t.Dict[str, t.Any]] = None,
+        extra_filters: t.Optional[t.Iterable[t.Callable[[t.Any], t.Any]]] = None,
+    ) -> None:
         """Discard data coming from an object."""
         super().process(formdata, extra_filters=extra_filters)
 
-    def populate_obj(self, *args) -> None:
-        """Override populate_obj to not attempting setting nonce on the object."""
+    def populate_obj(self, *_args: t.Any, **_kwargs: t.Any) -> None:
+        """Override populate_obj to not attempt setting nonce on the object."""
 
 
 class RecaptchaField(RecaptchaFieldBase):
     """RecaptchaField with an improved validator."""
 
     def __init__(
-        self, label: str = '', validators: t.Optional[ValidatorList] = None, **kwargs
-    ):
+        self,
+        label: str = '',
+        validators: t.Optional[ValidatorList] = None,
+        **kwargs: t.Any,
+    ) -> None:
         validators = validators or [Recaptcha()]
         super().__init__(label, validators, **kwargs)
 
@@ -154,7 +160,7 @@ class SelectField(SelectFieldBase):
 
     widget = SelectWidget()
 
-    def pre_validate(self, form) -> None:
+    def pre_validate(self, form: WTForm) -> None:
         """Don't forget to also validate values from embedded lists."""
         for item1, item2 in self.choices:
             if isinstance(item2, (list, tuple)):
@@ -179,45 +185,16 @@ class TinyMce4Field(TextAreaField):
 
     def __init__(
         self,
-        # WTForms fields
-        label: str = '',
-        validators: t.Optional[ValidatorList] = None,
-        filters: FilterList = (),
-        description: str = '',
-        id: t.Optional[str] = None,  # noqa: A002  # pylint: disable=redefined-builtin
-        default: t.Optional[str] = None,
-        widget=None,
-        render_kw=None,
-        name=None,
-        _form=None,
-        _prefix='',
-        _translations=None,
-        _meta=None,
-        # Additional fields
+        *args: t.Any,
         content_css: t.Optional[t.Union[str, t.Callable[[], str]]] = None,
         linkify: bool = True,
         nofollow: bool = True,
-        tinymce_options: t.Optional[dict] = None,
-        sanitize_tags: t.Optional[t.List] = None,
+        tinymce_options: t.Optional[t.Dict[str, t.Any]] = None,
+        sanitize_tags: t.Optional[t.List[str]] = None,
         sanitize_attributes: t.Optional[t.Dict[str, t.List[str]]] = None,
-        **kwargs,
-    ):
-        super().__init__(
-            label=label,
-            validators=validators,
-            filters=filters,
-            description=description,
-            id=id,
-            default=default,
-            widget=widget,
-            render_kw=render_kw,
-            name=name,
-            _form=_form,
-            _prefix=_prefix,
-            _translations=_translations,
-            _meta=_meta,
-            **kwargs,
-        )
+        **kwargs: t.Any,
+    ) -> None:
+        super().__init__(*args, **kwargs)
 
         if tinymce_options is None:
             tinymce_options = {}
@@ -267,7 +244,7 @@ class TinyMce4Field(TextAreaField):
         self.sanitize_attributes = sanitize_attributes
 
     @property
-    def content_css(self):
+    def content_css(self) -> t.Optional[str]:
         if callable(self._content_css):
             return self._content_css()
         return self._content_css
@@ -313,15 +290,14 @@ class DateTimeField(wtforms.fields.DateTimeField):
 
     def __init__(
         self,
-        label: t.Optional[str] = None,
-        validators: t.Optional[ValidatorList] = None,
+        *args: t.Any,
         display_format: str = '%Y-%m-%dT%H:%M',
         timezone: t.Union[str, tzinfo, None] = None,
         message: t.Optional[str] = None,
         naive: bool = True,
-        **kwargs,
-    ):
-        super().__init__(label, validators, **kwargs)
+        **kwargs: t.Any,
+    ) -> None:
+        super().__init__(*args, **kwargs)
         self.display_format = display_format
         self.timezone = timezone  # type: ignore[assignment]
         self.message = message if message is not None else self.default_message
@@ -445,9 +421,9 @@ class TextListField(wtforms.fields.TextAreaField):
 class UserSelectFieldBase:
     """Select a user."""
 
-    data: t.Union[t.Type, t.List[t.Type], None]
+    data: t.Optional[t.List[t.Any]]
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: t.Any, **kwargs: t.Any) -> None:
         self.lastuser = kwargs.pop('lastuser', None)
         if self.lastuser is None:
             if hasattr(current_app, 'login_manager'):
@@ -509,7 +485,7 @@ class UserSelectFieldBase:
 class UserSelectField(UserSelectFieldBase, StringField):
     """Render a user select field that allows one user to be selected."""
 
-    data: t.Optional[t.Type]
+    data: t.Optional[t.Any]
     multiple = False
     widget = Select2Widget()
     widget_autocomplete = True
@@ -548,11 +524,18 @@ class AutocompleteFieldBase:
 
     data: t.Optional[t.Union[str, t.List[str]]]
 
-    def __init__(self, *args, **kwargs) -> None:
-        self.autocomplete_endpoint = kwargs.pop('autocomplete_endpoint')
-        self.results_key = kwargs.pop('results_key', 'results')
-        self.separator = kwargs.pop('separator', ',')
+    def __init__(
+        self,
+        *args: t.Any,
+        autocomplete_endpoint: str,
+        results_key: str = 'results',
+        separator: str = ',',
+        **kwargs: t.Any,
+    ) -> None:
         super().__init__(*args, **kwargs)
+        self.autocomplete_endpoint = autocomplete_endpoint
+        self.results_key = results_key
+        self.separator = separator
         self.choices = ()  # Disregard server-side choices
 
     def iter_choices(self) -> ReturnIterChoices:
@@ -567,7 +550,7 @@ class AutocompleteFieldBase:
         # Convert strings into Tag objects
         self.data = valuelist
 
-    def pre_validate(self, form) -> None:  # pylint: disable=unused-argument
+    def pre_validate(self, form: WTForm) -> None:  # pylint: disable=unused-argument
         """Do not validate data."""
         return
 
@@ -618,13 +601,12 @@ class GeonameSelectFieldBase:
         t.Union[str, t.List[str], GeonameidProtocol, t.List[GeonameidProtocol]]
     ]
 
-    def __init__(self, *args, **kwargs) -> None:
-        self.separator = kwargs.pop('separator', ',')
+    def __init__(self, *args: t.Any, separator: str = ',', **kwargs: t.Any) -> None:
+        super().__init__(*args, **kwargs)
+        self.separator = separator
         server = current_app.config.get('HASCORE_SERVER', 'https://hasgeek.com/api')
         self.autocomplete_endpoint = urljoin(server, '/1/geo/autocomplete')
         self.getname_endpoint = urljoin(server, '/1/geo/get_by_names')
-
-        super().__init__(*args, **kwargs)
 
     def iter_choices(self) -> ReturnIterChoices:
         """Iterate over choices."""
@@ -679,28 +661,34 @@ class GeonameSelectMultiField(GeonameSelectFieldBase, StringField):
 class AnnotatedTextField(StringField):
     """Text field with prefix and suffix annotations."""
 
-    def __init__(self, *args, **kwargs) -> None:
-        self.prefix = kwargs.pop('prefix', None)
-        self.suffix = kwargs.pop('suffix', None)
+    def __init__(
+        self,
+        *args: t.Any,
+        prefix: t.Optional[str] = None,
+        suffix: t.Optional[str] = None,
+        **kwargs: t.Any,
+    ) -> None:
         super().__init__(*args, **kwargs)
+        self.prefix = prefix
+        self.suffix = suffix
 
 
 class MarkdownField(TextAreaField):
     """TextArea field which has class='markdown'."""
 
-    def __call__(self, **kwargs) -> str:
+    def __call__(self, *args: t.Any, **kwargs: t.Any) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = (c + ' markdown').strip()
-        return super().__call__(**kwargs)
+        return super().__call__(*args, **kwargs)
 
 
 class StylesheetField(wtforms.TextAreaField):
     """TextArea field which has class='stylesheet'."""
 
-    def __call__(self, **kwargs) -> str:
+    def __call__(self, *args: t.Any, **kwargs: t.Any) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = (c + ' stylesheet').strip()
-        return super().__call__(**kwargs)
+        return super().__call__(*args, **kwargs)
 
 
 class ImgeeField(URLField):
@@ -709,29 +697,32 @@ class ImgeeField(URLField):
 
     Example usage::
 
-        image = ImgeeField(label="Logo", description="Your company logo here",
-                validators=[validators.DataRequired()],
-                profile='foo', img_label='logos', img_size='100x75')
-            )
+        image = ImgeeField(
+            label=__("Logo"),
+            description=__("Your company logo here"),
+            validators=[validators.DataRequired()],
+            profile='foo',
+            img_label='logos',
+            img_size='100x75'
+        )
     """
 
     widget = ImgeeWidget()
 
     def __init__(
         self,
-        label: str = '',
-        validators: t.Optional[ValidatorList] = None,
-        profile: t.Optional[str] = None,
+        *args: t.Any,
+        profile: t.Optional[t.Union[str, t.Callable[[], str]]] = None,
         img_label: t.Optional[str] = None,
         img_size: t.Optional[str] = None,
-        **kwargs,
-    ):
-        super().__init__(label, validators, **kwargs)
+        **kwargs: t.Any,
+    ) -> None:
+        super().__init__(*args, **kwargs)
         self.profile = profile
         self.img_label = img_label
         self.img_size = img_size
 
-    def __call__(self, **kwargs) -> str:
+    def __call__(self, *args: t.Any, **kwargs: t.Any) -> str:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = (c + ' imgee__url-holder').strip()
         if self.profile:
@@ -742,13 +733,13 @@ class ImgeeField(URLField):
             kwargs['data-img-label'] = self.img_label
         if self.img_size:
             kwargs['data-img-size'] = self.img_size
-        return super().__call__(**kwargs)
+        return super().__call__(*args, **kwargs)
 
 
 class FormField(wtforms.FormField):
     """FormField that removes CSRF in sub-forms."""
 
-    def process(self, *args, **kwargs) -> None:
+    def process(self, *args: t.Any, **kwargs: t.Any) -> None:
         super().process(*args, **kwargs)
         if hasattr(self.form, 'csrf_token'):
             del self.form.csrf_token
@@ -797,26 +788,26 @@ class RadioMatrixField(wtforms.Field):
 
     def __init__(
         self,
-        label: t.Optional[str] = None,
-        validators: t.Optional[ValidatorList] = None,
+        *args: t.Any,
         coerce: t.Callable[[t.Any], t.Any] = str,
-        fields=(),
-        choices=(),
-        **kwargs,
+        fields: t.Iterable[t.Tuple[str, str]] = (),
+        choices: t.Iterable[t.Tuple[str, str]] = (),
+        **kwargs: t.Any,
     ) -> None:
-        super().__init__(label, validators, **kwargs)
+        super().__init__(*args, **kwargs)
         self.coerce = coerce
         self.fields = fields
         self.choices = choices
-        self._obj = None
 
-    def process(self, formdata, data=unset_value, extra_filters=None) -> None:
+    def process(
+        self,
+        formdata: MultiDict,
+        data: t.Any = unset_value,
+        extra_filters: t.Optional[t.Iterable[t.Callable[[t.Any], t.Any]]] = None,
+    ) -> None:
         self.process_errors = []
         if data is unset_value:
-            try:
-                data = self.default()
-            except TypeError:
-                data = self.default
+            data = self.default() if callable(self.default) else self.default
 
         self.object_data = data
 
@@ -839,18 +830,18 @@ class RadioMatrixField(wtforms.Field):
         except ValueError as exc:
             self.process_errors.append(exc.args[0])
 
-    def process_data(self, value) -> None:
+    def process_data(self, value: t.Any) -> None:
         """Process incoming data from Python."""
         if value:
             self.data = {fname: getattr(value, fname) for fname, _ftitle in self.fields}
         else:
             self.data = {}
 
-    def process_formdata(self, valuelist) -> None:
+    def process_formdata(self, valuelist: t.Dict[str, t.Any]) -> None:
         """Process incoming data from request form."""
         self.data = {key: self.coerce(value) for key, value in valuelist.items()}
 
-    def populate_obj(self, obj, name: str) -> None:
+    def populate_obj(self, obj: t.Any, name: str) -> None:
         # 'name' is the name of this field in the form. Ignore it for RadioMatrixField
 
         for fname, _ftitle in self.fields:
@@ -878,7 +869,7 @@ class EnumSelectField(SelectField):
 
     widget = OriginalSelectWidget()
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: t.Any, **kwargs: t.Any) -> None:
         self.lenum = kwargs.pop('lenum')
         kwargs['choices'] = self.lenum.nametitles()
 
@@ -890,7 +881,7 @@ class EnumSelectField(SelectField):
         for name, title in self.choices:
             yield (name, title, name == selected_name)
 
-    def process_data(self, value) -> None:
+    def process_data(self, value: t.Any) -> None:
         """Process incoming data from Python."""
         if value is None:
             self.data = None
@@ -912,7 +903,7 @@ class EnumSelectField(SelectField):
                     self.gettext('Invalid Choice: could not coerce')
                 ) from exc
 
-    def pre_validate(self, form) -> None:
+    def pre_validate(self, form: WTForm) -> None:
         if self.data is _invalid_marker:
             raise StopValidation(self.gettext('Not a valid choice'))
 
@@ -921,30 +912,38 @@ class JsonField(wtforms.TextAreaField):
     """
     A field to accept JSON input, stored internally as a Python-native type.
 
-    By default, requires the JSON root object to be a dictionary/hash.
-
     ::
 
         class MyForm(forms.Form):
             field = forms.JsonField(__("My Field"), default={})
 
-    :param str label: Field label
-    :param list validators: List of field validators, passed on to WTForms
-    :param bool require_dict: Require a dictionary as the data value (default `True`)
-    :param kwargs: Additional field arguments, passed on to WTForms
+    The standard WTForms field arguments are accepted. Additionally:
+
+    :param require_dict: Require a dict as the data value (default `True`)
+    :param encode_kwargs: Additional arguments for :meth:`json.dumps` (default
+        ``{'sort_keys': True, 'indent': 2}``)
+    :param decode_kwargs: Additional arguments for :meth:`json.loads` (default ``{}``)
     """
 
-    prettyprint_args = {'sort_keys': True, 'indent': 2}
+    default_encode_kwargs: t.Dict[str, t.Any] = {'sort_keys': True, 'indent': 2}
+    default_decode_kwargs: t.Dict[str, t.Any] = {}
 
     def __init__(
         self,
-        label: str = '',
-        validators: t.Optional[ValidatorList] = None,
+        *args: t.Any,
         require_dict: bool = True,
-        **kwargs,
-    ):
+        encode_kwargs: t.Optional[t.Dict[str, t.Any]] = None,
+        decode_kwargs: t.Optional[t.Dict[str, t.Any]] = None,
+        **kwargs: t.Any,
+    ) -> None:
+        super().__init__(*args, **kwargs)
         self.require_dict = require_dict
-        super().__init__(label, validators, **kwargs)
+        self.encode_args = (
+            encode_kwargs if encode_kwargs is not None else self.default_encode_kwargs
+        )
+        self.decode_args = (
+            decode_kwargs if decode_kwargs is not None else self.default_decode_kwargs
+        )
 
     def _value(self) -> str:
         """
@@ -957,17 +956,14 @@ class JsonField(wtforms.TextAreaField):
             # invalid JSON to be presented back to the user for correction.
             return self.raw_data[0]
         if self.data is not None:
-            return json.dumps(
-                self.data,
-                ensure_ascii=False,
-                app=current_app,
-                **self.prettyprint_args,
-            )
+            # Use Flask's JSON module to apply any custom JSON implementation as used
+            # by the app
+            return json.dumps(self.data, ensure_ascii=False, **self.encode_args)
         return ''
 
-    def process_data(self, value) -> None:
+    def process_data(self, value: t.Any) -> None:
         """Process incoming data from Python."""
-        if value is not None and self.require_dict and not isinstance(value, dict):
+        if value is not None and self.require_dict and not isinstance(value, Mapping):
             raise ValueError(_("Field value must be a dictionary"))
 
         # TODO: Confirm this value can be rendered as JSON.
@@ -984,10 +980,14 @@ class JsonField(wtforms.TextAreaField):
             if not value:
                 self.data = self.default
                 return
+            # ValueError raised by this method will be captured as a field validator
+            # error by WTForms
             try:
-                data = json.loads(value)
+                data = json.loads(value, **self.decode_args)
             except ValueError as exc:
                 raise ValueError(_("Invalid JSON: {0!r}").format(exc)) from exc
-            if self.require_dict and not isinstance(data, dict):
-                raise ValueError(_("The JSON root must be a hash object"))
+            if self.require_dict and not isinstance(data, Mapping):
+                raise ValueError(
+                    _("The JSON data must be a hash object enclosed in {}")
+                )
             self.data = data

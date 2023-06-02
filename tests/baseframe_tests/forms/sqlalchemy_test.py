@@ -2,18 +2,25 @@
 # pylint: disable=redefined-outer-name
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase
 import pytest
 
-from coaster.sqlalchemy import Query
+from coaster.sqlalchemy import ModelBase, Query
 
 from baseframe import forms
 
 # --- Fixtures -------------------------------------------------------------------------
 
-db = SQLAlchemy()
+
+class Model(ModelBase, DeclarativeBase):
+    """Model base class."""
 
 
-class Document(db.Model):  # type: ignore[name-defined]
+db = SQLAlchemy(metadata=Model.metadata)
+Model.init_flask_sqlalchemy(db)
+
+
+class Document(Model):
     """Document model."""
 
     # pylint: disable=no-member

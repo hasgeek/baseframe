@@ -8,7 +8,7 @@ from setuptools.command.build_py import build_py
 
 # This is invoked from ``pyproject.toml``
 class BaseframeBuildPy(build_py):
-    def run(self):
+    def run(self) -> None:
         build_py.run(self)
         if not self._dry_run:
             curdir = os.getcwd()

@@ -3,6 +3,7 @@
 
 from datetime import date, datetime, time, timedelta
 from types import SimpleNamespace
+import typing as t
 
 from pytz import UTC, timezone
 import pytest
@@ -360,14 +361,17 @@ def test_nossl(app) -> None:
 class UserTest:
     """Fixture user with an "avatar" URL column and an email address for Gravatar."""
 
-    def __init__(self, avatar=None, email=None):
+    avatar: t.Optional[str]
+    email: str
+
+    def __init__(self, avatar=None, email=None) -> None:
         self.set_avatar(avatar)
         self.set_email(email)
 
-    def set_avatar(self, avatar):
+    def set_avatar(self, avatar: t.Optional[str]) -> None:
         self.avatar = avatar
 
-    def set_email(self, email):
+    def set_email(self, email: str) -> None:
         self.email = email
 
 

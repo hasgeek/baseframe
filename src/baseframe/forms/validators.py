@@ -35,6 +35,7 @@ from coaster.utils import deobfuscate_email, make_name, md5sum
 from ..extensions import _, __, asset_cache
 from ..signals import exception_catchall
 from ..utils import is_public_email_domain
+from .typing import ValidatorList
 
 __all__ = [
     'AllUrlsValid',
@@ -83,7 +84,7 @@ AllowedListInit = t.Union[t.Iterable[str], t.Callable[[], t.Iterable[str]], None
 AllowedList = t.Union[t.Iterable[str], None]
 
 
-def is_empty(value) -> bool:
+def is_empty(value: t.Any) -> bool:
     """Return True if the value is falsy but not a numeric zero."""
     return value not in _zero_values and not value
 
@@ -101,7 +102,7 @@ class ForEach:
     chain given to :class:`ForEach`, but not validators specified alongside.
     """
 
-    def __init__(self, validators) -> None:
+    def __init__(self, validators: ValidatorList) -> None:
         self.validators = validators
 
     def __call__(self, form: WTForm, field: WTField) -> None:
@@ -218,7 +219,7 @@ class _Comparison:
             }
             raise ValidationError(self.message.format(**d))
 
-    def compare(self, value, other) -> bool:
+    def compare(self, value: t.Any, other: t.Any) -> bool:
         raise NotImplementedError(_("Subclasses must define ``compare``"))
 
 
@@ -236,7 +237,7 @@ class GreaterThan(_Comparison):
 
     default_message = __("This must be greater than {other_label}")
 
-    def compare(self, value, other) -> bool:
+    def compare(self, value: t.Any, other: t.Any) -> bool:
         return value > other
 
 
@@ -254,7 +255,7 @@ class GreaterThanEqualTo(_Comparison):
 
     default_message = __("This must be greater than or equal to {other_label}")
 
-    def compare(self, value, other) -> bool:
+    def compare(self, value: t.Any, other: t.Any) -> bool:
         return value >= other
 
 
@@ -272,7 +273,7 @@ class LesserThan(_Comparison):
 
     default_message = __("This must be lesser than {other_label}")
 
-    def compare(self, value, other) -> bool:
+    def compare(self, value: t.Any, other: t.Any) -> bool:
         return value < other
 
 
@@ -290,7 +291,7 @@ class LesserThanEqualTo(_Comparison):
 
     default_message = __("This must be lesser than or equal to {other_label}")
 
-    def compare(self, value, other) -> bool:
+    def compare(self, value: t.Any, other: t.Any) -> bool:
         return value <= other
 
 
@@ -308,7 +309,7 @@ class NotEqualTo(_Comparison):
 
     default_message = __("This must not be the same as {other_label}")
 
-    def compare(self, value, other) -> bool:
+    def compare(self, value: t.Any, other: t.Any) -> bool:
         return value != other
 
 
@@ -451,7 +452,7 @@ class ValidUrl:
         allowed_schemes: t.Optional[AllowedListInit] = None,
         allowed_domains: t.Optional[AllowedListInit] = None,
         visit_url: bool = True,
-    ):
+    ) -> None:
         self.message = message or self.default_message
         self.message_urltext = message_urltext or self.default_message_urltext
         self.message_schemes = message_schemes or self.default_message_schemes
@@ -586,12 +587,12 @@ class ValidUrl:
 
     def call_inner(
         self,
-        field,
+        field: WTField,
         current_url: str,
         allowed_schemes: AllowedList,
         allowed_domains: AllowedList,
         invalid_urls: InvalidUrlPatterns,
-    ):
+    ) -> None:
         error = self.check_url(
             urljoin(current_url, field.data),
             allowed_schemes,
@@ -635,7 +636,7 @@ class AllUrlsValid(ValidUrl):
 
     def call_inner(
         self,
-        field,
+        field: WTField,
         current_url: str,
         allowed_schemes: AllowedList,
         allowed_domains: AllowedList,

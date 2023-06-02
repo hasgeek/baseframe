@@ -1,8 +1,13 @@
 """Redefined WTForms widgets and some extra widgets."""
 
+from __future__ import annotations
+
+import typing as t
+
 from flask import current_app, render_template
 from furl import furl
-from markupsafe import Markup
+from markupsafe import Markup, escape
+from wtforms import Field as WTField
 from wtforms.widgets import RadioInput, Select, html_params
 import wtforms
 
@@ -26,7 +31,7 @@ __all__ = [
 class SelectWidget(Select):
     """Add support of choices with ``optgroup`` to the ``Select`` widget."""
 
-    def __call__(self, field, **kwargs) -> str:
+    def __call__(self, field: WTField, **kwargs: t.Any) -> Markup:
         kwargs.setdefault('id', field.id)
         if self.multiple:
             kwargs['multiple'] = True
@@ -56,7 +61,7 @@ class SelectWidget(Select):
 class Select2Widget(Select):
     """Add a select2 class to the rendered select widget."""
 
-    def __call__(self, field, **kwargs) -> str:
+    def __call__(self, field: WTField, **kwargs: t.Any) -> Markup:
         kwargs.setdefault('id', field.id)
         kwargs.pop('type', field.type)
         if field.multiple:
@@ -77,9 +82,10 @@ class Select2Widget(Select):
 class TinyMce4(wtforms.widgets.TextArea):
     """Rich text widget with Tiny MCE 4."""
 
-    input_type = 'tinymce4'
+    #: Used as an identifier in forms.html.jinja2
+    input_type: str = 'tinymce4'
 
-    def __call__(self, field, **kwargs) -> str:
+    def __call__(self, field: WTField, **kwargs: t.Any) -> Markup:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         if c:
             kwargs['class'] = f'richtext {c}'
@@ -91,11 +97,11 @@ class TinyMce4(wtforms.widgets.TextArea):
 class SubmitInput(wtforms.widgets.SubmitInput):
     """Submit input with pre-defined classes."""
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: t.Any, **kwargs: t.Any) -> None:
         self.css_class = kwargs.pop('class', '') or kwargs.pop('class_', '')
         super().__init__(*args, **kwargs)
 
-    def __call__(self, field, **kwargs) -> str:
+    def __call__(self, field: WTField, **kwargs: t.Any) -> Markup:
         c = kwargs.pop('class', '') or kwargs.pop('class_', '')
         kwargs['class'] = f'{self.css_class} {c}'
         return super().__call__(field, **kwargs)
@@ -106,7 +112,7 @@ class DateTimeInput(wtforms.widgets.Input):
 
     input_type = 'datetime-local'
 
-    def __call__(self, field, **kwargs) -> str:
+    def __call__(self, field: WTField, **kwargs: t.Any) -> Markup:
         kwargs.setdefault('id', field.id)
         field_id = kwargs.pop('id')
         kwargs.pop('type', None)
@@ -114,9 +120,7 @@ class DateTimeInput(wtforms.widgets.Input):
         if value is None:  # Allow blank value to override field data
             value = field._value() or ''
         class_ = kwargs.pop('class', kwargs.pop('class_', ''))
-        input_attrs = wtforms.widgets.html_params(
-            name=field.name, id=field_id, value=value, **kwargs
-        )
+        input_attrs = html_params(name=field.name, id=field_id, value=value, **kwargs)
         return Markup(
             f'<input type="datetime-local" class="{class_}"'
             f' {input_attrs} /> {field.tzname}'
@@ -128,7 +132,7 @@ class CoordinatesInput(wtforms.widgets.core.Input):
 
     input_type = 'text'
 
-    def __call__(self, field, **kwargs) -> str:
+    def __call__(self, field: WTField, **kwargs: t.Any) -> Markup:
         id_ = kwargs.pop('id', field.id)
         kwargs.setdefault('type', self.input_type)
         kwargs.setdefault('size', 10)  # 9 digits precision and +/- sign
@@ -169,29 +173,31 @@ class CoordinatesInput(wtforms.widgets.core.Input):
 class RadioMatrixInput:
     """Render a table with a radio matrix."""
 
-    def __call__(self, field, **kwargs) -> str:
+    def __call__(self, field: RadioMatrixField, **kwargs: t.Any) -> Markup:
         rendered = []
         table_class = kwargs.pop('table_class', 'table')
-        rendered.append(f'<table class="{table_class}">')
+        rendered.append(f'<table class="{escape(table_class)}">')
         rendered.append('<thead>')
         rendered.append('<tr>')
-        rendered.append(f'<th>{field.label}</th>')
+        rendered.append(f'<th>{escape(field.label)}</th>')
         for _value, label in field.choices:
-            rendered.append(f'<th>{label}</th>')
+            rendered.append(f'<th>{escape(label)}</th>')
         rendered.append('</th>')
         rendered.append('</thead>')
         rendered.append('<tbody>')
         for name, title in field.fields:
             rendered.append('<tr>')
-            rendered.append(f'<td>{title}</td>')
+            rendered.append(f'<td>{escape(title)}</td>')
             selected = field.data.get(name)
             for value, _label in field.choices:
-                params = {'type': 'radio', 'name': name, 'value': value}
+                params: t.Dict[str, t.Any] = {
+                    'type': 'radio',
+                    'name': name,
+                    'value': value,
+                }
                 if str(selected) == str(value):
                     params['checked'] = True
-                rendered.append(
-                    f'<td><input {wtforms.widgets.html_params(**params)}/></td>'
-                )
+                rendered.append(f'<td><input {html_params(**params)}/></td>')
             rendered.append('</tr>')
         rendered.append('</tbody>')
         rendered.append('</table>')
@@ -213,31 +219,35 @@ class InlineListWidget:
     """
 
     def __init__(
-        self, html_tag='div', class_='', class_prefix=''  # pylint: disable=W0613
+        self,
+        html_tag: str = 'div',
+        class_: str = '',
+        class_prefix: str = '',
     ) -> None:
         self.html_tag = html_tag
-        self.class_ = ''
+        self.class_ = class_
         self.class_prefix = class_prefix
 
-    def __call__(self, field, **kwargs) -> str:
+    def __call__(self, field: WTField, **kwargs: t.Any) -> Markup:
         kwargs.setdefault('id', field.id)
         kwargs['class_'] = (
             kwargs.pop('class_', kwargs.pop('class', '')).strip() + ' ' + self.class_
         ).strip()
-        html = [f'<{self.html_tag} {wtforms.widgets.html_params(**kwargs)}>']
+        html = [f'<{escape(self.html_tag)} {html_params(**kwargs)}>']
         for subfield in field:
             html.append(
-                f'<label for="{subfield.id}" class="{self.class_prefix}{subfield.data}'
-                f'">{subfield()} {subfield.label.text}</label>'
+                f'<label for="{escape(subfield.id)}" class="{escape(self.class_prefix)}'
+                f'{escape(subfield.data)}">{escape(subfield())}'
+                f' {escape(subfield.label.text)}</label>'
             )
-        html.append(f'</{self.html_tag}>')
+        html.append(f'</{escape(self.html_tag)}>')
         return Markup('\n'.join(html))
 
 
 class ImgeeWidget(wtforms.widgets.Input):
     input_type = 'hidden'
 
-    def __call__(self, field, **kwargs) -> str:
+    def __call__(self, field: WTField, **kwargs: t.Any) -> Markup:
         id_ = kwargs.pop('id', field.id)
         kwargs.setdefault('type', self.input_type)
         imgee_host = current_app.config.get('IMGEE_HOST')
@@ -286,3 +296,7 @@ class ImgeeWidget(wtforms.widgets.Input):
                 field_html=field_html,
             )
         )
+
+
+if t.TYPE_CHECKING:
+    from .fields import RadioMatrixField

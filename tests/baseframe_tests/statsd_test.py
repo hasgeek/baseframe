@@ -7,12 +7,12 @@ from datetime import timedelta
 from unittest.mock import patch
 
 from flask import Flask
+from flask_babel import Babel
 from statsd.client.timer import Timer
 from statsd.client.udp import Pipeline
 import pytest
 
 from baseframe import forms
-from baseframe.extensions import Babel
 from baseframe.statsd import Statsd
 
 

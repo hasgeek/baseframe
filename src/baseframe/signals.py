@@ -1,6 +1,6 @@
 """Baseframe signals."""
 
-from flask.signals import Namespace
+from blinker import Namespace
 
 baseframe_signals = Namespace()
 

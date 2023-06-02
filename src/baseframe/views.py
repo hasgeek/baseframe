@@ -22,7 +22,7 @@ import requests
 from coaster.assets import split_namespec
 from coaster.auth import current_auth, request_has_auth
 from coaster.utils import make_name
-from coaster.views import render_with
+from coaster.views import ReturnRenderWith, render_with
 
 from .assets import assets as assets_repo
 from .blueprint import baseframe
@@ -227,9 +227,7 @@ def editorcss(subdomain: t.Optional[str] = None) -> Response:
 @baseframe.route('/api/baseframe/1/csrf/refresh', subdomain='<subdomain>')
 @baseframe.route('/api/baseframe/1/csrf/refresh', defaults={'subdomain': None})
 @render_with({'text/plain': lambda r: r['csrf_token']}, json=True)
-def csrf_refresh(  # TODO: Need ReturnRenderWith here
-    subdomain: t.Optional[str] = None,
-) -> t.Tuple[t.Dict[str, t.Any], int, t.Dict[str, str]]:
+def csrf_refresh(subdomain: t.Optional[str] = None) -> ReturnRenderWith:
     """Serve a refreshed CSRF token to ensure HTML forms never expire."""
     parsed_host = urlparse(request.url_root)
     origin = parsed_host.scheme + '://' + parsed_host.netloc

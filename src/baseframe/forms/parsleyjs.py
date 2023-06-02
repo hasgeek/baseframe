@@ -17,6 +17,7 @@ import re
 import typing as t
 
 from markupsafe import Markup
+from wtforms import Field as WTField
 from wtforms.fields import BooleanField as _BooleanField
 from wtforms.fields import DateField as _DateField
 from wtforms.fields import DecimalField as _DecimalField
@@ -56,6 +57,8 @@ from wtforms.widgets import TextInput as _TextInput
 from wtforms.widgets import URLInput as _URLInput
 from wtforms.widgets import html_params
 
+from .typing import ValidatorCallable
+
 __author__ = 'Johannes Gehrs (jgehrs@gmail.com)'
 
 __all__ = [
@@ -93,11 +96,11 @@ __all__ = [
 ]
 
 
-def parsley_kwargs(field, kwargs, extend=True) -> t.Dict[str, t.Any]:
+def parsley_kwargs(
+    field: WTField, kwargs: t.Any, extend: bool = True
+) -> t.Dict[str, t.Any]:
     """
-    Return new *kwargs* for *widget*.
-
-    Generate *kwargs* from the validators present for the widget.
+    Generate updated kwargs from the validators present for the widget.
 
     Note that the regex validation relies on the regex pattern being compatible with
     both ECMA script and Python. The regex is not converted in any way.
@@ -109,7 +112,7 @@ def parsley_kwargs(field, kwargs, extend=True) -> t.Dict[str, t.Any]:
     one. Do check if the behaviour suits your needs.
     """
     if extend:
-        new_kwargs = copy.deepcopy(kwargs)
+        new_kwargs: t.Dict[str, t.Any] = copy.deepcopy(kwargs)
     else:
         new_kwargs = {}
     for vali in field.validators:
@@ -138,15 +141,15 @@ def parsley_kwargs(field, kwargs, extend=True) -> t.Dict[str, t.Any]:
     return new_kwargs
 
 
-def _email_kwargs(kwargs, vali) -> None:
+def _email_kwargs(kwargs: t.Dict[str, t.Any], vali: ValidatorCallable) -> None:
     kwargs['data-parsley-type'] = 'email'
 
 
-def _equal_to_kwargs(kwargs, vali) -> None:
+def _equal_to_kwargs(kwargs: t.Dict[str, t.Any], vali: EqualTo) -> None:
     kwargs['data-parsley-equalto'] = '#' + vali.fieldname
 
 
-def _ip_address_kwargs(kwargs, vali) -> None:
+def _ip_address_kwargs(kwargs: t.Dict[str, t.Any], vali: IPAddress) -> None:
     # Regexp from http://stackoverflow.com/a/4460645
     kwargs['data-parsley-regexp'] = (
         r'^\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.'
@@ -156,7 +159,7 @@ def _ip_address_kwargs(kwargs, vali) -> None:
     )
 
 
-def _length_kwargs(kwargs, vali) -> None:
+def _length_kwargs(kwargs: t.Dict[str, t.Any], vali: Length) -> None:
     default_number = -1
 
     if default_number not in (vali.min, vali.max):
@@ -172,17 +175,19 @@ def _length_kwargs(kwargs, vali) -> None:
             kwargs['data-parsley-maxlength'] = str(vali.max)
 
 
-def _number_range_kwargs(kwargs, vali) -> None:
+def _number_range_kwargs(kwargs: t.Dict[str, t.Any], vali: NumberRange) -> None:
     kwargs['data-parsley-range'] = '[' + str(vali.min) + ',' + str(vali.max) + ']'
 
 
-def _input_required_kwargs(kwargs, vali) -> None:
+def _input_required_kwargs(
+    kwargs: t.Dict[str, t.Any], vali: t.Union[InputRequired, DataRequired]
+) -> None:
     kwargs['data-parsley-required'] = 'true'
     if vali.message:
         kwargs['data-parsley-required-message'] = vali.message
 
 
-def _regexp_kwargs(kwargs, vali) -> None:
+def _regexp_kwargs(kwargs: t.Dict[str, t.Any], vali: Regexp) -> None:
     if isinstance(vali.regex, re.Pattern):
         # WTForms allows compiled regexps to be passed to the validator, but we need
         # the pattern text
@@ -192,11 +197,11 @@ def _regexp_kwargs(kwargs, vali) -> None:
     kwargs['data-parsley-regexp'] = regex_string
 
 
-def _url_kwargs(kwargs, vali) -> None:
+def _url_kwargs(kwargs: t.Dict[str, t.Any], vali: URL) -> None:
     kwargs['data-parsley-type'] = 'url'
 
 
-def _string_seq_delimiter(kwargs, vali) -> str:
+def _string_seq_delimiter(kwargs: t.Dict[str, t.Any], vali: AnyOf) -> str:
     # We normally use a comma as the delimiter - looks clean and it's parsley's default.
     # If the strings for which we check contain a comma, we cannot use it as a
     # delimiter.
@@ -212,21 +217,23 @@ def _string_seq_delimiter(kwargs, vali) -> str:
     return delimiter
 
 
-def _anyof_kwargs(kwargs, vali) -> None:
+def _anyof_kwargs(kwargs: t.Dict[str, t.Any], vali: AnyOf) -> None:
     delimiter = _string_seq_delimiter(kwargs, vali)
     kwargs['data-parsley-inlist'] = delimiter.join(vali.values)
 
 
-def _trigger_kwargs(kwargs, trigger='change focusout') -> None:
+def _trigger_kwargs(
+    kwargs: t.Dict[str, t.Any], trigger: str = 'change focusout'
+) -> None:
     kwargs['data-parsley-trigger'] = trigger
 
 
-def _message_kwargs(kwargs, message) -> None:
+def _message_kwargs(kwargs: t.Dict[str, t.Any], message: str) -> None:
     kwargs['data-parsley-error-message'] = message
 
 
 class ParsleyInputMixin:
-    def __call__(self, field, **kwargs) -> str:
+    def __call__(self, field: WTField, **kwargs: t.Any) -> str:
         kwargs = parsley_kwargs(field, kwargs)
         return super().__call__(field, **kwargs)  # type: ignore[misc]
 
@@ -276,7 +283,7 @@ class Select(ParsleyInputMixin, _Select):
 
 
 class ListWidget(_ListWidget):
-    def __call__(self, field, **kwargs) -> str:
+    def __call__(self, field: WTField, **kwargs: t.Any) -> str:
         sub_kwargs = parsley_kwargs(field, kwargs, extend=False)
         kwargs.setdefault('id', field.id)
         html = [f'<{self.html_tag} {html_params(**kwargs)}>']

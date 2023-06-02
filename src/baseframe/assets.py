@@ -4,6 +4,8 @@ from coaster.assets import Version, VersionedAssets
 
 from . import __version__
 
+__all__ = ['Version', 'assets']
+
 #: Semantic-versioned assets
 assets = VersionedAssets()
 

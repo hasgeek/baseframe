@@ -1,5 +1,7 @@
 """Automatic form rendering."""
 
+from __future__ import annotations
+
 import typing as t
 
 from flask import (
@@ -23,6 +25,9 @@ from ..extensions import __
 from ..utils import request_is_xhr
 from .fields import SubmitField
 from .form import Form
+
+if t.TYPE_CHECKING:
+    from flask_sqlalchemy import SQLAlchemy
 
 _submit_str = __("Submit")
 
@@ -118,8 +123,8 @@ def render_redirect(url: str, code: int = 302) -> Response:
 
 
 def render_delete_sqla(
-    obj,
-    db,
+    obj: t.Any,
+    db: SQLAlchemy,
     title: str,
     message: str,
     success: str = '',

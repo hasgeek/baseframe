@@ -16,18 +16,18 @@ class SimpleUser:
     company: str
     pw_hash: str
 
-    def _set_password(self, value):
-        self.pw_hash = password_hash(value)
+    def _set_password(self, value: str):
+        self.pw_hash = str(password_hash(value))
 
     password = property(fset=_set_password)
 
-    def __init__(self, fullname, company, password):
+    def __init__(self, fullname: str, company: str, password: str) -> None:
         self.fullname = fullname
         self.company = company
         self.password = password
 
-    def password_is(self, candidate):
-        return self.pw_hash == password_hash(candidate)
+    def password_is(self, candidate: str) -> bool:
+        return self.pw_hash == str(password_hash(candidate))
 
 
 class GetSetForm(forms.Form):
@@ -79,7 +79,7 @@ class FieldRenderForm(forms.Form):
 
 
 @pytest.fixture()
-def user():
+def user() -> SimpleUser:
     return SimpleUser(  # nosec
         fullname="Test user", company="Test company", password="test"
     )

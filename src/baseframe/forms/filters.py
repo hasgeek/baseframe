@@ -59,7 +59,7 @@ def strip(
 
 
 def lstrip(
-    chars=unicode_extended_whitespace,
+    chars: str = unicode_extended_whitespace,
 ) -> t.Callable[[t.Optional[str]], t.Optional[str]]:
     """
     Strip whitespace from beginning of data.
@@ -74,7 +74,7 @@ def lstrip(
 
 
 def rstrip(
-    chars=unicode_extended_whitespace,
+    chars: str = unicode_extended_whitespace,
 ) -> t.Callable[[t.Optional[str]], t.Optional[str]]:
     """
     Strip whitespace from end of data.
@@ -89,7 +89,7 @@ def rstrip(
 
 
 def strip_each(
-    chars=unicode_extended_whitespace,
+    chars: str = unicode_extended_whitespace,
 ) -> t.Callable[[t.Optional[t.Iterable[str]]], t.Optional[t.Iterable[str]]]:
     """
     Strip whitespace and remove blank elements from each element in an iterable.

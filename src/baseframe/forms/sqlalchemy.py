@@ -20,7 +20,9 @@ __all__ = [
 class AvailableAttr:
     """Check whether the specified attribute is available for the model being edited."""
 
-    def __init__(self, attr: str, message=None, model=None) -> None:
+    def __init__(
+        self, attr: str, message: t.Optional[str] = None, model: t.Any = None
+    ) -> None:
         self.model = model
         self.attr = attr
         if not message:
@@ -47,7 +49,7 @@ class AvailableAttr:
 class AvailableName(AvailableAttr):
     """Check whether the specified name is available for the model being edited."""
 
-    def __init__(self, message: t.Optional[str] = None, model=None) -> None:
+    def __init__(self, message: t.Optional[str] = None, model: t.Any = None) -> None:
         if not message:
             message = __("This URL name is already in use")
         super().__init__('name', message, model)
