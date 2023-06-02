@@ -37,6 +37,39 @@ function activate_widgets() {
     },
   };
 
+  var cm_json_config = {
+    mode: { name: 'javascript', json: true },
+    lineNumbers: true,
+    theme: 'default',
+    lineWrapping: true,
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    viewportMargin: Infinity,
+    indentSize: 2,
+    tabSize: 2,
+    foldGutter: true,
+    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+    extraKeys: {
+      Tab: false,
+      'Shift-Tab': false,
+      Home: 'goLineLeft',
+      End: 'goLineRight',
+      'Cmd-Left': 'goLineLeft',
+      'Cmd-Right': 'goLineRight',
+      F11: function (cm) {
+        cm.setOption('fullScreen', !cm.getOption('fullScreen'));
+      },
+      'Shift-F11': function (cm) {
+        cm.setOption('fullScreen', !cm.getOption('fullScreen'));
+      },
+      Esc: function (cm) {
+        if (cm.getOption('fullScreen')) cm.setOption('fullScreen', false);
+      },
+      'Shift-Esc': function (cm) {
+        if (cm.getOption('fullScreen')) cm.setOption('fullScreen', false);
+      },
+    },
+  };
   // Activate codemirror on all textareas with class='markdown'
   $('textarea.markdown').each(function () {
     var editor = CodeMirror.fromTextArea(this, cm_markdown_config);
@@ -52,6 +85,18 @@ function activate_widgets() {
   // Activate codemirror on all textareas with class='stylesheet'
   $('textarea.stylesheet').each(function () {
     var editor = CodeMirror.fromTextArea(this, cm_css_config);
+    var delay;
+    editor.on('change', function (instance) {
+      clearTimeout(delay);
+      delay = setTimeout(function () {
+        editor.save();
+      }, 300);
+    });
+  });
+
+  // Activate codemirror on all textareas with class='json'
+  $('textarea.json').each(function () {
+    var editor = CodeMirror.fromTextArea(this, cm_json_config);
     var delay;
     editor.on('change', function (instance) {
       clearTimeout(delay);

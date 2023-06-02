@@ -945,6 +945,11 @@ class JsonField(wtforms.TextAreaField):
             decode_kwargs if decode_kwargs is not None else self.default_decode_kwargs
         )
 
+    def __call__(self, *args: t.Any, **kwargs: t.Any) -> str:
+        c = kwargs.pop('class', '') or kwargs.pop('class_', '')
+        kwargs['class'] = (c + ' json').strip()
+        return super().__call__(*args, **kwargs)
+
     def _value(self) -> str:
         """
         Render the internal Python value as a JSON string.
@@ -985,7 +990,9 @@ class JsonField(wtforms.TextAreaField):
             try:
                 data = json.loads(value, **self.decode_args)
             except ValueError as exc:
-                raise ValueError(_("Invalid JSON: {0!r}").format(exc)) from exc
+                raise ValueError(
+                    _("Invalid JSON: {message}").format(message=exc.args[0])
+                ) from None
             if self.require_dict and not isinstance(data, Mapping):
                 raise ValueError(
                     _("The JSON data must be a hash object enclosed in {}")
