@@ -1,5 +1,5 @@
-# Makefile for tinymce
-all: tinymce codemirror
+# Makefile for obsolete CodeMirror 4
+all: codemirror
 
 codemirror_package = codemirror5
 codemirror_ver = 4.11.0
