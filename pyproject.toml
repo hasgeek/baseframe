@@ -59,7 +59,6 @@ dependencies = [
   'python-dateutil',
   'pytz',
   'redis',
-  'requests-mock>=1.9.3',
   'requests',
   'rq',
   'semantic_version',
