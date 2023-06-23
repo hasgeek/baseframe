@@ -1,8 +1,8 @@
 """Test forms."""
 # pylint: disable=redefined-outer-name
 
-from werkzeug.datastructures import MultiDict
 import pytest
+from werkzeug.datastructures import MultiDict
 
 from baseframe import forms
 from baseframe.filters import render_field_options

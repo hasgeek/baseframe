@@ -1,11 +1,12 @@
 """Baseframe utilities."""
 
-from collections import abc
-from datetime import datetime, time, tzinfo
 import gettext
 import types
 import typing as t
+from collections import abc
+from datetime import datetime, time, tzinfo
 
+import pycountry
 from babel import Locale
 from flask import g, request
 from flask_babel import LazyString
@@ -13,7 +14,6 @@ from furl import furl
 from mxsniff import mxsniff
 from pytz import timezone, utc
 from pytz.tzinfo import BaseTzInfo
-import pycountry
 
 try:
     from mxsniff import MxLookupError  # pylint: disable=ungrouped-imports

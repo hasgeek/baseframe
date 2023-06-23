@@ -1,11 +1,13 @@
 """Jinja2 filters."""
 
+import os.path
+import typing as t
+import typing_extensions as te
 from datetime import date, datetime, time, timedelta
 from typing import TYPE_CHECKING, cast
 from urllib.parse import urlsplit, urlunsplit
-import os.path
-import typing as t
 
+import grapheme
 from babel.dates import format_date, format_datetime, format_time, format_timedelta
 from flask import current_app, request
 from flask_babel import Locale, get_locale
@@ -13,8 +15,6 @@ from furl import furl
 from markupsafe import Markup
 from pytz import utc
 from wtforms import Field as WTField
-import grapheme
-import typing_extensions as te
 
 from coaster.gfm import markdown
 from coaster.utils import compress_whitespace, md5sum, text_blocks

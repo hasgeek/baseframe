@@ -1,8 +1,8 @@
 """Standard extensions to add to the Flask app."""
 
-from datetime import tzinfo
 import os.path
 import typing as t
+from datetime import tzinfo
 
 from flask import current_app, request
 from flask_babel import Babel, Domain

@@ -1,7 +1,6 @@
 """Baseframe init."""
 
-from flask_babel import gettext as _
-from flask_babel import lazy_gettext as __
+from flask_babel import gettext as _, lazy_gettext as __
 
 from ._version import __version__, __version_info__
 from .assets import Version, assets

@@ -1,9 +1,9 @@
 """Test SQLAlchemy fields."""
 # pylint: disable=redefined-outer-name
 
+import pytest
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
-import pytest
 
 from coaster.sqlalchemy import ModelBase, Query
 

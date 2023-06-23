@@ -2,8 +2,7 @@
 
 import typing as t
 
-from wtforms import Field as WTField
-from wtforms import Form as WTForm
+from wtforms import Field as WTField, Form as WTForm
 from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 
 from ..extensions import __

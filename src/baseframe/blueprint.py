@@ -5,7 +5,9 @@ from __future__ import annotations
 import json
 import os.path
 import typing as t
+import typing_extensions as te
 
+import sentry_sdk
 from flask import Blueprint, Flask
 from flask_assets import Bundle, Environment
 from flask_babel import get_locale
@@ -14,8 +16,6 @@ from pytz import timezone
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.rq import RqIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
-import sentry_sdk
-import typing_extensions as te
 
 from coaster.app import RotatingKeySecureCookieSessionInterface
 from coaster.assets import split_namespec
@@ -107,7 +107,6 @@ class BaseframeBlueprint(Blueprint):
         :param theme: CSS theme, one of 'bootstrap3' (default) or 'mui'
         :param assetenv: Environment for assets (in case your app needs a custom
             environment)
-        :param asset_modules: Modules providing additional assets
         :param error_handlers: Register app error handlers (will override any from app)
         """
         if error_handlers:

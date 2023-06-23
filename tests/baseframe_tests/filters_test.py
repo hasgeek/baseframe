@@ -1,12 +1,12 @@
 """Test form filters."""
 # pylint: disable=redefined-outer-name
 
+import typing as t
 from datetime import date, datetime, time, timedelta
 from types import SimpleNamespace
-import typing as t
 
-from pytz import UTC, timezone
 import pytest
+from pytz import UTC, timezone
 
 from coaster.utils import md5sum
 
