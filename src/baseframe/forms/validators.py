@@ -2,18 +2,21 @@
 
 from __future__ import annotations
 
+import datetime
+import re
+import typing as t
 from collections import namedtuple
 from decimal import Decimal
 from fractions import Fraction
 from urllib.parse import urljoin, urlparse
-import datetime
-import re
-import typing as t
 
+import dns.resolver
+import emoji
+import html5lib
+import requests
 from flask import current_app, request
 from pyisemail import is_email
-from wtforms import Field as WTField
-from wtforms import Form as WTForm
+from wtforms import Field as WTField, Form as WTForm
 from wtforms.validators import (  # skipcq: PY-W2000
     URL,
     DataRequired,
@@ -25,10 +28,6 @@ from wtforms.validators import (  # skipcq: PY-W2000
     StopValidation,
     ValidationError,
 )
-import dns.resolver
-import emoji
-import html5lib
-import requests
 
 from coaster.utils import deobfuscate_email, make_name, md5sum
 

@@ -1,8 +1,8 @@
 """Statsd logger."""
 
-from datetime import timedelta
 import time
 import typing as t
+from datetime import timedelta
 
 from flask import Flask, current_app, request, request_finished, request_started
 from flask_wtf import FlaskForm

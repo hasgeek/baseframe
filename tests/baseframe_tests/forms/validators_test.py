@@ -1,15 +1,15 @@
 """Test form validators."""
 # pylint: disable=redefined-outer-name
 
-from types import SimpleNamespace
 import re
 import typing as t
 import warnings
+from types import SimpleNamespace
 
-from werkzeug.datastructures import MultiDict
 import pytest
 import requests_mock
 import urllib3
+from werkzeug.datastructures import MultiDict
 
 from baseframe import forms
 from baseframe.utils import MxLookupError, is_public_email_domain

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import typing as t
 
+import wtforms
 from flask import (
     abort,
     current_app,
@@ -16,7 +17,6 @@ from flask import (
 )
 from markupsafe import Markup, escape
 from werkzeug.wrappers import Response
-import wtforms
 
 from coaster.utils import buid
 

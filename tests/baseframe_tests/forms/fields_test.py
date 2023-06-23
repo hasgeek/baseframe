@@ -4,9 +4,9 @@
 from datetime import datetime
 from decimal import Decimal
 
+import pytest
 from pytz import timezone, utc
 from werkzeug.datastructures import MultiDict
-import pytest
 
 from coaster.utils import LabeledEnum
 

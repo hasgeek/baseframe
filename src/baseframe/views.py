@@ -1,11 +1,12 @@
 """Baseframe views and view support helpers."""
 
-from datetime import timedelta
-from urllib.parse import urlparse
 import os
 import os.path
 import typing as t
+from datetime import timedelta
+from urllib.parse import urlparse
 
+import requests
 from flask import (
     Response,
     abort,
@@ -17,7 +18,6 @@ from flask import (
 from flask_assets import Bundle
 from flask_babel import _get_current_context
 from flask_wtf.csrf import generate_csrf
-import requests
 
 from coaster.assets import split_namespec
 from coaster.auth import current_auth, request_has_auth

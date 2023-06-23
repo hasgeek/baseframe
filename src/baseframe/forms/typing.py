@@ -1,11 +1,10 @@
 """Form type aliases and protocols."""
 
 import typing as t
+import typing_extensions as te
 
 from markupsafe import Markup
-from wtforms import Field as WTField
-from wtforms import Form as WTForm
-import typing_extensions as te
+from wtforms import Field as WTField, Form as WTForm
 
 FilterCallable: te.TypeAlias = t.Callable[[t.Any], t.Any]
 FilterList: te.TypeAlias = t.Iterable[FilterCallable]

@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import typing as t
 
+import wtforms
 from flask import current_app, render_template
 from furl import furl
 from markupsafe import Markup, escape
 from wtforms import Field as WTField
 from wtforms.widgets import RadioInput, Select, html_params
-import wtforms
 
 from ..extensions import _
 

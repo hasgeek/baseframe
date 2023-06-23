@@ -2,24 +2,26 @@
 
 from __future__ import annotations
 
-from threading import Lock
 import typing as t
+import typing_extensions as te
 import uuid
+from threading import Lock
 
+import wtforms
 from flask import current_app
 from flask_wtf import FlaskForm as BaseForm
 from werkzeug.datastructures import MultiDict
 from wtforms import Field as WTField
 from wtforms.utils import unset_value
-import typing_extensions as te
-import wtforms
 
 from ..extensions import __, asset_cache
 from ..signals import form_validation_error, form_validation_success
-from . import fields as bfields
-from . import filters as bfilters
-from . import parsleyjs as bparsleyjs
-from . import validators as bvalidators
+from . import (
+    fields as bfields,
+    filters as bfilters,
+    parsleyjs as bparsleyjs,
+    validators as bvalidators,
+)
 from .typing import FilterCallable, ValidatorCallable, ValidatorList, WidgetProtocol
 
 __all__ = [

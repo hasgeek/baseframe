@@ -3,29 +3,33 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
-from datetime import datetime, tzinfo
-from decimal import Decimal
-from decimal import InvalidOperation as DecimalError
-from urllib.parse import urljoin
 import itertools
 import typing as t
+import typing_extensions as te
+from collections.abc import Mapping
+from datetime import datetime, tzinfo
+from decimal import Decimal, InvalidOperation as DecimalError
+from urllib.parse import urljoin
 
+import bleach
+import wtforms
 from dateutil import parser
 from flask import current_app, json
 from flask_wtf import RecaptchaField as RecaptchaFieldBase
-from pytz import timezone as pytz_timezone
-from pytz import utc
+from pytz import timezone as pytz_timezone, utc
 from werkzeug.datastructures import MultiDict
 from wtforms import Form as WTForm
-from wtforms.fields import Field, FieldList, FileField, Label
-from wtforms.fields import SelectField as SelectFieldBase
-from wtforms.fields import SelectMultipleField, SubmitField
+from wtforms.fields import (
+    Field,
+    FieldList,
+    FileField,
+    Label,
+    SelectField as SelectFieldBase,
+    SelectMultipleField,
+    SubmitField,
+)
 from wtforms.utils import unset_value
 from wtforms.widgets import Select as OriginalSelectWidget
-import bleach
-import typing_extensions as te
-import wtforms
 
 from ..extensions import _, __, get_timezone
 from ..utils import request_timestamp
