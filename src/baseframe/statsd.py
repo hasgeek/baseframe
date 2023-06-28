@@ -34,7 +34,6 @@ class Statsd:
 
     App configuration defaults::
 
-        SITE_ID = app.name  # Used as a prefix in stats
         STATSD_HOST = '127.0.0.1'
         STATSD_PORT = 8125
         STATSD_MAXUDPSIZE = 512
@@ -98,11 +97,11 @@ class Statsd:
             tags = {}
         if current_app.config['STATSD_TAGS']:
             prefix = 'flask_app'
-            tags['app'] = current_app.config['SITE_ID']
+            tags['app'] = current_app.name
             tag_sep = current_app.config['STATSD_TAGS']
             tag_join = '='
         else:
-            prefix = f'flask_app.{current_app.config["SITE_ID"]}'
+            prefix = f'flask_app.{current_app.name}'
             tag_sep = '.'
             tag_join = '_'
         if tags:
