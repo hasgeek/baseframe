@@ -375,6 +375,11 @@ assets['codemirror-css.js'][Version('5.53.2')] = {
         'codemirror.addon.edit.closebrackets.js==5.53.2',
     ]
 }
+assets['codemirror-css.css'][Version('5.53.2')] = {
+    'requires': [
+        'codemirror.css==5.53.2',
+    ]
+}
 
 
 assets['pygments-default.css'][Version('1.5.0')] = 'baseframe/css/pygments-default.css'
