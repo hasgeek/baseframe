@@ -141,10 +141,13 @@ class BaseframeBlueprint(Blueprint):
             raise ValueError("App has misconfigured secret keys")
         app.session_interface = RotatingKeySecureCookieSessionInterface()
 
-        # Default .js and tracking file for Matomo
         if app.config.get('MATOMO_URL') and app.config.get('MATOMO_ID'):
+            # Default .js and tracking file for Matomo
             app.config.setdefault('MATOMO_JS', 'matomo.js')
             app.config.setdefault('MATOMO_FILE', 'matomo.php')
+            # Check if Matomo URL is ending with '/' or else add it
+            if not app.config['MATOMO_URL'].endswith('/'):
+                app.config['MATOMO_URL'] += '/'
 
         statsd.init_app(app)
 
