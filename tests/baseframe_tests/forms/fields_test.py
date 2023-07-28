@@ -20,8 +20,6 @@ class MY_ENUM(LabeledEnum):  # noqa: N801
     SECOND = (2, 'second', "Second")
     THIRD = (3, 'third', "Third")
 
-    __order__ = (FIRST, SECOND, THIRD)
-
 
 DEFAULT_JSONDATA = {'key': "val"}
 
