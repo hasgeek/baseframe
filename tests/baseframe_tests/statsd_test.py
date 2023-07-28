@@ -7,7 +7,7 @@ from datetime import timedelta
 from unittest.mock import patch
 
 import pytest
-from flask import Flask
+from flask import Flask, render_template_string
 from flask_babel import Babel
 from statsd.client.timer import Timer
 from statsd.client.udp import Pipeline
@@ -238,51 +238,105 @@ def test_tags(app, ctx, statsd) -> None:
 
 
 def test_request_handler_notags(app, statsd, view) -> None:
-    with patch('statsd.StatsClient.incr') as mock_incr:
-        with patch('statsd.StatsClient.timing') as mock_timing:
-            with app.test_client() as client:
-                client.get('/')
-                # First call
-                mock_incr.assert_any_call(
-                    'flask_app.baseframe_tests.statsd_test.request_handlers'
-                    '.endpoint_index.status_code_200',
-                    1,
-                    rate=1,
-                )
-                # Second and last call
-                mock_incr.assert_called_with(
-                    'flask_app.baseframe_tests.statsd_test.request_handlers'
-                    '.endpoint__overall.status_code_200',
-                    1,
-                    rate=1,
-                )
-                mock_timing.assert_called()
+    """Test request_handlers logging with tags disabled."""
+    with patch('statsd.StatsClient.incr') as mock_incr, patch(
+        'statsd.StatsClient.timing'
+    ) as mock_timing, app.test_client() as client:
+        client.get('/')
+        # First call
+        mock_incr.assert_any_call(
+            'flask_app.baseframe_tests.statsd_test.request_handlers'
+            '.endpoint_index.status_code_200',
+            1,
+            rate=1,
+        )
+        # Second and last call
+        mock_incr.assert_called_with(
+            'flask_app.baseframe_tests.statsd_test.request_handlers'
+            '.endpoint__overall.status_code_200',
+            1,
+            rate=1,
+        )
+        mock_timing.assert_called()
 
 
 def test_request_handler_tags(app, statsd, view) -> None:
+    """Test request_handlers logging with tags enabled."""
     app.config['STATSD_TAGS'] = ','
-    with patch('statsd.StatsClient.incr') as mock_incr:
-        with patch('statsd.StatsClient.timing') as mock_timing:
-            with app.test_client() as client:
-                client.get('/')
-                mock_incr.assert_called_once_with(
-                    'flask_app.request_handlers,endpoint=index,status_code=200'
-                    ',app=baseframe_tests.statsd_test',
-                    1,
-                    rate=1,
-                )
-                mock_timing.assert_called_once()
+    with patch('statsd.StatsClient.incr') as mock_incr, patch(
+        'statsd.StatsClient.timing'
+    ) as mock_timing, app.test_client() as client:
+        client.get('/')
+        mock_incr.assert_called_once_with(
+            'flask_app.request_handlers,endpoint=index,status_code=200'
+            ',app=baseframe_tests.statsd_test',
+            1,
+            rate=1,
+        )
+        mock_timing.assert_called_once()
 
 
 def test_request_handler_disabled(app, view) -> None:
+    """Test request_handlers logging disabled."""
     app.config['STATSD_REQUEST_LOG'] = False
     Statsd(app)
-    with patch('statsd.StatsClient.incr') as mock_incr:
-        with patch('statsd.StatsClient.timing') as mock_timing:
-            with app.test_client() as client:
-                client.get('/')
-                mock_incr.assert_not_called()
-                mock_timing.assert_not_called()
+    with patch('statsd.StatsClient.incr') as mock_incr, patch(
+        'statsd.StatsClient.timing'
+    ) as mock_timing, app.test_client() as client:
+        client.get('/')
+        mock_incr.assert_not_called()
+        mock_timing.assert_not_called()
+
+
+def test_render_template_notags(app, statsd) -> None:
+    """Test render_template logging with tags disabled."""
+    with patch('statsd.StatsClient.incr') as mock_incr, patch(
+        'statsd.StatsClient.timing'
+    ) as mock_timing, app.app_context():
+        render_template_string("Test template")
+        assert mock_incr.call_count == 2
+        assert mock_timing.call_count == 2
+        assert [c[0][0] for c in mock_incr.call_args_list] == [
+            'flask_app.baseframe_tests.statsd_test.render_template.template__str',
+            'flask_app.baseframe_tests.statsd_test.render_template'
+            '.template__overall',
+        ]
+        assert [c[0][0] for c in mock_incr.call_args_list] == [
+            'flask_app.baseframe_tests.statsd_test.render_template.template__str',
+            'flask_app.baseframe_tests.statsd_test.render_template'
+            '.template__overall',
+        ]
+
+
+def test_render_template_tags(app, statsd) -> None:
+    """Test render_template logging with tags enabled."""
+    app.config['STATSD_TAGS'] = ','
+    with patch('statsd.StatsClient.incr') as mock_incr, patch(
+        'statsd.StatsClient.timing'
+    ) as mock_timing, app.app_context():
+        render_template_string("Test template")
+        assert mock_incr.call_count == 1
+        assert mock_timing.call_count == 1
+        assert (
+            mock_incr.call_args[0][0] == 'flask_app.render_template,template=_str,'
+            'app=baseframe_tests.statsd_test'
+        )
+        assert (
+            mock_incr.call_args[0][0] == 'flask_app.render_template,template=_str,'
+            'app=baseframe_tests.statsd_test'
+        )
+
+
+def test_render_template_disabled(app, view) -> None:
+    """Test render_template logging disabled."""
+    app.config['STATSD_RENDERTEMPLATE_LOG'] = False
+    Statsd(app)
+    with patch('statsd.StatsClient.incr') as mock_incr, patch(
+        'statsd.StatsClient.timing'
+    ) as mock_timing, app.app_context():
+        render_template_string("Test template")
+        mock_incr.assert_not_called()
+        mock_timing.assert_not_called()
 
 
 def test_form_success(ctx, app, statsd, form) -> None:
