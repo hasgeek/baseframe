@@ -224,7 +224,8 @@ class Statsd:
     def pipeline(self) -> Pipeline:
         return current_app.extensions['statsd_core'].pipeline()
 
-    def _request_started(self, app: Flask) -> None:
+    @staticmethod
+    def _request_started(app: Flask) -> None:
         if app.config['STATSD_RATE'] != 0:
             setattr(g, REQUEST_START_TIME_ATTR, time.time())
 
@@ -254,13 +255,16 @@ class Statsd:
                 # we use both: timer (via `timing`) and counter (via `incr`).
                 self.incr(metric_name, tags=tags)
 
-    def _before_render_template(self, app: Flask, template: Template, **kwargs) -> None:
+    @staticmethod
+    def _before_render_template(app: Flask, template: Template, **kwargs) -> None:
+        """Record start time when rendering a template."""
         if app.config['STATSD_RATE'] != 0:
             if not hasattr(g, TEMPLATE_START_TIME_ATTR):
                 setattr(g, TEMPLATE_START_TIME_ATTR, {})
             getattr(g, TEMPLATE_START_TIME_ATTR)[template] = time.time()
 
     def _template_rendered(self, app: Flask, template: Template, **kwargs) -> None:
+        """Calculate time to render a template and log to statsd."""
         start_time = getattr(g, TEMPLATE_START_TIME_ATTR, {}).get(template)
         if not start_time:
             current_app.logger.warning(
