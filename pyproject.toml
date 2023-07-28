@@ -123,7 +123,6 @@ sections = [
 [tool.mypy]
 files = '**/*.py'
 exclude = 'node_modules'
-plugins = ['sqlalchemy.ext.mypy.plugin']
 ignore_missing_imports = true
 show_error_codes = true
 warn_unreachable = true

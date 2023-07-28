@@ -4,8 +4,18 @@ import time
 import typing as t
 from datetime import timedelta
 
-from flask import Flask, current_app, request, request_finished, request_started
+from flask import (
+    Flask,
+    before_render_template,
+    current_app,
+    g,
+    request,
+    request_finished,
+    request_started,
+    template_rendered,
+)
 from flask_wtf import FlaskForm
+from jinja2 import Template
 from statsd import StatsClient
 from statsd.client.timer import Timer
 from statsd.client.udp import Pipeline
@@ -15,7 +25,8 @@ from .signals import form_validation_error, form_validation_success
 
 __all__ = ['Statsd']
 
-START_TIME_ATTR = 'statsd_start_time'
+REQUEST_START_TIME_ATTR = 'statsd_request_start_time'
+TEMPLATE_START_TIME_ATTR = 'statsd_template_start_time'
 
 TagsType = t.Dict[str, t.Union[int, str, None]]
 
@@ -41,6 +52,7 @@ class Statsd:
         STATSD_RATE = 1
         STATSD_TAGS = False
         STATSD_REQUEST_LOG = True
+        STATSD_RENDERTEMPLATE_LOG = True
         STATSD_FORM_LOG = True
 
     If the statsd server supports tags, the ``STATSD_TAGS`` parameter may be set to a
@@ -91,6 +103,11 @@ class Statsd:
             # processors, allowing us to capture (nearly) all time taken for processing
             request_started.connect(self._request_started, app)
             request_finished.connect(self._request_finished, app)
+
+        if app.config.setdefault('STATSD_RENDERTEMPLATE_LOG', True):
+            # Flask's render_template also sends before and after signals
+            before_render_template.connect(self._before_render_template, app)
+            template_rendered.connect(self._template_rendered, app)
 
     def _metric_name(self, name: str, tags: t.Optional[TagsType] = None) -> str:
         if tags is None:
@@ -209,10 +226,11 @@ class Statsd:
 
     def _request_started(self, app: Flask) -> None:
         if app.config['STATSD_RATE'] != 0:
-            setattr(request, START_TIME_ATTR, time.time())
+            setattr(g, REQUEST_START_TIME_ATTR, time.time())
 
     def _request_finished(self, app: Flask, response: Response) -> None:
-        if hasattr(request, START_TIME_ATTR):
+        if hasattr(g, REQUEST_START_TIME_ATTR):
+            start_time = getattr(g, REQUEST_START_TIME_ATTR)
             metrics = [
                 (
                     'request_handlers',
@@ -226,19 +244,55 @@ class Statsd:
                         {'endpoint': '_overall', 'status_code': response.status_code},
                     )
                 )
-
+            duration = int((time.time() - start_time) * 1000)
             for metric_name, tags in metrics:
                 # Use `timing` instead of `timer` because we record it as two metrics.
                 # Convert time from seconds:float to milliseconds:int
-                self.timing(
-                    metric_name,
-                    int((time.time() - getattr(request, START_TIME_ATTR)) * 1000),
-                    tags=tags,
-                )
+                self.timing(metric_name, duration, tags=tags)
                 # The timer metric also registers a count, making the counter metric
                 # seemingly redundant, but the counter metric also includes a rate, so
                 # we use both: timer (via `timing`) and counter (via `incr`).
                 self.incr(metric_name, tags=tags)
+
+    def _before_render_template(self, app: Flask, template: Template, **kwargs) -> None:
+        if app.config['STATSD_RATE'] != 0:
+            if not hasattr(g, TEMPLATE_START_TIME_ATTR):
+                setattr(g, TEMPLATE_START_TIME_ATTR, {})
+            getattr(g, TEMPLATE_START_TIME_ATTR)[template] = time.time()
+
+    def _template_rendered(self, app: Flask, template: Template, **kwargs) -> None:
+        start_time = getattr(g, TEMPLATE_START_TIME_ATTR, {}).get(template)
+        if not start_time:
+            current_app.logger.warning(
+                "flask.template_rendered signal was called with template %s but"
+                " flask.before_render_template was not called first",
+                template,
+            )
+            return
+
+        metrics: t.List[t.Tuple[str, t.Dict[str, t.Optional[t.Union[int, str]]]]] = [
+            (
+                'render_template',
+                {'template': template.name or '_str'},
+            )
+        ]
+        if not app.config['STATSD_TAGS']:
+            metrics.append(
+                (
+                    'render_template',
+                    {'template': '_overall'},
+                )
+            )
+
+        duration = int((time.time() - start_time) * 1000)
+        for metric_name, tags in metrics:
+            # Use `timing` instead of `timer` because we record it as two metrics.
+            # Convert time from seconds:float to milliseconds:int
+            self.timing(metric_name, duration, tags=tags)
+            # The timer metric also registers a count, making the counter metric
+            # seemingly redundant, but the counter metric also includes a rate, so
+            # we use both: timer (via `timing`) and counter (via `incr`).
+            self.incr(metric_name, tags=tags)
 
 
 @form_validation_success.connect
