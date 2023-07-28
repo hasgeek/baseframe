@@ -296,12 +296,12 @@ def test_render_template_notags(app, statsd) -> None:
         render_template_string("Test template")
         assert mock_incr.call_count == 2
         assert mock_timing.call_count == 2
-        assert [c.args[0] for c in mock_incr.call_args_list] == [
+        assert [c[0][0] for c in mock_incr.call_args_list] == [
             'flask_app.baseframe_tests.statsd_test.render_template.template__str',
             'flask_app.baseframe_tests.statsd_test.render_template'
             '.template__overall',
         ]
-        assert [c.args[0] for c in mock_incr.call_args_list] == [
+        assert [c[0][0] for c in mock_incr.call_args_list] == [
             'flask_app.baseframe_tests.statsd_test.render_template.template__str',
             'flask_app.baseframe_tests.statsd_test.render_template'
             '.template__overall',
@@ -318,11 +318,11 @@ def test_render_template_tags(app, statsd) -> None:
         assert mock_incr.call_count == 1
         assert mock_timing.call_count == 1
         assert (
-            mock_incr.call_args.args[0] == 'flask_app.render_template,template=_str,'
+            mock_incr.call_args[0][0] == 'flask_app.render_template,template=_str,'
             'app=baseframe_tests.statsd_test'
         )
         assert (
-            mock_incr.call_args.args[0] == 'flask_app.render_template,template=_str,'
+            mock_incr.call_args[0][0] == 'flask_app.render_template,template=_str,'
             'app=baseframe_tests.statsd_test'
         )
 
