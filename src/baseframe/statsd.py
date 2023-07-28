@@ -226,10 +226,12 @@ class Statsd:
 
     @staticmethod
     def _request_started(app: Flask) -> None:
+        """Record start time when serving a request."""
         if app.config['STATSD_RATE'] != 0:
             setattr(g, REQUEST_START_TIME_ATTR, time.time())
 
     def _request_finished(self, app: Flask, response: Response) -> None:
+        """Calculate time to render a response and log to statsd."""
         if hasattr(g, REQUEST_START_TIME_ATTR):
             start_time = getattr(g, REQUEST_START_TIME_ATTR)
             metrics = [
