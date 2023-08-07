@@ -8,7 +8,7 @@ repos:
     hooks:
       - id: check-pre-commit-ci-config
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.0.280
+    rev: v0.0.282
     hooks:
       - id: ruff
         args: ['--fix', '--exit-non-zero-on-fix']
@@ -103,7 +103,7 @@ repos:
         additional_dependencies:
           - 'bandit[toml]'
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.0
+    rev: v3.0.1
     hooks:
       - id: prettier
         args: ['--single-quote', '--trailing-comma', 'es5']
