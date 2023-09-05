@@ -4813,8 +4813,9 @@
             }
 
             if (options.initSelection != null) {
-              var InitSelection = require(options.amdBase +
-                'compat/initSelection');
+              var InitSelection = require(
+                options.amdBase + 'compat/initSelection'
+              );
 
               options.dataAdapter = Utils.Decorate(
                 options.dataAdapter,
@@ -4924,8 +4925,9 @@
               options.containerCss != null ||
               options.adaptContainerCssClass != null
             ) {
-              var ContainerCSS = require(options.amdBase +
-                'compat/containerCss');
+              var ContainerCSS = require(
+                options.amdBase + 'compat/containerCss'
+              );
 
               options.selectionAdapter = Utils.Decorate(
                 options.selectionAdapter,
