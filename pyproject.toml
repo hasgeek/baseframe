@@ -11,15 +11,11 @@ description = 'Baseframe for Hasgeek projects'
 readme = 'README.rst'
 requires-python = '>=3.7'
 keywords = ['baseframe', 'flask', 'framework', 'web']
-license = {file = 'LICENSE.txt'}
+license = { file = 'LICENSE.txt' }
 dynamic = ['version']
-maintainers = [
-  {name = 'Hasgeek', email = 'info@hasgeek.com'},
-]
-authors = [
-  {name = 'Kiran Jonnalagadda'}
-]
-urls = {repository = 'https://github.com/hasgeek/baseframe'}
+maintainers = [{ name = 'Hasgeek', email = 'info@hasgeek.com' }]
+authors = [{ name = 'Kiran Jonnalagadda' }]
+urls = { repository = 'https://github.com/hasgeek/baseframe' }
 classifiers = [
   'Programming Language :: Python',
   'Programming Language :: Python :: 3 :: Only',
@@ -41,7 +37,7 @@ dependencies = [
   'cssmin',
   'dnspython',
   'emoji>=1.0.0',
-  'Flask-Assets',
+  'Flask-Assets2',
   'Flask-Babel>=3.0.0',
   'Flask-Caching',
   'Flask-WTF>=0.14',
@@ -69,7 +65,7 @@ dependencies = [
 ]
 
 [tool.setuptools.dynamic]
-version = {attr = 'baseframe._version.__version__'}
+version = { attr = 'baseframe._version.__version__' }
 
 [tool.setuptools.packages.find]
 where = ['src']
@@ -117,7 +113,7 @@ sections = [
   'THIRDPARTY',
   'FIRSTPARTY',
   'REPO',
-  'LOCALFOLDER'
+  'LOCALFOLDER',
 ]
 
 [tool.mypy]
@@ -149,25 +145,25 @@ for path in pathlib.Path.cwd().parents:
 [tool.pylint.message_control]
 max-line-length = 88
 disable = [
-  'cyclic-import',  # We have tail imports all over
-  'fixme',  # Our workflow is to tag for future fixes
-  'invalid-name',  # Flake8 covers our naming convention requirements
-  'missing-class-docstring',  # Backlog
-  'missing-function-docstring',  # Backlog
-  'no-member',  # Pylint doesn't understand mixins referring to main class members
-  'redefined-builtin',  # Covered by Flake8 already
-  'too-few-public-methods',  # Data classes and validator classes have few methods
+  'cyclic-import',                # We have tail imports all over
+  'fixme',                        # Our workflow is to tag for future fixes
+  'invalid-name',                 # Flake8 covers our naming convention requirements
+  'missing-class-docstring',      # Backlog
+  'missing-function-docstring',   # Backlog
+  'no-member',                    # Pylint doesn't understand mixins referring to main class members
+  'redefined-builtin',            # Covered by Flake8 already
+  'too-few-public-methods',       # Data classes and validator classes have few methods
   'too-many-arguments',
   'too-many-branches',
   'too-many-locals',
-  'too-many-instance-attributes',  # Some instances are just bags of attributes
+  'too-many-instance-attributes', # Some instances are just bags of attributes
   'too-many-lines',
   'too-many-nested-blocks',
   'too-many-return-statements',
   'too-many-statements',
-  'unused-argument',  # Arguments required for spec compatibility aren't always used
-  'wrong-import-position',  # Imports after code are sometimes required
-  'wrong-import-order',  # Let black and isort handle this
+  'unused-argument',              # Arguments required for spec compatibility aren't always used
+  'wrong-import-position',        # Imports after code are sometimes required
+  'wrong-import-order',           # Let black and isort handle this
 ]
 
 [tool.bandit]
@@ -187,31 +183,76 @@ select = ["E", "F"]
 ignore = ["E402", "E501"]
 
 # Allow autofix for all enabled rules (when `--fix`) is provided.
-fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
+fixable = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "I",
+  "N",
+  "Q",
+  "S",
+  "T",
+  "W",
+  "ANN",
+  "ARG",
+  "BLE",
+  "COM",
+  "DJ",
+  "DTZ",
+  "EM",
+  "ERA",
+  "EXE",
+  "FBT",
+  "ICN",
+  "INP",
+  "ISC",
+  "NPY",
+  "PD",
+  "PGH",
+  "PIE",
+  "PL",
+  "PT",
+  "PTH",
+  "PYI",
+  "RET",
+  "RSE",
+  "RUF",
+  "SIM",
+  "SLF",
+  "TCH",
+  "TID",
+  "TRY",
+  "UP",
+  "YTT",
+]
 unfixable = []
 
 # Exclude a variety of commonly ignored directories.
 exclude = [
-    ".bzr",
-    ".direnv",
-    ".eggs",
-    ".git",
-    ".hg",
-    ".mypy_cache",
-    ".nox",
-    ".pants.d",
-    ".pytype",
-    ".ruff_cache",
-    ".svn",
-    ".tox",
-    ".venv",
-    "__pypackages__",
-    "_build",
-    "buck-out",
-    "build",
-    "dist",
-    "node_modules",
-    "venv",
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".hg",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".pytype",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "node_modules",
+  "venv",
 ]
 
 # Same as Black.
@@ -235,7 +276,12 @@ split-on-trailing-comma = false
 relative-imports-order = 'furthest-to-closest'
 known-first-party = ['coaster', 'flask_lastuser']
 section-order = [
-  'future', 'standard-library', 'third-party', 'first-party', 'repo', 'local-folder'
+  'future',
+  'standard-library',
+  'third-party',
+  'first-party',
+  'repo',
+  'local-folder',
 ]
 
 [tool.ruff.isort.sections]
