@@ -73,8 +73,8 @@ class Select2Widget(Select):
             kwargs['class'] = 'select2'
         html = [f'<select {html_params(name=field.name, **kwargs)}>']
         if field.iter_choices():
-            for val, label, selected in field.iter_choices():
-                html.append(self.render_option(val, label, selected))
+            for val, label, selected, render_kw in field.iter_choices():
+                html.append(self.render_option(val, label, selected, **render_kw))
         html.append('</select>')
         return Markup(''.join(html))
 
