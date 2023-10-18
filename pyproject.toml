@@ -9,7 +9,7 @@ build-backend = 'setuptools.build_meta'
 name = 'baseframe'
 description = 'Baseframe for Hasgeek projects'
 readme = 'README.rst'
-requires-python = '>=3.7'
+requires-python = '>=3.9'
 keywords = ['baseframe', 'flask', 'framework', 'web']
 license = { file = 'LICENSE.txt' }
 dynamic = ['version']
@@ -19,11 +19,10 @@ urls = { repository = 'https://github.com/hasgeek/baseframe' }
 classifiers = [
   'Programming Language :: Python',
   'Programming Language :: Python :: 3 :: Only',
-  'Programming Language :: Python :: 3.7',
-  'Programming Language :: Python :: 3.8',
   'Programming Language :: Python :: 3.9',
   'Programming Language :: Python :: 3.10',
   'Programming Language :: Python :: 3.11',
+  'Programming Language :: Python :: 3.12',
   'License :: OSI Approved :: BSD License',
   'Operating System :: OS Independent',
   'Intended Audience :: Developers',
@@ -72,7 +71,7 @@ where = ['src']
 
 [tool.black]
 line-length = 88
-target_version = ['py37']
+target_version = ['py39']
 skip-string-normalization = true
 include = '\.pyi?$'
 exclude = '''
@@ -261,8 +260,8 @@ line-length = 88
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
-# Target Python 3.7
-target-version = "py37"
+# Target Python 3.9
+target-version = "py39"
 
 [tool.ruff.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
