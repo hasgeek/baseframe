@@ -60,7 +60,7 @@ dependencies = [
   'typing_extensions',
   'werkzeug',
   'WTForms-SQLAlchemy',
-  'WTForms>=3.0',
+  'WTForms>=3.1',
 
 ]
 
