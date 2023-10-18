@@ -451,7 +451,7 @@ class UserSelectFieldBase:
         """Iterate over choices."""
         if self.data:
             for user in self.data:
-                yield (user.userid, user.pickername, True)
+                yield (user.userid, user.pickername, True, {})
 
     def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
@@ -503,7 +503,7 @@ class UserSelectField(UserSelectFieldBase, StringField):
     def iter_choices(self) -> ReturnIterChoices:
         """Iterate over choices."""
         if self.data:
-            yield (self.data.userid, self.data.pickername, True)
+            yield (self.data.userid, self.data.pickername, True, {})
 
     def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
@@ -546,7 +546,7 @@ class AutocompleteFieldBase:
         """Iterate over choices."""
         if self.data:
             for user in self.data:
-                yield (str(user), str(user), True)
+                yield (str(user), str(user), True, {})
 
     def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
@@ -616,10 +616,10 @@ class GeonameSelectFieldBase:
         """Iterate over choices."""
         if self.data:
             if isinstance(self.data, (str, GeonameidProtocol)):
-                yield (str(self.data), str(self.data), True)
+                yield (str(self.data), str(self.data), True, {})
             else:
                 for item in self.data:
-                    yield (str(item), str(item), True)
+                    yield (str(item), str(item), True, {})
 
     def process_formdata(self, valuelist: t.List[str]) -> None:
         """Process incoming data from request form."""
@@ -883,7 +883,7 @@ class EnumSelectField(SelectField):
         """Iterate over choices."""
         selected_name = self.lenum[self.data].name if self.data is not None else None
         for name, title in self.choices:
-            yield (name, title, name == selected_name)
+            yield (name, title, name == selected_name, {})
 
     def process_data(self, value: t.Any) -> None:
         """Process incoming data from Python."""
