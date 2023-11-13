@@ -154,11 +154,11 @@
           b.depends && 'function' === typeof b.depends
             ? b.depends.call(this, b) && this._validateField(b)
             : b.depends &&
-              'string' === typeof b.depends &&
-              this.conditionals[b.depends]
-            ? this.conditionals[b.depends].call(this, b) &&
-              this._validateField(b)
-            : this._validateField(b));
+                'string' === typeof b.depends &&
+                this.conditionals[b.depends]
+              ? this.conditionals[b.depends].call(this, b) &&
+                this._validateField(b)
+              : this._validateField(b));
       }
     'function' === typeof this.callback && this.callback(this.errors, a);
     0 < this.errors.length &&

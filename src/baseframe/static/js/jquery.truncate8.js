@@ -220,8 +220,8 @@
       return s[e]
         ? s[e].apply(this, Array.prototype.slice.call(arguments, 1))
         : 'object' != typeof e && e
-        ? void t.error('Method ' + e + ' does not exist on jQuery.trunk8')
-        : s.init.apply(this, arguments);
+          ? void t.error('Method ' + e + ' does not exist on jQuery.trunk8')
+          : s.init.apply(this, arguments);
     }),
     (t.fn.trunk8.defaults = {
       fill: '&hellip;',

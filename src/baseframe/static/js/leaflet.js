@@ -6,8 +6,8 @@
   'object' == typeof exports && 'undefined' != typeof module
     ? i(exports)
     : 'function' == typeof define && define.amd
-    ? define(['exports'], i)
-    : i((t.L = {}));
+      ? define(['exports'], i)
+      : i((t.L = {}));
 })(this, function (t) {
   'use strict';
   function i(t) {
@@ -121,12 +121,12 @@
     return t instanceof x
       ? t
       : oi(t)
-      ? new x(t[0], t[1])
-      : void 0 === t || null === t
-      ? t
-      : 'object' == typeof t && 'x' in t && 'y' in t
-      ? new x(t.x, t.y)
-      : new x(t, i, e);
+        ? new x(t[0], t[1])
+        : void 0 === t || null === t
+          ? t
+          : 'object' == typeof t && 'x' in t && 'y' in t
+            ? new x(t.x, t.y)
+            : new x(t, i, e);
   }
   function P(t, i) {
     if (t)
@@ -153,18 +153,18 @@
     return t instanceof M
       ? t
       : oi(t) && 'object' != typeof t[0]
-      ? 3 === t.length
-        ? new M(t[0], t[1], t[2])
-        : 2 === t.length
-        ? new M(t[0], t[1])
-        : null
-      : void 0 === t || null === t
-      ? t
-      : 'object' == typeof t && 'lat' in t
-      ? new M(t.lat, 'lng' in t ? t.lng : t.lon, t.alt)
-      : void 0 === i
-      ? null
-      : new M(t, i, e);
+        ? 3 === t.length
+          ? new M(t[0], t[1], t[2])
+          : 2 === t.length
+            ? new M(t[0], t[1])
+            : null
+        : void 0 === t || null === t
+          ? t
+          : 'object' == typeof t && 'lat' in t
+            ? new M(t.lat, 'lng' in t ? t.lng : t.lon, t.alt)
+            : void 0 === i
+              ? null
+              : new M(t, i, e);
   }
   function S(t, i, e, n) {
     if (oi(t))
@@ -205,8 +205,8 @@
       'touchstart' === i
         ? O(t, e, n)
         : 'touchmove' === i
-        ? W(t, e, n)
-        : 'touchend' === i && H(t, e, n),
+          ? W(t, e, n)
+          : 'touchend' === i && H(t, e, n),
       this
     );
   }
@@ -216,9 +216,10 @@
       'touchstart' === i
         ? t.removeEventListener(te, n, !1)
         : 'touchmove' === i
-        ? t.removeEventListener(ie, n, !1)
-        : 'touchend' === i &&
-          (t.removeEventListener(ee, n, !1), t.removeEventListener(ne, n, !1)),
+          ? t.removeEventListener(ie, n, !1)
+          : 'touchend' === i &&
+            (t.removeEventListener(ee, n, !1),
+            t.removeEventListener(ne, n, !1)),
       this
     );
   }
@@ -480,26 +481,26 @@
     Vi && 0 === i.indexOf('touch')
       ? B(t, i, r, s)
       : !qi || 'dblclick' !== i || !F || (Vi && Ei)
-      ? 'addEventListener' in t
-        ? 'mousewheel' === i
-          ? t.addEventListener('onwheel' in t ? 'wheel' : 'mousewheel', r, !1)
-          : 'mouseenter' === i || 'mouseleave' === i
-          ? ((r = function (i) {
-              (i = i || window.event), Ct(t, i) && a(i);
-            }),
-            t.addEventListener(
-              'mouseenter' === i ? 'mouseover' : 'mouseout',
-              r,
-              !1
-            ))
-          : ('click' === i &&
-              zi &&
-              (r = function (t) {
-                St(t, a);
-              }),
-            t.addEventListener(i, r, !1))
-        : 'attachEvent' in t && t.attachEvent('on' + i, r)
-      : F(t, r, s),
+        ? 'addEventListener' in t
+          ? 'mousewheel' === i
+            ? t.addEventListener('onwheel' in t ? 'wheel' : 'mousewheel', r, !1)
+            : 'mouseenter' === i || 'mouseleave' === i
+              ? ((r = function (i) {
+                  (i = i || window.event), Ct(t, i) && a(i);
+                }),
+                t.addEventListener(
+                  'mouseenter' === i ? 'mouseover' : 'mouseout',
+                  r,
+                  !1
+                ))
+              : ('click' === i &&
+                  zi &&
+                  (r = function (t) {
+                    St(t, a);
+                  }),
+                t.addEventListener(i, r, !1))
+          : 'attachEvent' in t && t.attachEvent('on' + i, r)
+        : F(t, r, s),
       (t[ye] = t[ye] || {}),
       (t[ye][s] = r);
   }
@@ -510,24 +511,24 @@
     Vi && 0 === i.indexOf('touch')
       ? I(t, i, s)
       : !qi || 'dblclick' !== i || !U || (Vi && Ei)
-      ? 'removeEventListener' in t
-        ? 'mousewheel' === i
-          ? t.removeEventListener(
-              'onwheel' in t ? 'wheel' : 'mousewheel',
-              r,
-              !1
-            )
-          : t.removeEventListener(
-              'mouseenter' === i
-                ? 'mouseover'
-                : 'mouseleave' === i
-                ? 'mouseout'
-                : i,
-              r,
-              !1
-            )
-        : 'detachEvent' in t && t.detachEvent('on' + i, r)
-      : U(t, s),
+        ? 'removeEventListener' in t
+          ? 'mousewheel' === i
+            ? t.removeEventListener(
+                'onwheel' in t ? 'wheel' : 'mousewheel',
+                r,
+                !1
+              )
+            : t.removeEventListener(
+                'mouseenter' === i
+                  ? 'mouseover'
+                  : 'mouseleave' === i
+                    ? 'mouseout'
+                    : i,
+                r,
+                !1
+              )
+          : 'detachEvent' in t && t.detachEvent('on' + i, r)
+        : U(t, s),
       (t[ye][s] = null);
   }
   function yt(t) {
@@ -535,8 +536,8 @@
       t.stopPropagation
         ? t.stopPropagation()
         : t.originalEvent
-        ? (t.originalEvent._stopped = !0)
-        : (t.cancelBubble = !0),
+          ? (t.originalEvent._stopped = !0)
+          : (t.cancelBubble = !0),
       Mt(t),
       this
     );
@@ -566,20 +567,20 @@
     return bi
       ? t.wheelDeltaY / 2
       : t.deltaY && 0 === t.deltaMode
-      ? -t.deltaY / xe
-      : t.deltaY && 1 === t.deltaMode
-      ? 20 * -t.deltaY
-      : t.deltaY && 2 === t.deltaMode
-      ? 60 * -t.deltaY
-      : t.deltaX || t.deltaZ
-      ? 0
-      : t.wheelDelta
-      ? (t.wheelDeltaY || t.wheelDelta) / 2
-      : t.detail && Math.abs(t.detail) < 32765
-      ? 20 * -t.detail
-      : t.detail
-      ? (t.detail / -32765) * 60
-      : 0;
+        ? -t.deltaY / xe
+        : t.deltaY && 1 === t.deltaMode
+          ? 20 * -t.deltaY
+          : t.deltaY && 2 === t.deltaMode
+            ? 60 * -t.deltaY
+            : t.deltaX || t.deltaZ
+              ? 0
+              : t.wheelDelta
+                ? (t.wheelDeltaY || t.wheelDelta) / 2
+                : t.detail && Math.abs(t.detail) < 32765
+                  ? 20 * -t.detail
+                  : t.detail
+                    ? (t.detail / -32765) * 60
+                    : 0;
   }
   function zt(t) {
     we[t.type] = !0;
@@ -660,10 +661,10 @@
       8 & e
         ? ((s = t.x + (a * (l.y - t.y)) / h), (r = l.y))
         : 4 & e
-        ? ((s = t.x + (a * (u.y - t.y)) / h), (r = u.y))
-        : 2 & e
-        ? ((s = l.x), (r = t.y + (h * (l.x - t.x)) / a))
-        : 1 & e && ((s = u.x), (r = t.y + (h * (u.x - t.x)) / a)),
+          ? ((s = t.x + (a * (u.y - t.y)) / h), (r = u.y))
+          : 2 & e
+            ? ((s = l.x), (r = t.y + (h * (l.x - t.x)) / a))
+            : 1 & e && ((s = u.x), (r = t.y + (h * (u.x - t.x)) / a)),
       new x(s, r, o)
     );
   }
@@ -2003,8 +2004,8 @@
             (1 === i
               ? 'permission denied'
               : 2 === i
-              ? 'position unavailable'
-              : 'timeout');
+                ? 'position unavailable'
+                : 'timeout');
         this._locateOptions.setView && !this._loaded && this.fitWorld(),
           this.fire('locationerror', {
             code: i,
@@ -2824,8 +2825,8 @@
               ? 'overlayadd'
               : 'overlayremove'
             : 'add' === t.type
-            ? 'baselayerchange'
-            : null;
+              ? 'baselayerchange'
+              : null;
         e && this._map.fire(e, i);
       },
       _createRadioElement: function (t, i) {
@@ -4894,8 +4895,8 @@
           i instanceof Qe
             ? this.openPopup(t.layer || t.target, t.latlng)
             : this._map.hasLayer(this._popup) && this._popup._source === i
-            ? this.closePopup()
-            : this.openPopup(i, t.latlng));
+              ? this.closePopup()
+              : this.openPopup(i, t.latlng));
       },
       _movePopup: function (t) {
         this._popup.setLatLng(t.latlng);
@@ -4956,13 +4957,14 @@
       'top' === s
         ? (t = t.add(w(-r / 2 + h.x, -a + h.y + u.y, !0)))
         : 'bottom' === s
-        ? (t = t.subtract(w(r / 2 - h.x, -h.y, !0)))
-        : 'center' === s
-        ? (t = t.subtract(w(r / 2 + h.x, a / 2 - u.y + h.y, !0)))
-        : 'right' === s || ('auto' === s && o.x < n.x)
-        ? ((s = 'right'), (t = t.add(w(h.x + u.x, u.y - a / 2 + h.y, !0))))
-        : ((s = 'left'),
-          (t = t.subtract(w(r + u.x - h.x, a / 2 - u.y - h.y, !0)))),
+          ? (t = t.subtract(w(r / 2 - h.x, -h.y, !0)))
+          : 'center' === s
+            ? (t = t.subtract(w(r / 2 + h.x, a / 2 - u.y + h.y, !0)))
+            : 'right' === s || ('auto' === s && o.x < n.x)
+              ? ((s = 'right'),
+                (t = t.add(w(h.x + u.x, u.y - a / 2 + h.y, !0))))
+              : ((s = 'left'),
+                (t = t.subtract(w(r + u.x - h.x, a / 2 - u.y - h.y, !0)))),
         tt(e, 'leaflet-tooltip-right'),
         tt(e, 'leaflet-tooltip-left'),
         tt(e, 'leaflet-tooltip-top'),
@@ -5376,8 +5378,8 @@
         return void 0 !== i.minNativeZoom && t < i.minNativeZoom
           ? i.minNativeZoom
           : void 0 !== i.maxNativeZoom && i.maxNativeZoom < t
-          ? i.maxNativeZoom
-          : t;
+            ? i.maxNativeZoom
+            : t;
       },
       _setView: function (t, i, e, n) {
         var o = this._clampZoom(Math.round(i));

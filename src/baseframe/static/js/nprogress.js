@@ -284,12 +284,12 @@
       'WebkitTransform' in bodyStyle
         ? 'Webkit'
         : 'MozTransform' in bodyStyle
-        ? 'Moz'
-        : 'msTransform' in bodyStyle
-        ? 'ms'
-        : 'OTransform' in bodyStyle
-        ? 'O'
-        : '';
+          ? 'Moz'
+          : 'msTransform' in bodyStyle
+            ? 'ms'
+            : 'OTransform' in bodyStyle
+              ? 'O'
+              : '';
 
     if (vendorPrefix + 'Perspective' in bodyStyle) {
       // Modern browsers with 3D support, e.g. Webkit, IE10

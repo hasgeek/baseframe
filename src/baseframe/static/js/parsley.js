@@ -82,12 +82,12 @@
               (value == 'false'
                 ? false
                 : value == 'null'
-                ? null
-                : !isNaN((num = Number(value)))
-                ? num
-                : /^[\[\{]/.test(value)
-                ? $.parseJSON(value)
-                : value)
+                  ? null
+                  : !isNaN((num = Number(value)))
+                    ? num
+                    : /^[\[\{]/.test(value)
+                      ? $.parseJSON(value)
+                      : value)
           : value;
       } catch (e) {
         return value;
@@ -965,8 +965,8 @@
     'undefined' !== typeof Validator
       ? Validator
       : 'undefined' !== typeof module
-      ? module.exports
-      : null;
+        ? module.exports
+        : null;
   var ParsleyValidator = function (validators, catalog) {
     this.__class__ = 'ParsleyValidator';
     this.Validator = Validator;

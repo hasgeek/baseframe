@@ -733,8 +733,8 @@
       var effectName = !options
         ? method
         : options === true || typeof options === 'number'
-        ? defaultEffect
-        : options.effect || defaultEffect;
+          ? defaultEffect
+          : options.effect || defaultEffect;
 
       options = options || {};
       if (typeof options === 'number') {
@@ -946,8 +946,8 @@
           pos = rhorizontal.test(pos[0])
             ? pos.concat(['center'])
             : rvertical.test(pos[0])
-            ? ['center'].concat(pos)
-            : ['center', 'center'];
+              ? ['center'].concat(pos)
+              : ['center', 'center'];
         }
         pos[0] = rhorizontal.test(pos[0]) ? pos[0] : 'center';
         pos[1] = rvertical.test(pos[1]) ? pos[1] : 'center';
@@ -1224,14 +1224,14 @@
               data.my[0] === 'left'
                 ? -data.elemWidth
                 : data.my[0] === 'right'
-                ? data.elemWidth
-                : 0,
+                  ? data.elemWidth
+                  : 0,
             atOffset =
               data.at[0] === 'left'
                 ? data.targetWidth
                 : data.at[0] === 'right'
-                ? -data.targetWidth
-                : 0,
+                  ? -data.targetWidth
+                  : 0,
             offset = -2 * data.offset[0],
             newOverRight,
             newOverLeft;
@@ -1274,14 +1274,14 @@
             myOffset = top
               ? -data.elemHeight
               : data.my[1] === 'bottom'
-              ? data.elemHeight
-              : 0,
+                ? data.elemHeight
+                : 0,
             atOffset =
               data.at[1] === 'top'
                 ? data.targetHeight
                 : data.at[1] === 'bottom'
-                ? -data.targetHeight
-                : 0,
+                  ? -data.targetHeight
+                  : 0,
             offset = -2 * data.offset[1],
             newOverTop,
             newOverBottom;
@@ -2721,10 +2721,10 @@
       effect.duration = $.fx.off
         ? 0
         : typeof speed === 'number'
-        ? speed
-        : speed in $.fx.speeds
-        ? $.fx.speeds[speed]
-        : $.fx.speeds._default;
+          ? speed
+          : speed in $.fx.speeds
+            ? $.fx.speeds[speed]
+            : $.fx.speeds._default;
 
       effect.complete = callback || options.complete;
 
@@ -8117,10 +8117,10 @@
         return name === 'defaults'
           ? $.extend({}, $.datepicker._defaults)
           : inst
-          ? name === 'all'
-            ? $.extend({}, inst.settings)
-            : this._get(inst, name)
-          : null;
+            ? name === 'all'
+              ? $.extend({}, inst.settings)
+              : this._get(inst, name)
+            : null;
       }
 
       settings = name || {};
@@ -8493,8 +8493,8 @@
           $.datepicker._inDialog && $.blockUI
             ? 'static'
             : isFixed
-            ? 'fixed'
-            : 'absolute',
+              ? 'fixed'
+              : 'absolute',
         display: 'none',
         left: offset.left + 'px',
         top: offset.top + 'px',
@@ -8686,8 +8686,8 @@
             showAnim === 'slideDown'
               ? 'slideUp'
               : showAnim === 'fadeIn'
-              ? 'fadeOut'
-              : 'hide'
+                ? 'fadeOut'
+                : 'hide'
           ](showAnim ? duration : null, postProcess);
         }
 
@@ -8971,12 +8971,12 @@
               match === '@'
                 ? 14
                 : match === '!'
-                ? 20
-                : match === 'y' && isDoubled
-                ? 4
-                : match === 'o'
-                ? 3
-                : 2,
+                  ? 20
+                  : match === 'y' && isDoubled
+                    ? 4
+                    : match === 'o'
+                      ? 3
+                      : 2,
             minSize = match === 'y' ? size : 1,
             digits = new RegExp('^\\d{' + minSize + ',' + size + '}'),
             num = value.substring(iValue).match(digits);
@@ -9430,12 +9430,12 @@
           date == null || date === ''
             ? defaultDate
             : typeof date === 'string'
-            ? offsetString(date)
-            : typeof date === 'number'
-            ? isNaN(date)
-              ? defaultDate
-              : offsetNumeric(date)
-            : new Date(date.getTime());
+              ? offsetString(date)
+              : typeof date === 'number'
+                ? isNaN(date)
+                  ? defaultDate
+                  : offsetNumeric(date)
+                : new Date(date.getTime());
 
       newDate =
         newDate && newDate.toString() === 'Invalid Date'
@@ -9666,14 +9666,14 @@
           prevText +
           '</span></a>'
         : hideIfNoPrevNext
-        ? ''
-        : "<a class='ui-datepicker-prev ui-corner-all ui-state-disabled' title='" +
-          prevText +
-          "'><span class='ui-icon ui-icon-circle-triangle-" +
-          (isRTL ? 'e' : 'w') +
-          "'>" +
-          prevText +
-          '</span></a>';
+          ? ''
+          : "<a class='ui-datepicker-prev ui-corner-all ui-state-disabled' title='" +
+            prevText +
+            "'><span class='ui-icon ui-icon-circle-triangle-" +
+            (isRTL ? 'e' : 'w') +
+            "'>" +
+            prevText +
+            '</span></a>';
 
       nextText = this._get(inst, 'nextText');
       nextText = !navigationAsDateFormat
@@ -9696,14 +9696,14 @@
           nextText +
           '</span></a>'
         : hideIfNoPrevNext
-        ? ''
-        : "<a class='ui-datepicker-next ui-corner-all ui-state-disabled' title='" +
-          nextText +
-          "'><span class='ui-icon ui-icon-circle-triangle-" +
-          (isRTL ? 'w' : 'e') +
-          "'>" +
-          nextText +
-          '</span></a>';
+          ? ''
+          : "<a class='ui-datepicker-next ui-corner-all ui-state-disabled' title='" +
+            nextText +
+            "'><span class='ui-icon ui-icon-circle-triangle-" +
+            (isRTL ? 'w' : 'e') +
+            "'>" +
+            nextText +
+            '</span></a>';
 
       currentText = this._get(inst, 'currentText');
       gotoDate =
@@ -9903,20 +9903,20 @@
                 (otherMonth && !showOtherMonths
                   ? '&#xa0;' // display for other months
                   : unselectable
-                  ? "<span class='ui-state-default'>" +
-                    printDate.getDate() +
-                    '</span>'
-                  : "<a class='ui-state-default" +
-                    (printDate.getTime() === today.getTime()
-                      ? ' ui-state-highlight'
-                      : '') +
-                    (printDate.getTime() === currentDate.getTime()
-                      ? ' ui-state-active'
-                      : '') + // highlight selected day
-                    (otherMonth ? ' ui-priority-secondary' : '') + // distinguish dates from other months
-                    "' href='#'>" +
-                    printDate.getDate() +
-                    '</a>') +
+                    ? "<span class='ui-state-default'>" +
+                      printDate.getDate() +
+                      '</span>'
+                    : "<a class='ui-state-default" +
+                      (printDate.getTime() === today.getTime()
+                        ? ' ui-state-highlight'
+                        : '') +
+                      (printDate.getTime() === currentDate.getTime()
+                        ? ' ui-state-active'
+                        : '') + // highlight selected day
+                      (otherMonth ? ' ui-priority-secondary' : '') + // distinguish dates from other months
+                      "' href='#'>" +
+                      printDate.getDate() +
+                      '</a>') +
                 '</td>'; // display selectable date
               printDate.setDate(printDate.getDate() + 1);
               printDate = this._daylightSavingAdjust(printDate);
@@ -10018,8 +10018,8 @@
             var year = value.match(/c[+\-].*/)
               ? drawYear + parseInt(value.substring(1), 10)
               : value.match(/[+\-].*/)
-              ? thisYear + parseInt(value, 10)
-              : parseInt(value, 10);
+                ? thisYear + parseInt(value, 10)
+                : parseInt(value, 10);
             return isNaN(year) ? thisYear : year;
           };
           year = determineYear(years[0]);
@@ -10103,8 +10103,8 @@
       return numMonths == null
         ? [1, 1]
         : typeof numMonths === 'number'
-        ? [1, numMonths]
-        : numMonths;
+          ? [1, numMonths]
+          : numMonths;
     },
 
     /* Determine the current maximum date - ensure no time components are set. */
@@ -10942,8 +10942,8 @@
         helper = helperIsFunction
           ? $(o.helper.apply(this.element[0], [event]))
           : o.helper === 'clone'
-          ? this.element.clone().removeAttr('id')
-          : this.element;
+            ? this.element.clone().removeAttr('id')
+            : this.element;
 
       if (!helper.parents('body').length) {
         helper.appendTo(
@@ -11183,8 +11183,8 @@
           (this.cssPosition === 'fixed'
             ? -this.offset.scroll.top
             : scrollIsRootNode
-            ? 0
-            : this.offset.scroll.top) *
+              ? 0
+              : this.offset.scroll.top) *
             mod,
         left:
           // The absolute mouse position
@@ -11196,8 +11196,8 @@
           (this.cssPosition === 'fixed'
             ? -this.offset.scroll.left
             : scrollIsRootNode
-            ? 0
-            : this.offset.scroll.left) *
+              ? 0
+              : this.offset.scroll.left) *
             mod,
       };
     },
@@ -11266,8 +11266,8 @@
               top - this.offset.click.top > containment[3]
               ? top
               : top - this.offset.click.top >= containment[1]
-              ? top - o.grid[1]
-              : top + o.grid[1]
+                ? top - o.grid[1]
+                : top + o.grid[1]
             : top;
 
           left = o.grid[0]
@@ -11279,8 +11279,8 @@
               left - this.offset.click.left > containment[2]
               ? left
               : left - this.offset.click.left >= containment[0]
-              ? left - o.grid[0]
-              : left + o.grid[0]
+                ? left - o.grid[0]
+                : left + o.grid[0]
             : left;
         }
 
@@ -11306,8 +11306,8 @@
           (this.cssPosition === 'fixed'
             ? -this.offset.scroll.top
             : scrollIsRootNode
-            ? 0
-            : this.offset.scroll.top),
+              ? 0
+              : this.offset.scroll.top),
         left:
           // The absolute mouse position
           pageX -
@@ -11320,8 +11320,8 @@
           (this.cssPosition === 'fixed'
             ? -this.offset.scroll.left
             : scrollIsRootNode
-            ? 0
-            : this.offset.scroll.left),
+              ? 0
+              : this.offset.scroll.left),
       };
     },
 
@@ -12178,10 +12178,10 @@
               /ne|nw|n/.test(i)
                 ? 'Top'
                 : /se|sw|s/.test(i)
-                ? 'Bottom'
-                : /^e$/.test(i)
-                ? 'Right'
-                : 'Left',
+                  ? 'Bottom'
+                  : /^e$/.test(i)
+                    ? 'Right'
+                    : 'Left',
             ].join('');
 
             target.css(padPos, padWrapper);
@@ -12768,8 +12768,8 @@
           oc instanceof $
             ? oc.get(0)
             : /parent/.test(oc)
-            ? el.parent().get(0)
-            : oc;
+              ? el.parent().get(0)
+              : oc;
 
       if (!ce) {
         return;
@@ -14485,8 +14485,8 @@
               !intersects && this.isover
                 ? 'isout'
                 : intersects && !this.isover
-                ? 'isover'
-                : null;
+                  ? 'isover'
+                  : null;
           if (!c) {
             return;
           }
@@ -17712,8 +17712,8 @@
         helper = $.isFunction(o.helper)
           ? $(o.helper.apply(this.element[0], [event, this.currentItem]))
           : o.helper === 'clone'
-          ? this.currentItem.clone()
-          : this.currentItem;
+            ? this.currentItem.clone()
+            : this.currentItem;
 
       //Add the helper to the DOM if that didn't happen already
       if (!helper.parents('body').length) {
@@ -17922,8 +17922,8 @@
           (this.cssPosition === 'fixed'
             ? -this.scrollParent.scrollTop()
             : scrollIsRootNode
-            ? 0
-            : scroll.scrollTop()) *
+              ? 0
+              : scroll.scrollTop()) *
             mod,
         left:
           // The absolute mouse position
@@ -17935,8 +17935,8 @@
           (this.cssPosition === 'fixed'
             ? -this.scrollParent.scrollLeft()
             : scrollIsRootNode
-            ? 0
-            : scroll.scrollLeft()) *
+              ? 0
+              : scroll.scrollLeft()) *
             mod,
       };
     },
@@ -18003,8 +18003,8 @@
               top - this.offset.click.top <= this.containment[3]
               ? top
               : top - this.offset.click.top >= this.containment[1]
-              ? top - o.grid[1]
-              : top + o.grid[1]
+                ? top - o.grid[1]
+                : top + o.grid[1]
             : top;
 
           left =
@@ -18015,8 +18015,8 @@
               left - this.offset.click.left <= this.containment[2]
               ? left
               : left - this.offset.click.left >= this.containment[0]
-              ? left - o.grid[0]
-              : left + o.grid[0]
+                ? left - o.grid[0]
+                : left + o.grid[0]
             : left;
         }
       }
@@ -18034,8 +18034,8 @@
           (this.cssPosition === 'fixed'
             ? -this.scrollParent.scrollTop()
             : scrollIsRootNode
-            ? 0
-            : scroll.scrollTop()),
+              ? 0
+              : scroll.scrollTop()),
         left:
           // The absolute mouse position
           pageX -
@@ -18048,8 +18048,8 @@
           (this.cssPosition === 'fixed'
             ? -this.scrollParent.scrollLeft()
             : scrollIsRootNode
-            ? 0
-            : scroll.scrollLeft()),
+              ? 0
+              : scroll.scrollLeft()),
       };
     },
 
