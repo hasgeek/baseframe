@@ -5183,12 +5183,12 @@ Editableform based on Twitter Bootstrap 3
             pos.top + pos.height + actualHeight - docScroll > parentHeight
               ? 'top'
               : placement == 'top' && pos.top - docScroll - actualHeight < 0
-              ? 'bottom'
-              : placement == 'right' && pos.right + actualWidth > parentWidth
-              ? 'left'
-              : placement == 'left' && pos.left - actualWidth < parentLeft
-              ? 'right'
-              : placement;
+                ? 'bottom'
+                : placement == 'right' && pos.right + actualWidth > parentWidth
+                  ? 'left'
+                  : placement == 'left' && pos.left - actualWidth < parentLeft
+                    ? 'right'
+                    : placement;
 
           $tip.removeClass(orgPlacement).addClass(placement);
         }

@@ -2,8 +2,8 @@
   'object' == typeof exports && 'undefined' != typeof module
     ? (module.exports = e())
     : 'function' == typeof define && define.amd
-    ? define(e)
-    : (t.Ractive.transitions.fly = e());
+      ? define(e)
+      : (t.Ractive.transitions.fly = e());
 })(this, function () {
   'use strict';
   function t(t) {

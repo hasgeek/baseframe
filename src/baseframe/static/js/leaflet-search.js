@@ -479,31 +479,31 @@
                 (e.layer = b),
                 (c[f._getPath(b.feature.properties, d)] = e))
             : b instanceof a.Path ||
-              b instanceof a.Polyline ||
-              b instanceof a.Polygon
-            ? f._getPath(b.options, d)
-              ? ((e = b.getBounds().getCenter()),
-                (e.layer = b),
-                (c[f._getPath(b.options, d)] = e))
-              : f._getPath(b.feature.properties, d) &&
-                ((e = b.getBounds().getCenter()),
-                (e.layer = b),
-                (c[f._getPath(b.feature.properties, d)] = e))
-            : b.hasOwnProperty('feature')
-            ? b.feature.properties.hasOwnProperty(d) &&
-              (b.getLatLng && 'function' == typeof b.getLatLng
-                ? ((e = b.getLatLng()),
+                b instanceof a.Polyline ||
+                b instanceof a.Polygon
+              ? f._getPath(b.options, d)
+                ? ((e = b.getBounds().getCenter()),
                   (e.layer = b),
-                  (c[b.feature.properties[d]] = e))
-                : b.getBounds &&
-                  'function' == typeof b.getBounds &&
+                  (c[f._getPath(b.options, d)] = e))
+                : f._getPath(b.feature.properties, d) &&
                   ((e = b.getBounds().getCenter()),
                   (e.layer = b),
-                  (c[b.feature.properties[d]] = e)))
-            : b instanceof a.LayerGroup &&
-              b.eachLayer(function (a) {
-                f._searchInLayer(a, c, d);
-              }));
+                  (c[f._getPath(b.feature.properties, d)] = e))
+              : b.hasOwnProperty('feature')
+                ? b.feature.properties.hasOwnProperty(d) &&
+                  (b.getLatLng && 'function' == typeof b.getLatLng
+                    ? ((e = b.getLatLng()),
+                      (e.layer = b),
+                      (c[b.feature.properties[d]] = e))
+                    : b.getBounds &&
+                      'function' == typeof b.getBounds &&
+                      ((e = b.getBounds().getCenter()),
+                      (e.layer = b),
+                      (c[b.feature.properties[d]] = e)))
+                : b instanceof a.LayerGroup &&
+                  b.eachLayer(function (a) {
+                    f._searchInLayer(a, c, d);
+                  }));
       },
       _recordsFromLayer: function () {
         var a = this,

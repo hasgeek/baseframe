@@ -102,8 +102,8 @@
               e === a
                 ? d.hasClass(c.sorted)
                 : 'toggle' === e
-                ? !d.hasClass(c.sorted)
-                : e),
+                  ? !d.hasClass(c.sorted)
+                  : e),
             l.sort.ignore === !0)
           )
             return !0;

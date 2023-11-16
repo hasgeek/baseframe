@@ -733,8 +733,8 @@
       var effectName = !options
         ? method
         : options === true || typeof options === 'number'
-        ? defaultEffect
-        : options.effect || defaultEffect;
+          ? defaultEffect
+          : options.effect || defaultEffect;
 
       options = options || {};
       if (typeof options === 'number') {
@@ -946,8 +946,8 @@
           pos = rhorizontal.test(pos[0])
             ? pos.concat(['center'])
             : rvertical.test(pos[0])
-            ? ['center'].concat(pos)
-            : ['center', 'center'];
+              ? ['center'].concat(pos)
+              : ['center', 'center'];
         }
         pos[0] = rhorizontal.test(pos[0]) ? pos[0] : 'center';
         pos[1] = rvertical.test(pos[1]) ? pos[1] : 'center';
@@ -1224,14 +1224,14 @@
               data.my[0] === 'left'
                 ? -data.elemWidth
                 : data.my[0] === 'right'
-                ? data.elemWidth
-                : 0,
+                  ? data.elemWidth
+                  : 0,
             atOffset =
               data.at[0] === 'left'
                 ? data.targetWidth
                 : data.at[0] === 'right'
-                ? -data.targetWidth
-                : 0,
+                  ? -data.targetWidth
+                  : 0,
             offset = -2 * data.offset[0],
             newOverRight,
             newOverLeft;
@@ -1274,14 +1274,14 @@
             myOffset = top
               ? -data.elemHeight
               : data.my[1] === 'bottom'
-              ? data.elemHeight
-              : 0,
+                ? data.elemHeight
+                : 0,
             atOffset =
               data.at[1] === 'top'
                 ? data.targetHeight
                 : data.at[1] === 'bottom'
-                ? -data.targetHeight
-                : 0,
+                  ? -data.targetHeight
+                  : 0,
             offset = -2 * data.offset[1],
             newOverTop,
             newOverBottom;

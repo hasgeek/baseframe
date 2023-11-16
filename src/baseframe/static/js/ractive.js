@@ -11,8 +11,8 @@
   'object' == typeof exports && 'undefined' != typeof module
     ? (module.exports = e())
     : 'function' == typeof define && define.amd
-    ? define(e)
-    : (t.Ractive = e());
+      ? define(e)
+      : (t.Ractive = e());
 })(this, function () {
   'use strict';
   function t(t) {
@@ -22,13 +22,13 @@
         ? t.nodeType
           ? t
           : 'string' == typeof t &&
-            ((e = document.getElementById(t)),
-            !e && document.querySelector && (e = document.querySelector(t)),
-            e && e.nodeType)
-          ? e
-          : t[0] && t[0].nodeType
-          ? t[0]
-          : null
+              ((e = document.getElementById(t)),
+              !e && document.querySelector && (e = document.querySelector(t)),
+              e && e.nodeType)
+            ? e
+            : t[0] && t[0].nodeType
+              ? t[0]
+              : null
         : null;
   }
   function e(t) {
@@ -78,8 +78,8 @@
     return null === t && null === e
       ? !0
       : 'object' == typeof t || 'object' == typeof e
-      ? !1
-      : t === e;
+        ? !1
+        : t === e;
   }
   function u(t) {
     return !isNaN(parseFloat(t)) && isFinite(t);
@@ -227,8 +227,8 @@
       '*' === r
         ? (o = o.reduce(n, []))
         : o[0] === Za
-        ? (o[0] = _(r))
-        : (o = o.map(S(r)));
+          ? (o[0] = _(r))
+          : (o = o.map(S(r)));
     return o;
   }
   function S(t) {
@@ -336,8 +336,8 @@
       '~/' === e.substr(0, 2)
         ? ((i = _(e.substring(2))), q(t, i.firstKey, n))
         : '.' === e[0]
-        ? ((i = z(au(n), e)), i && q(t, i.firstKey, n))
-        : (i = B(t, _(e), n)),
+          ? ((i = z(au(n), e)), i && q(t, i.firstKey, n))
+          : (i = B(t, _(e), n)),
       i
     );
   }
@@ -373,15 +373,15 @@
     return $(t.viewmodel, s)
       ? e
       : t.parent &&
-        !t.isolated &&
-        ((a = !0),
-        (n = t.component.parentFragment),
-        (s = _(s)),
-        (u = B(t.parent, s, n, !0)))
-      ? (t.viewmodel.map(s, { origin: t.parent.viewmodel, keypath: u }), e)
-      : i || a
-      ? void 0
-      : (t.viewmodel.set(e, void 0), e);
+          !t.isolated &&
+          ((a = !0),
+          (n = t.component.parentFragment),
+          (s = _(s)),
+          (u = B(t.parent, s, n, !0)))
+        ? (t.viewmodel.map(s, { origin: t.parent.viewmodel, keypath: u }), e)
+        : i || a
+          ? void 0
+          : (t.viewmodel.set(e, void 0), e);
   }
   function q(t, e) {
     var n;
@@ -553,8 +553,8 @@
       (n = this._isComponentQuery
         ? !this.selector || t.name === this.selector
         : t.node
-        ? fa(t.node, this.selector)
-        : null),
+          ? fa(t.node, this.selector)
+          : null),
       n ? (this.push(t.node || t.instance), e || this._makeDirty(), !0) : void 0
     );
   }
@@ -563,8 +563,8 @@
     return (e = t.parentFragment)
       ? e.owner
       : t.component && (e = t.component.parentFragment)
-      ? e.owner
-      : void 0;
+        ? e.owner
+        : void 0;
   }
   function ut(t) {
     var e, n;
@@ -1093,8 +1093,8 @@
     return 'true' === e.substr(0, 4)
       ? ((t.pos += 4), { t: dc, v: 'true' })
       : 'false' === e.substr(0, 5)
-      ? ((t.pos += 5), { t: dc, v: 'false' })
-      : null;
+        ? ((t.pos += 5), { t: dc, v: 'false' })
+        : null;
   }
   function Ht(t) {
     var e;
@@ -1103,10 +1103,10 @@
         ? e.v
         : '"' + e.v.replace(/"/g, '\\"') + '"'
       : (e = Wc(t))
-      ? e.v
-      : (e = t.matchPattern(Gc))
-      ? e
-      : void 0;
+        ? e.v
+        : (e = t.matchPattern(Gc))
+          ? e
+          : void 0;
   }
   function Kt(t) {
     var e, n, i;
@@ -1294,10 +1294,10 @@
         t.t === gc
           ? (e.r = t.n)
           : t.t === hc && Fl.test(t.v)
-          ? (e.r = t.v)
-          : (n = ae(t))
-          ? (e.rx = n)
-          : (e.x = Pl(t)),
+            ? (e.r = t.v)
+            : (n = ae(t))
+              ? (e.rx = n)
+              : (e.x = Pl(t)),
         e
       );
     }
@@ -1555,8 +1555,8 @@
           '#' !== e[0]
             ? wl[e]
             : 'x' === e[1]
-            ? parseInt(e.substring(2), 16)
-            : parseInt(e.substring(1), 10)),
+              ? parseInt(e.substring(2), 16)
+              : parseInt(e.substring(1), 10)),
         n ? String.fromCharCode(Ae(n)) : t
       );
     });
@@ -1566,16 +1566,16 @@
       ? 10 === t
         ? 32
         : 128 > t
-        ? t
-        : 159 >= t
-        ? xl[t - 128]
-        : 55296 > t
-        ? t
-        : 57343 >= t
-        ? 65533
-        : 65535 >= t
-        ? t
-        : 65533
+          ? t
+          : 159 >= t
+            ? xl[t - 128]
+            : 55296 > t
+              ? t
+              : 57343 >= t
+                ? 65533
+                : 65535 >= t
+                  ? t
+                  : 65533
       : 65533;
   }
   function Se(t) {
@@ -1814,10 +1814,10 @@
         ? (i = Df[o.name])
           ? (n[i] = Sf(o.value, t))
           : (r = jf.exec(o.name))
-          ? (n.v || (n.v = {}), (a = Sf(o.value, t)), s(r[1], a))
-          : (t.sanitizeEventAttributes && Rf.test(o.name)) ||
-            (n.a || (n.a = {}),
-            (n.a[o.name] = o.value || ('' === o.value ? '' : 0)))
+            ? (n.v || (n.v = {}), (a = Sf(o.value, t)), s(r[1], a))
+            : (t.sanitizeEventAttributes && Rf.test(o.name)) ||
+              (n.a || (n.a = {}),
+              (n.a[o.name] = o.value || ('' === o.value ? '' : 0)))
         : (n.m || (n.m = []), n.m.push(o)),
         t.allowWhitespace();
     if (
@@ -1852,14 +1852,14 @@
             }))
               ? ((d = !0), (t.pos = p))
               : (f = t.read(ed))
-              ? (c[f.n] &&
-                  ((t.pos = p), t.error('Duplicate partial definition')),
-                lf(f.f, t.stripComments, y, !y, !y),
-                (c[f.n] = f.f),
-                (l = !0))
-              : (f = t.read(td))
-              ? h.push(f)
-              : (d = !0);
+                ? (c[f.n] &&
+                    ((t.pos = p), t.error('Duplicate partial definition')),
+                  lf(f.f, t.stripComments, y, !y, !y),
+                  (c[f.n] = f.f),
+                  (l = !0))
+                : (f = t.read(td))
+                  ? h.push(f)
+                  : (d = !0);
         else d = !0;
       while (!d);
       h.length && (n.f = h), l && (n.p = c), t.elementStack.pop();
@@ -1983,8 +1983,8 @@
           (n[a.n] = a.f),
           (i = !0))
         : (o = t.read(td))
-        ? e.push(o)
-        : t.error('Unexpected template content');
+          ? e.push(o)
+          : t.error('Unexpected template content');
     }
     var u = { v: oa, t: e };
     return i && (u.p = n), u;
@@ -2237,10 +2237,10 @@
     return (e = this.items[n + 1]
       ? this.items[n + 1].firstNode()
       : this.owner === this.root
-      ? this.owner.component
-        ? this.owner.component.findNextNode()
-        : null
-      : this.owner.findNextNode(this));
+        ? this.owner.component
+          ? this.owner.component.findNextNode()
+          : null
+        : this.owner.findNextNode(this));
   }
   function xn() {
     return this.items && this.items[0] ? this.items[0].firstNode() : null;
@@ -2254,18 +2254,18 @@
           return t.text
             ? t.text
             : t.fragments
-            ? t.fragments
-                .map(function (t) {
-                  return kn(t.items, e, n, i);
-                })
-                .join('')
-            : ((r = n + '-' + i++),
-              (o =
-                t.keypath && (s = t.root.viewmodel.wrapped[t.keypath.str])
-                  ? s.value
-                  : t.getValue()),
-              (e[r] = o),
-              '${' + r + '}');
+              ? t.fragments
+                  .map(function (t) {
+                    return kn(t.items, e, n, i);
+                  })
+                  .join('')
+              : ((r = n + '-' + i++),
+                (o =
+                  t.keypath && (s = t.root.viewmodel.wrapped[t.keypath.str])
+                    ? s.value
+                    : t.getValue()),
+                (e[r] = o),
+                '${' + r + '}');
         })
         .join('')
     );
@@ -2343,8 +2343,8 @@
     return '@' === e.charAt(0)
       ? new Wd(t, e, n)
       : (i = qd(t.parentFragment, e))
-      ? new Bd(t, i, n)
-      : new Vd(t, e, n);
+        ? new Bd(t, i, n)
+        : new Vd(t, e, n);
   }
   function Fn(t, e) {
     var n, i;
@@ -2364,8 +2364,8 @@
           void 0 === i
             ? 'undefined'
             : i.isSpecial
-            ? ((r = i.value), 'number' == typeof r ? r : '"' + r + '"')
-            : i.str);
+              ? ((r = i.value), 'number' == typeof r ? r : '"' + r + '"')
+              : i.str);
     });
   }
   function Nn(t) {
@@ -2629,10 +2629,10 @@
       t.ordered
         ? (ei(t, Cc, !1), ii(t, e, n))
         : h(e) || 'function' == typeof e
-        ? t.template.i
-          ? (ei(t, Cc, !0), ri(t, e, n))
-          : (ei(t, Oc, !1), oi(t, n))
-        : (ei(t, Ac, !1), (t.hasContext = !1), ai(t, e, !1, n))
+          ? t.template.i
+            ? (ei(t, Cc, !0), ri(t, e, n))
+            : (ei(t, Oc, !1), oi(t, n))
+          : (ei(t, Ac, !1), (t.hasContext = !1), ai(t, e, !1, n))
     );
   }
   function ii(t, e, n) {
@@ -3091,12 +3091,12 @@
     n
       ? e.setAttributeNS(n, i, (s || r).toString())
       : this.isBoolean
-      ? r
-        ? e.setAttribute(i, '')
-        : e.removeAttribute(i)
-      : null == r
-      ? e.removeAttribute(i)
-      : e.setAttribute(i, (s || r).toString());
+        ? r
+          ? e.setAttribute(i, '')
+          : e.removeAttribute(i)
+        : null == r
+          ? e.removeAttribute(i)
+          : e.setAttribute(i, (s || r).toString());
   }
   function Xi() {
     var t,
@@ -3108,29 +3108,29 @@
     'id' === i
       ? (e = bm)
       : 'value' === i
-      ? 'select' === r.name && 'value' === i
-        ? (e = r.getAttribute('multiple') ? pm : dm)
-        : 'textarea' === r.name
-        ? (e = km)
-        : null != r.getAttribute('contenteditable')
-        ? (e = xm)
-        : 'input' === r.name &&
-          ((t = r.getAttribute('type')),
-          (e =
-            'file' === t
-              ? Fa
-              : 'radio' === t && r.binding && 'name' === r.binding.name
-              ? vm
-              : km))
-      : this.isTwoway && 'name' === i
-      ? 'radio' === s.type
-        ? (e = mm)
-        : 'checkbox' === s.type && (e = gm)
-      : 'style' === i && s.style.setAttribute
-      ? (e = wm)
-      : 'class' !== i || (s.namespaceURI && s.namespaceURI !== ia.html)
-      ? this.useProperty && (e = Em)
-      : (e = ym),
+        ? 'select' === r.name && 'value' === i
+          ? (e = r.getAttribute('multiple') ? pm : dm)
+          : 'textarea' === r.name
+            ? (e = km)
+            : null != r.getAttribute('contenteditable')
+              ? (e = xm)
+              : 'input' === r.name &&
+                ((t = r.getAttribute('type')),
+                (e =
+                  'file' === t
+                    ? Fa
+                    : 'radio' === t && r.binding && 'name' === r.binding.name
+                      ? vm
+                      : km))
+        : this.isTwoway && 'name' === i
+          ? 'radio' === s.type
+            ? (e = mm)
+            : 'checkbox' === s.type && (e = gm)
+          : 'style' === i && s.style.setAttribute
+            ? (e = wm)
+            : 'class' !== i || (s.namespaceURI && s.namespaceURI !== ia.html)
+              ? this.useProperty && (e = Em)
+              : (e = ym),
       e || (e = _m),
       (this.update = e),
       this.update();
@@ -3190,25 +3190,26 @@
       cr(o.value)
         ? (n = Mm)
         : 'input' === t.name
-        ? ((e = t.getAttribute('type')),
-          'radio' === e || 'checkbox' === e
-            ? ((i = cr(o.name)),
-              (r = cr(o.checked)),
-              i &&
-                r &&
-                m(
-                  'A radio input can have two-way binding on its name attribute, or its checked attribute - not both',
-                  { ractive: t.root }
-                ),
-              i
-                ? (n = 'radio' === e ? $m : Zm)
-                : r && (n = 'radio' === e ? Bm : Km))
-            : 'file' === e && cr(o.value)
-            ? (n = ev)
-            : cr(o.value) && (n = 'number' === e || 'range' === e ? nv : Lm))
-        : 'select' === t.name && cr(o.value)
-        ? (n = t.getAttribute('multiple') ? Xm : Ym)
-        : 'textarea' === t.name && cr(o.value) && (n = Lm),
+          ? ((e = t.getAttribute('type')),
+            'radio' === e || 'checkbox' === e
+              ? ((i = cr(o.name)),
+                (r = cr(o.checked)),
+                i &&
+                  r &&
+                  m(
+                    'A radio input can have two-way binding on its name attribute, or its checked attribute - not both',
+                    { ractive: t.root }
+                  ),
+                i
+                  ? (n = 'radio' === e ? $m : Zm)
+                  : r && (n = 'radio' === e ? Bm : Km))
+              : 'file' === e && cr(o.value)
+                ? (n = ev)
+                : cr(o.value) &&
+                  (n = 'number' === e || 'range' === e ? nv : Lm))
+          : 'select' === t.name && cr(o.value)
+            ? (n = t.getAttribute('multiple') ? Xm : Ym)
+            : 'textarea' === t.name && cr(o.value) && (n = Lm),
       n && (s = new n(t)) && s.keypath ? s : void 0
     );
   }
@@ -3610,10 +3611,10 @@
             (this.node.text = this.fragment.toString(!1)),
             (this.fragment.unrender = Fa))
           : 'style' === this.name
-          ? ((this.bubble = lg), this.bubble(), (this.fragment.unrender = Fa))
-          : this.binding && this.getAttribute('contenteditable')
-          ? (this.fragment.unrender = Fa)
-          : this.node.appendChild(this.fragment.render())),
+            ? ((this.bubble = lg), this.bubble(), (this.fragment.unrender = Fa))
+            : this.binding && this.getAttribute('contenteditable')
+              ? (this.fragment.unrender = Fa)
+              : this.node.appendChild(this.fragment.render())),
       this.binding &&
         (this.binding.render(), (this.node._ractive.binding = this.binding)),
       this.eventHandlers &&
@@ -3624,11 +3625,11 @@
       'img' === this.name
         ? Nr(this)
         : 'form' === this.name
-        ? Dr(this)
-        : 'input' === this.name || 'textarea' === this.name
-        ? (this.node.defaultValue = this.node.value)
-        : 'option' === this.name &&
-          (this.node.defaultSelected = this.node.selected),
+          ? Dr(this)
+          : 'input' === this.name || 'textarea' === this.name
+            ? (this.node.defaultValue = this.node.value)
+            : 'option' === this.name &&
+              (this.node.defaultSelected = this.node.selected),
       this.decorator &&
         this.decorator.fn &&
         mu.scheduleTask(function () {
@@ -3655,12 +3656,12 @@
     return (e = (n = t.getAttribute('xmlns'))
       ? n
       : 'svg' === t.name
-      ? ia.svg
-      : (i = t.parent)
-      ? 'foreignObject' === i.name
-        ? ia.html
-        : i.node.namespaceURI
-      : t.root.el.namespaceURI);
+        ? ia.svg
+        : (i = t.parent)
+          ? 'foreignObject' === i.name
+            ? ia.html
+            : i.node.namespaceURI
+          : t.root.el.namespaceURI);
   }
   function Hr(t) {
     var e, n, i;
@@ -3905,10 +3906,10 @@
           return 'string' == typeof n
             ? ((r = {}), (r[e + n] = i), r)
             : 'object' == typeof n
-            ? e
-              ? ys(n, t)
-              : n
-            : void 0;
+              ? e
+                ? ys(n, t)
+                : n
+              : void 0;
         })),
       iy[t]
     );
@@ -4092,10 +4093,10 @@
         ? ((i = this.computations[u]) && !i.bypass
             ? ((n = i.get()), this.adapt(u, n))
             : (r = this.wrapped[u])
-            ? (n = r.value)
-            : t.isRoot
-            ? (this.adapt('', this.data), (n = this.data))
-            : (n = Ns(this, t)),
+              ? (n = r.value)
+              : t.isRoot
+                ? (this.adapt('', this.data), (n = this.data))
+                : (n = Ns(this, t)),
           (a[u] = n))
         : (n = a[u]),
       !e.noUnwrap && (r = this.wrapped[u]) && (n = r.get()),
@@ -4325,8 +4326,8 @@
         ('string' == typeof n.get
           ? (i = io(t, n.get))
           : 'function' == typeof n.get
-          ? (i = ro(n.get, t))
-          : l('`%s` computation must have a `get()` method', e),
+            ? (i = ro(n.get, t))
+            : l('`%s` computation must have a `get()` method', e),
         'function' == typeof n.set && (r = ro(n.set, t))),
       { getter: i, setter: r }
     );
@@ -4470,8 +4471,8 @@
       e.r
         ? (i = Qd(t, e.r, n))
         : e.x
-        ? (i = new Gd(t, t.parentFragment, e.x, n))
-        : e.rx && (i = new tp(t, e.rx, n)),
+          ? (i = new Gd(t, t.parentFragment, e.x, n))
+          : e.rx && (i = new tp(t, e.rx, n)),
       i
     );
   }
@@ -5244,10 +5245,10 @@
       return this === t
         ? e
         : this.startsWith(t)
-        ? null === e
-          ? e
-          : _(this.str.replace(t.str + '.', e.str + '.'))
-        : void 0;
+          ? null === e
+            ? e
+            : _(this.str.replace(t.str + '.', e.str + '.'))
+          : void 0;
     },
     startsWith: function (t) {
       return t ? t && this.str.substr(0, t.str.length + 1) === t.str + '.' : !1;
@@ -6131,9 +6132,9 @@
           ? ((n = Hc(t)),
             t.matchString('"') ? { t: cc, v: n } : ((t.pos = e), null))
           : t.matchString("'")
-          ? ((n = Zc(t)),
-            t.matchString("'") ? { t: cc, v: n } : ((t.pos = e), null))
-          : null
+            ? ((n = Zc(t)),
+              t.matchString("'") ? { t: cc, v: n } : ((t.pos = e), null))
+            : null
       );
     },
     Gc = /^[a-zA-Z_$][a-zA-Z_$0-9]*/,
@@ -6203,11 +6204,11 @@
       return (i = e(n))
         ? i
         : n.matchString(t)
-        ? (n.allowWhitespace(),
-          (i = Ol(n)),
-          i || n.error(Mc),
-          { s: t, o: i, t: wc })
-        : null;
+          ? (n.allowWhitespace(),
+            (i = Ol(n)),
+            i || n.error(Mc),
+            { s: t, o: i, t: wc })
+          : null;
     };
   }),
     (function () {
@@ -7167,17 +7168,17 @@
                       return void 0;
                     }
                   : t.isSpecial
-                  ? ((e = t.value),
-                    function () {
-                      return e;
-                    })
-                  : function () {
-                      var e = s.root.viewmodel.get(t, {
-                        noUnwrap: !0,
-                        fullRootGet: !0,
-                      });
-                      return 'function' == typeof e && (e = In(e, s.root)), e;
-                    };
+                    ? ((e = t.value),
+                      function () {
+                        return e;
+                      })
+                    : function () {
+                        var e = s.root.viewmodel.get(t, {
+                          noUnwrap: !0,
+                          fullRootGet: !0,
+                        });
+                        return 'function' == typeof e && (e = In(e, s.root)), e;
+                      };
               })),
               (n = {
                 deps: this.keypaths.filter(Dn),
@@ -7204,12 +7205,12 @@
         'string' == typeof t
           ? (this.value = t)
           : t.t === gc
-          ? (this.refResolver = Qd(this, t.n, function (t) {
-              i.resolve(t);
-            }))
-          : new Gd(e, n, t, function (t) {
-              i.resolve(t);
-            });
+            ? (this.refResolver = Qd(this, t.n, function (t) {
+                i.resolve(t);
+              }))
+            : new Gd(e, n, t, function (t) {
+                i.resolve(t);
+              });
     };
   Yd.prototype = {
     resolve: function (t) {
@@ -7435,12 +7436,12 @@
               (i = i.querySelector('.x')),
               'SELECT' === i.tagName && (s = i.options[i.selectedIndex]))
             : e.namespaceURI === ia.svg
-            ? ((i = xi('DIV')),
-              (i.innerHTML = '<svg class="x">' + t + '</svg>'),
-              (i = i.querySelector('.x')))
-            : ((i = xi(e.tagName)),
-              (i.innerHTML = t),
-              'SELECT' === i.tagName && (s = i.options[i.selectedIndex]));
+              ? ((i = xi('DIV')),
+                (i.innerHTML = '<svg class="x">' + t + '</svg>'),
+                (i = i.querySelector('.x')))
+              : ((i = xi(e.tagName)),
+                (i.innerHTML = t),
+                'SELECT' === i.tagName && (s = i.options[i.selectedIndex]));
           (o = i.firstChild);
 
         )
@@ -7488,8 +7489,8 @@
         ? fa(this.node, t)
           ? this.node
           : this.fragment && this.fragment.find
-          ? this.fragment.find(t)
-          : void 0
+            ? this.fragment.find(t)
+            : void 0
         : null;
     },
     Hp = function (t, e) {
@@ -7780,10 +7781,10 @@
         this.element.lazy === !0
           ? (t = !0)
           : this.element.lazy === !1
-          ? (t = !1)
-          : u(this.element.lazy)
-          ? ((t = !1), (n = +this.element.lazy))
-          : u(t || '') && ((n = +t), (t = !1), (this.element.lazy = n)),
+            ? (t = !1)
+            : u(this.element.lazy)
+              ? ((t = !1), (n = +this.element.lazy))
+              : u(t || '') && ((n = +t), (t = !1), (this.element.lazy = n)),
         (this.handler = n ? sr : Im),
         e.addEventListener('change', Im, !1),
         t ||
@@ -8315,8 +8316,10 @@
         void 0 !== Lv.transition
           ? ((Vv = 'transition'), (Mv = 'transitionend'), (Uv = !0))
           : void 0 !== Lv.webkitTransition
-          ? ((Vv = 'webkitTransition'), (Mv = 'webkitTransitionEnd'), (Uv = !0))
-          : (Uv = !1);
+            ? ((Vv = 'webkitTransition'),
+              (Mv = 'webkitTransitionEnd'),
+              (Uv = !0))
+            : (Uv = !1);
       })(),
       Vv &&
         ((Wv = Vv + 'Duration'),
@@ -8455,13 +8458,13 @@
         'number' == typeof t
           ? (t = { duration: t })
           : 'string' == typeof t
-          ? (t =
-              'slow' === t
-                ? { duration: 600 }
-                : 'fast' === t
-                ? { duration: 200 }
-                : { duration: 400 })
-          : t || (t = {}),
+            ? (t =
+                'slow' === t
+                  ? { duration: 600 }
+                  : 'fast' === t
+                    ? { duration: 200 }
+                    : { duration: 400 })
+            : t || (t = {}),
         r({}, t, e)
       );
     },
@@ -8626,8 +8629,8 @@
       return this.isNamed && this.name
         ? this.name
         : void 0 === this.value
-        ? this.name
-        : this.value;
+          ? this.name
+          : this.value;
     },
     getValue: function () {
       return this.fragment.getValue();
@@ -9340,8 +9343,8 @@
                         ? a.set(e, t.value)
                         : ((p[e] = t.value), delete v[e])
                       : f
-                      ? a.viewmodel.mappings[e].resolve(t)
-                      : (v[e].keypath = t);
+                        ? a.viewmodel.mappings[e].resolve(t)
+                        : (v[e].keypath = t);
                   })))
                 : (r = new qy(t, o, function (t) {
                     f ? a.set(e, t) : (p[e] = t);
@@ -9566,10 +9569,10 @@
               s(e.fragments)
                 ? n(e.fragments, i, r)
                 : s(e.items)
-                ? n(e.items, i, r)
-                : e.type === sc &&
-                  e.instance &&
-                  n(e.instance.fragment.items, i, e.instance),
+                  ? n(e.items, i, r)
+                  : e.type === sc &&
+                    e.instance &&
+                    n(e.instance.fragment.items, i, e.instance),
               e.type === Xh &&
                 (s(e.attributes) && n(e.attributes, i, r),
                 s(e.conditionalAttributes) && n(e.conditionalAttributes, i, r));

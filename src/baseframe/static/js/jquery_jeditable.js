@@ -180,20 +180,20 @@
                                   }, 500);
                                 })
                               : 'submit' === settings.onblur
-                              ? input.blur(function (e) {
-                                  t = self.setTimeout(function () {
-                                    form.trigger('submit');
-                                  }, 200);
-                                })
-                              : $.isFunction(settings.onblur) &&
-                                input.blur(function (e) {
-                                  !1 ===
-                                    settings.onblur.apply(self, [
-                                      input.val(),
-                                      settings,
-                                      form,
-                                    ]) && reset.apply(form, [settings, self]);
-                                }),
+                                ? input.blur(function (e) {
+                                    t = self.setTimeout(function () {
+                                      form.trigger('submit');
+                                    }, 200);
+                                  })
+                                : $.isFunction(settings.onblur) &&
+                                  input.blur(function (e) {
+                                    !1 ===
+                                      settings.onblur.apply(self, [
+                                        input.val(),
+                                        settings,
+                                        form,
+                                      ]) && reset.apply(form, [settings, self]);
+                                  }),
                             form.on('submit', function (e) {
                               if (
                                 (e.preventDefault(),

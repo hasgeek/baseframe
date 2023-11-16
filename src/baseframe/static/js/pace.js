@@ -482,32 +482,32 @@
         I(g)
           ? void 0
           : j.running || (D.restartOnRequestAfter === !1 && 'force' !== J(f))
-          ? void 0
-          : ((d = arguments),
-            (c = D.restartOnRequestAfter || 0),
-            'boolean' == typeof c && (c = 0),
-            setTimeout(function () {
-              var b, c, g, h, i, k;
-              if (
-                (b =
-                  'socket' === f
-                    ? e.readyState < 2
-                    : 0 < (h = e.readyState) && 4 > h)
-              ) {
-                for (
-                  j.restart(), i = j.sources, k = [], c = 0, g = i.length;
-                  g > c;
-                  c++
+            ? void 0
+            : ((d = arguments),
+              (c = D.restartOnRequestAfter || 0),
+              'boolean' == typeof c && (c = 0),
+              setTimeout(function () {
+                var b, c, g, h, i, k;
+                if (
+                  (b =
+                    'socket' === f
+                      ? e.readyState < 2
+                      : 0 < (h = e.readyState) && 4 > h)
                 ) {
-                  if (((K = i[c]), K instanceof a)) {
-                    K.watch.apply(K, d);
-                    break;
+                  for (
+                    j.restart(), i = j.sources, k = [], c = 0, g = i.length;
+                    g > c;
+                    c++
+                  ) {
+                    if (((K = i[c]), K instanceof a)) {
+                      K.watch.apply(K, d);
+                      break;
+                    }
+                    k.push(void 0);
                   }
-                  k.push(void 0);
+                  return k;
                 }
-                return k;
-              }
-            }, c))
+              }, c))
       );
     }),
     (a = (function () {
@@ -842,6 +842,6 @@
           return j;
         })
       : 'object' == typeof exports
-      ? (module.exports = j)
-      : D.startOnPageLoad && j.start();
+        ? (module.exports = j)
+        : D.startOnPageLoad && j.start();
 }).call(this);

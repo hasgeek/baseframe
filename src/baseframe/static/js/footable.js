@@ -708,20 +708,20 @@
               ),
             !1)
           : e.isFunction(i.init)
-          ? (t.footable.options.debug === !0 &&
-              console.log(
-                'Validation succeeded for plugin "' + i.name + '".',
-                i
-              ),
-            !0)
-          : (t.footable.options.debug === !0 &&
-              console.error(
-                'Validation failed, plugin "' +
-                  i.name +
-                  '" does not implement a function called "init".',
-                i
-              ),
-            !1);
+            ? (t.footable.options.debug === !0 &&
+                console.log(
+                  'Validation succeeded for plugin "' + i.name + '".',
+                  i
+                ),
+              !0)
+            : (t.footable.options.debug === !0 &&
+                console.error(
+                  'Validation failed, plugin "' +
+                    i.name +
+                    '" does not implement a function called "init".',
+                  i
+                ),
+              !1);
       },
       registered: [],
       register: function (a, i) {

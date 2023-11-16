@@ -792,10 +792,10 @@
           ? 'step' === b && this._checkStep(c)
             ? ((this.options.step = c), this.update())
             : 'bounds' === b
-            ? ((this.options.bounds = c), this.update())
-            : 'range' === b &&
-              this._checkRange(c) &&
-              ((this.options.range = c), this.update())
+              ? ((this.options.bounds = c), this.update())
+              : 'range' === b &&
+                this._checkRange(c) &&
+                ((this.options.range = c), this.update())
           : ((this.options.isLeft = c),
             this.element
               .toggleClass('ui-rangeSlider-leftHandle', this.options.isLeft)
@@ -1020,8 +1020,8 @@
         'range' === a
           ? this._setRangeOption(b)
           : 'wheelSpeed' === a
-          ? this._setWheelSpeedOption(b)
-          : 'wheelMode' === a && this._setWheelModeOption(b);
+            ? this._setWheelSpeedOption(b)
+            : 'wheelMode' === a && this._setWheelModeOption(b);
       },
       _setRangeOption: function (a) {
         if (

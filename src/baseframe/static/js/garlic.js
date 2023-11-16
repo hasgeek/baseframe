@@ -24,8 +24,8 @@
       return localStorage.getItem(key)
         ? localStorage.getItem(key)
         : 'undefined' !== typeof placeholder
-        ? placeholder
-        : null;
+          ? placeholder
+          : null;
     },
 
     has: function (key) {

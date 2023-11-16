@@ -9,10 +9,10 @@ window =
   typeof global !== 'undefined'
     ? global
     : typeof self !== 'undefined'
-    ? self
-    : typeof window !== 'undefined'
-    ? window
-    : {};
+      ? self
+      : typeof window !== 'undefined'
+        ? window
+        : {};
 document = window.document || {};
 
 (function (factory, global) {
