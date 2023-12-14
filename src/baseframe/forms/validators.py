@@ -8,6 +8,7 @@ import typing as t
 from collections import namedtuple
 from decimal import Decimal
 from fractions import Fraction
+from typing import Any, cast
 from urllib.parse import urljoin, urlparse
 
 import dns.resolver
@@ -219,12 +220,12 @@ class _Comparison:
             raise ValidationError(self.message.format(**d))
 
     def compare(self, value: t.Any, other: t.Any) -> bool:
-        raise NotImplementedError(_("Subclasses must define ``compare``"))
+        raise NotImplementedError("Subclasses must define ``compare``")
 
 
 class GreaterThan(_Comparison):
     """
-    Validate field.data > otherfield.data.
+    Validate ``field.data > otherfield.data``.
 
     :param fieldname:
         The name of the other field to compare to.
@@ -242,7 +243,7 @@ class GreaterThan(_Comparison):
 
 class GreaterThanEqualTo(_Comparison):
     """
-    Validate field.data >= otherfield.data.
+    Validate ``field.data >= otherfield.data``.
 
     :param fieldname:
         The name of the other field to compare to.
@@ -260,7 +261,7 @@ class GreaterThanEqualTo(_Comparison):
 
 class LesserThan(_Comparison):
     """
-    Validate field.data < otherfield.data.
+    Validate ``field.data < otherfield.data``.
 
     :param fieldname:
         The name of the other field to compare to.
@@ -278,7 +279,7 @@ class LesserThan(_Comparison):
 
 class LesserThanEqualTo(_Comparison):
     """
-    Validate field.data <= otherfield.data.
+    Validate ``field.data <= otherfield.data``.
 
     :param fieldname:
         The name of the other field to compare to.
@@ -296,7 +297,7 @@ class LesserThanEqualTo(_Comparison):
 
 class NotEqualTo(_Comparison):
     """
-    Validate field.data != otherfield.data.
+    Validate ``field.data != otherfield.data``.
 
     :param fieldname:
         The name of the other field to compare to.
@@ -428,7 +429,7 @@ class ValidUrl:
     """
 
     user_agent = (
-        "Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 Hasgeek/linkchecker"
+        'Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 Hasgeek/linkchecker'
     )
 
     default_message = __("The URL “{url}” is not valid or is currently inaccessible")
@@ -500,7 +501,7 @@ class ValidUrl:
 
         cache_key = 'linkchecker/' + md5sum(url)
         try:
-            cache_check = asset_cache.get(cache_key)
+            cache_check = cast(Any, asset_cache.get(cache_key))
         except ValueError:  # Possible error from a broken pickle
             cache_check = None
         # Read from cache, but assume cache may be broken since Flask-Cache stores data
@@ -509,7 +510,7 @@ class ValidUrl:
             rurl = cache_check.get('url')
             code = cache_check.get('code')
         else:
-            rurl = None  # rurl is the response URL after following redirects
+            rurl = None  # `rurl` is the response URL after following redirects
             code = None
 
         # TODO: Also honour the robots.txt protocol and stay off URLs that aren't meant
