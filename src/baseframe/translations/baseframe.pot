@@ -1,332 +1,330 @@
 # Translations template for PROJECT.
-# Copyright (C) 2021 ORGANIZATION
+# Copyright (C) 2023 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-05-06 02:01+0530\n"
+"POT-Creation-Date: 2023-12-14 16:36+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
+"Generated-By: Babel 2.12.1\n"
 
-#: baseframe/filters.py:32
+#: src/baseframe/filters.py:37
 msgid "now"
 msgstr ""
 
-#: baseframe/filters.py:34
+#: src/baseframe/filters.py:39
 msgid "seconds ago"
 msgstr ""
 
-#: baseframe/filters.py:36
+#: src/baseframe/filters.py:41
 #, python-format
 msgid "%(num)s seconds ago"
 msgstr ""
 
-#: baseframe/filters.py:38
+#: src/baseframe/filters.py:43
 msgid "a minute ago"
 msgstr ""
 
-#: baseframe/filters.py:40
+#: src/baseframe/filters.py:45
 #, python-format
 msgid "%(num)s minutes ago"
 msgstr ""
 
-#: baseframe/filters.py:42
+#: src/baseframe/filters.py:47
 msgid "an hour ago"
 msgstr ""
 
-#: baseframe/filters.py:43
+#: src/baseframe/filters.py:48
 #, python-format
 msgid "%(num)s hours ago"
 msgstr ""
 
-#: baseframe/filters.py:45
+#: src/baseframe/filters.py:50
 msgid "a day ago"
 msgstr ""
 
-#: baseframe/filters.py:47
+#: src/baseframe/filters.py:52
 #, python-format
 msgid "%(num)s days ago"
 msgstr ""
 
-#: baseframe/filters.py:49
+#: src/baseframe/filters.py:54
 msgid "a month ago"
 msgstr ""
 
-#: baseframe/filters.py:51
+#: src/baseframe/filters.py:56
 #, python-format
 msgid "%(num)s months ago"
 msgstr ""
 
-#: baseframe/filters.py:53
+#: src/baseframe/filters.py:58
 msgid "a year ago"
 msgstr ""
 
-#: baseframe/filters.py:54
+#: src/baseframe/filters.py:59
 #, python-format
 msgid "%(num)s years ago"
 msgstr ""
 
-#: baseframe/forms/auto.py:31
-#: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:11
-#: baseframe/templates/baseframe/mui/delete.html.jinja2:13
-msgid "Delete"
-msgstr ""
-
-#: baseframe/forms/auto.py:32
-#: baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:12
-#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:53
-#: baseframe/templates/baseframe/mui/delete.html.jinja2:14
-#: baseframe/templates/baseframe/mui/forms.html.jinja2:96
-msgid "Cancel"
-msgstr ""
-
-#: baseframe/forms/auto.py:40
-#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:76
-#: baseframe/templates/baseframe/mui/forms.html.jinja2:119
+#: src/baseframe/forms/auto.py:32
+#: src/baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:154
+#: src/baseframe/templates/baseframe/mui/forms.html.jinja2:208
 msgid "Submit"
 msgstr ""
 
-#: baseframe/forms/fields.py:169
-msgid "Not a valid choice!"
+#: src/baseframe/forms/auto.py:39
+#: src/baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:11
+#: src/baseframe/templates/baseframe/mui/delete.html.jinja2:13
+msgid "Delete"
 msgstr ""
 
-#: baseframe/forms/fields.py:936
-msgid "Value not in LabeledEnum"
+#: src/baseframe/forms/auto.py:40
+#: src/baseframe/templates/baseframe/bootstrap3/delete.html.jinja2:12
+#: src/baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:94
+#: src/baseframe/templates/baseframe/mui/delete.html.jinja2:14
+#: src/baseframe/templates/baseframe/mui/forms.html.jinja2:146
+msgid "Cancel"
 msgstr ""
 
-#: baseframe/forms/fields.py:946
-msgid "Invalid Choice: could not coerce"
-msgstr ""
-
-#: baseframe/forms/fields.py:950
+#: src/baseframe/forms/fields.py:181 src/baseframe/forms/fields.py:912
 msgid "Not a valid choice"
 msgstr ""
 
-#: baseframe/forms/fields.py:1006
+#: src/baseframe/forms/fields.py:292
+msgid "This date/time could not be recognized"
+msgstr ""
+
+#: src/baseframe/forms/fields.py:895
+msgid "Value not in LabeledEnum"
+msgstr ""
+
+#: src/baseframe/forms/fields.py:907
+msgid "Invalid Choice: could not coerce"
+msgstr ""
+
+#: src/baseframe/forms/fields.py:976
 msgid "Field value must be a dictionary"
 msgstr ""
 
-#: baseframe/forms/fields.py:1024
-msgid "Invalid JSON: {0!r}"
+#: src/baseframe/forms/fields.py:998
+msgid "Invalid JSON: {message}"
 msgstr ""
 
-#: baseframe/forms/fields.py:1027
-msgid "The JSON root must be a hash object"
+#: src/baseframe/forms/fields.py:1002
+msgid "The JSON data must be a hash object enclosed in {}"
 msgstr ""
 
-#: baseframe/forms/form.py:124
+#: src/baseframe/forms/form.py:136
 msgid "This form has already been submitted"
 msgstr ""
 
-#: baseframe/forms/sqlalchemy.py:20
-msgid "This {attr} is already in use"
-msgstr ""
-
-#: baseframe/forms/sqlalchemy.py:48
+#: src/baseframe/forms/sqlalchemy.py:53
 msgid "This URL name is already in use"
 msgstr ""
 
-#: baseframe/forms/validators.py:72
+#: src/baseframe/forms/validators.py:76
 msgid "The secret parameter is missing"
 msgstr ""
 
-#: baseframe/forms/validators.py:73
+#: src/baseframe/forms/validators.py:77
 msgid "The secret parameter is invalid or malformed"
 msgstr ""
 
-#: baseframe/forms/validators.py:74
+#: src/baseframe/forms/validators.py:78
 msgid "The response parameter is missing"
 msgstr ""
 
-#: baseframe/forms/validators.py:75
+#: src/baseframe/forms/validators.py:79
 msgid "The response parameter is invalid or malformed"
 msgstr ""
 
-#: baseframe/forms/validators.py:127
+#: src/baseframe/forms/validators.py:129
 msgid "This requires ‘{field}’ to be specified"
 msgstr ""
 
-#: baseframe/forms/validators.py:158 baseframe/forms/validators.py:187
+#: src/baseframe/forms/validators.py:160 src/baseframe/forms/validators.py:189
 msgid "This is required"
 msgstr ""
 
-#: baseframe/forms/validators.py:204
+#: src/baseframe/forms/validators.py:205
 msgid "Comparison failed"
 msgstr ""
 
-#: baseframe/forms/validators.py:222
-msgid "Subclasses must define ``compare``"
-msgstr ""
-
-#: baseframe/forms/validators.py:237
+#: src/baseframe/forms/validators.py:238
 msgid "This must be greater than {other_label}"
 msgstr ""
 
-#: baseframe/forms/validators.py:255
+#: src/baseframe/forms/validators.py:256
 msgid "This must be greater than or equal to {other_label}"
 msgstr ""
 
-#: baseframe/forms/validators.py:273
+#: src/baseframe/forms/validators.py:274
 msgid "This must be lesser than {other_label}"
 msgstr ""
 
-#: baseframe/forms/validators.py:291
+#: src/baseframe/forms/validators.py:292
 msgid "This must be lesser than or equal to {other_label}"
 msgstr ""
 
-#: baseframe/forms/validators.py:309
+#: src/baseframe/forms/validators.py:310
 msgid "This must not be the same as {other_label}"
 msgstr ""
 
-#: baseframe/forms/validators.py:323
+#: src/baseframe/forms/validators.py:324
 msgid "This is not a valid emoji"
 msgstr ""
 
-#: baseframe/forms/validators.py:344
+#: src/baseframe/forms/validators.py:345
 msgid "This domain is not a public email domain"
 msgstr ""
 
-#: baseframe/forms/validators.py:367
+#: src/baseframe/forms/validators.py:368
 msgid "This domain is a public email domain"
 msgstr ""
 
-#: baseframe/forms/validators.py:388
+#: src/baseframe/forms/validators.py:389
 msgid "This email address does not appear to be valid"
 msgstr ""
 
-#: baseframe/forms/validators.py:434
+#: src/baseframe/forms/validators.py:435
 msgid "The URL “{url}” is not valid or is currently inaccessible"
 msgstr ""
 
-#: baseframe/forms/validators.py:436
+#: src/baseframe/forms/validators.py:437
 msgid ""
 "The URL “{url}” linked from “{text}” is not valid or is currently "
 "inaccessible"
 msgstr ""
 
-#: baseframe/forms/validators.py:440
+#: src/baseframe/forms/validators.py:441
 msgid "This URL’s protocol is not allowed"
 msgstr ""
 
-#: baseframe/forms/validators.py:442
+#: src/baseframe/forms/validators.py:443
 msgid "This URL’s domain is not allowed"
 msgstr ""
 
-#: baseframe/forms/validators.py:489 baseframe/forms/validators.py:494
+#: src/baseframe/forms/validators.py:490 src/baseframe/forms/validators.py:495
 msgid ", "
 msgstr ""
 
-#: baseframe/forms/validators.py:659
+#: src/baseframe/forms/validators.py:665
 msgid "Email address identified"
 msgstr ""
 
-#: baseframe/forms/validators.py:677
+#: src/baseframe/forms/validators.py:682
 msgid ""
 "This name contains unsupported characters. It should have letters, "
 "numbers and non-terminal hyphens only"
 msgstr ""
 
-#: baseframe/forms/validators.py:692
+#: src/baseframe/forms/validators.py:696
 msgid "Valid latitude and longitude expected"
 msgstr ""
 
-#: baseframe/forms/validators.py:693
+#: src/baseframe/forms/validators.py:697
 msgid "Latitude must be within ± 90 degrees"
 msgstr ""
 
-#: baseframe/forms/validators.py:694
+#: src/baseframe/forms/validators.py:698
 msgid "Longitude must be within ± 180 degrees"
 msgstr ""
 
-#: baseframe/forms/validators.py:718
+#: src/baseframe/forms/validators.py:722
 msgid "The server was temporarily unreachable. Try again"
 msgstr ""
 
-#: baseframe/forms/widgets.py:185
+#: src/baseframe/forms/widgets.py:158
 msgid "Latitude"
 msgstr ""
 
-#: baseframe/forms/widgets.py:192
+#: src/baseframe/forms/widgets.py:165
 msgid "Longitude"
 msgstr ""
 
-#: baseframe/forms/widgets.py:311
+#: src/baseframe/forms/widgets.py:284
 msgid "Image URL"
 msgstr ""
 
-#: baseframe/templates/400.html.jinja2:2
-msgid "Bad Request"
-msgstr ""
-
-#: baseframe/templates/400.html.jinja2:5 baseframe/templates/422.html.jinja2:5
-msgid "This request was malformed and could not be processed"
-msgstr ""
-
-#: baseframe/templates/403.html.jinja2:2
-msgid "Access denied"
-msgstr ""
-
-#: baseframe/templates/403.html.jinja2:5
-msgid "You do not have access to that page"
-msgstr ""
-
-#: baseframe/templates/404.html.jinja2:2
-msgid "Not Found"
-msgstr ""
-
-#: baseframe/templates/404.html.jinja2:5
-msgid "The page you were looking for does not exist"
-msgstr ""
-
-#: baseframe/templates/422.html.jinja2:2
-msgid "Unprocessable Entity"
-msgstr ""
-
-#: baseframe/templates/429.html.jinja2:2
-msgid "Too Many Requests"
-msgstr ""
-
-#: baseframe/templates/429.html.jinja2:5
-msgid "You have exceeded the rate limit and must try after some time"
-msgstr ""
-
-#: baseframe/templates/500.html.jinja2:2
-msgid "Internal Server Error"
-msgstr ""
-
-#: baseframe/templates/500.html.jinja2:5
-msgid ""
-"Something broke inside. A report has been sent to the server’s "
-"administrator. Our apologies for the inconvenience"
-msgstr ""
-
-#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:56
-#: baseframe/templates/baseframe/mui/forms.html.jinja2:99
+#: src/baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:100
+#: src/baseframe/templates/baseframe/mui/forms.html.jinja2:152
 msgid "This form has timed out. Please submit again to confirm"
 msgstr ""
 
-#: baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:63
+#: src/baseframe/templates/baseframe/bootstrap3/forms.html.jinja2:122
+#: src/baseframe/templates/baseframe/mui/forms.html.jinja2:172
 msgid "Please review the indicated issues"
 msgstr ""
 
-#: baseframe/templates/baseframe/bootstrap3/redirect.html.jinja2:1
-#: baseframe/templates/baseframe/mui/redirect.html.jinja2:1
+#: src/baseframe/templates/baseframe/bootstrap3/redirect.html.jinja2:1
+#: src/baseframe/templates/baseframe/mui/redirect.html.jinja2:1
 msgid "Loading…"
 msgstr ""
 
-#: baseframe/templates/baseframe/mui/imgeefield.html.jinja2:5
+#: src/baseframe/templates/baseframe/mui/forms.html.jinja2:230
+msgid "An error occured when submitting the form"
+msgstr ""
+
+#: src/baseframe/templates/baseframe/mui/imgeefield.html.jinja2:5
 msgid "Select or upload image"
 msgstr ""
 
-#: baseframe/templates/baseframe/mui/imgeefield.html.jinja2:8
+#: src/baseframe/templates/baseframe/mui/imgeefield.html.jinja2:8
 msgid "Close"
+msgstr ""
+
+#: src/baseframe/templates/errors/400.html.jinja2:2
+msgid "Bad Request"
+msgstr ""
+
+#: src/baseframe/templates/errors/400.html.jinja2:5
+#: src/baseframe/templates/errors/422.html.jinja2:5
+msgid "This request was malformed and could not be processed"
+msgstr ""
+
+#: src/baseframe/templates/errors/403.html.jinja2:2
+msgid "Access denied"
+msgstr ""
+
+#: src/baseframe/templates/errors/403.html.jinja2:5
+msgid "You do not have access to that page"
+msgstr ""
+
+#: src/baseframe/templates/errors/404.html.jinja2:2
+msgid "Not Found"
+msgstr ""
+
+#: src/baseframe/templates/errors/404.html.jinja2:5
+msgid "The page you were looking for does not exist"
+msgstr ""
+
+#: src/baseframe/templates/errors/422.html.jinja2:2
+msgid "Unprocessable Entity"
+msgstr ""
+
+#: src/baseframe/templates/errors/429.html.jinja2:2
+msgid "Too Many Requests"
+msgstr ""
+
+#: src/baseframe/templates/errors/429.html.jinja2:5
+msgid "You have exceeded the rate limit and must try after some time"
+msgstr ""
+
+#: src/baseframe/templates/errors/500.html.jinja2:2
+msgid "Internal Server Error"
+msgstr ""
+
+#: src/baseframe/templates/errors/500.html.jinja2:5
+msgid ""
+"Something broke inside. A report has been sent to the server’s "
+"administrator. Our apologies for the inconvenience"
 msgstr ""

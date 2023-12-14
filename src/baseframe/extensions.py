@@ -1,8 +1,10 @@
 """Standard extensions to add to the Flask app."""
+# pyright: reportMissingImports = false
 
 import os.path
 import typing as t
 from datetime import tzinfo
+from typing import cast
 
 from flask import current_app, request
 from flask_babel import Babel, Domain
@@ -24,8 +26,6 @@ except ImportError:
     line_profile = None
 
 __all__ = [
-    '_',
-    '__',
     'asset_cache',
     'babel',
     'baseframe_translations',
@@ -52,8 +52,8 @@ else:  # pragma: no cover
 baseframe_translations = Domain(
     os.path.join(os.path.dirname(__file__), 'translations'), domain='baseframe'
 )
-_ = baseframe_translations.gettext
-__ = baseframe_translations.lazy_gettext
+_ = cast(t.Callable[..., str], baseframe_translations.gettext)
+__ = cast(t.Callable[..., str], baseframe_translations.lazy_gettext)
 
 
 def get_user_locale() -> str:
