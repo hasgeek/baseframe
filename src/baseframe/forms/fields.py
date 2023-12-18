@@ -20,6 +20,7 @@ from pytz import timezone as pytz_timezone, utc
 from werkzeug.datastructures import MultiDict
 from wtforms import Form as WTForm
 from wtforms.fields import (
+    DateTimeField as DateTimeFieldBase,
     Field,
     FieldList,
     FileField,
@@ -27,6 +28,7 @@ from wtforms.fields import (
     SelectField as SelectFieldBase,
     SelectMultipleField,
     SubmitField,
+    TextAreaField as TextAreaFieldBase,
 )
 from wtforms.utils import unset_value
 from wtforms.widgets import Select as OriginalSelectWidget
@@ -121,6 +123,11 @@ class NonceField(HiddenField):
 
     def populate_obj(self, *_args: t.Any, **_kwargs: t.Any) -> None:
         """Override populate_obj to not attempt setting nonce on the object."""
+
+    def get_default(self) -> str:
+        if callable(default := self.default):
+            return default()
+        return default
 
 
 class RecaptchaField(RecaptchaFieldBase):
@@ -270,7 +277,7 @@ class TinyMce4Field(TextAreaField):
                 self.data = bleach.linkify(self.data or '', callbacks=[])
 
 
-class DateTimeField(wtforms.fields.DateTimeField):
+class DateTimeField(DateTimeFieldBase):
     """
     A text field which stores a `datetime.datetime` matching a format.
 
@@ -365,14 +372,14 @@ class DateTimeField(wtforms.fields.DateTimeField):
         if valuelist:
             # We received a timestamp from the browser. Parse and save it
             data: t.Optional[datetime] = None
-            # Valuelist will contain `date` and `time` as two separate values
+            # `valuelist` will contain `date` and `time` as two separate values
             # if the widget is rendered as two parts. If so, parse each at a time
             # and use it as a default to replace values from the next value.  If the
             # front-end renders a single widget, the entire content will be parsed once.
             for value in valuelist:
                 if value.strip():
                     try:
-                        # dateutil cannot handle ISO and European-style dates at the
+                        # `dateutil` cannot handle ISO and European-style dates at the
                         # same time, so `dayfirst` MUST be False. Setting it to True
                         # will interpret YYYY-DD-MM instead of YYYY-MM-DD. Bug report:
                         # https://github.com/dateutil/dateutil/issues/402
@@ -381,7 +388,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
                         )
                     except (ValueError, OverflowError, TypeError):
                         # TypeError is not a documented error for `parser.parse`, but
-                        # the DateTimeField implementation in wtforms_dateutil says
+                        # the DateTimeField implementation in `wtforms_dateutil` says
                         # it can happen due to a known bug
                         raise ValidationError(self.message) from None
             if data is not None:
@@ -404,7 +411,7 @@ class DateTimeField(wtforms.fields.DateTimeField):
             self.data = None
 
 
-class TextListField(wtforms.fields.TextAreaField):
+class TextListField(TextAreaFieldBase):
     """A list field that renders as a textarea with one line per list item."""
 
     def _value(self) -> str:

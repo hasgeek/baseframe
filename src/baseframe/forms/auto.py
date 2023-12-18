@@ -51,7 +51,7 @@ def render_form(
     with_chrome: bool = True,
     action: t.Optional[str] = None,
     autosave: bool = False,
-    draft_revision: t.Optional[int] = None,
+    draft_revision: t.Optional[t.Any] = None,
     template: str = '',
 ) -> Response:
     """Render a form."""
