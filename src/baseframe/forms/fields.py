@@ -125,6 +125,7 @@ class NonceField(HiddenField):
         """Override populate_obj to not attempt setting nonce on the object."""
 
     def get_default(self) -> str:
+        """Get default value."""
         if callable(default := self.default):
             return default()
         return default
