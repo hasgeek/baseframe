@@ -8,7 +8,7 @@ import wtforms
 from flask import current_app, render_template
 from furl import furl
 from markupsafe import Markup, escape
-from wtforms import Field as WTField
+from wtforms import Field as WTField, SelectFieldBase
 from wtforms.widgets import RadioInput, Select, html_params
 
 from ..extensions import _
@@ -31,7 +31,7 @@ __all__ = [
 class SelectWidget(Select):
     """Add support of choices with ``optgroup`` to the ``Select`` widget."""
 
-    def __call__(self, field: WTField, **kwargs: t.Any) -> Markup:
+    def __call__(self, field: SelectFieldBase, **kwargs: t.Any) -> Markup:
         kwargs.setdefault('id', field.id)
         if self.multiple:
             kwargs['multiple'] = True
@@ -61,7 +61,7 @@ class SelectWidget(Select):
 class Select2Widget(Select):
     """Add a select2 class to the rendered select widget."""
 
-    def __call__(self, field: WTField, **kwargs: t.Any) -> Markup:
+    def __call__(self, field: SelectFieldBase, **kwargs: t.Any) -> Markup:
         kwargs.setdefault('id', field.id)
         kwargs.pop('type', field.type)
         if field.multiple:
