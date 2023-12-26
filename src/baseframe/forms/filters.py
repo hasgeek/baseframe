@@ -110,7 +110,7 @@ def strip_each(
 
 
 def none_if_empty() -> t.Callable[[t.Any], t.Optional[t.Any]]:
-    """If data is empty or evalues to boolean false, replace with None."""
+    """If data is empty or evaluates to boolean false, replace with None."""
 
     def none_if_empty_inner(value: t.Any) -> t.Optional[t.Any]:
         return value if value else None
