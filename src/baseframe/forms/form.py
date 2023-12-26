@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing as t
 import typing_extensions as te
 import uuid
+import warnings
 from threading import Lock
 
 import wtforms
@@ -148,6 +149,12 @@ class Form(BaseForm):
             raise TypeError(
                 "This form has __expects__ parameters that clash with field names"
             )
+        if 'set_queries' in cls.__dict__ and 'queries' not in cls.__dict__:
+            warnings.warn(
+                f"`{cls.__qualname__}.set_queries` is deprecated due to conflict with"
+                " `set_<fieldname>` methods. Rename it to `__post_init__`",
+                stacklevel=2,
+            )
 
     def __init__(self, *args: t.Any, **kwargs: t.Any) -> None:
         for attr in self.__expects__:
@@ -178,7 +185,10 @@ class Form(BaseForm):
         super().__init__(*args, **kwargs)
 
         # Finally, populate the ``choices`` attr of selection fields
-        self.set_queries()
+        if callable(post_init := getattr(self, '__post_init__', None)):
+            post_init()  # pylint: disable=not-callable
+        elif callable(post_init := getattr(self, 'set_queries', None)):
+            post_init()  # pylint: disable=not-callable
 
     def __json__(self) -> t.List[t.Any]:
         """Render this form as JSON."""
@@ -214,7 +224,7 @@ class Form(BaseForm):
         """
         Take form, object data, and keyword arg input and have the fields process them.
 
-        :param formdata: Used to pass data coming from the enduser, usually
+        :param formdata: Used to pass data coming from the client, usually
             `request.POST` or equivalent.
         :param obj: If `formdata` is empty or not provided, this object is checked for
             attributes matching form field names, which will be used for field values.
@@ -301,15 +311,6 @@ class Form(BaseForm):
             if f.errors
         }
 
-    def set_queries(self) -> None:
-        """
-        Set queries/choices as may be required for fields.
-
-        This is an overridable method and is typically required on forms that use
-        QuerySelectField or QuerySelectMultipleField, or have select fields with choices
-        that are only available at runtime.
-        """
-
 
 class FormGenerator:
     """
@@ -335,7 +336,7 @@ class FormGenerator:
 
         self.default_field = default_field
 
-    # TODO: Make formstruct a TypedDict
+    # TODO: Make `formstruct` a TypedDict
     def generate(self, formstruct: dict) -> t.Type[Form]:
         """Generate a dynamic form from the given data structure."""
 
@@ -383,7 +384,7 @@ class FormGenerator:
                                 itemparams[paramname] = item[paramname]
                         filters.append(filter_registry[itemname][0](**itemparams))
 
-            # TODO: Also validate the parameters in fielddata, like with validators
+            # TODO: Also validate the parameters in `fielddata`, like with validators
             # above
             setattr(
                 DynamicForm,
