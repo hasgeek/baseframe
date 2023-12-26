@@ -90,7 +90,7 @@ def test_no_obj() -> None:
     """Test that the form can be initialized without an object."""
     form = GetSetForm(meta={'csrf': False})
 
-    # Confirm form is bkank
+    # Confirm form is blank
     assert form.firstname.data is None
     assert form.lastname.data is None
     assert form.company.data is None
@@ -104,9 +104,9 @@ def test_get(user) -> None:
     form = GetSetForm(obj=user, meta={'csrf': False})
 
     # Confirm form loaded from user object
-    assert form.firstname.data == "Test"
-    assert form.lastname.data == "user"
-    assert form.company.data == "Test company"
+    assert form.firstname.data == 'Test'
+    assert form.lastname.data == 'user'
+    assert form.company.data == 'Test company'
     assert form.password.data == ''
     assert form.confirm_password.data == ''
 
@@ -117,23 +117,23 @@ def test_get_formdata(user) -> None:
     form = GetSetForm(
         formdata=MultiDict(
             {
-                'firstname': "Ffirst",
-                'lastname': "Flast",
-                'company': "Form company",
-                'password': "Test123",
-                'confirm_password': "Mismatched",
+                'firstname': 'Ffirst',
+                'lastname': 'Flast',
+                'company': 'Form company',
+                'password': 'Test123',
+                'confirm_password': 'Mismatched',
             }
         ),
         obj=user,
         meta={'csrf': False},
     )
 
-    # Confirm form loaded from formdata instead of user object
-    assert form.firstname.data == "Ffirst"
-    assert form.lastname.data == "Flast"
-    assert form.company.data == "Form company"
-    assert form.password.data == "Test123"
-    assert form.confirm_password.data == "Mismatched"
+    # Confirm form loaded from `formdata` instead of user object
+    assert form.firstname.data == 'Ffirst'
+    assert form.lastname.data == 'Flast'
+    assert form.company.data == 'Form company'
+    assert form.password.data == 'Test123'
+    assert form.confirm_password.data == 'Mismatched'
 
 
 @pytest.mark.usefixtures('ctx')
@@ -142,11 +142,11 @@ def test_set(user) -> None:
     form = GetSetForm(
         formdata=MultiDict(
             {
-                'firstname': "Ffirst",
-                'lastname': "Flast",
-                'company': "Form company",
-                'password': "Test123",
-                'confirm_password': "Mismatched",
+                'firstname': 'Ffirst',
+                'lastname': 'Flast',
+                'company': 'Form company',
+                'password': 'Test123',
+                'confirm_password': 'Mismatched',
             }
         ),
         obj=user,
@@ -154,16 +154,16 @@ def test_set(user) -> None:
     )
 
     # Check user object before and after populating
-    assert user.fullname == "Test user"
-    assert user.company == "Test company"
-    assert user.password_is("test")
+    assert user.fullname == 'Test user'
+    assert user.company == 'Test company'
+    assert user.password_is('test')
 
     form.populate_obj(user)
 
-    assert user.fullname == "Ffirst Flast"
-    assert user.company == "Form company"
-    assert not user.password_is("test")
-    assert user.password_is("Test123")
+    assert user.fullname == 'Ffirst Flast'
+    assert user.company == 'Form company'
+    assert not user.password_is('test')
+    assert user.password_is('Test123')
     assert not hasattr(user, 'confirm_password')
 
 
@@ -193,9 +193,54 @@ def test_render_field_options() -> None:
         'attrfour': '',
     }
     render = render_field_options(form.string_field, **test_attrs)
-    # This expicit rendering is based on dictionary key order stability in Python 3.7+
+    # This explicit rendering is based on dictionary key order stability in Python 3.7+
     assert render == (
         '<input'
         ' attrfour="" attrone="test"'
         ' id="string_field" name="string_field" type="text" value="">'
     )
+
+
+@pytest.mark.usefixtures('ctx')
+def test_post_init_gets_called() -> None:
+    class TestForm(forms.Form):
+        post_init_called: bool = False
+
+        def __post_init__(self) -> None:
+            self.post_init_called = True
+
+    form = TestForm(meta={'csrf': False})
+    assert form.post_init_called is True
+
+
+@pytest.mark.usefixtures('ctx')
+def test_set_queries_gets_called() -> None:
+    with pytest.warns(UserWarning):
+
+        class TestForm(forms.Form):
+            set_queries_called: bool = False
+
+            def set_queries(self) -> None:
+                self.set_queries_called = True
+
+    form = TestForm(meta={'csrf': False})
+    assert form.set_queries_called is True
+
+
+@pytest.mark.usefixtures('ctx')
+def test_only_post_init_called() -> None:
+    with pytest.warns(UserWarning):
+
+        class TestForm(forms.Form):
+            post_init_called: bool = False
+            set_queries_called: bool = False
+
+            def __post_init__(self) -> None:
+                self.post_init_called = True
+
+            def set_queries(self) -> None:
+                self.set_queries_called = True
+
+    form = TestForm(meta={'csrf': False})
+    assert form.post_init_called is True
+    assert form.set_queries_called is False
