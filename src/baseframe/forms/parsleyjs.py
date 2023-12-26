@@ -1,14 +1,14 @@
 """
 WTForms fields and widgets with ParsleyJS headers.
 
-This is a fork of wtforms-parsleyjs based on
+This is a fork of WTForms-ParsleyJS based on
 https://github.com/johannes-gehrs/wtforms-parsleyjs and
 https://github.com/fuhrysteve/wtforms-parsleyjs. We've forked it into Baseframe because
 the upstream repositories appear unmaintained, and from past experience, we'll have
 trouble getting patches accepted every time WTForms or ParsleyJS has an update. This
 works best for us if we maintain our own fork.
 
-wtforms-parsleysj is MIT licensed, while the rest of Baseframe is either BSD (our code)
+WTForms-ParsleyJS is MIT licensed, while the rest of Baseframe is either BSD (our code)
 or various other open source licenses (other third party code).
 """
 

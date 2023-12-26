@@ -289,7 +289,7 @@ def test_escaped_label_text() -> None:
     ],
 )
 def test_date_time_field(test_input, expected_naive, expected_aware) -> None:
-    """Assert various datetime inputs are recogized and processed accurately."""
+    """Assert various datetime inputs are recognized and processed accurately."""
     form = DateTimeForm(meta={'csrf': False})
     form.process(
         formdata=MultiDict(

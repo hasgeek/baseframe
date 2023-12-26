@@ -966,7 +966,7 @@ class JsonField(wtforms.TextAreaField):
         """
         Render the internal Python value as a JSON string.
 
-        Specialcase `None` to return an empty string instead of a JSON ``null``.
+        Special-case `None` to return an empty string instead of a JSON ``null``.
         """
         if self.raw_data:
             # If we've received data from a form, render it as is. This allows
