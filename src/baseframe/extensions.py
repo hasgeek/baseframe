@@ -3,6 +3,7 @@
 
 import os.path
 import typing as t
+import typing_extensions as te
 from datetime import tzinfo
 from typing import cast
 
@@ -37,6 +38,18 @@ __all__ = [
 ]
 
 
+class GetTextProtocol(te.Protocol):
+    """
+    Callable protocol for gettext and lazy_gettext.
+
+    Specify that the first parameter must always be a literal string, not a variable,
+    and that the return type is a string (though actually a LazyString).
+    """
+
+    def __call__(self, string: te.LiteralString, **variables) -> str:
+        ...
+
+
 DEFAULT_LOCALE = 'en'
 
 networkbar_cache = Cache(with_jinja2_ext=False)
@@ -52,8 +65,8 @@ else:  # pragma: no cover
 baseframe_translations = Domain(
     os.path.join(os.path.dirname(__file__), 'translations'), domain='baseframe'
 )
-_ = cast(t.Callable[..., str], baseframe_translations.gettext)
-__ = cast(t.Callable[..., str], baseframe_translations.lazy_gettext)
+_ = cast(GetTextProtocol, baseframe_translations.gettext)
+__ = cast(GetTextProtocol, baseframe_translations.lazy_gettext)
 
 
 def get_user_locale() -> str:

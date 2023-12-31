@@ -80,8 +80,10 @@ RECAPTCHA_ERROR_CODES = {
 }
 
 InvalidUrlPatterns = t.Iterable[t.Tuple[t.Iterable[t.Any], str]]
-AllowedListInit = t.Union[t.Iterable[str], t.Callable[[], t.Iterable[str]], None]
-AllowedList = t.Union[t.Iterable[str], None]
+AllowedListInit = t.Optional[
+    t.Union[t.Iterable[str], t.Callable[[], t.Optional[t.Iterable[str]]]]
+]
+AllowedList = t.Optional[t.Iterable[str]]
 
 
 def is_empty(value: t.Any) -> bool:
