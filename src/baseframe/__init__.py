@@ -1,6 +1,6 @@
 """Baseframe init."""
 
-from typing import Callable, cast
+from typing import cast
 
 from flask_babel import gettext, lazy_gettext
 
@@ -9,6 +9,7 @@ from .assets import Version, assets
 from .blueprint import *  # NOQA
 from .deprecated import *  # NOQA
 from .extensions import *  # NOQA
+from .extensions import GetTextProtocol
 from .filters import *  # NOQA
 from .utils import *  # NOQA
 from .views import *  # NOQA
@@ -16,8 +17,8 @@ from .views import *  # NOQA
 from . import forms  # isort:skip
 
 # Pretend these return str, not Any or LazyString
-_ = cast(Callable[..., str], gettext)
-__ = cast(Callable[..., str], lazy_gettext)
+_ = cast(GetTextProtocol, gettext)
+__ = cast(GetTextProtocol, lazy_gettext)
 
 # TODO: baseframe_js and baseframe_css are defined in deprecated.py
 # and pending removal after an audit of all apps
