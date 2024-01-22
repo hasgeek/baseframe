@@ -285,18 +285,16 @@
 
           $targetPanel
             .addClass(settings.panelActiveClass)
-            [transitions.uncollapse](
-              transitions.speed,
-              settings.transitionUncollapseEasing,
-              function () {
-                $container.trigger('easytabs:midTransition', [
-                  $clicked,
-                  $targetPanel,
-                  settings,
-                ]);
-                if (typeof callback == 'function') callback();
-              }
-            );
+            [
+              transitions.uncollapse
+            ](transitions.speed, settings.transitionUncollapseEasing, function () {
+              $container.trigger('easytabs:midTransition', [
+                $clicked,
+                $targetPanel,
+                settings,
+              ]);
+              if (typeof callback == 'function') callback();
+            });
 
           // Otherwise, collapse it
         } else {
@@ -308,18 +306,16 @@
 
           $targetPanel
             .removeClass(settings.panelActiveClass)
-            [transitions.collapse](
-              transitions.speed,
-              settings.transitionCollapseEasing,
-              function () {
-                $container.trigger('easytabs:midTransition', [
-                  $clicked,
-                  $targetPanel,
-                  settings,
-                ]);
-                if (typeof callback == 'function') callback();
-              }
-            );
+            [
+              transitions.collapse
+            ](transitions.speed, settings.transitionCollapseEasing, function () {
+              $container.trigger('easytabs:midTransition', [
+                $clicked,
+                $targetPanel,
+                settings,
+              ]);
+              if (typeof callback == 'function') callback();
+            });
         }
       }
     };
