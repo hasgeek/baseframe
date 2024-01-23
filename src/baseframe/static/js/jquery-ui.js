@@ -15249,10 +15249,9 @@
               if (i === 0) {
                 that.range
                   .stop(1, 1)
-                  [animate ? 'animate' : 'css'](
-                    { left: valPercent + '%' },
-                    o.animate
-                  );
+                  [
+                    animate ? 'animate' : 'css'
+                  ]({ left: valPercent + '%' }, o.animate);
               }
               if (i === 1) {
                 that.range[animate ? 'animate' : 'css'](
@@ -15264,10 +15263,9 @@
               if (i === 0) {
                 that.range
                   .stop(1, 1)
-                  [animate ? 'animate' : 'css'](
-                    { bottom: valPercent + '%' },
-                    o.animate
-                  );
+                  [
+                    animate ? 'animate' : 'css'
+                  ]({ bottom: valPercent + '%' }, o.animate);
               }
               if (i === 1) {
                 that.range[animate ? 'animate' : 'css'](
@@ -15294,10 +15292,9 @@
         if (oRange === 'min' && this.orientation === 'horizontal') {
           this.range
             .stop(1, 1)
-            [animate ? 'animate' : 'css'](
-              { width: valPercent + '%' },
-              o.animate
-            );
+            [
+              animate ? 'animate' : 'css'
+            ]({ width: valPercent + '%' }, o.animate);
         }
         if (oRange === 'max' && this.orientation === 'horizontal') {
           this.range[animate ? 'animate' : 'css'](
@@ -15308,10 +15305,9 @@
         if (oRange === 'min' && this.orientation === 'vertical') {
           this.range
             .stop(1, 1)
-            [animate ? 'animate' : 'css'](
-              { height: valPercent + '%' },
-              o.animate
-            );
+            [
+              animate ? 'animate' : 'css'
+            ]({ height: valPercent + '%' }, o.animate);
         }
         if (oRange === 'max' && this.orientation === 'vertical') {
           this.range[animate ? 'animate' : 'css'](
