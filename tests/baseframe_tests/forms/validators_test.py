@@ -1,4 +1,5 @@
 """Test form validators."""
+
 # pylint: disable=redefined-outer-name
 
 import re

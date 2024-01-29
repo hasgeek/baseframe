@@ -1,4 +1,5 @@
 """Sphinx configuration."""
+
 # flake8: noqa
 #
 # baseframe documentation build configuration file, created by

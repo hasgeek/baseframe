@@ -1,4 +1,5 @@
 """Test SQLAlchemy fields."""
+
 # pylint: disable=redefined-outer-name
 
 import pytest

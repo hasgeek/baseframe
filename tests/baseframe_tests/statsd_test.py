@@ -1,4 +1,5 @@
 """Test statsd logging."""
+
 # pylint: disable=redefined-outer-name
 
 # Tests adapted from https://github.com/bbelyeu/flask-statsdclient
@@ -239,9 +240,11 @@ def test_tags(app, ctx, statsd) -> None:
 
 def test_request_handler_notags(app, statsd, view) -> None:
     """Test request_handlers logging with tags disabled."""
-    with patch('statsd.StatsClient.incr') as mock_incr, patch(
-        'statsd.StatsClient.timing'
-    ) as mock_timing, app.test_client() as client:
+    with (
+        patch('statsd.StatsClient.incr') as mock_incr,
+        patch('statsd.StatsClient.timing') as mock_timing,
+        app.test_client() as client,
+    ):
         client.get('/')
         # First call
         mock_incr.assert_any_call(
@@ -263,9 +266,11 @@ def test_request_handler_notags(app, statsd, view) -> None:
 def test_request_handler_tags(app, statsd, view) -> None:
     """Test request_handlers logging with tags enabled."""
     app.config['STATSD_TAGS'] = ','
-    with patch('statsd.StatsClient.incr') as mock_incr, patch(
-        'statsd.StatsClient.timing'
-    ) as mock_timing, app.test_client() as client:
+    with (
+        patch('statsd.StatsClient.incr') as mock_incr,
+        patch('statsd.StatsClient.timing') as mock_timing,
+        app.test_client() as client,
+    ):
         client.get('/')
         mock_incr.assert_called_once_with(
             'flask_app.request_handlers,endpoint=index,status_code=200'
@@ -280,9 +285,11 @@ def test_request_handler_disabled(app, view) -> None:
     """Test request_handlers logging disabled."""
     app.config['STATSD_REQUEST_LOG'] = False
     Statsd(app)
-    with patch('statsd.StatsClient.incr') as mock_incr, patch(
-        'statsd.StatsClient.timing'
-    ) as mock_timing, app.test_client() as client:
+    with (
+        patch('statsd.StatsClient.incr') as mock_incr,
+        patch('statsd.StatsClient.timing') as mock_timing,
+        app.test_client() as client,
+    ):
         client.get('/')
         mock_incr.assert_not_called()
         mock_timing.assert_not_called()
@@ -290,9 +297,11 @@ def test_request_handler_disabled(app, view) -> None:
 
 def test_render_template_notags(app, statsd) -> None:
     """Test render_template logging with tags disabled."""
-    with patch('statsd.StatsClient.incr') as mock_incr, patch(
-        'statsd.StatsClient.timing'
-    ) as mock_timing, app.app_context():
+    with (
+        patch('statsd.StatsClient.incr') as mock_incr,
+        patch('statsd.StatsClient.timing') as mock_timing,
+        app.app_context(),
+    ):
         render_template_string("Test template")
         assert mock_incr.call_count == 2
         assert mock_timing.call_count == 2
@@ -311,9 +320,11 @@ def test_render_template_notags(app, statsd) -> None:
 def test_render_template_tags(app, statsd) -> None:
     """Test render_template logging with tags enabled."""
     app.config['STATSD_TAGS'] = ','
-    with patch('statsd.StatsClient.incr') as mock_incr, patch(
-        'statsd.StatsClient.timing'
-    ) as mock_timing, app.app_context():
+    with (
+        patch('statsd.StatsClient.incr') as mock_incr,
+        patch('statsd.StatsClient.timing') as mock_timing,
+        app.app_context(),
+    ):
         render_template_string("Test template")
         assert mock_incr.call_count == 1
         assert mock_timing.call_count == 1
@@ -331,9 +342,11 @@ def test_render_template_disabled(app, view) -> None:
     """Test render_template logging disabled."""
     app.config['STATSD_RENDERTEMPLATE_LOG'] = False
     Statsd(app)
-    with patch('statsd.StatsClient.incr') as mock_incr, patch(
-        'statsd.StatsClient.timing'
-    ) as mock_timing, app.app_context():
+    with (
+        patch('statsd.StatsClient.incr') as mock_incr,
+        patch('statsd.StatsClient.timing') as mock_timing,
+        app.app_context(),
+    ):
         render_template_string("Test template")
         mock_incr.assert_not_called()
         mock_timing.assert_not_called()

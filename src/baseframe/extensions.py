@@ -1,4 +1,5 @@
 """Standard extensions to add to the Flask app."""
+
 # pyright: reportMissingImports = false
 
 import os.path
@@ -46,8 +47,7 @@ class GetTextProtocol(te.Protocol):
     and that the return type is a string (though actually a LazyString).
     """
 
-    def __call__(self, string: te.LiteralString, **variables) -> str:
-        ...
+    def __call__(self, string: te.LiteralString, **variables) -> str: ...
 
 
 DEFAULT_LOCALE = 'en'
