@@ -161,13 +161,15 @@ def favicon(subdomain: t.Optional[str] = None) -> Response:
 def humans(subdomain: t.Optional[str] = None) -> Response:
     """Render humans.txt from app's static folder, falling back to default file."""
     return send_from_directory(
-        current_app.static_folder
-        if os.path.exists(
-            os.path.join(
-                current_app.static_folder, 'humans.txt'  # type: ignore[arg-type]
+        (
+            current_app.static_folder
+            if os.path.exists(
+                os.path.join(
+                    current_app.static_folder, 'humans.txt'  # type: ignore[arg-type]
+                )
             )
-        )
-        else baseframe.static_folder,
+            else baseframe.static_folder
+        ),
         'humans.txt',
         mimetype='text/plain',
     )
@@ -178,13 +180,15 @@ def humans(subdomain: t.Optional[str] = None) -> Response:
 def robots(subdomain: t.Optional[str] = None) -> Response:
     """Render robots.txt from app's static folder, falling back to default file."""
     return send_from_directory(
-        current_app.static_folder
-        if os.path.exists(
-            os.path.join(
-                current_app.static_folder, 'robots.txt'  # type: ignore[arg-type]
+        (
+            current_app.static_folder
+            if os.path.exists(
+                os.path.join(
+                    current_app.static_folder, 'robots.txt'  # type: ignore[arg-type]
+                )
             )
-        )
-        else baseframe.static_folder,
+            else baseframe.static_folder
+        ),
         'robots.txt',
         mimetype='text/plain',
     )

@@ -1,4 +1,5 @@
 """Test form fields."""
+
 # pylint: disable=redefined-outer-name,protected-access
 
 from datetime import datetime

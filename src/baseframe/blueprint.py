@@ -314,9 +314,9 @@ class BaseframeBlueprint(Blueprint):
         app.config['theme'] = theme
 
         if 'NETWORKBAR_DATA' not in app.config:
-            app.config[
-                'NETWORKBAR_DATA'
-            ] = 'https://api.hasgeek.com/1/networkbar/networkbar.json'
+            app.config['NETWORKBAR_DATA'] = (
+                'https://api.hasgeek.com/1/networkbar/networkbar.json'
+            )
 
         if isinstance(app.config.get('NETWORKBAR_DATA'), (list, tuple)):
             app.config['NETWORKBAR_LINKS'] = app.config['NETWORKBAR_DATA']

@@ -1,4 +1,5 @@
 """Test form filters."""
+
 # pylint: disable=redefined-outer-name
 
 import typing as t
@@ -276,8 +277,7 @@ def test_dt_filters_timestamp_filter_hi(app, times) -> None:
             == "1 सेकंड में"
         )
         assert (
-            filters.timedelta_filter(timedelta(days=1), add_direction=True)
-            == "1 दिन में"
+            filters.timedelta_filter(timedelta(days=1), add_direction=True) == "1 दिन में"
         )
         # Narrow format doesn't work for add_direction
         assert (
