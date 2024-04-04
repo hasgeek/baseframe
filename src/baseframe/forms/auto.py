@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import typing as t
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 import wtforms
 from flask import (
@@ -26,7 +26,7 @@ from ..utils import request_is_xhr
 from .fields import SubmitField
 from .form import Form
 
-if t.TYPE_CHECKING:
+if TYPE_CHECKING:
     from flask_sqlalchemy import SQLAlchemy
 
 _submit_str = __("Submit")
@@ -43,15 +43,15 @@ class ConfirmDeleteForm(Form):
 def render_form(
     form: Form,
     title: str,
-    message: t.Optional[t.Union[str, Markup]] = None,
-    formid: t.Optional[str] = None,
+    message: Optional[Union[str, Markup]] = None,
+    formid: Optional[str] = None,
     submit: str = _submit_str,
-    cancel_url: t.Optional[str] = None,
+    cancel_url: Optional[str] = None,
     ajax: bool = False,
     with_chrome: bool = True,
-    action: t.Optional[str] = None,
+    action: Optional[str] = None,
     autosave: bool = False,
-    draft_revision: t.Optional[t.Any] = None,
+    draft_revision: Optional[Any] = None,
     template: str = '',
 ) -> Response:
     """Render a form."""
@@ -123,15 +123,15 @@ def render_redirect(url: str, code: int = 302) -> Response:
 
 
 def render_delete_sqla(
-    obj: t.Any,
+    obj: Any,
     db: SQLAlchemy,
     title: str,
     message: str,
     success: str = '',
-    next: t.Optional[str] = None,  # noqa: A002  # pylint: disable=W0622
-    cancel_url: t.Optional[str] = None,
-    delete_text: t.Optional[str] = None,
-    cancel_text: t.Optional[str] = None,
+    next: Optional[str] = None,  # noqa: A002  # pylint: disable=W0622
+    cancel_url: Optional[str] = None,
+    delete_text: Optional[str] = None,
+    cancel_text: Optional[str] = None,
 ) -> Response:
     """Render a delete page for SQLAlchemy objects."""
     if not obj:

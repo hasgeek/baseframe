@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import json
 import os.path
-import typing as t
-import typing_extensions as te
+from collections.abc import Iterable
+from typing import Literal, Optional, Union
 
 import sentry_sdk
 from flask import Blueprint, Flask
@@ -59,7 +59,7 @@ THEME_FILES = {
 }
 
 
-def _select_jinja_autoescape(filename: t.Optional[str]) -> bool:
+def _select_jinja_autoescape(filename: Optional[str]) -> bool:
     """Return `True` if autoescaping should be active for the given template name."""
     if filename is None:
         return False
@@ -83,12 +83,12 @@ class BaseframeBlueprint(Blueprint):
     def init_app(
         self,
         app: Flask,
-        requires: t.Iterable[str] = (),
-        ext_requires: t.Iterable[t.Union[str, t.List[str], t.Tuple[str, ...]]] = (),
-        bundle_js: t.Optional[Bundle] = None,
-        bundle_css: t.Optional[Bundle] = None,
-        assetenv: t.Optional[Environment] = None,
-        theme: te.Literal['bootstrap3', 'mui'] = 'bootstrap3',
+        requires: Iterable[str] = (),
+        ext_requires: Iterable[Union[str, list[str], tuple[str, ...]]] = (),
+        bundle_js: Optional[Bundle] = None,
+        bundle_css: Optional[Bundle] = None,
+        assetenv: Optional[Environment] = None,
+        theme: Literal['bootstrap3', 'mui'] = 'bootstrap3',
         error_handlers: bool = True,
     ) -> None:
         """
@@ -181,10 +181,10 @@ class BaseframeBlueprint(Blueprint):
         else:
             subdomain = None
 
-        ignore_js: t.List[str] = []
-        ignore_css: t.List[str] = []
-        ext_js: t.List[t.List[str]] = []
-        ext_css: t.List[t.List[str]] = []
+        ignore_js: list[str] = []
+        ignore_css: list[str] = []
+        ext_js: list[list[str]] = []
+        ext_css: list[list[str]] = []
         requires = [
             item
             for itemgroup in ext_requires
@@ -196,8 +196,8 @@ class BaseframeBlueprint(Blueprint):
         app.config['ext_js'] = ext_js
         app.config['ext_css'] = ext_css
 
-        assets_js: t.List[str] = []
-        assets_css: t.List[str] = []
+        assets_js: list[str] = []
+        assets_css: list[str] = []
         for item in requires:
             name, spec = split_namespec(item)
             for alist, ext in [(assets_js, '.js'), (assets_css, '.css')]:

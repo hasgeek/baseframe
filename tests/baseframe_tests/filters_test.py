@@ -2,9 +2,9 @@
 
 # pylint: disable=redefined-outer-name
 
-import typing as t
 from datetime import date, datetime, time, timedelta
 from types import SimpleNamespace
+from typing import Optional
 
 import pytest
 from pytz import UTC, timezone
@@ -361,14 +361,14 @@ def test_nossl(app) -> None:
 class UserTest:
     """Fixture user with an "avatar" URL column and an email address for Gravatar."""
 
-    avatar: t.Optional[str]
+    avatar: Optional[str]
     email: str
 
     def __init__(self, avatar=None, email=None) -> None:
         self.set_avatar(avatar)
         self.set_email(email)
 
-    def set_avatar(self, avatar: t.Optional[str]) -> None:
+    def set_avatar(self, avatar: Optional[str]) -> None:
         self.avatar = avatar
 
     def set_email(self, email: str) -> None:

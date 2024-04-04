@@ -1,8 +1,8 @@
 """Statsd logger."""
 
 import time
-import typing as t
 from datetime import timedelta
+from typing import Optional, Union
 
 from flask import (
     Flask,
@@ -28,7 +28,7 @@ __all__ = ['Statsd']
 REQUEST_START_TIME_ATTR = 'statsd_request_start_time'
 TEMPLATE_START_TIME_ATTR = 'statsd_template_start_time'
 
-TagsType = t.Dict[str, t.Union[int, str, None]]
+TagsType = dict[str, Union[int, str, None]]
 
 
 class Statsd:
@@ -79,7 +79,7 @@ class Statsd:
     The Datadog and SignalFx tag formats are not supported at this time.
     """
 
-    def __init__(self, app: t.Optional[Flask] = None) -> None:
+    def __init__(self, app: Optional[Flask] = None) -> None:
         if app is not None:
             self.init_app(app)
 
@@ -109,7 +109,7 @@ class Statsd:
             before_render_template.connect(self._before_render_template, app)
             template_rendered.connect(self._template_rendered, app)
 
-    def _metric_name(self, name: str, tags: t.Optional[TagsType] = None) -> str:
+    def _metric_name(self, name: str, tags: Optional[TagsType] = None) -> str:
         if tags is None:
             tags = {}
         if current_app.config['STATSD_TAGS']:
@@ -131,8 +131,8 @@ class Statsd:
     def timer(
         self,
         stat: str,
-        rate: t.Optional[t.Union[int, float]] = None,
-        tags: t.Optional[TagsType] = None,
+        rate: Optional[Union[int, float]] = None,
+        tags: Optional[TagsType] = None,
     ) -> Timer:
         """Return a Timer."""
         stat = self._metric_name(stat, tags)
@@ -143,9 +143,9 @@ class Statsd:
     def timing(
         self,
         stat: str,
-        delta: t.Union[int, timedelta],
-        rate: t.Optional[t.Union[int, float]] = None,
-        tags: t.Optional[TagsType] = None,
+        delta: Union[int, timedelta],
+        rate: Optional[Union[int, float]] = None,
+        tags: Optional[TagsType] = None,
     ) -> None:
         """
         Send new timing information.
@@ -163,8 +163,8 @@ class Statsd:
         self,
         stat: str,
         count: int = 1,
-        rate: t.Optional[t.Union[int, float]] = None,
-        tags: t.Optional[TagsType] = None,
+        rate: Optional[Union[int, float]] = None,
+        tags: Optional[TagsType] = None,
     ) -> None:
         """Increment a stat by `count`."""
         stat = self._metric_name(stat, tags)
@@ -178,8 +178,8 @@ class Statsd:
         self,
         stat: str,
         count: int = 1,
-        rate: t.Optional[t.Union[int, float]] = None,
-        tags: t.Optional[TagsType] = None,
+        rate: Optional[Union[int, float]] = None,
+        tags: Optional[TagsType] = None,
     ) -> None:
         """Decrement a stat by `count`."""
         stat = self._metric_name(stat, tags)
@@ -193,9 +193,9 @@ class Statsd:
         self,
         stat: str,
         value: int,
-        rate: t.Optional[t.Union[int, float]] = None,
+        rate: Optional[Union[int, float]] = None,
         delta: bool = False,
-        tags: t.Optional[TagsType] = None,
+        tags: Optional[TagsType] = None,
     ) -> None:
         """Set a gauge value."""
         stat = self._metric_name(stat, tags)
@@ -210,8 +210,8 @@ class Statsd:
         self,
         stat: str,
         value: str,
-        rate: t.Optional[t.Union[int, float]] = None,
-        tags: t.Optional[TagsType] = None,
+        rate: Optional[Union[int, float]] = None,
+        tags: Optional[TagsType] = None,
     ) -> None:
         """Set a set value."""
         stat = self._metric_name(stat, tags)
@@ -276,7 +276,7 @@ class Statsd:
             )
             return
 
-        metrics: t.List[t.Tuple[str, t.Dict[str, t.Optional[t.Union[int, str]]]]] = [
+        metrics: list[tuple[str, dict[str, Optional[Union[int, str]]]]] = [
             (
                 'render_template',
                 {'template': template.name or '_str'},
