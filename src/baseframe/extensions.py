@@ -4,8 +4,8 @@
 
 import os.path
 from datetime import tzinfo
-from typing import Union, cast
-from typing_extensions import LiteralString, Protocol
+from typing import Protocol, Union, cast
+from typing_extensions import LiteralString
 
 from flask import current_app, request
 from flask_babel import Babel, Domain

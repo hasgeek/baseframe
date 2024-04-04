@@ -1,8 +1,8 @@
 """Form type aliases and protocols."""
 
 from collections.abc import Generator, Iterable, Sequence
-from typing import Any, Callable
-from typing_extensions import Protocol, TypeAlias
+from typing import Any, Callable, Protocol
+from typing_extensions import TypeAlias
 
 from markupsafe import Markup
 from wtforms import Field as WTField, Form as WTForm

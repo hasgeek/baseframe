@@ -8,8 +8,7 @@ import itertools
 from collections.abc import Iterable, Mapping
 from datetime import datetime, tzinfo
 from decimal import Decimal, InvalidOperation as DecimalError
-from typing import Any, Callable, Optional, Union, cast, runtime_checkable
-from typing_extensions import Protocol
+from typing import Any, Callable, Optional, Protocol, Union, cast, runtime_checkable
 from urllib.parse import urljoin
 
 import bleach
