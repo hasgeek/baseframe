@@ -36,7 +36,7 @@ from wtforms.widgets import Select as OriginalSelectWidget
 
 from ..extensions import _, __, get_timezone
 from ..utils import request_timestamp
-from .parsleyjs import HiddenField, StringField, TextAreaField, URLField
+from .parsleyjs import StringField, TextAreaField, URLField
 from .typing import ReturnIterChoices, ValidatorList
 from .validators import Recaptcha, StopValidation, ValidationError
 from .widgets import (
@@ -55,7 +55,6 @@ __all__ = [
     'FieldList',
     'FileField',
     'Label',
-    'NonceField',
     'RecaptchaField',
     'SelectMultipleField',
     'SubmitField',
@@ -108,28 +107,6 @@ SANITIZE_ATTRIBUTES = {'a': ['href', 'title', 'target']}
 @te.runtime_checkable
 class GeonameidProtocol(te.Protocol):
     geonameid: str
-
-
-class NonceField(HiddenField):
-    """Customized HiddenField for nonce values that ignores the form target object."""
-
-    def process(
-        self,
-        formdata: MultiDict,
-        data: t.Optional[t.Dict[str, t.Any]] = None,
-        extra_filters: t.Optional[t.Iterable[t.Callable[[t.Any], t.Any]]] = None,
-    ) -> None:
-        """Discard data coming from an object."""
-        super().process(formdata, extra_filters=extra_filters)
-
-    def populate_obj(self, *_args: t.Any, **_kwargs: t.Any) -> None:
-        """Override populate_obj to not attempt setting nonce on the object."""
-
-    def get_default(self) -> str:
-        """Get default value."""
-        if callable(default := self.default):
-            return default()
-        return default
 
 
 class RecaptchaField(RecaptchaFieldBase):
