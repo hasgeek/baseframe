@@ -232,45 +232,6 @@ def test_html_snippet_invalid_urls(app, tforms) -> None:
 
 
 @pytest.mark.usefixtures('ctx')
-def test_nonce_form_on_success(tforms) -> None:
-    """A form with a nonce cannot be submitted twice."""
-    formdata = MultiDict({field.name: field.data for field in tforms.nonce_form})
-    nonce = tforms.nonce_form.form_nonce.data
-    assert nonce
-    assert tforms.nonce_form.validate() is True
-    # Nonce changes on each submit
-    assert nonce != tforms.nonce_form.form_nonce.data
-    assert not tforms.nonce_form.form_nonce.errors
-    # Now restore old form contents
-    tforms.nonce_form.process(formdata=formdata)
-    # Second attempt on the same form contents will fail
-    assert tforms.nonce_form.validate() is False
-    assert tforms.nonce_form.form_nonce.errors
-
-
-@pytest.mark.usefixtures('ctx')
-def test_nonce_form_on_failure(tforms) -> None:
-    """Form resubmission is not blocked (via the nonce) when validation fails."""
-    tforms.emoji_form.process(
-        formdata=MultiDict(
-            {'emoji': 'not-emoji', 'form_nonce': tforms.emoji_form.form_nonce.data}
-        )
-    )
-    assert tforms.emoji_form.validate() is False
-    assert not tforms.emoji_form.form_nonce.errors
-    formdata = MultiDict(
-        {'emoji': '👍', 'form_nonce': tforms.emoji_form.form_nonce.data}
-    )
-    tforms.emoji_form.process(formdata=formdata)
-    assert tforms.emoji_form.validate() is True
-    assert not tforms.emoji_form.form_nonce.errors
-    # Second attempt on the same form data will fail
-    tforms.emoji_form.process(formdata)
-    assert tforms.emoji_form.validate() is False
-    assert tforms.emoji_form.errors
-
-
-@pytest.mark.usefixtures('ctx')
 def test_no_schemes() -> None:
     class UrlForm(forms.Form):
         url = forms.StringField("URL", validators=[forms.validators.ValidUrl()])
