@@ -1,10 +1,8 @@
 """Jinja2 filters."""
 
 import os.path
-import typing as t
-import typing_extensions as te
 from datetime import date, datetime, time, timedelta
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Any, Literal, Optional, Union, cast
 from urllib.parse import urlsplit, urlunsplit
 
 import grapheme
@@ -60,7 +58,7 @@ def age(dt: datetime) -> str:
 
 
 @baseframe.app_template_filter('initials')
-def initials(text: t.Optional[str]) -> str:
+def initials(text: Optional[str]) -> str:
     """Return up to two initials from the given string, for a default avatar image."""
     if not text:
         return ''
@@ -101,10 +99,8 @@ def nossl(url: str) -> str:
 # TODO: Move this into Hasjob as it's not used elsewhere
 @baseframe.app_template_filter('avatar_url')
 def avatar_url(
-    user: t.Any,
-    size: t.Optional[
-        t.Union[str, t.List[int], t.Tuple[int, int], t.Tuple[str, str]]
-    ] = None,
+    user: Any,
+    size: Optional[Union[str, list[int], tuple[int, int], tuple[str, str]]] = None,
 ) -> str:
     """Generate an avatar for the given user."""
     if isinstance(size, (list, tuple)):
@@ -135,7 +131,7 @@ def avatar_url(
 
 
 @baseframe.app_template_filter('render_field_options')
-def render_field_options(field: WTField, **kwargs: t.Any) -> str:
+def render_field_options(field: WTField, **kwargs: Any) -> str:
     """Remove HTML attributes with falsy values before rendering a field."""
     d = {k: v for k, v in kwargs.items() if v is not None and v is not False}
     if field.render_kw:
@@ -145,9 +141,9 @@ def render_field_options(field: WTField, **kwargs: t.Any) -> str:
 
 # TODO: Only used in renderfield.mustache. Re-check whether this is necessary at all.
 @baseframe.app_template_filter('to_json')
-def form_field_to_json(field: WTField, **kwargs: t.Any) -> t.Dict[str, t.Any]:
+def form_field_to_json(field: WTField, **kwargs: Any) -> dict[str, Any]:
     """Render a form field as JSON."""
-    d: t.Dict[str, t.Any] = {}
+    d: dict[str, Any] = {}
     d['id'] = field.id
     d['label'] = field.label.text
     d['has_errors'] = bool(field.errors)
@@ -171,7 +167,7 @@ def field_markdown(text: str) -> Markup:
 
 
 @baseframe.app_template_filter('ext_asset_url')
-def ext_asset_url(asset: t.Union[str, t.List[str]]) -> str:
+def ext_asset_url(asset: Union[str, list[str]]) -> str:
     """Return external asset URL for use in templates."""
     if isinstance(asset, str):
         return ext_assets([asset])
@@ -232,10 +228,10 @@ def cdata(text: str) -> str:
 
 # TODO: Used only in Hasjob. Move there?
 @baseframe.app_template_filter('shortdate')
-def shortdate(value: t.Union[datetime, date]) -> str:
+def shortdate(value: Union[datetime, date]) -> str:
     """Render a date in short form (deprecated for lack of i18n support)."""
-    dt: t.Union[datetime, date]
-    utc_now: t.Union[datetime, date]
+    dt: Union[datetime, date]
+    utc_now: Union[datetime, date]
     if isinstance(value, datetime):
         tz = get_timezone()
         if value.tzinfo is None:
@@ -258,9 +254,9 @@ def shortdate(value: t.Union[datetime, date]) -> str:
 
 # TODO: Only used in Hasjob. Move there?
 @baseframe.app_template_filter('longdate')
-def longdate(value: t.Union[datetime, date]) -> str:
+def longdate(value: Union[datetime, date]) -> str:
     """Render a date in long form (deprecated for lack of i18n support)."""
-    dt: t.Union[datetime, date]
+    dt: Union[datetime, date]
     if isinstance(value, datetime):
         if value.tzinfo is None:
             dt = utc.localize(value).astimezone(get_timezone())
@@ -273,13 +269,13 @@ def longdate(value: t.Union[datetime, date]) -> str:
 
 @baseframe.app_template_filter('date')
 def date_filter(
-    value: t.Union[datetime, date],
+    value: Union[datetime, date],
     format: str = 'medium',  # noqa: A002  # pylint: disable=W0622
-    locale: t.Optional[t.Union[Locale, str]] = None,
+    locale: Optional[Union[Locale, str]] = None,
     usertz: bool = True,
 ) -> str:
     """Render a localized date."""
-    dt: t.Union[datetime, date]
+    dt: Union[datetime, date]
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
             dt = utc.localize(value).astimezone(get_timezone())
@@ -294,14 +290,14 @@ def date_filter(
 
 @baseframe.app_template_filter('time')
 def time_filter(
-    value: t.Union[datetime, time],
+    value: Union[datetime, time],
     format: str = 'short',  # noqa: A002  # pylint: disable=W0622
-    locale: t.Optional[t.Union[Locale, str]] = None,
+    locale: Optional[Union[Locale, str]] = None,
     usertz: bool = True,
 ) -> str:
     """Render a localized time."""
     # Default format = hh:mm
-    dt: t.Union[datetime, time]
+    dt: Union[datetime, time]
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
             dt = utc.localize(value).astimezone(get_timezone())
@@ -316,13 +312,13 @@ def time_filter(
 
 @baseframe.app_template_filter('datetime')
 def datetime_filter(
-    value: t.Union[datetime, date, time],
+    value: Union[datetime, date, time],
     format: str = 'medium',  # noqa: A002  # pylint: disable=W0622
-    locale: t.Optional[t.Union[Locale, str]] = None,
+    locale: Optional[Union[Locale, str]] = None,
     usertz: bool = True,
 ) -> str:
     """Render a localized date and time."""
-    dt: t.Union[datetime, date, time]
+    dt: Union[datetime, date, time]
     if isinstance(value, datetime) and usertz:
         if value.tzinfo is None:
             dt = utc.localize(value).astimezone(get_timezone())
@@ -345,16 +341,16 @@ def timestamp_filter(value: datetime) -> float:
 
 @baseframe.app_template_filter('timedelta')
 def timedelta_filter(
-    delta: t.Union[int, timedelta, datetime],
-    granularity: te.Literal[
+    delta: Union[int, timedelta, datetime],
+    granularity: Literal[
         'year', 'month', 'week', 'day', 'hour', 'minute', 'second'
     ] = 'second',
     threshold: float = 0.85,
     add_direction: bool = False,
-    format: te.Literal[  # noqa: A002  # pylint: disable=W0622
+    format: Literal[  # noqa: A002  # pylint: disable=W0622
         'narrow', 'short', 'medium', 'long'
     ] = 'long',
-    locale: t.Optional[t.Union[Locale, str]] = None,
+    locale: Optional[Union[Locale, str]] = None,
 ) -> str:
     """
     Render a timedelta or int (representing seconds) as a duration.
@@ -390,7 +386,7 @@ def timedelta_filter(
 
 
 @baseframe.app_template_filter('cleanurl')
-def cleanurl_filter(url: t.Union[str, furl]) -> furl:
+def cleanurl_filter(url: Union[str, furl]) -> furl:
     """Clean a URL visually by removing defaults like scheme and the ``www`` prefix."""
     if not isinstance(url, furl):
         url = furl(url)

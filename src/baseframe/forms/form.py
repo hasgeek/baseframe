@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
-import typing as t
-import typing_extensions as te
 import warnings
+from collections.abc import Iterable
+from typing import Any, Callable, Optional, Union
+from typing_extensions import TypeAlias
 
 import wtforms
 from flask import current_app
@@ -32,7 +33,7 @@ __all__ = [
 ]
 
 # Use a hardcoded list to control what is available to user-facing apps
-field_registry: t.Dict[str, WTField] = {
+field_registry: dict[str, WTField] = {
     'SelectField': bparsleyjs.SelectField,
     'SelectMultipleField': bfields.SelectMultipleField,
     'RadioField': bparsleyjs.RadioField,
@@ -60,16 +61,16 @@ field_registry: t.Dict[str, WTField] = {
     'ImageField': bfields.ImgeeField,
 }
 
-WidgetRegistryEntry: te.TypeAlias = t.Tuple[t.Callable[..., WidgetProtocol]]
-widget_registry: t.Dict[str, WidgetRegistryEntry] = {}
+WidgetRegistryEntry: TypeAlias = tuple[Callable[..., WidgetProtocol]]
+widget_registry: dict[str, WidgetRegistryEntry] = {}
 
-ValidatorRegistryEntry: te.TypeAlias = t.Union[
-    t.Tuple[t.Callable[..., ValidatorCallable]],
-    t.Tuple[t.Callable[..., ValidatorCallable], str],
-    t.Tuple[t.Callable[..., ValidatorCallable], str, str],
-    t.Tuple[t.Callable[..., ValidatorCallable], str, str, str],
+ValidatorRegistryEntry: TypeAlias = Union[
+    tuple[Callable[..., ValidatorCallable]],
+    tuple[Callable[..., ValidatorCallable], str],
+    tuple[Callable[..., ValidatorCallable], str, str],
+    tuple[Callable[..., ValidatorCallable], str, str, str],
 ]
-validator_registry: t.Dict[str, ValidatorRegistryEntry] = {
+validator_registry: dict[str, ValidatorRegistryEntry] = {
     'Length': (wtforms.validators.Length, 'min', 'max', 'message'),
     'NumberRange': (wtforms.validators.NumberRange, 'min', 'max', 'message'),
     'Optional': (wtforms.validators.Optional, 'strip_whitespace'),
@@ -81,11 +82,11 @@ validator_registry: t.Dict[str, ValidatorRegistryEntry] = {
     'AllUrlsValid': (bvalidators.AllUrlsValid,),
 }
 
-FilterRegistryEntry: te.TypeAlias = t.Union[
-    t.Tuple[t.Callable[..., FilterCallable]],
-    t.Tuple[t.Callable[..., FilterCallable], str],
+FilterRegistryEntry: TypeAlias = Union[
+    tuple[Callable[..., FilterCallable]],
+    tuple[Callable[..., FilterCallable], str],
 ]
-filter_registry: t.Dict[str, FilterRegistryEntry] = {
+filter_registry: dict[str, FilterRegistryEntry] = {
     'lower': (bfilters.lower,),
     'upper': (bfilters.upper,),
     'strip': (bfilters.strip, 'chars'),
@@ -98,10 +99,10 @@ filter_registry: t.Dict[str, FilterRegistryEntry] = {
 class Form(BaseForm):
     """Form with additional methods."""
 
-    __expects__: t.Iterable[str] = ()
-    __returns__: t.Iterable[str] = ()
+    __expects__: Iterable[str] = ()
+    __returns__: Iterable[str] = ()
 
-    def __init_subclass__(cls, **kwargs: t.Any) -> None:
+    def __init_subclass__(cls, **kwargs: Any) -> None:
         """Validate :attr:`__expects__` and :attr:`__returns__` in sub-classes."""
         super().__init_subclass__(**kwargs)
         if {'edit_obj', 'edit_model', 'edit_parent', 'edit_id'} & set(cls.__expects__):
@@ -121,7 +122,7 @@ class Form(BaseForm):
                 stacklevel=2,
             )
 
-    def __init__(self, *args: t.Any, **kwargs: t.Any) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         for attr in self.__expects__:
             if attr not in kwargs:
                 raise TypeError(f"Expected parameter {attr} was not supplied")
@@ -155,11 +156,11 @@ class Form(BaseForm):
         elif callable(post_init := getattr(self, 'set_queries', None)):
             post_init()  # pylint: disable=not-callable
 
-    def __json__(self) -> t.List[t.Any]:
+    def __json__(self) -> Any:
         """Render this form as JSON."""
         return [field.__json__() for field in self._fields.values()]
 
-    def populate_obj(self, obj: t.Any) -> None:
+    def populate_obj(self, obj: Any) -> None:
         """
         Populate the attributes of the passed `obj` with data from the form's fields.
 
@@ -178,13 +179,11 @@ class Form(BaseForm):
 
     def process(
         self,
-        formdata: t.Optional[MultiDict] = None,
-        obj: t.Any = None,
-        data: t.Optional[t.Dict[str, t.Any]] = None,
-        extra_filters: t.Optional[
-            t.Dict[str, t.Iterable[t.Callable[[t.Any], t.Any]]]
-        ] = None,
-        **kwargs: t.Any,
+        formdata: Optional[MultiDict] = None,
+        obj: Any = None,
+        data: Optional[dict[str, Any]] = None,
+        extra_filters: Optional[dict[str, Iterable[Callable[[Any], Any]]]] = None,
+        **kwargs: Any,
     ) -> None:
         """
         Take form, object data, and keyword arg input and have the fields process them.
@@ -236,7 +235,7 @@ class Form(BaseForm):
 
     def validate(
         self,
-        extra_validators: t.Optional[t.Dict[str, ValidatorList]] = None,
+        extra_validators: Optional[dict[str, ValidatorList]] = None,
         send_signals: bool = True,
     ) -> bool:
         """
@@ -258,7 +257,7 @@ class Form(BaseForm):
             self.send_signals(success)
         return success
 
-    def send_signals(self, success: t.Optional[bool] = None) -> None:
+    def send_signals(self, success: Optional[bool] = None) -> None:
         if success is None:
             success = not self.errors
         if success:
@@ -286,10 +285,10 @@ class FormGenerator:
 
     def __init__(
         self,
-        fields: t.Optional[t.Dict[str, WTField]] = None,
-        widgets: t.Optional[t.Dict[str, WidgetRegistryEntry]] = None,
-        validators: t.Optional[t.Dict[str, ValidatorRegistryEntry]] = None,
-        filters: t.Optional[t.Dict[str, FilterRegistryEntry]] = None,
+        fields: Optional[dict[str, WTField]] = None,
+        widgets: Optional[dict[str, WidgetRegistryEntry]] = None,
+        validators: Optional[dict[str, ValidatorRegistryEntry]] = None,
+        filters: Optional[dict[str, FilterRegistryEntry]] = None,
         default_field: str = 'StringField',
     ) -> None:
         # If using global defaults, make a copy in this class so that
@@ -302,7 +301,7 @@ class FormGenerator:
         self.default_field = default_field
 
     # TODO: Make `formstruct` a TypedDict
-    def generate(self, formstruct: dict) -> t.Type[Form]:
+    def generate(self, formstruct: dict) -> type[Form]:
         """Generate a dynamic form from the given data structure."""
 
         class DynamicForm(Form):
@@ -366,7 +365,7 @@ class RecaptchaForm(Form):
 
     recaptcha = bfields.RecaptchaField()
 
-    def __init__(self, *args: t.Any, **kwargs: t.Any) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         if not (
             current_app.config.get('RECAPTCHA_PUBLIC_KEY')

@@ -1,33 +1,34 @@
 """Form type aliases and protocols."""
 
-import typing as t
-import typing_extensions as te
+from collections.abc import Generator, Iterable, Sequence
+from typing import Any, Callable, Protocol
+from typing_extensions import TypeAlias
 
 from markupsafe import Markup
 from wtforms import Field as WTField, Form as WTForm
 
-FilterCallable: te.TypeAlias = t.Callable[[t.Any], t.Any]
-FilterList: te.TypeAlias = t.Iterable[FilterCallable]
-ReturnIterChoices: te.TypeAlias = t.Generator[
-    t.Tuple[str, str, bool, t.Dict[str, t.Any]], None, None
+FilterCallable: TypeAlias = Callable[[Any], Any]
+FilterList: TypeAlias = Iterable[FilterCallable]
+ReturnIterChoices: TypeAlias = Generator[
+    tuple[str, str, bool, dict[str, Any]], None, None
 ]
-ValidatorCallable: te.TypeAlias = t.Callable[[WTForm, WTField], None]
-ValidatorList: te.TypeAlias = t.Sequence[ValidatorCallable]
-ValidatorConstructor: te.TypeAlias = t.Callable[..., ValidatorCallable]
+ValidatorCallable: TypeAlias = Callable[[WTForm, WTField], None]
+ValidatorList: TypeAlias = Sequence[ValidatorCallable]
+ValidatorConstructor: TypeAlias = Callable[..., ValidatorCallable]
 
 
-class WidgetProtocol(te.Protocol):
+class WidgetProtocol(Protocol):
     """Protocol for a WTForms widget."""
 
-    def __call__(self, field: WTField, **kwargs: t.Any) -> Markup: ...
+    def __call__(self, field: WTField, **kwargs: Any) -> Markup: ...
 
 
-WidgetConstructor: te.TypeAlias = t.Callable[..., WidgetProtocol]
+WidgetConstructor: TypeAlias = Callable[..., WidgetProtocol]
 
 
-class ValidatorProtocol(te.Protocol):
+class ValidatorProtocol(Protocol):
     """Protocol for validators."""
 
-    field_flags: t.Dict[str, bool]
+    field_flags: dict[str, bool]
 
     def __call__(self, form: WTForm, field: WTField) -> None: ...

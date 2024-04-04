@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import datetime
 import re
-import typing as t
 from collections import namedtuple
+from collections.abc import Iterable
 from decimal import Decimal
 from fractions import Fraction
-from typing import Any, cast
+from typing import Any, Callable, Optional as OptionalType, Union, cast
 from urllib.parse import urljoin, urlparse
 
 import dns.resolver
@@ -79,14 +79,14 @@ RECAPTCHA_ERROR_CODES = {
     'invalid-input-response': __("The response parameter is invalid or malformed"),
 }
 
-InvalidUrlPatterns = t.Iterable[t.Tuple[t.Iterable[t.Any], str]]
-AllowedListInit = t.Optional[
-    t.Union[t.Iterable[str], t.Callable[[], t.Optional[t.Iterable[str]]]]
+InvalidUrlPatterns = Iterable[tuple[Iterable[Any], str]]
+AllowedListInit = OptionalType[
+    Union[Iterable[str], Callable[[], OptionalType[Iterable[str]]]]
 ]
-AllowedList = t.Optional[t.Iterable[str]]
+AllowedList = OptionalType[Iterable[str]]
 
 
-def is_empty(value: t.Any) -> bool:
+def is_empty(value: Any) -> bool:
     """Return True if the value is falsy but not a numeric zero."""
     return value not in _zero_values and not value
 
@@ -130,7 +130,7 @@ class AllowedIf:
 
     default_message = __("This requires ‘{field}’ to be specified")
 
-    def __init__(self, fieldname: str, message: t.Optional[str] = None) -> None:
+    def __init__(self, fieldname: str, message: OptionalType[str] = None) -> None:
         self.fieldname = fieldname
         self.message = message or self.default_message
 
@@ -161,7 +161,7 @@ class OptionalIf(Optional):
 
     default_message = __("This is required")
 
-    def __init__(self, fieldname: str, message: t.Optional[str] = None) -> None:
+    def __init__(self, fieldname: str, message: OptionalType[str] = None) -> None:
         super().__init__()
         self.fieldname = fieldname
         self.message = message or self.default_message
@@ -190,7 +190,7 @@ class RequiredIf(DataRequired):
 
     default_message = __("This is required")
 
-    def __init__(self, fieldname: str, message: t.Optional[str] = None) -> None:
+    def __init__(self, fieldname: str, message: OptionalType[str] = None) -> None:
         message = message or self.default_message
         super().__init__(message=message)
         self.fieldname = fieldname
@@ -206,7 +206,7 @@ class _Comparison:
 
     default_message = __("Comparison failed")
 
-    def __init__(self, fieldname: str, message: t.Optional[str] = None) -> None:
+    def __init__(self, fieldname: str, message: OptionalType[str] = None) -> None:
         self.fieldname = fieldname
         self.message = message or self.default_message
 
@@ -221,7 +221,7 @@ class _Comparison:
             }
             raise ValidationError(self.message.format(**d))
 
-    def compare(self, value: t.Any, other: t.Any) -> bool:
+    def compare(self, value: Any, other: Any) -> bool:
         raise NotImplementedError("Subclasses must define ``compare``")
 
 
@@ -239,7 +239,7 @@ class GreaterThan(_Comparison):
 
     default_message = __("This must be greater than {other_label}")
 
-    def compare(self, value: t.Any, other: t.Any) -> bool:
+    def compare(self, value: Any, other: Any) -> bool:
         return value > other
 
 
@@ -257,7 +257,7 @@ class GreaterThanEqualTo(_Comparison):
 
     default_message = __("This must be greater than or equal to {other_label}")
 
-    def compare(self, value: t.Any, other: t.Any) -> bool:
+    def compare(self, value: Any, other: Any) -> bool:
         return value >= other
 
 
@@ -275,7 +275,7 @@ class LesserThan(_Comparison):
 
     default_message = __("This must be lesser than {other_label}")
 
-    def compare(self, value: t.Any, other: t.Any) -> bool:
+    def compare(self, value: Any, other: Any) -> bool:
         return value < other
 
 
@@ -293,7 +293,7 @@ class LesserThanEqualTo(_Comparison):
 
     default_message = __("This must be lesser than or equal to {other_label}")
 
-    def compare(self, value: t.Any, other: t.Any) -> bool:
+    def compare(self, value: Any, other: Any) -> bool:
         return value <= other
 
 
@@ -311,7 +311,7 @@ class NotEqualTo(_Comparison):
 
     default_message = __("This must not be the same as {other_label}")
 
-    def compare(self, value: t.Any, other: t.Any) -> bool:
+    def compare(self, value: Any, other: Any) -> bool:
         return value != other
 
 
@@ -325,7 +325,7 @@ class IsEmoji:
 
     default_message = __("This is not a valid emoji")
 
-    def __init__(self, message: t.Optional[str] = None) -> None:
+    def __init__(self, message: OptionalType[str] = None) -> None:
         self.message = message or self.default_message
 
     def __call__(self, form: WTForm, field: WTField) -> None:
@@ -346,7 +346,7 @@ class IsPublicEmailDomain:
 
     default_message = __("This domain is not a public email domain")
 
-    def __init__(self, message: t.Optional[str] = None, timeout: int = 30) -> None:
+    def __init__(self, message: OptionalType[str] = None, timeout: int = 30) -> None:
         self.message = message or self.default_message
         self.timeout = timeout
 
@@ -369,7 +369,7 @@ class IsNotPublicEmailDomain:
 
     default_message = __("This domain is a public email domain")
 
-    def __init__(self, message: t.Optional[str] = None, timeout: int = 30) -> None:
+    def __init__(self, message: OptionalType[str] = None, timeout: int = 30) -> None:
         self.message = message or self.default_message
         self.timeout = timeout
 
@@ -390,7 +390,7 @@ class ValidEmail:
 
     default_message = __("This email address does not appear to be valid")
 
-    def __init__(self, message: t.Optional[str] = None) -> None:
+    def __init__(self, message: OptionalType[str] = None) -> None:
         self.message = message
 
     def __call__(self, form: WTForm, field: WTField) -> None:
@@ -446,13 +446,13 @@ class ValidUrl:
 
     def __init__(
         self,
-        message: t.Optional[str] = None,
-        message_urltext: t.Optional[str] = None,
-        message_schemes: t.Optional[str] = None,
-        message_domains: t.Optional[str] = None,
+        message: OptionalType[str] = None,
+        message_urltext: OptionalType[str] = None,
+        message_schemes: OptionalType[str] = None,
+        message_domains: OptionalType[str] = None,
         invalid_urls: InvalidUrlPatterns = (),
-        allowed_schemes: t.Optional[AllowedListInit] = None,
-        allowed_domains: t.Optional[AllowedListInit] = None,
+        allowed_schemes: OptionalType[AllowedListInit] = None,
+        allowed_domains: OptionalType[AllowedListInit] = None,
         visit_url: bool = True,
     ) -> None:
         self.message = message or self.default_message
@@ -470,8 +470,8 @@ class ValidUrl:
         allowed_schemes: AllowedList,
         allowed_domains: AllowedList,
         invalid_urls: InvalidUrlPatterns,
-        text: t.Union[str, None] = None,
-    ) -> t.Optional[str]:
+        text: Union[str, None] = None,
+    ) -> OptionalType[str]:
         """
         Inner method to actually check the URL.
 
@@ -666,7 +666,7 @@ class NoObfuscatedEmail:
 
     default_message = __("Email address identified")
 
-    def __init__(self, message: t.Optional[str] = None) -> None:
+    def __init__(self, message: OptionalType[str] = None) -> None:
         self.message = message or self.default_message
 
     def __call__(self, form: WTForm, field: WTField) -> None:
@@ -686,7 +686,7 @@ class ValidName:
         "It should have letters, numbers and non-terminal hyphens only"
     )
 
-    def __init__(self, message: t.Optional[str] = None) -> None:
+    def __init__(self, message: OptionalType[str] = None) -> None:
         self.message = message or self.default_message
 
     def __call__(self, form: WTForm, field: WTField) -> None:
@@ -701,9 +701,9 @@ class ValidCoordinates:
 
     def __init__(
         self,
-        message: t.Optional[str] = None,
-        message_latitude: t.Optional[str] = None,
-        message_longitude: t.Optional[str] = None,
+        message: OptionalType[str] = None,
+        message_latitude: OptionalType[str] = None,
+        message_longitude: OptionalType[str] = None,
     ) -> None:
         self.message = message or self.default_message
         self.message_latitude = message_latitude or self.default_message_latitude
@@ -724,7 +724,9 @@ class Recaptcha:
     default_message_network = __("The server was temporarily unreachable. Try again")
 
     def __init__(
-        self, message: t.Optional[str] = None, message_network: t.Optional[str] = None
+        self,
+        message: OptionalType[str] = None,
+        message_network: OptionalType[str] = None,
     ) -> None:
         if message is None:
             message = RECAPTCHA_ERROR_CODES['missing-input-response']

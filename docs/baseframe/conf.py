@@ -15,7 +15,6 @@
 
 import os
 import sys
-import typing as t
 
 sys.path.append(os.path.abspath('../../src'))
 from baseframe import _version  # isort:skip
@@ -181,7 +180,7 @@ htmlhelp_basename = 'baseframedoc'
 
 # -- Options for LaTeX output --------------------------------------------------
 
-latex_elements: t.Dict[str, str] = {
+latex_elements: dict[str, str] = {
     # The paper size ('letterpaper' or 'a4paper').
     #'papersize': 'letterpaper',
     # The font size ('10pt', '11pt' or '12pt').

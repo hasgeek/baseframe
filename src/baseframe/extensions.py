@@ -3,10 +3,9 @@
 # pyright: reportMissingImports = false
 
 import os.path
-import typing as t
-import typing_extensions as te
 from datetime import tzinfo
-from typing import cast
+from typing import Protocol, Union, cast
+from typing_extensions import LiteralString
 
 from flask import current_app, request
 from flask_babel import Babel, Domain
@@ -39,7 +38,7 @@ __all__ = [
 ]
 
 
-class GetTextProtocol(te.Protocol):
+class GetTextProtocol(Protocol):
     """
     Callable protocol for gettext and lazy_gettext.
 
@@ -47,7 +46,7 @@ class GetTextProtocol(te.Protocol):
     and that the return type is a string (though actually a LazyString).
     """
 
-    def __call__(self, string: te.LiteralString, **variables) -> str: ...
+    def __call__(self, string: LiteralString, **variables) -> str: ...
 
 
 DEFAULT_LOCALE = 'en'
@@ -87,7 +86,7 @@ def get_user_locale() -> str:
     ) or DEFAULT_LOCALE
 
 
-def get_timezone(default: t.Union[None, tzinfo, str] = None) -> tzinfo:
+def get_timezone(default: Union[None, tzinfo, str] = None) -> tzinfo:
     """Return a timezone suitable for the current context."""
     # If this app and request have a user, return user's timezone,
     # else return app default timezone

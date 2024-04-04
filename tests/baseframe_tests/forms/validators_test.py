@@ -3,9 +3,9 @@
 # pylint: disable=redefined-outer-name
 
 import re
-import typing as t
 import warnings
 from types import SimpleNamespace
+from typing import Any
 
 import pytest
 import requests_mock
@@ -530,7 +530,7 @@ def test_cloudflare_protected_url() -> None:
 
 
 class TestFormBase:
-    Form: t.Type[forms.Form]
+    Form: type[forms.Form]
     form: forms.Form
 
     @pytest.fixture(autouse=True)
@@ -641,7 +641,7 @@ class TestAllowedIf(TestFormBase):
             "Field", validators=[forms.validators.AllowedIf('other')]
         )
 
-    other_not_empty: t.Any = "Not empty"
+    other_not_empty: Any = "Not empty"
 
     def test_is_allowed(self) -> None:
         self.form.process(other=self.other_not_empty, field="Also not empty")
@@ -689,8 +689,8 @@ class TestOptionalIf(TestFormBase):
             ],
         )
 
-    other_empty: t.Any = ''
-    other_not_empty: t.Any = "Not empty"
+    other_empty: Any = ''
+    other_not_empty: Any = "Not empty"
 
     def test_is_optional(self) -> None:
         self.form.process(other=self.other_not_empty)
@@ -747,8 +747,8 @@ class TestRequiredIf(TestFormBase):
             ],
         )
 
-    other_empty: t.Any = ''
-    other_not_empty: t.Any = "Not empty"
+    other_empty: Any = ''
+    other_not_empty: Any = "Not empty"
 
     def test_is_required(self) -> None:
         self.form.process(other=self.other_not_empty)

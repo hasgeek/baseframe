@@ -2,8 +2,8 @@
 
 import os
 import os.path
-import typing as t
 from datetime import timedelta
+from typing import Any, Optional
 from urllib.parse import urlparse
 
 import requests
@@ -61,7 +61,7 @@ def networkbar_links() -> list:
     return networkbar_links_fetcher()
 
 
-def asset_key(assets: t.List[str]) -> str:
+def asset_key(assets: list[str]) -> str:
     """Convert multiple version specs into a URL-friendly key."""
     return make_name(
         '-'.join(assets)
@@ -74,7 +74,7 @@ def asset_key(assets: t.List[str]) -> str:
     )
 
 
-def gen_assets_url(assets: t.List[str]) -> str:
+def gen_assets_url(assets: list[str]) -> str:
     """Create an asset bundle and return URL (helper for :func:`ext_assets`)."""
     # TODO: write test for this function
     try:
@@ -108,7 +108,7 @@ def gen_assets_url(assets: t.List[str]) -> str:
     return bundle.urls()[0]
 
 
-def ext_assets(assets: t.List[str]) -> str:
+def ext_assets(assets: list[str]) -> str:
     """Return a URL to the required external assets."""
     # XXX: External assets are deprecated, so this function serves them as internal
     # assets
@@ -125,7 +125,7 @@ def asset_path(bundle_key: str) -> str:
 
 
 @baseframe.app_context_processor
-def baseframe_context() -> t.Dict[str, t.Any]:
+def baseframe_context() -> dict[str, Any]:
     """Add Baseframe helper functions to Jinja2 template context."""
     return {
         'networkbar_links': networkbar_links,
@@ -135,7 +135,7 @@ def baseframe_context() -> t.Dict[str, t.Any]:
 
 @baseframe.route('/favicon.ico', subdomain='<subdomain>')
 @baseframe.route('/favicon.ico', defaults={'subdomain': None})
-def favicon(subdomain: t.Optional[str] = None) -> Response:
+def favicon(subdomain: Optional[str] = None) -> Response:
     """Render a favicon from the app's static folder, falling back to default icon."""
     app_icon_folder = current_app.static_folder
     # Does the app have a favicon.ico in /static?
@@ -158,7 +158,7 @@ def favicon(subdomain: t.Optional[str] = None) -> Response:
 
 @baseframe.route('/humans.txt', subdomain='<subdomain>')
 @baseframe.route('/humans.txt', defaults={'subdomain': None})
-def humans(subdomain: t.Optional[str] = None) -> Response:
+def humans(subdomain: Optional[str] = None) -> Response:
     """Render humans.txt from app's static folder, falling back to default file."""
     return send_from_directory(
         (
@@ -177,7 +177,7 @@ def humans(subdomain: t.Optional[str] = None) -> Response:
 
 @baseframe.route('/robots.txt', subdomain='<subdomain>')
 @baseframe.route('/robots.txt', defaults={'subdomain': None})
-def robots(subdomain: t.Optional[str] = None) -> Response:
+def robots(subdomain: Optional[str] = None) -> Response:
     """Render robots.txt from app's static folder, falling back to default file."""
     return send_from_directory(
         (
@@ -196,7 +196,7 @@ def robots(subdomain: t.Optional[str] = None) -> Response:
 
 @baseframe.route('/.well-known/<path:filename>', subdomain='<subdomain>')
 @baseframe.route('/.well-known/<path:filename>', defaults={'subdomain': None})
-def well_known(filename: str, subdomain: t.Optional[str] = None) -> Response:
+def well_known(filename: str, subdomain: Optional[str] = None) -> Response:
     """Render .well-known folder contents from app's static folder."""
     well_known_path = os.path.join(
         current_app.static_folder, '.well-known'  # type: ignore[arg-type]
@@ -206,7 +206,7 @@ def well_known(filename: str, subdomain: t.Optional[str] = None) -> Response:
 
 @baseframe.route('/api/baseframe/1/toastr_messages.js', subdomain='<subdomain>')
 @baseframe.route('/api/baseframe/1/toastr_messages.js', defaults={'subdomain': None})
-def toastr_messages_js(subdomain: t.Optional[str] = None) -> Response:
+def toastr_messages_js(subdomain: Optional[str] = None) -> Response:
     """Return all pending flash messages as Toastr notifications."""
     return current_app.response_class(
         render_template('toastr_messages.js.jinja2'), mimetype='application/javascript'
@@ -215,7 +215,7 @@ def toastr_messages_js(subdomain: t.Optional[str] = None) -> Response:
 
 @baseframe.route('/api/baseframe/1/editor.css', subdomain='<subdomain>')
 @baseframe.route('/api/baseframe/1/editor.css', defaults={'subdomain': None})
-def editorcss(subdomain: t.Optional[str] = None) -> Response:
+def editorcss(subdomain: Optional[str] = None) -> Response:
     """Render a minimal CSS file for TinyMCE's iframe-based editor."""
     return current_app.response_class(
         render_template('editor.css.jinja2'),
@@ -231,7 +231,7 @@ def editorcss(subdomain: t.Optional[str] = None) -> Response:
 @baseframe.route('/api/baseframe/1/csrf/refresh', subdomain='<subdomain>')
 @baseframe.route('/api/baseframe/1/csrf/refresh', defaults={'subdomain': None})
 @render_with({'text/plain': lambda r: r['csrf_token']}, json=True)
-def csrf_refresh(subdomain: t.Optional[str] = None) -> ReturnRenderWith:
+def csrf_refresh(subdomain: Optional[str] = None) -> ReturnRenderWith:
     """Serve a refreshed CSRF token to ensure HTML forms never expire."""
     parsed_host = urlparse(request.url_root)
     origin = parsed_host.scheme + '://' + parsed_host.netloc
