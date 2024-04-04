@@ -13,7 +13,6 @@ from werkzeug.datastructures import MultiDict
 from wtforms import Field as WTField
 from wtforms.utils import unset_value
 
-from ..extensions import __
 from ..signals import form_validation_error, form_validation_success
 from . import (
     fields as bfields,
@@ -101,9 +100,6 @@ class Form(BaseForm):
 
     __expects__: t.Iterable[str] = ()
     __returns__: t.Iterable[str] = ()
-
-    form_nonce = bfields.NonceField("Nonce", default=lambda: '')
-    form_nonce_error = __("This form has already been submitted")
 
     def __init_subclass__(cls, **kwargs: t.Any) -> None:
         """Validate :attr:`__expects__` and :attr:`__returns__` in sub-classes."""
