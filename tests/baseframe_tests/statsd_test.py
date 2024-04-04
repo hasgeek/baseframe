@@ -48,9 +48,7 @@ def form(app):
             "Required", validators=[forms.validators.DataRequired()]
         )
 
-    f = SimpleForm(meta={'csrf': False})
-    del f.form_nonce
-    return f
+    return SimpleForm(meta={'csrf': False})
 
 
 def test_default_config(app, statsd) -> None:

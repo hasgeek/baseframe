@@ -4,9 +4,7 @@ from __future__ import annotations
 
 import typing as t
 import typing_extensions as te
-import uuid
 import warnings
-from threading import Lock
 
 import wtforms
 from flask import current_app
@@ -15,7 +13,7 @@ from werkzeug.datastructures import MultiDict
 from wtforms import Field as WTField
 from wtforms.utils import unset_value
 
-from ..extensions import __, asset_cache
+from ..extensions import __
 from ..signals import form_validation_error, form_validation_success
 from . import (
     fields as bfields,
@@ -98,42 +96,13 @@ filter_registry: t.Dict[str, FilterRegistryEntry] = {
 }
 
 
-_nonce_lock = Lock()
-
-
-def _nonce_cache_key(nonce: str) -> str:
-    return 'form_nonce/' + nonce
-
-
-def _nonce_validator(form: Form, field: bfields.Field) -> None:
-    # Check for already-used form nonce
-    if field.data:
-        with _nonce_lock:
-            # nonce_lock prevents parallel requests from attempting to use the same
-            # nonce in a multi-threaded deployment. As a thread lock, it is ineffective
-            # in a multi-process deployment, as is typical when using uwsgi or gunicorn.
-            nonce_cache_key = _nonce_cache_key(field.data)
-            nonce_cache_hit = asset_cache.get(nonce_cache_key)
-            if nonce_cache_hit is not None:
-                raise bvalidators.StopValidation(form.form_nonce_error)
-            # Mark this nonce as used for 10 seconds
-            asset_cache.set(_nonce_cache_key(field.data), True, 10)
-        # Set a new nonce. This is a conscious deviation from the convention for
-        # validators, which are expected to validate but not modify the data, leaving
-        # that to filters. However, filters run before validators, and the form nonce
-        # is nonsense data that will be imminently discarded, so this is okay here.
-        field.data = field.default()
-
-
 class Form(BaseForm):
     """Form with additional methods."""
 
     __expects__: t.Iterable[str] = ()
     __returns__: t.Iterable[str] = ()
 
-    form_nonce = bfields.NonceField(
-        "Nonce", validators=[_nonce_validator], default=lambda: uuid.uuid4().hex
-    )
+    form_nonce = bfields.NonceField("Nonce", default='')
     form_nonce_error = __("This form has already been submitted")
 
     def __init_subclass__(cls, **kwargs: t.Any) -> None:
