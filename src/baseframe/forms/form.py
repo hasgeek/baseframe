@@ -102,7 +102,7 @@ class Form(BaseForm):
     __expects__: t.Iterable[str] = ()
     __returns__: t.Iterable[str] = ()
 
-    form_nonce = bfields.NonceField("Nonce", default='')
+    form_nonce = bfields.NonceField("Nonce", default=lambda: '')
     form_nonce_error = __("This form has already been submitted")
 
     def __init_subclass__(cls, **kwargs: t.Any) -> None:
