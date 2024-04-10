@@ -9,7 +9,7 @@ from typing import Any, Optional, Union, cast
 import pycountry
 from babel import Locale
 from flask import g, request
-from flask_babel import LazyString
+from flask_babel import LazyString, _get_current_context
 from furl import furl
 from mxsniff import mxsniff
 from pytz import timezone, utc
@@ -169,3 +169,15 @@ def request_is_xhr() -> bool:
 def request_checked_xhr() -> bool:
     """Confirm if XHR header was checked for during this request."""
     return getattr(request, '_checked_xhr', False)
+
+
+def ctx_has_locale() -> bool:
+    """
+    Report if Babel was used in the current context.
+
+    For setting a ``Vary: Accept-Language`` header in the response.
+    """
+    ctx = _get_current_context()
+    if ctx is None:
+        return False
+    return hasattr(ctx, 'babel_locale')
