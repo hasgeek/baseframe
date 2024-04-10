@@ -16,7 +16,6 @@ from flask import (
     send_from_directory,
 )
 from flask_assets import Bundle
-from flask_babel import _get_current_context
 from flask_wtf.csrf import generate_csrf
 
 from coaster.assets import split_namespec
@@ -27,19 +26,7 @@ from coaster.views import ReturnRenderWith, render_with
 from .assets import assets as assets_repo
 from .blueprint import baseframe
 from .extensions import networkbar_cache
-from .utils import request_checked_xhr, request_timestamp
-
-
-def ctx_has_locale() -> bool:
-    """
-    Report if Babel was used in the current context.
-
-    For setting a ``Vary: Accept-Language`` header in the response.
-    """
-    ctx = _get_current_context()
-    if ctx is None:
-        return False
-    return hasattr(ctx, 'babel_locale')
+from .utils import ctx_has_locale, request_checked_xhr, request_timestamp
 
 
 @networkbar_cache.cached(key_prefix='networkbar_links')

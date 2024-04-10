@@ -2,7 +2,7 @@
 
 from coaster.assets import Version, VersionedAssets
 
-from . import __version__
+from ._version import __version__
 
 __all__ = ['Version', 'assets']
 
