@@ -8,7 +8,7 @@ from flask import Flask
 from baseframe import baseframe
 
 
-@pytest.fixture()
+@pytest.fixture
 def app():
     """App fixture."""
     fixture_app = Flask(__name__)
@@ -18,13 +18,13 @@ def app():
     return fixture_app
 
 
-@pytest.fixture()
+@pytest.fixture
 def ctx(app):
     with app.app_context() as context:
         yield context
 
 
-@pytest.fixture()
+@pytest.fixture
 def client(app):
     """App client fixture."""
     with app.test_client() as test_client:

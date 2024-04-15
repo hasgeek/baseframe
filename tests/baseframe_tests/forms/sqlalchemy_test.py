@@ -39,7 +39,7 @@ class DocumentForm(forms.Form):
     content = forms.TextAreaField("Content")
 
 
-@pytest.fixture()
+@pytest.fixture
 def database(app):
     """Database structure."""
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
@@ -52,7 +52,7 @@ def database(app):
         db.drop_all()
 
 
-@pytest.fixture()
+@pytest.fixture
 def db_session(database):
     """Database session fixture."""
     savepoint = database.session.begin_nested()
@@ -61,7 +61,7 @@ def db_session(database):
     database.session.rollback()
 
 
-@pytest.fixture()
+@pytest.fixture
 def form(ctx):
     return DocumentForm(model=Document, meta={'csrf': False})
 

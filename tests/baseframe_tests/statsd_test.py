@@ -17,20 +17,20 @@ from baseframe import forms
 from baseframe.statsd import Statsd
 
 
-@pytest.fixture()
+@pytest.fixture
 def app():
     """Redefine app without Baseframe for statsd tests."""
     return Flask(__name__)
 
 
-@pytest.fixture()
+@pytest.fixture
 def statsd(app):
     s = Statsd()
     s.init_app(app)
     return s
 
 
-@pytest.fixture()
+@pytest.fixture
 def view(app):
     @app.route('/')
     def index():
@@ -39,7 +39,7 @@ def view(app):
     return index
 
 
-@pytest.fixture()
+@pytest.fixture
 def form(app):
     Babel(app)  # Needed for form validator message translations
 

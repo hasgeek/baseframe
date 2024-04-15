@@ -62,7 +62,7 @@ class PublicEmailDomainFormTest(forms.Form):
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def tforms(ctx):
     urllib3.disable_warnings()
     yield SimpleNamespace(

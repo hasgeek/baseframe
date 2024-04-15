@@ -54,8 +54,6 @@ __all__ = [
     'errors',
     'extensions',
     'filters',
-    'filters',
-    'forms',
     'forms',
     'localize_timezone',
     'localized_country_list',
