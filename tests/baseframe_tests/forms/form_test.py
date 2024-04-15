@@ -79,7 +79,7 @@ class FieldRenderForm(forms.Form):
     string_field = forms.StringField("String")
 
 
-@pytest.fixture()
+@pytest.fixture
 def user() -> SimpleUser:
     return SimpleUser(  # nosec
         fullname="Test user", company="Test company", password="test"

@@ -14,7 +14,7 @@ from baseframe.utils import (
 # --- Fixtures -------------------------------------------------------------------------
 
 
-@pytest.fixture()
+@pytest.fixture
 def testview(app):
     """Add a view to the app for testing."""
 

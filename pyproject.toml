@@ -286,3 +286,7 @@ section-order = [
 
 [tool.ruff.lint.isort.sections]
 repo = ['baseframe']
+
+[tool.ruff.lint.flake8-pytest-style]
+fixture-parentheses = false
+mark-parentheses = false

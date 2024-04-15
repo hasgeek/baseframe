@@ -47,7 +47,7 @@ class DateTimeForm(forms.Form):
 # --- Tests ----------------------------------------------------------------------------
 
 
-@pytest.fixture()
+@pytest.fixture
 def enum_form(ctx):
     """Enum form fixture."""
     return EnumForm(meta={'csrf': False})
@@ -88,7 +88,7 @@ def test_enum_render(enum_form) -> None:
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def json_form(ctx):
     """JSON form fixture."""
     return JsonForm(meta={'csrf': False})
