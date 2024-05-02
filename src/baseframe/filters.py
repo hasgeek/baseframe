@@ -203,9 +203,15 @@ def preview(html: str, min: int = 50, max: int = 158) -> str:  # noqa: A002
     :param int max: Maximum number of characters in the preview (default 158,
         recommended for Google)
     """
+    # Check if we got a string-like object that implements the `__html__` protocol, and
+    # use that. This is the case for Coaster's Markdown Composite, where the text and
+    # html variants are different strings, so we can't use `str(html)` to get the text.
+    if callable(htmlfunc := getattr(html, '__html__', None)):
+        html = htmlfunc()
     # Get the max length we're interested in, for efficiency in grapheme counts. A large
     # blob of text can impair performance if we're only interested in a small preview.
-    # `max` can be < `min` when the caller specifies a custom `max` without `min`
+    # `max` can be < `min` when the caller specifies a custom `max` without `min`. In
+    # this case, we use `min`.
     max_length = (max if max > min else min) + 1
     blocks = text_blocks(html)
     if blocks:
