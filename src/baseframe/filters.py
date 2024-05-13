@@ -14,8 +14,7 @@ from markupsafe import Markup
 from pytz import utc
 from wtforms import Field as WTField
 
-from coaster.gfm import markdown
-from coaster.utils import compress_whitespace, md5sum, text_blocks
+from coaster.utils import compress_whitespace, markdown, md5sum, text_blocks
 
 from .blueprint import baseframe
 from .extensions import DEFAULT_LOCALE, _, cache, get_timezone
