@@ -735,7 +735,7 @@ class Recaptcha:
         self.message_network = message_network or self.default_message_network
 
     def __call__(self, form: WTForm, field: WTField) -> None:
-        if current_app.testing:
+        if current_app.testing or current_app.config.get('RECAPTCHA_DISABLED'):
             return
 
         if request.is_json:
