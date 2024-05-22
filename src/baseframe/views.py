@@ -91,6 +91,7 @@ def gen_assets_url(assets: list[str]) -> str:
     else:
         abort(400)
 
+    # pylint: disable=possibly-used-before-assignment
     bundle.env = current_app.assets  # type: ignore[attr-defined]
     return bundle.urls()[0]
 
