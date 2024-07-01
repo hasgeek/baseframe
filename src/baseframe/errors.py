@@ -69,7 +69,7 @@ def error429(_exc: Exception) -> ReturnRenderWith:
 def error500(_exc: Exception) -> ReturnRenderWith:
     """Render a 500 error."""
     if current_app.extensions and 'sqlalchemy' in current_app.extensions:
-        current_app.extensions['sqlalchemy'].db.session.rollback()
+        current_app.extensions['sqlalchemy'].session.rollback()
 
     baseframe_translations.as_default()
     return {'error': "500 Internal Server Error"}, 500
