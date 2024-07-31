@@ -8,13 +8,13 @@ repos:
     hooks:
       - id: check-pre-commit-ci-config
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.4.10
+    rev: v0.5.5
     hooks:
       - id: ruff
         args: ['--fix', '--exit-non-zero-on-fix']
         # Extra args, only after removing flake8 and yesqa: '--extend-select', 'RUF100'
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.16.0
+    rev: v3.17.0
     hooks:
       - id: pyupgrade
         args: ['--keep-runtime-typing', '--py39-plus']
@@ -50,7 +50,7 @@ repos:
     hooks:
       - id: black
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.10.0
+    rev: v1.11.0
     hooks:
       - id: mypy
         # warn-unused-ignores is unsafe with pre-commit, see
@@ -71,7 +71,7 @@ repos:
       - id: flake8
         additional_dependencies: *flake8deps
   - repo: https://github.com/PyCQA/pylint
-    rev: v3.2.3
+    rev: v3.2.6
     hooks:
       - id: pylint
         args: [
@@ -90,7 +90,7 @@ repos:
         additional_dependencies:
           - 'bandit[toml]'
   - repo: https://github.com/pycontribs/mirrors-prettier
-    rev: v3.3.1
+    rev: v3.3.3
     hooks:
       - id: prettier
   - repo: https://github.com/ducminh-phan/reformat-gherkin
