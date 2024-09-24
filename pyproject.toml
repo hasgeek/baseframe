@@ -144,26 +144,27 @@ for path in pathlib.Path.cwd().parents:
 [tool.pylint.message_control]
 max-line-length = 88
 disable = [
-  'cyclic-import',                # We have tail imports all over
-  'fixme',                        # Our workflow is to tag for future fixes
-  'invalid-name',                 # Flake8 covers our naming convention requirements
-  'line-too-long',                # Let Black/Ruff handle this
-  'missing-class-docstring',      # Backlog
-  'missing-function-docstring',   # Backlog
-  'no-member',                    # Pylint doesn't understand mixins referring to main class members
-  'redefined-builtin',            # Covered by Flake8 already
-  'too-few-public-methods',       # Data classes and validator classes have few methods
+  'cyclic-import',                 # We have tail imports all over
+  'fixme',                         # Our workflow is to tag for future fixes
+  'invalid-name',                  # Flake8 covers our naming convention requirements
+  'line-too-long',                 # Let Black/Ruff handle this
+  'missing-class-docstring',       # Backlog
+  'missing-function-docstring',    # Backlog
+  'no-member',                     # Pylint doesn't understand mixins referring to main class members
+  'redefined-builtin',             # Covered by Flake8 already
+  'too-few-public-methods',        # Data classes and validator classes have few methods
   'too-many-arguments',
   'too-many-branches',
   'too-many-locals',
-  'too-many-instance-attributes', # Some instances are just bags of attributes
+  'too-many-instance-attributes',  # Some instances are just bags of attributes
   'too-many-lines',
   'too-many-nested-blocks',
+  'too-many-positional-arguments',
   'too-many-return-statements',
   'too-many-statements',
-  'unused-argument',              # Arguments required for spec compatibility aren't always used
-  'wrong-import-position',        # Imports after code are sometimes required
-  'wrong-import-order',           # Let black and isort handle this
+  'unused-argument',               # Arguments required for spec compatibility aren't always used
+  'wrong-import-position',         # Imports after code are sometimes required
+  'wrong-import-order',            # Let black and isort handle this
 ]
 
 [tool.bandit]
