@@ -405,11 +405,13 @@
 }
 
 .chzn-container .chzn-results-scroll-down span {
-  background: url('/_baseframe/img/chosen-sprite.png?1330837580') no-repeat -4px -3px;
+  background: url('/_baseframe/img/chosen-sprite.png?1330837580')
+    no-repeat -4px -3px;
 }
 
 .chzn-container .chzn-results-scroll-up span {
-  background: url('/_baseframe/img/chosen-sprite.png?1330837580') no-repeat -22px -3px;
+  background: url('/_baseframe/img/chosen-sprite.png?1330837580')
+    no-repeat -22px -3px;
 }
 
 /* @end */
@@ -579,7 +581,8 @@
 }
 
 .chzn-rtl .chzn-search input {
-  background: #fff url('/_baseframe/img/chosen-sprite.png?1330837580') no-repeat -38px -22px;
+  background: #fff url('/_baseframe/img/chosen-sprite.png?1330837580')
+    no-repeat -38px -22px;
   padding: 4px 4px 4px 20px;
   direction: rtl;
 }
