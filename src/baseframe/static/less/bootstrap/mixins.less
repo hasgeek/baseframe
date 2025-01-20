@@ -341,8 +341,8 @@
 // -------------------------
 #inputGridSystem {
   .inputColumns(@gridGutterWidth, @gridColumnWidth, @gridRowWidth, @columns) {
-    width: ((@gridColumnWidth) * @columns) + (@gridGutterWidth * (@columns - 1)) -
-      10;
+    width: ((@gridColumnWidth) * @columns) +
+      (@gridGutterWidth * (@columns - 1)) - 10;
   }
   .generate(@gridColumns, @gridColumnWidth, @gridGutterWidth) {
     input,
