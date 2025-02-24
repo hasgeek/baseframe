@@ -655,8 +655,9 @@ table.mceLayout.focus {
   -moz-box-shadow: none !important;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
-  font-family: 'Source Sans Pro', 'HelveticaNeue', 'Helvetica Neue', Helvetica,
-    Arial, 'Lucida Grande', sans-serif !important;
+  font-family:
+    'Source Sans Pro', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial,
+    'Lucida Grande', sans-serif !important;
 }
 
 .mce-window {
@@ -766,7 +767,8 @@ input[name='title'],
 
 input[type='url'],
 input[name='name'] {
-  font-family: Consolas, Inconsolata, Menlo, 'DejaVu Sans Mono',
+  font-family:
+    Consolas, Inconsolata, Menlo, 'DejaVu Sans Mono',
     'Bitstream Vera Sans Mono', monospace;
 }
 
