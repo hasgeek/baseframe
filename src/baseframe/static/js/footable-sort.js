@@ -15,9 +15,9 @@
 !(function (t, o, a) {
   function s() {
     var o = this;
-    (o.name = 'Footable Sortable'),
+    ((o.name = 'Footable Sortable'),
       (o.init = function (a) {
-        (o.footable = a),
+        ((o.footable = a),
           a.options.sort === !0 &&
             t(a.table)
               .unbind('.sorting')
@@ -28,7 +28,7 @@
                     n = t(a.table),
                     i = (n.find('> tbody'), a.options.classes.sort);
                   if (n.data('sort') !== !1) {
-                    n
+                    (n
                       .find(
                         '> thead > tr:last-child > th, > thead > tr:last-child > td'
                       )
@@ -49,10 +49,10 @@
                         )
                         .unbind('click.footable')
                         .bind('click.footable', function (a) {
-                          a.preventDefault(), (r = t(this));
+                          (a.preventDefault(), (r = t(this)));
                           var s = !r.hasClass(i.sorted);
-                          return o.doSort(r.index(), s), !1;
-                        });
+                          return (o.doSort(r.index(), s), !1);
+                        }));
                     var l = !1;
                     for (var d in a.columns)
                       if (((e = a.columns[d]), e.sort.initial)) {
@@ -76,17 +76,17 @@
                 },
                 'footable_column_data.sorting': function (o) {
                   var a = t(o.column.th);
-                  (o.column.data.sort = o.column.data.sort || {}),
+                  ((o.column.data.sort = o.column.data.sort || {}),
                     (o.column.data.sort.initial = a.data('sort-initial') || !1),
                     (o.column.data.sort.ignore = a.data('sort-ignore') || !1),
                     (o.column.data.sort.selector =
-                      a.data('sort-selector') || null);
+                      a.data('sort-selector') || null));
                   var s = a.data('sort-match') || 0;
-                  s >= o.column.data.matches.length && (s = 0),
-                    (o.column.data.sort.match = o.column.data.matches[s]);
+                  (s >= o.column.data.matches.length && (s = 0),
+                    (o.column.data.sort.match = o.column.data.matches[s]));
                 },
               })
-              .data('footable-sort', o);
+              .data('footable-sort', o));
       }),
       (o.doSort = function (s, e) {
         var r = o.footable;
@@ -157,8 +157,8 @@
           return e ? n(t.value, o.value) : n(o.value, t.value);
         });
         for (var i = 0; i < r.length; i++)
-          a.append(r[i].row), null !== r[i].detail && a.append(r[i].detail);
-      });
+          (a.append(r[i].row), null !== r[i].detail && a.append(r[i].detail));
+      }));
   }
   if (o.footable === a || null === o.footable)
     throw new Error(

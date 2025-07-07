@@ -14,29 +14,29 @@
 (function (e, t) {
   function a() {
     var e = this;
-    (e.id = null),
+    ((e.id = null),
       (e.busy = !1),
       (e.start = function (t, a) {
         e.busy ||
           (e.stop(),
           (e.id = setTimeout(function () {
-            t(), (e.id = null), (e.busy = !1);
+            (t(), (e.id = null), (e.busy = !1));
           }, a)),
           (e.busy = !0));
       }),
       (e.stop = function () {
         null !== e.id && (clearTimeout(e.id), (e.id = null), (e.busy = !1));
-      });
+      }));
   }
   function i(i, o, n) {
     var r = this;
-    (r.id = n),
+    ((r.id = n),
       (r.table = i),
       (r.options = o),
       (r.breakpoints = []),
       (r.breakpointNames = ''),
       (r.columns = {}),
-      (r.plugins = t.footable.plugins.load(r));
+      (r.plugins = t.footable.plugins.load(r)));
     var l = r.options,
       d = l.classes,
       s = l.events,
@@ -46,35 +46,35 @@
       (r.timers = {
         resize: new a(),
         register: function (e) {
-          return (r.timers[e] = new a()), r.timers[e];
+          return ((r.timers[e] = new a()), r.timers[e]);
         },
       }),
       (r.init = function () {
         var a = e(t),
           i = e(r.table);
         if ((t.footable.plugins.init(r), i.hasClass(d.loaded)))
-          return r.raise(s.alreadyInitialized), undefined;
-        r.raise(s.initializing),
+          return (r.raise(s.alreadyInitialized), undefined);
+        (r.raise(s.initializing),
           i.addClass(d.loading),
           i.find(l.columnDataSelector).each(function () {
             var e = r.getColumnData(this);
             r.columns[e.index] = e;
-          });
+          }));
         for (var o in l.breakpoints)
-          r.breakpoints.push({ name: o, width: l.breakpoints[o] }),
-            (r.breakpointNames += o + ' ');
-        r.breakpoints.sort(function (e, t) {
+          (r.breakpoints.push({ name: o, width: l.breakpoints[o] }),
+            (r.breakpointNames += o + ' '));
+        (r.breakpoints.sort(function (e, t) {
           return e.width - t.width;
         }),
           i
             .unbind(u.initialize)
             .bind(u.initialize, function () {
-              i.removeData('footable_info'),
+              (i.removeData('footable_info'),
                 i.data('breakpoint', ''),
                 i.trigger(u.resize),
                 i.removeClass(d.loading),
                 i.addClass(d.loaded).addClass(d.main),
-                r.raise(s.initialized);
+                r.raise(s.initialized));
             })
             .unbind(u.redraw)
             .bind(u.redraw, function () {
@@ -103,11 +103,11 @@
             }),
           i.trigger(u.initialize),
           a.bind('resize.footable', function () {
-            r.timers.resize.stop(),
+            (r.timers.resize.stop(),
               r.timers.resize.start(function () {
                 r.raise(u.resize);
-              }, l.delay);
-          });
+              }, l.delay));
+          }));
       }),
       (r.addRowToggle = function () {
         if (l.addRowToggle) {
@@ -169,20 +169,20 @@
           if (null !== i.className) {
             var o = '',
               n = !0;
-            e.each(i.matches, function (e, t) {
-              n || (o += ', '),
+            (e.each(i.matches, function (e, t) {
+              (n || (o += ', '),
                 (o +=
                   '> tbody > tr:not(.' +
                   d.detail +
                   ') > td:nth-child(' +
                   (parseInt(t, 10) + 1) +
                   ')'),
-                (n = !1);
+                (n = !1));
             }),
               t
                 .find(o)
                 .not('.' + d.detailCell)
-                .addClass(i.className);
+                .addClass(i.className));
           }
         }
       }),
@@ -213,10 +213,10 @@
         var a = e(t),
           i = a.data('hide'),
           o = a.index();
-        (i = i || ''),
+        ((i = i || ''),
           (i = jQuery.map(i.split(','), function (e) {
             return jQuery.trim(e);
-          }));
+          })));
         var n = {
           index: o,
           hide: {},
@@ -249,16 +249,16 @@
           c = n.index + f;
         if (p > 1) {
           var b = a.data('names');
-          (b = b || ''), (b = b.split(','));
+          ((b = b || ''), (b = b.split(',')));
           for (var g = 0; p > g; g++)
-            n.matches.push(g + c), b.length > g && (n.names[g + c] = b[g]);
+            (n.matches.push(g + c), b.length > g && (n.names[g + c] = b[g]));
         } else n.matches.push(c);
         n.hide['default'] =
           'all' === a.data('hide') || e.inArray('default', i) >= 0;
         var h = !1;
         for (var m in l.breakpoints)
-          (n.hide[m] = 'all' === a.data('hide') || e.inArray(m, i) >= 0),
-            (h = h || n.hide[m]);
+          ((n.hide[m] = 'all' === a.data('hide') || e.inArray(m, i) >= 0),
+            (h = h || n.hide[m]));
         n.hasBreakpoint = h;
         var v = r.raise(s.columnData, { column: { data: n, th: t } });
         return v.column.data;
@@ -291,7 +291,7 @@
         var t = e(r.table);
         if (t.is(':visible')) {
           if (!r.hasAnyBreakpointColumn())
-            return t.trigger(u.redraw), undefined;
+            return (t.trigger(u.redraw), undefined);
           var a = {
             width: t.width(),
             viewportWidth: r.getViewportWidth(),
@@ -314,24 +314,24 @@
             var d = null === n ? 'default' : n.name,
               f = r.hasBreakpointColumn(d),
               p = t.data('breakpoint');
-            t
+            (t
               .data('breakpoint', d)
               .removeClass('default breakpoint')
               .removeClass(r.breakpointNames)
               .addClass(d + (f ? ' breakpoint' : '')),
               d !== p &&
                 (t.trigger(u.redraw),
-                r.raise(s.breakpoint, { breakpoint: d, info: a }));
+                r.raise(s.breakpoint, { breakpoint: d, info: a })));
           }
           r.raise(s.resized, { old: i, info: a });
         }
       }),
       (r.redraw = function () {
-        r.addRowToggle(), r.bindToggleSelectors(), r.setColumnClasses();
+        (r.addRowToggle(), r.bindToggleSelectors(), r.setColumnClasses());
         var t = e(r.table),
           a = t.data('breakpoint'),
           i = r.hasBreakpointColumn(a);
-        t
+        (t
           .find('> tbody > tr:not(.' + d.detail + ')')
           .data('detail_created', !1)
           .end()
@@ -340,10 +340,10 @@
             var i = r.columns[e(this).index()],
               o = '',
               n = !0;
-            e.each(i.matches, function (e, t) {
+            (e.each(i.matches, function (e, t) {
               n || (o += ', ');
               var a = t + 1;
-              (o +=
+              ((o +=
                 '> tbody > tr:not(.' +
                 d.detail +
                 ') > td:nth-child(' +
@@ -356,12 +356,12 @@
                   a +
                   ')'),
                 (o += ', > colgroup > col:nth-child(' + a + ')'),
-                (n = !1);
+                (n = !1));
             }),
               (o +=
                 ', > thead > tr[data-group-row="true"] > th[data-group="' +
                 i.group +
-                '"]');
+                '"]'));
             var l = t.find(o).add(this);
             if (
               ('' !== a &&
@@ -385,10 +385,10 @@
                     '"]'
                 ),
                 f = 0;
-              e.each(s, function () {
+              (e.each(s, function () {
                 f += parseInt(e(this).attr('colspan') || 1, 10);
               }),
-                f > 0 ? u.attr('colspan', f).show() : u.hide();
+                f > 0 ? u.attr('colspan', f).show() : u.hide());
             }
           })
           .end()
@@ -420,7 +420,7 @@
             .end()
             .find('> th.footable-visible:first, > td.footable-visible:first')
             .addClass('footable-first-column'),
-          r.raise(s.redrawn);
+          r.raise(s.redrawn));
       }),
       (r.toggleDetail = function (t) {
         var a = t.jquery ? t : e(t),
@@ -437,13 +437,13 @@
         var a = t.jquery ? t : e(t);
         a.hasClass(d.detail) && (a = a.prev());
         var i = a.next();
-        a.data('detail_created') === !0 && i.remove(),
+        (a.data('detail_created') === !0 && i.remove(),
           a.remove(),
-          r.raise(s.rowRemoved);
+          r.raise(s.rowRemoved));
       }),
       (r.appendRow = function (t) {
         var a = t.jquery ? t : e(t);
-        e(r.table).find('tbody').append(a), r.redraw();
+        (e(r.table).find('tbody').append(a), r.redraw());
       }),
       (r.getColumnFromTdIndex = function (t) {
         var a = null;
@@ -522,18 +522,18 @@
         );
       }),
       (r.raise = function (t, a) {
-        r.options.debug === !0 &&
+        (r.options.debug === !0 &&
           e.isFunction(r.options.log) &&
           r.options.log(t, 'event'),
-          (a = a || {});
+          (a = a || {}));
         var i = { ft: r };
         e.extend(!0, i, a);
         var o = e.Event(t, i);
-        return o.ft || e.extend(!0, o, i), e(r.table).trigger(o), o;
+        return (o.ft || e.extend(!0, o, i), e(r.table).trigger(o), o);
       }),
       (r.reset = function () {
         var t = e(r.table);
-        t
+        (t
           .removeData('footable_info')
           .data('breakpoint', '')
           .removeClass(d.loading)
@@ -541,7 +541,7 @@
           t.find(l.toggleSelector).unbind(u.toggleRow).unbind('click.footable'),
           t.find('> tbody > tr').removeClass(d.detailShow),
           t.find('> tbody > tr.' + d.detail).remove(),
-          r.raise(s.reset);
+          r.raise(s.reset));
       }),
       (r.toggleInput = function (t) {
         var a = e(t).attr('data-bind-name');
@@ -573,7 +573,7 @@
             e(t)
               .text()
               .replace(/[^0-9.\-]/g, '');
-          return (a = parseFloat(a)), isNaN(a) && (a = 0), a;
+          return ((a = parseFloat(a)), isNaN(a) && (a = 0), a);
         },
       },
       addRowToggle: !0,
@@ -735,7 +735,7 @@
           o = [];
         for (i = 0; t.footable.plugins.registered.length > i; i++)
           try {
-            (a = t.footable.plugins.registered[i]), o.push(new a(e));
+            ((a = t.footable.plugins.registered[i]), o.push(new a(e)));
           } catch (n) {
             t.footable.options.debug === !0 && console.error(n);
           }

@@ -2,8 +2,8 @@
 
 !(function ($) {
   'use strict';
-  ($.fn.editableAriaShim = function () {
-    return this.attr({ role: 'button', tabindex: 0 }), this;
+  (($.fn.editableAriaShim = function () {
+    return (this.attr({ role: 'button', tabindex: 0 }), this);
   }),
     ($.fn.editable = function (target, options) {
       if ('disable' !== target)
@@ -47,7 +47,7 @@
               settings.tooltip && $(this).attr('title', settings.tooltip),
               this.each(function () {
                 var self = this;
-                $(this).data('event.editable', settings.event),
+                ($(this).data('event.editable', settings.event),
                   $.trim($(this).html()) || $(this).html(settings.placeholder),
                   'destroy' !== target
                     ? ($(this).on(settings.event, function (e) {
@@ -67,7 +67,7 @@
                             !jQuery.isFunction(settings.before)
                           )
                             throw "The 'before' option needs to be provided as a function!";
-                          e.preventDefault(),
+                          (e.preventDefault(),
                             e.stopPropagation(),
                             settings.tooltip && $(self).removeAttr('title'),
                             $(this)
@@ -79,9 +79,9 @@
                                 .replace(/(;|"|\/)/g, '') && $(this).html(''),
                             (self.editing = !0),
                             (self.revert = $(self).text()),
-                            $(self).html('');
+                            $(self).html(''));
                           var form = $('<form />');
-                          settings.cssclass &&
+                          (settings.cssclass &&
                             ('inherit' === settings.cssclass
                               ? form.attr('class', $(self).attr('class'))
                               : form.attr('class', settings.cssclass)),
@@ -94,7 +94,8 @@
                               form.append(
                                 '<label>' + settings.label + '</label>'
                               ),
-                            settings.formid && form.attr('id', settings.formid);
+                            settings.formid &&
+                              form.attr('id', settings.formid));
                           var input_content,
                             t,
                             input = element.apply(form, [settings, self]);
@@ -104,12 +105,12 @@
                               : input.attr('class', settings.inputcssclass));
                           var isSubmitting = !1;
                           if (settings.loadurl) {
-                            (t = self.setTimeout(function () {
+                            ((t = self.setTimeout(function () {
                               input.disabled = !0;
                             }, 100)),
-                              $(self).html(settings.loadtext);
+                              $(self).html(settings.loadtext));
                             var loaddata = {};
-                            (loaddata[settings.id] = self.id),
+                            ((loaddata[settings.id] = self.id),
                               $.isFunction(settings.loaddata)
                                 ? $.extend(
                                     loaddata,
@@ -126,11 +127,11 @@
                                 async: !1,
                                 cache: !1,
                                 success: function (result) {
-                                  self.clearTimeout(t),
+                                  (self.clearTimeout(t),
                                     (input_content = result),
-                                    (input.disabled = !1);
+                                    (input.disabled = !1));
                                 },
-                              });
+                              }));
                           } else
                             settings.data
                               ? ((input_content = settings.data),
@@ -154,7 +155,7 @@
                               (input.outerWidth(!0) - settings.width);
                             input.width(adj_width);
                           }
-                          buttons.apply(form, [settings, self]),
+                          (buttons.apply(form, [settings, self]),
                             settings.showfn &&
                               $.isFunction(settings.showfn) &&
                               form.hide(),
@@ -216,7 +217,7 @@
                                       value,
                                       complete
                                     ) {
-                                      (isSubmitting = !1),
+                                      ((isSubmitting = !1),
                                         !1 !== complete &&
                                           ($(self).html(value),
                                           (self.editing = !1),
@@ -225,7 +226,9 @@
                                             settings,
                                           ]),
                                           $.trim($(self).html()) ||
-                                            $(self).html(settings.placeholder));
+                                            $(self).html(
+                                              settings.placeholder
+                                            )));
                                     },
                                     userTarget = settings.target.apply(self, [
                                       input.val(),
@@ -237,7 +240,7 @@
                                     responseHandler(userTarget, userTarget);
                                 } else {
                                   var submitdata = {};
-                                  (submitdata[settings.name] = input.val()),
+                                  ((submitdata[settings.name] = input.val()),
                                     (submitdata[settings.id] = self.id),
                                     $.isFunction(settings.submitdata)
                                       ? $.extend(
@@ -254,7 +257,7 @@
                                         ),
                                     'PUT' === settings.method &&
                                       (submitdata._method = 'put'),
-                                    $(self).html(settings.indicator);
+                                    $(self).html(settings.indicator));
                                   var ajaxoptions = {
                                     type: 'POST',
                                     complete: function (xhr, status) {
@@ -264,7 +267,7 @@
                                     dataType: 'html',
                                     url: settings.target,
                                     success: function (result, status) {
-                                      (result = intercept.apply(self, [
+                                      ((result = intercept.apply(self, [
                                         result,
                                         status,
                                       ])),
@@ -277,7 +280,7 @@
                                           submitdata,
                                         ]),
                                         $.trim($(self).html()) ||
-                                          $(self).html(settings.placeholder);
+                                          $(self).html(settings.placeholder));
                                     },
                                     error: function (xhr, status, error) {
                                       onerror.apply(form, [
@@ -287,13 +290,14 @@
                                       ]);
                                     },
                                   };
-                                  $.extend(ajaxoptions, settings.ajaxoptions),
-                                    $.ajax(ajaxoptions);
+                                  ($.extend(ajaxoptions, settings.ajaxoptions),
+                                    $.ajax(ajaxoptions));
                                 }
                               return (
-                                $(self).attr('title', settings.tooltip), !1
+                                $(self).attr('title', settings.tooltip),
+                                !1
                               );
-                            });
+                            }));
                         }
                       }),
                       (self.reset = function (form) {
@@ -307,12 +311,12 @@
                             $(self).attr('title', settings.tooltip));
                       }),
                       (self.destroy = function (form) {
-                        $(self)
+                        ($(self)
                           .off($(self).data('event.editable'))
                           .removeData('disabled.editable')
                           .removeData('event.editable'),
                           self.clearTimeouts(),
-                          self.editing && reset.apply(form, [settings, self]);
+                          self.editing && reset.apply(form, [settings, self]));
                       }),
                       (self.clearTimeout = function (t) {
                         var timeouts = $(self).data('timeouts');
@@ -333,13 +337,14 @@
                         if (timeouts) {
                           for (var i = 0, n = timeouts.length; i < n; ++i)
                             clearTimeout(timeouts[i]);
-                          (timeouts.length = 0), $(self).removeData('timeouts');
+                          ((timeouts.length = 0),
+                            $(self).removeData('timeouts'));
                         }
                       }),
                       (self.setTimeout = function (callback, time) {
                         var timeouts = $(self).data('timeouts'),
                           t = setTimeout(function () {
-                            callback(), self.clearTimeout(t);
+                            (callback(), self.clearTimeout(t));
                           }, time);
                         return (
                           timeouts ||
@@ -349,7 +354,7 @@
                           t
                         );
                       }))
-                    : destroy.apply($(this).find('form'), [settings, self]);
+                    : destroy.apply($(this).find('form'), [settings, self]));
               })
             );
           }
@@ -359,17 +364,17 @@
             .removeData('event.editable');
         } else $(this).data('disabled.editable', !1);
       else $(this).data('disabled.editable', !0);
-    });
+    }));
   var _supportInType = function (type) {
     var i = document.createElement('input');
-    return i.setAttribute('type', type), 'text' !== i.type ? type : 'text';
+    return (i.setAttribute('type', type), 'text' !== i.type ? type : 'text');
   };
-  ($.editable = {
+  (($.editable = {
     types: {
       defaults: {
         element: function (settings, original) {
           var input = $('<input type="hidden"></input>');
-          return $(this).append(input), input;
+          return ($(this).append(input), input);
         },
         content: function (string, settings, original) {
           $(this).find(':input:first').val(string);
@@ -465,11 +470,11 @@
             option,
             tuples = [];
           if (Array.isArray(json) && json.every(Array.isArray))
-            (tuples = json),
+            ((tuples = json),
               (json = {}),
               tuples.forEach(function (e) {
                 json[e[0]] = e[1];
-              });
+              }));
           else for (key in json) tuples.push([key, json[key]]);
           settings.sortselectoptions &&
             tuples.sort(function (a, b) {
@@ -565,5 +570,5 @@
       loaddata: {},
       submitdata: {},
       ajaxoptions: {},
-    });
+    }));
 })(jQuery);

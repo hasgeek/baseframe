@@ -354,8 +354,8 @@
             return;
           }
 
-          (o = $.extend({}, $this.data('expander') || {}, opts)),
-            (details = $this.find('.' + o.detailClass).contents());
+          ((o = $.extend({}, $this.data('expander') || {}, opts)),
+            (details = $this.find('.' + o.detailClass).contents()));
 
           $this.removeData('expanderInit');
           $this.removeData('expander');

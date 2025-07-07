@@ -163,7 +163,7 @@
       q = function (a) {
         var b, c, d, e, f;
         for (c = b = 0, e = 0, f = a.length; f > e; e++)
-          (d = a[e]), (c += Math.abs(d)), b++;
+          ((d = a[e]), (c += Math.abs(d)), b++);
         return c / b;
       },
       x = function (a, b) {
@@ -222,12 +222,12 @@
               null != (g = this.bindings) ? g[c] : void 0)
             ) {
               for (e = 0, i = []; e < this.bindings[c].length; )
-                (h = this.bindings[c][e]),
+                ((h = this.bindings[c][e]),
                   (d = h.handler),
                   (b = h.ctx),
                   (f = h.once),
                   d.apply(null != b ? b : this, a),
-                  i.push(f ? this.bindings[c].splice(e, 1) : e++);
+                  i.push(f ? this.bindings[c].splice(e, 1) : e++));
               return i;
             }
           }),
@@ -244,12 +244,12 @@
     S > Q;
     Q++
   )
-    (K = U[Q]), D[K] === !0 && (D[K] = u[K]);
-  (i = (function (a) {
+    ((K = U[Q]), D[K] === !0 && (D[K] = u[K]));
+  ((i = (function (a) {
     function b() {
       return (V = b.__super__.constructor.apply(this, arguments));
     }
-    return Z(b, a), b;
+    return (Z(b, a), b);
   })(Error)),
     (b = (function () {
       function a() {
@@ -260,7 +260,7 @@
           var a;
           if (null == this.el) {
             if (((a = document.querySelector(D.target)), !a)) throw new i();
-            (this.el = document.createElement('div')),
+            ((this.el = document.createElement('div')),
               (this.el.className = 'pace pace-active'),
               (document.body.className = document.body.className.replace(
                 /pace-done/g,
@@ -271,7 +271,7 @@
                 '<div class="pace-progress">\n  <div class="pace-progress-inner"></div>\n</div>\n<div class="pace-activity"></div>'),
               null != a.firstChild
                 ? a.insertBefore(this.el, a.firstChild)
-                : a.appendChild(this.el);
+                : a.appendChild(this.el));
           }
           return this.el;
         }),
@@ -289,7 +289,7 @@
           );
         }),
         (a.prototype.update = function (a) {
-          return (this.progress = a), this.render();
+          return ((this.progress = a), this.render());
         }),
         (a.prototype.destroy = function () {
           try {
@@ -311,7 +311,7 @@
             f > e;
             e++
           )
-            (b = g[e]), (a.children[0].style[b] = d);
+            ((b = g[e]), (a.children[0].style[b] = d));
           return (
             (!this.lastRenderedProgress ||
               this.lastRenderedProgress | (0 !== this.progress) | 0) &&
@@ -342,7 +342,7 @@
           var c, d, e, f, g;
           if (null != this.bindings[a]) {
             for (f = this.bindings[a], g = [], d = 0, e = f.length; e > d; d++)
-              (c = f[d]), g.push(c.call(this, b));
+              ((c = f[d]), g.push(c.call(this, b)));
             return g;
           }
         }),
@@ -364,10 +364,10 @@
       f = [];
       for (d in b.prototype)
         try {
-          (e = b.prototype[d]),
+          ((e = b.prototype[d]),
             f.push(
               null == a[d] && 'function' != typeof e ? (a[d] = e) : void 0
-            );
+            ));
         } catch (g) {
           c = g;
         }
@@ -410,7 +410,7 @@
       function b() {
         var a,
           c = this;
-        b.__super__.constructor.apply(this, arguments),
+        (b.__super__.constructor.apply(this, arguments),
           (a = function (a) {
             var b;
             return (
@@ -425,15 +425,15 @@
           }),
           (window.XMLHttpRequest = function (b) {
             var c;
-            return (c = new P(b)), a(c), c;
-          });
+            return ((c = new P(b)), a(c), c);
+          }));
         try {
           w(window.XMLHttpRequest, P);
         } catch (d) {}
         if (null != O) {
           window.XDomainRequest = function () {
             var b;
-            return (b = new O()), a(b), b;
+            return ((b = new O()), a(b), b);
           };
           try {
             w(window.XDomainRequest, O);
@@ -459,11 +459,11 @@
           } catch (d) {}
         }
       }
-      return Z(b, a), b;
+      return (Z(b, a), b);
     })(h)),
     (R = null),
     (y = function () {
-      return null == R && (R = new k()), R;
+      return (null == R && (R = new k()), R);
     }),
     (I = function (a) {
       var b, c, d, e;
@@ -513,10 +513,10 @@
     (a = (function () {
       function a() {
         var a = this;
-        (this.elements = []),
+        ((this.elements = []),
           y().on('request', function () {
             return a.watch.apply(a, arguments);
-          });
+          }));
       }
       return (
         (a.prototype.watch = function (a) {
@@ -561,16 +561,16 @@
             e > d;
             d++
           )
-            (b = g[d]),
+            ((b = g[d]),
               a.addEventListener(
                 b,
                 function () {
                   return (h.progress = 100);
                 },
                 !1
-              );
+              ));
         else
-          (f = a.onreadystatechange),
+          ((f = a.onreadystatechange),
             (a.onreadystatechange = function () {
               var b;
               return (
@@ -579,7 +579,7 @@
                   : 3 === a.readyState && (h.progress = 50),
                 'function' == typeof f ? f.apply(null, arguments) : void 0
               );
-            });
+            }));
       }
       return a;
     })()),
@@ -595,14 +595,14 @@
           d > c;
           c++
         )
-          (b = e[c]),
+          ((b = e[c]),
             a.addEventListener(
               b,
               function () {
                 return (f.progress = 100);
               },
               !1
-            );
+            ));
       }
       return a;
     })()),
@@ -619,13 +619,13 @@
           d > c;
           c++
         )
-          (b = f[c]), this.elements.push(new e(b));
+          ((b = f[c]), this.elements.push(new e(b)));
       }
       return a;
     })()),
     (e = (function () {
       function a(a) {
-        (this.selector = a), (this.progress = 0), this.check();
+        ((this.selector = a), (this.progress = 0), this.check());
       }
       return (
         (a.prototype.check = function () {
@@ -647,7 +647,7 @@
         var a,
           b,
           c = this;
-        (this.progress =
+        ((this.progress =
           null != (b = this.states[document.readyState]) ? b : 100),
           (a = document.onreadystatechange),
           (document.onreadystatechange = function () {
@@ -656,10 +656,11 @@
                 (c.progress = c.states[document.readyState]),
               'function' == typeof a ? a.apply(null, arguments) : void 0
             );
-          });
+          }));
       }
       return (
-        (a.prototype.states = { loading: 0, interactive: 50, complete: 100 }), a
+        (a.prototype.states = { loading: 0, interactive: 50, complete: 100 }),
+        a
       );
     })()),
     (f = (function () {
@@ -670,7 +671,7 @@
           d,
           e,
           f = this;
-        (this.progress = 0),
+        ((this.progress = 0),
           (a = 0),
           (e = []),
           (d = 0),
@@ -687,18 +688,18 @@
                 ? ((f.progress = 100), clearInterval(b))
                 : (f.progress = 100 * (3 / (a + 3)))
             );
-          }, 50));
+          }, 50)));
       }
       return a;
     })()),
     (m = (function () {
       function a(a) {
-        (this.source = a),
+        ((this.source = a),
           (this.last = this.sinceLastUpdate = 0),
           (this.rate = D.initialRate),
           (this.catchup = 0),
           (this.progress = this.lastProgress = 0),
-          null != this.source && (this.progress = F(this.source, 'progress'));
+          null != this.source && (this.progress = F(this.source, 'progress')));
       }
       return (
         (a.prototype.tick = function (a, b) {
@@ -742,12 +743,12 @@
     null != window.history.pushState &&
       ((T = window.history.pushState),
       (window.history.pushState = function () {
-        return z(), T.apply(window.history, arguments);
+        return (z(), T.apply(window.history, arguments));
       })),
     null != window.history.replaceState &&
       ((W = window.history.replaceState),
       (window.history.replaceState = function () {
-        return z(), W.apply(window.history, arguments);
+        return (z(), W.apply(window.history, arguments));
       })),
     (l = { ajax: a, elements: d, document: c, eventLag: f }),
     (B = function () {
@@ -760,14 +761,14 @@
         e > c;
         c++
       )
-        (a = g[c]), D[a] !== !1 && L.push(new l[a](D[a]));
+        ((a = g[c]), D[a] !== !1 && L.push(new l[a](D[a])));
       for (
         i = null != (h = D.extraSources) ? h : [], d = 0, f = i.length;
         f > d;
         d++
       )
-        (K = i[d]), L.push(new K(D));
-      return (j.bar = r = new b()), (H = []), (M = new m());
+        ((K = i[d]), L.push(new K(D)));
+      return ((j.bar = r = new b()), (H = []), (M = new m()));
     })(),
     (j.stop = function () {
       return (
@@ -780,7 +781,7 @@
       );
     }),
     (j.restart = function () {
-      return j.trigger('restart'), j.stop(), j.start();
+      return (j.trigger('restart'), j.stop(), j.start());
     }),
     (j.go = function () {
       var a;
@@ -805,10 +806,10 @@
               v > t;
               k = ++t
             )
-              (g = h[k]),
+              ((g = h[k]),
                 (n = null != o[k] ? o[k] : (o[k] = new m(g))),
                 (f &= n.done),
-                n.done || (e++, (p += n.tick(b)));
+                n.done || (e++, (p += n.tick(b))));
           return (
             (d = p / e),
             r.update(M.tick(b, d)),
@@ -817,7 +818,7 @@
                 j.trigger('done'),
                 setTimeout(
                   function () {
-                    return r.finish(), (j.running = !1), j.trigger('hide');
+                    return (r.finish(), (j.running = !1), j.trigger('hide'));
                   },
                   Math.max(D.ghostTime, Math.max(D.minTime - (C() - a), 0))
                 ))
@@ -827,7 +828,7 @@
       );
     }),
     (j.start = function (a) {
-      v(D, a), (j.running = !0);
+      (v(D, a), (j.running = !0));
       try {
         r.render();
       } catch (b) {
@@ -843,5 +844,5 @@
         })
       : 'object' == typeof exports
         ? (module.exports = j)
-        : D.startOnPageLoad && j.start();
+        : D.startOnPageLoad && j.start());
 }).call(this);
