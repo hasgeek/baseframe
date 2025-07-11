@@ -4,12 +4,15 @@
 
 import re
 import warnings
+from collections.abc import Generator
 from types import SimpleNamespace
 from typing import Any
 
 import pytest
 import requests_mock
 import urllib3
+from flask import Flask
+from flask.ctx import AppContext
 from werkzeug.datastructures import MultiDict
 
 from baseframe import forms
@@ -63,7 +66,7 @@ class PublicEmailDomainFormTest(forms.Form):
 
 
 @pytest.fixture
-def tforms(ctx):
+def tforms(ctx: AppContext) -> Generator[SimpleNamespace, None, None]:
     urllib3.disable_warnings()
     yield SimpleNamespace(
         url_form=UrlFormTest(meta={'csrf': False}),
@@ -86,35 +89,35 @@ def test_is_empty() -> None:
     assert forms.validators.is_empty(None) is True
 
 
-def test_valid_url(app, tforms) -> None:
+def test_valid_url(app: Flask, tforms: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         url = 'https://hasgeek.com/'
         tforms.url_form.process(url=url)
         assert tforms.url_form.validate()
 
 
-def test_invalid_url(app, tforms) -> None:
+def test_invalid_url(app: Flask, tforms: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         url = 'https://hasgeek'
         tforms.url_form.process(url=url)
         assert not tforms.url_form.validate()
 
 
-def test_valid_emoji(app, tforms) -> None:
+def test_valid_emoji(app: Flask, tforms: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         dat = '👍'
         tforms.emoji_form.process(emoji=dat)
         assert tforms.emoji_form.validate() is True
 
 
-def test_invalid_emoji(app, tforms) -> None:
+def test_invalid_emoji(app: Flask, tforms: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         dat = 'eviltext'
         tforms.emoji_form.process(emoji=dat)
         assert tforms.emoji_form.validate() is False
 
 
-def test_public_email_domain(app, tforms) -> None:
+def test_public_email_domain(app: Flask, tforms: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         # both valid
         tforms.webmail_form.process(
@@ -154,7 +157,7 @@ def test_public_email_domain(app, tforms) -> None:
         assert 'not_webmail_domain' not in tforms.webmail_form.errors
 
 
-def test_public_email_domain_helper(app) -> None:
+def test_public_email_domain_helper(app: Flask) -> None:
     with app.test_request_context('/'):
         assert is_public_email_domain('gmail.com', default=False)
         assert not is_public_email_domain('google.com', default=False)
@@ -179,21 +182,21 @@ def test_public_email_domain_helper(app) -> None:
         )
 
 
-def test_url_without_protocol(app, tforms) -> None:
+def test_url_without_protocol(app: Flask, tforms: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         url = 'hasgeek.com'
         tforms.url_form.process(url=url)
         assert not tforms.url_form.validate()
 
 
-def test_inaccessible_url(app, tforms) -> None:
+def test_inaccessible_url(app: Flask, tforms: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         url = 'http://4dc1f6f0e7bc44f2b5b44f00abea4eae.com/'
         tforms.url_form.process(url=url)
         assert not tforms.url_form.validate()
 
 
-def test_disallowed_url(app, tforms) -> None:
+def test_disallowed_url(app: Flask, tforms: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         url = 'https://example.com/'
         tforms.url_form.process(url=url)
@@ -203,7 +206,7 @@ def test_disallowed_url(app, tforms) -> None:
         assert not tforms.url_form.validate()
 
 
-def test_html_snippet_valid_urls(app, tforms) -> None:
+def test_html_snippet_valid_urls(app: Flask, tforms: SimpleNamespace) -> None:
     url1 = 'https://hasgeek.com/'
     url2 = 'https://hasjob.co/'
     with app.test_request_context('/'):
@@ -217,7 +220,7 @@ def test_html_snippet_valid_urls(app, tforms) -> None:
         assert tforms.all_urls_form.validate()
 
 
-def test_html_snippet_invalid_urls(app, tforms) -> None:
+def test_html_snippet_invalid_urls(app: Flask, tforms: SimpleNamespace) -> None:
     url1 = 'https://hasgeek.com/'
     url2 = 'https://hasjob'
     with app.test_request_context('/'):
@@ -534,7 +537,7 @@ class TestFormBase:
     form: forms.Form
 
     @pytest.fixture(autouse=True)
-    def _setup(self, app):
+    def _setup(self, app: Flask) -> Generator[None, None, None]:
         with app.app_context():
             self.form = self.Form(meta={'csrf': False})
             yield
@@ -786,3 +789,98 @@ class TestRequiredIfInteger(TestRequiredIf):
 
     other_empty = None  # '' is not valid in IntegerField
     other_not_empty = 0
+
+
+class TestValidCoordinates(TestFormBase):
+    class Form(forms.Form):
+        """Test form."""
+
+        coordinates = forms.CoordinatesField(
+            "Location",
+            validators=[forms.validators.ValidCoordinates()],
+        )
+
+    def test_none(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': None}))
+        assert not self.form.validate()
+
+    def test_empty(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': ()}))
+        assert not self.form.validate()
+
+    def test_nones(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': (None, None)}))
+        assert not self.form.validate()
+
+    def test_blanks(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': ('', '')}))
+        assert not self.form.validate()
+
+    def test_no_lat(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': (None, 0)}))
+        assert not self.form.validate()
+
+    def test_no_lon(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': (0, None)}))
+        assert not self.form.validate()
+
+    def test_invalid_lat(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': (-100, 0)}))
+        assert not self.form.validate()
+
+    def test_invalid_lon(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': (0, -200)}))
+        assert not self.form.validate()
+
+    def test_valid_latlon(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': (13, 77.6)}))
+        assert self.form.validate()
+
+
+class TestOptionalCoordinates(TestFormBase):
+    class Form(forms.Form):
+        """Test form."""
+
+        coordinates = forms.CoordinatesField(
+            "Location",
+            validators=[
+                forms.validators.OptionalCoordinates(),
+            ],
+        )
+
+    def test_none(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': None}))
+        assert self.form.validate()
+
+    def test_empty(self) -> None:
+        self.form.process(fromdata=MultiDict({'coordinates': ''}))
+        assert self.form.validate()
+
+    def test_nones(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': (None, None)}))
+        self.form.validate()
+        assert self.form.errors == {}
+
+    def test_blanks(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': ('', '')}))
+        assert self.form.validate()
+
+    def test_no_lat(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': (None, 0)}))
+        assert not self.form.validate()
+
+    def test_no_lon(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': (0, None)}))
+        assert not self.form.validate()
+
+    def test_invalid_lat(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': (-100, 0)}))
+        assert not self.form.validate()
+
+    def test_invalid_lon(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': (0, -200)}))
+        assert not self.form.validate()
+
+    def test_valid_latlon(self) -> None:
+        self.form.process(formdata=MultiDict({'coordinates': (13, 77.6)}))
+        assert self.form.validate()

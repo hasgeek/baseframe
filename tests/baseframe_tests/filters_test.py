@@ -7,6 +7,7 @@ from types import SimpleNamespace
 from typing import Optional
 
 import pytest
+from flask import Flask
 from pytz import UTC, timezone
 
 from coaster.utils import md5sum
@@ -15,7 +16,7 @@ from baseframe import filters
 
 
 @pytest.fixture(params=[True, False])
-def times(request):
+def times(request: pytest.FixtureRequest) -> SimpleNamespace:
     """Sample times fixture."""
     now = datetime.now(UTC) if request.param else datetime.utcnow()
     return SimpleNamespace(
@@ -27,7 +28,7 @@ def times(request):
     )
 
 
-def test_dt_filters_age(times) -> None:
+def test_dt_filters_age(times: SimpleNamespace) -> None:
     age = filters.age(times.now)
     assert age == 'now'
 
@@ -52,14 +53,18 @@ def test_dt_filters_age(times) -> None:
     assert age == '2 years ago'
 
 
-def test_dt_filters_shortdate_date_with_threshold(app, times) -> None:
+def test_dt_filters_shortdate_date_with_threshold(
+    app: Flask, times: SimpleNamespace
+) -> None:
     app.config['SHORTDATE_THRESHOLD_DAYS'] = 10
     testdate = times.now.date() - timedelta(days=5)
     with app.test_request_context('/'):
         assert filters.shortdate(testdate) == testdate.strftime('%e %b')
 
 
-def test_dt_filters_shortdate_date_without_threshold(app, times) -> None:
+def test_dt_filters_shortdate_date_without_threshold(
+    app: Flask, times: SimpleNamespace
+) -> None:
     app.config['SHORTDATE_THRESHOLD_DAYS'] = 0
     testdate = times.now.date() - timedelta(days=5)
     with app.test_request_context('/'):
@@ -68,14 +73,18 @@ def test_dt_filters_shortdate_date_without_threshold(app, times) -> None:
         )
 
 
-def test_dt_filters_shortdate_datetime_with_threshold(app, times) -> None:
+def test_dt_filters_shortdate_datetime_with_threshold(
+    app: Flask, times: SimpleNamespace
+) -> None:
     app.config['SHORTDATE_THRESHOLD_DAYS'] = 10
     testdate = times.now - timedelta(days=5)
     with app.test_request_context('/'):
         assert filters.shortdate(testdate) == testdate.strftime('%e %b')
 
 
-def test_dt_filters_shortdate_datetime_without_threshold(app, times) -> None:
+def test_dt_filters_shortdate_datetime_without_threshold(
+    app: Flask, times: SimpleNamespace
+) -> None:
     testdate = times.now - timedelta(days=5)
     with app.test_request_context('/'):
         assert filters.shortdate(testdate).replace("’", "'") == testdate.strftime(
@@ -83,7 +92,9 @@ def test_dt_filters_shortdate_datetime_without_threshold(app, times) -> None:
         )
 
 
-def test_dt_filters_shortdate_datetime_with_tz(app, times) -> None:
+def test_dt_filters_shortdate_datetime_with_tz(
+    app: Flask, times: SimpleNamespace
+) -> None:
     testdate = times.now
     with app.test_request_context('/'):
         assert filters.shortdate(testdate).replace("’", "'") == testdate.strftime(
@@ -91,47 +102,53 @@ def test_dt_filters_shortdate_datetime_with_tz(app, times) -> None:
         )
 
 
-def test_dt_filters_longdate_date(app, times) -> None:
+def test_dt_filters_longdate_date(app: Flask, times: SimpleNamespace) -> None:
     testdate = times.now.date()
     with app.test_request_context('/'):
         assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
 
 
-def test_dt_filters_longdate_datetime(app, times) -> None:
+def test_dt_filters_longdate_datetime(app: Flask, times: SimpleNamespace) -> None:
     testdate = times.now
     with app.test_request_context('/'):
         assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
 
 
-def test_dt_filters_longdate_datetime_with_tz(app, times) -> None:
+def test_dt_filters_longdate_datetime_with_tz(
+    app: Flask, times: SimpleNamespace
+) -> None:
     testdate = times.now
     with app.test_request_context('/'):
         assert filters.longdate(testdate) == testdate.strftime('%e %B %Y')
 
 
-def test_dt_filters_date_filter(app, times) -> None:
+def test_dt_filters_date_filter(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         assert (
             filters.date_filter(times.date, 'yyyy-MM-dd', usertz=False) == '2020-01-31'
         )
 
 
-def test_dt_filters_date_localized_short_hi(app, times) -> None:
+def test_dt_filters_date_localized_short_hi(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.date_filter(times.date, format='short') == '31/1/20'
 
 
-def test_dt_filters_date_localized_medium_hi(app, times) -> None:
+def test_dt_filters_date_localized_medium_hi(
+    app: Flask, times: SimpleNamespace
+) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.date_filter(times.date, format='medium') == '31 जन॰ 2020'
 
 
-def test_dt_filters_date_localized_long_hi(app, times) -> None:
+def test_dt_filters_date_localized_long_hi(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.date_filter(times.date, format='long') == '31 जनवरी 2020'
 
 
-def test_dt_filters_time_localized_hi_medium(app, times) -> None:
+def test_dt_filters_time_localized_hi_medium(
+    app: Flask, times: SimpleNamespace
+) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert (
             filters.datetime_filter(times.datetime, format='medium')
@@ -139,32 +156,32 @@ def test_dt_filters_time_localized_hi_medium(app, times) -> None:
         )
 
 
-def test_dt_filters_month_localized_hi(app, times) -> None:
+def test_dt_filters_month_localized_hi(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.date_filter(times.date, "MMMM") == 'जनवरी'
 
 
-def test_dt_filters_month_localized_en(app, times) -> None:
+def test_dt_filters_month_localized_en(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         assert filters.date_filter(times.date, "MMMM") == 'January'
 
 
-def test_dt_filters_time_localized_short(app, times) -> None:
+def test_dt_filters_time_localized_short(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.time_filter(times.datetime, format='short') == '12:00 am'
 
 
-def test_dt_filters_time_localized_medium(app, times) -> None:
+def test_dt_filters_time_localized_medium(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.time_filter(times.datetime, format='medium') == '12:00:00 am'
 
 
-def test_dt_filters_time_localized_long(app, times) -> None:
+def test_dt_filters_time_localized_long(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.time_filter(times.datetime, format='long') == '12:00:00 am UTC'
 
 
-def test_dt_filters_time_localized_hi_full(app, times) -> None:
+def test_dt_filters_time_localized_hi_full(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert (
             filters.time_filter(times.time, format='full')
@@ -172,7 +189,7 @@ def test_dt_filters_time_localized_hi_full(app, times) -> None:
         )
 
 
-def test_dt_filters_time_localized_en_full(app, times) -> None:
+def test_dt_filters_time_localized_en_full(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'en'}):
         assert filters.time_filter(times.time, format='full') in (
             '11:59:59 PM Coordinated Universal Time',
@@ -180,7 +197,7 @@ def test_dt_filters_time_localized_en_full(app, times) -> None:
         )
 
 
-def test_dt_filters_datetime_with_usertz(app, times) -> None:
+def test_dt_filters_datetime_with_usertz(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         assert filters.datetime_filter(
             times.datetimeEST, format='full', usertz=False
@@ -190,7 +207,7 @@ def test_dt_filters_datetime_with_usertz(app, times) -> None:
         )
 
 
-def test_dt_filters_datetime_without_usertz(app, times) -> None:
+def test_dt_filters_datetime_without_usertz(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         assert filters.datetime_filter(
             times.datetimeEST, format='full', usertz=True
@@ -200,7 +217,7 @@ def test_dt_filters_datetime_without_usertz(app, times) -> None:
         )
 
 
-def test_dt_filters_date_dmy(app, times) -> None:
+def test_dt_filters_date_dmy(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         assert (
             filters.date_filter(times.datetime, format='short', locale='en_GB')
@@ -208,7 +225,7 @@ def test_dt_filters_date_dmy(app, times) -> None:
         )
 
 
-def test_dt_filters_date_mdy(app, times) -> None:
+def test_dt_filters_date_mdy(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         assert (
             filters.date_filter(times.datetime, format='short', locale='en_US')
@@ -216,12 +233,12 @@ def test_dt_filters_date_mdy(app, times) -> None:
         )
 
 
-def test_dt_filters_timestamp(app, times) -> None:
+def test_dt_filters_timestamp(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         assert filters.timestamp_filter(times.datetime) == 1580428800.0
 
 
-def test_dt_filters_timestamp_filter(app, times) -> None:
+def test_dt_filters_timestamp_filter(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/'):
         assert filters.timedelta_filter(times.now) == "1 second ago"
         assert filters.timedelta_filter(1) == "1 second"
@@ -261,7 +278,7 @@ def test_dt_filters_timestamp_filter(app, times) -> None:
         )
 
 
-def test_dt_filters_timestamp_filter_hi(app, times) -> None:
+def test_dt_filters_timestamp_filter_hi(app: Flask, times: SimpleNamespace) -> None:
     with app.test_request_context('/', headers={'Accept-Language': 'hi'}):
         assert filters.timedelta_filter(times.now) == "1 सेकंड पहले"
         assert filters.timedelta_filter(1) == "1 सेकंड"
@@ -329,7 +346,7 @@ def test_initials() -> None:
     assert initial == ''
 
 
-def test_usessl(app) -> None:
+def test_usessl(app: Flask) -> None:
     with app.test_request_context('/'):
         app.config['USE_SSL'] = False
         ssled = filters.usessl('http://hasgeek.com')
@@ -346,7 +363,7 @@ def test_usessl(app) -> None:
         assert ssled == 'https://localhost/static/test'
 
 
-def test_nossl(app) -> None:
+def test_nossl(app: Flask) -> None:
     with app.test_request_context('/'):
         nossled = filters.nossl('https://hasgeek.com')
         assert nossled == 'http://hasgeek.com'
@@ -438,9 +455,8 @@ def test_preview() -> None:
         == "Hello all, Here is …"
     )
     # Strips HTML tags and attributes when returning text
-    assert (
-        filters.preview(
-            """
+    assert filters.preview(
+        """
             <p>
                 <a href="https://example.org">Example.org</a> is a reserved TLD
                 for tests.
@@ -449,11 +465,9 @@ def test_preview() -> None:
                 Anyone may use it for any example use case.
             </p>
             """
-        )
-        == (
-            "Example.org is a reserved TLD for tests."
-            " Anyone may use it for any example use case."
-        )
+    ) == (
+        "Example.org is a reserved TLD for tests."
+        " Anyone may use it for any example use case."
     )
     # Counts by Unicode graphemes, not code points, to avoid mangling letters
     assert filters.preview('हिंदी टायपिंग', min=1, max=3) == 'हिंदी…'

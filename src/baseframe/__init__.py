@@ -36,18 +36,19 @@ __ = cast(GetTextProtocol, lazy_gettext)
 # TODO: baseframe_js and baseframe_css are defined in deprecated.py
 # and pending removal after an audit of all apps
 __all__ = [
+    'Bundle',
+    'Version',
     '_',
     '__',
     '__version__',
     '__version_info__',
     'assets',
     'babel',
+    'baseframe',
     'baseframe_css',
     'baseframe_js',
     'baseframe_translations',
-    'baseframe',
     'blueprint',
-    'Bundle',
     'cache',
     'ctx_has_locale',
     'deprecated',
@@ -62,6 +63,5 @@ __all__ = [
     'signals',
     'statsd',
     'utils',
-    'Version',
     'views',
 ]

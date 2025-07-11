@@ -1,8 +1,5 @@
-# flake8: noqa
-
-"""
-Baseframe forms
-"""
+"""Baseframe forms."""
+# ruff: noqa: F403
 
 from .auto import *
 from .fields import *

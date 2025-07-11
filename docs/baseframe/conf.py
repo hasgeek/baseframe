@@ -1,6 +1,5 @@
 """Sphinx configuration."""
-
-# flake8: noqa
+# ruff: noqa: A001,INP001
 #
 # baseframe documentation build configuration file, created by
 # sphinx-quickstart on Thu Nov 15 12:31:40 2012.
@@ -52,7 +51,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'baseframe'
-copyright = '2012-22, Hasgeek'
+copyright = '2012-25, Hasgeek'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

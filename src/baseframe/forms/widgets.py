@@ -9,21 +9,22 @@ from flask import current_app, render_template
 from furl import furl
 from markupsafe import Markup, escape
 from wtforms import Field as WTField, SelectFieldBase
+from wtforms.fields import RadioField
 from wtforms.widgets import RadioInput, Select, html_params
 
 from ..extensions import _
 
 __all__ = [
-    'TinyMce4',
-    'SubmitInput',
-    'DateTimeInput',
     'CoordinatesInput',
-    'RadioMatrixInput',
+    'DateTimeInput',
     'ImgeeWidget',
     'InlineListWidget',
     'RadioInput',
-    'SelectWidget',
+    'RadioMatrixInput',
     'Select2Widget',
+    'SelectWidget',
+    'SubmitInput',
+    'TinyMce4',
 ]
 
 
@@ -55,7 +56,7 @@ class SelectWidget(Select):
                 label = item2
                 html.append(self.render_option(val, label, val == field.data))
         html.append('</select>')
-        return Markup(''.join(html))
+        return Markup(''.join(html))  # nosec: B704  # noqa: S704
 
 
 class Select2Widget(Select):
@@ -76,7 +77,7 @@ class Select2Widget(Select):
             for val, label, selected, render_kw in field.iter_choices():
                 html.append(self.render_option(val, label, selected, **render_kw))
         html.append('</select>')
-        return Markup(''.join(html))
+        return Markup(''.join(html))  # nosec: B704  # noqa: S704
 
 
 class TinyMce4(wtforms.widgets.TextArea):
@@ -121,7 +122,7 @@ class DateTimeInput(wtforms.widgets.Input):
             value = field._value() or ''
         class_ = kwargs.pop('class', kwargs.pop('class_', ''))
         input_attrs = html_params(name=field.name, id=field_id, value=value, **kwargs)
-        return Markup(
+        return Markup(  # nosec: B704  # noqa: S704
             f'<input type="datetime-local" class="{class_}"'
             f' {input_attrs} /> {field.tzname}'
         )
@@ -149,7 +150,7 @@ class CoordinatesInput(wtforms.widgets.core.Input):
         if len(value) < 2:
             value.append('')
 
-        return Markup(
+        return Markup(  # nosec: B704  # noqa: S704
             # pylint: disable=consider-using-f-string
             '<input {}> <input {}>'.format(
                 self.html_params(
@@ -202,7 +203,7 @@ class RadioMatrixInput:
         rendered.append('</tbody>')
         rendered.append('</table>')
 
-        return Markup('\n'.join(rendered))
+        return Markup('\n'.join(rendered))  # nosec: B704  # noqa: S704
 
 
 class InlineListWidget:
@@ -228,20 +229,20 @@ class InlineListWidget:
         self.class_ = class_
         self.class_prefix = class_prefix
 
-    def __call__(self, field: WTField, **kwargs: Any) -> Markup:
+    def __call__(self, field: RadioField, **kwargs: Any) -> Markup:
         kwargs.setdefault('id', field.id)
         kwargs['class_'] = (
             kwargs.pop('class_', kwargs.pop('class', '')).strip() + ' ' + self.class_
         ).strip()
         html = [f'<{escape(self.html_tag)} {html_params(**kwargs)}>']
-        for subfield in field:
-            html.append(
-                f'<label for="{escape(subfield.id)}" class="{escape(self.class_prefix)}'
-                f'{escape(subfield.data)}">{escape(subfield())}'
-                f' {escape(subfield.label.text)}</label>'
-            )
+        html.extend(
+            f'<label for="{escape(subfield.id)}" class="{escape(self.class_prefix)}'
+            f'{escape(subfield.data)}">{escape(subfield())}'
+            f' {escape(subfield.label.text)}</label>'
+            for subfield in field
+        )
         html.append(f'</{escape(self.html_tag)}>')
-        return Markup('\n'.join(html))
+        return Markup('\n'.join(html))  # nosec: B704  # noqa: S704
 
 
 class ImgeeWidget(wtforms.widgets.Input):
@@ -265,7 +266,7 @@ class ImgeeWidget(wtforms.widgets.Input):
             value = furl.url
 
         # pylint: disable=consider-using-f-string
-        iframe_html = Markup(
+        iframe_html = Markup(  # nosec: B704  # noqa: S704
             '<iframe {} class="imgee-upload"></iframe>'.format(
                 self.html_params(
                     id='iframe_' + id_ + '_upload',
@@ -275,7 +276,7 @@ class ImgeeWidget(wtforms.widgets.Input):
             )
         )
 
-        field_html = Markup(
+        field_html = Markup(  # nosec: B704  # noqa: S704
             '<img {}> <input {}>'.format(
                 self.html_params(id='img_' + id_, src=value, width='200', **kwargs),
                 self.html_params(

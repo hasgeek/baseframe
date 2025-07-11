@@ -23,7 +23,7 @@ from typing import Any, Callable, Optional
 
 from coaster.utils import unicode_extended_whitespace
 
-__all__ = ['lower', 'upper', 'strip', 'lstrip', 'rstrip', 'strip_each', 'none_if_empty']
+__all__ = ['lower', 'lstrip', 'none_if_empty', 'rstrip', 'strip', 'strip_each', 'upper']
 
 
 def lower() -> Callable[[Optional[str]], Optional[str]]:

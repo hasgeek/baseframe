@@ -1,6 +1,6 @@
 """Form fields."""
-
-# pylint: disable=attribute-defined-outside-init
+# ruff: noqa: ARG002
+# pylint: disable=attribute-defined-outside-init,unused-argument
 
 from __future__ import annotations
 
@@ -49,32 +49,30 @@ from .widgets import (
 )
 
 __all__ = [
-    # Imported from WTForms
-    'Field',
-    'FieldList',
-    'FileField',
-    'Label',
-    'RecaptchaField',
-    'SelectMultipleField',
-    'SubmitField',
-    # Baseframe fields (many of these are extensions of WTForms fields)
+    'SANITIZE_ATTRIBUTES',
+    'SANITIZE_TAGS',
     'AnnotatedTextField',
     'AutocompleteField',
     'AutocompleteMultipleField',
     'CoordinatesField',
     'DateTimeField',
     'EnumSelectField',
+    'Field',
+    'FieldList',
+    'FileField',
     'FormField',
     'GeonameSelectField',
     'GeonameSelectMultiField',
     'ImgeeField',
     'JsonField',
+    'Label',
     'MarkdownField',
     'RadioMatrixField',
-    'SANITIZE_ATTRIBUTES',
-    'SANITIZE_TAGS',
+    'RecaptchaField',
     'SelectField',
+    'SelectMultipleField',
     'StylesheetField',
+    'SubmitField',
     'TextListField',
     'TinyMce4Field',
     'UserSelectField',
@@ -129,17 +127,16 @@ class SelectField(SelectFieldBase):
     Here is an example of how the data is laid out::
 
         (
-            ("Fruits", (
-                ('apple', "Apple"),
-                ('peach', "Peach"),
-                ('pear', "Pear")
-            )),
-            ("Vegetables", (
-                ('cucumber', "Cucumber"),
-                ('potato', "Potato"),
-                ('tomato', "Tomato"),
-            )),
-            ('other', "None of the above")
+            ("Fruits", (('apple', "Apple"), ('peach', "Peach"), ('pear', "Pear"))),
+            (
+                "Vegetables",
+                (
+                    ('cucumber', "Cucumber"),
+                    ('potato', "Potato"),
+                    ('tomato', "Tomato"),
+                ),
+            ),
+            ('other', "None of the above"),
         )
 
     It's a little strange that the tuples are (value, label) except for groups which are
@@ -185,11 +182,8 @@ class TinyMce4Field(TextAreaField):
     ) -> None:
         super().__init__(*args, **kwargs)
 
-        if tinymce_options is None:
-            tinymce_options = {}
-        else:
-            # Clone the dict to preserve local edits
-            tinymce_options = dict(tinymce_options)
+        # Clone the dict to preserve local edits
+        tinymce_options = {} if tinymce_options is None else dict(tinymce_options)
 
         # Set defaults for TinyMCE
         tinymce_options.setdefault(
@@ -539,7 +533,7 @@ class AutocompleteFieldBase:
         # Convert strings into Tag objects
         self.data = valuelist
 
-    def pre_validate(self, form: WTForm) -> None:  # pylint: disable=unused-argument
+    def pre_validate(self, form: WTForm) -> None:
         """Do not validate data."""
         return
 
@@ -690,7 +684,7 @@ class ImgeeField(URLField):
             validators=[validators.DataRequired()],
             profile='foo',
             img_label='logos',
-            img_size='100x75'
+            img_size='100x75',
         )
     """
 
@@ -746,11 +740,11 @@ class CoordinatesField(wtforms.Field):
         if valuelist and len(valuelist) == 2:
             try:
                 latitude = Decimal(valuelist[0])
-            except DecimalError:
+            except (DecimalError, TypeError):
                 latitude = None
             try:
                 longitude = Decimal(valuelist[1])
-            except DecimalError:
+            except (DecimalError, TypeError):
                 longitude = None
 
             self.data = latitude, longitude
@@ -758,8 +752,12 @@ class CoordinatesField(wtforms.Field):
             self.data = None, None
 
     def _value(self) -> tuple[str, str]:
-        if self.data is not None and self.data != (None, None):
-            return str(self.data[0]), str(self.data[1])
+        """Return HTML render value."""
+        if self.data is not None:
+            return (
+                str(self.data[0]) if self.data[0] is not None else '',
+                str(self.data[1]) if self.data[1] is not None else '',
+            )
         return '', ''
 
 

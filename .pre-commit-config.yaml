@@ -1,56 +1,32 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 ci:
-  skip: ['yesqa', 'no-commit-to-branch']
+  skip: ['no-commit-to-branch']
 repos:
   - repo: https://github.com/pre-commit-ci/pre-commit-ci-config
     rev: v1.6.1
     hooks:
       - id: check-pre-commit-ci-config
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.9.1
-    hooks:
-      - id: ruff
-        args: ['--fix', '--exit-non-zero-on-fix']
-        # Extra args, only after removing flake8 and yesqa: '--extend-select', 'RUF100'
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.19.1
+    rev: v3.20.0
     hooks:
       - id: pyupgrade
         args: ['--keep-runtime-typing', '--py39-plus']
-  - repo: https://github.com/asottile/yesqa
-    rev: v1.5.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.2
     hooks:
-      - id: yesqa
-        additional_dependencies: &flake8deps
-          - bandit
-          - flake8-assertive
-          - flake8-blind-except
-          - flake8-bugbear
-          - flake8-builtins
-          - flake8-comprehensions
-          - flake8-docstrings
-          - flake8-isort
-          - flake8-logging-format
-          - flake8-mutable
-          - flake8-plugin-utils
-          - flake8-print
-          - flake8-pytest-style
-          - pep8-naming
-          - toml
-          - tomli
+      - id: ruff-check
+        args: ['--fix', '--exit-non-zero-on-fix']
+        # Extra args, only after removing flake8 and yesqa: '--extend-select', 'RUF100'
+      - id: ruff-format
   - repo: https://github.com/PyCQA/isort
-    rev: 5.13.2
+    rev: 6.0.1
     hooks:
       - id: isort
         additional_dependencies:
           - toml
-  - repo: https://github.com/psf/black
-    rev: 24.10.0
-    hooks:
-      - id: black
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.14.1
+    rev: v1.16.1
     hooks:
       - id: mypy
         # warn-unused-ignores is unsafe with pre-commit, see
@@ -65,13 +41,8 @@ repos:
           - types-pytz
           - types-requests
           - typing-extensions
-  - repo: https://github.com/PyCQA/flake8
-    rev: 7.1.1
-    hooks:
-      - id: flake8
-        additional_dependencies: *flake8deps
   - repo: https://github.com/PyCQA/pylint
-    rev: v3.3.3
+    rev: v3.3.7
     hooks:
       - id: pylint
         args: [
@@ -82,7 +53,7 @@ repos:
         additional_dependencies:
           - tomli
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.8.2
+    rev: 1.8.6
     hooks:
       - id: bandit
         language_version: python3
@@ -90,7 +61,7 @@ repos:
         additional_dependencies:
           - 'bandit[toml]'
   - repo: https://github.com/pycontribs/mirrors-prettier
-    rev: v3.4.2
+    rev: v3.6.2
     hooks:
       - id: prettier
   - repo: https://github.com/ducminh-phan/reformat-gherkin

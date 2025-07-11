@@ -56,10 +56,7 @@ asset_cache = Cache(with_jinja2_ext=False)
 cache = Cache()
 babel = Babel()
 statsd = Statsd()
-if DebugToolbarExtension is not None:  # pragma: no cover
-    toolbar = DebugToolbarExtension()
-else:  # pragma: no cover
-    toolbar = None
+toolbar = DebugToolbarExtension() if DebugToolbarExtension is not None else None
 
 baseframe_translations = Domain(
     os.path.join(os.path.dirname(__file__), 'translations'), domain='baseframe'
