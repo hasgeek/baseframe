@@ -254,12 +254,12 @@ def test_dt_filters_timestamp_filter(app: Flask, times: SimpleNamespace) -> None
             filters.timedelta_filter(timedelta(days=1), add_direction=True)
             == "in 1 day"
         )
-        # Narrow format doesn't work for add_direction
+        # Narrow format works for add_direction in English
         assert (
             filters.timedelta_filter(
                 timedelta(days=1), format='narrow', add_direction=True
             )
-            == "in 1 day"
+            == "in 1d"
         )
         assert (
             filters.timedelta_filter(-timedelta(seconds=1), add_direction=True)
@@ -269,12 +269,12 @@ def test_dt_filters_timestamp_filter(app: Flask, times: SimpleNamespace) -> None
             filters.timedelta_filter(-timedelta(days=1), add_direction=True)
             == "1 day ago"
         )
-        # Narrow format doesn't work for add_direction
+        # Narrow format works for add_direction in English
         assert (
             filters.timedelta_filter(
                 -timedelta(days=1), format='narrow', add_direction=True
             )
-            == "1 day ago"
+            == "1d ago"
         )
 
 
@@ -296,7 +296,7 @@ def test_dt_filters_timestamp_filter_hi(app: Flask, times: SimpleNamespace) -> N
         assert (
             filters.timedelta_filter(timedelta(days=1), add_direction=True) == "1 दिन में"
         )
-        # Narrow format doesn't work for add_direction
+        # Narrow format doesn't work for add_direction in Hindi
         assert (
             filters.timedelta_filter(
                 timedelta(days=1), format='narrow', add_direction=True
@@ -311,7 +311,7 @@ def test_dt_filters_timestamp_filter_hi(app: Flask, times: SimpleNamespace) -> N
             filters.timedelta_filter(-timedelta(days=1), add_direction=True)
             == "1 दिन पहले"
         )
-        # Narrow format doesn't work for add_direction
+        # Narrow format doesn't work for add_direction in Hindi
         assert (
             filters.timedelta_filter(
                 -timedelta(days=1), format='narrow', add_direction=True
