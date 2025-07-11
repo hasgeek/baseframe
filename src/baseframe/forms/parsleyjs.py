@@ -66,37 +66,33 @@ from .typing import ValidatorCallable
 __author__ = 'Johannes Gehrs (jgehrs@gmail.com)'
 
 __all__ = [
-    # ParsleyJS helpers
-    'parsley_kwargs',
-    'ParsleyInputMixin',
-    # Widgets
-    'TextInput',
-    'PasswordInput',
-    'HiddenInput',
-    'TextArea',
-    'CheckboxInput',
-    'Select',
-    'ListWidget',
-    'TelInput',
-    'URLInput',
-    'EmailInput',
-    'DateInput',
-    'NumberInput',
-    # Fields
-    'StringField',
-    'IntegerField',
-    'RadioField',
     'BooleanField',
-    'DecimalField',
-    'FloatField',
-    'PasswordField',
-    'HiddenField',
-    'TextAreaField',
-    'SelectField',
-    'TelField',
-    'URLField',
-    'EmailField',
+    'CheckboxInput',
     'DateField',
+    'DateInput',
+    'DecimalField',
+    'EmailField',
+    'EmailInput',
+    'FloatField',
+    'HiddenField',
+    'HiddenInput',
+    'IntegerField',
+    'ListWidget',
+    'NumberInput',
+    'PasswordField',
+    'PasswordInput',
+    'RadioField',
+    'Select',
+    'SelectField',
+    'StringField',
+    'TelField',
+    'TelInput',
+    'TextArea',
+    'TextAreaField',
+    'TextInput',
+    'URLField',
+    'URLInput',
+    'parsley_kwargs',
 ]
 
 
@@ -143,7 +139,7 @@ def parsley_kwargs(field: WTField, kwargs: Any, extend: bool = True) -> dict[str
     return new_kwargs
 
 
-def _email_kwargs(kwargs: dict[str, Any], vali: ValidatorCallable) -> None:
+def _email_kwargs(kwargs: dict[str, Any], _vali: ValidatorCallable) -> None:
     kwargs['data-parsley-type'] = 'email'
 
 
@@ -151,7 +147,7 @@ def _equal_to_kwargs(kwargs: dict[str, Any], vali: EqualTo) -> None:
     kwargs['data-parsley-equalto'] = '#' + vali.fieldname
 
 
-def _ip_address_kwargs(kwargs: dict[str, Any], vali: IPAddress) -> None:
+def _ip_address_kwargs(kwargs: dict[str, Any], _vali: IPAddress) -> None:
     # Regexp from http://stackoverflow.com/a/4460645
     kwargs['data-parsley-regexp'] = (
         r'^\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.'
@@ -199,7 +195,7 @@ def _regexp_kwargs(kwargs: dict[str, Any], vali: Regexp) -> None:
     kwargs['data-parsley-regexp'] = regex_string
 
 
-def _url_kwargs(kwargs: dict[str, Any], vali: URL) -> None:
+def _url_kwargs(kwargs: dict[str, Any], _vali: URL) -> None:
     kwargs['data-parsley-type'] = 'url'
 
 
@@ -232,68 +228,68 @@ def _message_kwargs(kwargs: dict[str, Any], message: str) -> None:
     kwargs['data-parsley-error-message'] = message
 
 
-class ParsleyInputMixin:
-    def __call__(self, field: WTField, **kwargs: Any) -> str:
+class ParsleyWidgetMixin:
+    def __call__(self, field: WTField, **kwargs: Any) -> Markup:
         kwargs = parsley_kwargs(field, kwargs)
         return super().__call__(field, **kwargs)  # type: ignore[misc]
 
 
-class TextInput(ParsleyInputMixin, _TextInput):
+class TextInput(ParsleyWidgetMixin, _TextInput):
     pass
 
 
-class PasswordInput(ParsleyInputMixin, _PasswordInput):
+class PasswordInput(ParsleyWidgetMixin, _PasswordInput):
     pass
 
 
-class HiddenInput(ParsleyInputMixin, _HiddenInput):
+class HiddenInput(ParsleyWidgetMixin, _HiddenInput):
     pass
 
 
-class TextArea(ParsleyInputMixin, _TextArea):
+class TextArea(ParsleyWidgetMixin, _TextArea):
     pass
 
 
-class CheckboxInput(ParsleyInputMixin, _CheckboxInput):
+class CheckboxInput(ParsleyWidgetMixin, _CheckboxInput):
     pass
 
 
-class TelInput(ParsleyInputMixin, _TelInput):
+class TelInput(ParsleyWidgetMixin, _TelInput):
     pass
 
 
-class URLInput(ParsleyInputMixin, _URLInput):
+class URLInput(ParsleyWidgetMixin, _URLInput):
     pass
 
 
-class EmailInput(ParsleyInputMixin, _EmailInput):
+class EmailInput(ParsleyWidgetMixin, _EmailInput):
     pass
 
 
-class DateInput(ParsleyInputMixin, _DateInput):
+class DateInput(ParsleyWidgetMixin, _DateInput):
     pass
 
 
-class NumberInput(ParsleyInputMixin, _NumberInput):
+class NumberInput(ParsleyWidgetMixin, _NumberInput):
     pass
 
 
-class Select(ParsleyInputMixin, _Select):
+class Select(ParsleyWidgetMixin, _Select):
     pass
 
 
 class ListWidget(_ListWidget):
-    def __call__(self, field: WTField, **kwargs: Any) -> str:
+    def __call__(self, field: WTField, **kwargs: Any) -> Markup:
         sub_kwargs = parsley_kwargs(field, kwargs, extend=False)
         kwargs.setdefault('id', field.id)
         html = [f'<{self.html_tag} {html_params(**kwargs)}>']
-        for subfield in field:
+        for subfield in field:  # pyright: ignore[reportGeneralTypeIssues]
             if self.prefix_label:
                 html.append(f'<li>{subfield.label} {subfield(**sub_kwargs)}</li>')
             else:
                 html.append(f'<li>{subfield(**sub_kwargs)} {subfield.label}</li>')
         html.append(f'</{self.html_tag}>')
-        return Markup(''.join(html))
+        return Markup(''.join(html))  # nosec: B704  # noqa: S704
 
 
 class StringField(_StringField):

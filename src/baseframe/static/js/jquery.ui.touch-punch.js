@@ -14,7 +14,7 @@
       a.preventDefault();
       var c = a.originalEvent.changedTouches[0],
         d = document.createEvent('MouseEvents');
-      d.initMouseEvent(
+      (d.initMouseEvent(
         b,
         !0,
         !0,
@@ -31,7 +31,7 @@
         0,
         null
       ),
-        a.target.dispatchEvent(d);
+        a.target.dispatchEvent(d));
     }
   }
   if (((a.support.touch = 'ontouchend' in document), a.support.touch)) {
@@ -39,7 +39,7 @@
       b = a.ui.mouse.prototype,
       c = b._mouseInit,
       d = b._mouseDestroy;
-    (b._touchStart = function (a) {
+    ((b._touchStart = function (a) {
       var b = this;
       !e &&
         b._mouseCapture(a.originalEvent.changedTouches[0]) &&
@@ -61,21 +61,21 @@
       }),
       (b._mouseInit = function () {
         var b = this;
-        b.element.bind({
+        (b.element.bind({
           touchstart: a.proxy(b, '_touchStart'),
           touchmove: a.proxy(b, '_touchMove'),
           touchend: a.proxy(b, '_touchEnd'),
         }),
-          c.call(b);
+          c.call(b));
       }),
       (b._mouseDestroy = function () {
         var b = this;
-        b.element.unbind({
+        (b.element.unbind({
           touchstart: a.proxy(b, '_touchStart'),
           touchmove: a.proxy(b, '_touchMove'),
           touchend: a.proxy(b, '_touchEnd'),
         }),
-          d.call(b);
-      });
+          d.call(b));
+      }));
   }
 })(jQuery);

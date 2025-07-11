@@ -1,4 +1,5 @@
 """WTForms validators."""
+# ruff: noqa: ARG002
 
 from __future__ import annotations
 
@@ -38,31 +39,31 @@ from ..utils import is_public_email_domain
 from .typing import ValidatorList
 
 __all__ = [
+    'URL',  # WTForms
     'AllUrlsValid',
+    'AllowedIf',
+    'DataRequired',  # WTForms
+    'EqualTo',  # WTForms
+    'ForEach',
+    'InputRequired',  # WTForms
     'IsEmoji',
     'IsNotPublicEmailDomain',
     'IsPublicEmailDomain',
+    'Length',  # WTForms
     'NoObfuscatedEmail',
-    'AllowedIf',
+    'NumberRange',  # WTForms
+    'Optional',  # WTForms
+    'OptionalCoordinates',
     'OptionalIf',
+    'Recaptcha',
     'RequiredIf',
+    'StopValidation',  # WTForms
     'ValidCoordinates',
     'ValidEmail',
     'ValidEmailDomain',
     'ValidName',
     'ValidUrl',
-    'ForEach',
-    'Recaptcha',
-    # WTForms validators
-    'DataRequired',
-    'EqualTo',
-    'InputRequired',
-    'Length',
-    'NumberRange',
-    'Optional',
-    'StopValidation',
-    'URL',
-    'ValidationError',
+    'ValidationError',  # WTForms
 ]
 
 
@@ -91,7 +92,7 @@ def is_empty(value: Any) -> bool:
     return value not in _zero_values and not value
 
 
-FakeField = namedtuple(
+FakeField = namedtuple(  # noqa: PYI024
     'FakeField', ['data', 'raw_data', 'errors', 'gettext', 'ngettext']
 )
 
@@ -110,13 +111,12 @@ class ForEach:
     def __call__(self, form: WTForm, field: WTField) -> None:
         for element in field.data:
             fake_field = FakeField(element, element, [], field.gettext, field.ngettext)
-            for validator in self.validators:
-                try:
+            try:
+                for validator in self.validators:
                     validator(form, fake_field)
-                except StopValidation as exc:
-                    if exc.args and exc.args[0]:
-                        field.errors.append(exc.args[0])
-                    break
+            except StopValidation as exc:
+                if exc.args and exc.args[0]:
+                    field.errors.append(exc.args[0])
 
 
 class AllowedIf:
@@ -135,11 +135,10 @@ class AllowedIf:
         self.message = message or self.default_message
 
     def __call__(self, form: WTForm, field: WTField) -> None:
-        if field.data:
-            if is_empty(form[self.fieldname].data):
-                raise StopValidation(
-                    self.message.format(field=form[self.fieldname].label.text)
-                )
+        if field.data and is_empty(form[self.fieldname].data):
+            raise StopValidation(
+                self.message.format(field=form[self.fieldname].label.text)
+            )
 
 
 class OptionalIf(Optional):
@@ -149,10 +148,12 @@ class OptionalIf(Optional):
     If this field is required when the other field is empty, chain it with
     :class:`DataRequired`::
 
-        field = forms.StringField("Field",
+        field = forms.StringField(
+            "Field",
             validators=[
-                forms.validators.OptionalIf('other'), forms.validators.DataRequired()
-            ]
+                forms.validators.OptionalIf('other'),
+                forms.validators.DataRequired(),
+            ],
         )
 
     :param str fieldname: Name of the other field
@@ -178,10 +179,12 @@ class RequiredIf(DataRequired):
     If this field is also optional when the other field is empty, chain it with
     :class:`Optional`::
 
-        field = forms.StringField("Field",
+        field = forms.StringField(
+            "Field",
             validators=[
-                forms.validators.RequiredIf('other'), forms.validators.Optional()
-            ]
+                forms.validators.RequiredIf('other'),
+                forms.validators.Optional(),
+            ],
         )
 
     :param str fieldname: Name of the other field
@@ -214,8 +217,7 @@ class _Comparison:
         other = form[self.fieldname]
         if not self.compare(field.data, other.data):
             d = {
-                'other_label': hasattr(other, 'label')
-                and other.label.text
+                'other_label': (hasattr(other, 'label') and other.label.text)
                 or self.fieldname,
                 'other_name': self.fieldname,
             }
@@ -486,16 +488,14 @@ class ValidUrl:
         method to the next.
         """
         urlparts = urlparse(url)
-        if allowed_schemes:
-            if urlparts.scheme not in allowed_schemes:
-                return self.message_schemes.format(
-                    url=url, schemes=_(', ').join(allowed_schemes)
-                )
-        if allowed_domains:
-            if urlparts.netloc.lower() not in allowed_domains:
-                return self.message_domains.format(
-                    url=url, domains=_(', ').join(allowed_domains)
-                )
+        if allowed_schemes and urlparts.scheme not in allowed_schemes:
+            return self.message_schemes.format(
+                url=url, schemes=_(', ').join(allowed_schemes)
+            )
+        if allowed_domains and urlparts.netloc.lower() not in allowed_domains:
+            return self.message_domains.format(
+                url=url, domains=_(', ').join(allowed_domains)
+            )
 
         if urlparts.scheme not in ('http', 'https') or not self.visit_url:
             # The rest of this function only validates HTTP urls.
@@ -522,7 +522,7 @@ class ValidUrl:
                 r = requests.get(
                     url,
                     timeout=5,
-                    verify=False,  # nosec  # skipcq: BAN-B501
+                    verify=False,  # nosec: B501  # noqa: S501
                     headers={'User-Agent': self.user_agent},
                 )
                 code = r.status_code
@@ -536,7 +536,7 @@ class ValidUrl:
                 requests.exceptions.Timeout,
             ):
                 code = None
-            except Exception as exc:  # noqa: B902  # pylint: disable=broad-except
+            except Exception as exc:  # pylint: disable=broad-except  # noqa: BLE001
                 exception_catchall.send(exc)
                 code = None
 
@@ -676,7 +676,7 @@ class NoObfuscatedEmail:
                 diagnosis = is_email(email, check_dns=True, diagnose=True)
                 if diagnosis.code == 0:
                     raise StopValidation(self.message)
-            except (dns.resolver.Timeout, dns.resolver.NoNameservers):
+            except (dns.resolver.Timeout, dns.resolver.NoNameservers):  # noqa: PERF203
                 pass
 
 
@@ -710,11 +710,47 @@ class ValidCoordinates:
         self.message_longitude = message_longitude or self.default_message_longitude
 
     def __call__(self, form: WTForm, field: WTField) -> None:
+        if not field.data or len(field.data) != 2:
+            # Don't allow `None`, `()` or `[]`, or lists not of size two.
+            # While this rejects `0` for being falsy, that too is not a valid value
+            raise StopValidation(self.message)
+        latitude, longitude = field.data
+        if latitude is None or (not -90 <= latitude <= 90):
+            raise StopValidation(self.message_latitude)
+        if longitude is None or (not -180 <= longitude <= 180):
+            raise StopValidation(self.message_longitude)
+
+
+class OptionalCoordinates:
+    default_message = __("Valid latitude and longitude expected")
+    default_message_latitude = __("Latitude must be within ± 90 degrees")
+    default_message_longitude = __("Longitude must be within ± 180 degrees")
+
+    def __init__(
+        self,
+        message: OptionalType[str] = None,
+        message_latitude: OptionalType[str] = None,
+        message_longitude: OptionalType[str] = None,
+    ) -> None:
+        self.message = message or self.default_message
+        self.message_latitude = message_latitude or self.default_message_latitude
+        self.message_longitude = message_longitude or self.default_message_longitude
+
+    def __call__(self, form: WTForm, field: WTField) -> None:
+        if (
+            field.data is None
+            or field.data == ''
+            or tuple(field.data)
+            in [(), (None,), ('',), (None, None), ('', None), (None, ''), ('', '')]
+        ):
+            # No value provided, treat as optional
+            return
         if len(field.data) != 2:
             raise StopValidation(self.message)
-        if not -90 <= field.data[0] <= 90:
+        latitude, longitude = field.data
+        if latitude is None or (not -90 <= latitude <= 90):
             raise StopValidation(self.message_latitude)
-        if not -180 <= field.data[1] <= 180:
+        if longitude is None or (not -180 <= longitude <= 180):
             raise StopValidation(self.message_longitude)
 
 

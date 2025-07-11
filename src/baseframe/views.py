@@ -1,4 +1,5 @@
 """Baseframe views and view support helpers."""
+# ruff: noqa: ARG001
 
 import os
 import os.path
@@ -115,16 +116,14 @@ def asset_path(bundle_key: str) -> str:
 @baseframe.app_context_processor
 def baseframe_context() -> dict[str, Any]:
     """Add Baseframe helper functions to Jinja2 template context."""
-    return {
-        'networkbar_links': networkbar_links,
-        'asset_path': asset_path,
-    }
+    return {'networkbar_links': networkbar_links, 'asset_path': asset_path}
 
 
 @baseframe.route('/favicon.ico', subdomain='<subdomain>')
 @baseframe.route('/favicon.ico', defaults={'subdomain': None})
 def favicon(subdomain: Optional[str] = None) -> Response:
     """Render a favicon from the app's static folder, falling back to default icon."""
+    app_icon_path: Optional[str] = None
     app_icon_folder = current_app.static_folder
     # Does the app have a favicon.ico in /static?
     if not os.path.exists(
@@ -132,13 +131,17 @@ def favicon(subdomain: Optional[str] = None) -> Response:
     ):
         # Nope? Is it in /static/img?
         app_icon_path = os.path.join(
-            current_app.static_folder, 'img'  # type: ignore[arg-type]
+            current_app.static_folder or '',
+            'img',
         )
         if not os.path.exists(os.path.join(app_icon_path, 'favicon.ico')):
             # Still nope? Serve default favicon from baseframe
             app_icon_path = os.path.join(
-                baseframe.static_folder, 'img'  # type: ignore[arg-type]
+                baseframe.static_folder or '',
+                'img',
             )
+    if not app_icon_path:
+        abort(404)
     return send_from_directory(
         app_icon_path, 'favicon.ico', mimetype='image/vnd.microsoft.icon'
     )
@@ -153,7 +156,8 @@ def humans(subdomain: Optional[str] = None) -> Response:
             current_app.static_folder
             if os.path.exists(
                 os.path.join(
-                    current_app.static_folder, 'humans.txt'  # type: ignore[arg-type]
+                    current_app.static_folder or '',
+                    'humans.txt',  # type: ignore[arg-type]
                 )
             )
             else baseframe.static_folder
@@ -172,7 +176,8 @@ def robots(subdomain: Optional[str] = None) -> Response:
             current_app.static_folder
             if os.path.exists(
                 os.path.join(
-                    current_app.static_folder, 'robots.txt'  # type: ignore[arg-type]
+                    current_app.static_folder or '',
+                    'robots.txt',  # type: ignore[arg-type]
                 )
             )
             else baseframe.static_folder
@@ -187,7 +192,8 @@ def robots(subdomain: Optional[str] = None) -> Response:
 def well_known(filename: str, subdomain: Optional[str] = None) -> Response:
     """Render .well-known folder contents from app's static folder."""
     well_known_path = os.path.join(
-        current_app.static_folder, '.well-known'  # type: ignore[arg-type]
+        current_app.static_folder or '',
+        '.well-known',  # type: ignore[arg-type]
     )
     return send_from_directory(well_known_path, filename)
 
@@ -223,11 +229,10 @@ def csrf_refresh(subdomain: Optional[str] = None) -> ReturnRenderWith:
     """Serve a refreshed CSRF token to ensure HTML forms never expire."""
     parsed_host = urlparse(request.url_root)
     origin = parsed_host.scheme + '://' + parsed_host.netloc
-    if 'Origin' in request.headers:
-        # Origin is present in (a) cross-site requests and (b) same site requests in
-        # some browsers. Therefore, if Origin is present, confirm it matches our domain.
-        if request.headers['Origin'] != origin:
-            abort(403)
+    # Origin is present in (a) cross-site requests and (b) same site requests in some
+    # browsers. Therefore, if Origin is present, confirm it matches our domain
+    if 'Origin' in request.headers and request.headers['Origin'] != origin:
+        abort(403)
 
     return (
         {'csrf_token': generate_csrf()},
@@ -245,12 +250,14 @@ def csrf_refresh(subdomain: Optional[str] = None) -> ReturnRenderWith:
 @baseframe.after_app_request
 def process_response(response: Response) -> Response:
     """Process response objects to add additional headers."""
-    if request.endpoint in ('static', 'baseframe.static'):
-        if 'Access-Control-Allow-Origin' not in response.headers:
-            # This is required for webfont resources
-            # Note: We do not serve static assets in production, nginx does.
-            # That means this piece of code will never be called in production.
-            response.headers['Access-Control-Allow-Origin'] = '*'
+    if (
+        request.endpoint in ('static', 'baseframe.static')
+        and 'Access-Control-Allow-Origin' not in response.headers
+    ):
+        # This is required for webfont resources
+        # Note: We do not serve static assets in production, nginx does.
+        # That means this piece of code will never be called in production.
+        response.headers['Access-Control-Allow-Origin'] = '*'
 
     # If Babel was accessed in this request, the response's contents will vary with
     # the accepted language
@@ -273,10 +280,9 @@ def process_response(response: Response) -> Response:
             # 'ALLOW' is an unofficial signal from the app to Baseframe.
             # It signals us to remove the header and not set a default
             response.headers.pop('X-Frame-Options')
-    else:
-        if request_has_auth() and getattr(current_auth, 'login_required', False):
-            # Protect only login_required pages from appearing in frames
-            response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    elif request_has_auth() and getattr(current_auth, 'login_required', False):
+        # Protect only login_required pages from appearing in frames
+        response.headers['X-Frame-Options'] = 'SAMEORIGIN'
 
     # In memoriam. http://www.gnuterrypratchett.com/
     response.headers['X-Clacks-Overhead'] = 'GNU Terry Pratchett'

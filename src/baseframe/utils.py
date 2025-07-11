@@ -27,12 +27,12 @@ from .extensions import asset_cache, cache, get_timezone, get_user_locale
 
 __all__ = [
     'MxLookupError',
-    'request_timestamp',
     'is_public_email_domain',
-    'localized_country_list',
     'localize_timezone',
-    'request_is_xhr',
+    'localized_country_list',
     'request_checked_xhr',
+    'request_is_xhr',
+    'request_timestamp',
 ]
 
 
@@ -105,9 +105,7 @@ def is_public_email_domain(
                 raise
             return default
 
-    if any(p['public'] for p in sniffedmx['providers']):
-        return True
-    return False
+    return bool(any(p['public'] for p in sniffedmx['providers']))
 
 
 def localized_country_list() -> list[tuple[str, str]]:

@@ -15,7 +15,7 @@ from flask import (
     request,
     url_for,
 )
-from markupsafe import Markup, escape
+from markupsafe import Markup
 from werkzeug.wrappers import Response
 
 from coaster.utils import buid
@@ -110,7 +110,7 @@ def render_message(title: str, message: str, code: int = 200) -> Response:
     """Render a message."""
     template = THEME_FILES[current_app.config['theme']]['message.html.jinja2']
     if request_is_xhr():
-        return make_response(Markup(f'<p>{escape(message)}</p>'), code)
+        return make_response(Markup('<p>{}</p>').format(message), code)
     return make_response(render_template(template, title=title, message=message), code)
 
 

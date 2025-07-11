@@ -206,7 +206,7 @@ class Statsd:
             delta=delta,
         )
 
-    def set(  # noqa: A003
+    def set(
         self,
         stat: str,
         value: str,
@@ -258,14 +258,14 @@ class Statsd:
                 self.incr(metric_name, tags=tags)
 
     @staticmethod
-    def _before_render_template(app: Flask, template: Template, **kwargs) -> None:
+    def _before_render_template(app: Flask, template: Template, **_kwargs) -> None:
         """Record start time when rendering a template."""
         if app.config['STATSD_RATE'] != 0:
             if not hasattr(g, TEMPLATE_START_TIME_ATTR):
                 setattr(g, TEMPLATE_START_TIME_ATTR, {})
             getattr(g, TEMPLATE_START_TIME_ATTR)[template] = time.time()
 
-    def _template_rendered(self, app: Flask, template: Template, **kwargs) -> None:
+    def _template_rendered(self, app: Flask, template: Template, **_kwargs) -> None:
         """Calculate time to render a template and log to statsd."""
         start_time = getattr(g, TEMPLATE_START_TIME_ATTR, {}).get(template)
         if not start_time:

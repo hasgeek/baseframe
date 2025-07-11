@@ -1,8 +1,10 @@
 """Test utils."""
-
 # pylint: disable=redefined-outer-name
 
+from collections.abc import Callable
+
 import pytest
+from flask import Flask
 
 from baseframe.utils import (
     _localized_country_list_inner,
@@ -15,11 +17,11 @@ from baseframe.utils import (
 
 
 @pytest.fixture
-def testview(app):
+def testview(app: Flask) -> Callable[[], str]:
     """Add a view to the app for testing."""
 
     @app.route('/localetest')
-    def locale_testview():
+    def locale_testview() -> str:
         country_list = localized_country_list()
         return dict(country_list)['DE']
 

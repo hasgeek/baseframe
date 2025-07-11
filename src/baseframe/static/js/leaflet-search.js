@@ -80,7 +80,7 @@
         return '[object Object]' === Object.prototype.toString.call(a);
       },
       initialize: function (b) {
-        a.Util.setOptions(this, b || {}),
+        (a.Util.setOptions(this, b || {}),
           (this._inputMinSize = this.options.textPlaceholder
             ? this.options.textPlaceholder.length
             : 10),
@@ -94,7 +94,7 @@
           (this._autoTypeTmp = this.options.autoType),
           (this._countertips = 0),
           (this._recordsCache = {}),
-          (this._curReq = null);
+          (this._curReq = null));
       },
       onAdd: function (b) {
         return (
@@ -145,7 +145,7 @@
         this._recordsCache = {};
       },
       setLayer: function (a) {
-        return (this._layer = a), this._layer.addTo(this._map), this;
+        return ((this._layer = a), this._layer.addTo(this._map), this);
       },
       showAlert: function (a) {
         var b = this;
@@ -161,7 +161,7 @@
         );
       },
       hideAlert: function () {
-        return (this._alert.style.display = 'none'), this;
+        return ((this._alert.style.display = 'none'), this);
       },
       cancel: function () {
         return (
@@ -215,7 +215,7 @@
           : this;
       },
       collapseDelayedStop: function () {
-        return clearTimeout(this.timerCollapse), this;
+        return (clearTimeout(this.timerCollapse), this);
       },
       _createAlert: function (b) {
         var c = a.DomUtil.create('div', b, this._container);
@@ -308,7 +308,7 @@
               d,
               'mousewheel',
               function (b) {
-                c.collapseDelayedStop(), a.DomEvent.stopPropagation(b);
+                (c.collapseDelayedStop(), a.DomEvent.stopPropagation(b));
               },
               this
             )
@@ -330,9 +330,9 @@
             ((d = this.options.buildTip.call(this, b, c)), 'string' == typeof d)
           ) {
             var e = a.DomUtil.create('div');
-            (e.innerHTML = d), (d = e.firstChild);
+            ((e.innerHTML = d), (d = e.firstChild));
           }
-        } else (d = a.DomUtil.create('li', '')), (d.innerHTML = b);
+        } else ((d = a.DomUtil.create('li', '')), (d.innerHTML = b));
         return (
           a.DomUtil.addClass(d, 'search-tip'),
           (d._text = b),
@@ -343,11 +343,11 @@
                 d,
                 'click',
                 function (a) {
-                  (this._input.value = b),
+                  ((this._input.value = b),
                     this._handleAutoresize(),
                     this._input.focus(),
                     this._hideTooltip(),
-                    this._handleSubmit();
+                    this._handleSubmit());
                 },
                 this
               ),
@@ -365,9 +365,9 @@
           e,
           f = {};
         if (((a = a.replace(/[.*+?^${}()|[\]\\]/g, '')), '' === a)) return [];
-        (c = this.options.initial ? '^' : ''),
+        ((c = this.options.initial ? '^' : ''),
           (d = this.options.casesensitive ? void 0 : 'i'),
-          (e = new RegExp(c + a, d));
+          (e = new RegExp(c + a, d)));
         for (var g in b) e.test(g) && (f[g] = b[g]);
         return f;
       },
@@ -380,8 +380,8 @@
         )
           for (var b in a) {
             if (this._countertips === this.options.tooltipLimit) break;
-            this._countertips++,
-              this._tooltip.appendChild(this._createTip(b, a[b]));
+            (this._countertips++,
+              this._tooltip.appendChild(this._createTip(b, a[b])));
           }
         return (
           this._countertips > 0
@@ -527,10 +527,10 @@
             this._input.createTextRange)
           ) {
             var d = this._input.createTextRange();
-            d.collapse(!0),
+            (d.collapse(!0),
               d.moveStart('character', a),
               d.moveEnd('character', c),
-              d.select();
+              d.select());
           } else
             this._input.setSelectionRange
               ? this._input.setSelectionRange(a, c)
@@ -542,13 +542,13 @@
         var a;
         if ((a = this._input.selection) && a.empty) a.empty();
         else if (this._input.createTextRange) {
-          (a = this._input.createTextRange()), a.collapse(!0);
+          ((a = this._input.createTextRange()), a.collapse(!0));
           var b = this._input.value.length;
-          a.moveStart('character', b), a.moveEnd('character', b), a.select();
+          (a.moveStart('character', b), a.moveEnd('character', b), a.select());
         } else
-          this._input.getSelection &&
+          (this._input.getSelection &&
             this._input.getSelection().removeAllRanges(),
-            (this._input.selectionStart = this._input.selectionEnd);
+            (this._input.selectionStart = this._input.selectionEnd));
       },
       _handleKeypress: function (a) {
         var b = this;
@@ -557,11 +557,11 @@
             this.collapse();
             break;
           case 13:
-            (1 == this._countertips ||
+            ((1 == this._countertips ||
               (this.options.firstTipSubmit && this._countertips > 0)) &&
               -1 == this._tooltip.currentSelection &&
               this._handleArrowSelect(1),
-              this._handleSubmit();
+              this._handleSubmit());
             break;
           case 38:
             this._handleArrowSelect(-1);
@@ -582,7 +582,7 @@
           case 36:
             break;
           default:
-            this._input.value.length
+            (this._input.value.length
               ? (this._cancel.style.display = 'block')
               : (this._cancel.style.display = 'none'),
               this._input.value.length >= this.options.minLength
@@ -590,23 +590,23 @@
                   (this.timerKeypress = setTimeout(function () {
                     b._fillRecordsCache();
                   }, this.options.delayType)))
-                : this._hideTooltip();
+                : this._hideTooltip());
         }
         this._handleAutoresize();
       },
       searchText: function (b) {
         var c = b.charCodeAt(b.length);
-        (this._input.value = b),
+        ((this._input.value = b),
           (this._input.style.display = 'block'),
           a.DomUtil.addClass(this._container, 'search-exp'),
           (this._autoTypeTmp = !1),
-          this._handleKeypress({ keyCode: c });
+          this._handleKeypress({ keyCode: c }));
       },
       _fillRecordsCache: function () {
         var b,
           c = this,
           d = this._input.value;
-        this._curReq && this._curReq.abort && this._curReq.abort(),
+        (this._curReq && this._curReq.abort && this._curReq.abort(),
           a.DomUtil.addClass(this._container, 'search-load'),
           this.options.layer
             ? ((this._recordsCache = this._recordsFromLayer()),
@@ -620,17 +620,17 @@
                     ? this._recordsFromJsonp
                     : this._recordsFromAjax),
               (this._curReq = this._retrieveData.call(this, d, function (d) {
-                (c._recordsCache = c._formatData.call(c, d)),
+                ((c._recordsCache = c._formatData.call(c, d)),
                   (b = c.options.sourceData
                     ? c._filterData(c._input.value, c._recordsCache)
                     : c._recordsCache),
                   c.showTooltip(b),
-                  a.DomUtil.removeClass(c._container, 'search-load');
-              })));
+                  a.DomUtil.removeClass(c._container, 'search-load'));
+              }))));
       },
       _handleAutoresize: function () {
         var a;
-        this._input.style.maxWidth !== this._map._container.offsetWidth &&
+        (this._input.style.maxWidth !== this._map._container.offsetWidth &&
           ((a = this._map._container.clientWidth),
           (a -= 83),
           (this._input.style.maxWidth = a.toString() + 'px')),
@@ -640,7 +640,7 @@
             (this._input.size =
               this._input.value.length < this._inputMinSize
                 ? this._inputMinSize
-                : this._input.value.length);
+                : this._input.value.length));
       },
       _handleArrowSelect: function (b) {
         var c = this._tooltip.hasChildNodes() ? this._tooltip.childNodes : [];
@@ -654,12 +654,12 @@
         else if (-1 == b && this._tooltip.currentSelection <= 0)
           this._tooltip.currentSelection = -1;
         else if ('none' != this._tooltip.style.display) {
-          (this._tooltip.currentSelection += b),
+          ((this._tooltip.currentSelection += b),
             a.DomUtil.addClass(
               c[this._tooltip.currentSelection],
               'search-tip-select'
             ),
-            (this._input.value = c[this._tooltip.currentSelection]._text);
+            (this._input.value = c[this._tooltip.currentSelection]._text));
           var d = c[this._tooltip.currentSelection].offsetTop;
           d + c[this._tooltip.currentSelection].clientHeight >=
           this._tooltip.scrollTop + this._tooltip.clientHeight
@@ -721,21 +721,21 @@
         circle: { radius: 10, weight: 3, color: '#e03', stroke: !0, fill: !1 },
       },
       initialize: function (b, c) {
-        a.setOptions(this, c),
+        (a.setOptions(this, c),
           c.icon === !0 && (c.icon = new a.Icon.Default()),
           a.Marker.prototype.initialize.call(this, b, c),
           a.Control.Search.prototype._isObject(this.options.circle) &&
-            (this._circleLoc = new a.CircleMarker(b, this.options.circle));
+            (this._circleLoc = new a.CircleMarker(b, this.options.circle)));
       },
       onAdd: function (b) {
-        a.Marker.prototype.onAdd.call(this, b),
+        (a.Marker.prototype.onAdd.call(this, b),
           this._circleLoc &&
             (b.addLayer(this._circleLoc),
-            this.options.animate && this.animate());
+            this.options.animate && this.animate()));
       },
       onRemove: function (b) {
-        a.Marker.prototype.onRemove.call(this, b),
-          this._circleLoc && b.removeLayer(this._circleLoc);
+        (a.Marker.prototype.onRemove.call(this, b),
+          this._circleLoc && b.removeLayer(this._circleLoc));
       },
       setLatLng: function (b) {
         return (
@@ -760,11 +760,11 @@
             f = 2 * a._radius,
             g = 0;
           a._timerAnimLoc = setInterval(function () {
-            (g += 0.5),
+            ((g += 0.5),
               (d += g),
               (f -= d),
               a.setRadius(f),
-              e > f && (clearInterval(a._timerAnimLoc), a.setRadius(e));
+              e > f && (clearInterval(a._timerAnimLoc), a.setRadius(e)));
           }, b);
         }
         return this;

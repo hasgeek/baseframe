@@ -2,7 +2,7 @@
 
 import os.path
 from datetime import date, datetime, time, timedelta
-from typing import TYPE_CHECKING, Any, Literal, Optional, Union, cast
+from typing import TYPE_CHECKING, Any, Literal, Optional, Union
 from urllib.parse import urlsplit, urlunsplit
 
 import grapheme
@@ -113,14 +113,9 @@ def avatar_url(
                 return user.avatar + '&size=' + str(size)
             return user.avatar + '?size=' + str(size)
         return user.avatar
-    email = user.email
+    email = str(user.email or '')
     if email:
-        if isinstance(email, str):
-            # Flask-Lastuser's User model has email as a string
-            ehash = md5sum(user.email)
-        else:
-            # Lastuser's User model has email as a UserEmail object
-            ehash = email.md5sum
+        ehash = md5sum(email)
         gravatar = '//www.gravatar.com/avatar/' + ehash + '?d=mm'
         if size:
             gravatar += '&s=' + str(size)
@@ -130,12 +125,12 @@ def avatar_url(
 
 
 @baseframe.app_template_filter('render_field_options')
-def render_field_options(field: WTField, **kwargs: Any) -> str:
+def render_field_options(field: WTField, **kwargs: Any) -> Markup:
     """Remove HTML attributes with falsy values before rendering a field."""
     d = {k: v for k, v in kwargs.items() if v is not None and v is not False}
     if field.render_kw:
         d.update(field.render_kw)
-    return cast(str, field(**d))
+    return field(**d)
 
 
 # TODO: Only used in renderfield.mustache. Re-check whether this is necessary at all.
@@ -228,7 +223,7 @@ def preview(html: str, min: int = 50, max: int = 158) -> str:  # noqa: A002
 @baseframe.app_template_filter('cdata')
 def cdata(text: str) -> str:
     """Convert text to a CDATA sequence."""
-    return Markup('<![CDATA[' + text.replace(']]>', ']]]]><![CDATA[>') + ']]>')
+    return Markup('<![CDATA[' + text.replace(']]>', ']]]]><![CDATA[>') + ']]>')  # nosec: B704  # noqa: S704
 
 
 # TODO: Used only in Hasjob. Move there?

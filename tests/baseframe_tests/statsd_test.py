@@ -4,11 +4,16 @@
 
 # Tests adapted from https://github.com/bbelyeu/flask-statsdclient
 
+from __future__ import annotations
+
+from collections.abc import Callable
 from datetime import timedelta
 from unittest.mock import patch
 
 import pytest
 from flask import Flask, render_template_string
+from flask.ctx import AppContext
+from flask.typing import ResponseReturnValue
 from flask_babel import Babel
 from statsd.client.timer import Timer
 from statsd.client.udp import Pipeline
@@ -18,29 +23,29 @@ from baseframe.statsd import Statsd
 
 
 @pytest.fixture
-def app():
+def app() -> Flask:
     """Redefine app without Baseframe for statsd tests."""
     return Flask(__name__)
 
 
 @pytest.fixture
-def statsd(app):
+def statsd(app: Flask) -> Statsd:
     s = Statsd()
     s.init_app(app)
     return s
 
 
 @pytest.fixture
-def view(app):
+def view(app: Flask) -> Callable[[], ResponseReturnValue]:
     @app.route('/')
-    def index():
+    def index() -> ResponseReturnValue:
         return 'index'
 
     return index
 
 
 @pytest.fixture
-def form(app):
+def form(app: Flask) -> forms.Form:
     Babel(app)  # Needed for form validator message translations
 
     class SimpleForm(forms.Form):
@@ -51,12 +56,12 @@ def form(app):
     return SimpleForm(meta={'csrf': False})
 
 
-def test_default_config(app, statsd) -> None:
+def test_default_config(app: Flask, statsd: Statsd) -> None:
     # pylint: disable=protected-access
     assert app.extensions['statsd_core']._addr == ('127.0.0.1', 8125)
 
 
-def test_custom_config(app) -> None:
+def test_custom_config(app: Flask) -> None:
     # pylint: disable=protected-access
     app.config['STATSD_HOST'] = '1.2.3.4'
     app.config['STATSD_PORT'] = 12345
@@ -71,7 +76,7 @@ def test_custom_config(app) -> None:
 # 3. Insert tags if tags are enabled and specified
 
 
-def test_incr(ctx, statsd) -> None:
+def test_incr(ctx: AppContext, statsd) -> None:
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter')
         mock_incr.assert_called_once_with(
@@ -89,7 +94,7 @@ def test_incr(ctx, statsd) -> None:
         )
 
 
-def test_decr(ctx, statsd) -> None:
+def test_decr(ctx: AppContext, statsd: Statsd) -> None:
     with patch('statsd.StatsClient.decr') as mock_decr:
         statsd.decr('test.counter')
         mock_decr.assert_called_once_with(
@@ -107,7 +112,7 @@ def test_decr(ctx, statsd) -> None:
         )
 
 
-def test_gauge(ctx, statsd) -> None:
+def test_gauge(ctx: AppContext, statsd: Statsd) -> None:
     with patch('statsd.StatsClient.gauge') as mock_gauge:
         statsd.gauge('test.gauge', 5)
         mock_gauge.assert_called_once_with(
@@ -125,7 +130,7 @@ def test_gauge(ctx, statsd) -> None:
         )
 
 
-def test_set(ctx, statsd) -> None:
+def test_set(ctx: AppContext, statsd: Statsd) -> None:
     with patch('statsd.StatsClient.set') as mock_set:
         statsd.set('test.set', 'item')
         mock_set.assert_called_once_with(
@@ -138,7 +143,7 @@ def test_set(ctx, statsd) -> None:
         )
 
 
-def test_timing(ctx, statsd) -> None:
+def test_timing(ctx: AppContext, statsd: Statsd) -> None:
     with patch('statsd.StatsClient.timing') as mock_timing:
         statsd.timing('test.timing', 10)
         mock_timing.assert_called_once_with(
@@ -153,7 +158,7 @@ def test_timing(ctx, statsd) -> None:
         )
 
 
-def test_timer(ctx, statsd) -> None:
+def test_timer(ctx: AppContext, statsd: Statsd) -> None:
     timer = statsd.timer('test.timer', rate=1)
     assert isinstance(timer, Timer)
     assert timer.stat == 'flask_app.baseframe_tests.statsd_test.test.timer'
@@ -165,12 +170,12 @@ def test_timer(ctx, statsd) -> None:
     assert timer.rate == 0.5
 
 
-def test_pipeline(ctx, statsd) -> None:
+def test_pipeline(ctx: AppContext, statsd: Statsd) -> None:
     pipeline = statsd.pipeline()
     assert isinstance(pipeline, Pipeline)
 
 
-def test_custom_rate(app, ctx, statsd) -> None:
+def test_custom_rate(app: Flask, ctx: AppContext, statsd: Statsd) -> None:
     app.config['STATSD_RATE'] = 0.3
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter')
@@ -184,7 +189,7 @@ def test_custom_rate(app, ctx, statsd) -> None:
         )
 
 
-def test_tags(app, ctx, statsd) -> None:
+def test_tags(app: Flask, ctx: AppContext, statsd: Statsd) -> None:
     # Tags are converted into buckets if statsd doesn't support them
     with patch('statsd.StatsClient.incr') as mock_incr:
         statsd.incr('test.counter', tags={'tag': 'value'})
@@ -236,7 +241,9 @@ def test_tags(app, ctx, statsd) -> None:
         )
 
 
-def test_request_handler_notags(app, statsd, view) -> None:
+def test_request_handler_notags(
+    app: Flask, statsd: Statsd, view: Callable[[], ResponseReturnValue]
+) -> None:
     """Test request_handlers logging with tags disabled."""
     with (
         patch('statsd.StatsClient.incr') as mock_incr,
@@ -261,7 +268,9 @@ def test_request_handler_notags(app, statsd, view) -> None:
         mock_timing.assert_called()
 
 
-def test_request_handler_tags(app, statsd, view) -> None:
+def test_request_handler_tags(
+    app: Flask, statsd: Statsd, view: Callable[[], ResponseReturnValue]
+) -> None:
     """Test request_handlers logging with tags enabled."""
     app.config['STATSD_TAGS'] = ','
     with (
@@ -279,7 +288,9 @@ def test_request_handler_tags(app, statsd, view) -> None:
         mock_timing.assert_called_once()
 
 
-def test_request_handler_disabled(app, view) -> None:
+def test_request_handler_disabled(
+    app: Flask, view: Callable[[], ResponseReturnValue]
+) -> None:
     """Test request_handlers logging disabled."""
     app.config['STATSD_REQUEST_LOG'] = False
     Statsd(app)
@@ -293,7 +304,7 @@ def test_request_handler_disabled(app, view) -> None:
         mock_timing.assert_not_called()
 
 
-def test_render_template_notags(app, statsd) -> None:
+def test_render_template_notags(app: Flask, statsd: Statsd) -> None:
     """Test render_template logging with tags disabled."""
     with (
         patch('statsd.StatsClient.incr') as mock_incr,
@@ -305,17 +316,15 @@ def test_render_template_notags(app, statsd) -> None:
         assert mock_timing.call_count == 2
         assert [c[0][0] for c in mock_incr.call_args_list] == [
             'flask_app.baseframe_tests.statsd_test.render_template.template__str',
-            'flask_app.baseframe_tests.statsd_test.render_template'
-            '.template__overall',
+            'flask_app.baseframe_tests.statsd_test.render_template.template__overall',
         ]
         assert [c[0][0] for c in mock_incr.call_args_list] == [
             'flask_app.baseframe_tests.statsd_test.render_template.template__str',
-            'flask_app.baseframe_tests.statsd_test.render_template'
-            '.template__overall',
+            'flask_app.baseframe_tests.statsd_test.render_template.template__overall',
         ]
 
 
-def test_render_template_tags(app, statsd) -> None:
+def test_render_template_tags(app: Flask, statsd: Statsd) -> None:
     """Test render_template logging with tags enabled."""
     app.config['STATSD_TAGS'] = ','
     with (
@@ -336,7 +345,9 @@ def test_render_template_tags(app, statsd) -> None:
         )
 
 
-def test_render_template_disabled(app, view) -> None:
+def test_render_template_disabled(
+    app: Flask, view: Callable[[], ResponseReturnValue]
+) -> None:
     """Test render_template logging disabled."""
     app.config['STATSD_RENDERTEMPLATE_LOG'] = False
     Statsd(app)
@@ -350,7 +361,9 @@ def test_render_template_disabled(app, view) -> None:
         mock_timing.assert_not_called()
 
 
-def test_form_success(ctx, app, statsd, form) -> None:
+def test_form_success(
+    ctx: AppContext, app: Flask, statsd: Statsd, form: forms.Form
+) -> None:
     app.config['STATSD_TAGS'] = ','
     with patch('statsd.StatsClient.incr') as mock_incr:
         form.field.data = "test"
@@ -363,7 +376,7 @@ def test_form_success(ctx, app, statsd, form) -> None:
         )
 
 
-def test_form_error(ctx, app, statsd, form) -> None:
+def test_form_error(ctx, app: Flask, statsd: Statsd, form: forms.Form) -> None:
     app.config['STATSD_TAGS'] = ','
     with patch('statsd.StatsClient.incr') as mock_incr:
         form.field.data = None
@@ -376,7 +389,9 @@ def test_form_error(ctx, app, statsd, form) -> None:
         )
 
 
-def test_form_nolog(ctx, app, statsd, form) -> None:
+def test_form_nolog(
+    ctx: AppContext, app: Flask, statsd: Statsd, form: forms.Form
+) -> None:
     app.config['STATSD_TAGS'] = ','
     app.config['STATSD_FORM_LOG'] = False
     with patch('statsd.StatsClient.incr') as mock_incr:
@@ -388,7 +403,9 @@ def test_form_nolog(ctx, app, statsd, form) -> None:
         mock_incr.assert_not_called()
 
 
-def test_form_signals_off(ctx, app, statsd, form) -> None:
+def test_form_signals_off(
+    ctx: AppContext, app: Flask, statsd: Statsd, form: forms.Form
+) -> None:
     app.config['STATSD_TAGS'] = ','
     app.config['STATSD_FORM_LOG'] = True
     with patch('statsd.StatsClient.incr') as mock_incr:

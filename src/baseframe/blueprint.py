@@ -17,7 +17,7 @@ from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.rq import RqIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
-from coaster.app import RotatingKeySecureCookieSessionInterface
+from coaster.app import FlaskRotatingKeySecureCookieSessionInterface
 from coaster.assets import split_namespec
 
 from .assets import assets
@@ -139,7 +139,7 @@ class BaseframeBlueprint(Blueprint):
             app.config['SECRET_KEY'] = app.config['SECRET_KEYS'][0]
         if app.config.get('SECRET_KEY') != app.config.get('SECRET_KEYS', [None])[0]:
             raise ValueError("App has misconfigured secret keys")
-        app.session_interface = RotatingKeySecureCookieSessionInterface()
+        app.session_interface = FlaskRotatingKeySecureCookieSessionInterface()
 
         if app.config.get('MATOMO_URL') and app.config.get('MATOMO_ID'):
             # Default .js and tracking file for Matomo

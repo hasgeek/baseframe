@@ -6,6 +6,7 @@ from datetime import datetime
 from decimal import Decimal
 
 import pytest
+from flask.ctx import AppContext
 from pytz import timezone, utc
 from werkzeug.datastructures import MultiDict
 
@@ -48,7 +49,7 @@ class DateTimeForm(forms.Form):
 
 
 @pytest.fixture
-def enum_form(ctx):
+def enum_form(ctx: AppContext) -> EnumForm:
     """Enum form fixture."""
     return EnumForm(meta={'csrf': False})
 
@@ -89,30 +90,30 @@ def test_enum_render(enum_form) -> None:
 
 
 @pytest.fixture
-def json_form(ctx):
+def json_form(ctx: AppContext) -> JsonForm:
     """JSON form fixture."""
     return JsonForm(meta={'csrf': False})
 
 
-def test_json_default(json_form) -> None:
+def test_json_default(json_form: JsonForm) -> None:
     assert json_form.jsondata.data == DEFAULT_JSONDATA
     assert json_form.jsondata_empty_default.data == {}
     assert json_form.jsondata_no_default.data is None
 
 
-def test_json_valid(json_form) -> None:
+def test_json_valid(json_form: JsonForm) -> None:
     json_form.process(formdata=MultiDict({'jsondata': '{"key": "val"}'}))
     assert json_form.validate() is True
 
 
-def test_json_invalid(json_form) -> None:
+def test_json_invalid(json_form: JsonForm) -> None:
     json_form.process(
         formdata=MultiDict({'jsondata': '{"key"; "val"}'})
     )  # invalid JSON
     assert json_form.validate() is False
 
 
-def test_json_empty_default(json_form) -> None:
+def test_json_empty_default(json_form: JsonForm) -> None:
     json_form.process(
         formdata=MultiDict(
             {
@@ -127,7 +128,7 @@ def test_json_empty_default(json_form) -> None:
     assert json_form.jsondata_no_default.data is None
 
 
-def test_json_nondict(json_form) -> None:
+def test_json_nondict(json_form: JsonForm) -> None:
     json_form.process(formdata=MultiDict({'jsondata': '43'}))
     assert json_form.validate() is False
     json_form.process(formdata=MultiDict({'jsondata': 'true'}))
@@ -139,18 +140,18 @@ def test_json_nondict(json_form) -> None:
     assert json_form.validate() is True
 
 
-def test_json_unicode(json_form) -> None:
+def test_json_unicode(json_form: JsonForm) -> None:
     json_form.process(formdata=MultiDict({'jsondata': '{"key": "val😡"}'}))
     assert json_form.validate() is True
     assert json_form.jsondata.data == {"key": "val😡"}
 
 
-def test_json_unicode_dumps(json_form) -> None:
+def test_json_unicode_dumps(json_form: JsonForm) -> None:
     json_form.jsondata.data = {"key": "val😡"}
     assert json_form.jsondata._value() == '{\n  "key": "val😡"\n}'
 
 
-def test_json_decimal(json_form) -> None:
+def test_json_decimal(json_form: JsonForm) -> None:
     json_form.jsondata.data = {"key": Decimal('1.2')}
     assert json_form.validate() is True
     assert json_form.jsondata._value() == '{\n  "key": "1.2"\n}'
@@ -164,7 +165,7 @@ def test_json_decimal(json_form) -> None:
     assert json_form.jsondata.data == {"key": 1.2}
 
 
-def test_json_array(json_form) -> None:
+def test_json_array(json_form: JsonForm) -> None:
     json_form.process(
         formdata=MultiDict({'jsondata': '[{"key": "val"}, {"key2": "val2"}]'})
     )
@@ -177,7 +178,7 @@ def test_json_array(json_form) -> None:
     assert json_form.jsondata_no_dict.data == [{"key": "val"}, {"key2": "val2"}]
 
 
-def test_json_comment(json_form) -> None:
+def test_json_comment(json_form: JsonForm) -> None:
     json_form.process(
         formdata=MultiDict(
             {
@@ -192,7 +193,7 @@ def test_json_comment(json_form) -> None:
     assert json_form.validate() is False
 
 
-def test_json_non_serializable(json_form) -> None:
+def test_json_non_serializable(json_form: JsonForm) -> None:
     json_form.jsondata.data = {"key": complex(1, 2)}
     with pytest.raises(TypeError):
         json_form.jsondata._value()
@@ -321,7 +322,7 @@ def test_date_time_field(test_input, expected_naive, expected_aware) -> None:
         '100000-01-01',
     ],
 )
-def test_date_time_field_badvalue(test_input) -> None:
+def test_date_time_field_badvalue(test_input: str) -> None:
     """Assert bad datetime input is recorded as a ValidationError."""
     form = DateTimeForm(meta={'csrf': False})
     form.process(formdata=MultiDict({'naive': test_input, 'aware': test_input}))

@@ -24,12 +24,12 @@ from . import (
 from .typing import FilterCallable, ValidatorCallable, ValidatorList, WidgetProtocol
 
 __all__ = [
-    'field_registry',
-    'widget_registry',
-    'validator_registry',
     'Form',
     'FormGenerator',
     'RecaptchaForm',
+    'field_registry',
+    'validator_registry',
+    'widget_registry',
 ]
 
 # Use a hardcoded list to control what is available to user-facing apps
@@ -151,9 +151,9 @@ class Form(BaseForm):
         super().__init__(*args, **kwargs)
 
         # Finally, populate the ``choices`` attr of selection fields
-        if callable(post_init := getattr(self, '__post_init__', None)):
-            post_init()  # pylint: disable=not-callable
-        elif callable(post_init := getattr(self, 'set_queries', None)):
+        if callable(post_init := getattr(self, '__post_init__', None)) or callable(
+            post_init := getattr(self, 'set_queries', None)
+        ):
             post_init()  # pylint: disable=not-callable
 
     def __json__(self) -> Any:
@@ -307,8 +307,8 @@ class FormGenerator:
         class DynamicForm(Form):
             pass
 
-        for fielddata in formstruct:
-            fielddata = dict(fielddata)  # Make a copy
+        for _fielddata in formstruct:
+            fielddata = dict(_fielddata)  # Make a copy
             name = fielddata.pop('name', None)
             type_ = fielddata.pop('type', None)
             if not name:

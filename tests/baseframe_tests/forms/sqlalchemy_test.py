@@ -2,9 +2,13 @@
 
 # pylint: disable=redefined-outer-name
 
+from collections.abc import Generator
+
 import pytest
+from flask import Flask
+from flask.ctx import AppContext
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import DeclarativeBase, scoped_session
 
 from coaster.sqlalchemy import ModelBase, Query
 
@@ -40,7 +44,7 @@ class DocumentForm(forms.Form):
 
 
 @pytest.fixture
-def database(app):
+def database(app: Flask) -> Generator[SQLAlchemy, None, None]:
     """Database structure."""
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -53,7 +57,7 @@ def database(app):
 
 
 @pytest.fixture
-def db_session(database):
+def db_session(database: SQLAlchemy) -> Generator[scoped_session, None, None]:
     """Database session fixture."""
     savepoint = database.session.begin_nested()
     yield database.session
@@ -62,11 +66,11 @@ def db_session(database):
 
 
 @pytest.fixture
-def form(ctx):
+def form(ctx: AppContext) -> DocumentForm:
     return DocumentForm(model=Document, meta={'csrf': False})
 
 
-def test_available_attr(form, db_session) -> None:
+def test_available_attr(form: DocumentForm, db_session: scoped_session) -> None:
     """Test AvailableAttr SQLAlchemy validator."""
     d1 = Document()
     form.process(name='d1', title='t1')
