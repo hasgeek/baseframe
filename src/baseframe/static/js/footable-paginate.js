@@ -16,7 +16,7 @@
   function i(e) {
     var t = a(e.table),
       i = t.data();
-    (this.pageNavigation = i.pageNavigation || e.options.pageNavigation),
+    ((this.pageNavigation = i.pageNavigation || e.options.pageNavigation),
       (this.pageSize = i.pageSize || e.options.pageSize),
       (this.firstText = i.firstText || e.options.firstText),
       (this.previousText = i.previousText || e.options.previousText),
@@ -32,15 +32,15 @@
       (this.limit = this.limitNavigation > 0),
       (this.currentPage = i.currentPage || 0),
       (this.pages = []),
-      (this.control = !1);
+      (this.control = !1));
   }
   function n() {
     var e = this;
-    (e.name = 'Footable Paginate'),
+    ((e.name = 'Footable Paginate'),
       (e.init = function (t) {
         if (t.options.paginate === !0) {
           if (a(t.table).data('page') === !1) return;
-          (e.footable = t),
+          ((e.footable = t),
             a(t.table)
               .unbind('.paging')
               .bind({
@@ -49,16 +49,16 @@
                     e.setupPaging();
                   },
               })
-              .data('footable-paging', e);
+              .data('footable-paging', e));
         }
       }),
       (e.setupPaging = function () {
         var t = e.footable,
           n = a(t.table).find('> tbody');
-        (t.pageInfo = new i(t)),
+        ((t.pageInfo = new i(t)),
           e.createPages(t, n),
           e.createNavigation(t, n),
-          e.fillPage(t, n, t.pageInfo.currentPage);
+          e.fillPage(t, n, t.pageInfo.currentPage));
       }),
       (e.createPages = function (e, t) {
         var i = 1,
@@ -68,11 +68,11 @@
           g = [];
         n.pages = [];
         var s = t.find('> tr:not(.footable-filtered,.footable-row-detail)');
-        s.each(function (a, e) {
-          l.push(e),
+        (s.each(function (a, e) {
+          (l.push(e),
             a === o - 1
               ? (n.pages.push(l), i++, (o = i * n.pageSize), (l = []))
-              : a >= s.length - (s.length % n.pageSize) && g.push(e);
+              : a >= s.length - (s.length % n.pageSize) && g.push(e));
         }),
           g.length > 0 && n.pages.push(g),
           n.currentPage >= n.pages.length &&
@@ -80,7 +80,7 @@
           n.currentPage < 0 && (n.currentPage = 0),
           1 === n.pages.length
             ? a(e.table).addClass('no-paging')
-            : a(e.table).removeClass('no-paging');
+            : a(e.table).removeClass('no-paging'));
       }),
       (e.createNavigation = function (t, i) {
         var n = a(t.table).find(t.pageInfo.pageNavigation);
@@ -96,12 +96,12 @@
             console.error('More than one pagination control was found!');
         }
         if (0 !== n.length) {
-          n.is('ul') ||
+          (n.is('ul') ||
             (0 === n.find('ul:first').length && n.append('<ul />'),
             (n = n.find('ul'))),
-            n.find('li').remove();
+            n.find('li').remove());
           var o = t.pageInfo;
-          (o.control = n),
+          ((o.control = n),
             o.pages.length > 0 &&
               (n.append(
                 '<li class="footable-page-arrow"><a data-page="first" href="#first">' +
@@ -160,13 +160,13 @@
                 else if ('limit-prev' === l) {
                   g = -1;
                   var s = n.find('.footable-page:first a').data('page');
-                  e.createLimited(n, o, s - o.limitNavigation),
-                    e.setPagingClasses(n, o.currentPage, o.pages.length);
+                  (e.createLimited(n, o, s - o.limitNavigation),
+                    e.setPagingClasses(n, o.currentPage, o.pages.length));
                 } else if ('limit-next' === l) {
                   g = -1;
                   var r = n.find('.footable-page:last a').data('page');
-                  e.createLimited(n, o, r + 1),
-                    e.setPagingClasses(n, o.currentPage, o.pages.length);
+                  (e.createLimited(n, o, r + 1),
+                    e.setPagingClasses(n, o.currentPage, o.pages.length));
                 } else g = l;
                 if (g >= 0) {
                   if (o.limit && o.currentPage != g) {
@@ -176,11 +176,11 @@
                   e.paginate(t, g);
                 }
               }),
-            e.setPagingClasses(n, o.currentPage, o.pages.length);
+            e.setPagingClasses(n, o.currentPage, o.pages.length));
         }
       }),
       (e.createLimited = function (a, e, t) {
-        (t = t || 0), a.find('li.footable-page').remove();
+        ((t = t || 0), a.find('li.footable-page').remove());
         var i,
           n,
           o = a
@@ -190,7 +190,7 @@
             .find('li.footable-page-arrow > a[data-page="limit-next"]')
             .parent();
         for (i = e.pages.length - 1; i >= 0; i--)
-          (n = e.pages[i]),
+          ((n = e.pages[i]),
             i >= t &&
               i < t + e.limitNavigation &&
               n.length > 0 &&
@@ -200,9 +200,9 @@
                   '" href="#">' +
                   (i + 1) +
                   '</a></li>'
-              );
-        0 === t ? o.hide() : o.show(),
-          t + e.limitNavigation >= e.pages.length ? l.hide() : l.show();
+              ));
+        (0 === t ? o.hide() : o.show(),
+          t + e.limitNavigation >= e.pages.length ? l.hide() : l.show());
       }),
       (e.paginate = function (t, i) {
         var n = t.pageInfo;
@@ -210,13 +210,13 @@
           var o = a(t.table).find('> tbody'),
             l = t.raise('footable_paging', { page: i, size: n.pageSize });
           if (l && l.result === !1) return;
-          e.fillPage(t, o, i),
+          (e.fillPage(t, o, i),
             n.control.find('li').removeClass('active disabled'),
-            e.setPagingClasses(n.control, n.currentPage, n.pages.length);
+            e.setPagingClasses(n.control, n.currentPage, n.pages.length));
         }
       }),
       (e.setPagingClasses = function (a, e, t) {
-        a
+        (a
           .find('li.footable-page > a[data-page=' + e + ']')
           .parent()
           .addClass('active'),
@@ -237,16 +237,16 @@
             a
               .find('li.footable-page-arrow > a[data-page="prev"]')
               .parent()
-              .addClass('disabled'));
+              .addClass('disabled')));
       }),
       (e.fillPage = function (t, i, n) {
-        (t.pageInfo.currentPage = n),
+        ((t.pageInfo.currentPage = n),
           a(t.table).data('currentPage', n),
           i.find('> tr').hide(),
           a(t.pageInfo.pages[n]).each(function () {
             e.showRow(this, t);
           }),
-          t.raise('footable_page_filled');
+          t.raise('footable_page_filled'));
       }),
       (e.showRow = function (e, t) {
         var i = a(e),
@@ -257,7 +257,7 @@
         n.hasClass('footable-row-detail')
           ? (i.add(n).show(), t.createOrUpdateDetailRow(e))
           : i.show();
-      });
+      }));
   }
   if (e.footable === t || null === e.footable)
     throw new Error(

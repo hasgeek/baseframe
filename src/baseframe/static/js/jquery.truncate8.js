@@ -9,9 +9,9 @@
  */
 !(function (t) {
   function e(e) {
-    (this.$element = t(e)),
+    ((this.$element = t(e)),
       (this.original_text = this.$element.html().trim()),
-      (this.settings = t.extend({}, t.fn.trunk8.defaults));
+      (this.settings = t.extend({}, t.fn.trunk8.defaults)));
   }
   function n(t) {
     var e = document.createElement('DIV');
@@ -32,12 +32,12 @@
       o && e !== s.lastIndex;
 
     )
-      (e = s.lastIndex),
+      ((e = s.lastIndex),
         o[5]
           ? a.push(o[5])
           : o[1] &&
             a.push({ tag: o[1], attribs: o[2], content: o[3], after: o[4] }),
-        (o = s.exec(t));
+        (o = s.exec(t)));
     for (i = 0; i < a.length; i++)
       'string' != typeof a[i] &&
         a[i].content &&
@@ -53,7 +53,7 @@
           h,
           u = '';
         for (h = 0; h < n.length; h++)
-          (s = n[h]),
+          ((s = n[h]),
             (l = t.trim(e).split(' ').length),
             t.trim(e).length &&
               ('string' == typeof s
@@ -77,11 +77,11 @@
                       '</' +
                       s.tag +
                       '>' +
-                      s.after))));
+                      s.after)))));
         return u;
       },
       a = i(n);
-    return a.slice(a.length - r.length) === r && (a += r), a;
+    return (a.slice(a.length - r.length) === r && (a += r), a);
   }
   function a() {
     var e,
@@ -108,20 +108,20 @@
     ) {
       if (this.height() <= y) return;
       for (e = 0, a = x - 1; a >= e; )
-        (s = e + ((a - e) >> 1)),
+        ((s = e + ((a - e) >> 1)),
           (l = o.eatStr(S, d, x - s, m)),
           v && c && (l = i(l, c, m)),
           this.html(l),
           this.height() > y
             ? (a = s - 1)
-            : ((e = s + 1), (b = b.length > l.length ? b : l));
-      this.html(''), this.html(b), g.tooltip && this.attr('title', u);
+            : ((e = s + 1), (b = b.length > l.length ? b : l)));
+      (this.html(''), this.html(b), g.tooltip && this.attr('title', u));
     } else {
       if (isNaN(p)) return void t.error('Invalid width "' + p + '".');
-      (s = x - p),
+      ((s = x - p),
         (l = o.eatStr(S, d, s, m)),
         this.html(l),
-        g.tooltip && this.attr('title', S);
+        g.tooltip && this.attr('title', S));
     }
     g.onTruncate();
   }
@@ -129,7 +129,7 @@
     o,
     l = { center: 'center', left: 'left', right: 'right' },
     h = { auto: 'auto' };
-  (e.prototype.updateSettings = function (e) {
+  ((e.prototype.updateSettings = function (e) {
     this.settings = t.extend(this.settings, e);
   }),
     (s = {
@@ -137,15 +137,15 @@
         return this.each(function () {
           var r = t(this),
             i = r.data('trunk8');
-          i || r.data('trunk8', (i = new e(this))),
+          (i || r.data('trunk8', (i = new e(this))),
             i.updateSettings(n),
-            a.call(r);
+            a.call(r));
         });
       },
       update: function (e) {
         return this.each(function () {
           var n = t(this);
-          e && (n.data('trunk8').original_text = e), a.call(n);
+          (e && (n.data('trunk8').original_text = e), a.call(n));
         });
       },
       revert: function () {
@@ -231,5 +231,5 @@
       width: h.auto,
       parseHTML: !1,
       onTruncate: function () {},
-    });
+    }));
 })(jQuery);

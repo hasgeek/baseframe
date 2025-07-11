@@ -150,7 +150,7 @@
 
       // Find the initial set of elements matching the setting.tabs
       // CSS selector within the container
-      (plugin.tabs = $container.find(settings.tabs)),
+      ((plugin.tabs = $container.find(settings.tabs)),
         // Instantiate panels as empty jquery object
         (plugin.panels = $()),
         plugin.tabs.each(function () {
@@ -200,7 +200,7 @@
               );
             }
           }
-        });
+        }));
     };
 
     // Select tab and fire callback

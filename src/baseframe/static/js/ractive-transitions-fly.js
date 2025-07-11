@@ -11,14 +11,14 @@
   }
   function e(e, o) {
     var i, r, a, s;
-    (o = e.processParams(o, n)),
+    ((o = e.processParams(o, n)),
       (i = t(o.x)),
       (r = t(o.y)),
       (a = { transform: 'translate(' + i + ',' + r + ')', opacity: 0 }),
       e.isIntro
         ? ((s = e.getStyle(['opacity', 'transform'])), e.setStyle(a))
         : (s = a),
-      e.animateStyle(s, o).then(e.complete);
+      e.animateStyle(s, o).then(e.complete));
   }
   var n = { duration: 400, easing: 'easeOut', opacity: 0, x: -500, y: 0 };
   return e;

@@ -77,13 +77,13 @@
               this._addField(d, d.names[n]);
           else this._addField(d, d.name);
         else
-          console.warn(
+          (console.warn(
             'validate.js: The following field is being skipped due to a misconfiguration:'
           ),
             console.warn(d),
             console.warn(
               'Check to ensure you have properly configured a name and rules for this field'
-            );
+            ));
       }
       var e = this.form.onsubmit;
       this.form.onsubmit = (function (a) {
@@ -305,11 +305,11 @@
         d = !1;
       a = a.value.replace(/\D/g, '');
       for (var f = a.length - 1; 0 <= f; f--)
-        (b = a.charAt(f)),
+        ((b = a.charAt(f)),
           (b = parseInt(b, 10)),
           d && 9 < (b *= 2) && (b -= 9),
           (c += b),
-          (d = !d);
+          (d = !d));
       return 0 === c % 10;
     },
     is_file_type: function (a, c) {

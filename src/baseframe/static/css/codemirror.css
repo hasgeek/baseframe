@@ -2,7 +2,8 @@
 .CodeMirror {
   height: auto;
   min-height: 6em;
-  font-family: Consolas, Inconsolata, Menlo, 'DejaVu Sans Mono',
+  font-family:
+    Consolas, Inconsolata, Menlo, 'DejaVu Sans Mono',
     'Bitstream Vera Sans Mono', monospace;
   border: 1px solid #ccc;
   border-radius: 4px;

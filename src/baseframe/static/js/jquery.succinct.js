@@ -18,7 +18,7 @@
         f = /[!-\/:-@\[-`{-~]$/,
         g = function () {
           e.each(function () {
-            (b = a(this).html()),
+            ((b = a(this).html()),
               b.length > c.size &&
                 ((d = a
                   .trim(b)
@@ -27,7 +27,7 @@
                   .slice(0, -1)
                   .join(' ')),
                 c.ignore && (d = d.replace(f, '')),
-                a(this).html(d + c.omission));
+                a(this).html(d + c.omission)));
           });
         };
       g();
